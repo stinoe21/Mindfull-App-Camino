@@ -128,15 +128,19 @@ Bij twijfel: niet opslaan, en vragen.
 
 ## 10. MCP's
 
-Zie `.mcp.json` in de repo. Iedereen krijgt na een `git clone` dezelfde koppelingen. Tokens komen uit een eigen lokale `.env`, die nooit wordt gecommit.
+Zie `.mcp.json` in de repo. Iedereen krijgt na een `git clone` dezelfde koppelingen. Er zijn **geen tokens** nodig: alle drie autoriseren via de browser met het eigen account.
 
 | Server | Waarvoor |
 |---|---|
 | `github` | Pull requests, issues, reviews |
-| `supabase` | Database inspecteren, types genereren (read-only) |
+| `supabase-mind` | Database inspecteren, types genereren. Staat op **read-only**. |
 | `figma` | Frames, componenten en variables uit het designbestand lezen |
 
+De server heet `supabase-mind` en niet `supabase`, omdat dat laatste bij sommigen al een user-scope server is voor een ander project. Gelijke namen in verschillende scopes botsen.
+
 Opzetten staat in `ONBOARDING.md`.
+
+**Openstaand:** `supabase-mind` heeft nog geen `--project-ref`, want het Supabase-project voor deze app bestaat nog niet. Zodra dat er is, wordt de config daarop gescoped.
 
 ## 11. Toon en taal
 

@@ -9,7 +9,8 @@ Dit bestand is het contract waar alle drie de werkstromen tegenaan bouwen. Het i
 ## Werkwijze
 
 - Schemawijzigingen gaan **altijd** via een migratiebestand in `supabase/migrations/`. Nooit via de dashboard-UI, nooit via los SQL tegen productie.
-- De Supabase MCP staat op `--read-only`. Dat is bewust.
+- De Supabase MCP heet `supabase-mind` en staat op `--read-only`. Dat is bewust.
+- **TODO:** het Supabase-project bestaat nog niet. Zodra het er is, `--project-ref=<ref>` toevoegen in `.mcp.json`, zodat de MCP alleen dit project ziet. Kies een EU-regio.
 - TypeScript-types worden **gegenereerd** uit het schema, niet met de hand geschreven.
 - Row Level Security staat aan op elke tabel met gebruikersdata. Een tabel zonder RLS is een bug, geen keuze.
 - Een migratie is een eigen kleine pull request. Nooit bijvangst van een feature.

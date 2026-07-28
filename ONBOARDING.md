@@ -61,54 +61,44 @@ git reset --hard origin/main
 
 Waarom rebase en geen merge staat uitgelegd in de skill `werkwijze`. Vraag je Claude gewoon: "leg de werkwijze van dit project uit".
 
-## 3. Tokens aanmaken
+## 3. MCP's activeren
 
-Kopieer het voorbeeldbestand en vul je eigen waarden in:
+Je hoeft **geen tokens aan te maken**. Alle drie de MCP's autoriseren via je browser met je eigen account. De configuratie staat al in de repo, in `.mcp.json`.
 
-```bash
-cp .env.example .env
-```
-
-`.env` staat in `.gitignore` en wordt nooit gecommit. Deel je tokens met niemand, ook niet met elkaar. Iedereen maakt zijn eigen tokens aan.
-
-**GITHUB_TOKEN**
-1. Ga naar GitHub, Settings, Developer settings, Personal access tokens, Fine-grained tokens
-2. Maak een token met toegang tot alleen deze repo
-3. Permissions: Contents (read and write), Pull requests (read and write), Issues (read and write), Metadata (read)
-4. Plak de waarde in `.env`
-
-**SUPABASE_ACCESS_TOKEN**
-1. Ga naar `supabase.com/dashboard/account/tokens`
-2. Maak een personal access token
-3. Plak de waarde in `.env`
-
-**SUPABASE_PROJECT_REF**
-Staat in de URL van het Supabase-project: `supabase.com/dashboard/project/<dit-stukje>`. Vraag Stijn welk project we gebruiken.
-
-## 4. MCP's activeren
-
-De MCP-configuratie staat al in de repo, in `.mcp.json`. Je hoeft niets toe te voegen. Start Claude Code in de projectmap:
+Start Claude Code in de projectmap:
 
 ```bash
-cd mind-app
+cd mentale-weerbericht
 claude
 ```
 
-Claude vraagt bij de eerste start of je de project-MCP's vertrouwt. Antwoord ja. Controleer daarna:
+Bij de eerste start vraagt Claude of je de project-MCP's vertrouwt. Antwoord ja. Daarna staan `github`, `supabase-mind` en `figma` op "pending approval". Keur ze goed, dan opent er per server een browservenster waarin je inlogt.
+
+Controleer met:
 
 ```
 /mcp
 ```
 
-Je hoort `github`, `supabase` en `figma` te zien staan.
+Alle drie horen op `connected` te staan.
 
-### Figma apart autoriseren
+### Als iets niet verbindt
 
-De Figma MCP werkt via OAuth, niet via een token in `.env`. Bij de eerste keer dat Claude iets uit Figma probeert te lezen, opent er een browservenster waarin je inlogt en toegang geeft. Dat is eenmalig.
+**figma** is een remote server met OAuth. Werkt hij niet, dan is er een lokaal alternatief: zet in de Figma **desktop-app** onder Preferences de Dev Mode MCP Server aan, en vervang in `.mcp.json` de figma-URL door `http://127.0.0.1:3845/mcp`. Nadeel: de desktop-app moet dan altijd openstaan. Commit die wijziging niet. We kunnen ook zonder Figma MCP werken, alleen minder prettig.
 
-Werkt de remote server niet, dan is er een alternatief: zet in de Figma **desktop-app** onder Preferences de Dev Mode MCP Server aan, en vervang in `.mcp.json` de figma-URL door `http://127.0.0.1:3845/mcp`. Nadeel: de desktop-app moet dan altijd openstaan. Doe dit alleen als het echt nodig is, en commit die wijziging niet.
+**supabase-mind** heeft nu nog geen `--project-ref`, dus hij ziet alle Supabase-projecten van jouw eigen account. Zodra het project voor deze app bestaat, wordt de config gescoped op dat ene project. Hij staat op `--read-only`, dat is bewust: schemawijzigingen gaan altijd via een migratiebestand.
 
-Werkt geen van beide, meld het. We kunnen zonder Figma MCP werken, alleen minder prettig.
+**Heb je al een user-scope MCP met dezelfde naam?** Dan botst dat. De project-servers heten daarom `supabase-mind` en niet `supabase`. Zie je toch een waarschuwing over "conflicting scopes", draai dan `claude mcp list` en meld wat er staat.
+
+## 4. Tokens voor de app zelf
+
+Alleen nodig zodra de Expo-app er staat, dus nu nog niet.
+
+```bash
+cp .env.example .env
+```
+
+`.env` staat in `.gitignore` en wordt nooit gecommit.
 
 ## 5. Controleer of alles klopt
 
