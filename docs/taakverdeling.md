@@ -8,13 +8,13 @@ Wij verdelen op twee assen tegelijk. Dat klinkt dubbel, maar het lost twee versc
 
 Ieder heeft één gebied waarvoor hij eindverantwoordelijk is. Dit betekent **niet** dat alleen die persoon daar mag werken. Het betekent dat wijzigingen in dat gebied door hem gereviewd worden, en dat hij de knopen doorhakt als er twijfel is.
 
-| Eigenaar | Verantwoordelijk voor | Reviewt |
-|---|---|---|
-| Stijn | Architectuur, Supabase, datamodel, CI, releases, App Store | `supabase/**`, `.github/**`, `package.json`, auth |
-| **TODO naam 2** | Design system, componenten, visuele consistentie, interaction design | `packages/ui/**`, alles met een zichtbare wijziging |
-| **TODO naam 3** | Productlogica, userflow, content, teksten, functionele acceptatie | `apps/mobile/src/features/**`, alle UI-teksten |
+| Eigenaar | GitHub | Verantwoordelijk voor | Reviewt |
+|---|---|---|---|
+| Stijn | `@stinoe21` | Architectuur, Supabase, datamodel, CI, releases, App Store | `supabase/**`, `.github/**`, `package.json`, auth |
+| Caesar | `@Cschoorl` | Design system, componenten, visuele consistentie, interaction design | `packages/ui/**`, alles met een zichtbare wijziging |
+| Max | `@maxhelmantel-gif` | Productlogica, userflow, content, teksten, functionele acceptatie | `apps/mobile/src/features/**`, alle UI-teksten |
 
-Vul de namen in en zet ze in `.github/CODEOWNERS`, dan wijst GitHub de reviewer automatisch toe.
+> **Bevestig deze verdeling.** Wie van Caesar en Max op design en wie op product zit is een voorstel, geen beslissing. Draai het gerust om. Pas dan ook `.github/CODEOWNERS` aan, want daar staat dezelfde verdeling in en die bepaalt wie GitHub automatisch als reviewer toewijst.
 
 ## As 2: feature-eigenaarschap (per taak)
 

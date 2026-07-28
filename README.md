@@ -1,8 +1,12 @@
-# Mind App
+# Mentale Weerbericht
 
 Een mobiele app voor Stichting Mind, gebouwd door drie mensen tijdens het lopen van de Camino, zomer 2026.
 
 **Stack:** React Native met Expo en expo-router, Supabase voor backend en auth, iOS en Android.
+
+**Team:** [@stinoe21](https://github.com/stinoe21) (architectuur, backend, releases), [@Cschoorl](https://github.com/Cschoorl) (design system), [@maxhelmantel-gif](https://github.com/maxhelmantel-gif) (productlogica, content)
+
+**Userflow:** [Figma board](https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow)
 
 ---
 

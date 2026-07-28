@@ -1,12 +1,17 @@
-# Scope v1
+# Scope v1: Mentale Weerbericht
 
 > **Status: nog niet ingevuld.** Alles hieronder met `TODO` moet vastliggen voordat we vertrekken. Zolang dat niet zo is, mogen agents geen productbeslissingen nemen. Ontbreekt er informatie, vraag het dan in plaats van iets aan te nemen.
+
+**Userflow (Figma board):**
+https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow
+
+Dit board is de bron. Alles hieronder is een vertaling daarvan naar bouwbare taken. Wijkt de code af van het board, dan wint het board, tenzij hier expliciet iets anders staat.
 
 ---
 
 ## Wat de app doet
 
-**TODO:** één alinea. Wat kan een gebruiker met deze app dat hij nu niet kan?
+**TODO:** één alinea, af te leiden uit het Figma-board. Wat kan een gebruiker met deze app dat hij nu niet kan?
 
 ## Voor wie
 

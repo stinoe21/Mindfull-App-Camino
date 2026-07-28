@@ -1,22 +1,24 @@
-# Automatische reviewer-toewijzing.
-# Vervang de placeholders door de echte GitHub-usernames, dan wijst GitHub
-# de juiste persoon toe zodra een PR een van deze paden raakt.
+# Automatische reviewer-toewijzing. GitHub wijst de juiste persoon toe
+# zodra een PR een van deze paden raakt.
 #
-# Zie docs/taakverdeling.md voor wie waar eigenaar van is.
+# LET OP: de verdeling tussen @Cschoorl en @maxhelmantel-gif is een voorstel.
+# Bevestig of draai om, zie docs/taakverdeling.md.
 
-# Architectuur, backend, releases
-/supabase/              @stijnsmit
-/.github/               @stijnsmit
-/package.json           @stijnsmit
-/package-lock.json      @stijnsmit
-/app.config.ts          @stijnsmit
-/CLAUDE.md              @stijnsmit
-/.mcp.json              @stijnsmit
-/.claude/               @stijnsmit
+# Architectuur, backend, releases: Stijn
+/supabase/              @stinoe21
+/.github/               @stinoe21
+/package.json           @stinoe21
+/package-lock.json      @stinoe21
+/app.config.ts          @stinoe21
+/CLAUDE.md              @stinoe21
+/.mcp.json              @stinoe21
+/.claude/               @stinoe21
+/docs/datamodel.md      @stinoe21
 
-# Design system en visuele consistentie
-/packages/ui/           @TODO-naam-2
+# Design system en visuele consistentie: Caesar
+/packages/ui/           @Cschoorl
+/docs/design-system.md  @Cschoorl
 
-# Productlogica, userflow, content
-/apps/mobile/src/features/   @TODO-naam-3
-/docs/scope.md               @TODO-naam-3
+# Productlogica, userflow, content: Max
+/apps/mobile/src/features/   @maxhelmantel-gif
+/docs/scope.md               @maxhelmantel-gif

@@ -1,4 +1,4 @@
-# Mind App
+# Mentale Weerbericht
 
 Projectinstructies voor Claude Code. Dit bestand laadt automatisch bij iedere sessie, bij alle drie de teamleden. Het is het contract waar we ons alle drie aan houden.
 
@@ -8,12 +8,17 @@ Lees bij twijfel ook `docs/scope.md` (wat bouwen we wel en niet) en `docs/taakve
 
 ## 1. Wat dit project is
 
-Een mobiele app voor **Stichting Mind**, gebouwd door drie mensen tijdens het lopen van de Camino, zomer 2026.
+Een mobiele app voor **Stichting Mind**, werktitel "Mentale Weerbericht", gebouwd door drie mensen tijdens het lopen van de Camino, zomer 2026.
 
 - **Doel:** zie `docs/scope.md`. Is de scope daar nog niet ingevuld, vraag er dan naar in plaats van iets aan te nemen.
 - **Platform:** iOS en Android, via de App Store en de Play Store.
 - **Stack:** React Native met Expo en expo-router. Supabase voor backend, auth en database.
 - **Domein:** mentale gezondheid. Dat heeft harde gevolgen voor wat je met data mag doen, zie sectie 8.
+
+**Userflow (Figma board):**
+https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow
+
+Dit is de bron voor wat de app doet. Staat iets niet in `docs/scope.md`, lees dan dit board voordat je iets aanneemt.
 
 ## 2. Hoe we met drie mensen werken
 

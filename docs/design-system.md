@@ -75,6 +75,15 @@ Wat je er **niet** mee doet: rechtstreeks Figma-output als code in de repo plakk
 
 ---
 
+## Figma-bestanden
+
+**Userflow (board, FigJam):**
+https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow
+
+Let op: dit is een **board**, geen design file. De Figma MCP is gebouwd voor design files en Dev Mode. Een board kun je mogelijk niet volledig uitlezen. Controleer dat bij de eerste keer. Lukt het niet, dan vertalen we het board met de hand naar `docs/scope.md` en is dat vanaf dan de bron voor agents.
+
+**Design file:** TODO, nog aanmaken. Hier komen Foundations, Components en Screens.
+
 ## Figma-bestandsstructuur
 
 **TODO:** afstemmen met wat er al staat.
