@@ -1,0 +1,22 @@
+# Automatische reviewer-toewijzing.
+# Vervang de placeholders door de echte GitHub-usernames, dan wijst GitHub
+# de juiste persoon toe zodra een PR een van deze paden raakt.
+#
+# Zie docs/taakverdeling.md voor wie waar eigenaar van is.
+
+# Architectuur, backend, releases
+/supabase/              @stijnsmit
+/.github/               @stijnsmit
+/package.json           @stijnsmit
+/package-lock.json      @stijnsmit
+/app.config.ts          @stijnsmit
+/CLAUDE.md              @stijnsmit
+/.mcp.json              @stijnsmit
+/.claude/               @stijnsmit
+
+# Design system en visuele consistentie
+/packages/ui/           @TODO-naam-2
+
+# Productlogica, userflow, content
+/apps/mobile/src/features/   @TODO-naam-3
+/docs/scope.md               @TODO-naam-3

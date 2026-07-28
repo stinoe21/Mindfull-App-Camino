@@ -1,0 +1,51 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Zolang de Expo-app nog niet gescaffold is, slaan we de rest over.
+      # Zodra package.json bestaat draaien alle checks vanzelf mee.
+      - name: Check of het project al gescaffold is
+        id: scaffold
+        run: |
+          if [ -f package.json ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "Nog geen package.json. Checks worden overgeslagen."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.scaffold.outputs.ready == 'true'
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        if: steps.scaffold.outputs.ready == 'true'
+        run: npm ci
+
+      - name: Typecheck
+        if: steps.scaffold.outputs.ready == 'true'
+        run: npm run typecheck
+
+      - name: Lint
+        if: steps.scaffold.outputs.ready == 'true'
+        run: npm run lint
+
+      - name: Test
+        if: steps.scaffold.outputs.ready == 'true'
+        run: npm test --if-present

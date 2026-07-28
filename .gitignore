@@ -1,0 +1,47 @@
+# Secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.p8
+*.p12
+*.mobileprovision
+
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Expo / React Native
+.expo/
+dist/
+web-build/
+ios/
+android/
+*.jks
+*.keystore
+
+# Build output
+build/
+.next/
+out/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Claude Code lokaal (persoonlijke overrides, niet delen)
+.claude/settings.local.json
+.claude/worktrees/
+
+# Test / coverage
+coverage/
+.nyc_output/
