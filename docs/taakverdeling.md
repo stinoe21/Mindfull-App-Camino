@@ -95,7 +95,16 @@ We lopen overdag, dus het werk gebeurt in blokken.
 - controleren dat die drie taken elkaars bestanden niet raken
 - hardop bevestigen wat "af" betekent voor die taak
 
-**Tijdens en na het lopen, alleen**
+**Tijdens het lopen, via Remote Control**
+- laptop draait in de rugzak, sessie open in de projectmap
+- vanaf je telefoon zet je een afgebakende taak weg via de Claude-app of `claude.ai/code`
+- alleen taken die geen beoordeling van jou vragen tijdens de uitvoering: een scherm dat al in de userflow staat, tests, documentatie
+- niet: iets waarvoor je moet beslissen hoe het eruitziet, of iets dat een gedeeld bestand raakt
+- let op je accu, een dag zonder stopcontact is zo voorbij
+
+Opzetten staat in `ONBOARDING.md` stap 4. Zonder dit moet al het werk in het albergue gebeuren, en dat is het verschil tussen twee en zes productieve uren per dag.
+
+**Na het lopen, alleen**
 - ieder praat tegen zijn eigen Claude-sessie
 - kleine commits, draft PR meteen openen
 - niet mergen

@@ -90,7 +90,39 @@ Alle drie horen op `connected` te staan.
 
 **Heb je al een user-scope MCP met dezelfde naam?** Dan botst dat. De project-servers heten daarom `supabase-mind` en niet `supabase`. Zie je toch een waarschuwing over "conflicting scopes", draai dan `claude mcp list` en meld wat er staat.
 
-## 4. Tokens voor de app zelf
+## 4. Remote Control aanzetten
+
+Hiermee stuur je een Claude Code-sessie op je laptop aan vanaf je telefoon, via de Claude-app of `claude.ai/code`.
+
+Dit is voor dit project geen gadget. Wij lopen vijf tot zeven uur per dag met de laptop in de rugzak. Zonder dit moet al het werk in het albergue gebeuren. Met dit kun je onderweg een taak wegzetten die klaar is tegen de tijd dat je aankomt.
+
+```bash
+claude auth login
+```
+
+Controleer daarna:
+
+```bash
+claude doctor
+```
+
+Onder "Remote Control" hoort te staan: *"Control this session from claude.ai/code or the Claude mobile app"*. Staat er in plaats daarvan iets over een ontbrekende `user:profile` scope, dan ben je ingelogd met een long-lived token en moet `claude auth login` alsnog.
+
+Installeer de Claude-app op je telefoon en log in met hetzelfde account.
+
+### Hoe je dit onderweg gebruikt
+
+- Laptop aan, sessie open in de projectmap, deksel dicht in je rugzak. De sessie blijft draaien.
+- Onderweg pak je je telefoon en zet je een afgebakende taak weg. Kies iets dat geen beoordeling van jou vraagt tijdens de uitvoering.
+- 's Avonds kijk je na, review je, en merge je.
+
+Wat wel werkt onderweg: een scherm bouwen dat al in de userflow staat, tests schrijven, een refactor binnen één feature-map, documentatie.
+
+Wat niet werkt onderweg: iets waarvoor je moet beslissen hoe het eruitziet, of iets dat een gedeeld bestand raakt. Dat doe je 's avonds samen.
+
+Let op je accu. Een draaiende agent en een slapende laptop trekken meer dan je denkt op een dag zonder stopcontact.
+
+## 5. Tokens voor de app zelf
 
 Alleen nodig zodra de Expo-app er staat, dus nu nog niet.
 
@@ -100,7 +132,7 @@ cp .env.example .env
 
 `.env` staat in `.gitignore` en wordt nooit gecommit.
 
-## 5. Controleer of alles klopt
+## 6. Controleer of alles klopt
 
 Draai in Claude Code:
 
@@ -118,7 +150,7 @@ Draai daarna:
 
 Dat is de skill die de git-workflow uitlegt. Als die laadt, zijn de gedeelde skills actief.
 
-## 6. Je eerste taak
+## 7. Je eerste taak
 
 1. Pak een issue van het board dat op `Ready` staat en wijs jezelf toe.
 2. Maak een branch: `git checkout -b feat/<korte-naam>`
