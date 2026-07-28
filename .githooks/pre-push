@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# Weigert een push naar main en een force-push naar main.
+#
+# Nodig omdat branch protection op GitHub een betaald plan vereist voor
+# private repos. Deze hook vangt het ongeluk, niet de moedwil: je kunt hem
+# omzeilen met --no-verify. Doe dat niet.
+#
+# Activeren (staat in ONBOARDING.md stap 2):
+#   git config core.hooksPath .githooks
+
+protected_branch="main"
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+	case "$remote_ref" in
+	"refs/heads/$protected_branch")
+		echo ""
+		echo "  GEBLOKKEERD: je probeert rechtstreeks naar '$protected_branch' te pushen."
+		echo ""
+		echo "  Al het werk gaat via een branch en een pull request."
+		echo ""
+		echo "    git checkout -b feat/<korte-naam>"
+		echo "    git push --force-with-lease"
+		echo ""
+		echo "  Zie de skill 'werkwijze' of CLAUDE.md sectie 3."
+		echo ""
+		exit 1
+		;;
+	esac
+done
+
+exit 0

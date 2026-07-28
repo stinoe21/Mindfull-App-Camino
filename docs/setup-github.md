@@ -23,36 +23,48 @@ Squash als enige optie betekent dat `main` een leesbare lijst van features wordt
 
 ## 3. Branch protection op main
 
-Settings, Rules, Rulesets, New branch ruleset. Target: `main`.
+> **Werkt op dit moment niet.** GitHub vereist een betaald plan (Pro, 4 dollar per maand) voor branch protection en rulesets op **private** repos. De poging is met een 403 geweigerd. Zolang dat zo is, is `main` technisch niet beschermd op de server.
 
-Aanzetten:
+### Wat we in plaats daarvan doen
 
-- [x] Restrict deletions
-- [x] Block force pushes
-- [x] Require a pull request before merging
-  - Required approvals: **1**
-  - [x] Dismiss stale approvals when new commits are pushed
-  - [ ] Require review from Code Owners -> **uit**. Met drie mensen is dat te streng, de CODEOWNERS-toewijzing is genoeg.
-- [x] Require status checks to pass
-  - `ci` toevoegen zodra de eerste run heeft gedraaid
-  - [x] Require branches to be up to date before merging
+Drie lagen die het ongeluk vangen. Niet waterdicht tegen moedwil, wel tegen de fout die je op een berg om half elf 's avonds maakt.
 
-Bewust **niet** aanzetten:
+**Laag 1: een pre-push hook.** Staat in `.githooks/pre-push` en weigert elke push naar `main`. Iedereen activeert die met `git config core.hooksPath .githooks`, zie `ONBOARDING.md` stap 2. Te omzeilen met `--no-verify`, en dat doe je dus niet.
+
+**Laag 2: Claude Code permissions.** `.claude/settings.json` blokkeert `git push --force` en `git push origin main` voor alle drie de agents. Dit werkt ook als een agent de instructies negeert.
+
+**Laag 3: de afspraak.** Staat in `CLAUDE.md`, in `README.md` en in de skill `werkwijze`. Alle drie de agents kennen hem.
+
+### Wat je kunt doen om het wel af te dwingen
+
+Kies er één:
+
+- **GitHub Pro nemen**, 4 dollar per maand. Draai daarna het commando onderaan dit bestand en je hebt echte branch protection.
+- **Repo publiek maken.** Dan is branch protection gratis. Er staan geen secrets in (`.env` staat in `.gitignore`), maar `docs/scope.md` gaat wel details over Stichting Mind bevatten. Overleg dat met hen voordat je dit doet.
+- **Zo laten.** Met drie mensen die dit gelezen hebben en drie lagen die het ongeluk vangen, is dit verdedigbaar. Het is de goedkoopste optie en `git revert` blijft één commando.
+
+### Zodra branch protection wel kan
+
+Er staat een kant-en-klare ruleset klaar in `docs/ruleset.json`. Toepassen:
+
+```bash
+gh api -X POST repos/stinoe21/mentale-weerbericht/rulesets --input docs/ruleset.json
+```
+
+Die zet aan: geen deletions, geen force push, PR verplicht, één review, stale approvals vervallen bij een nieuwe push, en alleen squash merge. De repo-eigenaar mag bypassen, dat is de ontsnapping voor als er 12 uur niemand reageert.
+
+Voeg `ci` daarna toe als required status check, maar **pas nadat de eerste CI-run groen is geweest**. Doe je dat eerder, dan blokkeer je elke PR op een check die GitHub nog niet kent.
+
+Bewust **niet** aanzetten, ook niet later:
 
 - Merge queue. Bij drie PR's per dag lost `git sync` dat prima op en het kost alleen wachttijd.
 - Require signed commits. Extra setup op drie laptops, geen opbrengst hier.
+- Require review from Code Owners. Met drie mensen te streng, de automatische toewijzing is genoeg.
 - Require linear history. Squash merge geeft dat al.
 
 ### De ontsnapping
 
 Wij lopen overdag. Wachten op een review mag het project nooit stilleggen. Afspraak: **reageert er binnen 12 uur niemand, dan merge je zelf** met het label `self-merged`.
-
-Technisch kan dat op twee manieren. Kies er één:
-
-- **Optie A (aanbevolen):** laat "Required approvals: 1" staan en geef de repo-eigenaar het recht om de ruleset te bypassen. Andere twee vragen dan even om een merge.
-- **Optie B:** zet required approvals op 0 en houd het als sociale afspraak. Vertrouwt op discipline, maar blokkeert nooit.
-
-Begin met A. Merk je dat het blokkeert tijdens het lopen, schakel dan over naar B.
 
 ## 4. Labels
 
@@ -83,17 +95,33 @@ Vul `.github/CODEOWNERS` in met de echte GitHub-usernames zodra die bekend zijn.
 
 ## Controle achteraf
 
-Test of het werkt door dit te proberen op een testbranch:
+Test of de pre-push hook werkt. Dit hoort geweigerd te worden:
 
 ```bash
+git config core.hooksPath .githooks     # eenmalig, per clone
 git checkout main
-echo test >> README.md
-git commit -am "test"
+git commit --allow-empty -m "test"
 git push origin main
 ```
 
-Dit **hoort** geweigerd te worden. Wordt het geaccepteerd, dan staat de branch protection niet goed.
+Je hoort de melding "GEBLOKKEERD" te zien. Gebeurt dat niet, dan staat `core.hooksPath` niet goed.
+
+Opruimen:
 
 ```bash
-git checkout main && git reset --hard origin/main
+git reset --hard origin/main
 ```
+
+---
+
+## Status
+
+| Stap | Status |
+|---|---|
+| Repo aangemaakt, private | Gedaan |
+| Collaborators uitgenodigd (`@Cschoorl`, `@maxhelmantel-gif`) | Uitnodiging verstuurd, moeten zelf accepteren |
+| Squash-only merge, branches auto-verwijderen | Gedaan |
+| Labels | Gedaan |
+| Branch protection | **Geblokkeerd**, vereist GitHub Pro. Zie sectie 3. |
+| Issue board | Nog doen, sectie 5 |
+| CODEOWNERS-verdeling bevestigen | Nog doen, is nu een voorstel |

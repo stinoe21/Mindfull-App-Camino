@@ -28,7 +28,7 @@ npm install
 
 ## 2. Git instellen
 
-Draai deze vier regels één keer. Daarna kun je de workflow niet meer per ongeluk verkeerd doen.
+Draai deze regels één keer. Daarna kun je de workflow niet meer per ongeluk verkeerd doen.
 
 ```bash
 git config --global pull.rebase true
@@ -37,7 +37,27 @@ git config --global push.autoSetupRemote true
 git config --global alias.sync '!git fetch origin && git rebase origin/main'
 ```
 
+En deze, in de projectmap zelf. Die activeert een hook die weigert naar `main` te pushen:
+
+```bash
+git config core.hooksPath .githooks
+```
+
 Vanaf nu is je dagelijkse commando om bij te blijven: `git sync`.
+
+Test of de hook werkt:
+
+```bash
+git checkout main
+git commit --allow-empty -m "test"
+git push origin main
+```
+
+Dit **hoort** geweigerd te worden met een melding. Gebeurt dat niet, dan staat `core.hooksPath` niet goed. Ruim daarna op:
+
+```bash
+git reset --hard origin/main
+```
 
 Waarom rebase en geen merge staat uitgelegd in de skill `werkwijze`. Vraag je Claude gewoon: "leg de werkwijze van dit project uit".
 
