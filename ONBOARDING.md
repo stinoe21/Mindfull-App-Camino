@@ -22,7 +22,7 @@ Kies een pad **buiten** iCloud, Google Drive, Dropbox of OneDrive. Cloud-sync en
 
 ```bash
 cd ~/Code            # of waar je je projecten bewaart, maar niet in een gesyncte map
-git clone <repo-url> mind-app
+git clone https://github.com/stinoe21/Mindfull-App-Camino.git mind-app
 cd mind-app
 npm install
 ```
@@ -77,7 +77,7 @@ Waar we ze voor gebruiken:
 Start Claude Code in de projectmap:
 
 ```bash
-cd mentale-weerbericht
+cd mind-app
 claude
 ```
 

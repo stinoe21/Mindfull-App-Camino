@@ -48,7 +48,7 @@ Kies er één:
 Er staat een kant-en-klare ruleset klaar in `docs/ruleset.json`. Toepassen:
 
 ```bash
-gh api -X POST repos/stinoe21/mentale-weerbericht/rulesets --input docs/ruleset.json
+gh api -X POST repos/stinoe21/Mindfull-App-Camino/rulesets --input docs/ruleset.json
 ```
 
 Die zet aan: geen deletions, geen force push, PR verplicht, één review, stale approvals vervallen bij een nieuwe push, en alleen squash merge. De repo-eigenaar mag bypassen, dat is de ontsnapping voor als er 12 uur niemand reageert.
