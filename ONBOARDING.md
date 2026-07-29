@@ -13,6 +13,7 @@ Aan het eind heb je een werkende clone met exact dezelfde MCP's, skills en proje
 - Git (`git --version`)
 - Claude Code (`npm i -g @anthropic-ai/claude-code`)
 - Een Figma-account met toegang tot het projectbestand
+- Een Supabase-account, en een uitnodiging voor de Supabase-organisatie van dit project (vraag Stijn). Zonder die uitnodiging kun je de `supabase-mind`-MCP wel autoriseren, maar ziet hij het project niet.
 - Voor iOS-tests: de Expo Go-app op je telefoon. Een Mac is niet nodig, we bouwen via EAS in de cloud.
 
 ## 1. Repo clonen
@@ -63,7 +64,15 @@ Waarom rebase en geen merge staat uitgelegd in de skill `werkwijze`. Vraag je Cl
 
 ## 3. MCP's activeren
 
-Je hoeft **geen tokens aan te maken**. Alle drie de MCP's autoriseren via je browser met je eigen account. De configuratie staat al in de repo, in `.mcp.json`.
+Je hoeft **geen tokens aan te maken**. Alle drie de MCP's zijn remote servers die je via je browser autoriseert met je eigen account. De configuratie staat al in de repo, in `.mcp.json`. Voeg daar zelf niets aan toe: die wijziging krijgt de rest ook.
+
+Waar we ze voor gebruiken:
+
+| Server | Waarvoor |
+|---|---|
+| `github` | Pull requests, issues, reviews |
+| `supabase-mind` | Database inspecteren, types genereren. Read-only. |
+| `figma` | **Designs ophalen.** Frames, componenten, variables en screenshots. Dit is onze route van design naar code: laat Claude het frame ophalen in plaats van een screenshot op het oog nabouwen. |
 
 Start Claude Code in de projectmap:
 
@@ -86,7 +95,11 @@ Alle drie horen op `connected` te staan.
 
 **figma** is een remote server met OAuth. Werkt hij niet, dan is er een lokaal alternatief: zet in de Figma **desktop-app** onder Preferences de Dev Mode MCP Server aan, en vervang in `.mcp.json` de figma-URL door `http://127.0.0.1:3845/mcp`. Nadeel: de desktop-app moet dan altijd openstaan. Commit die wijziging niet. We kunnen ook zonder Figma MCP werken, alleen minder prettig.
 
-**supabase-mind** heeft nu nog geen `--project-ref`, dus hij ziet alle Supabase-projecten van jouw eigen account. Zodra het project voor deze app bestaat, wordt de config gescoped op dat ene project. Hij staat op `--read-only`, dat is bewust: schemawijzigingen gaan altijd via een migratiebestand.
+**supabase-mind** is de remote server `https://mcp.supabase.com/mcp`, waar je met je eigen Supabase-account op inlogt. Let goed op het venster dat opent: Supabase vraagt **voor welke organisatie** je toegang geeft. Kies de organisatie waar het project van deze app in staat. Kies je de verkeerde, dan verbindt de server wel maar ziet hij het project niet, en dat lijkt op een storing terwijl het er geen is. Zie je een leeg projectenlijstje, dan heb je waarschijnlijk je uitnodiging voor de organisatie nog niet geaccepteerd.
+
+Draait hij via `npx`? Dan is je `.mcp.json` oud. De stdio-variant (`npx @supabase/mcp-server-supabase`) kan geen browserlogin en faalt met een `-32000`-fout omdat hij een personal access token mist. `git sync` haalt de goede config binnen.
+
+Hij staat op `read_only=true`, dat is bewust: schemawijzigingen gaan altijd via een migratiebestand. De URL is nog niet gescoped op één project met `?project_ref=<ref>`, dus voorlopig zie je alle projecten van de organisaties waarvoor je toegang gaf.
 
 **Heb je al een user-scope MCP met dezelfde naam?** Dan botst dat. De project-servers heten daarom `supabase-mind` en niet `supabase`. Zie je toch een waarschuwing over "conflicting scopes", draai dan `claude mcp list` en meld wat er staat.
 

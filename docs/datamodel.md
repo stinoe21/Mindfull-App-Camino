@@ -9,8 +9,8 @@ Dit bestand is het contract waar alle drie de werkstromen tegenaan bouwen. Het i
 ## Werkwijze
 
 - Schemawijzigingen gaan **altijd** via een migratiebestand in `supabase/migrations/`. Nooit via de dashboard-UI, nooit via los SQL tegen productie.
-- De Supabase MCP heet `supabase-mind` en staat op `--read-only`. Dat is bewust.
-- **TODO:** het Supabase-project bestaat nog niet. Zodra het er is, `--project-ref=<ref>` toevoegen in `.mcp.json`, zodat de MCP alleen dit project ziet. Kies een EU-regio.
+- De Supabase MCP heet `supabase-mind` en staat op `read_only=true`. Dat is bewust.
+- **TODO:** het Supabase-project bestaat sinds 29 juli 2026, maar de MCP is er nog niet op gescoped. Zodra iedereen in de organisatie zit, `?project_ref=<ref>` toevoegen aan de URL in `.mcp.json`, zodat de MCP alleen dit project ziet.
 - TypeScript-types worden **gegenereerd** uit het schema, niet met de hand geschreven.
 - Row Level Security staat aan op elke tabel met gebruikersdata. Een tabel zonder RLS is een bug, geen keuze.
 - Een migratie is een eigen kleine pull request. Nooit bijvangst van een feature.
@@ -57,7 +57,7 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 - [ ] Doen we aan analytics? Zo ja: alleen op gebeurtenisniveau, nooit op inhoud. Welke events dan?
 - [ ] Werkt de app offline, en zo ja, wat staat er lokaal op het toestel opgeslagen?
 - [ ] Verwerkersovereenkomst met Supabase getekend?
-- [ ] In welke regio staat het Supabase-project? Voor EU-gebruikers wil je EU.
+- [x] In welke regio staat het Supabase-project? EU. Bevestigd door Stijn op 29 juli 2026 bij het aanmaken van het project.
 
 ## Wat we bewust niet opslaan
 

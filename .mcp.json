@@ -5,12 +5,8 @@
       "url": "https://api.githubcopilot.com/mcp/"
     },
     "supabase-mind": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@supabase/mcp-server-supabase@latest",
-        "--read-only"
-      ]
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?read_only=true"
     },
     "figma": {
       "type": "http",

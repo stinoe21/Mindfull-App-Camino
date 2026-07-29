@@ -128,19 +128,23 @@ Bij twijfel: niet opslaan, en vragen.
 
 ## 10. MCP's
 
-Zie `.mcp.json` in de repo. Iedereen krijgt na een `git clone` dezelfde koppelingen. Er zijn **geen tokens** nodig: alle drie autoriseren via de browser met het eigen account.
+Zie `.mcp.json` in de repo. Iedereen krijgt na een `git clone` dezelfde koppelingen. Er zijn **geen tokens** nodig: alle drie autoriseren via de browser met het eigen account. Zet dus nooit een token, key of wachtwoord in `.mcp.json` of `.env.example`, die bestanden gaan de repo in.
 
 | Server | Waarvoor |
 |---|---|
 | `github` | Pull requests, issues, reviews |
 | `supabase-mind` | Database inspecteren, types genereren. Staat op **read-only**. |
-| `figma` | Frames, componenten en variables uit het designbestand lezen |
+| `figma` | Designs ophalen: frames, componenten, variables en screenshots uit het designbestand |
+
+Alle drie zijn remote servers over HTTP met OAuth in de browser. De Supabase-MCP draait dus **niet** via `npx`. Die stdio-variant kan geen browserlogin en verwacht een personal access token, en dat is precies wat we niet willen.
+
+**Figma is onze route van design naar code.** Haal een frame op met de MCP in plaats van een screenshot op het oog na te bouwen. De build hangt nooit af van een live Figma-query, zie sectie 6: tokens en assets staan in de repo.
 
 De server heet `supabase-mind` en niet `supabase`, omdat dat laatste bij sommigen al een user-scope server is voor een ander project. Gelijke namen in verschillende scopes botsen.
 
-Opzetten staat in `ONBOARDING.md`.
+Ieder verbindt zelf, met het eigen account. Daarvoor heb je wel toegang nodig tot wat eronder zit: de GitHub-repo, de Supabase-organisatie en het Figma-bestand. Zie je een server niet verbinden of een leeg projectenlijstje, dan mist waarschijnlijk je uitnodiging. Vraag Stijn. Stap voor stap staat het in `ONBOARDING.md`.
 
-**Openstaand:** `supabase-mind` heeft nog geen `--project-ref`, want het Supabase-project voor deze app bestaat nog niet. Zodra dat er is, wordt de config daarop gescoped.
+**Openstaand:** de `supabase-mind`-URL is nog niet gescoped op één project met `?project_ref=<ref>`. Zolang dat zo is, ziet de MCP alle Supabase-projecten waarvoor je bij het inloggen toegang gaf. Zodra iedereen in de organisatie van deze app zit, wordt die parameter toegevoegd.
 
 ## 11. Toon en taal
 
