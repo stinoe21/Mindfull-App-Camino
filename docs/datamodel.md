@@ -10,7 +10,7 @@ Dit bestand is het contract waar alle drie de werkstromen tegenaan bouwen. Het i
 
 - Schemawijzigingen gaan **altijd** via een migratiebestand in `supabase/migrations/`. Nooit via de dashboard-UI, nooit via los SQL tegen productie.
 - De Supabase MCP heet `supabase-mind` en staat op `read_only=true`. Dat is bewust.
-- Het project heet **Mindfull-App-Camino** (`cyvklaragbhteylzoopp`), organisatie **Back to Being**, regio `eu-west-2`. De MCP is daarop gescoped en ziet dus geen andere projecten. Let op de regio, zie de open beslissing onderaan dit bestand.
+- Het project heet **Mindfull-App-Camino** (`fpvvmgdzftmkyiqfvpjj`), organisatie **Back to Being**, regio `eu-central-1` (Frankfurt). De MCP is daarop gescoped en ziet dus geen andere projecten.
 - TypeScript-types worden **gegenereerd** uit het schema, niet met de hand geschreven.
 - Row Level Security staat aan op elke tabel met gebruikersdata. Een tabel zonder RLS is een bug, geen keuze.
 - Een migratie is een eigen kleine pull request. Nooit bijvangst van een feature.
@@ -57,7 +57,7 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 - [ ] Doen we aan analytics? Zo ja: alleen op gebeurtenisniveau, nooit op inhoud. Welke events dan?
 - [ ] Werkt de app offline, en zo ja, wat staat er lokaal op het toestel opgeslagen?
 - [ ] Verwerkersovereenkomst met Supabase getekend?
-- [ ] **In welke regio staat het Supabase-project?** Nu `eu-west-2`, en dat is **Londen, dus het Verenigd Koninkrijk en niet de EU**. De regiocode begint met `eu`, maar dat is een AWS-naam, geen juridische. Doorgifte naar het VK mag op grond van het adequaatheidsbesluit van de Europese Commissie, dat periodiek verlengd moet worden. Voor een app over mentale gezondheid, met een Nederlandse stichting als verwerkingsverantwoordelijke, is dat een uit te leggen keuze in plaats van een vanzelfsprekende. Het project is leeg en van vandaag, dus opnieuw aanmaken in `eu-central-1` (Frankfurt) of `eu-west-3` (Parijs) kost nu vrijwel niets en later een migratie. Beslis dit vóór de eerste tabel.
+- [x] **In welke regio staat het Supabase-project?** `eu-central-1`, Frankfurt, dus binnen de EU. Op 29 juli 2026 verplaatst vanuit `eu-west-2`: die code begint weliswaar met `eu`, maar dat is een AWS-naam en geen juridische. Londen ligt in het Verenigd Koninkrijk, en dat is sinds Brexit een derde land waarvoor je op een adequaatheidsbesluit moet leunen. Dat wilden we niet uitleggen aan Mind. De regio van een Supabase-project kan niet gewijzigd worden, dus het project is opnieuw aangemaakt toen het nog leeg was.
 
 ## Wat we bewust niet opslaan
 
