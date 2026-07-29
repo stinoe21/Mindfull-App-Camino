@@ -97,6 +97,17 @@ Alle drie horen op `connected` te staan.
 
 **supabase-mind** is de remote server `https://mcp.supabase.com/mcp`, waar je met je eigen Supabase-account op inlogt. Let goed op het venster dat opent: Supabase vraagt **voor welke organisatie** je toegang geeft. Kies de organisatie waar het project van deze app in staat. Kies je de verkeerde, dan verbindt de server wel maar ziet hij het project niet, en dat lijkt op een storing terwijl het er geen is. Zie je een leeg projectenlijstje, dan heb je waarschijnlijk je uitnodiging voor de organisatie nog niet geaccepteerd.
 
+**Krijg je `{"message":"resource: Resource must be a valid MCP endpoint"}`?** Dan gebruik je Claude Code als **VSCode-extensie**, en dat is een bug in de extensie, niet in onze configuratie. Hij verhaspelt het vraagteken in de MCP-URL bij het opbouwen van de OAuth-aanvraag (`?` wordt `%253F`), waarna Supabase de aanvraag terecht weigert. Zie [claude-code#34880](https://github.com/anthropics/claude-code/issues/34880).
+
+De oplossing kost één minuut. Autoriseer via de **CLI** in plaats van de extensie:
+
+```bash
+cd mind-app
+claude
+```
+
+Draai daar `/mcp`, kies `supabase-mind` en log in. De extensie mag gewoon openstaan. De inloggegevens worden per account opgeslagen, dus dit is eenmalig: daarna werkt `supabase-mind` ook in de extensie.
+
 Draait hij via `npx`? Dan is je `.mcp.json` oud. De stdio-variant (`npx @supabase/mcp-server-supabase`) kan geen browserlogin en faalt met een `-32000`-fout omdat hij een personal access token mist. `git sync` haalt de goede config binnen.
 
 Hij staat op `read_only=true`, dat is bewust: schemawijzigingen gaan altijd via een migratiebestand. De URL is nog niet gescoped op één project met `?project_ref=<ref>`, dus voorlopig zie je alle projecten van de organisaties waarvoor je toegang gaf.
