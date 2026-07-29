@@ -63,7 +63,7 @@ De volgorde is belangrijk: **tokens vaststellen in de repo, dan componenten bouw
 
 ### Figma MCP gebruiken
 
-Staat geconfigureerd in `.mcp.json`. Bij het eerste gebruik autoriseer je via de browser. Zie `ONBOARDING.md` stap 4.
+Staat geconfigureerd in `.mcp.json`. Bij het eerste gebruik autoriseer je via de browser. Zie `ONBOARDING.md` stap 3.
 
 Nuttig om te vragen:
 
@@ -80,7 +80,16 @@ Wat je er **niet** mee doet: rechtstreeks Figma-output als code in de repo plakk
 **Userflow (board, FigJam):**
 https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow
 
-Let op: dit is een **board**, geen design file. De Figma MCP is gebouwd voor design files en Dev Mode. Een board kun je mogelijk niet volledig uitlezen. Controleer dat bij de eerste keer. Lukt het niet, dan vertalen we het board met de hand naar `docs/scope.md` en is dat vanaf dan de bron voor agents.
+Dit is een **board**, geen design file, en dat vraagt een ander gereedschap. Gecontroleerd op 29 juli 2026: de MCP leest het board volledig uit, inclusief alle vormen, verbindingen en labels. Handmatig overtypen naar `docs/scope.md` is dus niet nodig.
+
+Vraag het zo op, met de tool `get_figjam` en niet met `get_design_context`:
+
+```
+fileKey: jwNUZRHmpKfqTCeUnFcVdP
+nodeId:  0:1        (de root, dus het hele board)
+```
+
+De blauwe cilinders op het board (`ENG_DATABASE`) markeren per stap welke data wordt opgeslagen. Dat is de bron voor `docs/datamodel.md`, inclusief de grondslag per veld.
 
 **Design file:** TODO, nog aanmaken. Hier komen Foundations, Components en Screens.
 

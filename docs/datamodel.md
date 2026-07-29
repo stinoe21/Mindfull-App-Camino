@@ -10,7 +10,7 @@ Dit bestand is het contract waar alle drie de werkstromen tegenaan bouwen. Het i
 
 - Schemawijzigingen gaan **altijd** via een migratiebestand in `supabase/migrations/`. Nooit via de dashboard-UI, nooit via los SQL tegen productie.
 - De Supabase MCP heet `supabase-mind` en staat op `read_only=true`. Dat is bewust.
-- **TODO:** het Supabase-project bestaat sinds 29 juli 2026, maar de MCP is er nog niet op gescoped. Zodra iedereen in de organisatie zit, `?project_ref=<ref>` toevoegen aan de URL in `.mcp.json`, zodat de MCP alleen dit project ziet.
+- Het project heet **Mindfull-App-Camino** (`cyvklaragbhteylzoopp`), organisatie **Back to Being**, regio `eu-west-2`. De MCP is daarop gescoped en ziet dus geen andere projecten. Let op de regio, zie de open beslissing onderaan dit bestand.
 - TypeScript-types worden **gegenereerd** uit het schema, niet met de hand geschreven.
 - Row Level Security staat aan op elke tabel met gebruikersdata. Een tabel zonder RLS is een bug, geen keuze.
 - Een migratie is een eigen kleine pull request. Nooit bijvangst van een feature.
@@ -57,7 +57,7 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 - [ ] Doen we aan analytics? Zo ja: alleen op gebeurtenisniveau, nooit op inhoud. Welke events dan?
 - [ ] Werkt de app offline, en zo ja, wat staat er lokaal op het toestel opgeslagen?
 - [ ] Verwerkersovereenkomst met Supabase getekend?
-- [x] In welke regio staat het Supabase-project? EU. Bevestigd door Stijn op 29 juli 2026 bij het aanmaken van het project.
+- [ ] **In welke regio staat het Supabase-project?** Nu `eu-west-2`, en dat is **Londen, dus het Verenigd Koninkrijk en niet de EU**. De regiocode begint met `eu`, maar dat is een AWS-naam, geen juridische. Doorgifte naar het VK mag op grond van het adequaatheidsbesluit van de Europese Commissie, dat periodiek verlengd moet worden. Voor een app over mentale gezondheid, met een Nederlandse stichting als verwerkingsverantwoordelijke, is dat een uit te leggen keuze in plaats van een vanzelfsprekende. Het project is leeg en van vandaag, dus opnieuw aanmaken in `eu-central-1` (Frankfurt) of `eu-west-3` (Parijs) kost nu vrijwel niets en later een migratie. Beslis dit vóór de eerste tabel.
 
 ## Wat we bewust niet opslaan
 

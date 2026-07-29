@@ -144,7 +144,7 @@ De server heet `supabase-mind` en niet `supabase`, omdat dat laatste bij sommige
 
 Ieder verbindt zelf, met het eigen account. Daarvoor heb je wel toegang nodig tot wat eronder zit: de GitHub-repo, de Supabase-organisatie en het Figma-bestand. Zie je een server niet verbinden of een leeg projectenlijstje, dan mist waarschijnlijk je uitnodiging. Vraag Stijn. Stap voor stap staat het in `ONBOARDING.md`.
 
-**Openstaand:** de `supabase-mind`-URL is nog niet gescoped op één project met `?project_ref=<ref>`. Zolang dat zo is, ziet de MCP alle Supabase-projecten waarvoor je bij het inloggen toegang gaf. Zodra iedereen in de organisatie van deze app zit, wordt die parameter toegevoegd.
+De `supabase-mind`-URL is gescoped met `?project_ref=cyvklaragbhteylzoopp`, het project **Mindfull-App-Camino** in de organisatie **Back to Being** (regio `eu-west-2`). De MCP ziet daardoor alleen dit project, ook als je zelf nog andere Supabase-projecten hebt.
 
 ## 11. Toon en taal
 

@@ -110,7 +110,7 @@ Draai daar `/mcp`, kies `supabase-mind` en log in. De extensie mag gewoon openst
 
 Draait hij via `npx`? Dan is je `.mcp.json` oud. De stdio-variant (`npx @supabase/mcp-server-supabase`) kan geen browserlogin en faalt met een `-32000`-fout omdat hij een personal access token mist. `git sync` haalt de goede config binnen.
 
-Hij staat op `read_only=true`, dat is bewust: schemawijzigingen gaan altijd via een migratiebestand. De URL is nog niet gescoped op één project met `?project_ref=<ref>`, dus voorlopig zie je alle projecten van de organisaties waarvoor je toegang gaf.
+Hij staat op `read_only=true`, dat is bewust: schemawijzigingen gaan altijd via een migratiebestand. De URL is gescoped op ons eigen project, dus je ziet alleen **Mindfull-App-Camino** en niet je eigen andere projecten.
 
 **Heb je al een user-scope MCP met dezelfde naam?** Dan botst dat. De project-servers heten daarom `supabase-mind` en niet `supabase`. Zie je toch een waarschuwing over "conflicting scopes", draai dan `claude mcp list` en meld wat er staat.
 
