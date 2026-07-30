@@ -11,7 +11,8 @@ Aan het eind heb je een werkende clone met exact dezelfde MCP's, skills en proje
 - Een GitHub-account, en collaborator-toegang tot deze repo (vraag Stijn)
 - Node 20 of hoger (`node --version`)
 - Git (`git --version`)
-- Claude Code (`npm i -g @anthropic-ai/claude-code`)
+- Claude Code (`npm i -g @anthropic-ai/claude-code`), **plus een betaald Claude-abonnement**. Zonder abonnement werkt Claude Code niet. Reken er ook op dat je tegen usage limits aanloopt als je een hele dag een agent laat werken. Regel dit vóór vertrek en probeer het één keer uit, niet in een albergue met slechte wifi.
+- Je kunt Claude Code als **CLI** in de terminal draaien of als **VSCode-extensie**. Beide mag, maar één ding moet via de CLI: het autoriseren van de Supabase-MCP, zie stap 3.
 - Een Figma-account met toegang tot het projectbestand
 - Een Supabase-account, en een uitnodiging voor de Supabase-organisatie van dit project (vraag Stijn). Zonder die uitnodiging kun je de `supabase-mind`-MCP wel autoriseren, maar ziet hij het project niet.
 - Voor iOS-tests: de Expo Go-app op je telefoon. Een Mac is niet nodig, we bouwen via EAS in de cloud.
@@ -24,8 +25,9 @@ Kies een pad **buiten** iCloud, Google Drive, Dropbox of OneDrive. Cloud-sync en
 cd ~/Code            # of waar je je projecten bewaart, maar niet in een gesyncte map
 git clone https://github.com/stinoe21/Mindfull-App-Camino.git mind-app
 cd mind-app
-npm install
 ```
+
+Nog **geen** `npm install`. De Expo-app is nog niet gescaffold, dus er is nog geen `package.json` en het commando zou falen. Zodra die er staat komt dit erbij. De CI weet dat ook en slaat de checks tot die tijd over.
 
 ## 2. Git instellen
 
@@ -89,7 +91,14 @@ Controleer met:
 /mcp
 ```
 
-Alle drie horen op `connected` te staan.
+`supabase-mind` en `figma` horen op `connected` te staan.
+
+**`github` staat op dit moment op `failed`, en dat klopt.** Die endpoint ondersteunt geen browserlogin (`does not support dynamic client registration`) en wil een token in een header, precies wat we niet willen. Dat is geen fout in jouw setup en je hoeft er niets aan te doen. Voor pull requests en issues gebruik je voorlopig de `gh` CLI, die werkt gewoon:
+
+```bash
+gh auth login
+gh pr list
+```
 
 ### Als iets niet verbindt
 
