@@ -128,6 +128,23 @@ Bij twijfel: niet opslaan, en vragen.
 - TypeScript-types worden gegenereerd uit het schema, niet met de hand geschreven.
 - Row Level Security staat aan op elke tabel met gebruikersdata. Een tabel zonder RLS is een bug.
 
+### Als de MCP niet werkt
+
+Er zijn drie routes, en welke je pakt hangt af van wat je wil doen. Geen ervan vraagt een service role key op je laptop.
+
+| Wat je wil | Route |
+|---|---|
+| Kijken: schema, tabellen, policies, logs | De MCP. Werkt die niet, dan het Supabase-dashboard in de browser, of de `supabase` CLI na `supabase login` met je eigen account. |
+| Types genereren | `supabase gen types typescript` via de CLI. Werkt zonder MCP. |
+| Schema wijzigen | **Altijd** een migratiebestand plus `supabase db push`. De CLI authenticeert met jouw account, niet met een key die alles mag. |
+| Vrij experimenteren, data schrijven, dingen stukmaken | **Lokale Supabase**, met `supabase start`. Daar heb je alle rechten en raak je geen productiedata. Dit is de plek waar je mag rommelen. |
+
+> **Geen service role key op een laptop, en nooit voor een agent.** Die key omzeilt Row Level Security volledig, en RLS is precies het mechanisme dat de twee datastromen uit `datamodel.md` gescheiden houdt. Met zo'n key is één verkeerde join genoeg om de collectieve pool aan gebruikers-id's te koppelen, en dan is de anonimisering weg die we aan Mind hebben belegd.
+>
+> Drie laptops op wisselende wifi betekent drie kopieën van een sleutel die alles kan met mentale-gezondheidsdata, terwijl de DPIA nog loopt. De lokale stack lost hetzelfde probleem op zonder dat risico.
+>
+> De productie-service-role-key hoort alleen in de serveromgeving van de admin- en analyticspagina, en nooit in een `.env` naast de app.
+
 ## 10. MCP's
 
 Zie `.mcp.json` in de repo. Iedereen krijgt na een `git clone` dezelfde koppelingen. Zet **nooit** een token, key of wachtwoord in `.mcp.json` of `.env.example`, die bestanden gaan de repo in. Is er een token nodig, dan staat in `.mcp.json` alleen de naam van een omgevingsvariabele.

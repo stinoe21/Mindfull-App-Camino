@@ -18,6 +18,16 @@ Ook als je verder niets leest:
 4. **Geen hardcoded kleuren, spacing, radii, font sizes of shadows.** Altijd via de tokens uit `packages/ui/tokens`.
 5. **Raak geen gedeelde bestanden aan** buiten de scope van je taak. De lijst staat in `CLAUDE.md` sectie 5.
 6. **Verzin geen tabel, veld, analytics-event of hulptekst.** Staat het niet in `docs/datamodel.md` of `docs/scope.md`, dan bestaat het niet en vraag je ernaar.
+7. **Zet geen afbeelding in Supabase Storage die in de app bundle hoort.** Iconen, illustraties en gradients horen in de bundle, alleen content die Mind zelf toevoegt gaat naar Storage. Zie `docs/assets-en-media.md`.
+
+## Media en caching, kort
+
+Vier regels die egress en laadtijd bepalen. De onderbouwing en de cijfers staan in `docs/assets-en-media.md`.
+
+- **Comprimeer en schaal vooraf**, nooit tijdens het opvragen. Image transformations bestaan niet op ons plan en de grootste winst zit in de afmeting, niet in het formaat.
+- **Public bucket, geen signed URLs** voor content die niet per gebruiker afgeschermd hoeft te worden. Elk token in een signed URL is een eigen cache-entry, dus daarmee wordt de cache nooit warm en gaat elke aanvraag naar de origin.
+- **Zet `cacheControl` hoog bij upload.** De standaard is één uur, en dat is te laag voor content die zelden wijzigt.
+- **Wijzigt een afbeelding, upload naar een nieuw pad.** Overschrijven werkt niet betrouwbaar, want browsers verversen hun eigen cache niet als de CDN invalideert.
 
 Melden dat iets niet kan binnen deze grenzen is een geldig eindresultaat. Een taak half afmaken zonder het te melden is dat niet.
 

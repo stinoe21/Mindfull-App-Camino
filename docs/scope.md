@@ -109,6 +109,15 @@ Dat is geen enkele richtlijn maar het gevolg van 2.1 (completeness) en 4.2 (mini
 
 Dit is precies waarom we de states niet als extra maar als onderdeel van "af" behandelen.
 
+### Checklists van anderen
+
+Er bestaan goed onderhouden lijsten met afwijzingsredenen uit de praktijk. Nuttig om vlak voor de eerste submit langs te lopen, niet om nu over te nemen:
+
+- [lukylab/appstore-submission-checklist](https://github.com/lukylab/appstore-submission-checklist), praktische checklist op basis van meer dan tien live apps
+- [jaywcjlove/app-rejection-fixes](https://github.com/jaywcjlove/app-rejection-fixes), afwijzingen met de bijbehorende oplossing
+- [cruisediary/apple-app-review-skills](https://github.com/cruisediary/apple-app-review-skills), 31 checks over alle vijf de secties van de richtlijnen, als Claude Code-skill
+- [safaiyeh/app-store-review-skill](https://github.com/safaiyeh/app-store-review-skill), valideert een codebase tegen de richtlijnen en heeft **patterns voor React Native en Expo**, dus die sluit het beste aan op onze stack
+
 ### Google Play, en een risico op het kritieke pad
 
 Nieuwe **persoonlijke** developer-accounts moeten voor hun eerste productierelease een closed test doen met minimaal 12 testers die 14 dagen aaneengesloten meedoen. Voor **organisatie**-accounts geldt dat niet.
