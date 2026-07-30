@@ -189,7 +189,40 @@ nodeId:  0:1        (de root, dus het hele board)
 
 De blauwe cilinders op het board (`ENG_DATABASE`) markeren per stap welke data wordt opgeslagen. Dat is de bron voor `docs/datamodel.md`, inclusief de grondslag per veld.
 
-**Design file:** TODO, nog aanmaken. Hier komen Foundations, Components en Screens.
+**Styleguide (design file):**
+https://www.figma.com/design/H1EUAgE86CsYg0LfYTNd0M/Stylguide-App-MIND
+
+Gecontroleerd op 30 juli 2026 via de MCP. Wat er staat:
+
+- **Een kleurenpalet met vijf families:** Blue, Red, Purple, Yellow en Violet. Per kleur staan Name, Hex, Rgb en een Base, plus een aparte contrastmeting voor **Large Text** en **Small Text**. Er is een Light- en een Dark-variant.
+- **Een aanzet tot een semantische laag:** `Primary`, `Secundary`, `Base` en `State/accent`.
+- **Typografie:** Headers, Subheaders en Base.
+- **Twee schermen al uitgewerkt:** een Challenge Screen (`41:68`) en Info Hoogsensitief (`41:71`). De challenge-content sluit aan op de Mind-campagne "Leg je telefoon weg", zie `privacy-besluiten.md`.
+
+Dat de contrastratio's per tekstgrootte al zijn uitgezocht is winst: dat is normaal het werk dat blijft liggen tot iemand er bij App Review op valt.
+
+### Twee dingen die aandacht vragen
+
+**Er hangen acht community-libraries aan het bestand:** Material 3 Design Kit, Simple Design System, iOS en iPadOS 26, iOS en iPadOS 27, macOS 26, macOS 27, watchOS 26 en visionOS 26. Er is geen eigen gepubliceerde library.
+
+Dat is prima om mee te ontwerpen, maar het wordt een probleem zodra een scherm componenten uit die kits als instance gebruikt. Dan bouwen we tegen Material 3 of tegen Apple-componenten die niet in `packages/ui` staan, en dan klopt de code niet met het ontwerp. Er staat nu al een `Examples/Home-Mobile` in het bestand die uit de Simple Design System komt, met carousel en cards die niet uit ons eigen systeem komen.
+
+Dit is dezelfde regel als voor assets, en hij vraagt één beslissing: **welke kit is de basis, of bouwen we onze eigen componenten?** Beide kan, maar niet allebei tegelijk. Zolang dit open staat, gebruik een kit als referentie en niet als bron.
+
+**`Secundary` is een typo** en dat wordt straks een tokennaam. Nu goedzetten is gratis, later een zoek-en-vervang door de hele codebase.
+
+### Van styleguide naar tokens
+
+De kleuren zijn nu **primitief** benoemd (Blue, Red, Purple) met een aanzet tot rollen (Primary, Secondary). Dat is precies de goede richting, en het patroon uit de sectie hierboven is de volgende stap: de primitieven blijven bestaan als onderste laag, en daarbovenop komt de semantische laag die de app gebruikt.
+
+```
+primitief          semantisch (wat de app gebruikt)
+blue/500     ->    color/action/primary
+gray/900     ->    color/text/primary
+gray/500     ->    color/text/muted
+```
+
+Componentcode verwijst **alleen** naar de rechterkolom. Zo kan een kleur wijzigen zonder dat er één component aangeraakt hoeft te worden.
 
 ## Figma-bestandsstructuur
 
@@ -205,7 +238,9 @@ De opbouw loopt één richting op: elke laag gebruikt alleen wat eronder al vast
 06 Agent Playground  waar nieuwe output landt
 ```
 
-**TODO:** dit afstemmen met de styleguide die al bestaat. Wijkt die af, dan wint wat er staat: dit is de voorgestelde ordening, geen herindeling van iemands werk.
+**Stand op 30 juli 2026:** de styleguide heeft **één pagina** waar alles op staat, met één frame `Styleguide App Mind` van 1920 bij 1080. De indeling hierboven is dus nog een voorstel en geen beschrijving.
+
+Dat is nu geen probleem. Het wordt er een zodra er meer dan een handvol schermen bijkomen, want dan kan niemand meer een frame vinden en gaan agents de verkeerde node ophalen. De opsplitsing is werk voor de eigenaar van het design system en hoort vóór het bouwen van de tokens.
 
 Koppel elk scherm uit `docs/scope.md` aan zijn node-ID. Dan kan een agent het juiste frame ophalen zonder te zoeken.
 
@@ -215,13 +250,15 @@ Werk drie tot vijf schermen volledig uit voordat de rest wordt ontworpen. Die sc
 
 Op basis van de userflow zijn dit de logische vijf:
 
-| Scherm | Waarom dit een referentie is |
-|---|---|
-| Dashboard, Mijn Mentale Weer | De spil van de app, en het scherm met de meeste soorten inhoud naast elkaar |
-| Weer-check-in | Hier gebeurt de kernhandeling, en de toon is hier het meest kwetsbaar |
-| Challenge detail | Het patroon voor alle detailpagina's |
-| Naslagwerk-artikel | Het patroon voor content en voor bronvermelding |
-| Profiel en instellingen | Het patroon voor lijsten, en waar consent wordt ingetrokken |
+| Scherm | Waarom dit een referentie is | Status |
+|---|---|---|
+| Challenge detail | Het patroon voor alle detailpagina's | **Staat al in de styleguide**, `41:68` |
+| Naslagwerk-artikel | Het patroon voor content en voor bronvermelding | **Begonnen**, Info Hoogsensitief `41:71` |
+| Dashboard, Mijn Mentale Weer | De spil van de app, en het scherm met de meeste soorten inhoud naast elkaar | Nog doen |
+| Weer-check-in | Hier gebeurt de kernhandeling, en de toon is hier het meest kwetsbaar | Nog doen |
+| Profiel en instellingen | Het patroon voor lijsten, en waar consent wordt ingetrokken | Nog doen |
+
+Twee van de vijf zijn dus al onderweg, en het zijn precies de twee die het contentpatroon vastleggen. Wat nog mist is de spil (dashboard) en de kernhandeling (check-in).
 
 ### Agent Playground
 

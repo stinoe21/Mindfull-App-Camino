@@ -1,29 +1,24 @@
-# Automatische reviewer-toewijzing. GitHub wijst de juiste persoon toe
-# zodra een PR een van deze paden raakt.
+# Dit bestand BLOKKEERT NIETS.
 #
-# Verdeling bevestigd op 30 juli 2026, zie docs/taakverdeling.md.
+# Er staat geen verplichte Code Owner-review op de repo. Eén review van wie
+# dan ook volstaat. Iedereen mag aan alles werken, zie docs/taakverdeling.md.
 #
-# Dit STELT een reviewer VOOR en blokkeert niets. Er staat bewust geen
-# verplichte Code Owner-review op de repo: iedereen mag aan alles werken
-# en een review van wie dan ook volstaat. Zie docs/setup-github.md.
+# Het enige wat dit doet: GitHub stelt automatisch een reviewer voor bij de
+# paar plekken waar één iemand het overzicht houdt. Bewust kort: feature-code
+# en documentatie staan er NIET in, want daar bouwt ieder zijn eigen onderdeel
+# en dan wil je niet dat alles langs dezelfde persoon moet.
 
-# Architectuur, backend, releases: Stijn
+# Infrastructuur, database en releases: Stijn
 /supabase/              @stinoe21
 /.github/               @stinoe21
 /package.json           @stinoe21
 /package-lock.json      @stinoe21
 /app.config.ts          @stinoe21
-/CLAUDE.md              @stinoe21
-/AGENTS.md              @stinoe21
 /.mcp.json              @stinoe21
 /.claude/               @stinoe21
+/CLAUDE.md              @stinoe21
+/AGENTS.md              @stinoe21
 /docs/datamodel.md      @stinoe21
 
-# Structuur, pagina's, productlogica, userflow: Caesar
-/apps/mobile/src/features/   @Cschoorl
-/docs/scope.md               @Cschoorl
-/docs/productprincipes.md    @Cschoorl
-
-# Design system, componenten, visuele consistentie: Max
+# Tokens, componenten en assets, want daar loopt het beeld uit elkaar: Max
 /packages/ui/           @maxhelmantel-gif
-/docs/design-system.md  @maxhelmantel-gif

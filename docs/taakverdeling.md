@@ -1,36 +1,24 @@
 # Taakverdeling
 
-Wij verdelen op twee assen tegelijk. Dat klinkt dubbel, maar het lost twee verschillende problemen op.
+Het belangrijkste feit voor dit document: **wij lopen samen terwijl we bouwen.** We kunnen elk moment overleggen, zonder ticket en zonder te wachten. Alles hieronder is er dus om te voorkomen dat we op elkaar wachten, niet om af te bakenen wie waar mag komen.
+
+> **Iedereen heeft toegang tot alles.** Niets in dit document, en niets in `.github/CODEOWNERS`, blokkeert een wijziging omdat die "niet bij iemand hoort". Zie je iets dat beter kan, dan pak je het en je zegt het. We lopen naast elkaar, dus dat is één zin en geen procedure.
+>
+> Er staat bewust **geen** verplichte Code Owner-review op de repo. Eén review volstaat, van wie dan ook. Zie `docs/setup-github.md`.
 
 ---
 
-## As 1: systeemeigenaarschap (vast)
+## Zo verdelen we het werk: per onderdeel van de app
 
-Ieder heeft één gebied waarvoor hij eindverantwoordelijk is. Dit betekent **niet** dat alleen die persoon daar mag werken. Het betekent dat wijzigingen in dat gebied door hem gereviewd worden, en dat hij de knopen doorhakt als er twijfel is.
-
-> **Eigenaarschap is geen schrijfrecht, en het wordt technisch ook niet afgedwongen.** Iedereen mag aan alles werken. GitHub weigert geen wijziging omdat die uit de branch van iemand anders komt, en er staat bewust **geen** verplichte Code Owner-review op de repo. `.github/CODEOWNERS` doet één ding: automatisch de juiste reviewer voorstellen. Eén review volstaat, van wie dan ook. Zie `docs/setup-github.md`.
->
-> Zou je dit wel afdwingen, dan blokkeert elke ochtend waarop de eigenaar toevallig eerder gaat lopen dan de rest. Dat is precies het soort stilstand dat we niet kunnen hebben.
-
-| Eigenaar | GitHub | Verantwoordelijk voor | Reviewt |
-|---|---|---|---|
-| Stijn | `@stinoe21` | Architectuur, Supabase, datamodel, CI, releases, App Store | `supabase/**`, `.github/**`, `package.json`, auth |
-| Caesar | `@Cschoorl` | Structuur, pagina's, productlogica, userflow, content, functionele acceptatie | `apps/mobile/src/features/**`, alle UI-teksten |
-| Max | `@maxhelmantel-gif` | Design system, componenten, visuele consistentie, interaction design | `packages/ui/**`, alles met een zichtbare wijziging |
-
-> **Bevestigd op 30 juli 2026.** Deze verdeling stond eerder omgedraaid en was gemarkeerd als voorstel. `.github/CODEOWNERS` is meegedraaid.
-
-## As 2: feature-eigenaarschap (per taak)
-
-Het echte werk verdelen we **verticaal**, per complete gebruikersfunctie. Niet per laag.
+Ieder pakt een **compleet onderdeel**, van scherm tot database. Niet een laag.
 
 Dus dit:
 
 ```
-Feature: dagelijkse check-in       <- één persoon, van scherm tot database
-  scherm + navigatie
+Onderdeel: weer-check-in           <- één persoon, van scherm tot database
+  scherm en navigatie
   validatie
-  opslag
+  opslag en RLS
   loading / empty / error / offline
   tests
   privacycheck
@@ -44,7 +32,40 @@ Persoon 2: alle tabellen
 Persoon 3: knoopt het later aan elkaar          <- dit blokkeert altijd
 ```
 
-Waarom: bij laagverdeling is een scherm pas af als drie mensen precies op elkaar aansluiten. Bij verticale verdeling kan iedereen doorwerken zonder op iemand te wachten. Dat is het hele punt van parallel werken op een wandeltocht.
+Twee redenen, en de tweede is de praktische.
+
+**Niemand zit te wachten.** Doet de een de schermen en de ander de database, dan is niets af totdat die twee precies op elkaar aansluiten. Er is dan altijd iemand geblokkeerd. Bij verdeling per onderdeel kan alle drie doorwerken.
+
+**Het mergt eenvoudiger.** Twee branches die elk een eigen onderdeel bouwen, raken bijna geen gemeenschappelijke bestanden. Twee branches waarvan de een het design doet en de ander de backend, raken elkaar continu. Onze regel dat een taak bestaat uit nieuwe bestanden plus hooguit één bestaand bestand (zie `CLAUDE.md` sectie 4) is alleen haalbaar bij verdeling per onderdeel.
+
+### De onderdelen
+
+Afgeleid uit de userflow op het Figma-board. Twee per persoon, en de laatste twee zitten buiten de app.
+
+| # | Onderdeel | Wat erin zit | Board |
+|---|---|---|---|
+| 1 | Onboarding, auth en consent | Intro, 16+-check, inloggen, voorkeuren, disclaimer, voorwaarden, de twee consents | `12:143` tot `12:139` |
+| 2 | Dashboard, Mijn Mentale Weer | De spil, plus de dagelijkse quote | `12:173`, `12:179` |
+| 3 | Weer-check-in en landelijk weerbericht | De check-in, de collectieve store, de drempel voor tonen | `12:182`, `12:197`, `12:202` |
+| 4 | Challenges | Weekbasis, unlocken, no-guilt close | `12:185`, `12:208` tot `12:214` |
+| 5 | Naslagwerk en slim zoeken | Interesses, bronvermelding, de externe links | `12:188`, `12:191` |
+| 6 | Profiel en instellingen | Voorkeuren, privacy, consent intrekken, account verwijderen | `12:194` |
+| 7 | Adminpagina voor Mind | Content toevoegen, eigen rollenmodel | `75:236` |
+| 8 | Analytics voor IT | Los van de app, leest uit Supabase | `75:240` |
+
+> **Het dashboard is het enige echte raakpunt.** Daar komt alles samen, dus wie onderdeel 2 doet bouwt de container en de anderen leveren wat erin komt. Doe dat vroeg en met één persoon, anders wordt het het bestand waar drie branches op botsen.
+
+## Wie waakt over het geheel
+
+Naast een onderdeel houdt ieder iets in de gaten dat over alle onderdelen heen loopt. Dat is **een blik, geen gebied**: je reviewt het, je hakt de knoop door als er twijfel is, en je merkt het als het uit elkaar loopt. Je hoeft er niet als enige aan te werken en je hoeft er niet om gevraagd te worden.
+
+| Wie | Waakt over | Wat dat concreet betekent |
+|---|---|---|
+| Stijn | Backend, Supabase, datamodel, CI, releases, App Store | Schemawijzigingen gaan via een migratie langs hem. Hij houdt in de gaten of RLS overal aan staat. |
+| Max | Design, componenten, visuele consistentie, CSS-structuur | Hij merkt als het beeld uit elkaar loopt en beheert de tokens en de assetbibliotheek. |
+| Caesar | Productlogica, userflow, content en teksten | Hij toetst of een onderdeel doet wat de flow belooft en of de toon klopt met `productprincipes.md`. |
+
+Deze drie blikken zijn de reden dat we `.github/CODEOWNERS` hebben: GitHub stelt dan automatisch de juiste reviewer voor. Voorstellen, niet verplichten.
 
 ---
 
