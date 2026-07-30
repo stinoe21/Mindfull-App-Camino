@@ -40,7 +40,7 @@ Een mobiele app voor **Stichting Mind**, werktitel "Mentale Weerbericht", gebouw
   packages/types   TypeScript-types, gegenereerd uit het Supabase-schema
   ```
 
-  De adminwebapp is dus een **CMS**: Mind uploadt daar content en de app leest die uit Supabase. De twee applicaties delen geen beeld, ze delen de database. Dat is precies waarom `packages/types` bestaat: één keer genereren uit het schema, en niet in twee applicaties een eigen kopie die uit elkaar loopt.
+  De adminwebapp is dus een **CMS**: Mind uploadt daar content en de app leest die uit Supabase. **De mobiele app staat centraal en de admin komt daarna**, zie `docs/taakverdeling.md`. De twee applicaties delen geen beeld, ze delen de database. Dat is precies waarom `packages/types` bestaat: één keer genereren uit het schema, en niet in twee applicaties een eigen kopie die uit elkaar loopt.
 
   Let op: de componenten in `packages/ui` zijn React Native-componenten en draaien niet zonder meer in een webapp. De **tokens** zijn platte waarden en gelden overal. Zie `docs/design-system.md`.
 - **Domein:** mentale gezondheid. Dat heeft harde gevolgen voor wat je met data mag doen, zie sectie 8.

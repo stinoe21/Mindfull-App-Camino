@@ -66,8 +66,7 @@ Het samenwerkingsraamwerk staat. De app zelf nog niet. Eerstvolgende stappen:
 
 - [ ] Mind vragen het Apple Developer-account vroeg aan te vragen (langste doorlooptijd; hun actie, niet de onze)
 - [x] ~~Monorepo of één platte app~~ **Monorepo**, besloten 30 juli 2026: `apps/mobile`, `apps/admin`, `packages/ui` en `packages/types`. De admin is een CMS-webapp waar Mind content in zet, en de app geeft die weer. Ze delen de database en de gegenereerde types, niet het beeld.
-- [ ] **Kiezen: welk framework voor `apps/admin`**, en waar die gedeployed wordt
-- [ ] **Regelen hoe we op een iPhone testen.** Mind maakt het Apple Developer-account en wij komen daar niet aan, dus Sign in with Apple en TestFlight kunnen wij niet afmaken. Zie `docs/scope.md`.
+- [ ] Kiezen welk framework `apps/admin` krijgt en waar die gedeployed wordt. Pas nodig als de mobiele app staat: die is de prioriteit.
 - [ ] **Kiezen: welke UI-kit is de basis, of bouwen we eigen componenten?** Er hangen nu acht community-kits aan het Figma-bestand en geen eigen library. Beide kan, allebei tegelijk niet. Zie `docs/design-system.md`.
 - [ ] Scope v1 vastleggen in `docs/scope.md`
 - [ ] Verdelen wie welk van de acht onderdelen doet, zie `docs/taakverdeling.md`

@@ -39,15 +39,21 @@ Zie `privacy-besluiten.md` voor wat dit eenvoudiger maakt en wat het lastiger ma
 
 Een Apple Developer Program-account voor een organisatie vereist een D-U-N-S-nummer en verificatie door Apple. Dat kan weken duren. Dat account is nu een actie van Mind en niet van ons, dus het blokkeert ons bouwwerk niet meer. Het blijft wel de langste doorlooptijd naar livegang, en het blokkeert twee dingen die wij niet kunnen afmaken zolang het er niet is: zie de sectie hieronder.
 
-### Wat wij niet kunnen testen zonder het account van Mind
+### Testen op iOS zonder het account van Mind
 
-Dit is de kant die de nieuwe rolverdeling ons kost, en het is beter om het nu te weten dan in week drie.
+**Besloten op 30 juli 2026: we accepteren dat de Apple-login pas werkt als het account van Mind er is.** Na de DPIA en het aanmaken van dat account helpen wij met het klaarzetten. Vóór de overdracht hoeft die flow dus niet end to end te werken.
 
-- **Sign in with Apple is niet te configureren zonder Apple Developer-account.** Je hebt daar een Service ID en een sleutel voor nodig, en die maak je in dat account aan. Wij kunnen de knop bouwen en het scherm afmaken, maar de flow niet end to end laten werken. Dat is dus geen taak die op één dag afgerond kan worden, en dat raakt onderdeel 1.
-- **TestFlight kan niet.** Dat is de gebruikelijke manier om de app op een echte iPhone te krijgen. Zonder account testen we op iOS via Expo Go, en dat dekt niet alles: alles wat een eigen native module nodig heeft, valt daarbuiten.
-- **Android heeft dit probleem niet.** Een installeerbare build maak je daar zonder developer-account. Voor testen op een fysiek toestel is Android dus de snelste route.
+Wat wel kan is meer dan het lijkt, want wij hebben alle drie een MacBook en een iPhone:
 
-Drie manieren om hiermee om te gaan, en dit is een keuze die vóór vertrek gemaakt moet worden: Mind vraagt het account vroeg aan en zet ons erin als developer, of één van ons gebruikt tijdelijk een eigen Apple Developer-account voor ontwikkelbuilds terwijl de release op dat van Mind gebeurt, of we accepteren dat de Apple-login pas na de overdracht getest wordt en zetten dat expliciet als risico op papier.
+- **De iOS Simulator** draait een ontwikkelbuild zonder betaald account. Dat dekt verreweg het meeste werk: schermen, navigatie, states, data, de hele flow behalve wat een echte Apple-identiteit nodig heeft.
+- **Een fysieke iPhone** kan ook, via een lokale build met een gratis Apple ID. Eén beperking om te kennen: zo'n signing verloopt na zeven dagen en dan moet je opnieuw installeren. Prima om tussendoor te kijken, niet om iets een week op een toestel te laten staan.
+- **TestFlight en Sign in with Apple** hebben het betaalde account wel echt nodig. Die twee blijven liggen tot Mind het geregeld heeft.
+
+Wat dat betekent voor onderdeel 1:
+
+> **Bouw de Apple-login zo dat er alleen nog een sleutel in hoeft.** Het scherm, de knop, de afhandeling en de foutstaten zijn gewoon af te maken. Wat ontbreekt is configuratie: een Service ID en een sleutel uit het account van Mind. Zet die achter omgevingsvariabelen, en zorg dat een ontbrekende waarde de rest van de onboarding niet blokkeert tijdens ontwikkelen. Dan is aanzetten later vijf minuten werk en geen verbouwing.
+
+Dit is precies waarom die knop toch in v1 hoort: Apple eist Sign in with Apple zodra je Google aanbiedt, dus later toevoegen is geen optie. Zie de richtlijn hierboven.
 
 ---
 
@@ -155,4 +161,4 @@ Dat is een extra reden om ook het Play-account op naam van Mind te zetten en nie
 
 **TODO:** wanneer is dit klaar? Bijvoorbeeld: alle schermen hierboven werken end-to-end, een testgebruiker kan de hele flow doorlopen zonder vast te lopen, en er is een installeerbare build waarmee iemand van Mind dat op een toestel kan controleren.
 
-Let op bij het invullen: "de build staat in TestFlight" kan hier niet als eis staan zolang wij geen Apple Developer-account hebben. Zie de sectie over wat wij niet kunnen testen. Op Android kan het wel.
+Let op bij het invullen: "de build staat in TestFlight" kan hier niet als eis staan zolang wij geen Apple Developer-account hebben, en "de Apple-login werkt" ook niet. Die twee horen bij de fase ná de overdracht. Wat er wél als eis in kan: de hele flow loopt door op de Simulator en op een toestel, en de Apple-login wacht alleen nog op een sleutel.
