@@ -62,15 +62,20 @@ git push --force-with-lease           # draft PR openen
 
 ## Status
 
-Het samenwerkingsraamwerk staat. De app zelf nog niet. Eerstvolgende stappen:
+Het samenwerkingsraamwerk staat. De app zelf nog niet: deze repo bevat op dit moment alleen documentatie en configuratie.
+
+**Deze twee blokkeren al het andere werk, in deze volgorde:**
+
+- [ ] **Scope v1 vastleggen in `docs/scope.md`**, vanaf het Figma-board. Een sessie met z'n drieën. Zolang dit leeg is stopt elke agent terecht met een vraag in plaats van te bouwen.
+- [ ] **Expo-app scaffolden**, plus CI groen op alle drie de laptops. Raakt `package.json`, `app.config.ts` en de tokens, dus een eigen PR van de eigenaar.
+
+Daarna pas:
 
 - [ ] Mind vragen het Apple Developer-account vroeg aan te vragen (langste doorlooptijd; hun actie, niet de onze)
 - [x] ~~Monorepo of één platte app~~ **Monorepo**, besloten 30 juli 2026: `apps/mobile`, `apps/admin`, `packages/ui` en `packages/types`. De admin is een CMS-webapp waar Mind content in zet, en de app geeft die weer. Ze delen de database en de gegenereerde types, niet het beeld.
 - [ ] Kiezen welk framework `apps/admin` krijgt en waar die gedeployed wordt. Pas nodig als de mobiele app staat: die is de prioriteit.
 - [ ] **Kiezen: welke UI-kit is de basis, of bouwen we eigen componenten?** Er hangen nu acht community-kits aan het Figma-bestand en geen eigen library. Beide kan, allebei tegelijk niet. Zie `docs/design-system.md`.
-- [ ] Scope v1 vastleggen in `docs/scope.md`
 - [ ] Verdelen wie welk van de acht onderdelen doet, zie `docs/taakverdeling.md`
-- [ ] Expo-app scaffolden, CI groen krijgen op alle drie de laptops
 - [ ] Design tokens plus de basiscomponenten, in alle states
 - [ ] Elk scherm uit de userflow als leeg routebestand aanmaken
 - [ ] Userflow vertalen naar 15 tot 20 taken op het board

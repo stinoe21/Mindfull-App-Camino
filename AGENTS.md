@@ -8,6 +8,14 @@ Dit is dus geen tweede regelset. Bij twijfel of tegenspraak wint `CLAUDE.md`.
 
 ---
 
+## Stand van zaken
+
+**Er staat nog geen code in deze repo.** Geen `apps/`, geen `packages/`, geen `package.json`. De tokens waar hieronder naar verwezen wordt bestaan dus nog niet, en de checks uit de definition of done zijn nog niet te draaien.
+
+Eerst moet `docs/scope.md` ingevuld worden en daarna de Expo-app gescaffold, allebei door het team en niet door een agent. Zie `CLAUDE.md` sectie 0. Word je gevraagd een feature te bouwen en is dat nog niet gebeurd, meld dat dan.
+
+---
+
 ## De regels die je in geen geval mag missen
 
 Ook als je verder niets leest:

@@ -24,6 +24,25 @@ Drie skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (
 
 ---
 
+## 0. Stand van zaken, lees dit eerst
+
+**Er staat nog geen code in deze repo.** Alleen documentatie en configuratie. `apps/`, `packages/`, `supabase/` en `package.json` bestaan nog niet. Alles hieronder beschrijft dus hoe we gaan werken zodra dat er wel is, niet wat je nu aantreft.
+
+Wat dat concreet voor je betekent als je nu een taak oppakt:
+
+- **`packages/ui/tokens` bestaat nog niet.** De regel "nooit een hardcoded designwaarde" blijft staan, maar tot het scaffolden gebeurd is kun je er niet aan voldoen. Bouw dus nog geen UI.
+- **`npm run typecheck`, `npm run lint` en `npm test` bestaan nog niet.** De definition of done in sectie 7 is nog niet af te vinken. De CI weet dat en slaat die stappen over zolang er geen `package.json` is.
+- **De routebestanden van de userflow bestaan nog niet.** Zie sectie 4.
+
+Er staan twee dingen voor, in deze volgorde, en het zijn allebei geen agent-taken:
+
+1. **`docs/scope.md` invullen** vanaf het Figma-board. Dat is een besluit van de drie samen. Zolang dat leeg is, mag je geen productbeslissing nemen en is stoppen en vragen het juiste antwoord.
+2. **De Expo-app scaffolden.** Dat raakt `package.json`, `app.config.ts` en de tokens, dus het is per sectie 5 een eigen pull request van de eigenaar.
+
+Pas daarna is een feature-taak uitvoerbaar. Word je gevraagd iets te bouwen en klopt bovenstaande nog steeds, zeg dat dan in plaats van alvast iets neer te zetten.
+
+---
+
 ## 1. Wat dit project is
 
 Een mobiele app voor **Stichting Mind**, werktitel "Mentale Weerbericht", gebouwd door drie mensen tijdens het lopen van de Camino, zomer 2026.
@@ -90,7 +109,7 @@ Als dat waar is, kan er per definitie geen merge-conflict ontstaan, ongeacht wie
 
 Praktisch betekent dit:
 
-- Elk scherm uit de userflow bestaat al als bestand op de juiste route. Een feature bouwen is dat bestand vullen plus nieuwe bestanden ernaast zetten.
+- Elk scherm uit de userflow krijgt vóór vertrek een leeg routebestand op de juiste plek. Een feature bouwen is dan dat bestand vullen plus nieuwe bestanden ernaast zetten. **Die routebestanden bestaan nog niet**, zie de stand van zaken hierboven.
 - Feature-code staat in `apps/mobile/src/features/<feature>/` en nergens anders.
 - Moet je toch een gedeeld bestand wijzigen, dan is dat een **aparte, kleine pull request** die binnen een halfuur gemerged wordt. Niet als bijvangst van een feature.
 
