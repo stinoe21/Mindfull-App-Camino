@@ -23,6 +23,7 @@ Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen
 | [docs/scope.md](docs/scope.md) | Wat bouwen we wel en expliciet niet in v1 |
 | [docs/taakverdeling.md](docs/taakverdeling.md) | Wie is waar eigenaar van, hoe een taak eruitziet, dagritme |
 | [docs/datamodel.md](docs/datamodel.md) | Elke tabel en elk veld, met bewaartermijn en privacyverantwoording |
+| [docs/privacy-besluiten.md](docs/privacy-besluiten.md) | Wat is afgesproken met Mind, wat staat nog open, en wie is aan zet |
 | [docs/design-system.md](docs/design-system.md) | Tokens, componenten, en hoe Figma en de repo zich verhouden |
 | [docs/setup-github.md](docs/setup-github.md) | Eenmalige repo-instellingen, door de eigenaar |
 

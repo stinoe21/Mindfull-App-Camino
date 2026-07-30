@@ -15,7 +15,9 @@ Dit board is de bron. Alles hieronder is een vertaling daarvan naar bouwbare tak
 
 ## Voor wie
 
-**TODO:** wie is de gebruiker? Leeftijd is hier geen detail, want het bepaalt de App Store-leeftijdsclassificatie, of we ouderlijke toestemming nodig hebben, en wat we mogen opslaan.
+**TODO:** wie is de gebruiker precies? Dat bepaalt de content en de toon.
+
+**De leeftijd ligt wel vast: 16+.** Dat is een harde toegangseis en geen aanbeveling. De check komt vóór het aanmaken van een account en heeft geen Skip. Onder de 16 geen toegang, en daarmee is ouderlijke toestemming niet nodig. Zie `datamodel.md`. Dit moet consistent zijn met de leeftijdsclassificatie die je in App Store Connect invult.
 
 ## Relatie met Stichting Mind
 
@@ -54,6 +56,15 @@ Dit is de belangrijkste lijst van dit document. Zonder harde non-goals groeit de
 - Een webversie
 - Accountherstel via e-mail
 
+## Beheer, buiten de app
+
+Dit zit niet in de app die gebruikers installeren, maar hoort wel bij het project. Het staat als aparte sectie op het Figma-board, onderaan.
+
+- **Adminpagina voor Mind.** Content toevoegen aan de app, laagdrempelig, zonder tussenkomst van een ontwikkelaar.
+- **Analyticspagina voor het IT-departement.** Overzicht van hoe de app ervoor staat. Leest uit Supabase.
+
+Onderschat dit niet: het zijn eigen schermen met een eigen rollenmodel en eigen RLS-policies. Reken er aparte taken voor, het is geen bijvangst van een feature. Wat de analyticspagina precies toont en aan wie ligt nog open, zie `privacy-besluiten.md`.
+
 ---
 
 ## Privacy en veiligheid
@@ -66,8 +77,8 @@ Dit is een app in de mentale gezondheidshoek. Deze punten zijn geen formaliteit.
 - Slaan we vrije tekst op over iemands gemoedstoestand? Zo ja: waar, hoe lang, en wie kan erbij?
 - Hoe verwijdert een gebruiker zijn account en zijn data?
 - Doen we aan analytics? Zo ja, op welk niveau, en nooit op inhoud.
-- **Crisis-signposting:** wat tonen we als iemand in nood lijkt te zijn? De exacte tekst en doorverwijzing (bijvoorbeeld 113 Zelfmoordpreventie) leggen we hier woordelijk vast en wordt door niemand geïmproviseerd, ook niet door een agent.
-- Verwerkersovereenkomst met Supabase geregeld?
+- **Crisis-signposting:** wat tonen we als iemand in nood lijkt te zijn? De exacte tekst en doorverwijzing leggen we hier woordelijk vast en wordt door niemand geïmproviseerd, ook niet door een agent. Op het Figma-board staat de **MIND Hulplijn** via WhatsApp. Noem geen andere instantie en geen telefoonnummer tenzij het hier woordelijk staat. Er is bewust **geen** proactieve escalatie, zie `privacy-besluiten.md`.
+- Verwerkersovereenkomst met Supabase geregeld? Ligt bij Mind, zie `privacy-besluiten.md`.
 - Is er een privacyverklaring, en waar staat die? App Review vraagt erom.
 
 ## App Store-risico's
