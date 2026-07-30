@@ -58,7 +58,8 @@ Afgeleid uit de userflow op het Figma-board. Twee per persoon, en de laatste twe
 **Wie welk onderdeel doet, is nog niet verdeeld.** Dat is een gesprek van vijf minuten en het hoort vóór vertrek te gebeuren, want het bepaalt wie zich in welk deel van de userflow inleest. Twee dingen om mee te nemen bij die verdeling:
 
 - **Onderdeel 3 kan nog niet beginnen.** De weer-check-in wacht op akkoord van Mind op de weer-metafoor, en de weertypen zelf staan nog nergens vastgelegd. Zie `datamodel.md`. Wie dit onderdeel pakt, moet dus iets anders hebben om aan te werken, of het akkoord moet er eerst zijn.
-- **Onderdeel 7 en 8 zijn samen één webapp**, geen schermen in de iOS-app. Besloten op 30 juli 2026, zie `scope.md`. Ze hebben een eigen rollenmodel, eigen RLS-policies, een eigen framework dat nog gekozen moet worden en een eigen deploy. Wie dit pakt bouwt dus iets anders dan de rest, en dat is werk dat je niet tussendoor doet. Reken het apart.
+- **Onderdeel 7 en 8 zijn samen één webapp**, geen schermen in de iOS-app. Besloten op 30 juli 2026, zie `scope.md`. Het is een CMS: Mind zet er content in, en de app leest die uit Supabase. Die webapp staat in `apps/admin` in deze repo, met een eigen rollenmodel, eigen RLS-policies, een framework dat nog gekozen moet worden en een eigen deploy. Wie dit pakt bouwt dus iets anders dan de rest, en dat is geen werk dat je tussendoor doet. Reken het apart.
+- **De adminpagina is een voorwaarde voor de contentschermen, niet een extraatje aan het eind.** Onderdeel 5 leest content die daar ingevoerd wordt. Wordt de admin als laatste gebouwd, dan werkt iedereen tot die tijd met content die met de hand in de database is gezet, en dan komt de eerste echte test van dat samenspel op de dag dat er geen tijd meer is.
 
 ## Wie waakt over het geheel
 

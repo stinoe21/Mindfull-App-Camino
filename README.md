@@ -64,10 +64,10 @@ git push --force-with-lease           # draft PR openen
 
 Het samenwerkingsraamwerk staat. De app zelf nog niet. Eerstvolgende stappen:
 
-- [ ] Apple Developer-account regelen (langste doorlooptijd, dus als eerste)
-- [x] ~~Monorepo of één platte app~~ **Monorepo**, besloten 30 juli 2026: `apps/mobile`, `apps/admin` en `packages/ui`. De admin- en analyticspagina worden een webapp en geen scherm in de app, dus er zijn twee applicaties die dezelfde tokens delen.
+- [ ] Mind vragen het Apple Developer-account vroeg aan te vragen (langste doorlooptijd; hun actie, niet de onze)
+- [x] ~~Monorepo of één platte app~~ **Monorepo**, besloten 30 juli 2026: `apps/mobile`, `apps/admin`, `packages/ui` en `packages/types`. De admin is een CMS-webapp waar Mind content in zet, en de app geeft die weer. Ze delen de database en de gegenereerde types, niet het beeld.
 - [ ] **Kiezen: welk framework voor `apps/admin`**, en waar die gedeployed wordt
-- [ ] Het Supabase-project verplaatsen naar de organisatie van Mind, **voordat er gebruikersdata in staat**. Zie `docs/privacy-besluiten.md`.
+- [ ] **Regelen hoe we op een iPhone testen.** Mind maakt het Apple Developer-account en wij komen daar niet aan, dus Sign in with Apple en TestFlight kunnen wij niet afmaken. Zie `docs/scope.md`.
 - [ ] **Kiezen: welke UI-kit is de basis, of bouwen we eigen componenten?** Er hangen nu acht community-kits aan het Figma-bestand en geen eigen library. Beide kan, allebei tegelijk niet. Zie `docs/design-system.md`.
 - [ ] Scope v1 vastleggen in `docs/scope.md`
 - [ ] Verdelen wie welk van de acht onderdelen doet, zie `docs/taakverdeling.md`

@@ -20,6 +20,8 @@ De adminpagina en de analyticspagina worden een webapp, zie `scope.md`. De token
 
 De componenten in `packages/ui/components` zijn React Native-componenten en draaien **niet** in een gewone webapp. Verwacht dus niet dat je daar dezelfde Button hergebruikt. Wat je hergebruikt is de laag eronder: kleuren, spacing, typografie, radii. Dat is genoeg om de twee op elkaar te laten lijken en het is de enige laag die de overstap zonder gedoe overleeft.
 
+Dat is ook geen verlies, want de webapp is een CMS voor medewerkers van Mind en niet iets dat een gebruiker ziet. Hij moet werkbaar zijn en niet stuk lijken. Alles wat daar in ontwerp in gaat zitten, gaat niet in de app zitten, en de app is wel wat beoordeeld wordt.
+
 ### Namen zijn semantisch, niet letterlijk
 
 Een token heet naar zijn **rol**, niet naar zijn waarde. Dus niet `color/green500` maar:
