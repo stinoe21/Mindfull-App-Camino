@@ -127,6 +127,23 @@ Zie je `Authorization header is badly formatted`, dan is de variabele leeg of ni
 gh pr list
 ```
 
+### De Figma-plugin, aangeraden maar niet verplicht
+
+De MCP hierboven komt uit `.mcp.json` en heb je dus al na het clonen. De **plugin** is iets anders en die komt niet mee uit de repo: die installeert iedereen zelf, één keer.
+
+```bash
+claude plugin install figma@claude-plugins-official
+```
+
+Wat je ermee krijgt zijn een stuk of twaalf skills bovenop de MCP, waaronder `figma-design-to-code` voor het omzetten van een frame naar code, `figma-use-figjam` voor het userflow-board en `figma-generate-library` voor het opzetten van een component library. Zonder de plugin werkt de MCP gewoon, je mist alleen die skills.
+
+**Herstart Claude Code daarna volledig**, net als bij de omgevingsvariabele hierboven: skills worden bij het starten geladen.
+
+Twee dingen om te weten:
+
+- In de **VSCode-extensie** werkt de slash-command `/plugin` niet. Gebruik de `claude plugin`-CLI, zoals hierboven.
+- De plugin brengt zijn eigen MCP-server mee die ook `figma` heet, met dezelfde URL als die in onze `.mcp.json`. Dat is dezelfde server, dus het werkt gewoon. Zie je een waarschuwing over conflicting scopes, dan komt hij daarvandaan en is er niets stuk.
+
 ### Als iets niet verbindt
 
 **figma** is een remote server met OAuth. Werkt hij niet, dan is er een lokaal alternatief: zet in de Figma **desktop-app** onder Preferences de Dev Mode MCP Server aan, en vervang in `.mcp.json` de figma-URL door `http://127.0.0.1:3845/mcp`. Nadeel: de desktop-app moet dan altijd openstaan. Commit die wijziging niet. We kunnen ook zonder Figma MCP werken, alleen minder prettig.
