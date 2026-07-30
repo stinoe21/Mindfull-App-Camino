@@ -66,13 +66,13 @@ Waarom rebase en geen merge staat uitgelegd in de skill `werkwijze`. Vraag je Cl
 
 ## 3. MCP's activeren
 
-Je hoeft **geen tokens aan te maken**. Alle drie de MCP's zijn remote servers die je via je browser autoriseert met je eigen account. De configuratie staat al in de repo, in `.mcp.json`. Voeg daar zelf niets aan toe: die wijziging krijgt de rest ook.
+Je hoeft **geen personal access token aan te maken**. Supabase en Figma autoriseer je via je browser, en GitHub hergebruikt het token dat de `gh` CLI al voor je beheert. De configuratie staat al in de repo, in `.mcp.json`. Voeg daar zelf niets aan toe: die wijziging krijgt de rest ook.
 
 Waar we ze voor gebruiken:
 
 | Server | Waarvoor |
 |---|---|
-| `github` | Pull requests, issues, reviews |
+| `github` | Pull requests, issues, reviews. Vraagt één omgevingsvariabele, zie hieronder. |
 | `supabase-mind` | Database inspecteren, types genereren. Read-only. |
 | `figma` | **Designs ophalen.** Frames, componenten, variables en screenshots. Dit is onze route van design naar code: laat Claude het frame ophalen in plaats van een screenshot op het oog nabouwen. |
 
@@ -83,7 +83,7 @@ cd mind-app
 claude
 ```
 
-Bij de eerste start vraagt Claude of je de project-MCP's vertrouwt. Antwoord ja. Daarna staan `github`, `supabase-mind` en `figma` op "pending approval". Keur ze goed, dan opent er per server een browservenster waarin je inlogt.
+Bij de eerste start vraagt Claude of je de project-MCP's vertrouwt. Antwoord ja. Daarna staan `github`, `supabase-mind` en `figma` op "pending approval". Keur ze goed. Voor `supabase-mind` en `figma` opent er dan een browservenster waarin je inlogt. `github` doet dat niet, die werkt met een omgevingsvariabele.
 
 Controleer met:
 
@@ -91,12 +91,39 @@ Controleer met:
 /mcp
 ```
 
-`supabase-mind` en `figma` horen op `connected` te staan.
+`supabase-mind` en `figma` horen nu op `connected` te staan. `github` nog niet, die heeft eerst de stap hieronder nodig.
 
-**`github` staat op dit moment op `failed`, en dat klopt.** Die endpoint ondersteunt geen browserlogin (`does not support dynamic client registration`) en wil een token in een header, precies wat we niet willen. Dat is geen fout in jouw setup en je hoeft er niets aan te doen. Voor pull requests en issues gebruik je voorlopig de `gh` CLI, die werkt gewoon:
+### GitHub: één omgevingsvariabele
+
+De GitHub-MCP kan geen browserlogin doen. Die server ondersteunt geen dynamic client registration en wil een token in een header. In plaats van dat we alle drie een personal access token gaan aanmaken en verlengen, hergebruiken we het token dat de `gh` CLI al in je keyring heeft staan.
+
+Log eerst in met `gh`, als je dat nog niet had gedaan:
 
 ```bash
 gh auth login
+```
+
+Kies "Login with a web browser". Zet daarna het token in een omgevingsvariabele.
+
+Windows, in PowerShell:
+
+```powershell
+setx GITHUB_MCP_TOKEN (gh auth token)
+```
+
+macOS of Linux, als regel in `~/.zshrc` of `~/.bashrc`:
+
+```bash
+export GITHUB_MCP_TOKEN=$(gh auth token)
+```
+
+**Herstart hierna Claude Code volledig**, en bij de VSCode-extensie VSCode zelf. Een nieuw venster of tabblad is niet genoeg: een omgevingsvariabele wordt gelezen op het moment dat het proces start. Daarna staat `github` op `connected`.
+
+In `.mcp.json` staat alleen `${GITHUB_MCP_TOKEN}`, dus het token zelf gaat nooit de repo in. De `~/.zshrc`-variant is technisch de nettere, want die haalt het token bij elke shellstart uit de keyring en laat dus geen tweede kopie achter. `setx` schrijft het naar je gebruikersregister, wat hetzelfde beveiligingsniveau heeft als de tokens die Claude Code al lokaal bewaart.
+
+Zie je `Authorization header is badly formatted`, dan is de variabele leeg of niet meegekomen met het proces. De `gh` CLI blijft daarnaast gewoon werken en is de terugvaloptie voor alles:
+
+```bash
 gh pr list
 ```
 

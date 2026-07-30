@@ -128,15 +128,31 @@ Bij twijfel: niet opslaan, en vragen.
 
 ## 10. MCP's
 
-Zie `.mcp.json` in de repo. Iedereen krijgt na een `git clone` dezelfde koppelingen. Er zijn **geen tokens** nodig: alle drie autoriseren via de browser met het eigen account. Zet dus nooit een token, key of wachtwoord in `.mcp.json` of `.env.example`, die bestanden gaan de repo in.
+Zie `.mcp.json` in de repo. Iedereen krijgt na een `git clone` dezelfde koppelingen. Zet **nooit** een token, key of wachtwoord in `.mcp.json` of `.env.example`, die bestanden gaan de repo in. Is er een token nodig, dan staat in `.mcp.json` alleen de naam van een omgevingsvariabele.
 
 | Server | Waarvoor |
 |---|---|
-| `github` | Pull requests, issues, reviews |
+| `github` | Pull requests, issues, reviews. Heeft één omgevingsvariabele nodig, zie hieronder. |
 | `supabase-mind` | Database inspecteren, types genereren. Staat op **read-only**. |
 | `figma` | Designs ophalen: frames, componenten, variables en screenshots uit het designbestand |
 
-Alle drie zijn remote servers over HTTP met OAuth in de browser. De Supabase-MCP draait dus **niet** via `npx`. Die stdio-variant kan geen browserlogin en verwacht een personal access token, en dat is precies wat we niet willen.
+`supabase-mind` en `figma` autoriseer je via de browser met je eigen account, zonder token. De Supabase-MCP draait dus **niet** via `npx`. Die stdio-variant kan geen browserlogin en verwacht een personal access token, en dat is precies wat we niet willen.
+
+**GitHub is de uitzondering en heeft één token nodig.** Die server ondersteunt geen dynamic client registration en publiceert geen OAuth-metadata, dus browserlogin bestaat er niet. In plaats van drie personal access tokens aan te maken en te verlengen, hergebruiken we het token dat de `gh` CLI al voor je beheert.
+
+Windows:
+
+```powershell
+setx GITHUB_MCP_TOKEN (gh auth token)
+```
+
+macOS of Linux, in `~/.zshrc` of `~/.bashrc`:
+
+```bash
+export GITHUB_MCP_TOKEN=$(gh auth token)
+```
+
+Herstart daarna Claude Code volledig, of VSCode als je de extensie gebruikt: een omgevingsvariabele wordt gelezen bij het starten van het proces. De variant met `~/.zshrc` is de nettere, want dan bestaat er geen tweede kopie van het token buiten je keyring. Werkt `github` niet en zie je `Authorization header is badly formatted`, dan is de variabele leeg of niet meegekomen.
 
 **Figma is onze route van design naar code.** Haal een frame op met de MCP in plaats van een screenshot op het oog na te bouwen. De build hangt nooit af van een live Figma-query, zie sectie 6: tokens en assets staan in de repo.
 
