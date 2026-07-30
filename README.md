@@ -66,7 +66,9 @@ Het samenwerkingsraamwerk staat. De app zelf nog niet. Eerstvolgende stappen:
 
 - [ ] Apple Developer-account regelen (langste doorlooptijd, dus als eerste)
 - [ ] **Kiezen: monorepo (`apps/mobile` plus `packages/ui`) of één platte Expo-app.** Nu gratis, na het scaffolden duur. Alle padverwijzingen in `CLAUDE.md`, `CODEOWNERS` en `design-system.md` gaan uit van de monorepo.
+- [ ] **Kiezen: welke UI-kit is de basis, of bouwen we eigen componenten?** Er hangen nu acht community-kits aan het Figma-bestand en geen eigen library. Beide kan, allebei tegelijk niet. Zie `docs/design-system.md`.
 - [ ] Scope v1 vastleggen in `docs/scope.md`
+- [ ] Verdelen wie welk van de acht onderdelen doet, zie `docs/taakverdeling.md`
 - [ ] Expo-app scaffolden, CI groen krijgen op alle drie de laptops
 - [ ] Design tokens plus de basiscomponenten, in alle states
 - [ ] Elk scherm uit de userflow als leeg routebestand aanmaken

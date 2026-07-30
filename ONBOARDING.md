@@ -210,9 +210,22 @@ Draai daarna:
 
 Dat is de skill die de git-workflow uitlegt. Als die laadt, zijn de gedeelde skills actief.
 
-## 7. Je eerste taak
+## 7. Lees waar de afspraken staan
 
-1. Pak een issue van het board dat op `Ready` staat en wijs jezelf toe.
+Je Claude kent deze bestanden en verwijst ernaar, maar lees deze vier zelf een keer door. Het zijn er vier omdat het de vier soorten fouten zijn die je niet aan een diff ziet.
+
+| Lees dit | Waarom je het zelf moet weten |
+|---|---|
+| `CLAUDE.md` | Het contract. Bovenaan staat een tabel met alle andere documenten en wanneer je ze nodig hebt. |
+| `docs/productprincipes.md` | Hoe de app zich hoort te gedragen. Je kunt een technisch perfect scherm bouwen dat toch verkeerd voelt. |
+| `docs/taakverdeling.md` | Hoe we het werk verdelen, wat er in een taak hoort, en het dagritme onderweg. |
+| `docs/datamodel.md` | Wat we wel en niet opslaan. Staat een veld daar niet in, dan bestaat het niet. |
+
+De volledige index staat in `README.md`. Kom je iets tegen dat in geen enkel document staat, dan is het niet afgesproken: vraag ernaar en vul het niet zelf in. Dat is geen formaliteit maar de reden dat we met drie parallelle agents niet uit elkaar lopen.
+
+## 8. Je eerste taak
+
+1. Pak een issue van het board dat op `Ready` staat en wijs jezelf toe. Staat er nog geen board, en dat is nu het geval, vraag dan aan Stijn welke taak je pakt.
 2. Maak een branch: `git checkout -b feat/<korte-naam>`
 3. Vraag je Claude: `/nieuwe-feature <issue-nummer>`
 4. Open een draft pull request zodra je iets hebt. Niet aan het eind, maar meteen. Dan ziet de rest waar je mee bezig bent.

@@ -25,9 +25,9 @@ Squash als enige optie betekent dat `main` een leesbare lijst van features wordt
 
 > **Besloten op 30 juli 2026: we nemen GitHub Pro.** Branch protection en rulesets vereisen op een **private** repo een betaald plan, 4 dollar per maand. Elke poging geeft anders een 403. Zolang Pro niet actief is, is `main` technisch niet beschermd en leunen we op de drie lagen hieronder.
 
-### Wat we in plaats daarvan doen
+### De drie lagen die er lokaal onder liggen
 
-Drie lagen die het ongeluk vangen. Niet waterdicht tegen moedwil, wel tegen de fout die je op een berg om half elf 's avonds maakt.
+Deze stonden er eerst omdat er geen branch protection was. Ze blijven staan nu die er wel is, want ze vangen de fout **voordat** je pusht in plaats van erna. Niet waterdicht tegen moedwil, wel tegen de fout die je op een berg om half elf 's avonds maakt.
 
 **Laag 1: een pre-push hook.** Staat in `.githooks/pre-push` en weigert elke push naar `main`. Iedereen activeert die met `git config core.hooksPath .githooks`, zie `ONBOARDING.md` stap 2. Te omzeilen met `--no-verify`, en dat doe je dus niet.
 
@@ -98,7 +98,9 @@ Alleen taken in `Ready` mogen geclaimd worden. `Ready` betekent dat alle velden 
 
 ## 6. CODEOWNERS
 
-Vul `.github/CODEOWNERS` in met de echte GitHub-usernames zodra die bekend zijn. GitHub wijst dan automatisch de juiste reviewer toe.
+Staat ingevuld met de echte usernames. GitHub stelt daarmee automatisch een reviewer voor bij de paar plekken waar één iemand het overzicht houdt.
+
+**Let op wat er bewust niet in staat:** feature-code en documentatie. `require_code_owner_review` staat uit in de ruleset, dus dit bestand blokkeert niets. Zou je het wel aanzetten, dan loopt elk onderdeel van de app langs één reviewer en is precies dat kapot wat `docs/taakverdeling.md` probeert te voorkomen.
 
 ---
 
@@ -128,7 +130,7 @@ git reset --hard origin/main
 | Stap | Status |
 |---|---|
 | Repo aangemaakt, private | Gedaan |
-| Collaborators uitgenodigd (`@Cschoorl`, `@maxhelmantel-gif`) | Uitnodiging verstuurd, moeten zelf accepteren |
+| Collaborators (`@Cschoorl`, `@maxhelmantel-gif`) | **Gedaan.** Beiden hebben geaccepteerd en hebben Write, gecontroleerd op 30 juli 2026. |
 | Squash-only merge, branches auto-verwijderen | Gedaan |
 | Labels | Gedaan |
 | Branch protection | **Actief** sinds 30 juli 2026. Ruleset `protect-main` (id `20028996`) via GitHub Pro. |

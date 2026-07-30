@@ -55,6 +55,11 @@ Afgeleid uit de userflow op het Figma-board. Twee per persoon, en de laatste twe
 
 > **Het dashboard is het enige echte raakpunt.** Daar komt alles samen, dus wie onderdeel 2 doet bouwt de container en de anderen leveren wat erin komt. Doe dat vroeg en met één persoon, anders wordt het het bestand waar drie branches op botsen.
 
+**Wie welk onderdeel doet, is nog niet verdeeld.** Dat is een gesprek van vijf minuten en het hoort vóór vertrek te gebeuren, want het bepaalt wie zich in welk deel van de userflow inleest. Twee dingen om mee te nemen bij die verdeling:
+
+- **Onderdeel 3 kan nog niet beginnen.** De weer-check-in wacht op akkoord van Mind op de weer-metafoor, en de weertypen zelf staan nog nergens vastgelegd. Zie `datamodel.md`. Wie dit onderdeel pakt, moet dus iets anders hebben om aan te werken, of het akkoord moet er eerst zijn.
+- **Onderdeel 7 en 8 zitten buiten de app** en hebben een eigen rollenmodel en eigen RLS-policies. Dat is geen bijvangst van iemands twee onderdelen, dus reken ze apart. Zie `scope.md`.
+
 ## Wie waakt over het geheel
 
 Naast een onderdeel houdt ieder iets in de gaten dat over alle onderdelen heen loopt. Dat is **een blik, geen gebied**: je reviewt het, je hakt de knoop door als er twijfel is, en je merkt het als het uit elkaar loopt. Je hoeft er niet als enige aan te werken en je hoeft er niet om gevraagd te worden.

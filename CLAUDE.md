@@ -2,7 +2,25 @@
 
 Projectinstructies voor Claude Code. Dit bestand laadt automatisch bij iedere sessie, bij alle drie de teamleden. Het is het contract waar we ons alle drie aan houden.
 
-Lees bij twijfel ook `docs/scope.md` (wat bouwen we wel en niet), `docs/productprincipes.md` (hoe de app zich hoort te gedragen) en `docs/taakverdeling.md` (wie is waar eigenaar van).
+Lees bij twijfel het document dat bij je vraag hoort. Dit is de volledige lijst, er is niets daarbuiten.
+
+| Je vraag | Document |
+|---|---|
+| Wat bouwen we wel en expliciet niet in v1 | `docs/scope.md` |
+| Hoe de app zich hoort te gedragen: toon, houding, wat we nooit doen | `docs/productprincipes.md` |
+| Tokens, componenten, assets, en hoe Figma en de repo zich verhouden | `docs/design-system.md` |
+| Welke tabellen en velden bestaan, met bewaartermijn per veld | `docs/datamodel.md` |
+| Wat met Mind is afgesproken over privacy, en wat nog open staat | `docs/privacy-besluiten.md` |
+| Waar een afbeelding hoort, compressie, caching en egress | `docs/assets-en-media.md` |
+| Rate limits, misbruik, en waarom de check-in-teller persoonlijk moet zijn | `docs/limieten-en-misbruik.md` |
+| Wie waar eigenaar van is, hoe een taak eruitziet, dagritme | `docs/taakverdeling.md` |
+| Eenmalige repo-instellingen, door de eigenaar | `docs/setup-github.md` |
+
+**Staat het antwoord in geen van deze bestanden, dan is het niet afgesproken.** Vraag ernaar, vul het niet zelf in. Dat geldt ook voor iets dat logisch of onvermijdelijk lijkt.
+
+Drie skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (een taak van begin tot eind, met de definition of done) en `pr-check` (een pull request van een teamgenoot reviewen).
+
+`AGENTS.md` is een korte versie van dit bestand, voor agents die `CLAUDE.md` niet laden. Wijzigt hier een harde regel, werk die dan daar ook bij.
 
 ---
 
@@ -94,7 +112,7 @@ Het grootste risico bij drie parallelle agents is dat het beeld uit elkaar loopt
 - **Introduceer nooit zelf een icoon, illustratie of afbeelding.** De assetbibliotheek staat vast, ook de weer-iconen. Mis je iets, meld het.
 - Figma is de bron voor hoe iets eruitziet. De **build** hangt nooit af van een live Figma-query. Tokens en assets staan in de repo.
 
-Zie `docs/design-system.md`.
+Zie `docs/design-system.md` voor tokens en componenten, en `docs/assets-en-media.md` voor waar een afbeelding hoort. Kort: iconen, illustraties en gradients zitten in de app bundle, alleen content die Mind zelf toevoegt gaat naar Supabase Storage. Comprimeer vooraf, gebruik een public bucket in plaats van signed URLs, en zet `cacheControl` hoog. Een signed URL per keer opnieuw genereren maakt de cache nooit warm en kost elke keer egress.
 
 ## 7. Definition of done
 
@@ -118,8 +136,11 @@ Dit is geen formaliteit. Behandel het als een harde eis.
 - Voeg **nooit** eigenhandig een analytics-event, tracking-veld of databasekolom toe omdat het "handig" lijkt. Elk veld dat data over een gebruiker vastlegt, is een expliciete productbeslissing.
 - Elk stuk gebruikersdata moet verwijderbaar zijn. Bouw je opslag, bouw dan ook het verwijderen.
 - Verwerk je iets rond crisis of nood, wijk dan niet af van de tekst die in `docs/scope.md` is vastgelegd. Verzin zelf geen hulpteksten, telefoonnummers of doorverwijzingen.
+- **Tel check-ins nooit op de collectieve tabel.** Daar staat geen gebruikerscode in, dus het kan niet, en een poging daartoe breekt de anonimisering. De begrenzing van één check-in per dag hoort aan de persoonlijke kant, vóór het wegschrijven. Zie `docs/limieten-en-misbruik.md`.
 
 Bij twijfel: niet opslaan, en vragen.
+
+Wat er met Mind is afgesproken, wat nog open staat en wie daarvoor aan zet is: `docs/privacy-besluiten.md`. De inhoudelijke besluiten waar je tegenaan bouwt staan in `docs/datamodel.md`.
 
 ## 9. Backend: Supabase
 
