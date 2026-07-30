@@ -6,7 +6,11 @@ Eenmalig, door de repo-eigenaar. Dit is wat de werkwijze uit `.claude/skills/wer
 
 ## 1. Collaborators toevoegen
 
-Settings, Collaborators, Add people. Geef beide teamleden **Write**-rechten. Niet Admin, want dan kunnen ze branch protection omzeilen.
+Settings, Collaborators, Add people. Beide teamleden krijgen **Write**.
+
+> **Er valt niets te kiezen, en dat is goed om te weten.** Deze repo staat onder een persoonlijk account. Op een persoonlijke repo bestaan rollen niet: iedere collaborator krijgt push-rechten en verder niets. Admin, maintain en triage bestaan alleen op repo's van een **organisatie**. Probeer je het toch via de API met `permission=admin`, dan krijg je een 204 en gebeurt er niets. Gecontroleerd op 30 juli 2026.
+>
+> Dat heeft één gevolg dat verderop terugkomt: **niemand behalve de eigenaar kan een ruleset omzeilen.** Wil je dat wel, dan moet de repo naar een organisatie. Besloten op 30 juli 2026: dat doen we niet, we blijven op een persoonlijk account. Een organisatie komt er pas bij de overdracht aan Mind, zie `privacy-besluiten.md`. Wat dat betekent voor het mergen staat bij "De ontsnapping".
 
 Stuur ze daarna `ONBOARDING.md`.
 
@@ -75,6 +79,19 @@ Bewust **niet** aanzetten, ook niet later:
 
 Wij lopen overdag. Wachten op een review mag het project nooit stilleggen. Afspraak: **reageert er binnen 12 uur niemand, dan merge je zelf** met het label `self-merged`.
 
+**Besloten op 30 juli 2026: de verplichte review blijft staan, en de repo blijft onder een persoonlijk account.** Dat kan omdat we naast elkaar lopen. Eén review vragen is bij ons één zin en geen procedure, dus die eis kost geen tijd.
+
+Mergen kunnen alle drie, ook zonder admin-rechten. De volgorde is: jij opent een pull request, een van de andere twee klikt **Approve**, en daarna merg je zelf. De ruleset vraagt alleen dat er íemand anders heeft gekeken, niet wie er op de knop drukt.
+
+```bash
+gh pr merge <nummer> --squash --delete-branch
+git checkout main && git pull
+```
+
+Of via de webinterface: open de PR, knop **Squash and merge**.
+
+**Eén ding werkt alleen voor de eigenaar, en dat is bewust geaccepteerd.** De ontsnapping van 12 uur hierboven vraagt om het omzeilen van de ruleset, en dat kan op een persoonlijke repo alleen de eigenaar, zie sectie 1. Zit je vast en is er echt niemand: vraag Stijn, of wacht tot de wandeldag klaar is. Zolang we fysiek bij elkaar zijn is dat geen knelpunt. Wordt het dat wel, dan zijn er twee uitwegen: de verplichte review op nul zetten (`required_approving_review_count` in `ruleset.json`, daarna `gh api -X PUT repos/stinoe21/Mindfull-App-Camino/rulesets/20028996 --input docs/ruleset.json`), of de repo naar een organisatie verhuizen. Dat laatste gebeurt sowieso bij de overdracht aan Mind.
+
 ## 4. Labels
 
 Settings, Labels. Maak minimaal:
@@ -134,5 +151,6 @@ git reset --hard origin/main
 | Squash-only merge, branches auto-verwijderen | Gedaan |
 | Labels | Gedaan |
 | Branch protection | **Actief** sinds 30 juli 2026. Ruleset `protect-main` (id `20028996`) via GitHub Pro. |
+| Verplichte review | **Blijft op 1**, besloten 30 juli 2026. Alle drie kunnen mergen zodra iemand anders approvet. `docs/ruleset.json` en de live ruleset zijn gelijk. |
 | Issue board | Nog doen, sectie 5 |
 | CODEOWNERS-verdeling bevestigen | Gedaan, 30 juli 2026. Caesar op structuur en productlogica, Max op het design system. |

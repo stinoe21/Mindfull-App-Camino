@@ -182,13 +182,19 @@ Er zijn drie routes, en welke je pakt hangt af van wat je wil doen. Geen ervan v
 
 Zie `.mcp.json` in de repo. Iedereen krijgt na een `git clone` dezelfde koppelingen. Zet **nooit** een token, key of wachtwoord in `.mcp.json` of `.env.example`, die bestanden gaan de repo in. Is er een token nodig, dan staat in `.mcp.json` alleen de naam van een omgevingsvariabele.
 
-| Server | Waarvoor |
-|---|---|
-| `github` | Pull requests, issues, reviews. Heeft één omgevingsvariabele nodig, zie hieronder. |
-| `supabase-mind` | Database inspecteren, types genereren. Staat op **read-only**. |
-| `figma` | Designs ophalen: frames, componenten, variables en screenshots uit het designbestand |
+| Server | Waar hij vandaan komt | Waarvoor |
+|---|---|---|
+| `github` | `.mcp.json` | Pull requests, issues, reviews. Heeft één omgevingsvariabele nodig, zie hieronder. |
+| `supabase-mind` | `.mcp.json` | Database inspecteren, types genereren. Staat op **read-only**. |
+| `figma` | De **Figma-plugin**, user scope | Designs ophalen: frames, componenten, variables en screenshots. Plus twaalf skills. |
 
 `supabase-mind` en `figma` autoriseer je via de browser met je eigen account, zonder token. De Supabase-MCP draait dus **niet** via `npx`. Die stdio-variant kan geen browserlogin en verwacht een personal access token, en dat is precies wat we niet willen.
+
+**Figma komt uit de plugin en niet uit `.mcp.json`**, besloten op 30 juli 2026. De plugin brengt dezelfde server mee plus de skills eromheen, dus twee keer definiëren leverde alleen een naamconflict op. Nadeel: het is de enige koppeling die niet automatisch meekomt met een `git clone`. Installeren is één commando en het staat als verplichte stap in `ONBOARDING.md`.
+
+```bash
+claude plugin install figma@claude-plugins-official
+```
 
 **GitHub is de uitzondering en heeft één token nodig.** Die server ondersteunt geen dynamic client registration en publiceert geen OAuth-metadata, dus browserlogin bestaat er niet. In plaats van drie personal access tokens aan te maken en te verlengen, hergebruiken we het token dat de `gh` CLI al voor je beheert.
 
