@@ -58,7 +58,7 @@ Afgeleid uit de userflow op het Figma-board. Twee per persoon, en de laatste twe
 **Wie welk onderdeel doet, is nog niet verdeeld.** Dat is een gesprek van vijf minuten en het hoort vóór vertrek te gebeuren, want het bepaalt wie zich in welk deel van de userflow inleest. Twee dingen om mee te nemen bij die verdeling:
 
 - **Onderdeel 3 kan nog niet beginnen.** De weer-check-in wacht op akkoord van Mind op de weer-metafoor, en de weertypen zelf staan nog nergens vastgelegd. Zie `datamodel.md`. Wie dit onderdeel pakt, moet dus iets anders hebben om aan te werken, of het akkoord moet er eerst zijn.
-- **Onderdeel 7 en 8 zitten buiten de app** en hebben een eigen rollenmodel en eigen RLS-policies. Dat is geen bijvangst van iemands twee onderdelen, dus reken ze apart. Zie `scope.md`.
+- **Onderdeel 7 en 8 zijn samen één webapp**, geen schermen in de iOS-app. Besloten op 30 juli 2026, zie `scope.md`. Ze hebben een eigen rollenmodel, eigen RLS-policies, een eigen framework dat nog gekozen moet worden en een eigen deploy. Wie dit pakt bouwt dus iets anders dan de rest, en dat is werk dat je niet tussendoor doet. Reken het apart.
 
 ## Wie waakt over het geheel
 

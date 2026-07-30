@@ -9,11 +9,15 @@
 # en dan wil je niet dat alles langs dezelfde persoon moet.
 
 # Infrastructuur, database en releases: Stijn
+#
+# Zonder leidende slash matcht een patroon op elk niveau. Dat is bewust: het is
+# een monorepo, dus package.json en app.config.ts bestaan ook in apps/mobile
+# en apps/admin.
 /supabase/              @stinoe21
 /.github/               @stinoe21
-/package.json           @stinoe21
-/package-lock.json      @stinoe21
-/app.config.ts          @stinoe21
+package.json            @stinoe21
+package-lock.json       @stinoe21
+app.config.ts           @stinoe21
 /.mcp.json              @stinoe21
 /.claude/               @stinoe21
 /CLAUDE.md              @stinoe21

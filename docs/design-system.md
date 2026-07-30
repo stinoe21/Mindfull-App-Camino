@@ -14,6 +14,12 @@ Alle kleuren, spacing, radii, typografie, shadows en motion staan in `packages/u
 - De eigenaar (zie `docs/taakverdeling.md`) reviewt elke wijziging daar.
 - De **build** hangt nooit af van een live Figma-query. Tokens staan in git. Op de Camino heb je geen wifi te vertrouwen.
 
+### Tokens gelden ook voor de webapp, componenten niet
+
+De adminpagina en de analyticspagina worden een webapp, zie `scope.md`. De tokens zijn platte waarden en gelden daar net zo goed, en dat is precies waarom ze in een eigen package staan in plaats van in de app.
+
+De componenten in `packages/ui/components` zijn React Native-componenten en draaien **niet** in een gewone webapp. Verwacht dus niet dat je daar dezelfde Button hergebruikt. Wat je hergebruikt is de laag eronder: kleuren, spacing, typografie, radii. Dat is genoeg om de twee op elkaar te laten lijken en het is de enige laag die de overstap zonder gedoe overleeft.
+
 ### Namen zijn semantisch, niet letterlijk
 
 Een token heet naar zijn **rol**, niet naar zijn waarde. Dus niet `color/green500` maar:

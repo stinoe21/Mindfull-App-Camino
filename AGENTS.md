@@ -2,7 +2,7 @@
 
 **Lees eerst [CLAUDE.md](CLAUDE.md). Dat is het volledige contract voor dit project en het geldt voor jou net zo goed.**
 
-Dit bestand bestaat omdat niet elke agent `CLAUDE.md` automatisch laadt. Wij gebruiken naast Claude Code ook **Cursor** en **Codex**, en die lezen `AGENTS.md`. Zonder dit bestand zou een agent daar zonder enige projectafspraak beginnen.
+Wij werken met **Claude Code**, en die laadt `CLAUDE.md` zelf. Dit bestand is er voor het geval iemand een tool gebruikt die dat niet doet, zoals Cursor of Codex: die lezen `AGENTS.md` en zouden zonder dit bestand zonder enige projectafspraak beginnen. Het staat er dus als vangnet, niet omdat we die tools nodig hebben.
 
 Dit is dus geen tweede regelset. Bij twijfel of tegenspraak wint `CLAUDE.md`.
 

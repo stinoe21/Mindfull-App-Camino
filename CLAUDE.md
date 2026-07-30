@@ -29,8 +29,17 @@ Drie skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (
 Een mobiele app voor **Stichting Mind**, werktitel "Mentale Weerbericht", gebouwd door drie mensen tijdens het lopen van de Camino, zomer 2026.
 
 - **Doel:** zie `docs/scope.md`. Is de scope daar nog niet ingevuld, vraag er dan naar in plaats van iets aan te nemen.
-- **Platform:** iOS en Android, via de App Store en de Play Store.
-- **Stack:** React Native met Expo en expo-router. Supabase voor backend, auth en database.
+- **Platform:** iOS en Android, via de App Store en de Play Store. Daarnaast een **webapp** voor de adminpagina van Mind en de analyticspagina voor het IT-departement. Die zitten dus niet in de app die gebruikers installeren, zie `docs/scope.md`.
+- **Stack:** React Native met Expo en expo-router. Supabase voor backend, auth en database. Welk framework de webapp krijgt, staat nog open.
+- **Repo:** een monorepo, besloten op 30 juli 2026 omdat er twee applicaties zijn die dezelfde tokens en hetzelfde datamodel delen.
+
+  ```
+  apps/mobile      de Expo-app die in de stores komt
+  apps/admin       de webapp voor Mind en voor analytics
+  packages/ui      tokens en componenten
+  ```
+
+  Let op: de componenten in `packages/ui` zijn React Native-componenten en draaien niet zonder meer in een webapp. De **tokens** zijn platte waarden en gelden overal. Zie `docs/design-system.md`.
 - **Domein:** mentale gezondheid. Dat heeft harde gevolgen voor wat je met data mag doen, zie sectie 8.
 
 **Userflow (Figma board):**

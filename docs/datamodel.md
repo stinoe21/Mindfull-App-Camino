@@ -10,7 +10,7 @@ Dit bestand is het contract waar alle drie de werkstromen tegenaan bouwen. Het i
 
 - Schemawijzigingen gaan **altijd** via een migratiebestand in `supabase/migrations/`. Nooit via de dashboard-UI, nooit via los SQL tegen productie.
 - De Supabase MCP heet `supabase-mind` en staat op `read_only=true`. Dat is bewust.
-- Het project heet **Mindfull-App-Camino** (`fpvvmgdzftmkyiqfvpjj`), organisatie **Back to Being**, regio `eu-central-1` (Frankfurt). De MCP is daarop gescoped en ziet dus geen andere projecten.
+- Het project heet **Mindfull-App-Camino** (`fpvvmgdzftmkyiqfvpjj`), organisatie **Back to Being**, regio `eu-central-1` (Frankfurt). De MCP is daarop gescoped en ziet dus geen andere projecten. Het project gaat naar de organisatie van Mind, zie `privacy-besluiten.md`, dus zet geen GitHub-integratie op dit project aan: die blokkeert de transfer.
 - TypeScript-types worden **gegenereerd** uit het schema, niet met de hand geschreven.
 - Row Level Security staat aan op elke tabel met gebruikersdata. Een tabel zonder RLS is een bug, geen keuze.
 - Een migratie is een eigen kleine pull request. Nooit bijvangst van een feature.
@@ -27,6 +27,7 @@ Afgestemd met de privacyofficer van Mind op 29 juli 2026 en verwerkt in het Figm
 | Weer-check-in | Geen directe vragen naar mentale gezondheid of stress, maar een weer-metafoor, bijvoorbeeld "hoeveel druk voel je vandaag". Doel is buiten de bijzondere persoonsgegevens blijven. **Nog geen akkoord van Mind**, dus nog niet bouwen. |
 | Collectieve store | **Geanonimiseerd**, niet gepseudonimiseerd. Er gaat alleen een weerstatus plus een tijdstip naartoe, en nadrukkelijk **geen gebruikerscode**. Zo'n code is een sleutel en daarmee blijft het een persoonsgegeven. |
 | Bewaartermijn persoonsgegevens | Weg na 2 jaar inactiviteit, of eerder als de gebruiker zijn account zelf verwijdert. |
+| Inactiviteit meten | **Besloten op 30 juli 2026: we slaan het moment van laatste activiteit op.** Zonder dat veld is "weg na 2 jaar inactiviteit" niet te handhaven en beloof je in de privacyverklaring iets wat niemand uitvoert. De minimale vorm is **één tijdstip op het profiel dat elke keer overschreven wordt**, dus geen geschiedenis van wat iemand wanneer deed. Dat onderscheid is het hele punt: een laatste-activiteitsstempel is bewaartermijnadministratie, een logboek van sessies is gedragsdata. |
 | Bewaartermijn collectieve data | Blijft bewaard. Het is geen persoonsgegeven, dus de 2 jaar geldt er niet voor. Verwijderen is er per definitie ook niet mogelijk, want we weten niet welke rijen van wie zijn. Dit moet expliciet in de consent-tekst en de privacyverklaring staan. |
 | Analytics | Geen externe tool. Analyse en app-gebruik lopen via Supabase, met een beheerpagina buiten de app. |
 | n8n | Er gaan **geen persoonsgegevens** door n8n. Het landelijke weerbericht komt rechtstreeks uit Supabase. |
@@ -88,6 +89,7 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 - [ ] **Welke weertypen bestaan er precies, en hoe heten ze?** Dit is nu een gat waar drie documenten naar verwijzen: `design-system.md` zegt dat de weer-iconenset gesloten is met "precies één per weertype uit `datamodel.md`", en die lijst staat hier niet. Het board noemt de check-in wel, maar somt de opties niet op. Zolang dit ontbreekt kan niemand de iconen, de tokens `gradient/weather/*` of de check-in bouwen, en is de kans groot dat drie mensen drie verschillende sets verzinnen. Dit hangt samen met de vraagvorm die nog bij Mind ligt.
 - [ ] **Wat is het minimumaantal deelnemers waarboven het landelijke weerbericht getoond mag worden?** Op het board staat bij connector `12:308` letterlijk "pas tonen boven een minimum aantal deelnemers", zonder getal. Gecontroleerd op 30 juli 2026. Dit is een privacymaatregel en geen designkeuze, dus het getal hoort hier te staan en niet in de code te worden bedacht.
 - [ ] **Welke twee consents zijn het, en wat staat er precies in?** Het board heeft twee losse, apart intrekbare consents (`12:136` en `12:139`) en `design-system.md` rekent op een Consent row met twee varianten. Waar ze over gaan en wat de tekst is, staat nergens. Dit blokkeert onderdeel 1 uit `taakverdeling.md`.
+- [ ] **Wat ruimt de bewaartermijn daadwerkelijk op, en wanneer draait dat?** Het veld voor laatste activiteit is nu besloten, maar een termijn van 2 jaar bestaat pas als er iets is dat periodiek verwijdert. Zolang dat er niet is, staat er een belofte in de privacyverklaring die de app niet nakomt. Dit hoort bij de overdracht aan Mind, want daarna draait het in hun omgeving. Zie `privacy-besluiten.md`.
 - [ ] Werkt de app offline, en zo ja, wat staat er lokaal op het toestel opgeslagen?
 - [ ] Verwerkersovereenkomst met Supabase getekend? Ligt bij Mind, zie `privacy-besluiten.md`.
 - [ ] Wat is de grondslag voor de leeftijdscategorie nu 16+ een toegangseis is en geen voorkeur? Stond op toestemming, en dat klopt waarschijnlijk niet meer. Vraag voor Paul.

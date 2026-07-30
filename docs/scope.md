@@ -21,11 +21,15 @@ Dit board is de bron. Alles hieronder is een vertaling daarvan naar bouwbare tak
 
 ## Relatie met Stichting Mind
 
-**TODO, en dit blokkeert het App Store-traject:**
+**Wat vastligt sinds 30 juli 2026:**
 
-- Is dit een opdracht van Mind of een eigen initiatief?
-- Onder welk Apple Developer-account komt de app te staan, dat van Mind of dat van ons?
-- Wie is de verwerkingsverantwoordelijke voor de gebruikersdata?
+- **Mind is de verwerkingsverantwoordelijke** voor de gebruikersdata. Wij bouwen het en dragen het daarna over.
+- **De app en de infrastructuur worden overgedragen aan Mind.** De codebase én het Supabase-project komen op hun eigen account te staan. Dat is geen detail voor later: het bepaalt in wiens organisatie het project hoort te staan en wie er straks bij kan. Zie `privacy-besluiten.md`.
+- Het Apple Developer-account en het Google Play-account komen op naam van Mind.
+
+**Nog TODO:**
+
+- Is dit formeel een opdracht van Mind of een eigen initiatief? Dat bepaalt de contractvorm, niet de verwerkingsverantwoordelijkheid, want die ligt bij Mind.
 - Mogen we de naam en het logo van Mind gebruiken, en wie tekent daarvoor?
 
 Een Apple Developer Program-account voor een organisatie vereist een D-U-N-S-nummer en verificatie door Apple. Dat kan weken duren en ligt buiten onze controle. Dit is het langste kritieke pad in het hele project, dus het moet als eerste geregeld zijn.
@@ -63,7 +67,11 @@ Dit zit niet in de app die gebruikers installeren, maar hoort wel bij het projec
 - **Adminpagina voor Mind.** Content toevoegen aan de app, laagdrempelig, zonder tussenkomst van een ontwikkelaar.
 - **Analyticspagina voor het IT-departement.** Overzicht van hoe de app ervoor staat. Leest uit Supabase.
 
-Onderschat dit niet: het zijn eigen schermen met een eigen rollenmodel en eigen RLS-policies. Reken er aparte taken voor, het is geen bijvangst van een feature. Wat de analyticspagina precies toont en aan wie ligt nog open, zie `privacy-besluiten.md`.
+**Dit wordt een webapp**, besloten op 30 juli 2026. Niet een scherm in de iOS-app achter een rol. Beide pagina's leven in `apps/admin` en zijn de reden dat de repo een monorepo is.
+
+Onderschat dit niet: het is een eigen applicatie met een eigen rollenmodel en eigen RLS-policies. Reken er aparte taken voor, het is geen bijvangst van een feature. Wat de analyticspagina precies toont en aan wie ligt nog open, zie `privacy-besluiten.md`.
+
+Twee dingen die hier nog niet vastliggen: **welk framework** de webapp krijgt, en of hij ook een eigen deploy en domein nodig heeft. Dat laatste is werk dat niemand nu heeft ingepland.
 
 ---
 

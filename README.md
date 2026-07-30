@@ -65,7 +65,9 @@ git push --force-with-lease           # draft PR openen
 Het samenwerkingsraamwerk staat. De app zelf nog niet. Eerstvolgende stappen:
 
 - [ ] Apple Developer-account regelen (langste doorlooptijd, dus als eerste)
-- [ ] **Kiezen: monorepo (`apps/mobile` plus `packages/ui`) of één platte Expo-app.** Nu gratis, na het scaffolden duur. Alle padverwijzingen in `CLAUDE.md`, `CODEOWNERS` en `design-system.md` gaan uit van de monorepo.
+- [x] ~~Monorepo of één platte app~~ **Monorepo**, besloten 30 juli 2026: `apps/mobile`, `apps/admin` en `packages/ui`. De admin- en analyticspagina worden een webapp en geen scherm in de app, dus er zijn twee applicaties die dezelfde tokens delen.
+- [ ] **Kiezen: welk framework voor `apps/admin`**, en waar die gedeployed wordt
+- [ ] Het Supabase-project verplaatsen naar de organisatie van Mind, **voordat er gebruikersdata in staat**. Zie `docs/privacy-besluiten.md`.
 - [ ] **Kiezen: welke UI-kit is de basis, of bouwen we eigen componenten?** Er hangen nu acht community-kits aan het Figma-bestand en geen eigen library. Beide kan, allebei tegelijk niet. Zie `docs/design-system.md`.
 - [ ] Scope v1 vastleggen in `docs/scope.md`
 - [ ] Verdelen wie welk van de acht onderdelen doet, zie `docs/taakverdeling.md`
