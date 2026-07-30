@@ -70,11 +70,11 @@ Je hoeft **geen personal access token aan te maken**. Supabase en Figma autorise
 
 Waar we ze voor gebruiken:
 
-| Server | Waarvoor |
-|---|---|
-| `github` | Pull requests, issues, reviews. Vraagt één omgevingsvariabele, zie hieronder. |
-| `supabase-mind` | Database inspecteren, types genereren. Read-only. |
-| `figma` | **Designs ophalen.** Frames, componenten, variables en screenshots. Dit is onze route van design naar code: laat Claude het frame ophalen in plaats van een screenshot op het oog nabouwen. |
+| Server | Waar hij vandaan komt | Waarvoor |
+|---|---|---|
+| `github` | `.mcp.json` | Pull requests, issues, reviews. Vraagt één omgevingsvariabele, zie hieronder. |
+| `supabase-mind` | `.mcp.json` | Database inspecteren, types genereren. Read-only. |
+| `figma` | Een plugin, zie hieronder | **Designs ophalen.** Frames, componenten, variables en screenshots. Dit is onze route van design naar code: laat Claude het frame ophalen in plaats van een screenshot op het oog nabouwen. |
 
 Start Claude Code in de projectmap:
 
@@ -83,7 +83,7 @@ cd mind-app
 claude
 ```
 
-Bij de eerste start vraagt Claude of je de project-MCP's vertrouwt. Antwoord ja. Daarna staan `github`, `supabase-mind` en `figma` op "pending approval". Keur ze goed. Voor `supabase-mind` en `figma` opent er dan een browservenster waarin je inlogt. `github` doet dat niet, die werkt met een omgevingsvariabele.
+Bij de eerste start vraagt Claude of je de project-MCP's vertrouwt. Antwoord ja. Daarna staan `github` en `supabase-mind` op "pending approval". Keur ze goed. Voor `supabase-mind` opent er dan een browservenster waarin je inlogt. `github` doet dat niet, die werkt met een omgevingsvariabele.
 
 Controleer met:
 
@@ -91,7 +91,7 @@ Controleer met:
 /mcp
 ```
 
-`supabase-mind` en `figma` horen nu op `connected` te staan. `github` nog niet, die heeft eerst de stap hieronder nodig.
+`supabase-mind` hoort nu op `connected` te staan. `github` en `figma` nog niet: die hebben allebei eerst een eigen stap hieronder nodig.
 
 ### GitHub: één omgevingsvariabele
 
@@ -127,26 +127,25 @@ Zie je `Authorization header is badly formatted`, dan is de variabele leeg of ni
 gh pr list
 ```
 
-### De Figma-plugin, aangeraden maar niet verplicht
+### Figma: één commando, en dit is verplicht
 
-De MCP hierboven komt uit `.mcp.json` en heb je dus al na het clonen. De **plugin** is iets anders en die komt niet mee uit de repo: die installeert iedereen zelf, één keer.
+`github` en `supabase-mind` komen uit `.mcp.json` en heb je dus al na het clonen. **Figma niet.** Die komt uit een plugin en die installeert iedereen zelf:
 
 ```bash
 claude plugin install figma@claude-plugins-official
 ```
 
-Wat je ermee krijgt zijn een stuk of twaalf skills bovenop de MCP, waaronder `figma-design-to-code` voor het omzetten van een frame naar code, `figma-use-figjam` voor het userflow-board en `figma-generate-library` voor het opzetten van een component library. Zonder de plugin werkt de MCP gewoon, je mist alleen die skills.
+Waarom het zo staat: de plugin brengt de Figma-MCP mee **plus** een stuk of twaalf skills, waaronder `figma-design-to-code` voor het omzetten van een frame naar code, `figma-use-figjam` voor het userflow-board en `figma-generate-library` voor het opzetten van een component library. Toen we de server ook nog in `.mcp.json` hadden staan, stond hij er twee keer onder dezelfde naam. Die dubbeling is eruit gehaald en de plugin is wat overblijft.
 
-**Herstart Claude Code daarna volledig**, net als bij de omgevingsvariabele hierboven: skills worden bij het starten geladen.
+Sla je deze stap over, dan heb je **geen** Figma. Dat is de prijs van deze keuze, en het is de enige koppeling in dit project die niet automatisch meekomt.
 
-Twee dingen om te weten:
+**Herstart Claude Code daarna volledig**, net als bij de omgevingsvariabele hierboven: plugins en skills worden bij het starten geladen. Controleer met `/mcp` dat `figma` op `connected` staat, en met `/figma-use` dat de skills geladen zijn.
 
-- In de **VSCode-extensie** werkt de slash-command `/plugin` niet. Gebruik de `claude plugin`-CLI, zoals hierboven.
-- De plugin brengt zijn eigen MCP-server mee die ook `figma` heet, met dezelfde URL als die in onze `.mcp.json`. Dat is dezelfde server, dus het werkt gewoon. Zie je een waarschuwing over conflicting scopes, dan komt hij daarvandaan en is er niets stuk.
+In de **VSCode-extensie** werkt de slash-command `/plugin` niet. Gebruik de `claude plugin`-CLI, zoals hierboven.
 
 ### Als iets niet verbindt
 
-**figma** is een remote server met OAuth. Werkt hij niet, dan is er een lokaal alternatief: zet in de Figma **desktop-app** onder Preferences de Dev Mode MCP Server aan, en vervang in `.mcp.json` de figma-URL door `http://127.0.0.1:3845/mcp`. Nadeel: de desktop-app moet dan altijd openstaan. Commit die wijziging niet. We kunnen ook zonder Figma MCP werken, alleen minder prettig.
+**figma** is een remote server met OAuth, meegeleverd door de plugin. Werkt hij niet, controleer dan eerst of je Claude Code echt volledig opnieuw hebt gestart. Blijft het misgaan, dan is er een lokaal alternatief: zet in de Figma **desktop-app** onder Preferences de Dev Mode MCP Server aan en voeg die toe met `claude mcp add figma-lokaal --scope local --transport http http://127.0.0.1:3845/mcp`. Nadeel: de desktop-app moet dan altijd openstaan. Doe dat met `--scope local`, dan raakt het de rest niet. We kunnen ook zonder Figma MCP werken, alleen minder prettig.
 
 **supabase-mind** is de remote server `https://mcp.supabase.com/mcp`, waar je met je eigen Supabase-account op inlogt. Let goed op het venster dat opent: Supabase vraagt **voor welke organisatie** je toegang geeft. Kies de organisatie waar het project van deze app in staat. Kies je de verkeerde, dan verbindt de server wel maar ziet hij het project niet, en dat lijkt op een storing terwijl het er geen is. Zie je een leeg projectenlijstje, dan heb je waarschijnlijk je uitnodiging voor de organisatie nog niet geaccepteerd.
 

@@ -75,6 +75,19 @@ Bewust **niet** aanzetten, ook niet later:
 
 Wij lopen overdag. Wachten op een review mag het project nooit stilleggen. Afspraak: **reageert er binnen 12 uur niemand, dan merge je zelf** met het label `self-merged`.
 
+Zo doe je dat vanaf de commandoregel:
+
+```bash
+gh pr merge <nummer> --squash --admin --delete-branch
+git checkout main && git pull
+```
+
+`--admin` is nodig omdat de ruleset één review eist en die er niet is. Zonder die vlag weigert GitHub met "not mergeable". In de webinterface is het hetzelfde: als admin krijg je onderaan de knop om de regels te omzeilen.
+
+> **Let op: dit werkt alleen voor de repo-eigenaar.** In de ruleset staat één bypass actor, en dat is de rol admin. Caesar en Max hebben Write, dus voor hen bestaat deze ontsnapping niet: hun PR blijft staan tot iemand hem goedkeurt. De afspraak van 12 uur klopt dus nu maar voor één van de drie.
+>
+> Twee manieren om dat recht te trekken, en het is een keuze: ze allebei als bypass actor aan de ruleset toevoegen, of het zo laten omdat we naast elkaar lopen en een goedkeuring vragen letterlijk één zin is. De tweede is verdedigbaar zolang we samen zijn, de eerste is nodig zodra iemand een dag apart loopt.
+
 ## 4. Labels
 
 Settings, Labels. Maak minimaal:
