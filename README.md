@@ -27,6 +27,7 @@ Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen
 | [docs/datamodel.md](docs/datamodel.md) | Elke tabel en elk veld, met bewaartermijn en privacyverantwoording |
 | [docs/privacy-besluiten.md](docs/privacy-besluiten.md) | Wat is afgesproken met Mind, wat staat nog open, en wie is aan zet |
 | [docs/design-system.md](docs/design-system.md) | Tokens, assets, componenten, patterns, en hoe Figma en de repo zich verhouden |
+| [docs/assets-en-media.md](docs/assets-en-media.md) | Wat in de bundle hoort en wat in Storage, compressie, caching en egress |
 | [docs/setup-github.md](docs/setup-github.md) | Eenmalige repo-instellingen, door de eigenaar |
 
 ## Skills

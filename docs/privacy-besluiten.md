@@ -19,6 +19,7 @@ De besluiten die daaruit volgden staan in `datamodel.md`. Het Figma-board is op 
 | **DPIA**: is die verplicht, wie bepaalt dat, wie voert hem uit, wat kost het, hoe lang duurt het | Eveline en Paul | Art. 35 AVG. Bij mentale gezondheid, een mogelijk kwetsbare doelgroep en een innovatieve verwerking is dit waarschijnlijk verplicht. Zolang dit onbekend is, weten we niet of er nog eisen bij komen. |
 | **Akkoord op de weer-metafoor** | Eveline en Paul | Bepaalt of de check-in buiten de bijzondere persoonsgegevens blijft. Zonder akkoord bouwen we de check-in niet. Gaat in een aparte mail met onderbouwing. |
 | **Apple Developer-account op naam van Mind** | Mind, organisatorisch | Ongeveer 100 euro per jaar. De aanvraag vereist een D-U-N-S-nummer en verificatie door Apple, dat duurt weken en ligt buiten onze controle. Dit is het langste kritieke pad in het project. |
+| **Google Play developer-account op naam van Mind** | Mind, organisatorisch | Eenmalig 25 dollar. Belangrijker dan de kosten: een **persoonlijk** account moet voor de eerste productierelease 12 testers 14 dagen aaneengesloten laten testen. Een **organisatie**-account niet. Doen we dit onder een persoonlijk account, dan komt er twee weken wachttijd bij die niemand heeft ingepland. |
 | **Verwerkersovereenkomsten** | Mind | Supabase, Apple App Store, Google Play Store. n8n is van deze lijst af, want daar gaan geen persoonsgegevens doorheen. |
 
 ## Wat wij nog moeten beslissen

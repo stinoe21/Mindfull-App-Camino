@@ -87,8 +87,33 @@ Apps in deze categorie krijgen strengere review. Reken op minimaal één afwijzi
 
 - Geen medische claims doen. Geen diagnose, geen behandeling, geen "helpt tegen".
 - Duidelijk maken dat dit geen vervanging is voor professionele hulp.
-- Leeftijdsclassificatie kloppend invullen.
+- Leeftijdsclassificatie kloppend invullen, en consistent met onze 16+-eis.
 - Privacy nutrition label in App Store Connect moet exact overeenkomen met wat de app werkelijk verzamelt.
+
+### Twee harde eisen die code kosten
+
+**Sign in with Apple is verplicht** zodra je een andere social login aanbiedt (richtlijn 4.8). Het board heeft dit al goed: Google, **Apple met private relay**, of e-mail. Bouw je alleen Google, dan is dat een afwijzing. De richtlijn eist ook dat je niet meer dan naam en e-mail opvraagt en dat de gebruiker zijn e-mail privé kan houden, en dat past bij onze privacykeuzes.
+
+**Account verwijderen moet in de app** (richtlijn 5.1.1(v)). Een verwijzing naar "mail ons" of een webformulier is niet genoeg. Dit zit in het onderdeel Profiel en instellingen en het is geen bijvangst: het moet ook echt alle data weghalen, zie `datamodel.md`.
+
+### "Het mag er niet uitzien als een vibe coded app"
+
+Dat is geen enkele richtlijn maar het gevolg van 2.1 (completeness) en 4.2 (minimum functionality). Wat een reviewer concreet afkeurt:
+
+- **Placeholder-content of lorem ipsum.** Let op: dat staat nu nog in de styleguide.
+- Knoppen die niets doen, of schermen die leeg blijven.
+- Een ontbrekende loading-, empty- of error-state. Onze definition of done dekt dit al, en dit is de reden dat die er staat.
+- Een crash of een leeg scherm bij de eerste keer openen, dus met een leeg account en zonder data.
+- Verkeerde of ontbrekende app-icon en splash formaten.
+- Universal declareren en dan geen bruikbare iPad-layout hebben.
+
+Dit is precies waarom we de states niet als extra maar als onderdeel van "af" behandelen.
+
+### Google Play, en een risico op het kritieke pad
+
+Nieuwe **persoonlijke** developer-accounts moeten voor hun eerste productierelease een closed test doen met minimaal 12 testers die 14 dagen aaneengesloten meedoen. Voor **organisatie**-accounts geldt dat niet.
+
+Dat is een extra reden om ook het Play-account op naam van Mind te zetten en niet alleen het Apple-account. Doen we het onder een persoonlijk account, dan komt er twee weken wachttijd bij die niemand had ingepland. Zie `privacy-besluiten.md`.
 
 ---
 
