@@ -4,7 +4,7 @@ Een mobiele app voor Stichting Mind, gebouwd door drie mensen tijdens het lopen 
 
 **Stack:** React Native met Expo en expo-router, Supabase voor backend en auth, iOS en Android.
 
-**Team:** [@stinoe21](https://github.com/stinoe21) (architectuur, backend, releases), [@Cschoorl](https://github.com/Cschoorl) (design system), [@maxhelmantel-gif](https://github.com/maxhelmantel-gif) (productlogica, content)
+**Team:** [@stinoe21](https://github.com/stinoe21) (architectuur, backend, releases), [@Cschoorl](https://github.com/Cschoorl) (structuur, pagina's, productlogica), [@maxhelmantel-gif](https://github.com/maxhelmantel-gif) (design system, visuele consistentie)
 
 **Userflow:** [Figma board](https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow)
 
@@ -19,12 +19,14 @@ Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen
 | Bestand | Waarvoor |
 |---|---|
 | [CLAUDE.md](CLAUDE.md) | Het projectcontract. Laadt automatisch in elke Claude Code-sessie. |
+| [AGENTS.md](AGENTS.md) | Hetzelfde contract, kort, voor agents die `CLAUDE.md` niet laden (Cursor, Codex) |
 | [ONBOARDING.md](ONBOARDING.md) | Setup voor een nieuw teamlid. Dit deel je. |
 | [docs/scope.md](docs/scope.md) | Wat bouwen we wel en expliciet niet in v1 |
+| [docs/productprincipes.md](docs/productprincipes.md) | Hoe de app zich hoort te gedragen: toon, houding, wat we nooit doen |
 | [docs/taakverdeling.md](docs/taakverdeling.md) | Wie is waar eigenaar van, hoe een taak eruitziet, dagritme |
 | [docs/datamodel.md](docs/datamodel.md) | Elke tabel en elk veld, met bewaartermijn en privacyverantwoording |
 | [docs/privacy-besluiten.md](docs/privacy-besluiten.md) | Wat is afgesproken met Mind, wat staat nog open, en wie is aan zet |
-| [docs/design-system.md](docs/design-system.md) | Tokens, componenten, en hoe Figma en de repo zich verhouden |
+| [docs/design-system.md](docs/design-system.md) | Tokens, assets, componenten, patterns, en hoe Figma en de repo zich verhouden |
 | [docs/setup-github.md](docs/setup-github.md) | Eenmalige repo-instellingen, door de eigenaar |
 
 ## Skills
@@ -61,6 +63,7 @@ git push --force-with-lease           # draft PR openen
 Het samenwerkingsraamwerk staat. De app zelf nog niet. Eerstvolgende stappen:
 
 - [ ] Apple Developer-account regelen (langste doorlooptijd, dus als eerste)
+- [ ] **Kiezen: monorepo (`apps/mobile` plus `packages/ui`) of één platte Expo-app.** Nu gratis, na het scaffolden duur. Alle padverwijzingen in `CLAUDE.md`, `CODEOWNERS` en `design-system.md` gaan uit van de monorepo.
 - [ ] Scope v1 vastleggen in `docs/scope.md`
 - [ ] Expo-app scaffolden, CI groen krijgen op alle drie de laptops
 - [ ] Design tokens plus de basiscomponenten, in alle states

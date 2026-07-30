@@ -2,7 +2,7 @@
 
 Projectinstructies voor Claude Code. Dit bestand laadt automatisch bij iedere sessie, bij alle drie de teamleden. Het is het contract waar we ons alle drie aan houden.
 
-Lees bij twijfel ook `docs/scope.md` (wat bouwen we wel en niet) en `docs/taakverdeling.md` (wie is waar eigenaar van).
+Lees bij twijfel ook `docs/scope.md` (wat bouwen we wel en niet), `docs/productprincipes.md` (hoe de app zich hoort te gedragen) en `docs/taakverdeling.md` (wie is waar eigenaar van).
 
 ---
 
@@ -91,6 +91,7 @@ Het grootste risico bij drie parallelle agents is dat het beeld uit elkaar loopt
 - **Nooit hardcoded kleuren, spacing, radii, font sizes of shadows.** Altijd via de tokens uit `packages/ui/tokens`. Er staat een lint-regel op die dit weigert.
 - Bouw geen nieuwe component als er al een is. Zoek eerst in `packages/ui/components`.
 - Elke nieuwe of gewijzigde component wordt toegevoegd aan het kitchen sink-scherm (`apps/mobile/src/app/_dev/kitchen-sink.tsx`) met al zijn states.
+- **Introduceer nooit zelf een icoon, illustratie of afbeelding.** De assetbibliotheek staat vast, ook de weer-iconen. Mis je iets, meld het.
 - Figma is de bron voor hoe iets eruitziet. De **build** hangt nooit af van een live Figma-query. Tokens en assets staan in de repo.
 
 Zie `docs/design-system.md`.
@@ -101,11 +102,12 @@ Een taak is pas af als dit allemaal klopt. Zie de skill `nieuwe-feature` voor de
 
 1. Loading, empty en error state zijn geïmplementeerd, niet alleen het gelukte pad.
 2. Werkt zonder netwerk, of faalt netjes met een begrijpelijke melding.
-3. `npm run typecheck`, `npm run lint` en `npm test` zijn groen.
-4. Geen hardcoded designwaarden.
-5. Geen nieuwe dependency.
-6. Geen gedeelde bestanden aangeraakt buiten de afspraak.
-7. Er is een screenshot of opname in de pull request als er iets zichtbaars is veranderd.
+3. De vier vragen onderaan `docs/productprincipes.md` zijn nagelopen.
+4. `npm run typecheck`, `npm run lint` en `npm test` zijn groen.
+5. Geen hardcoded designwaarden, en geen zelf toegevoegde assets.
+6. Geen nieuwe dependency.
+7. Geen gedeelde bestanden aangeraakt buiten de afspraak.
+8. Er is een screenshot of opname in de pull request als er iets zichtbaars is veranderd.
 
 ## 8. Privacy: dit is een app over mentale gezondheid
 

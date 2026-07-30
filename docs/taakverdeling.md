@@ -8,13 +8,17 @@ Wij verdelen op twee assen tegelijk. Dat klinkt dubbel, maar het lost twee versc
 
 Ieder heeft één gebied waarvoor hij eindverantwoordelijk is. Dit betekent **niet** dat alleen die persoon daar mag werken. Het betekent dat wijzigingen in dat gebied door hem gereviewd worden, en dat hij de knopen doorhakt als er twijfel is.
 
+> **Eigenaarschap is geen schrijfrecht, en het wordt technisch ook niet afgedwongen.** Iedereen mag aan alles werken. GitHub weigert geen wijziging omdat die uit de branch van iemand anders komt, en er staat bewust **geen** verplichte Code Owner-review op de repo. `.github/CODEOWNERS` doet één ding: automatisch de juiste reviewer voorstellen. Eén review volstaat, van wie dan ook. Zie `docs/setup-github.md`.
+>
+> Zou je dit wel afdwingen, dan blokkeert elke ochtend waarop de eigenaar toevallig eerder gaat lopen dan de rest. Dat is precies het soort stilstand dat we niet kunnen hebben.
+
 | Eigenaar | GitHub | Verantwoordelijk voor | Reviewt |
 |---|---|---|---|
 | Stijn | `@stinoe21` | Architectuur, Supabase, datamodel, CI, releases, App Store | `supabase/**`, `.github/**`, `package.json`, auth |
-| Caesar | `@Cschoorl` | Design system, componenten, visuele consistentie, interaction design | `packages/ui/**`, alles met een zichtbare wijziging |
-| Max | `@maxhelmantel-gif` | Productlogica, userflow, content, teksten, functionele acceptatie | `apps/mobile/src/features/**`, alle UI-teksten |
+| Caesar | `@Cschoorl` | Structuur, pagina's, productlogica, userflow, content, functionele acceptatie | `apps/mobile/src/features/**`, alle UI-teksten |
+| Max | `@maxhelmantel-gif` | Design system, componenten, visuele consistentie, interaction design | `packages/ui/**`, alles met een zichtbare wijziging |
 
-> **Bevestig deze verdeling.** Wie van Caesar en Max op design en wie op product zit is een voorstel, geen beslissing. Draai het gerust om. Pas dan ook `.github/CODEOWNERS` aan, want daar staat dezelfde verdeling in en die bepaalt wie GitHub automatisch als reviewer toewijst.
+> **Bevestigd op 30 juli 2026.** Deze verdeling stond eerder omgedraaid en was gemarkeerd als voorstel. `.github/CODEOWNERS` is meegedraaid.
 
 ## As 2: feature-eigenaarschap (per taak)
 

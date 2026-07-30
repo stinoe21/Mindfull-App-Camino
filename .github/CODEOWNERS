@@ -1,8 +1,11 @@
 # Automatische reviewer-toewijzing. GitHub wijst de juiste persoon toe
 # zodra een PR een van deze paden raakt.
 #
-# LET OP: de verdeling tussen @Cschoorl en @maxhelmantel-gif is een voorstel.
-# Bevestig of draai om, zie docs/taakverdeling.md.
+# Verdeling bevestigd op 30 juli 2026, zie docs/taakverdeling.md.
+#
+# Dit STELT een reviewer VOOR en blokkeert niets. Er staat bewust geen
+# verplichte Code Owner-review op de repo: iedereen mag aan alles werken
+# en een review van wie dan ook volstaat. Zie docs/setup-github.md.
 
 # Architectuur, backend, releases: Stijn
 /supabase/              @stinoe21
@@ -11,14 +14,16 @@
 /package-lock.json      @stinoe21
 /app.config.ts          @stinoe21
 /CLAUDE.md              @stinoe21
+/AGENTS.md              @stinoe21
 /.mcp.json              @stinoe21
 /.claude/               @stinoe21
 /docs/datamodel.md      @stinoe21
 
-# Design system en visuele consistentie: Caesar
-/packages/ui/           @Cschoorl
-/docs/design-system.md  @Cschoorl
+# Structuur, pagina's, productlogica, userflow: Caesar
+/apps/mobile/src/features/   @Cschoorl
+/docs/scope.md               @Cschoorl
+/docs/productprincipes.md    @Cschoorl
 
-# Productlogica, userflow, content: Max
-/apps/mobile/src/features/   @maxhelmantel-gif
-/docs/scope.md               @maxhelmantel-gif
+# Design system, componenten, visuele consistentie: Max
+/packages/ui/           @maxhelmantel-gif
+/docs/design-system.md  @maxhelmantel-gif

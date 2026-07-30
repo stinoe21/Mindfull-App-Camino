@@ -133,4 +133,4 @@ git reset --hard origin/main
 | Labels | Gedaan |
 | Branch protection | **Actief** sinds 30 juli 2026. Ruleset `protect-main` (id `20028996`) via GitHub Pro. |
 | Issue board | Nog doen, sectie 5 |
-| CODEOWNERS-verdeling bevestigen | Nog doen, is nu een voorstel |
+| CODEOWNERS-verdeling bevestigen | Gedaan, 30 juli 2026. Caesar op structuur en productlogica, Max op het design system. |
