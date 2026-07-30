@@ -50,9 +50,11 @@ Het weghalen in een nieuwe commit lost dat niet op: bij een publieke repo is de 
 
 Zou je dit ooit alsnog willen, dan is de volgorde: eerst met Mind afstemmen, dan anonimiseren naar rollen in plaats van namen, dan de history herschrijven, en dan pas de zichtbaarheid omzetten. Niet andersom. Vier dollar per maand is goedkoper.
 
-### Zodra branch protection wel kan
+### De ruleset staat aan
 
-Er staat een kant-en-klare ruleset klaar in `docs/ruleset.json`. Toepassen:
+Toegepast op 30 juli 2026 als `protect-main`, id `20028996`. Actief op `main` zijn nu: `deletion`, `non_fast_forward` en `pull_request` met één verplichte review, alleen squash, en approvals die vervallen zodra er nieuw werk gepusht wordt.
+
+Opnieuw toepassen of op een verse repo aanzetten gaat zo:
 
 ```bash
 gh api -X POST repos/stinoe21/Mindfull-App-Camino/rulesets --input docs/ruleset.json
@@ -129,6 +131,6 @@ git reset --hard origin/main
 | Collaborators uitgenodigd (`@Cschoorl`, `@maxhelmantel-gif`) | Uitnodiging verstuurd, moeten zelf accepteren |
 | Squash-only merge, branches auto-verwijderen | Gedaan |
 | Labels | Gedaan |
-| Branch protection | **Wacht op GitHub Pro.** Besloten 30 juli 2026. Zodra het plan actief is: het commando in sectie 3 draaien. |
+| Branch protection | **Actief** sinds 30 juli 2026. Ruleset `protect-main` (id `20028996`) via GitHub Pro. |
 | Issue board | Nog doen, sectie 5 |
 | CODEOWNERS-verdeling bevestigen | Nog doen, is nu een voorstel |
