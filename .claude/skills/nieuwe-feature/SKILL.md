@@ -49,6 +49,7 @@ Terwijl je bouwt:
 
 - **Zoek eerst in `packages/ui/components`** voordat je iets nieuws maakt. De kans is groot dat het er al is.
 - **Nooit een hardcoded kleur, spacing, radius, fontgrootte of shadow.** Altijd via de tokens. De lint-regel weigert het anders alsnog.
+- **Introduceer nooit zelf een icoon, illustratie of afbeelding**, ook niet als placeholder. De assetbibliotheek is gesloten, ook de weer-iconen. Mis je iets, dan is dat een blokkade die je meldt. Zie `docs/design-system.md` en `docs/assets-en-media.md`.
 - Geen nieuwe dependency. Lukt het niet zonder, meld het.
 - Raak geen bestand aan uit de verbodenlijst in `CLAUDE.md` sectie 5.
 
@@ -75,6 +76,7 @@ Dit is een app over mentale gezondheid. Loop dit expliciet na:
 - [ ] Ik heb geen analytics-event, tracking-veld of databasekolom toegevoegd die er niet stond
 - [ ] Alles wat ik opsla is ook verwijderbaar
 - [ ] Ik heb geen hulpteksten, telefoonnummers of doorverwijzingen zelf verzonnen
+- [ ] Ik tel niets op de collectieve tabel. Die heeft geen gebruikerscode, dus een teller hoort aan de persoonlijke kant. Zie `docs/limieten-en-misbruik.md`
 
 Twijfel je over één van deze punten: niet doen, en vragen.
 
@@ -98,6 +100,7 @@ Is er iets zichtbaars veranderd:
 De taak is af als dit allemaal waar is:
 
 - [ ] Loading, empty, error en offline state werken
+- [ ] De vier vragen onderaan `docs/productprincipes.md` zijn nagelopen
 - [ ] `typecheck`, `lint` en `test` zijn groen
 - [ ] Geen hardcoded designwaarden
 - [ ] Geen nieuwe dependency

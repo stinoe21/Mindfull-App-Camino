@@ -4,7 +4,7 @@ Een mobiele app voor Stichting Mind, gebouwd door drie mensen tijdens het lopen 
 
 **Stack:** React Native met Expo en expo-router, Supabase voor backend en auth, iOS en Android.
 
-**Team:** [@stinoe21](https://github.com/stinoe21) (architectuur, backend, releases), [@Cschoorl](https://github.com/Cschoorl) (design system), [@maxhelmantel-gif](https://github.com/maxhelmantel-gif) (productlogica, content)
+**Team:** [@stinoe21](https://github.com/stinoe21) (architectuur, backend, releases), [@Cschoorl](https://github.com/Cschoorl) (structuur, pagina's, productlogica), [@maxhelmantel-gif](https://github.com/maxhelmantel-gif) (design system, visuele consistentie)
 
 **Userflow:** [Figma board](https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow)
 
@@ -19,11 +19,16 @@ Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen
 | Bestand | Waarvoor |
 |---|---|
 | [CLAUDE.md](CLAUDE.md) | Het projectcontract. Laadt automatisch in elke Claude Code-sessie. |
+| [AGENTS.md](AGENTS.md) | Hetzelfde contract, kort, voor agents die `CLAUDE.md` niet laden (Cursor, Codex) |
 | [ONBOARDING.md](ONBOARDING.md) | Setup voor een nieuw teamlid. Dit deel je. |
 | [docs/scope.md](docs/scope.md) | Wat bouwen we wel en expliciet niet in v1 |
+| [docs/productprincipes.md](docs/productprincipes.md) | Hoe de app zich hoort te gedragen: toon, houding, wat we nooit doen |
 | [docs/taakverdeling.md](docs/taakverdeling.md) | Wie is waar eigenaar van, hoe een taak eruitziet, dagritme |
 | [docs/datamodel.md](docs/datamodel.md) | Elke tabel en elk veld, met bewaartermijn en privacyverantwoording |
-| [docs/design-system.md](docs/design-system.md) | Tokens, componenten, en hoe Figma en de repo zich verhouden |
+| [docs/privacy-besluiten.md](docs/privacy-besluiten.md) | Wat is afgesproken met Mind, wat staat nog open, en wie is aan zet |
+| [docs/design-system.md](docs/design-system.md) | Tokens, assets, componenten, patterns, en hoe Figma en de repo zich verhouden |
+| [docs/assets-en-media.md](docs/assets-en-media.md) | Wat in de bundle hoort en wat in Storage, compressie, caching en egress |
+| [docs/limieten-en-misbruik.md](docs/limieten-en-misbruik.md) | Rate limits, waarom de check-in-teller persoonlijk moet zijn, en wat de anonieme pool niet kan |
 | [docs/setup-github.md](docs/setup-github.md) | Eenmalige repo-instellingen, door de eigenaar |
 
 ## Skills
@@ -59,8 +64,12 @@ git push --force-with-lease           # draft PR openen
 
 Het samenwerkingsraamwerk staat. De app zelf nog niet. Eerstvolgende stappen:
 
-- [ ] Apple Developer-account regelen (langste doorlooptijd, dus als eerste)
+- [ ] Mind vragen het Apple Developer-account vroeg aan te vragen (langste doorlooptijd; hun actie, niet de onze)
+- [x] ~~Monorepo of één platte app~~ **Monorepo**, besloten 30 juli 2026: `apps/mobile`, `apps/admin`, `packages/ui` en `packages/types`. De admin is een CMS-webapp waar Mind content in zet, en de app geeft die weer. Ze delen de database en de gegenereerde types, niet het beeld.
+- [ ] Kiezen welk framework `apps/admin` krijgt en waar die gedeployed wordt. Pas nodig als de mobiele app staat: die is de prioriteit.
+- [ ] **Kiezen: welke UI-kit is de basis, of bouwen we eigen componenten?** Er hangen nu acht community-kits aan het Figma-bestand en geen eigen library. Beide kan, allebei tegelijk niet. Zie `docs/design-system.md`.
 - [ ] Scope v1 vastleggen in `docs/scope.md`
+- [ ] Verdelen wie welk van de acht onderdelen doet, zie `docs/taakverdeling.md`
 - [ ] Expo-app scaffolden, CI groen krijgen op alle drie de laptops
 - [ ] Design tokens plus de basiscomponenten, in alle states
 - [ ] Elk scherm uit de userflow als leeg routebestand aanmaken

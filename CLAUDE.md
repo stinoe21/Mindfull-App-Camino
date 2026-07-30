@@ -2,7 +2,25 @@
 
 Projectinstructies voor Claude Code. Dit bestand laadt automatisch bij iedere sessie, bij alle drie de teamleden. Het is het contract waar we ons alle drie aan houden.
 
-Lees bij twijfel ook `docs/scope.md` (wat bouwen we wel en niet) en `docs/taakverdeling.md` (wie is waar eigenaar van).
+Lees bij twijfel het document dat bij je vraag hoort. Dit is de volledige lijst, er is niets daarbuiten.
+
+| Je vraag | Document |
+|---|---|
+| Wat bouwen we wel en expliciet niet in v1 | `docs/scope.md` |
+| Hoe de app zich hoort te gedragen: toon, houding, wat we nooit doen | `docs/productprincipes.md` |
+| Tokens, componenten, assets, en hoe Figma en de repo zich verhouden | `docs/design-system.md` |
+| Welke tabellen en velden bestaan, met bewaartermijn per veld | `docs/datamodel.md` |
+| Wat met Mind is afgesproken over privacy, en wat nog open staat | `docs/privacy-besluiten.md` |
+| Waar een afbeelding hoort, compressie, caching en egress | `docs/assets-en-media.md` |
+| Rate limits, misbruik, en waarom de check-in-teller persoonlijk moet zijn | `docs/limieten-en-misbruik.md` |
+| Wie waar eigenaar van is, hoe een taak eruitziet, dagritme | `docs/taakverdeling.md` |
+| Eenmalige repo-instellingen, door de eigenaar | `docs/setup-github.md` |
+
+**Staat het antwoord in geen van deze bestanden, dan is het niet afgesproken.** Vraag ernaar, vul het niet zelf in. Dat geldt ook voor iets dat logisch of onvermijdelijk lijkt.
+
+Drie skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (een taak van begin tot eind, met de definition of done) en `pr-check` (een pull request van een teamgenoot reviewen).
+
+`AGENTS.md` is een korte versie van dit bestand, voor agents die `CLAUDE.md` niet laden. Wijzigt hier een harde regel, werk die dan daar ook bij.
 
 ---
 
@@ -11,8 +29,20 @@ Lees bij twijfel ook `docs/scope.md` (wat bouwen we wel en niet) en `docs/taakve
 Een mobiele app voor **Stichting Mind**, werktitel "Mentale Weerbericht", gebouwd door drie mensen tijdens het lopen van de Camino, zomer 2026.
 
 - **Doel:** zie `docs/scope.md`. Is de scope daar nog niet ingevuld, vraag er dan naar in plaats van iets aan te nemen.
-- **Platform:** iOS en Android, via de App Store en de Play Store.
-- **Stack:** React Native met Expo en expo-router. Supabase voor backend, auth en database.
+- **Platform:** iOS en Android, via de App Store en de Play Store. Daarnaast een **webapp** voor de adminpagina van Mind en de analyticspagina voor het IT-departement. Die zitten dus niet in de app die gebruikers installeren, zie `docs/scope.md`.
+- **Stack:** React Native met Expo en expo-router. Supabase voor backend, auth en database. Welk framework de webapp krijgt, staat nog open.
+- **Repo:** een monorepo, besloten op 30 juli 2026 omdat er twee applicaties zijn die dezelfde tokens en hetzelfde datamodel delen.
+
+  ```
+  apps/mobile      de Expo-app die in de stores komt
+  apps/admin       de webapp: Mind zet er content in, de app geeft die weer
+  packages/ui      tokens en componenten
+  packages/types   TypeScript-types, gegenereerd uit het Supabase-schema
+  ```
+
+  De adminwebapp is dus een **CMS**: Mind uploadt daar content en de app leest die uit Supabase. **De mobiele app staat centraal en de admin komt daarna**, zie `docs/taakverdeling.md`. De twee applicaties delen geen beeld, ze delen de database. Dat is precies waarom `packages/types` bestaat: één keer genereren uit het schema, en niet in twee applicaties een eigen kopie die uit elkaar loopt.
+
+  Let op: de componenten in `packages/ui` zijn React Native-componenten en draaien niet zonder meer in een webapp. De **tokens** zijn platte waarden en gelden overal. Zie `docs/design-system.md`.
 - **Domein:** mentale gezondheid. Dat heeft harde gevolgen voor wat je met data mag doen, zie sectie 8.
 
 **Userflow (Figma board):**
@@ -91,9 +121,10 @@ Het grootste risico bij drie parallelle agents is dat het beeld uit elkaar loopt
 - **Nooit hardcoded kleuren, spacing, radii, font sizes of shadows.** Altijd via de tokens uit `packages/ui/tokens`. Er staat een lint-regel op die dit weigert.
 - Bouw geen nieuwe component als er al een is. Zoek eerst in `packages/ui/components`.
 - Elke nieuwe of gewijzigde component wordt toegevoegd aan het kitchen sink-scherm (`apps/mobile/src/app/_dev/kitchen-sink.tsx`) met al zijn states.
+- **Introduceer nooit zelf een icoon, illustratie of afbeelding.** De assetbibliotheek staat vast, ook de weer-iconen. Mis je iets, meld het.
 - Figma is de bron voor hoe iets eruitziet. De **build** hangt nooit af van een live Figma-query. Tokens en assets staan in de repo.
 
-Zie `docs/design-system.md`.
+Zie `docs/design-system.md` voor tokens en componenten, en `docs/assets-en-media.md` voor waar een afbeelding hoort. Kort: iconen, illustraties en gradients zitten in de app bundle, alleen content die Mind zelf toevoegt gaat naar Supabase Storage. Comprimeer vooraf, gebruik een public bucket in plaats van signed URLs, en zet `cacheControl` hoog. Een signed URL per keer opnieuw genereren maakt de cache nooit warm en kost elke keer egress.
 
 ## 7. Definition of done
 
@@ -101,11 +132,12 @@ Een taak is pas af als dit allemaal klopt. Zie de skill `nieuwe-feature` voor de
 
 1. Loading, empty en error state zijn geïmplementeerd, niet alleen het gelukte pad.
 2. Werkt zonder netwerk, of faalt netjes met een begrijpelijke melding.
-3. `npm run typecheck`, `npm run lint` en `npm test` zijn groen.
-4. Geen hardcoded designwaarden.
-5. Geen nieuwe dependency.
-6. Geen gedeelde bestanden aangeraakt buiten de afspraak.
-7. Er is een screenshot of opname in de pull request als er iets zichtbaars is veranderd.
+3. De vier vragen onderaan `docs/productprincipes.md` zijn nagelopen.
+4. `npm run typecheck`, `npm run lint` en `npm test` zijn groen.
+5. Geen hardcoded designwaarden, en geen zelf toegevoegde assets.
+6. Geen nieuwe dependency.
+7. Geen gedeelde bestanden aangeraakt buiten de afspraak.
+8. Er is een screenshot of opname in de pull request als er iets zichtbaars is veranderd.
 
 ## 8. Privacy: dit is een app over mentale gezondheid
 
@@ -116,8 +148,11 @@ Dit is geen formaliteit. Behandel het als een harde eis.
 - Voeg **nooit** eigenhandig een analytics-event, tracking-veld of databasekolom toe omdat het "handig" lijkt. Elk veld dat data over een gebruiker vastlegt, is een expliciete productbeslissing.
 - Elk stuk gebruikersdata moet verwijderbaar zijn. Bouw je opslag, bouw dan ook het verwijderen.
 - Verwerk je iets rond crisis of nood, wijk dan niet af van de tekst die in `docs/scope.md` is vastgelegd. Verzin zelf geen hulpteksten, telefoonnummers of doorverwijzingen.
+- **Tel check-ins nooit op de collectieve tabel.** Daar staat geen gebruikerscode in, dus het kan niet, en een poging daartoe breekt de anonimisering. De begrenzing van één check-in per dag hoort aan de persoonlijke kant, vóór het wegschrijven. Zie `docs/limieten-en-misbruik.md`.
 
 Bij twijfel: niet opslaan, en vragen.
+
+Wat er met Mind is afgesproken, wat nog open staat en wie daarvoor aan zet is: `docs/privacy-besluiten.md`. De inhoudelijke besluiten waar je tegenaan bouwt staan in `docs/datamodel.md`.
 
 ## 9. Backend: Supabase
 
@@ -126,17 +161,58 @@ Bij twijfel: niet opslaan, en vragen.
 - TypeScript-types worden gegenereerd uit het schema, niet met de hand geschreven.
 - Row Level Security staat aan op elke tabel met gebruikersdata. Een tabel zonder RLS is een bug.
 
+### Als de MCP niet werkt
+
+Er zijn drie routes, en welke je pakt hangt af van wat je wil doen. Geen ervan vraagt een service role key op je laptop.
+
+| Wat je wil | Route |
+|---|---|
+| Kijken: schema, tabellen, policies, logs | De MCP. Werkt die niet, dan het Supabase-dashboard in de browser, of de `supabase` CLI na `supabase login` met je eigen account. |
+| Types genereren | `supabase gen types typescript` via de CLI. Werkt zonder MCP. |
+| Schema wijzigen | **Altijd** een migratiebestand plus `supabase db push`. De CLI authenticeert met jouw account, niet met een key die alles mag. |
+| Vrij experimenteren, data schrijven, dingen stukmaken | **Lokale Supabase**, met `supabase start`. Daar heb je alle rechten en raak je geen productiedata. Dit is de plek waar je mag rommelen. |
+
+> **Geen service role key op een laptop, en nooit voor een agent.** Die key omzeilt Row Level Security volledig, en RLS is precies het mechanisme dat de twee datastromen uit `datamodel.md` gescheiden houdt. Met zo'n key is één verkeerde join genoeg om de collectieve pool aan gebruikers-id's te koppelen, en dan is de anonimisering weg die we aan Mind hebben belegd.
+>
+> Drie laptops op wisselende wifi betekent drie kopieën van een sleutel die alles kan met mentale-gezondheidsdata, terwijl de DPIA nog loopt. De lokale stack lost hetzelfde probleem op zonder dat risico.
+>
+> De productie-service-role-key hoort alleen in de serveromgeving van de admin- en analyticspagina, en nooit in een `.env` naast de app.
+
 ## 10. MCP's
 
-Zie `.mcp.json` in de repo. Iedereen krijgt na een `git clone` dezelfde koppelingen. Tokens komen uit een eigen lokale `.env`, die nooit wordt gecommit.
+Zie `.mcp.json` in de repo. Iedereen krijgt na een `git clone` dezelfde koppelingen. Zet **nooit** een token, key of wachtwoord in `.mcp.json` of `.env.example`, die bestanden gaan de repo in. Is er een token nodig, dan staat in `.mcp.json` alleen de naam van een omgevingsvariabele.
 
 | Server | Waarvoor |
 |---|---|
-| `github` | Pull requests, issues, reviews |
-| `supabase` | Database inspecteren, types genereren (read-only) |
-| `figma` | Frames, componenten en variables uit het designbestand lezen |
+| `github` | Pull requests, issues, reviews. Heeft één omgevingsvariabele nodig, zie hieronder. |
+| `supabase-mind` | Database inspecteren, types genereren. Staat op **read-only**. |
+| `figma` | Designs ophalen: frames, componenten, variables en screenshots uit het designbestand |
 
-Opzetten staat in `ONBOARDING.md`.
+`supabase-mind` en `figma` autoriseer je via de browser met je eigen account, zonder token. De Supabase-MCP draait dus **niet** via `npx`. Die stdio-variant kan geen browserlogin en verwacht een personal access token, en dat is precies wat we niet willen.
+
+**GitHub is de uitzondering en heeft één token nodig.** Die server ondersteunt geen dynamic client registration en publiceert geen OAuth-metadata, dus browserlogin bestaat er niet. In plaats van drie personal access tokens aan te maken en te verlengen, hergebruiken we het token dat de `gh` CLI al voor je beheert.
+
+Windows:
+
+```powershell
+setx GITHUB_MCP_TOKEN (gh auth token)
+```
+
+macOS of Linux, in `~/.zshrc` of `~/.bashrc`:
+
+```bash
+export GITHUB_MCP_TOKEN=$(gh auth token)
+```
+
+Herstart daarna Claude Code volledig, of VSCode als je de extensie gebruikt: een omgevingsvariabele wordt gelezen bij het starten van het proces. De variant met `~/.zshrc` is de nettere, want dan bestaat er geen tweede kopie van het token buiten je keyring. Werkt `github` niet en zie je `Authorization header is badly formatted`, dan is de variabele leeg of niet meegekomen.
+
+**Figma is onze route van design naar code.** Haal een frame op met de MCP in plaats van een screenshot op het oog na te bouwen. De build hangt nooit af van een live Figma-query, zie sectie 6: tokens en assets staan in de repo.
+
+De server heet `supabase-mind` en niet `supabase`, omdat dat laatste bij sommigen al een user-scope server is voor een ander project. Gelijke namen in verschillende scopes botsen.
+
+Ieder verbindt zelf, met het eigen account. Daarvoor heb je wel toegang nodig tot wat eronder zit: de GitHub-repo, de Supabase-organisatie en het Figma-bestand. Zie je een server niet verbinden of een leeg projectenlijstje, dan mist waarschijnlijk je uitnodiging. Vraag Stijn. Stap voor stap staat het in `ONBOARDING.md`.
+
+De `supabase-mind`-URL is gescoped met `?project_ref=fpvvmgdzftmkyiqfvpjj`, het project **Mindfull-App-Camino** in de organisatie **Back to Being** (regio `eu-central-1`, Frankfurt). De MCP ziet daardoor alleen dit project, ook als je zelf nog andere Supabase-projecten hebt.
 
 ## 11. Toon en taal
 

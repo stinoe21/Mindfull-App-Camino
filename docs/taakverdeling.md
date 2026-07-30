@@ -1,32 +1,24 @@
 # Taakverdeling
 
-Wij verdelen op twee assen tegelijk. Dat klinkt dubbel, maar het lost twee verschillende problemen op.
+Het belangrijkste feit voor dit document: **wij lopen samen terwijl we bouwen.** We kunnen elk moment overleggen, zonder ticket en zonder te wachten. Alles hieronder is er dus om te voorkomen dat we op elkaar wachten, niet om af te bakenen wie waar mag komen.
+
+> **Iedereen heeft toegang tot alles.** Niets in dit document, en niets in `.github/CODEOWNERS`, blokkeert een wijziging omdat die "niet bij iemand hoort". Zie je iets dat beter kan, dan pak je het en je zegt het. We lopen naast elkaar, dus dat is één zin en geen procedure.
+>
+> Er staat bewust **geen** verplichte Code Owner-review op de repo. Eén review volstaat, van wie dan ook. Zie `docs/setup-github.md`.
 
 ---
 
-## As 1: systeemeigenaarschap (vast)
+## Zo verdelen we het werk: per onderdeel van de app
 
-Ieder heeft één gebied waarvoor hij eindverantwoordelijk is. Dit betekent **niet** dat alleen die persoon daar mag werken. Het betekent dat wijzigingen in dat gebied door hem gereviewd worden, en dat hij de knopen doorhakt als er twijfel is.
-
-| Eigenaar | GitHub | Verantwoordelijk voor | Reviewt |
-|---|---|---|---|
-| Stijn | `@stinoe21` | Architectuur, Supabase, datamodel, CI, releases, App Store | `supabase/**`, `.github/**`, `package.json`, auth |
-| Caesar | `@Cschoorl` | Design system, componenten, visuele consistentie, interaction design | `packages/ui/**`, alles met een zichtbare wijziging |
-| Max | `@maxhelmantel-gif` | Productlogica, userflow, content, teksten, functionele acceptatie | `apps/mobile/src/features/**`, alle UI-teksten |
-
-> **Bevestig deze verdeling.** Wie van Caesar en Max op design en wie op product zit is een voorstel, geen beslissing. Draai het gerust om. Pas dan ook `.github/CODEOWNERS` aan, want daar staat dezelfde verdeling in en die bepaalt wie GitHub automatisch als reviewer toewijst.
-
-## As 2: feature-eigenaarschap (per taak)
-
-Het echte werk verdelen we **verticaal**, per complete gebruikersfunctie. Niet per laag.
+Ieder pakt een **compleet onderdeel**, van scherm tot database. Niet een laag.
 
 Dus dit:
 
 ```
-Feature: dagelijkse check-in       <- één persoon, van scherm tot database
-  scherm + navigatie
+Onderdeel: weer-check-in           <- één persoon, van scherm tot database
+  scherm en navigatie
   validatie
-  opslag
+  opslag en RLS
   loading / empty / error / offline
   tests
   privacycheck
@@ -40,7 +32,46 @@ Persoon 2: alle tabellen
 Persoon 3: knoopt het later aan elkaar          <- dit blokkeert altijd
 ```
 
-Waarom: bij laagverdeling is een scherm pas af als drie mensen precies op elkaar aansluiten. Bij verticale verdeling kan iedereen doorwerken zonder op iemand te wachten. Dat is het hele punt van parallel werken op een wandeltocht.
+Twee redenen, en de tweede is de praktische.
+
+**Niemand zit te wachten.** Doet de een de schermen en de ander de database, dan is niets af totdat die twee precies op elkaar aansluiten. Er is dan altijd iemand geblokkeerd. Bij verdeling per onderdeel kan alle drie doorwerken.
+
+**Het mergt eenvoudiger.** Twee branches die elk een eigen onderdeel bouwen, raken bijna geen gemeenschappelijke bestanden. Twee branches waarvan de een het design doet en de ander de backend, raken elkaar continu. Onze regel dat een taak bestaat uit nieuwe bestanden plus hooguit één bestaand bestand (zie `CLAUDE.md` sectie 4) is alleen haalbaar bij verdeling per onderdeel.
+
+### De onderdelen
+
+Afgeleid uit de userflow op het Figma-board. Twee per persoon, en de laatste twee zitten buiten de app.
+
+| # | Onderdeel | Wat erin zit | Board |
+|---|---|---|---|
+| 1 | Onboarding, auth en consent | Intro, 16+-check, inloggen, voorkeuren, disclaimer, voorwaarden, de twee consents | `12:143` tot `12:139` |
+| 2 | Dashboard, Mijn Mentale Weer | De spil, plus de dagelijkse quote | `12:173`, `12:179` |
+| 3 | Weer-check-in en landelijk weerbericht | De check-in, de collectieve store, de drempel voor tonen | `12:182`, `12:197`, `12:202` |
+| 4 | Challenges | Weekbasis, unlocken, no-guilt close | `12:185`, `12:208` tot `12:214` |
+| 5 | Naslagwerk en slim zoeken | Interesses, bronvermelding, de externe links | `12:188`, `12:191` |
+| 6 | Profiel en instellingen | Voorkeuren, privacy, consent intrekken, account verwijderen | `12:194` |
+| 7 | Adminpagina voor Mind | Content toevoegen, eigen rollenmodel | `75:236` |
+| 8 | Analytics voor IT | Los van de app, leest uit Supabase | `75:240` |
+
+> **Het dashboard is het enige echte raakpunt.** Daar komt alles samen, dus wie onderdeel 2 doet bouwt de container en de anderen leveren wat erin komt. Doe dat vroeg en met één persoon, anders wordt het het bestand waar drie branches op botsen.
+
+**Wie welk onderdeel doet, is nog niet verdeeld.** Dat is een gesprek van vijf minuten en het hoort vóór vertrek te gebeuren, want het bepaalt wie zich in welk deel van de userflow inleest. Twee dingen om mee te nemen bij die verdeling:
+
+- **Onderdeel 3 kan nog niet beginnen.** De weer-check-in wacht op akkoord van Mind op de weer-metafoor, en de weertypen zelf staan nog nergens vastgelegd. Zie `datamodel.md`. Wie dit onderdeel pakt, moet dus iets anders hebben om aan te werken, of het akkoord moet er eerst zijn.
+- **De mobiele app staat centraal, de adminwebapp komt erbij.** Besloten op 30 juli 2026. Onderdeel 7 en 8 zijn samen één CMS-webapp in `apps/admin`: Mind zet er content in en de app leest die uit Supabase. Eigen rollenmodel, eigen RLS-policies, een framework dat nog gekozen moet worden en een eigen deploy. Dat is werk dat je niet tussendoor doet, en het is niet waar de app op beoordeeld wordt.
+- **Zet de content dan wel als seed neer, niet met de hand.** Onderdeel 5 leest content die straks via de admin binnenkomt. Komt die admin later, dan moet die content tijdens het bouwen ergens vandaan komen. Zet hem in een seed naast de migraties, niet als rijen die iemand in het dashboard heeft getypt. Twee redenen: iedereen heeft dan dezelfde content op zijn eigen machine, en het komt mee in de overdracht. Met de hand ingevoerde rijen bestaan straks niet bij Mind, zie `datamodel.md`.
+
+## Wie waakt over het geheel
+
+Naast een onderdeel houdt ieder iets in de gaten dat over alle onderdelen heen loopt. Dat is **een blik, geen gebied**: je reviewt het, je hakt de knoop door als er twijfel is, en je merkt het als het uit elkaar loopt. Je hoeft er niet als enige aan te werken en je hoeft er niet om gevraagd te worden.
+
+| Wie | Waakt over | Wat dat concreet betekent |
+|---|---|---|
+| Stijn | Backend, Supabase, datamodel, CI, releases, App Store | Schemawijzigingen gaan via een migratie langs hem. Hij houdt in de gaten of RLS overal aan staat. |
+| Max | Design, componenten, visuele consistentie, CSS-structuur | Hij merkt als het beeld uit elkaar loopt en beheert de tokens en de assetbibliotheek. |
+| Caesar | Productlogica, userflow, content en teksten | Hij toetst of een onderdeel doet wat de flow belooft en of de toon klopt met `productprincipes.md`. |
+
+Deze drie blikken zijn de reden dat we `.github/CODEOWNERS` hebben: GitHub stelt dan automatisch de juiste reviewer voor. Voorstellen, niet verplichten.
 
 ---
 
@@ -95,7 +126,16 @@ We lopen overdag, dus het werk gebeurt in blokken.
 - controleren dat die drie taken elkaars bestanden niet raken
 - hardop bevestigen wat "af" betekent voor die taak
 
-**Tijdens en na het lopen, alleen**
+**Tijdens het lopen, via Remote Control**
+- laptop draait in de rugzak, sessie open in de projectmap
+- vanaf je telefoon zet je een afgebakende taak weg via de Claude-app of `claude.ai/code`
+- alleen taken die geen beoordeling van jou vragen tijdens de uitvoering: een scherm dat al in de userflow staat, tests, documentatie
+- niet: iets waarvoor je moet beslissen hoe het eruitziet, of iets dat een gedeeld bestand raakt
+- let op je accu, een dag zonder stopcontact is zo voorbij
+
+Opzetten staat in `ONBOARDING.md` stap 4. Zonder dit moet al het werk in het albergue gebeuren, en dat is het verschil tussen twee en zes productieve uren per dag.
+
+**Na het lopen, alleen**
 - ieder praat tegen zijn eigen Claude-sessie
 - kleine commits, draft PR meteen openen
 - niet mergen

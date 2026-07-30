@@ -11,8 +11,10 @@ Aan het eind heb je een werkende clone met exact dezelfde MCP's, skills en proje
 - Een GitHub-account, en collaborator-toegang tot deze repo (vraag Stijn)
 - Node 20 of hoger (`node --version`)
 - Git (`git --version`)
-- Claude Code (`npm i -g @anthropic-ai/claude-code`)
+- Claude Code (`npm i -g @anthropic-ai/claude-code`), **plus een betaald Claude-abonnement**. Zonder abonnement werkt Claude Code niet. Reken er ook op dat je tegen usage limits aanloopt als je een hele dag een agent laat werken. Regel dit vóór vertrek en probeer het één keer uit, niet in een albergue met slechte wifi.
+- Je kunt Claude Code als **CLI** in de terminal draaien of als **VSCode-extensie**. Beide mag, maar één ding moet via de CLI: het autoriseren van de Supabase-MCP, zie stap 3.
 - Een Figma-account met toegang tot het projectbestand
+- Een Supabase-account, en een uitnodiging voor de Supabase-organisatie van dit project (vraag Stijn). Zonder die uitnodiging kun je de `supabase-mind`-MCP wel autoriseren, maar ziet hij het project niet.
 - Voor iOS-tests: de Expo Go-app op je telefoon. Een Mac is niet nodig, we bouwen via EAS in de cloud.
 
 ## 1. Repo clonen
@@ -21,10 +23,11 @@ Kies een pad **buiten** iCloud, Google Drive, Dropbox of OneDrive. Cloud-sync en
 
 ```bash
 cd ~/Code            # of waar je je projecten bewaart, maar niet in een gesyncte map
-git clone <repo-url> mind-app
+git clone https://github.com/stinoe21/Mindfull-App-Camino.git mind-app
 cd mind-app
-npm install
 ```
+
+Nog **geen** `npm install`. De Expo-app is nog niet gescaffold, dus er is nog geen `package.json` en het commando zou falen. Zodra die er staat komt dit erbij. De CI weet dat ook en slaat de checks tot die tijd over.
 
 ## 2. Git instellen
 
@@ -61,56 +64,135 @@ git reset --hard origin/main
 
 Waarom rebase en geen merge staat uitgelegd in de skill `werkwijze`. Vraag je Claude gewoon: "leg de werkwijze van dit project uit".
 
-## 3. Tokens aanmaken
+## 3. MCP's activeren
 
-Kopieer het voorbeeldbestand en vul je eigen waarden in:
+Je hoeft **geen personal access token aan te maken**. Supabase en Figma autoriseer je via je browser, en GitHub hergebruikt het token dat de `gh` CLI al voor je beheert. De configuratie staat al in de repo, in `.mcp.json`. Voeg daar zelf niets aan toe: die wijziging krijgt de rest ook.
 
-```bash
-cp .env.example .env
-```
+Waar we ze voor gebruiken:
 
-`.env` staat in `.gitignore` en wordt nooit gecommit. Deel je tokens met niemand, ook niet met elkaar. Iedereen maakt zijn eigen tokens aan.
+| Server | Waarvoor |
+|---|---|
+| `github` | Pull requests, issues, reviews. Vraagt één omgevingsvariabele, zie hieronder. |
+| `supabase-mind` | Database inspecteren, types genereren. Read-only. |
+| `figma` | **Designs ophalen.** Frames, componenten, variables en screenshots. Dit is onze route van design naar code: laat Claude het frame ophalen in plaats van een screenshot op het oog nabouwen. |
 
-**GITHUB_TOKEN**
-1. Ga naar GitHub, Settings, Developer settings, Personal access tokens, Fine-grained tokens
-2. Maak een token met toegang tot alleen deze repo
-3. Permissions: Contents (read and write), Pull requests (read and write), Issues (read and write), Metadata (read)
-4. Plak de waarde in `.env`
-
-**SUPABASE_ACCESS_TOKEN**
-1. Ga naar `supabase.com/dashboard/account/tokens`
-2. Maak een personal access token
-3. Plak de waarde in `.env`
-
-**SUPABASE_PROJECT_REF**
-Staat in de URL van het Supabase-project: `supabase.com/dashboard/project/<dit-stukje>`. Vraag Stijn welk project we gebruiken.
-
-## 4. MCP's activeren
-
-De MCP-configuratie staat al in de repo, in `.mcp.json`. Je hoeft niets toe te voegen. Start Claude Code in de projectmap:
+Start Claude Code in de projectmap:
 
 ```bash
 cd mind-app
 claude
 ```
 
-Claude vraagt bij de eerste start of je de project-MCP's vertrouwt. Antwoord ja. Controleer daarna:
+Bij de eerste start vraagt Claude of je de project-MCP's vertrouwt. Antwoord ja. Daarna staan `github`, `supabase-mind` en `figma` op "pending approval". Keur ze goed. Voor `supabase-mind` en `figma` opent er dan een browservenster waarin je inlogt. `github` doet dat niet, die werkt met een omgevingsvariabele.
+
+Controleer met:
 
 ```
 /mcp
 ```
 
-Je hoort `github`, `supabase` en `figma` te zien staan.
+`supabase-mind` en `figma` horen nu op `connected` te staan. `github` nog niet, die heeft eerst de stap hieronder nodig.
 
-### Figma apart autoriseren
+### GitHub: één omgevingsvariabele
 
-De Figma MCP werkt via OAuth, niet via een token in `.env`. Bij de eerste keer dat Claude iets uit Figma probeert te lezen, opent er een browservenster waarin je inlogt en toegang geeft. Dat is eenmalig.
+De GitHub-MCP kan geen browserlogin doen. Die server ondersteunt geen dynamic client registration en wil een token in een header. In plaats van dat we alle drie een personal access token gaan aanmaken en verlengen, hergebruiken we het token dat de `gh` CLI al in je keyring heeft staan.
 
-Werkt de remote server niet, dan is er een alternatief: zet in de Figma **desktop-app** onder Preferences de Dev Mode MCP Server aan, en vervang in `.mcp.json` de figma-URL door `http://127.0.0.1:3845/mcp`. Nadeel: de desktop-app moet dan altijd openstaan. Doe dit alleen als het echt nodig is, en commit die wijziging niet.
+Log eerst in met `gh`, als je dat nog niet had gedaan:
 
-Werkt geen van beide, meld het. We kunnen zonder Figma MCP werken, alleen minder prettig.
+```bash
+gh auth login
+```
 
-## 5. Controleer of alles klopt
+Kies "Login with a web browser". Zet daarna het token in een omgevingsvariabele.
+
+Windows, in PowerShell:
+
+```powershell
+setx GITHUB_MCP_TOKEN (gh auth token)
+```
+
+macOS of Linux, als regel in `~/.zshrc` of `~/.bashrc`:
+
+```bash
+export GITHUB_MCP_TOKEN=$(gh auth token)
+```
+
+**Herstart hierna Claude Code volledig**, en bij de VSCode-extensie VSCode zelf. Een nieuw venster of tabblad is niet genoeg: een omgevingsvariabele wordt gelezen op het moment dat het proces start. Daarna staat `github` op `connected`.
+
+In `.mcp.json` staat alleen `${GITHUB_MCP_TOKEN}`, dus het token zelf gaat nooit de repo in. De `~/.zshrc`-variant is technisch de nettere, want die haalt het token bij elke shellstart uit de keyring en laat dus geen tweede kopie achter. `setx` schrijft het naar je gebruikersregister, wat hetzelfde beveiligingsniveau heeft als de tokens die Claude Code al lokaal bewaart.
+
+Zie je `Authorization header is badly formatted`, dan is de variabele leeg of niet meegekomen met het proces. De `gh` CLI blijft daarnaast gewoon werken en is de terugvaloptie voor alles:
+
+```bash
+gh pr list
+```
+
+### Als iets niet verbindt
+
+**figma** is een remote server met OAuth. Werkt hij niet, dan is er een lokaal alternatief: zet in de Figma **desktop-app** onder Preferences de Dev Mode MCP Server aan, en vervang in `.mcp.json` de figma-URL door `http://127.0.0.1:3845/mcp`. Nadeel: de desktop-app moet dan altijd openstaan. Commit die wijziging niet. We kunnen ook zonder Figma MCP werken, alleen minder prettig.
+
+**supabase-mind** is de remote server `https://mcp.supabase.com/mcp`, waar je met je eigen Supabase-account op inlogt. Let goed op het venster dat opent: Supabase vraagt **voor welke organisatie** je toegang geeft. Kies de organisatie waar het project van deze app in staat. Kies je de verkeerde, dan verbindt de server wel maar ziet hij het project niet, en dat lijkt op een storing terwijl het er geen is. Zie je een leeg projectenlijstje, dan heb je waarschijnlijk je uitnodiging voor de organisatie nog niet geaccepteerd.
+
+**Krijg je `{"message":"resource: Resource must be a valid MCP endpoint"}`?** Dan gebruik je Claude Code als **VSCode-extensie**, en dat is een bug in de extensie, niet in onze configuratie. Hij verhaspelt het vraagteken in de MCP-URL bij het opbouwen van de OAuth-aanvraag (`?` wordt `%253F`), waarna Supabase de aanvraag terecht weigert. Zie [claude-code#34880](https://github.com/anthropics/claude-code/issues/34880).
+
+De oplossing kost één minuut. Autoriseer via de **CLI** in plaats van de extensie:
+
+```bash
+cd mind-app
+claude
+```
+
+Draai daar `/mcp`, kies `supabase-mind` en log in. De extensie mag gewoon openstaan. De inloggegevens worden per account opgeslagen, dus dit is eenmalig: daarna werkt `supabase-mind` ook in de extensie.
+
+Draait hij via `npx`? Dan is je `.mcp.json` oud. De stdio-variant (`npx @supabase/mcp-server-supabase`) kan geen browserlogin en faalt met een `-32000`-fout omdat hij een personal access token mist. `git sync` haalt de goede config binnen.
+
+Hij staat op `read_only=true`, dat is bewust: schemawijzigingen gaan altijd via een migratiebestand. De URL is gescoped op ons eigen project, dus je ziet alleen **Mindfull-App-Camino** en niet je eigen andere projecten.
+
+**Heb je al een user-scope MCP met dezelfde naam?** Dan botst dat. De project-servers heten daarom `supabase-mind` en niet `supabase`. Zie je toch een waarschuwing over "conflicting scopes", draai dan `claude mcp list` en meld wat er staat.
+
+## 4. Remote Control aanzetten
+
+Hiermee stuur je een Claude Code-sessie op je laptop aan vanaf je telefoon, via de Claude-app of `claude.ai/code`.
+
+Dit is voor dit project geen gadget. Wij lopen vijf tot zeven uur per dag met de laptop in de rugzak. Zonder dit moet al het werk in het albergue gebeuren. Met dit kun je onderweg een taak wegzetten die klaar is tegen de tijd dat je aankomt.
+
+```bash
+claude auth login
+```
+
+Controleer daarna:
+
+```bash
+claude doctor
+```
+
+Onder "Remote Control" hoort te staan: *"Control this session from claude.ai/code or the Claude mobile app"*. Staat er in plaats daarvan iets over een ontbrekende `user:profile` scope, dan ben je ingelogd met een long-lived token en moet `claude auth login` alsnog.
+
+Installeer de Claude-app op je telefoon en log in met hetzelfde account.
+
+### Hoe je dit onderweg gebruikt
+
+- Laptop aan, sessie open in de projectmap, deksel dicht in je rugzak. De sessie blijft draaien.
+- Onderweg pak je je telefoon en zet je een afgebakende taak weg. Kies iets dat geen beoordeling van jou vraagt tijdens de uitvoering.
+- 's Avonds kijk je na, review je, en merge je.
+
+Wat wel werkt onderweg: een scherm bouwen dat al in de userflow staat, tests schrijven, een refactor binnen één feature-map, documentatie.
+
+Wat niet werkt onderweg: iets waarvoor je moet beslissen hoe het eruitziet, of iets dat een gedeeld bestand raakt. Dat doe je 's avonds samen.
+
+Let op je accu. Een draaiende agent en een slapende laptop trekken meer dan je denkt op een dag zonder stopcontact.
+
+## 5. Tokens voor de app zelf
+
+Alleen nodig zodra de Expo-app er staat, dus nu nog niet.
+
+```bash
+cp .env.example .env
+```
+
+`.env` staat in `.gitignore` en wordt nooit gecommit.
+
+## 6. Controleer of alles klopt
 
 Draai in Claude Code:
 
@@ -128,9 +210,22 @@ Draai daarna:
 
 Dat is de skill die de git-workflow uitlegt. Als die laadt, zijn de gedeelde skills actief.
 
-## 6. Je eerste taak
+## 7. Lees waar de afspraken staan
 
-1. Pak een issue van het board dat op `Ready` staat en wijs jezelf toe.
+Je Claude kent deze bestanden en verwijst ernaar, maar lees deze vier zelf een keer door. Het zijn er vier omdat het de vier soorten fouten zijn die je niet aan een diff ziet.
+
+| Lees dit | Waarom je het zelf moet weten |
+|---|---|
+| `CLAUDE.md` | Het contract. Bovenaan staat een tabel met alle andere documenten en wanneer je ze nodig hebt. |
+| `docs/productprincipes.md` | Hoe de app zich hoort te gedragen. Je kunt een technisch perfect scherm bouwen dat toch verkeerd voelt. |
+| `docs/taakverdeling.md` | Hoe we het werk verdelen, wat er in een taak hoort, en het dagritme onderweg. |
+| `docs/datamodel.md` | Wat we wel en niet opslaan. Staat een veld daar niet in, dan bestaat het niet. |
+
+De volledige index staat in `README.md`. Kom je iets tegen dat in geen enkel document staat, dan is het niet afgesproken: vraag ernaar en vul het niet zelf in. Dat is geen formaliteit maar de reden dat we met drie parallelle agents niet uit elkaar lopen.
+
+## 8. Je eerste taak
+
+1. Pak een issue van het board dat op `Ready` staat en wijs jezelf toe. Staat er nog geen board, en dat is nu het geval, vraag dan aan Stijn welke taak je pakt.
 2. Maak een branch: `git checkout -b feat/<korte-naam>`
 3. Vraag je Claude: `/nieuwe-feature <issue-nummer>`
 4. Open een draft pull request zodra je iets hebt. Niet aan het eind, maar meteen. Dan ziet de rest waar je mee bezig bent.
