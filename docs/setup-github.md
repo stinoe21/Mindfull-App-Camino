@@ -23,7 +23,7 @@ Squash als enige optie betekent dat `main` een leesbare lijst van features wordt
 
 ## 3. Branch protection op main
 
-> **Werkt op dit moment niet.** GitHub vereist een betaald plan (Pro, 4 dollar per maand) voor branch protection en rulesets op **private** repos. De poging is met een 403 geweigerd. Zolang dat zo is, is `main` technisch niet beschermd op de server.
+> **Besloten op 30 juli 2026: we nemen GitHub Pro.** Branch protection en rulesets vereisen op een **private** repo een betaald plan, 4 dollar per maand. Elke poging geeft anders een 403. Zolang Pro niet actief is, is `main` technisch niet beschermd en leunen we op de drie lagen hieronder.
 
 ### Wat we in plaats daarvan doen
 
@@ -37,11 +37,18 @@ Drie lagen die het ongeluk vangen. Niet waterdicht tegen moedwil, wel tegen de f
 
 ### Wat je kunt doen om het wel af te dwingen
 
-Kies er één:
+- **GitHub Pro nemen**, 4 dollar per maand. **Dit is wat we doen.** Draai daarna het commando onderaan dit bestand en je hebt echte branch protection.
+- **Zo laten.** Met drie mensen die dit gelezen hebben en drie lagen die het ongeluk vangen is dit verdedigbaar. Het blijft de terugvaloptie als Pro om wat voor reden dan ook niet doorgaat.
 
-- **GitHub Pro nemen**, 4 dollar per maand. Draai daarna het commando onderaan dit bestand en je hebt echte branch protection.
-- **Repo publiek maken.** Dan is branch protection gratis. Er staan geen secrets in (`.env` staat in `.gitignore`), maar `docs/scope.md` gaat wel details over Stichting Mind bevatten. Overleg dat met hen voordat je dit doet.
-- **Zo laten.** Met drie mensen die dit gelezen hebben en drie lagen die het ongeluk vangen, is dit verdedigbaar. Het is de goedkoopste optie en `git revert` blijft één commando.
+### De repo publiek maken is geen optie meer
+
+Dat stond hier eerder wel als de gratis route, met als enige kanttekening "overleg het met Mind". Die afweging klopt niet meer.
+
+Sinds `docs/privacy-besluiten.md` bestaat, staan in deze repo de namen van medewerkers van Mind, wanneer zij afwezig zijn, dat hun DPIA nog niet is uitgevoerd en dat de verwerkersovereenkomsten nog niet rond zijn. Dat is interne informatie van een derde partij, inclusief persoonsgegevens.
+
+Het weghalen in een nieuwe commit lost dat niet op: bij een publieke repo is de **history** net zo goed leesbaar, en die informatie zit er vanaf commit `34a2019` in.
+
+Zou je dit ooit alsnog willen, dan is de volgorde: eerst met Mind afstemmen, dan anonimiseren naar rollen in plaats van namen, dan de history herschrijven, en dan pas de zichtbaarheid omzetten. Niet andersom. Vier dollar per maand is goedkoper.
 
 ### Zodra branch protection wel kan
 
@@ -122,6 +129,6 @@ git reset --hard origin/main
 | Collaborators uitgenodigd (`@Cschoorl`, `@maxhelmantel-gif`) | Uitnodiging verstuurd, moeten zelf accepteren |
 | Squash-only merge, branches auto-verwijderen | Gedaan |
 | Labels | Gedaan |
-| Branch protection | **Geblokkeerd**, vereist GitHub Pro. Zie sectie 3. |
+| Branch protection | **Wacht op GitHub Pro.** Besloten 30 juli 2026. Zodra het plan actief is: het commando in sectie 3 draaien. |
 | Issue board | Nog doen, sectie 5 |
 | CODEOWNERS-verdeling bevestigen | Nog doen, is nu een voorstel |
