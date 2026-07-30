@@ -21,6 +21,7 @@ De besluiten die daaruit volgden staan in `datamodel.md`. Het Figma-board is op 
 | **Apple Developer-account op naam van Mind** | Mind, organisatorisch | Ongeveer 100 euro per jaar. De aanvraag vereist een D-U-N-S-nummer en verificatie door Apple, dat duurt weken en ligt buiten onze controle. Dit is het langste kritieke pad in het project. |
 | **Google Play developer-account op naam van Mind** | Mind, organisatorisch | Eenmalig 25 dollar. Belangrijker dan de kosten: een **persoonlijk** account moet voor de eerste productierelease 12 testers 14 dagen aaneengesloten laten testen. Een **organisatie**-account niet. Doen we dit onder een persoonlijk account, dan komt er twee weken wachttijd bij die niemand heeft ingepland. |
 | **Verwerkersovereenkomsten** | Mind | Supabase, Apple App Store, Google Play Store. n8n is van deze lijst af, want daar gaan geen persoonsgegevens doorheen. |
+| **Verwerkersovereenkomst met een e-mailprovider** | Mind | **Nieuw punt, 30 juli 2026.** De ingebouwde e-mailservice van Supabase mag niet in productie: die stuurt maar een paar mails per uur en is alleen te verhogen met een eigen SMTP. Inloggen per e-mail staat op het board, dus er komt een partij bij die e-mailadressen verwerkt. Zie `limieten-en-misbruik.md`. |
 
 ## Wat wij nog moeten beslissen
 

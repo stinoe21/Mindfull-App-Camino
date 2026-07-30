@@ -28,6 +28,7 @@ Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen
 | [docs/privacy-besluiten.md](docs/privacy-besluiten.md) | Wat is afgesproken met Mind, wat staat nog open, en wie is aan zet |
 | [docs/design-system.md](docs/design-system.md) | Tokens, assets, componenten, patterns, en hoe Figma en de repo zich verhouden |
 | [docs/assets-en-media.md](docs/assets-en-media.md) | Wat in de bundle hoort en wat in Storage, compressie, caching en egress |
+| [docs/limieten-en-misbruik.md](docs/limieten-en-misbruik.md) | Rate limits, waarom de check-in-teller persoonlijk moet zijn, en wat de anonieme pool niet kan |
 | [docs/setup-github.md](docs/setup-github.md) | Eenmalige repo-instellingen, door de eigenaar |
 
 ## Skills

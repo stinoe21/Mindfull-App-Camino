@@ -19,6 +19,7 @@ Ook als je verder niets leest:
 5. **Raak geen gedeelde bestanden aan** buiten de scope van je taak. De lijst staat in `CLAUDE.md` sectie 5.
 6. **Verzin geen tabel, veld, analytics-event of hulptekst.** Staat het niet in `docs/datamodel.md` of `docs/scope.md`, dan bestaat het niet en vraag je ernaar.
 7. **Zet geen afbeelding in Supabase Storage die in de app bundle hoort.** Iconen, illustraties en gradients horen in de bundle, alleen content die Mind zelf toevoegt gaat naar Storage. Zie `docs/assets-en-media.md`.
+8. **Tel check-ins nooit op de collectieve tabel.** Die heeft geen gebruikerscode, dus dat kan niet, en een poging daartoe breekt de anonimisering. De teller hoort in de persoonlijke stroom. Zie `docs/limieten-en-misbruik.md`.
 
 ## Media en caching, kort
 
@@ -45,6 +46,8 @@ Het betekent **niet** dat alleen die persoon daar mag werken, en het betekent ni
 | Hoe de app zich hoort te gedragen | `docs/productprincipes.md` |
 | Tokens, componenten, assets, Figma | `docs/design-system.md` |
 | Welke data we opslaan en hoe lang | `docs/datamodel.md` |
+| Waar plaatjes horen, compressie en caching | `docs/assets-en-media.md` |
+| Rate limits en misbruik | `docs/limieten-en-misbruik.md` |
 | Wat met Mind is afgesproken over privacy | `docs/privacy-besluiten.md` |
 | Wie waar eigenaar van is | `docs/taakverdeling.md` |
 | De git-workflow | `.claude/skills/werkwijze/SKILL.md` |
