@@ -1,0 +1,12 @@
+-- ===========================================================================
+-- Seed voor de LOKALE stack. Draait bij `supabase db reset` en gaat niet mee
+-- met `supabase db push`, dus hier hoort alleen wat je lokaal nodig hebt.
+--
+-- Let op: referentiedata waar de app van afhangt staat NIET hier maar in een
+-- migratie, juist omdat dit bestand niet meekomt naar productie. De vijf
+-- weerbeelden staan daarom in 20260811090612_seed_weather_types.sql.
+--
+-- Voorlopig is er niets dat alleen lokaal nodig is. Komt de content voor het
+-- naslagwerk en de challenges, dan hoort die ook in een migratie of in de
+-- adminpagina, niet hier. Zie docs/taakverdeling.md.
+-- ===========================================================================
