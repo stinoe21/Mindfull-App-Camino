@@ -34,13 +34,18 @@ Twee gevolgen:
 
 Dit is de belangrijkste consequentie van het datamodel en het is geen implementatiedetail.
 
-De collectieve store krijgt alleen een weerstatus en een tijdstip, **zonder gebruikerscode**. Zie `datamodel.md`. Dat betekent dat je aan de collectieve kant onmogelijk kunt zien of iemand vandaag al heeft ingestuurd. Er is niets om op te dedupliceren, en dat is precies de bedoeling.
+De collectieve store bestaat uit dagtellers, **zonder gebruikerscode en zonder tijdstip**. Zie `datamodel.md`. Dat betekent dat je aan de collectieve kant onmogelijk kunt zien of iemand vandaag al heeft ingestuurd. Er is niets om op te dedupliceren, en dat is precies de bedoeling.
 
 Dus:
 
-> **De teller staat in de persoonlijke stroom, de bijdrage gaat naar de anonieme pool.** Eerst vaststellen dat deze gebruiker vandaag nog niet heeft ingestuurd, dan de anonieme rij wegschrijven. Nooit andersom, en nooit met een sleutel die meegaat.
+> **De teller staat in de persoonlijke stroom, de bijdrage gaat naar de anonieme pool.** Eerst vaststellen dat deze gebruiker vandaag nog niet heeft ingestuurd, dan pas de anonieme teller ophogen. Nooit andersom, en nooit met een sleutel die meegaat.
 
 Bouw dit niet met een `count` op de collectieve tabel. Dat kan niet, en een agent die het toch probeert, heeft een sleutel nodig en breekt daarmee de anonimisering.
+
+**Concreet, sinds 11 augustus 2026:** het slot is `profiles.last_checkin_on`, één datum die elke keer overschreven wordt, en het zit in `submit_weather()`. Twee dingen daarbij die niet vrijblijvend zijn:
+
+- **Het slot staat op de server en niet alleen lokaal.** Puur lokaal begrenzen wordt omzeild door de app opnieuw te installeren.
+- **Slot en teller zitten in één transactie.** Dat moet, want laat je de client twee losse calls doen, dan slaat hij de eerste gewoon over en is het slot geen slot.
 
 ## 3. Het landelijke weerbericht is niet te dedupliceren, dus wel te beïnvloeden
 
