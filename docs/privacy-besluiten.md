@@ -16,14 +16,29 @@ De besluiten die daaruit volgden staan in `datamodel.md`. Het Figma-board is op 
 
 | Wat | Van wie | Waarom dit blokkeert |
 |---|---|---|
-| **DPIA**: is die verplicht, wie bepaalt dat, wie voert hem uit, wat kost het, hoe lang duurt het | Eveline en Paul | Art. 35 AVG. Bij mentale gezondheid, een mogelijk kwetsbare doelgroep en een innovatieve verwerking is dit waarschijnlijk verplicht. Zolang dit onbekend is, weten we niet of er nog eisen bij komen. |
-| **Akkoord op de weer-metafoor** | Eveline en Paul | Bepaalt of de check-in buiten de bijzondere persoonsgegevens blijft. Zonder akkoord bouwen we de check-in niet. Gaat in een aparte mail met onderbouwing. |
+| ~~**DPIA**: is die verplicht~~ | Paul | **Beantwoord op 10 augustus 2026.** Niet DPIA-plichtig, omdat de risico's kleiner bleken dan gedacht. Paul voert er alsnog een korte uit na zijn vakantie (14 tot en met 23 augustus), niet omdat het moet maar om het compliance-proces vast te leggen bij een app die openbaar beschikbaar komt. Hij neemt daarin de lead en komt zelf ver met wat wij via mail en Figma hebben aangeleverd. Verwachte uitkomst: hooguit aanscherpingen, bijvoorbeeld rond uitdrukkelijke toestemming onder art. 9. |
+| ~~**Akkoord op de weer-metafoor**~~ | Paul | **Gegeven op 6 augustus 2026**: "De weermetafoor als uitvraagmechanisme is wat mij betreft prima." Met één aantekening die blijft staan: het resultaat blijft in de context van deze app een bijzonder persoonsgegeven, dus de waarborgen eromheen moeten staan. Onderdeel 3 uit `taakverdeling.md` is hiermee niet meer geblokkeerd op Mind. |
 | **Apple Developer-account op naam van Mind** | Mind, organisatorisch | Ongeveer 100 euro per jaar. Vereist een D-U-N-S-nummer en verificatie door Apple, dat duurt weken. **Mind maakt dit aan en dient de app zelf in; wij komen er niet aan.** Het is daarmee niet het kritieke pad van ons bouwwerk, maar wel de poort naar livegang, en het blokkeert twee dingen die wij niet kunnen testen zonder: Sign in with Apple en TestFlight. Zie `scope.md`. |
 | **Google Play developer-account op naam van Mind** | Mind, organisatorisch | Eenmalig 25 dollar. Belangrijker dan de kosten: een **persoonlijk** account moet voor de eerste productierelease 12 testers 14 dagen aaneengesloten laten testen. Een **organisatie**-account niet. Doen we dit onder een persoonlijk account, dan komt er twee weken wachttijd bij die niemand heeft ingepland. |
 | **Verwerkersovereenkomsten** | Mind | Supabase, Apple App Store, Google Play Store. n8n is van deze lijst af, want daar gaan geen persoonsgegevens doorheen. |
 | **Verwerkersovereenkomst met een e-mailprovider** | Mind | **Nieuw punt, 30 juli 2026.** De ingebouwde e-mailservice van Supabase mag niet in productie: die stuurt maar een paar mails per uur en is alleen te verhogen met een eigen SMTP. Inloggen per e-mail staat op het board, dus er komt een partij bij die e-mailadressen verwerkt. Zie `limieten-en-misbruik.md`. |
 | **Een Supabase-organisatie op naam van Mind** | Mind, organisatorisch | **Nieuw punt, 30 juli 2026.** Het project staat nu in onze eigen organisatie Back to Being en moet naar die van Mind. Zie de sectie hieronder: dat is zelf te doen, maar het is veel eenvoudiger zolang er nog geen gebruikersdata in staat. |
 | **Verwerkersovereenkomst tussen Mind en ons: alleen als wij ná livegang toegang houden** | Mind, juridisch | **Bijgesteld op 30 juli 2026.** Ik had dit als ontbrekend punt opgeschreven, maar het hangt af van één ding. Vóór de overdracht bestaat er geen gebruikersdata, dus verwerken wij niets en is er niets om af te spreken. Houden wij ná livegang toegang tot de productieomgeving voor onderhoud, dan verwerken wij vanaf dat moment wél persoonsgegevens namens Mind en hoort er een overeenkomst te liggen. Vraag dus niet om het contract, maar beslis eerst: blijven wij erbij of niet? |
+
+## Wat wij Paul nog schuldig zijn
+
+Stand van 11 augustus 2026. Paul is met vakantie van 14 tot en met 23 augustus en doet daarna de korte DPIA, dus dit hoort vóór die datum bij hem te liggen. Anders schrijft hij die DPIA op verouderde informatie.
+
+| # | Wat | Waarom het niet kan wachten |
+|---|---|---|
+| 1 | **Antwoord op zijn vraag over de lokale bewaartermijn.** Hij vroeg op 10 augustus letterlijk: "Is er een bewaartermijn gesteld voor deze lokale gegevens?" | Zijn hele conclusie dat we niet DPIA-plichtig zijn, rust op de zin dat de gegevens lokaal blijven en verder niet verwerkt worden. Dit is dus geen losse vraag maar de onderbouwing van die conclusie. |
+| 2 | **Melden dat er één datumveld per gebruiker bijkomt**, `profiles.last_checkin_on`. | Nieuw sinds 11 augustus 2026 en hij kent het niet. Het bevat geen weerbeeld en geen historie, alleen de datum van de laatste check-in, en het bestaat om manipulatie van het landelijke beeld te remmen. Het is dus privacy-positief, maar het is wél een gegeven over een gebruiker en daarmee zijn beslissing om te wegen, niet de onze om stil te bouwen. |
+| 3 | **Bevestigen dat de vier sliderwaarden niet naar de server gaan.** | Staat zo in de mail van 7 augustus en is zo gebouwd. Het herbevestigen kost een zin en voorkomt dat de DPIA iets anders aanneemt. |
+| 4 | **De uitdrukkelijke toestemming onder art. 9 AVG.** | Hij kondigde dit zelf aan als punt dat nog gefinetuned moet worden. Het valt samen met ons eigen openstaande punt "welke twee consents zijn het", zie `datamodel.md`, en blokkeert onderdeel 1 uit `taakverdeling.md`. |
+| 5 | **Grondslag voor de 16+-eis.** | Stond op toestemming, en dat klopt waarschijnlijk niet meer nu het een toegangseis is. Al twee keer genoteerd als vraag voor hem en nog steeds onbeantwoord. |
+| 6 | **De planning die Eveline op 30 juli vroeg**, inclusief wat wij van Mind verwachten. | Twee keer gevraagd, nog niet geleverd. Zie de sectie Planning hieronder. |
+
+Wat wij hem daarbij kunnen meesturen als onderbouwing: de uitvoer van `supabase/tests/anonimisering.sql`. Dat script bewijst structureel dat de collectieve tabel geen kolom heeft die naar een persoon of een moment kan wijzen. Dat is precies het antwoord op zijn vraag van 6 augustus over wanneer de individuele weerberichten losgekoppeld worden.
 
 ## Overdracht aan Mind
 
