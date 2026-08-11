@@ -56,14 +56,34 @@ Vier dingen die daaruit volgen, en ze veranderen de rest van dit document:
 
 - **De app gaat niet live voordat Mind alles in handen heeft.** De overdracht komt dus vóór de App Store, niet erna.
 - **Wij komen niet aan het Apple Developer-account van Mind.** Zij maken het aan en zij dienen de app in.
-- **Er komt geen gebruikersdata in Supabase voor de overdracht.** Alleen de code wordt overgedragen.
+- **Er komt geen gebruikersdata in Supabase voor de overdracht.** Zie hieronder wat er dan wél overgaat.
 - **De DPIA wordt uitgevoerd vóór de overdracht en vóór livegang.**
+
+### Hoe de omgeving meeverhuist
+
+**Besloten op 11 augustus 2026.** Hiervoor stond er dat alleen de code overgaat. Dat klopte niet: het Supabase-project zelf verhuist mee.
+
+| Wanneer | Waar het staat | Wat het is |
+|---|---|---|
+| Nu, tot na de Camino | Het account van Stijn, één project | **Development.** Hier bouwen we met z'n drieën. |
+| Bij de overdracht | Verhuist naar de organisatie van Mind | Daarna maken we de privacykant helemaal af, en worden wij als administrator toegevoegd. |
+| Daarna | Bij Mind, main en dev gescheiden | Pas dan is er een productieomgeving. |
+
+Twee regels die daaruit volgen, en ze gelden vanaf nu:
+
+- **Zet de GitHub-koppeling niet aan op het Supabase-project.** Een project transfer vereist dat die uit staat, gecontroleerd in de Supabase-documentatie op 11 augustus 2026. Hij staat nu uit, en dat moet zo blijven. Let op: dit gaat over de koppeling in het Supabase-dashboard, niet over met welk GitHub-account je op je laptop bent ingelogd. Dat laatste maakt niets uit.
+- **Geen echte gebruikers op het dev-project.** Alleen wij drieën met testaccounts. Checkt er iemand van buiten in, dan staat er data over iemands mentale gezondheid op een persoonlijk account terwijl Mind nog geen verwerkingsverantwoordelijke is en de DPIA nog moet komen. Dat is het enige in dit plan dat echt fout kan gaan. Ruim die testaccounts op vóór de overdracht, anders erft Mind ze.
+
+Twee dingen om te weten voordat het zover is:
+
+- **Main en dev als échte Supabase-branches vragen het Pro-abonnement**, 25 dollar per maand plus kosten per branch. Dat is dan voor Mind. Twee losse gratis projecten doen praktisch hetzelfde voor nul.
+- **Auth-instellingen komen niet mee in migraties.** Inloggen met Google of Apple, de e-mailteksten en de rest van de auth-configuratie staan niet in `supabase/migrations/`. Bij een project transfer verhuizen ze mee, maar bouw je ooit een omgeving opnieuw op, dan moet dat met de hand.
 
 ### Wat dit eenvoudiger maakt
 
 Het risico dat hier eerder stond, een productiedatabase met mentale-gezondheidsdata tussen twee accounts verplaatsen, bestaat niet. Er staat niets in dat mee hoeft. Dezelfde reden waarom de regiowissel van 29 juli nog kon.
 
-Eén technische voorwaarde blijft staan: zet **geen GitHub-integratie** op het Supabase-project. Dat blokkeert een project transfer, en het is de enige voorwaarde uit die lijst die wij per ongeluk kunnen aanzetten. Gecontroleerd in de documentatie op 30 juli 2026.
+Eén technische voorwaarde blijft staan: zet **geen GitHub-integratie** op het Supabase-project. Zie de sectie hierboven, dat is de enige voorwaarde uit die lijst die wij per ongeluk kunnen aanzetten.
 
 ### Wat dit lastiger maakt
 
