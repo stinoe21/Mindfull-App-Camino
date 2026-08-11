@@ -16,14 +16,32 @@ De besluiten die daaruit volgden staan in `datamodel.md`. Het Figma-board is op 
 
 | Wat | Van wie | Waarom dit blokkeert |
 |---|---|---|
-| **DPIA**: is die verplicht, wie bepaalt dat, wie voert hem uit, wat kost het, hoe lang duurt het | Eveline en Paul | Art. 35 AVG. Bij mentale gezondheid, een mogelijk kwetsbare doelgroep en een innovatieve verwerking is dit waarschijnlijk verplicht. Zolang dit onbekend is, weten we niet of er nog eisen bij komen. |
-| **Akkoord op de weer-metafoor** | Eveline en Paul | Bepaalt of de check-in buiten de bijzondere persoonsgegevens blijft. Zonder akkoord bouwen we de check-in niet. Gaat in een aparte mail met onderbouwing. |
+| ~~**DPIA**: is die verplicht~~ | Paul | **Beantwoord op 10 augustus 2026.** Niet DPIA-plichtig, omdat de risico's kleiner bleken dan gedacht. Paul voert er alsnog een korte uit na zijn vakantie (14 tot en met 23 augustus), niet omdat het moet maar om het compliance-proces vast te leggen bij een app die openbaar beschikbaar komt. Hij neemt daarin de lead en komt zelf ver met wat wij via mail en Figma hebben aangeleverd. Verwachte uitkomst: hooguit aanscherpingen, bijvoorbeeld rond uitdrukkelijke toestemming onder art. 9. |
+| ~~**Akkoord op de weer-metafoor**~~ | Paul | **Gegeven op 6 augustus 2026**: "De weermetafoor als uitvraagmechanisme is wat mij betreft prima." Met één aantekening die blijft staan: het resultaat blijft in de context van deze app een bijzonder persoonsgegeven, dus de waarborgen eromheen moeten staan. Onderdeel 3 uit `taakverdeling.md` is hiermee niet meer geblokkeerd op Mind. |
 | **Apple Developer-account op naam van Mind** | Mind, organisatorisch | Ongeveer 100 euro per jaar. Vereist een D-U-N-S-nummer en verificatie door Apple, dat duurt weken. **Mind maakt dit aan en dient de app zelf in; wij komen er niet aan.** Het is daarmee niet het kritieke pad van ons bouwwerk, maar wel de poort naar livegang, en het blokkeert twee dingen die wij niet kunnen testen zonder: Sign in with Apple en TestFlight. Zie `scope.md`. |
 | **Google Play developer-account op naam van Mind** | Mind, organisatorisch | Eenmalig 25 dollar. Belangrijker dan de kosten: een **persoonlijk** account moet voor de eerste productierelease 12 testers 14 dagen aaneengesloten laten testen. Een **organisatie**-account niet. Doen we dit onder een persoonlijk account, dan komt er twee weken wachttijd bij die niemand heeft ingepland. |
 | **Verwerkersovereenkomsten** | Mind | Supabase, Apple App Store, Google Play Store. n8n is van deze lijst af, want daar gaan geen persoonsgegevens doorheen. |
 | **Verwerkersovereenkomst met een e-mailprovider** | Mind | **Nieuw punt, 30 juli 2026.** De ingebouwde e-mailservice van Supabase mag niet in productie: die stuurt maar een paar mails per uur en is alleen te verhogen met een eigen SMTP. Inloggen per e-mail staat op het board, dus er komt een partij bij die e-mailadressen verwerkt. Zie `limieten-en-misbruik.md`. |
 | **Een Supabase-organisatie op naam van Mind** | Mind, organisatorisch | **Nieuw punt, 30 juli 2026.** Het project staat nu in onze eigen organisatie Back to Being en moet naar die van Mind. Zie de sectie hieronder: dat is zelf te doen, maar het is veel eenvoudiger zolang er nog geen gebruikersdata in staat. |
 | **Verwerkersovereenkomst tussen Mind en ons: alleen als wij ná livegang toegang houden** | Mind, juridisch | **Bijgesteld op 30 juli 2026.** Ik had dit als ontbrekend punt opgeschreven, maar het hangt af van één ding. Vóór de overdracht bestaat er geen gebruikersdata, dus verwerken wij niets en is er niets om af te spreken. Houden wij ná livegang toegang tot de productieomgeving voor onderhoud, dan verwerken wij vanaf dat moment wél persoonsgegevens namens Mind en hoort er een overeenkomst te liggen. Vraag dus niet om het contract, maar beslis eerst: blijven wij erbij of niet? |
+
+## Wat wij Paul nog schuldig zijn
+
+Stand van 11 augustus 2026. Paul is met vakantie van 14 tot en met 23 augustus en doet daarna de korte DPIA, dus dit hoort vóór die datum bij hem te liggen. Anders schrijft hij die DPIA op verouderde informatie.
+
+| # | Wat | Waarom het niet kan wachten |
+|---|---|---|
+| 1 | **De collectieve opslag slaat een rij per inzending op, met een uurblok erbij.** Dat is een afzwakking ten opzichte van wat hij weet, en het moet zo genoemd worden. | Dit is het zwaarste punt van de zes. Zijn conclusie dat de app niet DPIA-plichtig is, rust op de zin dat de gegevens lokaal blijven en verder niet verwerkt worden. Een rij per inzending is een stap daarvandaan, en het is reëel dat hij die conclusie herziet. Dat is een aanvaarde prijs, zie `datamodel.md`, maar hij moet hem zelf kunnen wegen. **Noem er ook het restrisico bij**: `ctid` en `xmin` verraden de invoegvolgorde en zijn niet weg te halen, en de bewaartermijn van een jaar is de maatregel die dat eindig maakt. Verzwijg dat niet, het komt in een DPIA toch boven. |
+| 2 | **Antwoord op zijn vraag over de lokale bewaartermijn.** Hij vroeg op 10 augustus letterlijk: "Is er een bewaartermijn gesteld voor deze lokale gegevens?" | Zelfde onderbouwing als punt 1: het is geen losse vraag maar de basis onder zijn conclusie. Let op dat het antwoord een **toezegging** is en geen waarneming, want de app bestaat nog niet en het lijstje met wat er lokaal staat is nog niet af. Zie `datamodel.md`. |
+| 3 | **Melden dat er één datumveld per gebruiker bijkomt**, `profiles.last_checkin_on`. | Nieuw sinds 11 augustus 2026 en hij kent het niet. Het bevat geen weerbeeld en geen historie, alleen de datum van de laatste check-in, en het bestaat om manipulatie van het landelijke beeld te remmen. Het is dus privacy-positief, maar het is wél een gegeven over een gebruiker en daarmee zijn beslissing om te wegen, niet de onze om stil te bouwen. |
+| 4 | **Bevestigen dat de vier sliderwaarden niet naar de server gaan.** | Staat zo in de mail van 7 augustus en is zo gebouwd. Dit is nu het punt waar hij op zal letten, want als de rij wél naar de server gaat, is de vraag gerechtvaardigd wat er nog meer meegaat. Het herbevestigen kost een zin. |
+| 5 | **De uitdrukkelijke toestemming onder art. 9 AVG.** | Hij kondigde dit zelf aan als punt dat nog gefinetuned moet worden. Het valt samen met ons eigen openstaande punt "welke twee consents zijn het", zie `datamodel.md`, en blokkeert onderdeel 1 uit `taakverdeling.md`. |
+| 6 | **Grondslag voor de 16+-eis.** | Stond op toestemming, en dat klopt waarschijnlijk niet meer nu het een toegangseis is. Al twee keer genoteerd als vraag voor hem en nog steeds onbeantwoord. |
+| 7 | **De planning die Eveline op 30 juli vroeg**, inclusief wat wij van Mind verwachten. | Twee keer gevraagd, nog niet geleverd. Zie de sectie Planning hieronder. |
+
+Wat wij hem daarbij kunnen meesturen als onderbouwing: de uitvoer van `supabase/tests/anonimisering.sql`. Dat script controleert structureel dat de collectieve tabel geen kolom heeft die naar een persoon kan wijzen, geen sleutel heeft die een inzending aanwijst, en geen tijd bevat die fijner is dan een uur. Het sluit af met wat het **niet** bewijst, en dat hoort er net zo goed bij.
+
+> **Tot Paul hierop gereageerd heeft, is zijn oordeel over de DPIA-plicht niet iets om op te leunen.** Bouwen mag doorgaan, want het schema staat en de anonimisering is zo sterk als hij binnen deze keuze kan zijn. Wat niet mag, is ergens opschrijven of tegen Mind zeggen dat de app niet DPIA-plichtig is. Dat was een conclusie over een ander ontwerp.
 
 ## Overdracht aan Mind
 
@@ -38,14 +56,34 @@ Vier dingen die daaruit volgen, en ze veranderen de rest van dit document:
 
 - **De app gaat niet live voordat Mind alles in handen heeft.** De overdracht komt dus vóór de App Store, niet erna.
 - **Wij komen niet aan het Apple Developer-account van Mind.** Zij maken het aan en zij dienen de app in.
-- **Er komt geen gebruikersdata in Supabase voor de overdracht.** Alleen de code wordt overgedragen.
+- **Er komt geen gebruikersdata in Supabase voor de overdracht.** Zie hieronder wat er dan wél overgaat.
 - **De DPIA wordt uitgevoerd vóór de overdracht en vóór livegang.**
+
+### Hoe de omgeving meeverhuist
+
+**Besloten op 11 augustus 2026.** Hiervoor stond er dat alleen de code overgaat. Dat klopte niet: het Supabase-project zelf verhuist mee.
+
+| Wanneer | Waar het staat | Wat het is |
+|---|---|---|
+| Nu, tot na de Camino | Het account van Stijn, één project | **Development.** Hier bouwen we met z'n drieën. |
+| Bij de overdracht | Verhuist naar de organisatie van Mind | Daarna maken we de privacykant helemaal af, en worden wij als administrator toegevoegd. |
+| Daarna | Bij Mind, main en dev gescheiden | Pas dan is er een productieomgeving. |
+
+Twee regels die daaruit volgen, en ze gelden vanaf nu:
+
+- **Zet de GitHub-koppeling niet aan op het Supabase-project.** Een project transfer vereist dat die uit staat, gecontroleerd in de Supabase-documentatie op 11 augustus 2026. Hij staat nu uit, en dat moet zo blijven. Let op: dit gaat over de koppeling in het Supabase-dashboard, niet over met welk GitHub-account je op je laptop bent ingelogd. Dat laatste maakt niets uit.
+- **Geen echte gebruikers op het dev-project.** Alleen wij drieën met testaccounts. Checkt er iemand van buiten in, dan staat er data over iemands mentale gezondheid op een persoonlijk account terwijl Mind nog geen verwerkingsverantwoordelijke is en de DPIA nog moet komen. Dat is het enige in dit plan dat echt fout kan gaan. Ruim die testaccounts op vóór de overdracht, anders erft Mind ze.
+
+Twee dingen om te weten voordat het zover is:
+
+- **Main en dev als échte Supabase-branches vragen het Pro-abonnement**, 25 dollar per maand plus kosten per branch. Dat is dan voor Mind. Twee losse gratis projecten doen praktisch hetzelfde voor nul.
+- **Auth-instellingen komen niet mee in migraties.** Inloggen met Google of Apple, de e-mailteksten en de rest van de auth-configuratie staan niet in `supabase/migrations/`. Bij een project transfer verhuizen ze mee, maar bouw je ooit een omgeving opnieuw op, dan moet dat met de hand.
 
 ### Wat dit eenvoudiger maakt
 
 Het risico dat hier eerder stond, een productiedatabase met mentale-gezondheidsdata tussen twee accounts verplaatsen, bestaat niet. Er staat niets in dat mee hoeft. Dezelfde reden waarom de regiowissel van 29 juli nog kon.
 
-Eén technische voorwaarde blijft staan: zet **geen GitHub-integratie** op het Supabase-project. Dat blokkeert een project transfer, en het is de enige voorwaarde uit die lijst die wij per ongeluk kunnen aanzetten. Gecontroleerd in de documentatie op 30 juli 2026.
+Eén technische voorwaarde blijft staan: zet **geen GitHub-integratie** op het Supabase-project. Zie de sectie hierboven, dat is de enige voorwaarde uit die lijst die wij per ongeluk kunnen aanzetten.
 
 ### Wat dit lastiger maakt
 
