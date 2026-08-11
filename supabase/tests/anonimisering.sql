@@ -235,13 +235,20 @@ do $$
 declare
   v_los text;
 begin
-  select string_agg(proname, ', ') into v_los
-    from pg_proc
-   where pronamespace = 'public'::regnamespace
-     and prosecdef
-     and (proconfig is null or not (proconfig && array['search_path=']));
+  -- Let op de schrijfwijze: Postgres slaat `set search_path = ''` op als
+  -- search_path="" met aanhalingstekens, niet als search_path=. Vergelijken met
+  -- die kale string gaf hier een test die faalde terwijl de functies klopten.
+  select string_agg(p.proname, ', ') into v_los
+    from pg_proc p
+   where p.pronamespace = 'public'::regnamespace
+     and p.prosecdef
+     and not exists (
+       select 1
+         from unnest(coalesce(p.proconfig, '{}'::text[])) as cfg
+        where cfg ~ '^search_path=("")?$'
+     );
   assert v_los is null,
-    format('Deze security definer-functies hebben geen vast search_path: %s. Daarmee zijn ze te kapen via de zoekvolgorde.', v_los);
+    format('Deze security definer-functies hebben geen leeg search_path: %s. Daarmee zijn ze te kapen via de zoekvolgorde.', v_los);
 end $$;
 
 \echo ''
