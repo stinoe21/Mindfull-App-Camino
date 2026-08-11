@@ -34,18 +34,18 @@ Twee gevolgen:
 
 Dit is de belangrijkste consequentie van het datamodel en het is geen implementatiedetail.
 
-De collectieve store bestaat uit dagtellers, **zonder gebruikerscode en zonder tijdstip**. Zie `datamodel.md`. Dat betekent dat je aan de collectieve kant onmogelijk kunt zien of iemand vandaag al heeft ingestuurd. Er is niets om op te dedupliceren, en dat is precies de bedoeling.
+De collectieve store bestaat uit losse rijen met alleen een dag, een uurblok en het weerbeeld: **geen gebruikerscode, geen id, geen tijdstempel**. Zie `datamodel.md`. Dat betekent dat je aan de collectieve kant onmogelijk kunt zien of iemand vandaag al heeft ingestuurd. Er is niets om op te dedupliceren, en dat is precies de bedoeling.
 
 Dus:
 
-> **De teller staat in de persoonlijke stroom, de bijdrage gaat naar de anonieme pool.** Eerst vaststellen dat deze gebruiker vandaag nog niet heeft ingestuurd, dan pas de anonieme teller ophogen. Nooit andersom, en nooit met een sleutel die meegaat.
+> **De teller staat in de persoonlijke stroom, de bijdrage gaat naar de anonieme pool.** Eerst vaststellen dat deze gebruiker vandaag nog niet heeft ingestuurd, dan pas de anonieme rij wegschrijven. Nooit andersom, en nooit met een sleutel die meegaat.
 
 Bouw dit niet met een `count` op de collectieve tabel. Dat kan niet, en een agent die het toch probeert, heeft een sleutel nodig en breekt daarmee de anonimisering.
 
 **Concreet, sinds 11 augustus 2026:** het slot is `profiles.last_checkin_on`, één datum die elke keer overschreven wordt, en het zit in `submit_weather()`. Twee dingen daarbij die niet vrijblijvend zijn:
 
 - **Het slot staat op de server en niet alleen lokaal.** Puur lokaal begrenzen wordt omzeild door de app opnieuw te installeren.
-- **Slot en teller zitten in één transactie.** Dat moet, want laat je de client twee losse calls doen, dan slaat hij de eerste gewoon over en is het slot geen slot.
+- **Slot en rij zitten in één transactie.** Dat moet, want laat je de client twee losse calls doen, dan slaat hij de eerste gewoon over en is het slot geen slot.
 
 ## 3. Het landelijke weerbericht is niet te dedupliceren, dus wel te beïnvloeden
 
@@ -58,6 +58,14 @@ Wat we er wel tegen hebben:
 - Een account aanmaken kost een geverifieerd e-mailadres of een Apple- of Google-login. Dat maakt honderd accounts duur.
 - De auth-limieten hierboven begrenzen hoe snel dat kan.
 - De limiet uit punt 2 begrenst het tot één bijdrage per account per dag.
+
+**Wat we sinds 11 augustus 2026 wél kunnen: het achteraf herkennen.** Er staat een rij per inzending met een uurblok erbij, en dat was een van de redenen om voor losse rijen te kiezen in plaats van dagtellers. Zie `datamodel.md`. Vierhonderd inzendingen in één uur waar de basislijn op veertig ligt, is zichtbaar. Bij een teller was dat niet te zien.
+
+Verwacht er niet te veel van. Je ziet een piek, geen handtekening:
+
+- Een uurblok is grof. Vierhonderd inzendingen binnen drie minuten en vierhonderd verspreid over het uur zien er identiek uit, en dat is de bedoeling, want fijner maakt de rij herleidbaar.
+- Wie het rustig aan doet, verdwijnt in de ruis. Tien accounts die netjes één keer per dag insturen, zijn niet te onderscheiden van tien mensen.
+- Er is geen alarm dat afgaat. Dit is iets wat je ziet als je kijkt, en niemand heeft nu de taak om te kijken.
 
 Wat we er bewust **niet** tegen doen: een vingerafdruk van het toestel opslaan, of een hash die bijdragen aan elkaar knoopt. Dat zou werken, en het is precies de sleutel die we niet willen. Voor een app waarin het weerbericht een gespreksopener is en geen statistiek, is dit een acceptabele grens. Het hoort wel gemeld te worden als iemand het weerbericht ooit als onderzoeksdata wil gebruiken, want daarvoor is het niet geschikt.
 
