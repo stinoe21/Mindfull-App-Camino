@@ -201,7 +201,18 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 - [x] Wat is de bewaartermijn per tabel? Persoonsgegevens weg na 2 jaar inactiviteit. De collectieve, geanonimiseerde weerdata blijft.
 - [x] Hoe verwijdert een gebruiker zijn account, en wat gebeurt er dan precies met zijn data? Zelf te verwijderen vanuit profiel en instellingen, waarna alles wat aan hem gekoppeld is weggaat. Zijn bijdrage aan het landelijke weerbericht blijft, want die is anoniem en dus niet terug te vinden. Dat laatste moet in de consent-tekst staan, anders beloof je iets wat je niet waarmaakt.
 - [x] Doen we aan analytics? Geen externe tool, alles via Supabase met een beheerpagina buiten de app. **Welke events precies staat nog open.** Elk event komt hier eerst als veld te staan voordat het gebouwd wordt.
-- [ ] **Welke weertypen bestaan er precies, en hoe heten ze?** Dit is nu een gat waar drie documenten naar verwijzen: `design-system.md` zegt dat de weer-iconenset gesloten is met "precies één per weertype uit `datamodel.md`", en die lijst staat hier niet. Het board noemt de check-in wel, maar somt de opties niet op. Zolang dit ontbreekt kan niemand de iconen, de tokens `gradient/weather/*` of de check-in bouwen, en is de kans groot dat drie mensen drie verschillende sets verzinnen. Dit hangt samen met de vraagvorm die nog bij Mind ligt. **Wat er sinds 7 augustus 2026 wel ligt: het zijn er vijf**, zo staat het in de mail aan Paul. De namen niet. Het schema wacht hier niet op, want `weather_type` is een referentietabel, maar de seed wel.
+- [x] **Welke weertypen bestaan er precies, en hoe heten ze?** **Beantwoord op 11 augustus 2026** vanaf het Figma-board, sectie "4 . Uitkomsten (weer-states)". Het zijn er vijf, wat klopt met de mail aan Paul van 7 augustus:
+
+  | code | label | volgorde |
+  |---|---|---|
+  | `zonnig` | Zonnige dag | 1 |
+  | `wolken` | Wolkendag | 2 |
+  | `mist` | Mistige dag | 3 |
+  | `wind` | Winderige dag | 4 |
+  | `regen` | Regenachtige dag | 5 |
+
+  De codes zijn stabiel en komen nooit in beeld. De labels komen uit de koppen op het board; wijzigt Mind een tekst, dan is dat een migratie en geen dashboard-edit. Dit deblokkeert de weer-iconenset uit `design-system.md` en de tokens `gradient/weather/*`. **Let op: er is geen onweer.** Wie een set met onweer heeft nagebouwd, zit fout.
+- [ ] **Hoe luiden de vier sliders precies?** De assen liggen vast in de mail aan Paul: temperatuur, wind, zicht en wisselvalligheid. De vraagteksten en de schaal nog niet, en ook niet welke combinatie tot welk van de vijf weerbeelden leidt. Die afbeelding gebeurt lokaal op het toestel, dus het raakt het schema niet, maar zonder dit kan de check-in niet af.
 - [ ] **Wat is het minimumaantal deelnemers waarboven het landelijke weerbericht getoond mag worden?** Op het board staat bij connector `12:308` letterlijk "pas tonen boven een minimum aantal deelnemers", zonder getal. Gecontroleerd op 30 juli 2026. Dit is een privacymaatregel en geen designkeuze, dus het getal hoort hier te staan en niet in de code te worden bedacht. **Voorstel: 10.** Onder de drempel geeft `weather_today()` nul rijen terug en toont het dashboard de empty state. Bevestig het getal, dan staat het in de functie.
 - [ ] **Wat is de uitdrukkelijke toestemming onder art. 9 AVG precies?** Paul kondigde op 10 augustus aan hier nog op te finetunen. Dit valt samen met het punt hieronder over de twee consents, en is daarmee blokkerend geworden in plaats van een losse vraag.
 - [ ] **Welke twee consents zijn het, en wat staat er precies in?** Het board heeft twee losse, apart intrekbare consents (`12:136` en `12:139`) en `design-system.md` rekent op een Consent row met twee varianten. Waar ze over gaan en wat de tekst is, staat nergens. Dit blokkeert onderdeel 1 uit `taakverdeling.md`.
