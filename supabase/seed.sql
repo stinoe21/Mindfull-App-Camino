@@ -1,6 +1,7 @@
 -- ===========================================================================
--- Seed voor de LOKALE stack. Draait bij `supabase db reset` en gaat niet mee
--- met `supabase db push`, dus hier hoort alleen wat je lokaal nodig hebt.
+-- Draait bij elke `supabase db reset`, ook met `--linked` tegen het dev-project
+-- (gezien op 13 augustus 2026), en gaat niet mee met `supabase db push`. Zet er
+-- dus nooit iets in dat niet ook op dev mag belanden.
 --
 -- Let op: referentiedata waar de app van afhangt staat NIET hier maar in een
 -- migratie, juist omdat dit bestand niet meekomt naar productie. De vijf
