@@ -10,7 +10,7 @@ De inhoudelijke besluiten staan niet hier: wat we opslaan staat in `datamodel.md
 
 De hele backend is op dit moment twee migratiebestanden in `supabase/migrations/`. Dat is geen tussenstand maar het ontwerp: klein, leesbaar, en elke wijziging is een bestand met een review erop.
 
-Het idee in één alinea: het persoonlijke weerbeeld blijft op het toestel en wordt aan het eind van de dag gewist. De server kent maar twee dingen. Eén: een **anonieme rij per inzending**, met alleen een dag, een uurblok en het weerbeeld. Twee: op het profiel **de datum van de laatste check-in**, zodat iemand één keer per dag meetelt. Tussen die twee loopt geen verbinding, en de tabellen zijn zo gebouwd dat die verbinding er ook niet bij kán: er is in de collectieve tabel geen kolom die een gebruiker of een exact moment kan aanduiden.
+Het idee in één alinea: het persoonlijke weerbeeld blijft op het toestel en wordt aan het eind van de dag gewist. De server kent maar twee dingen. Eén: **anonieme totalen**, per dag, uurblok en weerbeeld hoeveel inzendingen er waren; een inzending telt op bij een totaal en krijgt geen eigen rij. Twee: op het profiel **de datum van de laatste check-in**, zodat iemand één keer per dag meetelt. Tussen die twee loopt geen verbinding, en de tabellen zijn zo gebouwd dat die verbinding er ook niet bij kán: er is in de collectieve tabel geen kolom die een gebruiker of een exact moment kan aanduiden, en geen rij die één inzending vertegenwoordigt.
 
 ### Wat de app mag aanraken
 
@@ -18,27 +18,27 @@ Dit is de volledige API van de backend. Alles wat hier niet staat, is voor de ap
 
 | Handeling | Hoe | Wat het doet |
 |---|---|---|
-| Insturen | `rpc('submit_weather', { p_weather: 'zonnig' })` | Zet eerst het dagslot op het profiel, schrijft dan de anonieme rij. Eén transactie. Tweede keer op een dag: foutmelding "vandaag al ingecheckt". |
+| Insturen | `rpc('submit_weather', { p_weather: 'zonnig' })` | Zet eerst het dagslot op het profiel, telt dan anoniem op bij het uurtotaal. Eén transactie. Tweede keer op een dag: foutmelding "vandaag al ingecheckt". |
 | Weerbericht lezen | `rpc('weather_today')` | De percentages van vandaag. Geeft **nul rijen** onder de toondrempel; dat is meteen de empty state. |
 | Weertypen lezen | `select` op `weather_type` | De vijf weerbeelden met hun labels. |
 | Eigen profiel lezen | `select` op de eigen rij in `profiles` | Voor `last_checkin_on`, zodat de check-in-knop uit kan staan als iemand al heeft ingecheckt. |
 
-Schrijven op `profiles` kan niet vanuit de app, ook niet op je eigen rij: anders zet iemand zijn eigen dagslot terug. En `weather_entry` en `weather_daily` zijn helemaal onzichtbaar: RLS staat aan en er is bewust geen enkele policy.
+Schrijven op `profiles` kan niet vanuit de app, ook niet op je eigen rij: anders zet iemand zijn eigen dagslot terug. En `weather_hourly` en `weather_daily` zijn helemaal onzichtbaar: RLS staat aan en er is bewust geen enkele policy.
 
 ### De tabellen
 
 | Tabel | Wat erin staat | Bewaartermijn |
 |---|---|---|
 | `weather_type` | De vijf weerbeelden: zonnig, wolken, mist, wind, regen | Referentiedata |
-| `weather_entry` | Een rij per inzending: dag, uurblok (0 tot 23), weerbeeld. Geen id, geen code, geen tijdstip, geen verwijzing naar een gebruiker. | 1 jaar, daarna opgeteld naar `weather_daily` |
+| `weather_hourly` | Totalen: per dag, uurblok (0 tot 23) en weerbeeld hoeveel inzendingen. Geen id, geen code, geen tijdstip, geen rij per inzending. | 1 jaar, daarna samengevat naar `weather_daily` |
 | `weather_daily` | Het archief: per dag, per weerbeeld, hoeveel. Geen uur meer. | Onbeperkt, onherroepelijk anoniem |
 | `profiles` | `last_active_at` en `last_checkin_on`. Nergens staat wát iemand invulde. | Volgt het account |
 
-Waarom de rij geen id en geen tijdstip heeft, staat uitgelegd in `datamodel.md`. De korte versie: de platformlogs bevatten bij elk verzoek wie het deed en wanneer, dus een exact tijdstip in de rij is een sleutel naar die logs, en daarmee zou de data pseudoniem zijn in plaats van anoniem.
+Waarom er geen rij per inzending is en geen tijdstip, staat uitgelegd in `datamodel.md`. De korte versie: de platformlogs bevatten bij elk verzoek wie het deed en wanneer, dus alles wat een inzending aanwijsbaar maakt is een sleutel naar die logs: een tijdstip, een rij-id, en zelfs de invoegvolgorde van losse rijen. Een totaal kent geen volgorde en geen geschiedenis, dus die sleutel bestaat niet meer.
 
 ### Het bewijsstuk
 
-`supabase/tests/anonimisering.sql` bewijst aan de tabeldefinities dat de collectieve stroom niet herleidbaar kan zijn: geen kolom die naar een persoon kan wijzen, geen sleutel, geen tijd fijner dan een uur, RLS dicht, realtime uit, functies met een vast `search_path`. Het script stopt op de eerste afwijking en eindigt anders met GESLAAGD. De uitvoer is een bijlage bij de DPIA van Paul. Draai het na elke push, zie sectie 4.
+`supabase/tests/anonimisering.sql` bewijst aan de tabeldefinities dat de collectieve stroom niet herleidbaar kan zijn: geen kolom die naar een persoon kan wijzen, geen rij per inzending, geen tijd fijner dan een uur, RLS dicht, realtime uit, functies met een vast `search_path`. Het script stopt op de eerste afwijking en eindigt anders met GESLAAGD. De uitvoer is een bijlage bij de DPIA van Paul. Draai het na elke push, zie sectie 4.
 
 ### Instellingen die geen SQL zijn
 
@@ -49,7 +49,7 @@ Waarom de rij geen id en geen tijdstip heeft, staat uitgelegd in `datamodel.md`.
 
 ### Wat er bewust nog niet is
 
-- **De rollup is niet ingepland.** `rollup_weather_entries()` bestaat, maar pg_cron aanzetten is een eigen besluit. De eerste rijen lopen pas in augustus 2027 af, dus het heeft geen haast; het moet alleen niet vergeten worden.
+- **De rollup is niet ingepland.** `rollup_weather_hourly()` bestaat, maar pg_cron aanzetten is een eigen besluit. De eerste totalen lopen pas in augustus 2027 af, dus het heeft geen haast; het moet alleen niet vergeten worden.
 - **De opruiming van inactieve accounts bestaat nog niet**, alleen het veld (`last_active_at`) om hem op te bouwen.
 - **Een eigen SMTP is pas voor livegang**, met een verwerkersovereenkomst erbij, zie `limieten-en-misbruik.md`.
 

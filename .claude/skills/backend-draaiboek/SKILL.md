@@ -15,11 +15,11 @@ We draaien Supabase **niet lokaal**: geen Docker, geen `supabase start`. Alles g
 
 ## 1. De twee stromen, en de regels die nooit wijken
 
-Het persoonlijke weerbeeld blijft op het toestel en wordt aan het eind van de dag gewist. De server kent alleen twee dingen: een anonieme rij per inzending in de collectieve pool, en op het profiel de datum van de laatste check-in. Tussen die twee loopt geen verbinding, en dat is toegezegd aan de privacyofficer van Mind. Zie `docs/datamodel.md`.
+Het persoonlijke weerbeeld blijft op het toestel en wordt aan het eind van de dag gewist. De server kent alleen twee dingen: anonieme totalen per dag, uurblok en weerbeeld in de collectieve pool, en op het profiel de datum van de laatste check-in. Tussen die twee loopt geen verbinding, en dat is toegezegd aan de privacyofficer van Mind. Zie `docs/datamodel.md`.
 
 Daaruit volgen vijf regels. Ze staan ook in de bestanden zelf, maar hier op een rij:
 
-1. **`weather_entry` en `weather_daily` krijgen er nooit een kolom bij.** Elke kolomwens is een productbesluit dat eerst `docs/datamodel.md` in moet, langs het team. Niets in die tabellen mag een gebruiker kunnen aanduiden of een moment fijner dan een uurblok.
+1. **`weather_hourly` en `weather_daily` krijgen er nooit een kolom bij.** Elke kolomwens is een productbesluit dat eerst `docs/datamodel.md` in moet, langs het team. Niets in die tabellen mag een gebruiker kunnen aanduiden of een moment fijner dan een uurblok.
 2. **Het dagslot zit aan de persoonlijke kant**, in `submit_weather()`, in dezelfde transactie als de insert. Tel nooit op de collectieve tabel, zie `docs/limieten-en-misbruik.md`.
 3. **De app praat alleen via `submit_weather()` en `weather_today()` met de data**, plus lezen van `weather_type` en de eigen rij in `profiles`. Nieuwe directe toegang op een tabel is een besluit, geen implementatiedetail.
 4. **Realtime blijft uit op de collectieve tabellen en PITR blijft uit op het project.** Allebei zenden ze anders elke insert uit met een exact moment erbij, en dat is precies het lek dat het uurblok dichthoudt.
@@ -68,7 +68,7 @@ Kijk naar `20260811082814_weather_anonymous_aggregate.sql` als voorbeeld; dat be
 
 - Schema wijzigen via de dashboard-UI of met een los `execute_sql`-commando. Altijd een migratiebestand.
 - Een service role key gebruiken, opvragen of ergens neerzetten. Zie `CLAUDE.md` sectie 9 voor waarom dit hier erger is dan elders.
-- Een kolom toevoegen aan `weather_entry` of `weather_daily`.
+- Een kolom toevoegen aan `weather_hourly` of `weather_daily`.
 - Realtime aanzetten, PITR aanzetten, een extensie of pg_cron installeren.
 - Een migratiebestand wijzigen of verwijderen dat al gepusht of gemerged is.
 - `supabase db reset --linked` draaien. Dat wist het hele dev-project en is aan het team, niet aan een agent.

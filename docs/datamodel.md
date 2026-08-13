@@ -26,7 +26,7 @@ Afgestemd met de privacyofficer van Mind op 29 juli 2026 en verwerkt in het Figm
 >
 > Wat in die mail aan Paul staat, is daarmee bindend. Wijkt de app ervan af, dan vervalt zijn conclusie en moet je eerst terug naar hem. Dat is geen formaliteit maar het verschil tussen wel en geen verplichte DPIA.
 >
-> **Bevestigd op 13 augustus 2026: de rij per inzending is conform die mail en houden we aan.** In de bijlage van 7 augustus stond al dat iedere inzending een eigen, geanonimiseerde rij wordt; dat is dus geen afwijking. Wat Paul nog niet kent zijn drie verfijningen uit de bouw van 11 augustus: de "willekeurige unieke code" uit die mail is geschrapt (er staat helemaal geen code of sleutel in een rij, en dat is sterker), er staat een uurblok in de rij, en er is het dagslot-veld `last_checkin_on`. Tot hij die heeft gewogen, schrijf nergens op dat de app niet DPIA-plichtig is. Zie de secties "Waarom er een rij per inzending staat en geen dagteller" en "Wat het uurblok niet oplost", en `privacy-besluiten.md`.
+> **Aangescherpt op 13 augustus 2026: de collectieve opslag is totalen per uurblok geworden, geen rij per inzending meer.** Iedere inzending telt direct op bij een totaal per (dag, uurblok, weerbeeld). Dat is strikt sterker dan de rij uit de mail van 7 augustus: de informatie is identiek, maar een totaal kent geen volgorde en geen geschiedenis, dus het restrisico van de invoegvolgorde is vervallen. Wat Paul nog niet kent: deze aanscherping, het uurblok, de geschrapte "willekeurige unieke code" en het dagslot-veld `last_checkin_on`. Tot hij die heeft gewogen, schrijf nergens op dat de app niet DPIA-plichtig is. Zie de secties "Waarom er totalen per uurblok staan" en "Wat het uurblok niet oplost", en `privacy-besluiten.md`.
 
 > **Uitgangspunt: we slaan bewust geen tot een persoon herleidbare data over mentaal welzijn op.** Elk besluit hieronder volgt daaruit. Doen we dat wel, dan worden de beveiligingseisen van de app fors zwaarder.
 
@@ -34,14 +34,14 @@ Afgestemd met de privacyofficer van Mind op 29 juli 2026 en verwerkt in het Figm
 |---|---|
 | Leeftijd | 16+ is een harde toegangseis. De check komt **vóór** het aanmaken van een account en heeft **geen Skip**. Onder de 16 geen toegang. Daarmee is ouderlijke toestemming niet nodig. |
 | Weer-check-in | Geen directe vragen naar mentale gezondheid of stress, maar een weer-metafoor. Doel is buiten de bijzondere persoonsgegevens blijven. **Akkoord van Paul op 6 augustus 2026**, letterlijk: "De weermetafoor als uitvraagmechanisme is wat mij betreft prima." Dit blokkeert onderdeel 3 uit `taakverdeling.md` dus niet meer. Wel met één aantekening van hem, en die is belangrijk: de metafoor beperkt het risico maar heft het niet op, want het resultaat blijft in de context van deze app een bijzonder persoonsgegeven. De waarborgen eromheen moeten dus staan, en dat is precies wat de rest van dit document regelt. |
-| Collectieve store | **Geanonimiseerd**, niet gepseudonimiseerd. **Eén rij per inzending**, conform de mail aan Paul van 7 augustus 2026 en bevestigd op 13 augustus, met daarin alleen de dag, een **uurblok** en het weerbeeld. Geen gebruikerscode, geen id, geen tijdstempel. De "willekeurige unieke code" uit die mail is bewust geschrapt: elke code is een sleutel die een inzending aanwijst. Zie de sectie hieronder over waarom de tijd een uurblok is en geen tijdstip. |
+| Collectieve store | **Geanonimiseerd**, niet gepseudonimiseerd. **Totalen per (dag, uurblok, weerbeeld)**, besloten op 13 augustus 2026: een inzending telt direct op bij een totaal en er bestaat geen rij die één inzending vertegenwoordigt. Geen gebruikerscode, geen id, geen tijdstempel, geen volgorde. De "willekeurige unieke code" uit de mail van 7 augustus is bewust geschrapt: elke code is een sleutel die een inzending aanwijst. Zie de secties hieronder over het uurblok en over waarom het totalen zijn geworden. |
 | Check-in-vorm | Vier sliders binnen de weermetafoor: **temperatuur, wind, zicht en wisselvalligheid**. Die worden **op het toestel** gecombineerd tot één van vijf vaste weerbeelden. Vastgelegd in de mail aan Paul van 7 augustus 2026. |
 | Sliderwaarden | Gaan **niet** naar de server en worden nergens als historie opgeslagen. Toegezegd aan Paul. Los van die toezegging: vier sliderwaarden vormen een vier-dimensionale vingerafdruk die veel unieker is dan één uit vijf weerbeelden, dus meesturen zou de anonimisering meetbaar verzwakken. |
 | Persoonlijk weerbeeld | Blijft **lokaal op het toestel** en wordt aan het eind van de dag gewist. Er komt geen persoonlijke historie van eerdere weerbeelden, niet lokaal en niet op de server. Toegezegd aan Paul op 7 augustus 2026. |
 | Dagslot | **Nieuw op 11 augustus 2026.** Eén datumveld op het profiel, `last_checkin_on`, dat elke keer overschreven wordt. Daarmee kan iemand maar één keer per dag bijdragen aan het landelijke beeld. Er staat **geen weerbeeld** in en geen historie. Dit veld kent Paul nog niet, zie `privacy-besluiten.md`. |
 | Bewaartermijn persoonsgegevens | Weg na 2 jaar inactiviteit, of eerder als de gebruiker zijn account zelf verwijdert. |
 | Inactiviteit meten | **Besloten op 30 juli 2026: we slaan het moment van laatste activiteit op.** Zonder dat veld is "weg na 2 jaar inactiviteit" niet te handhaven en beloof je in de privacyverklaring iets wat niemand uitvoert. De minimale vorm is **één tijdstip op het profiel dat elke keer overschreven wordt**, dus geen geschiedenis van wat iemand wanneer deed. Dat onderscheid is het hele punt: een laatste-activiteitsstempel is bewaartermijnadministratie, een logboek van sessies is gedragsdata. |
-| Bewaartermijn collectieve data | **Besloten op 11 augustus 2026: de losse rijen blijven een jaar staan, daarna worden ze opgeteld tot dagtellers en verdwijnen ze.** Het getal is voorlopig en staat op één plek, de default van `rollup_weather_entries()`. Wat overblijft is een teller per dag per weerbeeld, zonder uur, en die is onherroepelijk anoniem. Verwijderen per gebruiker is er niet, want we weten niet welke rij van wie is. Dit moet expliciet in de consent-tekst en de privacyverklaring staan. |
+| Bewaartermijn collectieve data | **Besloten op 11 augustus 2026, aangepast op 13 augustus: de uurtotalen blijven een jaar staan, daarna worden ze samengevat tot dagtotalen en verdwijnen ze.** Het getal is voorlopig en staat op één plek, de default van `rollup_weather_hourly()`. Wat overblijft is een totaal per dag per weerbeeld, zonder uur, en dat is onherroepelijk anoniem. Verwijderen per gebruiker is er niet, want een totaal bevat geen losse inzendingen. Dit moet expliciet in de consent-tekst en de privacyverklaring staan. |
 | Analytics | Geen externe tool. Analyse en app-gebruik lopen via Supabase, met een beheerpagina buiten de app. |
 | n8n | Er gaan **geen persoonsgegevens** door n8n. Het landelijke weerbericht komt rechtstreeks uit Supabase. |
 | Crisis | Bewust **geen** proactieve escalatie bij structureel negatieve check-ins, want daarvoor zouden we juist de data moeten bewaren die we niet bewaren. Alleen de disclaimer en de hulpknop. Dit is een gedocumenteerde grens, geen omissie. |
@@ -53,7 +53,7 @@ Afgestemd met de privacyofficer van Mind op 29 juli 2026 en verwerkt in het Figm
 Uit het besluit over de collectieve store volgt een consequentie die je in het schema moet terugzien:
 
 1. **Persoonlijk.** Het weerbeeld van de gebruiker zelf, dat "Mijn Mentale Weer" op het dashboard voedt. Dit staat **lokaal op het toestel** en gaat niet naar de server. Op de server staat aan deze kant alleen `profiles`, en daar staat geen weerbeeld in.
-2. **Collectief.** Eén rij per inzending, zonder enige identifier: de dag, een uurblok, het weerbeeld. Dit voedt het weerbericht van Nederland en het overzicht voor Mind.
+2. **Collectief.** Totalen per dag, uurblok en weerbeeld, zonder enige identifier: een inzending telt op bij een totaal. Dit voedt het weerbericht van Nederland en het overzicht voor Mind.
 
 Er loopt **geen sleutel** tussen die twee. Schrijf je vanuit stroom 1 naar stroom 2, dan gaat er geen id, geen hash en geen code mee.
 
@@ -73,35 +73,31 @@ Onder overweging 26 AVG telt wat de verwerkingsverantwoordelijke redelijkerwijs 
 
 Vier varianten van hetzelfde lek, zodat niemand ze per ongeluk opnieuw introduceert:
 
-- Een oplopende `id` verraadt de invoegvolgorde, ook zonder tijdstip. **`uuid v7` ook**, want die is tijdgeordend. `weather_entry` heeft daarom helemaal geen sleutel.
-- De systeemkolommen `ctid` en `xmin` doen dat óók, op elke tabel, en die kun je niet weghalen. Zie hieronder, dit is het restrisico.
+- Een oplopende `id` verraadt de invoegvolgorde, ook zonder tijdstip. **`uuid v7` ook**, want die is tijdgeordend. `weather_hourly` heeft daarom alleen de sleutel (dag, uurblok, weerbeeld), en die wijst een totaal aan en geen inzending.
+- De systeemkolommen `ctid` en `xmin` verraden op elke tabel de invoegvolgorde van rijen, en die kun je niet weghalen. Dit was de reden om van losse rijen naar totalen te gaan: zonder rij per inzending is er geen volgorde die iets over een inzending zegt. Zie hieronder.
 - WAL en point-in-time recovery leggen elke insert vast met zijn transactietijd, op de milliseconde. **PITR staat daarom uit op dit project en moet uit blijven.**
 - Realtime zendt inserts live uit met een tijdstempel. **Realtime staat daarom uit op de collectieve tabellen.**
 
-### Waarom er een rij per inzending staat en geen dagteller
+### Waarom er totalen per uurblok staan
 
-Op 11 augustus 2026 stonden hier dagtellers: één rij per dag per weerbeeld met een teller erop. Dat was privacytechnisch sterker, want een teller heeft geen geschiedenis en is achteraf dus niet te correleren. **Het is toch een rij per inzending geworden, en dat is een bewuste afweging met een prijs.**
+Dit ontwerp is in drie stappen gegaan, en elke stap legt een afweging vast:
 
-Wat een teller Mind kost, en dit is waarom hij het niet geworden is:
-
-1. **Geen verloop binnen de dag.** Je ziet niet of Nederland 's ochtends anders incheckt dan 's avonds. Voor een app die "hoe voelt Nederland zich nu" belooft, is dat inhoudelijk het interessante deel.
-2. **Geen misbruikdetectie.** Een teller die op 500 staat ziet er hetzelfde uit of dat nu 500 mensen zijn of één script. Bij losse rijen zie je de piek in een uurblok tegen de basislijn. Dat sluit aan op `limieten-en-misbruik.md` sectie 3: manipulatie kunnen we niet voorkomen, herkennen wel.
-3. **Segmentatie moet vooraf.** Bij een teller is elke uitsplitsing een extra kolom die je vooraf moet bedenken, en elke dimensie verkleint de cellen tot ze eencijferig en dus herleidbaar zijn. Bij losse rijen kies je de analyse achteraf. Dat is de echte kostenpost van een teller: wat niemand in augustus bedacht heeft, is in december niet meer te reconstrueren.
+1. **Dagtellers** (11 augustus, eerste opzet). Privacytechnisch sterk, want een teller heeft geen geschiedenis. Maar Mind verliest het verloop binnen de dag en de misbruikdetectie: een dagteller op 500 ziet er hetzelfde uit of dat nu 500 mensen zijn of één script.
+2. **Een rij per inzending met een uurblok** (11 augustus, tweede opzet). Geeft Mind het uurverloop, maar introduceert een restrisico: de systeemkolommen `ctid` en `xmin` verraden de invoegvolgorde, en wie zowel databasetoegang als de platformlogs heeft, kan rijen binnen een uurblok op rangorde naast de logregels leggen en ze zo alsnog uitlijnen.
+3. **Totalen per (dag, uurblok, weerbeeld)** (13 augustus). Het beste van allebei, en het inzicht is simpel: een rij bevatte alleen dag, uurblok en weerbeeld, dus de verzameling rijen bevatte exact dezelfde informatie als deze totalen. Het verloop binnen de dag blijft, een misbruikpiek in een uurblok blijft zichtbaar tegen de basislijn (zie `limieten-en-misbruik.md` sectie 3), en uitsplitsing achteraf kon toch alleen op deze drie dimensies. Wat verdwijnt is precies het lek: **een totaal kent geen volgorde en geen geschiedenis.**
 
 ### Wat het uurblok niet oplost
 
 Dit hoort in de DPIA en het hoort niet weggepoetst te worden.
 
-**`ctid` en `xmin` verraden de invoegvolgorde en zijn niet weg te halen.** Wie zowel databasetoegang als de logs heeft, kan de rijen binnen een uurblok op rangorde leggen naast de logregels van datzelfde uur en ze zo alsnog uitlijnen. Grofmaken helpt daar niet tegen, want de volgorde zit in de opslag zelf en niet in een kolom.
+**Wie live meekijkt, ziet welk totaal ophoogt.** Iemand met dashboardtoegang die op het moment zelf de tabel observeert en de platformlogs ernaast houdt, kan een inzending aan een account koppelen zolang die logs bewaard blijven, en dat is een kwestie van dagen. Daar helpt geen schema tegen: elk ontwerp met serveropslag heeft dit venster, ook het oude met losse rijen. Wat het begrenst:
 
-Wat dat begrenst:
-
-- **De bewaartermijn.** Na een jaar zijn de rijen opgeteld tot dagtellers en verdwenen. Daarmee is het restrisico eindig in plaats van permanent. Dat is de reden dat de rijen aflopen: het is geen opruimhygiëne maar de maatregel.
+- **De logbewaartermijn van het platform.** Na afloop daarvan bestaat de aanvullende informatie niet meer en valt er niets te reconstrueren, door niemand: een totaal kent zijn eigen verleden niet.
 - **Wie er bij het dashboard kan.** Dat is een organisatorische maatregel en hoort daarom in de DPIA en niet in dit document.
 
-**Wees hier eerlijk over richting Paul.** Ten opzichte van wat hij weet is dit geen afzwakking: de rij per inzending stond al in de mail van 7 augustus, en de willekeurige unieke code daaruit is juist geschrapt. Maar het uurblok en het restrisico hierboven kent hij nog niet, en een rij per inzending blijft zwakker dan een teller. Dat is de prijs van de analysewaarde, die keuze is bewust gemaakt, en hij moet hem zelf kunnen wegen.
+**Wees hier eerlijk over richting Paul.** Ten opzichte van de mail van 7 augustus is dit een aanscherping en geen afzwakking: de willekeurige code is geschrapt, en de losse rij is vervangen door een totaal waarmee het volgorde-restrisico is vervallen. Maar het uurblok, de totalen en het live-venster hierboven kent hij nog niet, en hij moet ze zelf kunnen wegen.
 
-De vraag die Paul op 6 augustus stelde, "op welk moment worden de individuele weerberichten losgekoppeld", heeft daarmee nog steeds hetzelfde antwoord: ze worden nooit losgekoppeld, want ze zijn nooit gekoppeld geweest. Er staat geen code en geen verwijzing in de rij.
+De vraag die Paul op 6 augustus stelde, "op welk moment worden de individuele weerberichten losgekoppeld", heeft daarmee nog steeds hetzelfde antwoord: ze worden nooit losgekoppeld, want ze zijn nooit gekoppeld geweest. Er bestaat niet eens een rij per inzending.
 
 ### De begrenzing van één per dag
 
@@ -155,11 +151,11 @@ Welke schermen lezen dit? Weer-check-in, dashboard, analyticspagina.
 
 Bewust een referentietabel en geen Postgres-enum: de namen moeten nog van Mind komen, en zo is een weerbeeld erbij een seed-wijziging in plaats van een enum-migratie.
 
-### weather_entry
+### weather_hourly
 
 ```
-Tabel:            weather_entry
-Waarvoor:         Het landelijke weerbericht: één rij per inzending, met een uurblok.
+Tabel:            weather_hourly
+Waarvoor:         Het landelijke weerbericht: totalen per dag, uurblok en weerbeeld.
 RLS:              Aan, en zonder één policy. Dus niemand leest of schrijft rechtstreeks.
                   Alle toegang loopt via submit_weather() en weather_today().
 
@@ -167,32 +163,33 @@ Kolommen:
   day      date      verplicht   De dag, gezet door de database in Europe/Amsterdam
   hour     smallint  verplicht   Uurblok 0 t/m 23, gezet door de database, met een check erop
   weather  text      verplicht   Verwijst naar weather_type.code
+  total    integer   verplicht   Hoeveel inzendingen dit totaal telt, minimaal 1
 
 Bevat gevoelige data?     Nee, en dat is een eigenschap van de structuur en niet van de discipline
                           van wie er een query op schrijft. Er is geen kolom die een persoon kán
-                          aanduiden, en geen tijd fijner dan een uur. Er is bovendien geen primary
-                          key en geen unique index: elke sleutel wijst een inzending aan, en een
-                          oplopende of tijdgeordende sleutel verraadt de volgorde.
-                          Restrisico: ctid en xmin verraden de invoegvolgorde en zijn niet weg te
-                          halen. Zie "Wat het uurblok niet oplost" hierboven.
-Bewaartermijn:            Een jaar, voorlopig. Daarna telt rollup_weather_entries() de rijen op tot
-                          weather_daily en verwijdert ze. Die functie is nog niet ingepland, zie de
-                          openstaande punten.
-Verwijderbaar door user?  Nee, en dat kan ook niet: we weten niet welke rij van wie is.
+                          aanduiden, geen tijd fijner dan een uur, en geen rij die één inzending
+                          vertegenwoordigt. De primary key (day, hour, weather) wijst een totaal
+                          aan en geen inzending; hij bestaat omdat het optellen een upsert is.
+                          Een totaal kent geen volgorde en geen geschiedenis, dus er valt achteraf
+                          niets uit te lijnen. Zie "Wat het uurblok niet oplost" hierboven.
+Bewaartermijn:            Een jaar, voorlopig. Daarna vat rollup_weather_hourly() de uurtotalen
+                          samen tot weather_daily en verwijdert ze. Die functie is nog niet
+                          ingepland, zie de openstaande punten.
+Verwijderbaar door user?  Nee, en dat kan ook niet: een totaal bevat geen losse inzendingen.
                           Dit moet in de consent-tekst en de privacyverklaring staan.
 Welke schermen lezen dit? Dashboard (het landelijke weerbericht), analyticspagina voor het IT-departement.
 ```
 
-Twee platforminstellingen horen bij deze tabel en zijn net zo belangrijk als het schema: **PITR uit** en **realtime uit**. Zie de sectie hierboven over het uurblok. Ze wegen hier zwaarder dan bij de eerdere opzet met tellers, want elke insert is nu een inzending.
+Twee platforminstellingen horen bij deze tabel en zijn net zo belangrijk als het schema: **PITR uit** en **realtime uit**. Ze wegen hier onverminderd zwaar: realtime zou elke ophoging live uitzenden met het moment erbij, en PITR zou elke ophoging in de WAL bewaren. In beide gevallen heeft een totaal dan alsnog een geschiedenis.
 
-Het uur staat in de tabel **voor Mind, niet voor de app**. `weather_today()` geeft bewust geen uitsplitsing per uur terug: een uurblok met weinig rijen is wel weer herleidbaar, en de app toont het landelijke beeld van vandaag.
+Het uur staat in de tabel **voor Mind, niet voor de app**. `weather_today()` geeft bewust geen uitsplitsing per uur terug: een uurblok met een laag totaal is wel weer herleidbaar, en de app toont het landelijke beeld van vandaag.
 
 ### weather_daily
 
 ```
 Tabel:            weather_daily
-Waarvoor:         Het archief: rijen die door de bewaartermijn heen zijn, opgeteld per dag.
-RLS:              Aan, en zonder één policy. Wordt alleen geschreven door rollup_weather_entries().
+Waarvoor:         Het archief: uurtotalen die door de bewaartermijn heen zijn, samengevat per dag.
+RLS:              Aan, en zonder één policy. Wordt alleen geschreven door rollup_weather_hourly().
 
 Kolommen:
   day      date     verplicht   De dag waar deze telling over gaat
@@ -264,9 +261,9 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 - [ ] **Welke twee consents zijn het, en wat staat er precies in?** Het board heeft twee losse, apart intrekbare consents (`12:136` en `12:139`) en `design-system.md` rekent op een Consent row met twee varianten. Waar ze over gaan en wat de tekst is, staat nergens. Dit blokkeert onderdeel 1 uit `taakverdeling.md`.
 - [ ] **Wat ruimt de bewaartermijn daadwerkelijk op, en wanneer draait dat?** Het veld voor laatste activiteit is nu besloten, maar een termijn van 2 jaar bestaat pas als er iets is dat periodiek verwijdert. Zolang dat er niet is, staat er een belofte in de privacyverklaring die de app niet nakomt. Dit moet in een migratie staan, want anders komt het niet mee in de overdracht en gaat de app bij Mind live zonder opruiming. Zie `privacy-besluiten.md`.
 - [ ] **Wat staat er lokaal op het toestel, en hoe lang?** Dit is niet meer alleen onze vraag: Paul stelde hem op 10 augustus letterlijk ("Is er een bewaartermijn gesteld voor deze lokale gegevens?") en hij staat nog open. Uit het ontwerp volgt het antwoord al grotendeels: het persoonlijke weerbeeld staat lokaal en wordt aan het eind van de dag gewist, en er is geen lokale historie. Wat nog benoemd moet worden is wat er verder lokaal staat, zoals de sessietokens, en wat er gebeurt bij uitloggen. Dit hangt samen met de vraag of de app offline werkt.
-- [x] **Wil Mind meer zien dan de dagverdeling?** **Ja, besloten op 11 augustus 2026.** Er komt een rij per inzending met een uurblok, zodat het verloop binnen de dag, misbruikdetectie en uitsplitsing achteraf mogelijk blijven. De sliderwaarden gaan nog steeds **niet** mee: dat is een aparte toezegging aan Paul en een vier-dimensionale waarde is een veel unievere vingerafdruk. Wil Mind die alsnog, dan is dat een nieuwe verwerking en gaat het eerst langs Paul.
-- [ ] **Wie plant `rollup_weather_entries()` in, en waarmee?** De bewaartermijn van een jaar bestaat pas als er iets is dat hem uitvoert. De functie staat in de migratie maar is **niet ingepland**: daar is `pg_cron` voor nodig en dat aanzetten is een eigen besluit, geen bijvangst van deze migratie. De eerste rijen lopen pas in augustus 2027 af, dus het heeft geen haast. Wat wel haast heeft, is dat het besluit genomen wordt en niet vergeten, want dit is precies zo'n belofte die anders alleen in een privacyverklaring bestaat. Zelfde probleem als het punt hieronder over de 2 jaar inactiviteit, en waarschijnlijk dezelfde oplossing.
-- [ ] **Blijft de bewaartermijn van de losse rijen op een jaar staan?** Voorlopig getal, gekozen op 11 augustus 2026. Korter is privacytechnisch sterker en kost Mind de mogelijkheid om oude data alsnog anders uit te splitsen. Dit is een afweging voor Mind en niet voor ons, en hij hoort in de DPIA.
+- [x] **Wil Mind meer zien dan de dagverdeling?** **Ja, besloten op 11 augustus 2026.** Sinds 13 augustus zijn dat totalen per (dag, uurblok, weerbeeld): het verloop binnen de dag en misbruikdetectie blijven mogelijk, zonder losse rijen. De sliderwaarden gaan nog steeds **niet** mee: dat is een aparte toezegging aan Paul en een vier-dimensionale waarde is een veel unievere vingerafdruk. Wil Mind die alsnog, dan is dat een nieuwe verwerking en gaat het eerst langs Paul.
+- [ ] **Wie plant `rollup_weather_hourly()` in, en waarmee?** De bewaartermijn van een jaar bestaat pas als er iets is dat hem uitvoert. De functie staat in de migratie maar is **niet ingepland**: daar is `pg_cron` voor nodig en dat aanzetten is een eigen besluit, geen bijvangst van deze migratie. De eerste totalen lopen pas in augustus 2027 af, dus het heeft geen haast. Wat wel haast heeft, is dat het besluit genomen wordt en niet vergeten, want dit is precies zo'n belofte die anders alleen in een privacyverklaring bestaat. Zelfde probleem als het punt hieronder over de 2 jaar inactiviteit, en waarschijnlijk dezelfde oplossing.
+- [ ] **Blijft de bewaartermijn van de uurtotalen op een jaar staan?** Voorlopig getal, gekozen op 11 augustus 2026. Sinds de totalen van 13 augustus is dit vooral data-minimalisatie en geen risicomaatregel meer; korter kost Mind het uurverloop van oudere dagen. Dit is een afweging voor Mind en niet voor ons, en hij hoort in de DPIA.
 - [ ] Verwerkersovereenkomst met Supabase getekend? Ligt bij Mind, zie `privacy-besluiten.md`.
 - [ ] Wat is de grondslag voor de leeftijdscategorie nu 16+ een toegangseis is en geen voorkeur? Stond op toestemming, en dat klopt waarschijnlijk niet meer. Vraag voor Paul.
 - [ ] Wat toont de analyticspagina precies, en aan wie? Geaggregeerde cijfers is iets anders dan individuele check-ins inzien door het IT-departement.
@@ -279,7 +276,8 @@ Deze lijst is net zo belangrijk als de tabellen zelf. Vul aan naarmate we beslis
 - Locatiegegevens
 - Contactgegevens van derden
 - **Het exacte tijdstip van een bijdrage aan het landelijke weerbericht.** Alleen het uurblok. Zie de sectie hierboven: een tijdstip is de sleutel, in een ander alfabet.
-- **Een sleutel op de collectieve tabel.** Geen primary key, geen unique index, geen `uuid v7`. Elke sleutel wijst een inzending aan en een geordende sleutel verraadt bovendien de volgorde.
+- **Een sleutel die een inzending aanwijst.** De collectieve tabel heeft alleen de sleutel (dag, uurblok, weerbeeld), en die wijst een totaal aan. Geen rij-id, geen `uuid v7`, geen unique index daarbuiten: een geordende sleutel zou bovendien de volgorde verraden.
+- **Losse rijen per inzending.** Sinds 13 augustus 2026 telt een inzending direct op bij een totaal. Er bestaat geen rij die één inzending vertegenwoordigt, en daarmee ook geen invoegvolgorde die iets over een inzending zegt.
 - **De vier sliderwaarden.** Die blijven op het toestel. Een vier-dimensionale waarde is een veel unievere vingerafdruk dan één uit vijf weerbeelden.
 - **Een persoonlijke historie van weerbeelden**, niet op de server en niet lokaal.
 - **Een vingerafdruk van het toestel of een hash die bijdragen aan elkaar knoopt.** Dat zou werken tegen manipulatie, en het is precies de sleutel die we niet willen. Zie `limieten-en-misbruik.md`.

@@ -6,10 +6,13 @@
 -- structuur is, en niet van de zorgvuldigheid van degene die er een query op
 -- schrijft. De uitvoer hoort als bijlage bij de DPIA.
 --
--- Er staat een rij per inzending in weather_entry, want Mind heeft die nodig.
--- Wat deze test bewaakt is dat zo'n rij niets bevat waarmee je hem aan iemand
--- kunt koppelen, en dat de tijd erin grof genoeg is om niet met de API-logs te
--- kunnen joinen. Zie de kop van de migratie.
+-- Sinds 13 augustus 2026 staan er totalen in weather_hourly: per dag, uurblok
+-- en weerbeeld hoeveel inzendingen er waren. Er bestaat geen rij per
+-- inzending, dus ook geen invoegvolgorde die iets over een inzending zegt.
+-- Wat deze test bewaakt is dat zo'n totaal niets bevat waarmee je een
+-- inzending aan iemand kunt koppelen, en dat de tijd erin grof genoeg is om
+-- niet met de API-logs te kunnen joinen. Zie de kop van de migratie
+-- weather_hourly_totals.
 --
 -- Draaien, tegen het gedeelde dev-project (we draaien Supabase niet lokaal,
 -- zie CLAUDE.md sectie 9). De pooler-URI en het wachtwoord staan uitgelegd in
@@ -25,7 +28,7 @@
 
 select column_name, data_type, is_nullable
   from information_schema.columns
- where table_schema = 'public' and table_name = 'weather_entry'
+ where table_schema = 'public' and table_name = 'weather_hourly'
  order by ordinal_position;
 
 do $$
@@ -35,20 +38,20 @@ declare
 begin
   select count(*) into v_cols
     from information_schema.columns
-   where table_schema = 'public' and table_name = 'weather_entry';
-  assert v_cols = 3,
-    format('weather_entry hoort 3 kolommen te hebben, gevonden: %s. Is er een kolom bijgekomen?', v_cols);
+   where table_schema = 'public' and table_name = 'weather_hourly';
+  assert v_cols = 4,
+    format('weather_hourly hoort 4 kolommen te hebben, gevonden: %s. Is er een kolom bijgekomen?', v_cols);
 
   -- Een uuid is een gebruiker. Een timestamp is een sleutel naar de logs, en
   -- daar is het hele ontwerp op gebouwd: het uur mag, de minuut niet.
   select string_agg(column_name || ' (' || data_type || ')', ', ') into v_risky
     from information_schema.columns
-   where table_schema = 'public' and table_name = 'weather_entry'
+   where table_schema = 'public' and table_name = 'weather_hourly'
      and (data_type in ('uuid', 'timestamp with time zone', 'timestamp without time zone',
                         'time with time zone', 'time without time zone')
           or column_name in ('id', 'user_id', 'device_id', 'code', 'session_id', 'created_at'));
   assert v_risky is null,
-    format('weather_entry bevat een kolom die naar een persoon of een exact moment kan wijzen: %s', v_risky);
+    format('weather_hourly bevat een kolom die naar een persoon of een exact moment kan wijzen: %s', v_risky);
 end $$;
 
 \echo ''
@@ -56,7 +59,7 @@ end $$;
 
 select conname, pg_get_constraintdef(oid) as definitie
   from pg_constraint
- where conrelid = 'public.weather_entry'::regclass
+ where conrelid = 'public.weather_hourly'::regclass
    and contype = 'c'
  order by conname;
 
@@ -67,61 +70,64 @@ declare
 begin
   select data_type into v_type
     from information_schema.columns
-   where table_schema = 'public' and table_name = 'weather_entry' and column_name = 'hour';
+   where table_schema = 'public' and table_name = 'weather_hourly' and column_name = 'hour';
   assert v_type = 'smallint',
-    format('weather_entry.hour hoort smallint te zijn, gevonden: %s. Een fijner type is een fijner tijdstip.', coalesce(v_type, 'de kolom bestaat niet'));
+    format('weather_hourly.hour hoort smallint te zijn, gevonden: %s. Een fijner type is een fijner tijdstip.', coalesce(v_type, 'de kolom bestaat niet'));
 
   -- Zonder deze check kan er alsnog iets anders dan een uurblok in, bijvoorbeeld
   -- minuten sinds middernacht. Dat ziet er hetzelfde uit en is het niet.
   select exists (
     select 1 from pg_constraint
-     where conrelid = 'public.weather_entry'::regclass
+     where conrelid = 'public.weather_hourly'::regclass
        and contype = 'c'
        and pg_get_constraintdef(oid) ilike '%hour%23%'
   ) into v_check;
   assert v_check,
-    'Er staat geen check op weather_entry.hour die hem tot 0..23 begrenst. Zonder die grens is niet af te dwingen dat het echt een uurblok is.';
+    'Er staat geen check op weather_hourly.hour die hem tot 0..23 begrenst. Zonder die grens is niet af te dwingen dat het echt een uurblok is.';
 end $$;
 
 \echo 'de tijd in de collectieve tabel is een uurblok, begrensd op 0 tot en met 23'
 
 \echo ''
-\echo '=== 3. Bestaat er een sleutel of een verwijzing naar auth.users? ==='
+\echo '=== 3. Wijst er een sleutel naar een inzending of naar auth.users? ==='
 
 select conname, pg_get_constraintdef(oid) as definitie
   from pg_constraint
- where conrelid in ('public.weather_entry'::regclass, 'public.weather_daily'::regclass)
+ where conrelid in ('public.weather_hourly'::regclass, 'public.weather_daily'::regclass)
  order by conrelid::text, conname;
 
 do $$
 declare
   v_fk  text;
+  v_pk  text;
   v_key text;
 begin
   select string_agg(conname, ', ') into v_fk
     from pg_constraint
-   where conrelid in ('public.weather_entry'::regclass, 'public.weather_daily'::regclass)
+   where conrelid in ('public.weather_hourly'::regclass, 'public.weather_daily'::regclass)
      and contype = 'f'
      and confrelid <> 'public.weather_type'::regclass;
   assert v_fk is null,
     format('De collectieve tabellen verwijzen naar iets anders dan weather_type: %s', v_fk);
 
-  -- weather_entry hoort GEEN primary key en geen unique index te hebben. Elke
-  -- sleutel die een rij aanwijst, wijst ook een inzending aan, en een oplopende
-  -- of tijdgeordende sleutel verraadt bovendien de volgorde.
-  select string_agg(conname, ', ') into v_key
+  -- weather_hourly hoort precies EEN sleutel te hebben: de primary key op
+  -- (day, hour, weather). Die wijst een totaal aan en geen inzending, en hij
+  -- bestaat omdat het optellen een upsert is. Elke andere sleutel, of een
+  -- primary key met andere kolommen, kan wel iets aanwijsbaars introduceren.
+  select pg_get_constraintdef(oid) into v_pk
     from pg_constraint
-   where conrelid = 'public.weather_entry'::regclass
-     and contype in ('p', 'u');
-  assert v_key is null,
-    format('weather_entry heeft een sleutel: %s. Een rij uit de anonieme pool hoort niet aanwijsbaar te zijn.', v_key);
+   where conrelid = 'public.weather_hourly'::regclass
+     and contype = 'p';
+  assert v_pk = 'PRIMARY KEY (day, hour, weather)',
+    format('weather_hourly hoort als enige sleutel PRIMARY KEY (day, hour, weather) te hebben, gevonden: %s', coalesce(v_pk, 'geen primary key'));
 
   select string_agg(indexrelid::regclass::text, ', ') into v_key
     from pg_index
-   where indrelid = 'public.weather_entry'::regclass
-     and indisunique;
+   where indrelid = 'public.weather_hourly'::regclass
+     and indisunique
+     and not indisprimary;
   assert v_key is null,
-    format('weather_entry heeft een unieke index: %s. Dubbele rijen zijn hier normaal en gewenst.', v_key);
+    format('weather_hourly heeft naast de primary key nog een unieke index: %s. Daar is geen reden voor, en elke extra sleutel is verdacht.', v_key);
 end $$;
 
 \echo ''
@@ -131,7 +137,7 @@ select relname as tabel, relrowsecurity as rls_aan,
        (select count(*) from pg_policy where polrelid = c.oid) as aantal_policies
   from pg_class c
  where relnamespace = 'public'::regnamespace
-   and relname in ('weather_entry', 'weather_daily', 'weather_type', 'profiles')
+   and relname in ('weather_hourly', 'weather_daily', 'weather_type', 'profiles')
  order by relname;
 
 do $$
@@ -147,13 +153,13 @@ begin
   assert v_uit is null,
     format('Deze tabellen hebben geen RLS: %s. Een tabel zonder RLS is een bug.', v_uit);
 
-  -- weather_entry en weather_daily horen NUL policies te hebben. RLS zonder
+  -- weather_hourly en weather_daily horen NUL policies te hebben. RLS zonder
   -- policy weigert alles, en dat is hier precies de bedoeling.
   select string_agg(c.relname || ' (' || (select count(*) from pg_policy where polrelid = c.oid) || ')', ', ')
     into v_pol
     from pg_class c
    where c.relnamespace = 'public'::regnamespace
-     and c.relname in ('weather_entry', 'weather_daily')
+     and c.relname in ('weather_hourly', 'weather_daily')
      and exists (select 1 from pg_policy where polrelid = c.oid);
   assert v_pol is null,
     format('Deze collectieve tabellen hebben policies: %s. Er hoort er geen een te zijn, alle toegang loopt via de functies.', v_pol);
@@ -176,7 +182,7 @@ begin
   select string_agg(grantee || ' heeft ' || privilege_type || ' op ' || table_name, ', ') into v_grants
     from information_schema.role_table_grants
    where table_schema = 'public'
-     and table_name in ('weather_entry', 'weather_daily')
+     and table_name in ('weather_hourly', 'weather_daily')
      and grantee in ('anon', 'authenticated');
   assert v_grants is null,
     format('anon of authenticated heeft rechten op een collectieve tabel: %s. Die horen onzichtbaar te zijn.', v_grants);
@@ -197,10 +203,10 @@ begin
   select string_agg(grantee, ', ') into v_grants
     from information_schema.role_routine_grants
    where routine_schema = 'public'
-     and routine_name = 'rollup_weather_entries'
+     and routine_name = 'rollup_weather_hourly'
      and grantee in ('anon', 'authenticated');
   assert v_grants is null,
-    format('rollup_weather_entries is aanroepbaar door: %s. Die functie gooit rijen weg.', v_grants);
+    format('rollup_weather_hourly is aanroepbaar door: %s. Die functie gooit totalen weg.', v_grants);
 end $$;
 
 \echo ''
@@ -214,12 +220,12 @@ begin
     from pg_publication_tables
    where pubname = 'supabase_realtime'
      and schemaname = 'public'
-     and tablename in ('weather_entry', 'weather_daily');
+     and tablename in ('weather_hourly', 'weather_daily');
   assert v_aan is null,
-    format('Deze tabellen staan in de publicatie supabase_realtime: %s. Realtime zendt elke insert live uit met het moment erbij, en dat maakt het uurblok waardeloos.', v_aan);
+    format('Deze tabellen staan in de publicatie supabase_realtime: %s. Realtime zendt elke ophoging live uit met het moment erbij, en elke ophoging is een inzending.', v_aan);
 end $$;
 
-\echo 'realtime staat uit op weather_entry en weather_daily'
+\echo 'realtime staat uit op weather_hourly en weather_daily'
 
 \echo ''
 \echo '=== 7. Hebben de security definer-functies een vast search_path? ==='
@@ -254,11 +260,14 @@ end $$;
 \echo ''
 \echo '======================================================================'
 \echo ' GESLAAGD. De collectieve tabel heeft geen kolom die naar een persoon'
-\echo ' kan wijzen, geen sleutel die een rij aanwijst, en geen tijd fijner dan'
-\echo ' een uur. Hij is voor de app onzichtbaar, staat niet op realtime, en'
-\echo ' alle toegang loopt via functies met een vast search_path.'
+\echo ' kan wijzen, geen rij per inzending, geen tijd fijner dan een uur, en'
+\echo ' als enige sleutel de bucket (dag, uurblok, weerbeeld). Hij is voor de'
+\echo ' app onzichtbaar, staat niet op realtime, en alle toegang loopt via'
+\echo ' functies met een vast search_path.'
 \echo ''
-\echo ' Wat dit NIET bewijst: ctid en xmin verraden de invoegvolgorde en zijn'
-\echo ' niet weg te halen. Zie de kop van de migratie en de DPIA.'
+\echo ' Wat dit NIET bewijst: wie live meekijkt terwijl een totaal ophoogt,'
+\echo ' ziet welk totaal net veranderde, zolang de platformlogs bestaan. Dat'
+\echo ' venster sluit vanzelf; de maatregel is beperkte dashboardtoegang.'
+\echo ' Zie de kop van de migratie weather_hourly_totals en de DPIA.'
 \echo '======================================================================'
 \echo ''
