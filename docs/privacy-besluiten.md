@@ -37,7 +37,7 @@ Stand van 11 augustus 2026. Paul is met vakantie van 14 tot en met 23 augustus e
 | 4 | **Bevestigen dat de vier sliderwaarden niet naar de server gaan.** | Staat zo in de mail van 7 augustus en is zo gebouwd. Dit is nu het punt waar hij op zal letten, want als de rij wél naar de server gaat, is de vraag gerechtvaardigd wat er nog meer meegaat. Het herbevestigen kost een zin. |
 | 5 | **De uitdrukkelijke toestemming onder art. 9 AVG.** | Hij kondigde dit zelf aan als punt dat nog gefinetuned moet worden. Het valt samen met ons eigen openstaande punt "welke twee consents zijn het", zie `datamodel.md`, en blokkeert onderdeel 1 uit `taakverdeling.md`. |
 | 6 | **Grondslag voor de 16+-eis.** | Stond op toestemming, en dat klopt waarschijnlijk niet meer nu het een toegangseis is. Al twee keer genoteerd als vraag voor hem en nog steeds onbeantwoord. |
-| 7 | **De planning die Eveline op 30 juli vroeg**, inclusief wat wij van Mind verwachten. | Twee keer gevraagd, nog niet geleverd. Zie de sectie Planning hieronder. |
+| 7 | ~~**De planning die Eveline op 30 juli vroeg**, inclusief wat wij van Mind verwachten.~~ | **Geregeld, gemeld door Stijn op 13 augustus 2026.** De planningszin is daarom ook uit de conceptmail aan Paul gehaald. |
 
 Wat wij hem daarbij kunnen meesturen als onderbouwing: de uitvoer van `supabase/tests/anonimisering.sql`. Dat script controleert structureel dat de collectieve tabel geen kolom heeft die naar een persoon kan wijzen, geen sleutel heeft die een inzending aanwijst, en geen tijd bevat die fijner is dan een uur. Het sluit af met wat het **niet** bewijst, en dat hoort er net zo goed bij.
 
@@ -106,9 +106,15 @@ De GitHub-repo gaat ook naar Mind. Dat verandert de URL, dus iedereen werkt daar
 | Welke analytics-events we vastleggen | Elk event is een expliciete productbeslissing en komt eerst in `datamodel.md` te staan. |
 | Offline gedrag | Werkt de app offline, en zo ja, wat staat er dan lokaal op het toestel? |
 
+## Algemene voorwaarden
+
+**Er komt een algemene voorwaarden-document (terms and conditions), maar pas ná de Camino, in bespreking met Mind.** Zo besloten op 13 augustus 2026. Tot die tijd is dit geen actiepunt en blokkeert het niets: niemand hoeft er vóór vertrek iets voor te schrijven of te bouwen, en een agent hoort het niet te agenderen.
+
+Wat er te zijner tijd in moet, is grotendeels al besloten en staat verspreid in `datamodel.md` en dit document: de niet-verwijderbaarheid van bijdragen aan het landelijke weerbericht, de bewaartermijnen, en dat de app geen hulpverlening is. Eén genoemd punt is nog nergens vastgelegd: dat bepaalde accountgegevens langer bewaard zouden moeten worden in verband met anomalieën en misbruik. Welke gegevens, hoeveel langer en op welke grond is open, en dat hoort te zijner tijd eerst met een termijn in `datamodel.md` te staan voordat het in een voorwaardentekst kan.
+
 ## Planning
 
-Wij leveren een planning inclusief de acties die we van Mind verwachten. Houd rekening met: Eveline is afwezig tot en met 16 augustus 2026, Marianne is terug vanaf 10 augustus 2026, en Mind is in dezelfde periode druk met de campagne "Leg je telefoon weg".
+**Geregeld, gemeld door Stijn op 13 augustus 2026.** Hier stond het punt dat Eveline op 30 juli om een planning vroeg, inclusief de acties die wij van Mind verwachten. Dat is geen openstaand punt meer.
 
 ## Live-gang
 
