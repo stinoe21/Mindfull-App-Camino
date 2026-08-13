@@ -54,24 +54,13 @@ Waarom er geen rij per inzending is en geen tijdstip, staat uitgelegd in `datamo
 
 ---
 
-## 2. Voor vertrek: dev gelijktrekken met de repo
+## 2. Dev gelijktrekken met de repo: uitgevoerd
 
-Geconstateerd op 13 augustus 2026: het dev-project bevat nog het **proefschema van 31 juli**. Dertien migraties met onder meer `check_ins` (persoonlijke check-ins in de cloud, precies wat we Paul hebben toegezegd niet te doen), `weather_pool`, `consents` en `themes`, plus wat testdata. De twee echte migraties van 11 augustus staan er **niet** op.
+**Uitgevoerd op 13 augustus 2026, door Stijn.** Het dev-project droeg tot die dag het proefschema van 31 juli: dertien migraties met onder meer `check_ins` (persoonlijke check-ins in de cloud, precies wat we Paul hebben toegezegd niet te doen), plus testdata. Het is gereset met `supabase db reset --linked` en draait nu precies de migraties uit deze repo.
 
-Zolang dat zo is, kijkt iedereen die dev opent naar het verkeerde model, en weigert `supabase db push` vanwege de onbekende migraties. Dit moet dus recht vóór er iemand gaat bouwen.
+Geverifieerd via de read-only MCP direct na de reset: de migratiehistorie bevat exact onze twee versies, alleen de vier tabellen bestaan en RLS staat overal aan, en de security advisors melden alleen de twee bewuste keuzes (nul policies op de collectieve tabellen, en de twee functies die authenticated mag aanroepen). Nog openstaand uit de nacontrole: het volledige bewijsstuk draaien via psql (sectie 4), en in het dashboard nakijken dat PITR uit staat en de realtime-publicatie leeg is.
 
-De fix is eenmalig en destructief, en dat is hier precies de bedoeling, want alles op dev is testdata van juli:
-
-```bash
-supabase db reset --linked
-```
-
-Dat wist de database van het dev-project en draait daarna de migraties uit de repo opnieuw, in volgorde. Doe het met z'n drieën erbij, of in elk geval aangekondigd. Daarna meteen:
-
-1. Het bewijsstuk draaien (sectie 4) en controleren dat het eindigt met GESLAAGD.
-2. In het dashboard nakijken dat PITR uit staat en dat er geen tabellen in de realtime-publicatie zitten.
-
-Dit is een teambesluit en een mensenhandeling. De agent-skill verbiedt agents expliciet om dit commando te draaien.
+Voor als dit ooit opnieuw nodig is: de reset is destructief, een teambesluit en een mensenhandeling. De agent-skill verbiedt agents expliciet om dit commando te draaien. En één les uit de uitvoering: **bij `supabase db reset --linked` draait ook `supabase/seed.sql` mee tegen het gekoppelde project.** Alleen `supabase db push` slaat de seed over. Zet er dus nooit iets in dat niet ook op dev mag belanden.
 
 ## 3. Eenmalig per laptop
 

@@ -31,7 +31,7 @@ Daaruit volgen vijf regels. Ze staan ook in de bestanden zelf, maar hier op een 
 |---|---|
 | `supabase/migrations/` | Elke schemawijziging is hier een bestand. Er bestaat geen andere route. |
 | `supabase/tests/anonimisering.sql` | Het bewijsstuk dat de collectieve stroom niet herleidbaar kan zijn. Draaien na elke push; de uitvoer is een bijlage bij de DPIA. |
-| `supabase/seed.sql` | Draait alleen bij een lokale reset, en die hebben we niet. Referentiedata waar de app van afhangt hoort dus in een **migratie**, zoals de weertypen in `20260811090612_seed_weather_types.sql`. |
+| `supabase/seed.sql` | Draait bij elke `supabase db reset`, ook met `--linked` tegen dev, maar gaat **niet** mee met `supabase db push`. Referentiedata waar de app van afhangt hoort dus in een **migratie**, zoals de weertypen in `20260811090612_seed_weather_types.sql`, en er staat nooit iets in dat niet op dev mag belanden. |
 | `supabase/config.toml` | Lokale projectconfig. Niet aanraken. |
 
 ## 3. Vaste patronen in elke migratie
