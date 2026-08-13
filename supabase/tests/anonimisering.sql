@@ -11,10 +11,10 @@
 -- kunt koppelen, en dat de tijd erin grof genoeg is om niet met de API-logs te
 -- kunnen joinen. Zie de kop van de migratie.
 --
--- Draaien:
---   supabase db reset
---   psql "$(supabase status -o env | grep DB_URL | cut -d= -f2- | tr -d '"')" \
---        -f supabase/tests/anonimisering.sql
+-- Draaien, tegen het gedeelde dev-project (we draaien Supabase niet lokaal,
+-- zie CLAUDE.md sectie 9). De pooler-URI en het wachtwoord staan uitgelegd in
+-- docs/backend-draaiboek.md sectie 4:
+--   psql "<pooler-URI>" -f supabase/tests/anonimisering.sql
 --
 -- Elke assert die faalt, stopt het script met een foutmelding. Geen uitvoer met
 -- "GESLAAGD" onderaan betekent dus dat er iets niet klopt.

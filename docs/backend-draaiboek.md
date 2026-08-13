@@ -1,0 +1,114 @@
+# Backend-draaiboek
+
+Voor Caesar, Max en Stijn. Dit is het overzicht van hoe de backend in elkaar zit en de handelingen die je eraan doet. De agents hebben hun eigen versie: de skill `backend-draaiboek`, die laadt automatisch zodra een taak `supabase/**` raakt. Dit document is voor mensen, dus voor het begrip en voor de stappen die je zelf in de terminal doet.
+
+De inhoudelijke besluiten staan niet hier: wat we opslaan staat in `datamodel.md`, wat met Mind is afgesproken in `privacy-besluiten.md`, en de werkafspraken in `CLAUDE.md` sectie 9. Dit document herhaalt daar niets van, het wijst ernaar.
+
+---
+
+## 1. Hoe de backend in elkaar zit
+
+De hele backend is op dit moment twee migratiebestanden in `supabase/migrations/`. Dat is geen tussenstand maar het ontwerp: klein, leesbaar, en elke wijziging is een bestand met een review erop.
+
+Het idee in één alinea: het persoonlijke weerbeeld blijft op het toestel en wordt aan het eind van de dag gewist. De server kent maar twee dingen. Eén: een **anonieme rij per inzending**, met alleen een dag, een uurblok en het weerbeeld. Twee: op het profiel **de datum van de laatste check-in**, zodat iemand één keer per dag meetelt. Tussen die twee loopt geen verbinding, en de tabellen zijn zo gebouwd dat die verbinding er ook niet bij kán: er is in de collectieve tabel geen kolom die een gebruiker of een exact moment kan aanduiden.
+
+### Wat de app mag aanraken
+
+Dit is de volledige API van de backend. Alles wat hier niet staat, is voor de app onzichtbaar.
+
+| Handeling | Hoe | Wat het doet |
+|---|---|---|
+| Insturen | `rpc('submit_weather', { p_weather: 'zonnig' })` | Zet eerst het dagslot op het profiel, schrijft dan de anonieme rij. Eén transactie. Tweede keer op een dag: foutmelding "vandaag al ingecheckt". |
+| Weerbericht lezen | `rpc('weather_today')` | De percentages van vandaag. Geeft **nul rijen** onder de toondrempel; dat is meteen de empty state. |
+| Weertypen lezen | `select` op `weather_type` | De vijf weerbeelden met hun labels. |
+| Eigen profiel lezen | `select` op de eigen rij in `profiles` | Voor `last_checkin_on`, zodat de check-in-knop uit kan staan als iemand al heeft ingecheckt. |
+
+Schrijven op `profiles` kan niet vanuit de app, ook niet op je eigen rij: anders zet iemand zijn eigen dagslot terug. En `weather_entry` en `weather_daily` zijn helemaal onzichtbaar: RLS staat aan en er is bewust geen enkele policy.
+
+### De tabellen
+
+| Tabel | Wat erin staat | Bewaartermijn |
+|---|---|---|
+| `weather_type` | De vijf weerbeelden: zonnig, wolken, mist, wind, regen | Referentiedata |
+| `weather_entry` | Een rij per inzending: dag, uurblok (0 tot 23), weerbeeld. Geen id, geen code, geen tijdstip, geen verwijzing naar een gebruiker. | 1 jaar, daarna opgeteld naar `weather_daily` |
+| `weather_daily` | Het archief: per dag, per weerbeeld, hoeveel. Geen uur meer. | Onbeperkt, onherroepelijk anoniem |
+| `profiles` | `last_active_at` en `last_checkin_on`. Nergens staat wát iemand invulde. | Volgt het account |
+
+Waarom de rij geen id en geen tijdstip heeft, staat uitgelegd in `datamodel.md`. De korte versie: de platformlogs bevatten bij elk verzoek wie het deed en wanneer, dus een exact tijdstip in de rij is een sleutel naar die logs, en daarmee zou de data pseudoniem zijn in plaats van anoniem.
+
+### Het bewijsstuk
+
+`supabase/tests/anonimisering.sql` bewijst aan de tabeldefinities dat de collectieve stroom niet herleidbaar kan zijn: geen kolom die naar een persoon kan wijzen, geen sleutel, geen tijd fijner dan een uur, RLS dicht, realtime uit, functies met een vast `search_path`. Het script stopt op de eerste afwijking en eindigt anders met GESLAAGD. De uitvoer is een bijlage bij de DPIA van Paul. Draai het na elke push, zie sectie 4.
+
+### Instellingen die geen SQL zijn
+
+- **Point-in-time recovery staat uit en blijft uit.** De WAL zou anders elke insert vastleggen met zijn transactietijd.
+- **Realtime staat op geen enkele tabel.** Uitzenden van inserts met een moment erbij is precies het lek dat het uurblok dichthoudt.
+- **Geen GitHub-integratie op het Supabase-project.** Die blokkeert de overdracht aan Mind, zie `privacy-besluiten.md`.
+- **Wie er in het dashboard kan is een privacymaatregel**, geen gemak. Na de overdracht is dat aan Mind.
+
+### Wat er bewust nog niet is
+
+- **De rollup is niet ingepland.** `rollup_weather_entries()` bestaat, maar pg_cron aanzetten is een eigen besluit. De eerste rijen lopen pas in augustus 2027 af, dus het heeft geen haast; het moet alleen niet vergeten worden.
+- **De opruiming van inactieve accounts bestaat nog niet**, alleen het veld (`last_active_at`) om hem op te bouwen.
+- **Een eigen SMTP is pas voor livegang**, met een verwerkersovereenkomst erbij, zie `limieten-en-misbruik.md`.
+
+---
+
+## 2. Voor vertrek: dev gelijktrekken met de repo
+
+Geconstateerd op 13 augustus 2026: het dev-project bevat nog het **proefschema van 31 juli**. Dertien migraties met onder meer `check_ins` (persoonlijke check-ins in de cloud, precies wat we Paul hebben toegezegd niet te doen), `weather_pool`, `consents` en `themes`, plus wat testdata. De twee echte migraties van 11 augustus staan er **niet** op.
+
+Zolang dat zo is, kijkt iedereen die dev opent naar het verkeerde model, en weigert `supabase db push` vanwege de onbekende migraties. Dit moet dus recht vóór er iemand gaat bouwen.
+
+De fix is eenmalig en destructief, en dat is hier precies de bedoeling, want alles op dev is testdata van juli:
+
+```bash
+supabase db reset --linked
+```
+
+Dat wist de database van het dev-project en draait daarna de migraties uit de repo opnieuw, in volgorde. Doe het met z'n drieën erbij, of in elk geval aangekondigd. Daarna meteen:
+
+1. Het bewijsstuk draaien (sectie 4) en controleren dat het eindigt met GESLAAGD.
+2. In het dashboard nakijken dat PITR uit staat en dat er geen tabellen in de realtime-publicatie zitten.
+
+Dit is een teambesluit en een mensenhandeling. De agent-skill verbiedt agents expliciet om dit commando te draaien.
+
+## 3. Eenmalig per laptop
+
+De CLI-installatie en `supabase login` staan ook in `ONBOARDING.md`; hier het complete rijtje inclusief wat daar niet staat:
+
+```bash
+brew install supabase/tap/supabase    # de Supabase CLI
+supabase login                        # browserlogin met je eigen account
+cd mind-app
+supabase link --project-ref fpvvmgdzftmkyiqfvpjj
+brew install libpq && brew link --force libpq    # psql, voor het testscript
+```
+
+Bij het linken of de eerste push vraagt de CLI het **databasewachtwoord van het dev-project**. Dat krijg je mondeling van Stijn. Het staat nergens op schrift en gaat nooit een repo of een `.env` in. Dit is het gewone databasewachtwoord van een dev-project zonder echte gebruikers, niet een service role key: die laatste bestaat op onze laptops helemaal niet, zie `CLAUDE.md` sectie 9.
+
+## 4. De handelingen
+
+| Wat je wil | Hoe | Afspraak erbij |
+|---|---|---|
+| Kijken: schema, data, logs | De MCP `supabase-mind`, of het dashboard | Read-only, en dat blijft zo |
+| Iets wijzigen aan het schema | Migratiebestand plus eigen kleine PR; je agent kent de stappen via de skill `backend-draaiboek` | Nooit via de dashboard-UI |
+| Pushen naar dev | Zeg het hardop tegen de andere twee, dan `supabase db push` | Alles op dev staat in minstens een open PR, en die merget dezelfde dag |
+| De anonimisering testen | `psql "<pooler-URI>" -f supabase/tests/anonimisering.sql` | Na elke push. Eindigt met GESLAAGD of stopt op de fout |
+| Types genereren | `supabase gen types typescript --linked` | Zodra `packages/types` bestaat; nooit met de hand |
+
+De pooler-URI vind je in het dashboard onder **Connect**, kies **Session pooler**, en vul het databasewachtwoord uit sectie 3 in.
+
+## 5. Wie doet wat
+
+Iedereen kan en mag alles, zie `taakverdeling.md`. Daarbovenop: schemawijzigingen lopen ter review langs Stijn, die waakt over backend en datamodel. De integrator van de dag bepaalt de mergevolgorde als twee backend-PR's elkaar raken, maar als het goed is bestaat die situatie niet: één migratie per PR, dezelfde dag gemerged.
+
+## 6. Wat er nog beslist moet worden
+
+Alleen de backendpunten; het volledige overzicht staat in `privacy-besluiten.md`.
+
+- **De toondrempel (nu 10) en de bewaartermijn van een jaar** zijn voorlopige getallen die Paul nog moet wegen.
+- **Wie of wat de rollup draait**: pg_cron aanzetten, of een handmatige jaarlijkse handeling bij Mind. Hoort bij de overdracht.
+- **De opruiming na twee jaar inactiviteit** moet nog gebouwd, inclusief wat "inactief" precies is.
+- **De teksten van de twee consents** blokkeren de onboarding-flow; de vraag ligt bij Paul.

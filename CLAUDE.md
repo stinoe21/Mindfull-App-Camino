@@ -10,6 +10,7 @@ Lees bij twijfel het document dat bij je vraag hoort. Dit is de volledige lijst,
 | Hoe de app zich hoort te gedragen: toon, houding, wat we nooit doen | `docs/productprincipes.md` |
 | Tokens, componenten, assets, en hoe Figma en de repo zich verhouden | `docs/design-system.md` |
 | Welke tabellen en velden bestaan, met bewaartermijn per veld | `docs/datamodel.md` |
+| Hoe de backend in elkaar zit, en hoe je er iets aan wijzigt | `docs/backend-draaiboek.md` |
 | Wat met Mind is afgesproken over privacy, en wat nog open staat | `docs/privacy-besluiten.md` |
 | Waar een afbeelding hoort, compressie, caching en egress | `docs/assets-en-media.md` |
 | Rate limits, misbruik, en waarom de check-in-teller persoonlijk moet zijn | `docs/limieten-en-misbruik.md` |
@@ -18,7 +19,7 @@ Lees bij twijfel het document dat bij je vraag hoort. Dit is de volledige lijst,
 
 **Staat het antwoord in geen van deze bestanden, dan is het niet afgesproken.** Vraag ernaar, vul het niet zelf in. Dat geldt ook voor iets dat logisch of onvermijdelijk lijkt.
 
-Drie skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (een taak van begin tot eind, met de definition of done) en `pr-check` (een pull request van een teamgenoot reviewen).
+Vier skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (een taak van begin tot eind, met de definition of done), `pr-check` (een pull request van een teamgenoot reviewen) en `backend-draaiboek` (al het werk aan Supabase: migraties, RLS en pushen).
 
 `AGENTS.md` is een korte versie van dit bestand, voor agents die `CLAUDE.md` niet laden. Wijzigt hier een harde regel, werk die dan daar ook bij.
 
