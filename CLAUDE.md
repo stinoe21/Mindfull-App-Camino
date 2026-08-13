@@ -26,7 +26,7 @@ Drie skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (
 
 ## 0. Stand van zaken, lees dit eerst
 
-**Er staat nog geen code in deze repo.** Alleen documentatie en configuratie. `apps/`, `packages/`, `supabase/` en `package.json` bestaan nog niet. Alles hieronder beschrijft dus hoe we gaan werken zodra dat er wel is, niet wat je nu aantreft.
+**Er staat nog geen app-code in deze repo.** De backend wel: sinds 13 augustus 2026 staat het Supabase-schema in `supabase/`, met de migraties, de seed met de vijf weerbeelden en het controlescript `supabase/tests/anonimisering.sql`. `apps/`, `packages/` en `package.json` bestaan nog niet. Alles hieronder over de app beschrijft dus hoe we gaan werken zodra die er is, niet wat je nu aantreft.
 
 Wat dat concreet voor je betekent als je nu een taak oppakt:
 
@@ -177,6 +177,7 @@ Wat er met Mind is afgesproken, wat nog open staat en wie daarvoor aan zet is: `
 
 - Schema-wijzigingen gaan **altijd** via een migratiebestand in `supabase/migrations/`, nooit via de dashboard-UI en nooit via een los `execute_sql`-commando tegen productie.
 - De Supabase MCP staat op `--read-only`. Dat is bewust. Wil je iets wijzigen, schrijf een migratie.
+- **We draaien Supabase niet lokaal.** Besloten op 13 augustus 2026: geen Docker, geen `supabase start`. Iedereen werkt tegen het gedeelde dev-project in de cloud, en dat kan omdat daar geen echte gebruikers op staan, zie `docs/privacy-besluiten.md`. Kijken doe je met de MCP, pushen met `supabase db push` via de CLI, met je eigen account. Zeg het even tegen de andere twee voordat je pusht: we delen die ene database, en we lopen naast elkaar.
 - TypeScript-types worden gegenereerd uit het schema, niet met de hand geschreven.
 - Row Level Security staat aan op elke tabel met gebruikersdata. Een tabel zonder RLS is een bug.
 
@@ -189,11 +190,11 @@ Er zijn drie routes, en welke je pakt hangt af van wat je wil doen. Geen ervan v
 | Kijken: schema, tabellen, policies, logs | De MCP. Werkt die niet, dan het Supabase-dashboard in de browser, of de `supabase` CLI na `supabase login` met je eigen account. |
 | Types genereren | `supabase gen types typescript` via de CLI. Werkt zonder MCP. |
 | Schema wijzigen | **Altijd** een migratiebestand plus `supabase db push`. De CLI authenticeert met jouw account, niet met een key die alles mag. |
-| Vrij experimenteren, data schrijven, dingen stukmaken | **Lokale Supabase**, met `supabase start`. Daar heb je alle rechten en raak je geen productiedata. Dit is de plek waar je mag rommelen. |
+| Vrij experimenteren, data schrijven, dingen stukmaken | Het **gedeelde dev-project**. Daar staan geen echte gebruikers en geen productiedata, dus stukmaken kan. Meld het wel even, want jullie delen die ene database met z'n drieën. |
 
 > **Geen service role key op een laptop, en nooit voor een agent.** Die key omzeilt Row Level Security volledig, en RLS is precies het mechanisme dat de twee datastromen uit `datamodel.md` gescheiden houdt. Met zo'n key is één verkeerde join genoeg om de collectieve pool aan gebruikers-id's te koppelen, en dan is de anonimisering weg die we aan Mind hebben belegd.
 >
-> Drie laptops op wisselende wifi betekent drie kopieën van een sleutel die alles kan met mentale-gezondheidsdata, terwijl de DPIA nog loopt. De lokale stack lost hetzelfde probleem op zonder dat risico.
+> Drie laptops op wisselende wifi betekent drie kopieën van een sleutel die alles kan met mentale-gezondheidsdata, terwijl de DPIA nog loopt. De CLI met je eigen account op een dev-project zonder echte gebruikers lost hetzelfde probleem op zonder dat risico.
 >
 > De productie-service-role-key hoort alleen in de serveromgeving van de admin- en analyticspagina, en nooit in een `.env` naast de app.
 
@@ -235,7 +236,7 @@ Herstart daarna Claude Code volledig, of VSCode als je de extensie gebruikt: een
 
 De server heet `supabase-mind` en niet `supabase`, omdat dat laatste bij sommigen al een user-scope server is voor een ander project. Gelijke namen in verschillende scopes botsen.
 
-Ieder verbindt zelf, met het eigen account. Daarvoor heb je wel toegang nodig tot wat eronder zit: de GitHub-repo, de Supabase-organisatie en het Figma-bestand. Zie je een server niet verbinden of een leeg projectenlijstje, dan mist waarschijnlijk je uitnodiging. Vraag Stijn. Stap voor stap staat het in `ONBOARDING.md`.
+Ieder verbindt zelf, met het eigen account. De toegang eronder is geregeld, stand 13 augustus 2026: alle drie zitten in de GitHub-repo, de Supabase-organisatie en het Figma-bestand. Zie je een leeg projectenlijstje, dan heb je bij het inloggen de verkeerde organisatie gekozen, niet een ontbrekende uitnodiging. Stap voor stap staat het in `ONBOARDING.md`.
 
 De `supabase-mind`-URL is gescoped met `?project_ref=fpvvmgdzftmkyiqfvpjj`, het project **Mindfull-App-Camino** in de organisatie **Back to Being** (regio `eu-central-1`, Frankfurt). De MCP ziet daardoor alleen dit project, ook als je zelf nog andere Supabase-projecten hebt.
 

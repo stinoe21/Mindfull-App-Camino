@@ -13,9 +13,11 @@ Aan het eind heb je een werkende clone met exact dezelfde MCP's, skills en proje
 - Git (`git --version`)
 - Claude Code (`npm i -g @anthropic-ai/claude-code`), **plus een betaald Claude-abonnement**. Zonder abonnement werkt Claude Code niet. Reken er ook op dat je tegen usage limits aanloopt als je een hele dag een agent laat werken. Regel dit vóór vertrek en probeer het één keer uit, niet in een albergue met slechte wifi.
 - Je kunt Claude Code als **CLI** in de terminal draaien of als **VSCode-extensie**. Beide mag, maar één ding moet via de CLI: het autoriseren van de Supabase-MCP, zie stap 3.
-- Een Figma-account met toegang tot het projectbestand
-- Een Supabase-account, en een uitnodiging voor de Supabase-organisatie van dit project (vraag Stijn). Zonder die uitnodiging kun je de `supabase-mind`-MCP wel autoriseren, maar ziet hij het project niet.
-- Voor iOS-tests: de Expo Go-app op je telefoon. Een Mac is niet nodig, we bouwen via EAS in de cloud.
+- Een Figma-account. De toegang tot het projectbestand is al geregeld, stand 13 augustus 2026.
+- Een Supabase-account. De uitnodigingen voor de Supabase-organisatie zijn verstuurd en geaccepteerd, stand 13 augustus 2026. Zie je bij het autoriseren toch een leeg projectenlijstje, dan heb je bij het inloggen de verkeerde organisatie gekozen, zie stap 3.
+- De **Supabase CLI**: `brew install supabase/tap/supabase`, daarna eenmalig `supabase login` (opent de browser). Hiermee push je migraties naar het dev-project en genereer je types.
+- **Xcode**, uit de Mac App Store, met de iOS Simulator-runtime. We werken alle drie op een MacBook en testen in de Simulator, zie `docs/scope.md`. Dit is een download van ruim 10 GB: doe hem thuis op goede wifi, niet onderweg, en open Xcode één keer zodat hij de Simulator-runtime binnenhaalt.
+- **Docker heb je niet nodig.** Besloten op 13 augustus 2026: we draaien Supabase niet lokaal. Iedereen werkt tegen het gedeelde dev-project in de cloud, zie `CLAUDE.md` sectie 9.
 
 ## 1. Repo clonen
 
@@ -147,7 +149,7 @@ In de **VSCode-extensie** werkt de slash-command `/plugin` niet. Gebruik de `cla
 
 **figma** is een remote server met OAuth, meegeleverd door de plugin. Werkt hij niet, controleer dan eerst of je Claude Code echt volledig opnieuw hebt gestart. Blijft het misgaan, dan is er een lokaal alternatief: zet in de Figma **desktop-app** onder Preferences de Dev Mode MCP Server aan en voeg die toe met `claude mcp add figma-lokaal --scope local --transport http http://127.0.0.1:3845/mcp`. Nadeel: de desktop-app moet dan altijd openstaan. Doe dat met `--scope local`, dan raakt het de rest niet. We kunnen ook zonder Figma MCP werken, alleen minder prettig.
 
-**supabase-mind** is de remote server `https://mcp.supabase.com/mcp`, waar je met je eigen Supabase-account op inlogt. Let goed op het venster dat opent: Supabase vraagt **voor welke organisatie** je toegang geeft. Kies de organisatie waar het project van deze app in staat. Kies je de verkeerde, dan verbindt de server wel maar ziet hij het project niet, en dat lijkt op een storing terwijl het er geen is. Zie je een leeg projectenlijstje, dan heb je waarschijnlijk je uitnodiging voor de organisatie nog niet geaccepteerd.
+**supabase-mind** is de remote server `https://mcp.supabase.com/mcp`, waar je met je eigen Supabase-account op inlogt. Let goed op het venster dat opent: Supabase vraagt **voor welke organisatie** je toegang geeft. Kies de organisatie waar het project van deze app in staat. Kies je de verkeerde, dan verbindt de server wel maar ziet hij het project niet, en dat lijkt op een storing terwijl het er geen is. De uitnodigingen voor de organisatie zijn al geaccepteerd, dus een leeg projectenlijstje betekent hier vrijwel altijd: verkeerde organisatie gekozen bij het inloggen.
 
 **Krijg je `{"message":"resource: Resource must be a valid MCP endpoint"}`?** Dan gebruik je Claude Code als **VSCode-extensie**, en dat is een bug in de extensie, niet in onze configuratie. Hij verhaspelt het vraagteken in de MCP-URL bij het opbouwen van de OAuth-aanvraag (`?` wordt `%253F`), waarna Supabase de aanvraag terecht weigert. Zie [claude-code#34880](https://github.com/anthropics/claude-code/issues/34880).
 
