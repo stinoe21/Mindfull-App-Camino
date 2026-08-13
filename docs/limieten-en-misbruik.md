@@ -27,7 +27,7 @@ De ingebouwde SMTP van Supabase is bedoeld om te testen, niet om te gebruiken. D
 
 Twee gevolgen:
 
-- **Tijdens ontwikkelen loop je er meteen tegenaan.** Drie mensen die een e-mail-login testen zijn binnen tien minuten door het uurquotum. Dat lijkt op een bug in de app en is het niet. Test daarom met Google of Apple, of met de lokale stack.
+- **Tijdens ontwikkelen loop je er meteen tegenaan.** Drie mensen die een e-mail-login testen zijn binnen tien minuten door het uurquotum. Dat lijkt op een bug in de app en is het niet. Test daarom met Google of Apple; een lokale stack hebben we niet, zie `CLAUDE.md` sectie 9.
 - **Voor livegang is een eigen SMTP verplicht**, want anders krijgt de helft van de gebruikers geen bevestigingsmail. Dat betekent een extra partij die e-mailadressen verwerkt, en dus **een verwerkersovereenkomst erbij**. Zie `privacy-besluiten.md`.
 
 ## 2. Eén check-in per dag, en die limiet moet aan de persoonlijke kant

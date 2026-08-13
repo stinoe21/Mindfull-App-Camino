@@ -77,6 +77,9 @@ Dit is een app over mentale gezondheid. Loop dit expliciet na:
 - [ ] Alles wat ik opsla is ook verwijderbaar
 - [ ] Ik heb geen hulpteksten, telefoonnummers of doorverwijzingen zelf verzonnen
 - [ ] Ik tel niets op de collectieve tabel. Die heeft geen gebruikerscode, dus een teller hoort aan de persoonlijke kant. Zie `docs/limieten-en-misbruik.md`
+- [ ] Het persoonlijke weerbeeld blijft lokaal op het toestel en wordt aan het eind van de dag gewist, zonder historie. Toegezegd aan Paul, zie `docs/datamodel.md`
+- [ ] De vier sliderwaarden verlaten het toestel nooit, ook niet gecombineerd of gehasht
+- [ ] Er gaat niets naar de server met een tijd die fijner is dan het uurblok
 
 Twijfel je over één van deze punten: niet doen, en vragen.
 

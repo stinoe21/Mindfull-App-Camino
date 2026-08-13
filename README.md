@@ -62,7 +62,7 @@ git push --force-with-lease           # draft PR openen
 
 ## Status
 
-Het samenwerkingsraamwerk staat. De app zelf nog niet: deze repo bevat op dit moment alleen documentatie en configuratie.
+Het samenwerkingsraamwerk staat, en de backend ook: sinds 13 augustus 2026 staat het Supabase-schema met de anonieme collectieve store in `supabase/`, inclusief het controlescript `supabase/tests/anonimisering.sql`. De app zelf nog niet: verder bevat deze repo documentatie en configuratie.
 
 **Deze twee blokkeren al het andere werk, in deze volgorde:**
 
