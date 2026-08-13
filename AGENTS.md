@@ -54,6 +54,7 @@ Het betekent **niet** dat alleen die persoon daar mag werken, en het betekent ni
 | Hoe de app zich hoort te gedragen | `docs/productprincipes.md` |
 | Tokens, componenten, assets, Figma | `docs/design-system.md` |
 | Welke data we opslaan en hoe lang | `docs/datamodel.md` |
+| Hoe de backend in elkaar zit en hoe je er iets aan wijzigt | `docs/backend-draaiboek.md` |
 | Waar plaatjes horen, compressie en caching | `docs/assets-en-media.md` |
 | Rate limits en misbruik | `docs/limieten-en-misbruik.md` |
 | Wat met Mind is afgesproken over privacy | `docs/privacy-besluiten.md` |
