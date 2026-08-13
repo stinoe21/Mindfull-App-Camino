@@ -27,7 +27,7 @@ De besluiten die daaruit volgden staan in `datamodel.md`. Het Figma-board is op 
 
 ## Wat wij Paul nog schuldig zijn
 
-Stand van 11 augustus 2026. Paul is met vakantie van 14 tot en met 23 augustus en doet daarna de korte DPIA, dus dit hoort vóór die datum bij hem te liggen. Anders schrijft hij die DPIA op verouderde informatie.
+**Verzonden op 13 augustus 2026**, de dag voor zijn vakantie: alle onderstaande punten plus de twee openstaande vragen (de art. 9-teksten en de grondslag voor 16+) zitten in de mail van Stijn, in de bestaande thread onder Pauls bericht van 10 augustus. Paul is vrij van 14 tot en met 23 augustus en doet daarna de korte DPIA; zijn reactie wordt dus vanaf 24 augustus verwacht. De tabel hieronder blijft staan als administratie van wát er is gemeld en waarom.
 
 | # | Wat | Waarom het niet kan wachten |
 |---|---|---|
@@ -39,7 +39,7 @@ Stand van 11 augustus 2026. Paul is met vakantie van 14 tot en met 23 augustus e
 | 6 | **Grondslag voor de 16+-eis.** | Stond op toestemming, en dat klopt waarschijnlijk niet meer nu het een toegangseis is. Al twee keer genoteerd als vraag voor hem en nog steeds onbeantwoord. |
 | 7 | ~~**De planning die Eveline op 30 juli vroeg**, inclusief wat wij van Mind verwachten.~~ | **Geregeld, gemeld door Stijn op 13 augustus 2026.** De planningszin is daarom ook uit de conceptmail aan Paul gehaald. |
 
-Wat wij hem daarbij kunnen meesturen als onderbouwing: de uitvoer van `supabase/tests/anonimisering.sql`. Dat script controleert structureel dat de collectieve tabel geen kolom heeft die naar een persoon kan wijzen, geen rij per inzending bevat, en geen tijd bevat die fijner is dan een uur. Het sluit af met wat het **niet** bewijst, en dat hoort er net zo goed bij.
+Wat wij hem daarbij kunnen meesturen als onderbouwing: de uitvoer van `supabase/tests/anonimisering.sql`. Dat script controleert structureel dat de collectieve tabel geen kolom heeft die naar een persoon kan wijzen, geen rij per inzending bevat, en geen tijd bevat die fijner is dan een uur. Het sluit af met wat het **niet** bewijst, en dat hoort er net zo goed bij. In de mail van 13 augustus is die uitvoer aangeboden; de afspraak is om hem rond 24 augustus na te sturen, zodra de migratie van 13 augustus op dev staat en het script tegen het definitieve schema heeft gedraaid.
 
 > **Tot Paul hierop gereageerd heeft, is zijn oordeel over de DPIA-plicht niet iets om op te leunen.** Bouwen mag doorgaan, want het schema staat, de hoofdlijn is conform de mail van 7 augustus en de anonimisering is zo sterk als hij binnen deze keuze kan zijn. Wat niet mag, is ergens opschrijven of tegen Mind zeggen dat de app niet DPIA-plichtig is: het uurblok, de totalen, de geschrapte code en het dagslot heeft hij nog niet gewogen.
 
