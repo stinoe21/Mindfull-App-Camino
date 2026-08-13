@@ -23,15 +23,14 @@ Dit is de volledige API van de backend. Alles wat hier niet staat, is voor de ap
 | Weertypen lezen | `select` op `weather_type` | De vijf weerbeelden met hun labels. |
 | Eigen profiel lezen | `select` op de eigen rij in `profiles` | Voor `last_checkin_on`, zodat de check-in-knop uit kan staan als iemand al heeft ingecheckt. |
 
-Schrijven op `profiles` kan niet vanuit de app, ook niet op je eigen rij: anders zet iemand zijn eigen dagslot terug. En `weather_hourly` en `weather_daily` zijn helemaal onzichtbaar: RLS staat aan en er is bewust geen enkele policy.
+Schrijven op `profiles` kan niet vanuit de app, ook niet op je eigen rij: anders zet iemand zijn eigen dagslot terug. En `weather_hourly` is helemaal onzichtbaar: RLS staat aan en er is bewust geen enkele policy.
 
 ### De tabellen
 
 | Tabel | Wat erin staat | Bewaartermijn |
 |---|---|---|
 | `weather_type` | De vijf weerbeelden: zonnig, wolken, mist, wind, regen | Referentiedata |
-| `weather_hourly` | Totalen: per dag, uurblok (0 tot 23) en weerbeeld hoeveel inzendingen. Geen id, geen code, geen tijdstip, geen rij per inzending. | 1 jaar, daarna samengevat naar `weather_daily` |
-| `weather_daily` | Het archief: per dag, per weerbeeld, hoeveel. Geen uur meer. | Onbeperkt, onherroepelijk anoniem |
+| `weather_hourly` | Totalen: per dag, uurblok (0 tot 23) en weerbeeld hoeveel inzendingen. Geen id, geen code, geen tijdstip, geen rij per inzending. | Blijft staan: niet herleidbaar, dus geen termijn. Dagtotalen zijn een group by. |
 | `profiles` | `last_active_at` en `last_checkin_on`. Nergens staat wát iemand invulde. | Volgt het account |
 
 Waarom er geen rij per inzending is en geen tijdstip, staat uitgelegd in `datamodel.md`. De korte versie: de platformlogs bevatten bij elk verzoek wie het deed en wanneer, dus alles wat een inzending aanwijsbaar maakt is een sleutel naar die logs: een tijdstip, een rij-id, en zelfs de invoegvolgorde van losse rijen. Een totaal kent geen volgorde en geen geschiedenis, dus die sleutel bestaat niet meer.
@@ -49,7 +48,7 @@ Waarom er geen rij per inzending is en geen tijdstip, staat uitgelegd in `datamo
 
 ### Wat er bewust nog niet is
 
-- **De rollup is niet ingepland.** `rollup_weather_hourly()` bestaat, maar pg_cron aanzetten is een eigen besluit. De eerste totalen lopen pas in augustus 2027 af, dus het heeft geen haast; het moet alleen niet vergeten worden.
+- **Er is geen rollup en geen bewaartermijn op de uurtotalen.** Vervallen op 13 augustus 2026: de totalen zijn niet herleidbaar, dus er hoeft niets periodiek te draaien en er kan niets vergeten worden. Wil Mind alsnog een termijn, dan is dat een kleine migratie.
 - **De opruiming van inactieve accounts bestaat nog niet**, alleen het veld (`last_active_at`) om hem op te bouwen.
 - **Een eigen SMTP is pas voor livegang**, met een verwerkersovereenkomst erbij, zie `limieten-en-misbruik.md`.
 
@@ -108,7 +107,7 @@ Iedereen kan en mag alles, zie `taakverdeling.md`. Daarbovenop: schemawijziginge
 
 Alleen de backendpunten; het volledige overzicht staat in `privacy-besluiten.md`.
 
-- **De toondrempel (nu 10) en de bewaartermijn van een jaar** zijn voorlopige getallen die Paul nog moet wegen.
-- **Wie of wat de rollup draait**: pg_cron aanzetten, of een handmatige jaarlijkse handeling bij Mind. Hoort bij de overdracht.
+- **De toondrempel (nu 10)** is een voorlopig getal dat Paul nog moet wegen.
+- **Een bewaartermijn op de uurtotalen** is er sinds 13 augustus 2026 niet: ze zijn niet herleidbaar. Wil Mind er toch een, dan is dat een kleine migratie; de vraag ligt bij Paul.
 - **De opruiming na twee jaar inactiviteit** moet nog gebouwd, inclusief wat "inactief" precies is.
 - **De teksten van de twee consents** blokkeren de onboarding-flow; de vraag ligt bij Paul.

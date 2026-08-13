@@ -41,7 +41,7 @@ Afgestemd met de privacyofficer van Mind op 29 juli 2026 en verwerkt in het Figm
 | Dagslot | **Nieuw op 11 augustus 2026.** Eén datumveld op het profiel, `last_checkin_on`, dat elke keer overschreven wordt. Daarmee kan iemand maar één keer per dag bijdragen aan het landelijke beeld. Er staat **geen weerbeeld** in en geen historie. Dit veld kent Paul nog niet, zie `privacy-besluiten.md`. |
 | Bewaartermijn persoonsgegevens | Weg na 2 jaar inactiviteit, of eerder als de gebruiker zijn account zelf verwijdert. |
 | Inactiviteit meten | **Besloten op 30 juli 2026: we slaan het moment van laatste activiteit op.** Zonder dat veld is "weg na 2 jaar inactiviteit" niet te handhaven en beloof je in de privacyverklaring iets wat niemand uitvoert. De minimale vorm is **één tijdstip op het profiel dat elke keer overschreven wordt**, dus geen geschiedenis van wat iemand wanneer deed. Dat onderscheid is het hele punt: een laatste-activiteitsstempel is bewaartermijnadministratie, een logboek van sessies is gedragsdata. |
-| Bewaartermijn collectieve data | **Besloten op 11 augustus 2026, aangepast op 13 augustus: de uurtotalen blijven een jaar staan, daarna worden ze samengevat tot dagtotalen en verdwijnen ze.** Het getal is voorlopig en staat op één plek, de default van `rollup_weather_hourly()`. Wat overblijft is een totaal per dag per weerbeeld, zonder uur, en dat is onherroepelijk anoniem. Verwijderen per gebruiker is er niet, want een totaal bevat geen losse inzendingen. Dit moet expliciet in de consent-tekst en de privacyverklaring staan. |
+| Bewaartermijn collectieve data | **Besloten op 13 augustus 2026: de uurtotalen blijven staan, zonder einddatum.** Ze zijn niet tot personen herleidbaar, dus er loopt geen termijn. De eerdere rollup naar dagtotalen (11 augustus) bestond als maatregel tegen het volgordelek van losse rijen, en dat lek bestaat niet meer; `weather_daily` en de rollup-functie zijn daarom geschrapt. Dagtotalen zijn voor de analyticspagina een group by op de uurtotalen. Wil Mind alsnog een termijn, dan is dat een kleine migratie; de vraag is aan Paul voorgelegd in de mail van 13 augustus. Verwijderen per gebruiker is er niet, want een totaal bevat geen losse inzendingen. Dit moet expliciet in de consent-tekst en de privacyverklaring staan. |
 | Analytics | Geen externe tool. Analyse en app-gebruik lopen via Supabase, met een beheerpagina buiten de app. |
 | n8n | Er gaan **geen persoonsgegevens** door n8n. Het landelijke weerbericht komt rechtstreeks uit Supabase. |
 | Crisis | Bewust **geen** proactieve escalatie bij structureel negatieve check-ins, want daarvoor zouden we juist de data moeten bewaren die we niet bewaren. Alleen de disclaimer en de hulpknop. Dit is een gedocumenteerde grens, geen omissie. |
@@ -129,7 +129,7 @@ Welke schermen lezen dit? <lijst>
 
 ## Tabellen
 
-Vier tabellen, en wat er niet in staat, staat er bewust niet in. De rest van de dataflow, dus content, challenges en de twee consents, is nog niet ingevuld en staat onderaan bij de openstaande punten.
+Drie tabellen, en wat er niet in staat, staat er bewust niet in. De rest van de dataflow, dus content, challenges en de twee consents, is nog niet ingevuld en staat onderaan bij de openstaande punten.
 
 ### weather_type
 
@@ -172,9 +172,8 @@ Bevat gevoelige data?     Nee, en dat is een eigenschap van de structuur en niet
                           aan en geen inzending; hij bestaat omdat het optellen een upsert is.
                           Een totaal kent geen volgorde en geen geschiedenis, dus er valt achteraf
                           niets uit te lijnen. Zie "Wat het uurblok niet oplost" hierboven.
-Bewaartermijn:            Een jaar, voorlopig. Daarna vat rollup_weather_hourly() de uurtotalen
-                          samen tot weather_daily en verwijdert ze. Die functie is nog niet
-                          ingepland, zie de openstaande punten.
+Bewaartermijn:            Geen: de totalen blijven staan, want ze zijn niet herleidbaar. Wil Mind
+                          een termijn, dan is dat een kleine migratie; de vraag ligt bij Paul.
 Verwijderbaar door user?  Nee, en dat kan ook niet: een totaal bevat geen losse inzendingen.
                           Dit moet in de consent-tekst en de privacyverklaring staan.
 Welke schermen lezen dit? Dashboard (het landelijke weerbericht), analyticspagina voor het IT-departement.
@@ -184,25 +183,7 @@ Twee platforminstellingen horen bij deze tabel en zijn net zo belangrijk als het
 
 Het uur staat in de tabel **voor Mind, niet voor de app**. `weather_today()` geeft bewust geen uitsplitsing per uur terug: een uurblok met een laag totaal is wel weer herleidbaar, en de app toont het landelijke beeld van vandaag.
 
-### weather_daily
-
-```
-Tabel:            weather_daily
-Waarvoor:         Het archief: uurtotalen die door de bewaartermijn heen zijn, samengevat per dag.
-RLS:              Aan, en zonder één policy. Wordt alleen geschreven door rollup_weather_hourly().
-
-Kolommen:
-  day      date     verplicht   De dag waar deze telling over gaat
-  weather  text     verplicht   Verwijst naar weather_type.code
-  count    integer  verplicht   Hoeveel keer dit weerbeeld die dag is ingestuurd
-
-Bevat gevoelige data?     Nee. Hier is het uur weg en bestaat er geen losse inzending meer, dus dit
-                          is onherroepelijk anoniem. Een teller heeft geen geschiedenis: achteraf is
-                          niet te zien wanneer hij ophoogde.
-Bewaartermijn:            Blijft. Het is geen persoonsgegeven, dus de termijn van 2 jaar geldt niet.
-Verwijderbaar door user?  Nee, en dat kan ook niet.
-Welke schermen lezen dit? Analyticspagina voor het IT-departement, voor het verloop over langere tijd.
-```
+Er is bewust geen aparte archieftabel. `weather_daily` bestond als eindstation van een rollup na een jaar, maar die rollup was een maatregel tegen het volgordelek van losse rijen, en dat lek bestaat sinds de totalen niet meer. Dagtotalen voor de analyticspagina zijn een group by op `weather_hourly`.
 
 ### profiles
 
@@ -262,8 +243,8 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 - [ ] **Wat ruimt de bewaartermijn daadwerkelijk op, en wanneer draait dat?** Het veld voor laatste activiteit is nu besloten, maar een termijn van 2 jaar bestaat pas als er iets is dat periodiek verwijdert. Zolang dat er niet is, staat er een belofte in de privacyverklaring die de app niet nakomt. Dit moet in een migratie staan, want anders komt het niet mee in de overdracht en gaat de app bij Mind live zonder opruiming. Zie `privacy-besluiten.md`.
 - [ ] **Wat staat er lokaal op het toestel, en hoe lang?** Dit is niet meer alleen onze vraag: Paul stelde hem op 10 augustus letterlijk ("Is er een bewaartermijn gesteld voor deze lokale gegevens?") en hij staat nog open. Uit het ontwerp volgt het antwoord al grotendeels: het persoonlijke weerbeeld staat lokaal en wordt aan het eind van de dag gewist, en er is geen lokale historie. Wat nog benoemd moet worden is wat er verder lokaal staat, zoals de sessietokens, en wat er gebeurt bij uitloggen. Dit hangt samen met de vraag of de app offline werkt.
 - [x] **Wil Mind meer zien dan de dagverdeling?** **Ja, besloten op 11 augustus 2026.** Sinds 13 augustus zijn dat totalen per (dag, uurblok, weerbeeld): het verloop binnen de dag en misbruikdetectie blijven mogelijk, zonder losse rijen. De sliderwaarden gaan nog steeds **niet** mee: dat is een aparte toezegging aan Paul en een vier-dimensionale waarde is een veel unievere vingerafdruk. Wil Mind die alsnog, dan is dat een nieuwe verwerking en gaat het eerst langs Paul.
-- [ ] **Wie plant `rollup_weather_hourly()` in, en waarmee?** De bewaartermijn van een jaar bestaat pas als er iets is dat hem uitvoert. De functie staat in de migratie maar is **niet ingepland**: daar is `pg_cron` voor nodig en dat aanzetten is een eigen besluit, geen bijvangst van deze migratie. De eerste totalen lopen pas in augustus 2027 af, dus het heeft geen haast. Wat wel haast heeft, is dat het besluit genomen wordt en niet vergeten, want dit is precies zo'n belofte die anders alleen in een privacyverklaring bestaat. Zelfde probleem als het punt hieronder over de 2 jaar inactiviteit, en waarschijnlijk dezelfde oplossing.
-- [ ] **Blijft de bewaartermijn van de uurtotalen op een jaar staan?** Voorlopig getal, gekozen op 11 augustus 2026. Sinds de totalen van 13 augustus is dit vooral data-minimalisatie en geen risicomaatregel meer; korter kost Mind het uurverloop van oudere dagen. Dit is een afweging voor Mind en niet voor ons, en hij hoort in de DPIA.
+- [x] **Wie plant de rollup in, en waarmee?** **Vervallen op 13 augustus 2026: er is geen rollup meer.** De uurtotalen blijven staan omdat ze niet herleidbaar zijn; `weather_daily` en de rollup-functie zijn geschrapt, en daarmee is ook het pg_cron-besluit van tafel. Er kan dus ook niets vergeten worden. Wil Mind alsnog een bewaartermijn, dan is dat een kleine migratie.
+- [ ] **Wil Mind een bewaartermijn op de uurtotalen?** Sinds 13 augustus 2026 is er geen: de totalen zijn niet herleidbaar, dus de AVG vraagt er geen. Het is daarmee een keuze over data-minimalisatie, aan Paul voorgelegd in de mail van 13 augustus. Wil hij een termijn, dan is dat een kleine migratie en hoort het getal hier.
 - [ ] Verwerkersovereenkomst met Supabase getekend? Ligt bij Mind, zie `privacy-besluiten.md`.
 - [ ] Wat is de grondslag voor de leeftijdscategorie nu 16+ een toegangseis is en geen voorkeur? Stond op toestemming, en dat klopt waarschijnlijk niet meer. Vraag voor Paul.
 - [ ] Wat toont de analyticspagina precies, en aan wie? Geaggregeerde cijfers is iets anders dan individuele check-ins inzien door het IT-departement.

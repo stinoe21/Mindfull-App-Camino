@@ -13,6 +13,16 @@
 -- geen volgorde en geen geschiedenis, dus er valt achteraf niets meer uit te
 -- lijnen, ook niet binnen de bewaartermijn van de logs.
 --
+-- Daaruit volgt een tweede besluit van dezelfde dag: de uurtotalen BLIJVEN
+-- staan. De rollup naar dagtotalen bestond als maatregel tegen het
+-- volgordelek van losse rijen, en dat lek bestaat niet meer. Een uurtotaal
+-- van heel Nederland is niet tot een persoon herleidbaar, dus er loopt geen
+-- bewaartermijn. weather_daily en rollup_weather_entries() verdwijnen
+-- daarom: een dagtotaal is voor de analyticspagina een group by op de
+-- uurtotalen, en een functie die nog ingepland moest worden is er een die
+-- vergeten kan worden. Wil Mind alsnog een termijn, dan is dat een kleine
+-- migratie; de vraag ligt bij de privacyofficer.
+--
 -- Wat dit Mind kost: niets. Een rij bevatte alleen dag, uurblok en weerbeeld,
 -- dus de verzameling rijen bevatte exact dezelfde informatie als deze
 -- totalen. Het verloop binnen de dag blijft, een misbruikpiek in een uurblok
@@ -48,7 +58,7 @@ create table public.weather_hourly (
 );
 
 comment on table public.weather_hourly is
-  'Het landelijke weerbericht: totalen per dag, uurblok en weerbeeld. Een inzending telt op bij een totaal en krijgt geen eigen rij, dus er bestaat geen volgorde en geen geschiedenis. Zie docs/datamodel.md voordat je hier een kolom aan toevoegt.';
+  'Het landelijke weerbericht: totalen per dag, uurblok en weerbeeld. Een inzending telt op bij een totaal en krijgt geen eigen rij, dus er bestaat geen volgorde en geen geschiedenis. De totalen blijven staan: ze zijn niet herleidbaar, dus er loopt geen bewaartermijn. Zie docs/datamodel.md voordat je hier een kolom aan toevoegt.';
 
 -- De tijdzone is niet cosmetisch. Postgres draait hier op UTC, dus zonder deze
 -- conversie rolt de dag om 02:00 Nederlandse tijd om en klopt ook het uur niet.
@@ -73,6 +83,10 @@ revoke all on public.weather_hourly from anon, authenticated;
 --
 -- Op dev staat op dit moment niets in weather_entry, maar deze migratie moet
 -- ook kloppen als dat ooit anders is: eerst optellen, dan pas weg.
+--
+-- weather_daily gaat zonder overzetstap weg: de rollup heeft nooit gedraaid
+-- (hij was bewust niet ingepland) en de tabel is overal leeg. Er valt niets
+-- te bewaren, en dagtotalen zijn voortaan een group by op weather_hourly.
 -- ---------------------------------------------------------------------------
 
 insert into public.weather_hourly (day, hour, weather, total)
@@ -81,6 +95,10 @@ select e.day, e.hour, e.weather, count(*)::integer
  group by e.day, e.hour, e.weather;
 
 drop table public.weather_entry;
+
+drop function public.rollup_weather_entries(integer);
+
+drop table public.weather_daily;
 
 
 -- ---------------------------------------------------------------------------
@@ -194,62 +212,11 @@ grant  execute on function public.weather_today() to authenticated;
 
 
 -- ---------------------------------------------------------------------------
--- Bewaartermijn: de rollup volgt de tabel
---
--- De uurtotalen blijven een jaar staan. Daarna worden ze per dag samengevat
--- in weather_daily en verdwijnen ze. Wat overblijft is een dagtotaal zonder
--- uur.
---
--- De reden is nu data-minimalisatie en niet meer het volgordelek: dat lek
--- bestond bij losse rijen en een totaal heeft het niet. Het getal staat op
--- een plek, de default hieronder, en wijzigen gaat via een migratie zodat er
--- een review overheen komt.
---
--- LET OP: deze functie is NIET ingepland. Er staat geen pg_cron op dit project
--- en die aanzetten is een eigen besluit, geen bijvangst van deze migratie. De
--- eerste totalen lopen pas in augustus 2027 af, dus dat heeft geen haast. Wat
--- wel haast heeft is dat het besluit genomen wordt en niet vergeten.
--- ---------------------------------------------------------------------------
-
-drop function public.rollup_weather_entries(integer);
-
-create function public.rollup_weather_hourly(p_older_than_days integer default 365)
-returns integer
-language plpgsql
-security definer
-set search_path = ''
-as $$
-declare
-  v_cutoff  date := (now() at time zone 'Europe/Amsterdam')::date - p_older_than_days;
-  v_deleted integer;
-begin
-  insert into public.weather_daily as d (day, weather, count)
-  select h.day, h.weather, sum(h.total)::integer
-    from public.weather_hourly h
-   where h.day < v_cutoff
-   group by h.day, h.weather
-  on conflict (day, weather) do update set count = d.count + excluded.count;
-
-  delete from public.weather_hourly where day < v_cutoff;
-  get diagnostics v_deleted = row_count;
-
-  return v_deleted;
-end;
-$$;
-
-comment on function public.rollup_weather_hourly(integer) is
-  'Vat uurtotalen ouder dan de bewaartermijn samen tot dagtotalen in weather_daily en verwijdert ze daarna. Geeft terug hoeveel uurtotalen verdwenen. Nog niet ingepland, zie de migratie.';
-
-revoke execute on function public.rollup_weather_hourly(integer) from public, anon, authenticated;
-
--- weather_daily zelf wijzigt niet, alleen wie hem vult.
-comment on table public.weather_daily is
-  'Het archief van het landelijke weerbericht: per dag, per weerbeeld, hoeveel. Geen uur meer, dus onherroepelijk anoniem. Wordt gevuld door rollup_weather_hourly().';
-
-
--- ---------------------------------------------------------------------------
 -- Wat hier bewust NIET staat
 --
+-- - Een bewaartermijn of rollup. De uurtotalen zijn niet herleidbaar en
+--   blijven staan; zie de kop van dit bestand. Komt er ooit alsnog een
+--   termijn, dan is dat een eigen migratie met een review.
 -- - Realtime op weather_hourly. Realtime zendt elke wijziging live uit
 --   inclusief het moment waarop hij binnenkwam, en elke ophoging is een
 --   inzending. Voeg deze tabel dus niet toe aan de publicatie

@@ -8,7 +8,8 @@
 --
 -- Sinds 13 augustus 2026 staan er totalen in weather_hourly: per dag, uurblok
 -- en weerbeeld hoeveel inzendingen er waren. Er bestaat geen rij per
--- inzending, dus ook geen invoegvolgorde die iets over een inzending zegt.
+-- inzending, dus ook geen invoegvolgorde die iets over een inzending zegt,
+-- en de totalen blijven staan: er is geen rollup en geen archieftabel meer.
 -- Wat deze test bewaakt is dat zo'n totaal niets bevat waarmee je een
 -- inzending aan iemand kunt koppelen, en dat de tijd erin grof genoeg is om
 -- niet met de API-logs te kunnen joinen. Zie de kop van de migratie
@@ -93,8 +94,8 @@ end $$;
 
 select conname, pg_get_constraintdef(oid) as definitie
   from pg_constraint
- where conrelid in ('public.weather_hourly'::regclass, 'public.weather_daily'::regclass)
- order by conrelid::text, conname;
+ where conrelid = 'public.weather_hourly'::regclass
+ order by conname;
 
 do $$
 declare
@@ -104,11 +105,11 @@ declare
 begin
   select string_agg(conname, ', ') into v_fk
     from pg_constraint
-   where conrelid in ('public.weather_hourly'::regclass, 'public.weather_daily'::regclass)
+   where conrelid = 'public.weather_hourly'::regclass
      and contype = 'f'
      and confrelid <> 'public.weather_type'::regclass;
   assert v_fk is null,
-    format('De collectieve tabellen verwijzen naar iets anders dan weather_type: %s', v_fk);
+    format('De collectieve tabel verwijst naar iets anders dan weather_type: %s', v_fk);
 
   -- weather_hourly hoort precies EEN sleutel te hebben: de primary key op
   -- (day, hour, weather). Die wijst een totaal aan en geen inzending, en hij
@@ -137,7 +138,7 @@ select relname as tabel, relrowsecurity as rls_aan,
        (select count(*) from pg_policy where polrelid = c.oid) as aantal_policies
   from pg_class c
  where relnamespace = 'public'::regnamespace
-   and relname in ('weather_hourly', 'weather_daily', 'weather_type', 'profiles')
+   and relname in ('weather_hourly', 'weather_type', 'profiles')
  order by relname;
 
 do $$
@@ -153,16 +154,16 @@ begin
   assert v_uit is null,
     format('Deze tabellen hebben geen RLS: %s. Een tabel zonder RLS is een bug.', v_uit);
 
-  -- weather_hourly en weather_daily horen NUL policies te hebben. RLS zonder
-  -- policy weigert alles, en dat is hier precies de bedoeling.
+  -- weather_hourly hoort NUL policies te hebben. RLS zonder policy weigert
+  -- alles, en dat is hier precies de bedoeling.
   select string_agg(c.relname || ' (' || (select count(*) from pg_policy where polrelid = c.oid) || ')', ', ')
     into v_pol
     from pg_class c
    where c.relnamespace = 'public'::regnamespace
-     and c.relname in ('weather_hourly', 'weather_daily')
+     and c.relname = 'weather_hourly'
      and exists (select 1 from pg_policy where polrelid = c.oid);
   assert v_pol is null,
-    format('Deze collectieve tabellen hebben policies: %s. Er hoort er geen een te zijn, alle toegang loopt via de functies.', v_pol);
+    format('De collectieve tabel heeft policies: %s. Er hoort er geen een te zijn, alle toegang loopt via de functies.', v_pol);
 end $$;
 
 \echo ''
@@ -182,10 +183,10 @@ begin
   select string_agg(grantee || ' heeft ' || privilege_type || ' op ' || table_name, ', ') into v_grants
     from information_schema.role_table_grants
    where table_schema = 'public'
-     and table_name in ('weather_hourly', 'weather_daily')
+     and table_name = 'weather_hourly'
      and grantee in ('anon', 'authenticated');
   assert v_grants is null,
-    format('anon of authenticated heeft rechten op een collectieve tabel: %s. Die horen onzichtbaar te zijn.', v_grants);
+    format('anon of authenticated heeft rechten op de collectieve tabel: %s. Die hoort onzichtbaar te zijn.', v_grants);
 
   -- profiles mag gelezen worden, maar nooit geschreven: anders zet iemand zijn
   -- eigen last_checkin_on terug en omzeilt hij het dagslot.
@@ -197,20 +198,10 @@ begin
      and privilege_type <> 'SELECT';
   assert v_grants is null,
     format('Er is meer dan leesrecht op profiles: %s', v_grants);
-
-  -- De rollup verwijdert data. Die hoort niemand vanuit de app te kunnen
-  -- aanroepen, ook niet per ongeluk.
-  select string_agg(grantee, ', ') into v_grants
-    from information_schema.role_routine_grants
-   where routine_schema = 'public'
-     and routine_name = 'rollup_weather_hourly'
-     and grantee in ('anon', 'authenticated');
-  assert v_grants is null,
-    format('rollup_weather_hourly is aanroepbaar door: %s. Die functie gooit totalen weg.', v_grants);
 end $$;
 
 \echo ''
-\echo '=== 6. Staat realtime uit op de collectieve tabellen? ==='
+\echo '=== 6. Staat realtime uit op de collectieve tabel? ==='
 
 do $$
 declare
@@ -220,12 +211,12 @@ begin
     from pg_publication_tables
    where pubname = 'supabase_realtime'
      and schemaname = 'public'
-     and tablename in ('weather_hourly', 'weather_daily');
+     and tablename = 'weather_hourly';
   assert v_aan is null,
-    format('Deze tabellen staan in de publicatie supabase_realtime: %s. Realtime zendt elke ophoging live uit met het moment erbij, en elke ophoging is een inzending.', v_aan);
+    format('Deze tabel staat in de publicatie supabase_realtime: %s. Realtime zendt elke ophoging live uit met het moment erbij, en elke ophoging is een inzending.', v_aan);
 end $$;
 
-\echo 'realtime staat uit op weather_hourly en weather_daily'
+\echo 'realtime staat uit op weather_hourly'
 
 \echo ''
 \echo '=== 7. Hebben de security definer-functies een vast search_path? ==='
