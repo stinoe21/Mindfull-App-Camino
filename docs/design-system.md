@@ -167,7 +167,7 @@ We gebruiken drie plekken en die hebben elk één rol. Door elkaar halen is waar
 
 De volgorde is belangrijk: **tokens vaststellen in de repo, dan componenten bouwen, dan naar Claude Design pushen als gedeelde referentie.** Niet andersom, want dan wordt design de bottleneck en zit er iemand te wachten op een plaatje.
 
-**Besloten op 13 augustus 2026: we bouwen één gedeeld cloud design system, agents halen niet ieder voor zich losse frames uit Figma.** Figma blijft de plek waar het ontwerp gemaakt wordt en de repo blijft wat de build gebruikt, maar de referentie waar de drie agents tegenaan bouwen is de gedeelde bibliotheek in Claude Design, gesynchroniseerd via `/design-sync`. Zo kijken drie agents naar hetzelfde beeld in plaats van drie keer los naar Figma, en is het vooraf klaargezet in plaats van onderweg opgehaald. Het opzetten hoort bij het tokenwerk van de eigenaar en gebeurt vóór vertrek.
+**Besloten op 13 augustus 2026: we bouwen één gedeeld design system in Claude Design, agents halen niet ieder voor zich losse frames uit Figma.** Figma blijft de plek waar het ontwerp gemaakt wordt en de repo blijft wat de build gebruikt, maar de referentie waar de drie agents tegenaan bouwen is de gedeelde bibliotheek in Claude Design, gesynchroniseerd via `/design-sync`. Zo kijken drie agents naar hetzelfde beeld in plaats van drie keer los naar Figma, en is het vooraf klaargezet in plaats van onderweg opgehaald. Het opzetten hoort bij het tokenwerk van de eigenaar en gebeurt vóór vertrek.
 
 ### Figma MCP gebruiken
 
