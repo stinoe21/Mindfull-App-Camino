@@ -106,6 +106,27 @@ De GitHub-repo gaat ook naar Mind. Dat verandert de URL, dus iedereen werkt daar
 | Welke analytics-events we vastleggen | Elk event is een expliciete productbeslissing en komt eerst in `datamodel.md` te staan. |
 | Offline gedrag | Werkt de app offline, en zo ja, wat staat er dan lokaal op het toestel? |
 
+## Algemene voorwaarden
+
+**Besloten op 13 augustus 2026: er komt een algemene voorwaarden-document (terms and conditions), met een eigen pagina in de app die het toont.** Tot dit besluit kenden de documenten twee soorten juridische tekst: de twee consents en de privacyverklaring. Dit is de derde, en hij bestond nog nergens.
+
+De drie lopen snel door elkaar, dus voor de duidelijkheid:
+
+| Tekst | Wat het is | Waar het punt wordt bijgehouden |
+|---|---|---|
+| De twee consents | De uitdrukkelijke toestemming onder art. 9 AVG, apart intrekbaar. Inhoud ligt bij Paul. | `datamodel.md`, openstaande punten |
+| Privacyverklaring | De informatieplicht: wat we opslaan, hoe lang, en wat niet verwijderbaar is. | Volgt volledig uit `datamodel.md` |
+| Algemene voorwaarden | De gebruiksvoorwaarden van de app zelf. | Deze sectie |
+
+Wat er in elk geval in moet, verzameld uit besluiten die er al liggen:
+
+- Dat een bijdrage aan het landelijke weerbericht anoniem is en daarom **niet verwijderd kan worden**, zie "Grenzen die we bewust hebben getrokken".
+- De bewaartermijnen uit `datamodel.md`: persoonsgegevens weg na 2 jaar inactiviteit, de collectieve rijen een jaar en daarna alleen nog dagtellers.
+- Dat de app **geen hulpverlening** is en geen vervanging voor zorg, conform de disclaimer.
+- **Genoemd op 13 augustus 2026 en nog niet vastgelegd: bepaalde accountgegevens zouden langer bewaard moeten worden**, in verband met anomalieën en misbruik. Welke gegevens, hoeveel langer en op welke grond is onbekend, en de bron van de afspraak (of het van Paul komt of een eigen voornemen is) is niet teruggevonden in de mailwisseling die in deze repo naspeurbaar is. Dit moet eerst met een termijn in `datamodel.md` staan voordat het in de voorwaarden kan; tot die tijd geldt wat daar nu staat.
+
+Nog open: wie het concept schrijft, waar in de flow de gebruiker de voorwaarden te zien krijgt en of er een expliciet akkoord bij hoort (dat raakt de onboarding en dus `scope.md`), en de juridische toets door Paul. De tekst zelf is geen agent-werk: een agent verzint geen juridische tekst, hulptekst of doorverwijzing, zie `CLAUDE.md` sectie 8.
+
 ## Planning
 
 Wij leveren een planning inclusief de acties die we van Mind verwachten. Houd rekening met: Eveline is afwezig tot en met 16 augustus 2026, Marianne is terug vanaf 10 augustus 2026, en Mind is in dezelfde periode druk met de campagne "Leg je telefoon weg".
