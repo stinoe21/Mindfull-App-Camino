@@ -215,6 +215,28 @@ Komen er later velden bij die de gebruiker zelf mag wijzigen, dan geef je daar e
 
 De twee consents, de content voor het naslagwerk en de challenges. Die blokkeren onderdeel 1, 4 en 5 uit `taakverdeling.md`. Voor elk daarvan hoort het sjabloon hierboven volledig ingevuld te worden voordat er een migratie voor geschreven wordt.
 
+### Voorstel: de funnel van weerbeeld naar challenges en content
+
+**Status: voorstel van Stijn, 20 augustus 2026. Nog niet besloten.** Het vult de challenges en de content in die hierboven onder "Nog niet ingevuld" staan, en het is zo ontworpen dat het niets verandert aan de anonimisering en niets toevoegt aan het schema.
+
+Wat we willen: het mentale weerbericht beïnvloedt welke challenges worden aangeraden, en samen bepalen weerbeeld en challenges welke Mind-content vooraan staat. Daar zit een kleine gamification-lus in. En dat alles zonder dat er iets over gemoedstoestand aan een persoon te koppelen valt.
+
+Het principe: **de personalisatie gebeurt op het toestel, de server blijft weerblind.** Het scherm is persoonlijk, het verkeer is dat niet. Vier regels maken dat hard:
+
+1. **De mapping van weerbeeld naar challenges en content is appcode, geen serverdata.** Een vaste configuratie die met de app meekomt. De server rekent niets per gebruiker uit en weet dus ook nooit waarom iemand iets te zien kreeg.
+2. **Content ophalen is weerblind.** De app haalt voor iedereen dezelfde bundel op (de hele catalogus, of alle categorieën tegelijk) en filtert daarna lokaal. Nooit een query met het weerbeeld of een interesse als parameter: de request zelf is data, en belandt in de platformlogs naast het account. Dit sluit aan op `assets-en-media.md`: public bucket, hoge `cacheControl`, één keer ophalen en cachen.
+3. **Challenge-voortgang blijft in v1 lokaal op het toestel.** Een challenge is aanbevolen op basis van het weerbeeld, dus "account X doet challenge Y" op de server is een weer-gecorreleerd gegeven over mentale gezondheid. De prijs is bekend en geaccepteerd: geen sync tussen toestellen, en bij herinstallatie is de voortgang weg. Dezelfde afweging als bij het persoonlijke weerbeeld. Wil Mind later wel servervoortgang, dan is dat een nieuwe verwerking: eerst het sjabloon hierboven invullen en langs Paul.
+4. **Gamification telt lokaal.** Streaks en tellers zijn een historie en horen dus niet op de server. Lokaal mag het, met een kanttekening: een teller als "5 dagen op rij ingecheckt" is geen weerbeeld-historie en raakt de toezegging aan Paul dus niet, maar wat er lokaal staat is precies zijn open vraag van 10 augustus. Dit hoort dus in dat antwoord benoemd te worden, niet er stilletjes in te sluipen.
+
+**Interesses.** De gebruiker kan periodiek (bijvoorbeeld een tweewekelijkse pop-up, frequentie nog te kiezen) interesses aangeven. Die worden alleen lokaal opgeslagen; de sortering combineert lokaal het weerbeeld van vandaag met de interesses. Twee grenzen:
+
+- **Interesses per account op de server opslaan is uitgesloten.** In deze contentbibliotheek zijn interesses feitelijk mentale-gezondheidsthema's, dus dat zou een lijst "dit account is bezig met angst" opleveren: een bijzonder persoonsgegeven, aan een persoon gekoppeld, directer nog dan het weerbeeld.
+- **De framing is een ontwerpvraag.** De weermetafoor bestaat juist om de directe vraag naar gemoedstoestand te vermijden; een interesse-picker met diagnose-labels als opties stelt die vraag alsnog. Liever "waar wil je aan werken" met neutrale categorieën (ontspanning, beweging, verhalen van anderen, praktische tips) dan thema's als labels.
+
+Wat de server in dit ontwerp ziet, en meer niet: een account dat vandaag heeft ingecheckt (het dagslot), de anonieme uurtotalen, en contentverkeer dat er voor iedereen identiek uitziet.
+
+Nog te besluiten door de drie, deels op het board: welke interessecategorieën, de frequentie van de pop-up, welke challenge bij welk weerbeeld hoort, en hoe weerbeeld en interesses samen de sortering bepalen. De content-tabellen zelf (de catalogus die Mind via de admin vult) staan hier los van en volgen het sjabloon hierboven.
+
 ---
 
 ## Beslissingen die nog open staan
@@ -237,6 +259,7 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 
   De codes zijn stabiel en komen nooit in beeld. De labels komen uit de koppen op het board; wijzigt Mind een tekst, dan is dat een migratie en geen dashboard-edit. Dit deblokkeert de weer-iconenset uit `design-system.md` en de tokens `gradient/weather/*`. **Let op: er is geen onweer.** Wie een set met onweer heeft nagebouwd, zit fout.
 - [ ] **Hoe luiden de vier sliders precies?** De assen liggen vast in de mail aan Paul: temperatuur, wind, zicht en wisselvalligheid. De vraagteksten en de schaal nog niet, en ook niet welke combinatie tot welk van de vijf weerbeelden leidt. Die afbeelding gebeurt lokaal op het toestel, dus het raakt het schema niet, maar zonder dit kan de check-in niet af.
+- [ ] **Hoe werkt de funnel van weerbeeld naar challenges en content, en wat doen interesses daarin?** Er ligt sinds 20 augustus 2026 een voorstel, zie de sectie "Voorstel: de funnel van weerbeeld naar challenges en content" hierboven. Kern: personalisatie op het toestel, server blijft weerblind, voortgang en interesses alleen lokaal. Te besluiten door de drie; de lokale opslag hoort daarna in het antwoord aan Paul over de lokale bewaartermijn.
 - [ ] **Wat is het minimumaantal deelnemers waarboven het landelijke weerbericht getoond mag worden?** Op het board staat bij connector `12:308` letterlijk "pas tonen boven een minimum aantal deelnemers", zonder getal. Gecontroleerd op 30 juli 2026. Dit is een privacymaatregel en geen designkeuze, dus het getal hoort hier te staan en niet in de code te worden bedacht. **Voorstel: 10.** Onder de drempel geeft `weather_today()` nul rijen terug en toont het dashboard de empty state. Bevestig het getal, dan staat het in de functie.
 - [ ] **Wat is de uitdrukkelijke toestemming onder art. 9 AVG precies?** Paul kondigde op 10 augustus aan hier nog op te finetunen. Dit valt samen met het punt hieronder over de twee consents, en is daarmee blokkerend geworden in plaats van een losse vraag.
 - [ ] **Welke twee consents zijn het, en wat staat er precies in?** Het board heeft twee losse, apart intrekbare consents (`12:136` en `12:139`) en `design-system.md` rekent op een Consent row met twee varianten. Waar ze over gaan en wat de tekst is, staat nergens. Dit blokkeert onderdeel 1 uit `taakverdeling.md`.
