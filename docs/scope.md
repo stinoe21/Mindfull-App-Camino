@@ -1,11 +1,17 @@
 # Scope v1: Mentale Weerbericht
 
-> **Status: nog niet ingevuld.** Alles hieronder met `TODO` moet vastliggen voordat we vertrekken. Zolang dat niet zo is, mogen agents geen productbeslissingen nemen. Ontbreekt er informatie, vraag het dan in plaats van iets aan te nemen.
+> **Status: grotendeels ingevuld, nog te bevestigen met z'n drieën.** Alles hieronder met `TODO` moet vastliggen voordat we vertrekken. Zolang dat niet zo is, mogen agents daar geen productbeslissingen over nemen. Ontbreekt er informatie, vraag het dan in plaats van iets aan te nemen.
 
-**Userflow (Figma board):**
-https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow
+**Twee bronnen, en ze vullen elkaar aan.**
 
-Dit board is de bron. Alles hieronder is een vertaling daarvan naar bouwbare taken. Wijkt de code af van het board, dan wint het board, tenzij hier expliciet iets anders staat.
+| Bron | Wat het vastlegt |
+|---|---|
+| Het **design system** in `packages/ui/reference` | 41 uitgewerkte schermen, de kernlus, de ontwerpprincipes en de letterlijke teksten. Sinds 20 augustus 2026 in de repo. |
+| Het **Figma-board** ([userflow](https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow)) | De volgorde tussen de schermen en de secties die buiten de app vallen. |
+
+**Bij twijfel wint het design system**, want dat is uitgewerkt tot op de tekst en het board niet. Wijkt de code af van allebei, dan winnen zij van de code.
+
+Wat hieronder is ingevuld vanuit het design system is als zodanig gemarkeerd. Wat niet uit een van beide bronnen af te leiden was, staat er nog als `TODO`, want dat is een besluit en geen afleiding.
 
 ---
 
@@ -45,7 +51,15 @@ Beide zitten al wél in de contentbibliotheek in `content/`. Nice-to-have beteke
 
 ## Voor wie
 
-**TODO:** wie is de gebruiker precies? Dat bepaalt de content en de toon.
+> **Afgeleid uit het design system op 20 augustus 2026, nog te bevestigen.**
+
+Wat het ontwerp hierover vastlegt, en dat is meer dan het lijkt:
+
+- **Iedereen die zich niet ziek voelt maar wel iets wil doen met hoe het gaat.** Het hele ontwerp vermijdt klinische taal: geen schalen, geen labels, geen diagnose. De doelstelling in `HERKOMST.md` is letterlijk dat de gebruiker nooit gescoord of verteld wordt dat zijn dag "goed" of "slecht" was. Dat is een keuze voor een brede groep en niet voor mensen die al in zorg zitten.
+- **Iemand die dit dagelijks doet, in een halve minuut.** De check-in is met opzet vier sliders en geen vragenlijst. Ontwerpprincipe: *"Kort en visueel. Keep it short enough to do every day."*
+- **Nederlandstalig, informeel aangesproken.** "Je" en "jij", nooit "u", en de voornaam zodra die bekend is ("Goedemorgen, Maria"). Zie `HERKOMST.md`, Content fundamentals.
+
+**TODO:** blijft over: is er binnen die groep een leeftijd of levensfase waar de content op mikt? Dat bepaalt welke challenges en welke artikelen uit de bibliotheek van Mind we tonen. Het ontwerp zegt daar niets over, dus dit is een vraag aan Mind en niet iets om af te leiden.
 
 **De leeftijd ligt wel vast: 16+.** Dat is een harde toegangseis en geen aanbeveling. De check komt vóór het aanmaken van een account en heeft geen Skip. Onder de 16 geen toegang, en daarmee is ouderlijke toestemming niet nodig. Zie `datamodel.md`. Dit moet consistent zijn met de leeftijdsclassificatie die je in App Store Connect invult.
 
@@ -89,27 +103,89 @@ Dit is precies waarom die knop toch in v1 hoort: Apple eist Sign in with Apple z
 
 ## Schermen in v1
 
-**TODO:** vul aan vanuit de userflow in Figma. Elk scherm hier krijgt vóór vertrek een leeg routebestand, zodat niemand tijdens het bouwen nog een gedeeld navigatiebestand hoeft aan te raken.
+> **De routebestanden staan er sinds 20 augustus 2026**, allemaal leeg, met per stuk een omschrijving en een verwijzing naar hun specificatie. Niemand hoeft tijdens het bouwen nog een gedeeld navigatiebestand aan te raken. De eigenaars hieronder zijn een voorstel op basis van `taakverdeling.md`, nog te verdelen.
 
-| # | Scherm | Route | Figma node | Eigenaar |
-|---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
+Twintig schermen. De specificatie staat in `packages/ui/reference`: `HERKOMST.md` voor de regels en de teksten, `ui_kits/mind-app/index.html` voor het klikbare prototype, `components/` voor de maten.
+
+### Onboarding, eenmalig
+
+| # | Scherm | Route | Voorstel eigenaar |
+|---|---|---|---|
+| 1 | Welkom | `(onboarding)/welkom` | Caesar |
+| 2 | Leeftijdscheck 16+ | `(onboarding)/leeftijd` | Caesar |
+| 3 | Inloggen: Apple, Google, e-mail | `(onboarding)/inloggen` | Stijn |
+| 4 | Voorkeuren, keuze-chips | `(onboarding)/voorkeuren` | Caesar |
+| 5 | Anonimiteit en toestemming | `(onboarding)/anonimiteit` | Stijn |
+
+Scherm 2 is een harde toegangseis zonder Skip, en hij komt vóór het aanmaken van een account. Scherm 3 bouwen we zo dat er alleen nog een sleutel in hoeft, zie de sectie hierboven.
+
+### De kernlus, dagelijks
+
+| # | Scherm | Route | Voorstel eigenaar |
+|---|---|---|---|
+| 6 | Dashboard | `(app)/dashboard` | Max |
+| 7 | Check-in, stap 1 tot 4 | `check-in/[stap]` | Caesar |
+| 8 | Check-in bevestigd | `check-in/bevestigd` | Caesar |
+| 9 | Jouw weer, de uitkomst | `check-in/uitkomst` | Max |
+| 10 | Het weerbericht van Nederland | `weerbericht` | Stijn |
+
+Dit is waar de app om draait: **inchecken, je eigen weerbeeld zien met één zachte tip, en zien dat je meetelt in een gedeeld beeld.** De vier sliders leiden op het toestel tot één van vijf weerbeelden. Die vijf staan al in de database, zie `datamodel.md`. De sliderwaarden zelf verlaten het toestel nooit.
+
+De teksten van de check-in liggen woordelijk vast in `HERKOMST.md` onder *Canonical check-in copy*. Niet parafraseren, ook niet als het beter klinkt.
+
+### Verdieping
+
+| # | Scherm | Route | Voorstel eigenaar |
+|---|---|---|---|
+| 11 | Challenges | `(app)/challenges` | Caesar |
+| 12 | Challenge, detail | `(app)/challenges/[challenge]` | Caesar |
+| 13 | Challenge afgerond | `(app)/challenges/[challenge]/afgerond` | Max |
+| 14 | Naslagwerk, met zoeken | `(app)/naslagwerk` | Caesar |
+| 15 | Artikel | `(app)/naslagwerk/[artikel]` | Caesar |
+| 16 | MIND Hulplijn | `hulplijn` | Stijn |
+
+De challenges zijn de reden dat iemand de app downloadt en terugkomt. Het naslagwerk en de artikelen komen uit de contentbibliotheek in `content/`, met bronvermelding "Bron: MIND" onder elk artikel.
+
+### Profiel en beheer
+
+| # | Scherm | Route | Voorstel eigenaar |
+|---|---|---|---|
+| 17 | Profiel | `(app)/profiel` | Max |
+| 18 | Instellingen | `(app)/profiel/instellingen` | Stijn |
+| 19 | Account verwijderen | `(app)/profiel/account-verwijderen` | Stijn |
+| 20 | Route bestaat niet | `+not-found` | Max |
+
+Scherm 19 is een harde eis van Apple, richtlijn 5.1.1(v), en hij moet echt alle data weghalen. Zie `datamodel.md`.
+
+### Wat er nog naast moet
+
+Deze zijn geen eigen scherm maar wel eigen werk, en ze staan in de definition of done:
+
+- **De systeemstaten.** Fout en offline, leeg weerbericht, geen zoekresultaten, content achter consent, verlopen sessie, eerste-keer-tips, challenge ontgrendeld. Het ontwerp benoemt ze zelf als gat. **Besloten op 20 augustus 2026: we ontwerpen ze zelf**, uit de huisstijl, op het moment dat het eerste scherm ze nodig heeft.
+- **De navigatiebalk.** Vijf bestemmingen met "Check in" in het midden, een zwevende pil met frosted achtergrond. De vectorpaden liggen klaar. Er staat nu een tijdelijke standaardbalk.
 
 ## Expliciet niet in v1
 
 Dit is de belangrijkste lijst van dit document. Zonder harde non-goals groeit de scope tijdens het bouwen vanzelf.
 
-**TODO:** vul aan. Denk aan zaken als:
+> **Voorstel van 20 augustus 2026, afgeleid uit het design system, nog te bevestigen.** De redenering staat er bewust bij: een non-goal zonder reden wordt de volgende week weer ter discussie gesteld.
 
-- Meertaligheid
-- Push-notificaties
-- Offline-first synchronisatie
-- Delen met derden of hulpverleners
-- Data-export
-- Een webversie
-- Accountherstel via e-mail
+| Niet in v1 | Waarom |
+|---|---|
+| **Meertaligheid** | Elke tekst in het ontwerp is Nederlands, tot de aanspreekvorm aan toe. Mind is een Nederlandse stichting. Een tweede taal betekent ook de hele contentbibliotheek vertalen, en dat is geen bouwwerk maar redactiewerk. |
+| **Push-notificaties** | Er is geen enkel scherm voor toestemming of instellingen ervoor, en het ontwerp bouwt het dagelijkse moment expliciet **niet** op een herinnering maar op een eigen keuze ("Sla vandaag over"). Een notificatie die vraagt hoe je je voelt is bovendien precies het soort ding waar een DPIA vragen over stelt. |
+| **Offline-first synchronisatie** | De app moet zonder netwerk netjes falen, en dat staat in de definition of done. Een wachtrij die check-ins later alsnog wegschrijft is iets anders, en die botst met de begrenzing van één check-in per dag. |
+| **Delen met derden of hulpverleners** | Er is geen scherm voor, en het staat haaks op de belofte "Niemand kan zien wat jij hebt ingevuld". |
+| **Data-export** | Verwijderen moet, exporteren niet. Geen scherm in het ontwerp. |
+| **Een webversie van de app zelf** | De app is voor de telefoon ontworpen, 402 punten breed. `apps/admin` is iets anders: dat is een CMS voor Mind, zie hieronder. |
+| **Accountherstel via e-mail** | Hangt aan de inlogkeuze, en die is Apple, Google of e-mail. **TODO:** dit is de enige uit deze lijst die echt een besluit is en geen afleiding, want zonder herstel is een vergeten e-mailinlog een doodlopende weg. |
+| **Zelftests en ervaringsverhalen** | Nice-to-have, van het whiteboard van 20 augustus 2026. Ze zitten al wél in de contentbibliotheek, dus later toevoegen is contentwerk en geen verbouwing. |
+| **Windrichtingen** | Geparkeerd door Stijn op 20 augustus 2026. Raakt de kern niet. |
+| **Een iPad-layout** | `supportsTablet` staat op `false`. Universal declareren zonder een echte iPad-layout is een afwijzingsreden, zie hieronder. |
+| **Donkere modus** | De app dwingt licht af. Nog geen besluit, en zolang dat zo is is dit de veilige kant: het systeem zelf donker laten maken levert onleesbare tekst op de crèmekleur. Zie `design-system.md`. |
+| **Een profielfoto** | Bestaat nergens in de flow. De generieke avatar is bij de overname van het design system bewust verwijderd. |
+| **Emoji en stoplichtkleuren** | Geen decoratie in bodytekst, en de feedbackkleuren rood, groen en oranje zijn alleen voor echte systeemfeedback. Iemands stemming krijgt nooit een kleurcode. Zie `productprincipes.md` principe 3. |
+| **Proactieve escalatie bij zorgen** | Bewust niet, zie `privacy-besluiten.md`. De route naar de Hulplijn is er altijd, maar de app grijpt nooit zelf in. |
 
 ## Beheer, buiten de app
 
@@ -130,12 +206,14 @@ Twee dingen die hier nog niet vastliggen: **welk framework** de webapp krijgt, e
 
 Dit is een app in de mentale gezondheidshoek. Deze punten zijn geen formaliteit.
 
-**TODO per punt:**
+**Wat hiervan al vastligt, stand 20 augustus 2026:**
 
-- Welke gebruikersdata slaan we op, en waarom? Elk veld staat in `docs/datamodel.md` met een bewaartermijn.
-- Slaan we vrije tekst op over iemands gemoedstoestand? Zo ja: waar, hoe lang, en wie kan erbij?
-- Hoe verwijdert een gebruiker zijn account en zijn data?
-- Doen we aan analytics? Zo ja, op welk niveau, en nooit op inhoud.
+- **Welke gebruikersdata slaan we op?** Precies drie tabellen, allemaal in `datamodel.md` met een bewaartermijn per veld: `profiles` (id, laatst actief, datum van de laatste check-in), `weather_hourly` (uursaldo per weerbeeld, zonder enige gebruikerscode) en `weather_type` (de vijf weerbeelden). Meer niet. Een veld dat daar niet staat, bestaat niet.
+- **Slaan we vrije tekst op over iemands gemoedstoestand?** Nee. De check-in is vier sliders en die waarden verlaten het toestel niet: alleen het resulterende weerbeeld gaat mee, en dat komt terecht in een uursaldo waar geen gebruiker aan hangt. Vastgelegd in de mail aan Paul van 7 augustus 2026.
+- **Hoe verwijdert een gebruiker zijn account?** In de app zelf, scherm 19 hierboven. Verplicht volgens richtlijn 5.1.1(v), en het moet echt alles weghalen.
+- **Doen we aan analytics?** Nee, geen enkel event. Elk veld dat data over een gebruiker vastlegt is een expliciete productbeslissing en geen bijvangst.
+
+**TODO per punt:**
 - **Crisis-signposting:** wat tonen we als iemand in nood lijkt te zijn? De exacte tekst en doorverwijzing leggen we hier woordelijk vast en wordt door niemand geïmproviseerd, ook niet door een agent. Op het Figma-board staat de **MIND Hulplijn** via WhatsApp. Noem geen andere instantie en geen telefoonnummer tenzij het hier woordelijk staat. Er is bewust **geen** proactieve escalatie, zie `privacy-besluiten.md`.
 - Verwerkersovereenkomst met Supabase geregeld? Ligt bij Mind, zie `privacy-besluiten.md`.
 - Is er een privacyverklaring, en waar staat die? App Review vraagt erom.
@@ -189,6 +267,22 @@ Dat is een extra reden om ook het Play-account op naam van Mind te zetten en nie
 
 ## Definition of done voor v1
 
-**TODO:** wanneer is dit klaar? Bijvoorbeeld: alle schermen hierboven werken end-to-end, een testgebruiker kan de hele flow doorlopen zonder vast te lopen, en er is een installeerbare build waarmee iemand van Mind dat op een toestel kan controleren.
+> **Voorstel van 20 augustus 2026, nog te bevestigen.**
 
-Let op bij het invullen: "de build staat in TestFlight" kan hier niet als eis staan zolang wij geen Apple Developer-account hebben, en "de Apple-login werkt" ook niet. Die twee horen bij de fase ná de overdracht. Wat er wél als eis in kan: de hele flow loopt door op de Simulator en op een toestel, en de Apple-login wacht alleen nog op een sleutel.
+Let op bij het lezen: "de build staat in TestFlight" kan hier niet als eis staan zolang wij geen Apple Developer-account hebben, en "de Apple-login werkt" ook niet. Die twee horen bij de fase ná de overdracht.
+
+**v1 is af als dit allemaal waar is:**
+
+1. **De twintig schermen hierboven zijn gebouwd**, elk met zijn loading-, empty- en error-state. Niet alleen het gelukte pad.
+2. **Een testgebruiker loopt de hele flow door zonder vast te lopen**, van een verse installatie tot en met het verwijderen van zijn account. Op de Simulator én op een echt toestel.
+3. **De eerste keer openen is niet leeg.** Een vers account zonder één check-in toont een werkend dashboard, geen wit vlak. Dit is de meest voorkomende afwijzingsreden en het is precies wat wij het minst testen.
+4. **Er staat nergens placeholder-tekst.** Geen lorem ipsum, geen knop die niets doet, geen "NOG TE BOUWEN". `apps/mobile/src/components/NogTeBouwen.tsx` is verwijderd, want niets importeert hem meer.
+5. **Het beeld klopt met het ontwerp.** Naast elkaar gecontroleerd op 402 punten breed, en apart op Android, want daar gaan de tekstuitlijning en de nagemaakte vetdruk mis. Zie `van-ontwerp-naar-app.md` deel 6.
+6. **`npm run typecheck`, `npm run lint` en `npm test` zijn groen**, op alle drie de laptops en in de CI.
+7. **De vier vragen onderaan `productprincipes.md` zijn per scherm nagelopen.**
+8. **Geen enkel veld buiten `datamodel.md`**, en `supabase/tests/anonimisering.sql` draait schoon.
+9. **De app doet iets begrijpelijks zonder netwerk.** Niet crashen, niet leeg blijven staan.
+10. **De Apple-login wacht alleen nog op een sleutel.** Scherm, knop, afhandeling en foutstaten af; een ontbrekende Service ID blokkeert de rest van de onboarding niet.
+11. **Er is een installeerbare build waarmee iemand van Mind het op een toestel kan bekijken.** Via Expo Go zolang er geen developer-account is.
+
+**Wat expliciet géén eis is voor v1:** `apps/admin`. Die webapp is nodig voordat Mind zelf content kan toevoegen, maar hij blokkeert de app niet en de mobiele app is de prioriteit. Zie `taakverdeling.md`.
