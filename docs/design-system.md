@@ -24,7 +24,7 @@ Wat er nu ligt:
 | De vijf lettertypes geladen in de app | **Gedaan.** `apps/mobile/src/theme/fonts.ts` en de root layout. |
 | De lint-regel tegen hardcoded waarden | **Staat aan**, sinds 20 augustus 2026. `eslint.config.js`. Kleur en typografie zijn een fout, losse maten een waarschuwing. |
 | Het kitchen sink-scherm | **Staat er**, op `/_dev/kitchen-sink`: de typeschaal, alle kleuren, en een link naar elk scherm. |
-| React Native-componenten | **Nog niet gebouwd.** `packages/ui/components` is leeg. Dat is het echte bouwwerk. |
+| React Native-componenten | **Nog niet gebouwd.** `packages/ui/components` bevat alleen een README met de bouwinstructies. Dat is het echte bouwwerk. |
 
 De skill `mind-design` laadt automatisch en wijst je bij elke visuele vraag het juiste bestand aan. Gebruik die in plaats van te zoeken.
 
@@ -191,7 +191,7 @@ Harde regels voor een agent:
 
 - **Introduceer nooit zelf een icoon, illustratie of mascottepose.** De set is gesloten. Ook geen tussenvorm, ook geen variant.
 - **Zet nooit een willekeurige afbeelding of stockfoto in de app.** Ook niet als placeholder, want placeholders blijven staan.
-- Mis je een asset, dan is dat een blokkade die je meldt, geen probleem dat je zelf oplost. Dat geldt nu concreet voor de vierde check-in-pose, zie de open punten.
+- Mis je een asset, dan is dat een blokkade die je meldt, geen probleem dat je zelf oplost. Voor de vierde check-in-pose (`zicht`) is dat inmiddels beslist, op 20 augustus 2026: die pose komt er niet, de vraag valt terug op `mascot-main.svg`, en dat is de afspraak en geen noodgreep. Zie `van-ontwerp-naar-app.md`.
 - Assets staan in de repo, niet in een live query. Zelfde reden als de tokens.
 
 Comprimeer alles voordat het de repo in gaat, zie `assets-en-media.md`: iconen als SVG, illustraties als WebP op kwaliteit 80 tot 85, en niets groter dan de plek waar het staat. De export hield zich daar niet aan, en dat kostte 45 MB voor 176 KB aan beeld.
@@ -210,7 +210,7 @@ Geweigerd in `apps/**` en `packages/ui/components/**`:
 - losse getallen in `padding`, `margin`, `gap`, `borderRadius`, `fontSize`
 - inline `shadowColor`, `shadowOffset` en vergelijkbaar
 
-**TODO:** opzetten zodra de Expo-app gescaffold is. Dit is één van de eerste taken, vóór er features gebouwd worden. Anders sluit je de deur nadat het paard weg is.
+**Gedaan op 20 augustus 2026**, tegelijk met de scaffold: de regels staan in `eslint.config.js` en draaien mee in `npm run lint`. De deur was dus dicht voordat het eerste scherm gebouwd werd.
 
 `packages/ui/reference/**` valt hier expliciet buiten. Dat is overgenomen specificatie en geen code die meebouwt, en die staat vol letterlijke waarden omdat dat het punt ervan is.
 
@@ -220,7 +220,7 @@ Geweigerd in `apps/**` en `packages/ui/components/**`:
 
 Eén screenshot en je ziet of er iets stuk is. Verplicht bij te werken zodra je een component maakt of wijzigt. Dit staat in de definition of done.
 
-Tot dat scherm bestaat is `packages/ui/reference/ui_kits/mind-app/index.html` het dichtstbijzijnde: open dat in een browser en je ziet de hele flow.
+Het scherm bestaat sinds 20 augustus 2026. Wil je daarnaast de hele flow als webpagina zien, open dan `packages/ui/reference/ui_kits/mind-app/index.html` in een browser.
 
 ---
 
@@ -269,8 +269,6 @@ Dit zijn beslissingen van ons drieën, geen vergeten werk. De technische variant
 
 | Wat | Waarom het nu telt |
 |---|---|
-| **Vier pakketten toevoegen** | `expo-image`, `expo-font`, `react-native-svg` en `expo-linear-gradient`. Alle vier zitten in Expo Go, dus geen development build en geen native configuratie. Zie `van-ontwerp-naar-app.md` deel 2. |
-| **De vierde check-in-pose** | De mascotte voor `zicht` is nooit geëxporteerd. Eén van de vier vragen mist zijn beeld. Dit blokkeert de check-in, en dat is de kernhandeling. |
 | **De mascotte-poses op 3x** | Nu 354 bij 136 pixels voor een weergave van 128 hoog. Op een retina-scherm wordt dat zacht. |
 | **Een link naar het bronbestand in Figma** | Zonder die link kunnen Max en Caesar niet bij het ontwerp, alleen bij wat is overgenomen. |
 | **Donkere modus: wel of niet** | Het overgenomen systeem heeft er geen. De oude styleguide had wel een licht- en donkervariant. Nu beslissen is goedkoop, later betekent het elke kleur opnieuw langslopen. |
