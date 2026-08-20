@@ -62,11 +62,11 @@ Zoek eerst in `packages/ui/components`. Een tweede Button die net iets anders is
 
 ### 9. De MIND Hulplijn blijft bereikbaar
 
-Het board is hier specifieker dan een principe: de knop naar de **MIND Hulplijn via WhatsApp** is **persistent op elk scherm** (node `12:176`). Niet weggestopt in een menu, niet alleen op het dashboard.
+Het board is hier specifieker dan een principe: de knop naar de **MIND Hulplijn via WhatsApp** is **systeembreed aanwezig** (node `12:176`). Niet weggestopt in een menu, niet alleen op het dashboard. Of hij op letterlijk elk scherm staat, is een ontwerpbesluit dat nog open staat, zie `design-system.md` en `van-ontwerp-naar-app.md`.
 
 Twee harde randvoorwaarden:
 
-- **Verzin nooit zelf een hulptekst, telefoonnummer of doorverwijzing.** Alleen wat woordelijk in `scope.md` staat. Geen andere instantie erbij, hoe logisch die ook lijkt.
+- **Verzin nooit zelf een hulptekst, telefoonnummer of doorverwijzing.** Alleen wat woordelijk in `scope.md` is vastgelegd, en die tekst staat daar nu nog als TODO. Zolang dat zo is bouw je niets rond crisis en meld je de blokkade. Geen andere instantie erbij, hoe logisch die ook lijkt.
 - **Er is bewust geen proactieve escalatie.** Bij structureel negatieve check-ins gebeurt er niets automatisch. Om dat te kunnen zouden we precies de persoonsgebonden data over mentaal welzijn moeten bewaren die we bewust niet bewaren. Zie `privacy-besluiten.md`.
 
 ### 10. De app voelt geloofwaardig en volwassen, niet als een generieke wellness- of AI-app
@@ -92,4 +92,4 @@ Botst een principe met wat je gevraagd is te bouwen, dan is dat geen detail dat 
 
 De principes zijn op 30 juli 2026 vastgelegd op basis van een voorstel voor het agent-framework, en daarna gecontroleerd tegen de userflow op het Figma-board. Waar het board concreter was dan het principe, is het board gevolgd.
 
-Wat bewust **niet** in dit document staat: welke schermen er zijn en hoe ze heten. Dat komt uit Figma en hoort in `scope.md`, zodra het daar is vastgelegd.
+Wat bewust **niet** in dit document staat: welke schermen er zijn en hoe ze heten. Dat staat sinds 20 augustus 2026 in `scope.md`, als de twintig schermen van v1.
