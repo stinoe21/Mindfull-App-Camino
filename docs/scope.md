@@ -41,7 +41,7 @@ Van het whiteboard van 20 augustus 2026, zelfde status: concept.
 
 Beide zitten al wél in de contentbibliotheek in `content/`. Nice-to-have betekent hier dus: niet tonen in v1; later toevoegen is contentwerk en geen verbouwing.
 
-**Nog te verduidelijken uit het bord:** bij mind content staat "(windrichtingen)" tussen haakjes; wat daarmee bedoeld is, moet Stijn even toelichten voordat het hier landt.
+**Geparkeerd:** "windrichtingen" (van het whiteboard, bij mind content) is bewust doorgeschoven naar een eventuele latere versie. Besloten door Stijn op 20 augustus 2026: het raakt de kern van de app niet. Niemand hoeft hiernaar te vragen of het uit te werken voor v1.
 
 ## Voor wie
 
