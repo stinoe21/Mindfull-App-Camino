@@ -8,7 +8,7 @@ De inhoudelijke besluiten staan niet hier: wat we opslaan staat in `datamodel.md
 
 ## 1. Hoe de backend in elkaar zit
 
-De hele backend is op dit moment twee migratiebestanden in `supabase/migrations/`. Dat is geen tussenstand maar het ontwerp: klein, leesbaar, en elke wijziging is een bestand met een review erop.
+De hele backend is op dit moment drie migratiebestanden in `supabase/migrations/`. Dat is geen tussenstand maar het ontwerp: klein, leesbaar, en elke wijziging is een bestand met een review erop.
 
 Het idee in één alinea: het persoonlijke weerbeeld blijft op het toestel en wordt aan het eind van de dag gewist. De server kent maar twee dingen. Eén: **anonieme totalen**, per dag, uurblok en weerbeeld hoeveel inzendingen er waren; een inzending telt op bij een totaal en krijgt geen eigen rij. Twee: op het profiel **de datum van de laatste check-in**, zodat iemand één keer per dag meetelt. Tussen die twee loopt geen verbinding, en de tabellen zijn zo gebouwd dat die verbinding er ook niet bij kán: er is in de collectieve tabel geen kolom die een gebruiker of een exact moment kan aanduiden, en geen rij die één inzending vertegenwoordigt.
 
@@ -58,7 +58,7 @@ Waarom er geen rij per inzending is en geen tijdstip, staat uitgelegd in `datamo
 
 **Uitgevoerd op 13 augustus 2026, door Stijn.** Het dev-project droeg tot die dag het proefschema van 31 juli: dertien migraties met onder meer `check_ins` (persoonlijke check-ins in de cloud, precies wat we Paul hebben toegezegd niet te doen), plus testdata. Het is gereset met `supabase db reset --linked` en draait nu precies de migraties uit deze repo.
 
-Geverifieerd via de read-only MCP direct na de reset: de migratiehistorie bevat exact onze twee versies, alleen de vier tabellen bestaan en RLS staat overal aan, en de security advisors melden alleen de twee bewuste keuzes (nul policies op de collectieve tabellen, en de twee functies die authenticated mag aanroepen). Nog openstaand uit de nacontrole: het volledige bewijsstuk draaien via psql (sectie 4), en in het dashboard nakijken dat PITR uit staat en de realtime-publicatie leeg is.
+Geverifieerd via de read-only MCP direct na de reset, en opnieuw op 20 augustus 2026, na de totalen-migratie van 13 augustus: de migratiehistorie bevat exact onze drie versies, alleen de drie tabellen uit `datamodel.md` bestaan (`weather_type`, `weather_hourly`, `profiles`) en RLS staat overal aan, en de security advisors melden alleen de bewuste keuzes (nul policies op de collectieve tabel, en de twee functies die authenticated mag aanroepen). Nog openstaand uit de nacontrole: het volledige bewijsstuk draaien via psql (sectie 4), en in het dashboard nakijken dat PITR uit staat en de realtime-publicatie leeg is.
 
 Voor als dit ooit opnieuw nodig is: de reset is destructief, een teambesluit en een mensenhandeling. De agent-skill verbiedt agents expliciet om dit commando te draaien. En één les uit de uitvoering: **bij `supabase db reset --linked` draait ook `supabase/seed.sql` mee tegen het gekoppelde project.** Alleen `supabase db push` slaat de seed over. Zet er dus nooit iets in dat niet ook op dev mag belanden.
 
