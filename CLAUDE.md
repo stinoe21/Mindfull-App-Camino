@@ -10,6 +10,7 @@ Lees bij twijfel het document dat bij je vraag hoort. Dit is de volledige lijst,
 | Hoe de app zich hoort te gedragen: toon, houding, wat we nooit doen | `docs/productprincipes.md` |
 | De afspraken rond design: tokens, schermregels, assets, en hoe Figma, Claude Design en de repo zich verhouden | `docs/design-system.md` |
 | Een concrete kleur, maat, component of schermopbouw opzoeken | `packages/ui/README.md`, of de skill `mind-design` |
+| Iets opzoeken in de contentbibliotheek van Mind | `content/mind/LEESMIJ.md`, of de skill `mind-content`. Let op: naslag, nog geen goedgekeurde contentbron voor de app |
 | Wat er moet gebeuren om het ontwerp in React Native te krijgen | `docs/van-ontwerp-naar-app.md` |
 | Welke tabellen en velden bestaan, met bewaartermijn per veld | `docs/datamodel.md` |
 | Hoe de backend in elkaar zit, en hoe je er iets aan wijzigt | `docs/backend-draaiboek.md` |
@@ -44,7 +45,7 @@ Wat dat concreet voor je betekent als je nu een taak oppakt:
 
 Er staat nog één ding voor, en dat is geen agent-taak:
 
-> **`docs/scope.md` invullen.** Dat is een besluit van de drie samen. Zolang de TODO's daar staan, mag je geen productbeslissing nemen en is stoppen en vragen het juiste antwoord. De bron is niet meer alleen het Figma-board: het design system in `packages/ui/reference/HERKOMST.md` legt de kernlus, de ontwerpprincipes en de letterlijke teksten al vast.
+> **`docs/scope.md` bevestigen.** Het staat sinds 20 augustus 2026 grotendeels ingevuld, vanuit het design system en het whiteboard, maar het is een concept tot de drie het samen bevestigd hebben, en er staan nog enkele TODO's in. Zolang dat zo is, mag je op die punten geen productbeslissing nemen en is stoppen en vragen het juiste antwoord.
 
 Word je gevraagd iets te bouwen waarvoor het antwoord in `scope.md` had moeten staan, zeg dat dan in plaats van alvast iets neer te zetten.
 
@@ -116,7 +117,7 @@ Als dat waar is, kan er per definitie geen merge-conflict ontstaan, ongeacht wie
 
 Praktisch betekent dit:
 
-- Elk scherm uit de userflow krijgt vóór vertrek een leeg routebestand op de juiste plek. Een feature bouwen is dan dat bestand vullen plus nieuwe bestanden ernaast zetten. **Die routebestanden bestaan nog niet**, zie de stand van zaken hierboven.
+- Elk scherm uit de userflow heeft een leeg routebestand op de juiste plek, sinds 20 augustus 2026, zie de stand van zaken hierboven. Een feature bouwen is dat bestand vullen plus nieuwe bestanden ernaast zetten.
 - Feature-code staat in `apps/mobile/src/features/<feature>/` en nergens anders.
 - Moet je toch een gedeeld bestand wijzigen, dan is dat een **aparte, kleine pull request** die binnen een halfuur gemerged wordt. Niet als bijvangst van een feature.
 
