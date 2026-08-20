@@ -2,16 +2,17 @@
 
 > **Status: grotendeels ingevuld, nog te bevestigen met z'n drieën.** Alles hieronder met `TODO` moet vastliggen voordat we vertrekken. Zolang dat niet zo is, mogen agents daar geen productbeslissingen over nemen. Ontbreekt er informatie, vraag het dan in plaats van iets aan te nemen.
 
-**Twee bronnen, en ze vullen elkaar aan.**
+**Drie bronnen, en ze vullen elkaar aan.**
 
 | Bron | Wat het vastlegt |
 |---|---|
 | Het **design system** in `packages/ui/reference` | 41 uitgewerkte schermen, de kernlus, de ontwerpprincipes en de letterlijke teksten. Sinds 20 augustus 2026 in de repo. |
 | Het **Figma-board** ([userflow](https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow)) | De volgorde tussen de schermen en de secties die buiten de app vallen. |
+| Het **whiteboard van 20 augustus 2026**, met de toelichting van Stijn | De kern van de app, must-have en nice-to-have, in de sectie "Wat de app doet". Status: concept, nog te bevestigen met z'n drieën. |
 
 **Bij twijfel wint het design system**, want dat is uitgewerkt tot op de tekst en het board niet. Wijkt de code af van allebei, dan winnen zij van de code.
 
-Wat hieronder is ingevuld vanuit het design system is als zodanig gemarkeerd. Wat niet uit een van beide bronnen af te leiden was, staat er nog als `TODO`, want dat is een besluit en geen afleiding.
+Wat hieronder is ingevuld vanuit het design system is als zodanig gemarkeerd. Wat niet uit een van deze bronnen af te leiden was, staat er nog als `TODO`, want dat is een besluit en geen afleiding.
 
 ---
 
@@ -38,14 +39,14 @@ Van het whiteboard van 20 augustus 2026, zelfde status: concept.
 | Challenges | De USP; content komt uit de bibliotheek van MIND |
 | Mind-content, waaronder de psychipedia | Uit de contentbibliotheek in `content/` |
 | Hulplijn-integratie | De bestaande afspraak: doorverwijzing naar de MIND Hulplijn via WhatsApp, zonder identiteit vanuit de app, zie `privacy-besluiten.md` |
-| Quote-scheurkalender | Dagelijkse quote op het dashboard staat al op het board (`12:179`); of er daarnaast een eigen pagina komt, is nog een open keuze |
+| Quote-scheurkalender | Dagelijkse quote op het dashboard staat al op het board (`12:179`) en valt daarmee onder het dashboard-scherm uit de schermenlijst hieronder; of er daarnaast een eigen pagina komt, is nog een open keuze, en die pagina staat dus bewust niet in de twintig schermen |
 
 **Nice-to-have, dus niet in v1:**
 
 - Zelftests
 - Ervaringsverhalen
 
-Beide zitten al wél in de contentbibliotheek in `content/`. Nice-to-have betekent hier dus: niet tonen in v1; later toevoegen is contentwerk en geen verbouwing.
+Beide zitten al wél in de contentbibliotheek in `content/`. Nice-to-have betekent hier dus: niet tonen in v1; later toevoegen is contentwerk en geen verbouwing. Ze staan daarom ook in de tabel "Niet in v1" verderop; wijzigt hier iets, pas dan beide plekken aan.
 
 **Geparkeerd:** "windrichtingen" (van het whiteboard, bij mind content) is bewust doorgeschoven naar een eventuele latere versie. Besloten door Stijn op 20 augustus 2026: het raakt de kern van de app niet. Niemand hoeft hiernaar te vragen of het uit te werken voor v1.
 
@@ -239,7 +240,7 @@ Apps in deze categorie krijgen strengere review. Reken op minimaal één afwijzi
 
 Dat is geen enkele richtlijn maar het gevolg van 2.1 (completeness) en 4.2 (minimum functionality). Wat een reviewer concreet afkeurt:
 
-- **Placeholder-content of lorem ipsum.** Let op: dat staat nu nog in de styleguide.
+- **Placeholder-content of lorem ipsum.** Let op: dat stond nog in de oude Figma-styleguide, en die is sinds 20 augustus 2026 als bron vervallen, zie `design-system.md`.
 - Knoppen die niets doen, of schermen die leeg blijven.
 - Een ontbrekende loading-, empty- of error-state. Onze definition of done dekt dit al, en dit is de reden dat die er staat.
 - Een crash of een leeg scherm bij de eerste keer openen, dus met een leeg account en zonder data.
@@ -276,7 +277,7 @@ Let op bij het lezen: "de build staat in TestFlight" kan hier niet als eis staan
 1. **De twintig schermen hierboven zijn gebouwd**, elk met zijn loading-, empty- en error-state. Niet alleen het gelukte pad.
 2. **Een testgebruiker loopt de hele flow door zonder vast te lopen**, van een verse installatie tot en met het verwijderen van zijn account. Op de Simulator én op een echt toestel.
 3. **De eerste keer openen is niet leeg.** Een vers account zonder één check-in toont een werkend dashboard, geen wit vlak. Dit is de meest voorkomende afwijzingsreden en het is precies wat wij het minst testen.
-4. **Er staat nergens placeholder-tekst.** Geen lorem ipsum, geen knop die niets doet, geen "NOG TE BOUWEN". `apps/mobile/src/components/NogTeBouwen.tsx` is verwijderd, want niets importeert hem meer.
+4. **Er staat nergens placeholder-tekst.** Geen lorem ipsum, geen knop die niets doet, geen "NOG TE BOUWEN". `apps/mobile/src/components/NogTeBouwen.tsx` is dan verwijderd: pas als niets hem meer importeert, is dit punt af. Vandaag importeren alle schermen hem nog, dat is de bedoeling van de scaffold.
 5. **Het beeld klopt met het ontwerp.** Naast elkaar gecontroleerd op 402 punten breed, en apart op Android, want daar gaan de tekstuitlijning en de nagemaakte vetdruk mis. Zie `van-ontwerp-naar-app.md` deel 6.
 6. **`npm run typecheck`, `npm run lint` en `npm test` zijn groen**, op alle drie de laptops en in de CI.
 7. **De vier vragen onderaan `productprincipes.md` zijn per scherm nagelopen.**
