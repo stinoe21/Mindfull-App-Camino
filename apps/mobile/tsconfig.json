@@ -1,0 +1,36 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@mind/ui": [
+        "../../packages/ui/index.ts"
+      ],
+      "@mind/ui/*": [
+        "../../packages/ui/*"
+      ],
+      "@mind/types": [
+        "../../packages/types/index.ts"
+      ],
+      "@mind/types/*": [
+        "../../packages/types/*"
+      ]
+    },
+    "allowImportingTsExtensions": true
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "../../packages/ui/**/*.ts",
+    "../../packages/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "../../packages/**/*.test.ts"
+  ]
+}

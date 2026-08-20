@@ -1,15 +1,35 @@
 # Onboarding
 
-Deel dit bestand met de andere twee teamleden. Werk het van boven naar beneden af. Reken op ongeveer 30 minuten.
+Deel dit bestand met de andere twee teamleden. Werk het van boven naar beneden af. Reken op ongeveer 45 minuten, plus de download van Xcode.
 
-Aan het eind heb je een werkende clone met exact dezelfde MCP's, skills en projectinstructies als de rest van het team.
+Aan het eind heb je een draaiende app op je Simulator, met exact dezelfde MCP's, skills en projectinstructies als de rest van het team.
+
+---
+
+## De korte route: laat je agent het doen
+
+Alles wat **in** de repo zit krijg je gratis mee met een `git clone`: `CLAUDE.md`, `AGENTS.md`, de zes skills in `.claude/`, de MCP-configuratie in `.mcp.json` en de exacte pakketversies in `package-lock.json`. Daar hoef je niets voor te doen.
+
+Alles **buiten** de repo niet: Xcode, Expo Go, de `gh` en `supabase` CLI, de Figma-plugin, twee omgevingsvariabelen en je eigen `.env.local`. Dat is deze lijst.
+
+Kloon de repo, start Claude Code in de map en plak dit:
+
+> Lees ONBOARDING.md en zet mijn omgeving voor dit project volledig op.
+>
+> Doe zelf alles wat je kunt: controleer mijn Node-versie, draai `npm install`, controleer of `gh` en `supabase` geïnstalleerd zijn en installeer ze anders met Homebrew, zet de git-configuratie en de hook uit sectie 2, en draai daarna `npm run typecheck`, `npm run lint` en `npm test` om te bewijzen dat het werkt.
+>
+> Stop en vraag het aan mij bij alles wat een browserlogin, een wachtwoord of een keuze van mij vraagt: `gh auth login`, `supabase login`, het autoriseren van de MCP's, en de anon key voor `.env.local`. Verzin die waarden nooit zelf.
+>
+> Raak geen enkel bestand in de repo aan. Dit is een omgevingstaak, geen codetaak. Geef me aan het eind een lijst van wat er is gelukt en wat ik zelf nog moet doen.
+
+Wat je agent **niet** voor je kan doen, en wat je dus zelf moet: Xcode installeren, Expo Go op je telefoon zetten, de browserlogins van GitHub, Supabase en Figma, en `.env.local` aanmaken. Dat zijn precies de stappen hieronder die met een browser of de App Store beginnen.
 
 ---
 
 ## 0. Wat je nodig hebt
 
 - Een GitHub-account, en collaborator-toegang tot deze repo (vraag Stijn)
-- Node 20 of hoger (`node --version`)
+- **Node 24 of hoger** (`node --version`). Niet lager: `npm test` draait de testrunner van Node rechtstreeks op TypeScript, en dat kan pas vanaf 24 zonder extra vlag. Heb je een oudere versie, dan is `brew install node` genoeg.
 - Git (`git --version`)
 - Claude Code (`npm i -g @anthropic-ai/claude-code`), **plus een betaald Claude-abonnement**. Zonder abonnement werkt Claude Code niet. Reken er ook op dat je tegen usage limits aanloopt als je een hele dag een agent laat werken. Regel dit vóór vertrek en probeer het één keer uit, niet in een albergue met slechte wifi.
 - Je kunt Claude Code als **CLI** in de terminal draaien of als **VSCode-extensie**. Beide mag, maar één ding moet via de CLI: het autoriseren van de Supabase-MCP, zie stap 3.
@@ -17,6 +37,7 @@ Aan het eind heb je een werkende clone met exact dezelfde MCP's, skills en proje
 - Een Supabase-account. De uitnodigingen voor de Supabase-organisatie zijn verstuurd en geaccepteerd, stand 13 augustus 2026. Zie je bij het autoriseren toch een leeg projectenlijstje, dan heb je bij het inloggen de verkeerde organisatie gekozen, zie stap 3.
 - De **Supabase CLI**: `brew install supabase/tap/supabase`, daarna eenmalig `supabase login` (opent de browser). Hiermee push je migraties naar het dev-project en genereer je types.
 - **Xcode**, uit de Mac App Store, met de iOS Simulator-runtime. We werken alle drie op een MacBook en testen in de Simulator, zie `docs/scope.md`. Dit is een download van ruim 10 GB: doe hem thuis op goede wifi, niet onderweg, en open Xcode één keer zodat hij de Simulator-runtime binnenhaalt.
+- **Expo Go** op je eigen telefoon, uit de App Store of de Play Store. Dat is de snelste manier om te kijken: `npm start`, QR-code scannen, klaar. Alles wat deze app gebruikt zit in Expo Go, dus je hebt geen development build en geen Android Studio nodig. Zie `docs/van-ontwerp-naar-app.md`.
 - **Docker heb je niet nodig.** Besloten op 13 augustus 2026: we draaien Supabase niet lokaal. Iedereen werkt tegen het gedeelde dev-project in de cloud, zie `CLAUDE.md` sectie 9.
 
 ## 1. Repo clonen
@@ -29,7 +50,15 @@ git clone https://github.com/stinoe21/Mindfull-App-Camino.git mind-app
 cd mind-app
 ```
 
-Nog **geen** `npm install`. De Expo-app is nog niet gescaffold, dus er is nog geen `package.json` en het commando zou falen. Zodra die er staat komt dit erbij. De CI weet dat ook en slaat de checks tot die tijd over.
+Daarna de pakketten. Dit duurt een paar minuten en het is het enige moment waarop je goede wifi nodig hebt:
+
+```bash
+npm install
+```
+
+Doe dit **thuis en niet onderweg**. `package-lock.json` zit in de repo, dus je krijgt exact dezelfde versies als de rest van het team. Er is niets dat je zelf moet toevoegen: Expo, expo-router, de vier design-pakketten en de Supabase-client staan er allemaal al in.
+
+Zie je een waarschuwing over `unrs-resolver` en install scripts, negeer die. Dat is een transitieve afhankelijkheid van ESLint die geen postinstall hoeft te draaien.
 
 ## 2. Git instellen
 
@@ -200,19 +229,62 @@ Wat niet werkt onderweg: iets waarvoor je moet beslissen hoe het eruitziet, of i
 
 Let op je accu. Een draaiende agent en een slapende laptop trekken meer dan je denkt op een dag zonder stopcontact.
 
-## 5. Tokens voor de app zelf
+## 5. De app draaien
 
-Alleen nodig zodra de Expo-app er staat, dus nu nog niet.
+### Eerst je eigen `.env.local`
+
+Expo leest omgevingsvariabelen vanuit de map van de app, dus vanuit `apps/mobile` en niet vanuit de wortel van de repo. Maak daar dit bestand aan:
 
 ```bash
-cp .env.example .env
+cd apps/mobile
+cat > .env.local <<'EOF'
+EXPO_PUBLIC_SUPABASE_URL=https://fpvvmgdzftmkyiqfvpjj.supabase.co
+EXPO_PUBLIC_SUPABASE_ANON_KEY=
+EOF
 ```
 
-`.env` staat in `.gitignore` en wordt nooit gecommit.
+De anon key vul je zelf in. Haal hem op in het Supabase-dashboard onder **Project Settings, API keys**, of laat je agent hem ophalen met de MCP `supabase-mind`. Hij staat met opzet niet in de repo: sleutels horen niet in bestanden die we delen, ook geen publieke.
+
+Twee dingen die je moet weten over die key:
+
+- **Hij is bewust publiek.** Hij wordt meegecompileerd in de app en is te lezen door iedereen die de app installeert. Dat is geen lek. Wat de data beschermt is Row Level Security, niet de geheimhouding van deze sleutel.
+- **De service role key en het databasewachtwoord horen hier nooit in**, en op geen enkele laptop. Die omzeilen RLS volledig, en RLS is precies wat de persoonlijke check-ins gescheiden houdt van de anonieme collectieve pool. Zie `CLAUDE.md` sectie 9.
+
+`.env.local` staat in `.gitignore` en gaat dus nooit de repo in. Stuur hem ook niet naar elkaar door: ieder maakt zijn eigen.
+
+### Starten
+
+```bash
+cd ../..        # terug naar de wortel van de repo
+npm start
+```
+
+Daarna heb je twee routes, en ze werken allebei:
+
+- **Op je telefoon:** scan de QR-code met Expo Go. Dit is de snelste en werkt zonder Xcode.
+- **In de Simulator:** druk op `i` in de terminal. Xcode moet dan wel geïnstalleerd zijn en één keer geopend, zodat hij de Simulator-runtime heeft binnengehaald.
+
+Je ziet een app die je door de hele userflow laat lopen, met op elk scherm "NOG TE BOUWEN" en een omschrijving van wat daar hoort te komen. Dat is de bedoeling: de routes staan er, de schermen nog niet.
+
+**Controleer meteen het lettertype.** De koppen horen in Averia Serif Libre te staan, een licht handgetekende schreefletter. Zie je een gewone schreefloze systeemletter, dan zijn de fonts niet geladen en moet je dat eerst oplossen, want dan klopt straks geen enkel scherm. Kijk in `apps/mobile/src/theme/fonts.ts`.
+
+### Het kitchen sink-scherm
+
+Ga naar `/_dev/kitchen-sink`. Daar staan de hele typeschaal, alle kleuren en een link naar elk scherm. Dat is je snelste controle of het design system goed doorkomt, en het is de plek waar elke component die je bouwt met al zijn states neergezet wordt.
 
 ## 6. Controleer of alles klopt
 
-Draai in Claude Code:
+Eerst de drie commando's uit de definition of done. Alle drie horen groen te zijn op een verse clone. Zijn ze dat niet, dan ligt het aan je omgeving en niet aan de code, want de CI draait ze ook.
+
+```bash
+npm run typecheck
+npm run lint
+npm test
+```
+
+`npm test` controleert de invarianten van het design system: dat elke typerol een echt lettertypebestand heeft, dat geen enkele rol zelf een gewicht draagt, en dat geen token een gemoedstoestand waardeert. Acht tests, allemaal groen.
+
+Draai daarna in Claude Code:
 
 ```
 Lees CLAUDE.md en docs/scope.md en vat in vijf zinnen samen hoe wij in dit project werken.

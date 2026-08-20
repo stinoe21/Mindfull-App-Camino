@@ -35,20 +35,26 @@ Niet opnieuw doen.
 
 ## Deel 1: de scaffold, eenmalig door de eigenaar
 
-- [ ] **Expo-app scaffolden** met expo-router en TypeScript, in `apps/mobile`. Dit is een eigen PR, want het raakt `package.json` en `app.config.ts`.
-- [ ] **De monorepo werkend maken**: `packages/ui` importeerbaar vanuit `apps/mobile`, plus Metro die buiten `apps/mobile` mag kijken.
-- [ ] **`npm run typecheck`, `npm run lint` en `npm test` laten bestaan en groen zijn.** Zonder die drie is de definition of done in `CLAUDE.md` sectie 7 niet af te vinken.
-- [ ] **CI groen op alle drie de laptops.**
+**Gedaan op 20 augustus 2026.** Expo SDK 57, React Native 0.86.
 
-Zolang dit niet af is kan niemand een scherm bouwen. Dit is de flessenhals, en het is één taak van één persoon.
+- [x] **Expo-app gescaffold** met expo-router en TypeScript, in `apps/mobile`.
+- [x] **De monorepo werkt**: npm workspaces, `packages/ui` en `packages/types` importeerbaar als `@mind/ui` en `@mind/types`, en `apps/mobile/metro.config.js` laat Metro buiten `apps/mobile` kijken.
+- [x] **`npm run typecheck`, `npm run lint` en `npm test` bestaan en zijn groen.** De definition of done in `CLAUDE.md` sectie 7 is dus vanaf nu af te vinken.
+- [x] **De lint-regel tegen hardcoded designwaarden bestaat**, in `eslint.config.js`. Kleur en typografie zijn een fout, losse maten een waarschuwing. Waarom dat verschil staat in dat bestand.
+- [x] **De routebestanden van de userflow staan er**, twintig stuks, allemaal leeg met een omschrijving en een verwijzing naar hun specificatie.
+- [ ] **CI groen op alle drie de laptops.** Pas te controleren als Max en Caesar de repo hebben, zie `ONBOARDING.md`.
 
-## Deel 2: de vier pakketten
+## Deel 2: de pakketten
 
-- [ ] `npx expo install expo-image expo-font react-native-svg expo-linear-gradient`
+**Gedaan op 20 augustus 2026.** Alles staat in `package-lock.json`, dus `npm install` is genoeg en niemand hoeft onderweg nog iets op te halen.
 
-Vier stuks, alle vier in Expo Go, alle vier onvermijdelijk. `expo-image` is niet alleen voor WebP: hij doet ook de schijfcache en de overgang bij het laden, en dat wil je toch bij een schermvullend beeldvlak.
+- [x] De vier voor het ontwerp: `expo-image`, `expo-font`, `react-native-svg`, `expo-linear-gradient`. Alle vier in Expo Go.
+- [x] Navigatie: `expo-router`, `react-native-safe-area-context`, `react-native-screens`, `expo-linking`, `expo-constants`, `expo-splash-screen`, `@expo/metro-runtime`.
+- [x] Data: `@supabase/supabase-js`, `@react-native-async-storage/async-storage` (de sessie moet een herstart overleven) en `react-native-url-polyfill`.
 
-Dit is per `CLAUDE.md` sectie 5 een dependency-besluit, dus het hoort in dezelfde PR als de scaffold en niet in een feature.
+`expo-image` is niet alleen voor WebP: hij doet ook de schijfcache en de overgang bij het laden, en dat wil je bij een schermvullend beeldvlak.
+
+De verbinding met Supabase staat in `apps/mobile/src/lib/supabase.ts`. Daar staat bewust **geen** inlog- of sessiecode: dat is een eigen taak van de eigenaar.
 
 ## Deel 3: de lettertypes laden
 
@@ -58,7 +64,9 @@ Dit is de grootste bedreiging voor een één-op-één-weergave, en tegelijk het 
 
 **Daarom staat er in `tokens.ts` bij elke typerol wel een `fontFamily` en geen `fontWeight` en geen `fontStyle`.** De snit draagt die al. Zet ze er niet alsnog bij.
 
-- [ ] De vijf snitten laden, met precies deze namen als sleutel:
+**Gedaan op 20 augustus 2026**, in `apps/mobile/src/theme/fonts.ts` en de root layout. Hieronder staat waarom het zo staat, want dit is het deel dat je het makkelijkst per ongeluk weer stukmaakt.
+
+- [x] De vijf snitten laden, met precies deze namen als sleutel:
 
 ```ts
 import { useFonts } from "expo-font";
@@ -73,10 +81,12 @@ const [klaar] = useFonts({
 });
 ```
 
-De sleutel moet letterlijk kloppen met wat `fontFaces` uit `tokens.ts` teruggeeft. Wijkt hij af, dan valt de tekst stil terug op het systeemfont en zie je dat pas op een telefoon.
+De sleutel moet letterlijk kloppen met wat `fontFaces` uit `tokens.ts` teruggeeft. Wijkt hij af, dan valt de tekst stil terug op het systeemfont en zie je dat pas op een telefoon. In `fonts.ts` staat daarom een `Record<FontFace, number>`: een snit vergeten of er een verzinnen is nu een typefout en geen verrassing achteraf.
 
-- [ ] **Niets tekenen voordat ze geladen zijn.** Toon het splashscherm tot `klaar` waar is. Anders zie je één tel het verkeerde lettertype, en dat is precies het soort detail waar deze app op beoordeeld wordt.
-- [ ] Dit hoort in de root layout van expo-router, en dat is een gedeeld bestand: eigen taak van de eigenaar.
+- [x] **Niets tekenen voordat ze geladen zijn.** De root layout houdt het splashscherm vast tot `useFonts` klaar is. Anders zie je één tel het verkeerde lettertype, en dat is precies het soort detail waar deze app op beoordeeld wordt.
+- [x] Dit staat in de root layout van expo-router (`apps/mobile/src/app/_layout.tsx`), een gedeeld bestand: wijzigen doet de eigenaar.
+
+**Controleer het met je ogen, niet met een test.** Open `/_dev/kitchen-sink`. Staan de koppen daar in een licht handgetekende schreefletter, dan klopt het. Staat er een gewone systeemletter, dan is er iets mis en klopt straks geen enkel scherm.
 
 ## Deel 4: de vertaaltabel
 
@@ -103,7 +113,7 @@ Hier wordt één op één gewonnen of verloren. De componenten in `packages/ui/r
 | `gap: 12` | hetzelfde | Werkt vanaf React Native 0.71. |
 | `rgb(...)` en `rgba(...)` | hetzelfde | Gewoon overnemen. |
 
-- [ ] Zet `includeFontPadding: false` één keer centraal, in de tekstcomponent of het thema, niet per scherm.
+- [ ] Zet `includeFontPadding: false` één keer centraal, in de tekstcomponent of het thema, niet per scherm. Dit staat er nog **niet**: er is nog geen eigen tekstcomponent. Het hoort bij de eerste componenttaak hieronder, en het is de reden om die component te maken in plaats van overal een kale `Text` te gebruiken.
 
 ## Deel 5: de componenten, in deze volgorde
 
@@ -123,20 +133,26 @@ Bouw ze in deze volgorde, want elke rij leunt op de rij erboven. Specificatie pe
 - [ ] **Zet het naast elkaar.** Open `packages/ui/reference/ui_kits/mind-app/index.html` in een browser op **402 punten breed**, want dat is de breedte waarop de schermen getekend zijn, en zet er een simulator naast.
 - [ ] **Controleer de typografie het eerst.** Als Averia er niet staat, klopt de rest ook niet, en het is het minst opvallende dat het meest kapotmaakt.
 - [ ] **Controleer op Android apart.** De tekstuitlijning, het knippen bij een ronde hoek en de nagemaakte vetdruk gaan daar mis, niet op iOS.
-- [ ] **Zet de lint-regel aan** die letterlijke waarden weigert, zodra er twee schermen staan. Zie `design-system.md` sectie 6.
+- [x] **De lint-regel die letterlijke waarden weigert staat aan**, sinds 20 augustus 2026, in `eslint.config.js`. Zie `design-system.md` sectie 6.
 
 ---
+
+## Beslist op 20 augustus 2026
+
+- [x] **De check-in doet het met drie mascottehoudingen.** De pose voor `zicht` is nooit geëxporteerd en we vragen er niet om. Die vraag valt terug op `mascot-main.svg`, en dat is geen tijdelijke noodgreep maar de afspraak. Besloten door Stijn.
+- [x] **De systeemstaten ontwerpen we zelf**, op basis van de huisstijl en het design system, op het moment dat het eerste scherm ze nodig heeft. We vragen ze niet op bij Mind. Besloten door Stijn. Het gaat om: fout en offline, leeg weerbericht ("Kom later terug"), geen zoekresultaten, content achter consent, verlopen sessie, eerste-keer-tips, challenge ontgrendeld en afgerond.
+- [x] **De vertaling van vier sliderwaarden naar één weerbeeld schrijven we onderweg.** Het is een scriptje, geen ontwerpvraag, en het raakt het schema niet omdat die afbeelding op het toestel gebeurt. Besloten door Stijn. Zie `datamodel.md` regel 261.
 
 ## Nog te beslissen
 
 Deze staan het bouwen niet in de weg, maar ze worden duurder naarmate je langer wacht.
 
-- [ ] **De mascotte voor `zicht` is nooit geëxporteerd.** Eén van de vier check-invragen mist zijn beeld, en de check-in is de kernhandeling. Dit blokkeert dat scherm.
-- [ ] **De drie mascotte-poses staan op 354 bij 136 pixels** en worden op 128 punten hoog getoond. Dat is ongeveer 1x, dus op een telefoon wordt het zacht. Opnieuw exporteren op 3x, of als SVG.
+- [ ] **De drie mascotte-poses staan op 354 bij 136 pixels** en worden op 128 punten hoog getoond. Dat is ongeveer 1x, dus op een telefoon wordt het zacht. Opnieuw exporteren op 3x, of als SVG. Dit is een vraag aan Mind.
 - [ ] **Een link naar het Figma-bronbestand in de repo.** Zonder die link kunnen Max en Caesar niet bij het ontwerp zelf.
-- [ ] **Donkere modus: wel of niet.** Nu beslissen is goedkoop, later betekent het elke kleur opnieuw langslopen.
+- [ ] **Donkere modus: wel of niet.** Nu beslissen is goedkoop, later betekent het elke kleur opnieuw langslopen. De app dwingt voorlopig licht af in `app.config.ts`, want een systeem dat zelf donker maakt levert onleesbare tekst op crèmekleur.
 - [ ] **Waar de MIND Hulplijn zichtbaar is.** Systeembreed, maar niet per se op elk scherm.
-- [ ] **De systeemstaten** die het ontwerp zelf als gat benoemt: fout en offline, leeg weerbericht, geen zoekresultaten, content achter consent, verlopen sessie. De definition of done eist die per scherm.
+- [ ] **Een app-icoon en een splash-illustratie.** Die zijn er niet. Voor Expo Go maakt dat niets uit, voor een build naar de stores wel, en een ontbrekend of verkeerd formaat is een afwijzingsreden. Het splashscherm heeft nu wel de goede crèmekleur, dus er flitst geen wit vlak.
+- [ ] **De kleurtokens en de weercodes heten niet hetzelfde.** De achtergronden volgen de database (`zonnig`, `wolken`, `mist`, `wind`, `regen`), de kleurtokens zijn Engels en er is een `weather-storm` zonder tegenhanger terwijl `wind` er geen heeft. Zolang niemand een weerkleur per weerbeeld opzoekt is dat geen probleem, maar bij het uitkomstscherm wordt het er wel een.
 
 ---
 

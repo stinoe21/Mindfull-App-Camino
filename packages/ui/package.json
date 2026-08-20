@@ -1,0 +1,19 @@
+{
+  "name": "@mind/ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Design system: tokens, assets en React Native-componenten. Zie packages/ui/README.md.",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./tokens": "./tokens/tokens.ts",
+    "./tokens/index.css": "./tokens/index.css",
+    "./assets/*": "./assets/*",
+    "./components/*": "./components/*"
+  },
+  "scripts": {
+    "tokens": "node tokens/generate.mjs"
+  },
+  "type": "module"
+}

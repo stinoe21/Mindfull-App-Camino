@@ -71,12 +71,14 @@ git push --force-with-lease           # draft PR openen
 
 Het samenwerkingsraamwerk staat, en de backend ook: sinds 13 augustus 2026 staat het Supabase-schema met de anonieme collectieve store in `supabase/`, inclusief het controlescript `supabase/tests/anonimisering.sql`. De app zelf nog niet. Verder bevat deze repo documentatie, configuratie, en sinds 20 augustus 2026 de contentbibliotheek van Mind in `content/mind/`: 339 pagina's als Markdown, zodat we er onderweg in kunnen zoeken zonder bereik. Let op: die is naslag en nog geen goedgekeurde contentbron voor de app, zie [content/mind/LEESMIJ.md](content/mind/LEESMIJ.md).
 
-Sinds diezelfde dag staat ook het **design system** in `packages/ui`: tokens, assets, de vijf lettertypes en de volledige specificatie van 41 uitgewerkte schermen, overgenomen uit Claude Design. Er hoeft dus geen kleur of maat meer afgeleid of verzonnen te worden. De React Native-componenten moeten nog gebouwd worden, en wat daarvoor nodig is staat als afvinklijst in [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md).
+Sinds diezelfde dag staat ook het **design system** in `packages/ui`: tokens, assets, de vijf lettertypes en de volledige specificatie van 41 uitgewerkte schermen, overgenomen uit Claude Design. Er hoeft dus geen kleur of maat meer afgeleid of verzonnen te worden.
+
+En sinds 20 augustus 2026 draait de **app** ook: `apps/mobile`, Expo SDK 57 met expo-router, als npm workspace naast `packages/ui` en `packages/types`. `npm install` en `npm start`, en hij loopt op Expo Go en op de Simulator. De twintig routebestanden van de userflow staan er leeg, met per stuk een omschrijving en een verwijzing naar hun specificatie. Wat er nog moet gebeuren staat als afvinklijst in [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md), en hoe je je laptop klaarzet in [ONBOARDING.md](ONBOARDING.md).
 
 **Deze twee blokkeren al het andere werk, in deze volgorde:**
 
 - [ ] **Scope v1 vastleggen in `docs/scope.md`**, vanaf het Figma-board. Een sessie met z'n drieën. Zolang dit leeg is stopt elke agent terecht met een vraag in plaats van te bouwen.
-- [ ] **Expo-app scaffolden**, plus CI groen op alle drie de laptops. Raakt `package.json`, `app.config.ts` en de tokens, dus een eigen PR van de eigenaar.
+- [x] ~~**Expo-app scaffolden**~~ **Gedaan op 20 augustus 2026.** Expo SDK 57, expo-router, npm workspaces, Metro ingesteld op de monorepo, de lettertypes geladen in de root layout, en de lint-regel tegen hardcoded designwaarden. CI groen op alle drie de laptops moet nog, dat kan pas als Max en Caesar de repo hebben.
 
 Daarna pas:
 

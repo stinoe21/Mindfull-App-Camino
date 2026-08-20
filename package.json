@@ -1,0 +1,29 @@
+{
+  "name": "mentale-weerbericht",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mentale Weerbericht, een app voor Stichting Mind. Zie CLAUDE.md.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "npm run start --workspace @mind/mobile",
+    "ios": "npm run ios --workspace @mind/mobile",
+    "android": "npm run android --workspace @mind/mobile",
+    "typecheck": "tsc --noEmit --project apps/mobile/tsconfig.json && tsc --noEmit --project packages/ui/tsconfig.json",
+    "lint": "eslint .",
+    "test": "node --test packages/ui/tokens/tokens.test.ts",
+    "tokens": "node packages/ui/tokens/generate.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "eslint": "^9.39.0",
+    "eslint-config-expo": "^10.0.0",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "typescript": "~6.0.3"
+  }
+}
