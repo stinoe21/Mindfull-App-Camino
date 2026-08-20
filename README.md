@@ -25,6 +25,7 @@ Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen
 | [docs/productprincipes.md](docs/productprincipes.md) | Hoe de app zich hoort te gedragen: toon, houding, wat we nooit doen |
 | [docs/taakverdeling.md](docs/taakverdeling.md) | Wie is waar eigenaar van, hoe een taak eruitziet, dagritme |
 | [docs/datamodel.md](docs/datamodel.md) | Elke tabel en elk veld, met bewaartermijn en privacyverantwoording |
+| [docs/backend-draaiboek.md](docs/backend-draaiboek.md) | Hoe de backend in elkaar zit en de handelingen eraan: migraties, pushen, testen |
 | [docs/privacy-besluiten.md](docs/privacy-besluiten.md) | Wat is afgesproken met Mind, wat staat nog open, en wie is aan zet |
 | [docs/design-system.md](docs/design-system.md) | Tokens, assets, componenten, patterns, en hoe Figma en de repo zich verhouden |
 | [docs/assets-en-media.md](docs/assets-en-media.md) | Wat in de bundle hoort en wat in Storage, compressie, caching en egress |
@@ -40,6 +41,7 @@ Deze laden automatisch bij alle drie de teamleden. Aanroepen kan ook expliciet:
 | `/werkwijze` | De git-workflow: rebase, force-with-lease, squash merge, conflicten |
 | `/nieuwe-feature` | Een feature bouwen van begin tot eind, met de definition of done |
 | `/pr-check` | Een pull request van een teamgenoot reviewen |
+| `/backend-draaiboek` | Al het werk aan Supabase: migraties, RLS en pushen naar dev |
 
 Weet je niet hoe iets werkt, vraag het gewoon aan Claude in de projectmap. Hij kent deze afspraken.
 
