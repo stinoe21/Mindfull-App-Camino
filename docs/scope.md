@@ -11,7 +11,37 @@ Dit board is de bron. Alles hieronder is een vertaling daarvan naar bouwbare tak
 
 ## Wat de app doet
 
-**TODO:** één alinea, af te leiden uit het Figma-board. Wat kan een gebruiker met deze app dat hij nu niet kan?
+> **Concept van 20 augustus 2026, vanaf het whiteboard en de toelichting van Stijn. Nog te bevestigen met z'n drieën; tot die tijd geldt dit niet als vastgestelde scope.**
+
+**De app maakt mentale gezondheid bespreekbaar.** Twee kanten trekken hem:
+
+- **Het mentale weerbericht** is de waarde voor Mind: anoniem inzicht in hoe Nederland zich voelt, via de dagelijkse check-in en het landelijke beeld.
+- **De challenges zijn de USP voor de gebruiker**: de reden om de app te downloaden en terug te blijven komen.
+
+Daaromheen ligt één funnel die de onderdelen aan elkaar rijgt: van het weerbericht naar de challenges, naar de content van Mind, naar de quote en de scheurkalender. Hoe die funnel technisch werkt zonder de anonimisering te raken, staat als voorstel in `datamodel.md` ("Voorstel: de funnel van weerbeeld naar challenges en content").
+
+### Must-have en nice-to-have
+
+Van het whiteboard van 20 augustus 2026, zelfde status: concept.
+
+**Must-have voor v1:**
+
+| Wat | Aantekening |
+|---|---|
+| Mentale weerbericht | Check-in plus landelijk beeld; backend staat al in main |
+| Challenges | De USP; content komt uit de bibliotheek van MIND |
+| Mind-content, waaronder de psychipedia | Uit de contentbibliotheek in `content/` |
+| Hulplijn-integratie | De bestaande afspraak: doorverwijzing naar de MIND Hulplijn via WhatsApp, zonder identiteit vanuit de app, zie `privacy-besluiten.md` |
+| Quote-scheurkalender | Dagelijkse quote op het dashboard staat al op het board (`12:179`); of er daarnaast een eigen pagina komt, is nog een open keuze |
+
+**Nice-to-have, dus niet in v1:**
+
+- Zelftests
+- Ervaringsverhalen
+
+Beide zitten al wél in de contentbibliotheek in `content/`. Nice-to-have betekent hier dus: niet tonen in v1; later toevoegen is contentwerk en geen verbouwing.
+
+**Nog te verduidelijken uit het bord:** bij mind content staat "(windrichtingen)" tussen haakjes; wat daarmee bedoeld is, moet Stijn even toelichten voordat het hier landt.
 
 ## Voor wie
 
