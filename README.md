@@ -26,6 +26,7 @@ Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen
 | [docs/taakverdeling.md](docs/taakverdeling.md) | Wie is waar eigenaar van, hoe een taak eruitziet, dagritme |
 | [docs/datamodel.md](docs/datamodel.md) | Elke tabel en elk veld, met bewaartermijn en privacyverantwoording |
 | [docs/backend-draaiboek.md](docs/backend-draaiboek.md) | Hoe de backend in elkaar zit en de handelingen eraan: migraties, pushen, testen |
+| [content/mind/LEESMIJ.md](content/mind/LEESMIJ.md) | De contentbibliotheek van Mind: waar hij vandaan komt, wat er ontbreekt, en waarom hij nog niet de app in mag |
 | [docs/privacy-besluiten.md](docs/privacy-besluiten.md) | Wat is afgesproken met Mind, wat staat nog open, en wie is aan zet |
 | [docs/design-system.md](docs/design-system.md) | Tokens, assets, componenten, patterns, en hoe Figma en de repo zich verhouden |
 | [docs/assets-en-media.md](docs/assets-en-media.md) | Wat in de bundle hoort en wat in Storage, compressie, caching en egress |
@@ -42,6 +43,7 @@ Deze laden automatisch bij alle drie de teamleden. Aanroepen kan ook expliciet:
 | `/nieuwe-feature` | Een feature bouwen van begin tot eind, met de definition of done |
 | `/pr-check` | Een pull request van een teamgenoot reviewen |
 | `/backend-draaiboek` | Al het werk aan Supabase: migraties, RLS en pushen naar dev |
+| `/mind-content` | Iets opzoeken in de content van Mind: challenges, gidsen, zelftests, ervaringsverhalen |
 
 Weet je niet hoe iets werkt, vraag het gewoon aan Claude in de projectmap. Hij kent deze afspraken.
 
@@ -64,7 +66,7 @@ git push --force-with-lease           # draft PR openen
 
 ## Status
 
-Het samenwerkingsraamwerk staat, en de backend ook: sinds 13 augustus 2026 staat het Supabase-schema met de anonieme collectieve store in `supabase/`, inclusief het controlescript `supabase/tests/anonimisering.sql`. De app zelf nog niet: verder bevat deze repo documentatie en configuratie.
+Het samenwerkingsraamwerk staat, en de backend ook: sinds 13 augustus 2026 staat het Supabase-schema met de anonieme collectieve store in `supabase/`, inclusief het controlescript `supabase/tests/anonimisering.sql`. De app zelf nog niet. Verder bevat deze repo documentatie, configuratie, en sinds 20 augustus 2026 de contentbibliotheek van Mind in `content/mind/`: 339 pagina's als Markdown, zodat we er onderweg in kunnen zoeken zonder bereik. Let op: die is naslag en nog geen goedgekeurde contentbron voor de app, zie [content/mind/LEESMIJ.md](content/mind/LEESMIJ.md).
 
 **Deze twee blokkeren al het andere werk, in deze volgorde:**
 
