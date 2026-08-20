@@ -1,0 +1,31 @@
+<!-- @dsCard group="Foundations" viewport="900x520" name="Screen canvas" subtitle="Beige vel op de gradient, 8px marge rondom" -->
+<html><head><link rel="stylesheet" href="../preview.css"><script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script><script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script><script src="../_ds_bundle.js"></script></head>
+<body style="margin:0;background:#e9ebe6;font-family:var(--font-body)">
+<div id="root"></div>
+<script type="text/babel">
+const {ScreenCanvas,MascotteInput}=window.MINDDesignSystem_fbcbe3;
+const note=(t,d)=>(<div style={{display:"flex",flexDirection:"column",gap:4}}>
+  <span style={{fontFamily:"var(--font-body)",fontWeight:600,fontSize:11,letterSpacing:".05em",color:"var(--text-secondary)"}}>{t.toUpperCase()}</span>
+  <span style={{fontFamily:"var(--font-body)",fontSize:13,lineHeight:"19px",color:"var(--text-primary)"}}>{d}</span>
+</div>);
+function Demo(){return (
+<div style={{display:"flex",gap:32,padding:28,alignItems:"flex-start"}}>
+  <div style={{width:402,height:440,overflow:"hidden",borderRadius:12,flexShrink:0,boxShadow:"0 1px 3px rgba(0,0,0,.12)"}}><ScreenCanvas/></div>
+  <div style={{display:"flex",flexDirection:"column",gap:18,maxWidth:380}}>
+    {note("Rule","The gradient is the page background; the whole screen lives in one beige sheet card inset by 8px, so a thin ring of gradient stays visible all around.")}
+    {note("Geometry","Sheet top 56 · margin 8 · radius 20 · sheet padding 20 · section gap 28 · header-to-content 12 · card padding 18/20 · grid gutter 12, row min 120 · shelf cards 172×152.")}
+    {note("Sections","Lead card, then one ContentSection per collection: shelf for open-ended (next card peeks), grid for a finite set.")}
+    {note("Hero","Full-bleed gradient behind the sheet; lower the sheet (sheetTop) on results and celebratory screens to show more of it.")}
+    <div style={{display:"flex",gap:14,alignItems:"flex-end",paddingTop:4}}>
+      <MascotteInput state="temperatuur" assetBase="../" style={{height:76}}/>
+      <MascotteInput state="wind" assetBase="../" style={{height:76}}/>
+      <MascotteInput state="zicht" assetBase="../" style={{height:76}}/>
+      <MascotteInput state="wisselvallig" assetBase="../" style={{height:76}}/>
+    </div>
+    {note("Mascotte / Input states","One mascot per check-in question — a separate family from the seven mood states. (zicht artwork pending; falls back to main.)")}
+  </div>
+</div>
+);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body></html>

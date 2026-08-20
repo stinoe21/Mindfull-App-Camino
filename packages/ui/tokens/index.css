@@ -1,0 +1,7 @@
+/* De tokens als CSS. Dit is wat de adminwebapp en Claude Design lezen.
+ * React Native leest tokens.ts, dat hieruit gegenereerd wordt.
+ * Zie packages/ui/README.md. */
+@import "./colors.css";
+@import "./fonts.css";
+@import "./typography.css";
+@import "./spacing.css";

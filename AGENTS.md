@@ -52,7 +52,9 @@ Het betekent **niet** dat alleen die persoon daar mag werken, en het betekent ni
 |---|---|
 | Wat bouwen we wel en niet | `docs/scope.md` |
 | Hoe de app zich hoort te gedragen | `docs/productprincipes.md` |
-| Tokens, componenten, assets, Figma | `docs/design-system.md` |
+| Afspraken rond design: tokens, schermregels, assets, Figma | `docs/design-system.md` |
+| Een concrete kleur, maat, component of schermopbouw | `packages/ui/README.md` |
+| Wat er moet gebeuren om het ontwerp in React Native te krijgen | `docs/van-ontwerp-naar-app.md` |
 | Welke data we opslaan en hoe lang | `docs/datamodel.md` |
 | Hoe de backend in elkaar zit en hoe je er iets aan wijzigt | `docs/backend-draaiboek.md` |
 | Waar plaatjes horen, compressie en caching | `docs/assets-en-media.md` |

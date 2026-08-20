@@ -1,0 +1,76 @@
+:root{
+/* base */
+--base-cream:rgb(254,254,244);
+--base-ink:rgb(22,22,21);
+/* primary (petrol blue) */
+--primary-50:rgb(235,243,246);
+--primary-100:rgb(193,217,226);
+--primary-200:rgb(163,198,212);
+--primary-300:rgb(120,172,192);
+--primary-400:rgb(94,156,180);
+--primary-500:rgb(54,131,161);
+--primary-600:rgb(49,119,147);
+--primary-700:rgb(38,93,114);
+--primary-800:rgb(30,72,89);
+--primary-900:rgb(23,55,68);
+/* neutral */
+--neutral-0:rgb(255,255,255);
+--neutral-50:rgb(246,248,250);
+--neutral-100:rgb(237,241,245);
+/* Literal slider track value from /App-flow-v2/3b (542:1558) — deliberately not --neutral-100. */
+--slider-track-base:rgb(235,239,241);
+--neutral-200:rgb(221,228,235);
+--neutral-300:rgb(196,205,214);
+--neutral-400:rgb(155,166,178);
+--neutral-500:rgb(108,120,131);
+--neutral-600:rgb(78,89,102);
+--neutral-700:rgb(55,64,73);
+--neutral-800:rgb(35,42,49);
+--neutral-900:rgb(18,22,26);
+/* coral */
+--coral-50:rgb(254,246,244);
+--coral-100:rgb(251,226,219);
+--coral-200:rgb(249,211,202);
+--coral-300:rgb(246,191,178);
+--coral-400:rgb(244,179,163);
+--coral-500:rgb(241,160,140);
+--coral-600:rgb(219,146,127);
+--coral-700:rgb(171,114,99);
+--coral-800:rgb(133,88,77);
+--coral-900:rgb(101,67,59);
+/* purple */
+--purple-50:rgb(242,239,243);
+--purple-100:rgb(213,205,217);
+--purple-200:rgb(193,180,198);
+--purple-300:rgb(165,146,172);
+--purple-400:rgb(148,125,156);
+--purple-500:rgb(121,93,131);
+/* accent */
+--accent-lime:rgb(207,230,52);
+--accent-coral:rgb(241,160,140);
+--accent-yellow:rgb(254,225,149);
+--accent-magenta:rgb(242,155,255);
+--accent-purple:rgb(121,93,131);
+/* weather */
+--weather-sun:rgb(254,225,149);
+--weather-cloud:rgb(163,198,212);
+--weather-rain:rgb(54,131,161);
+--weather-storm:rgb(23,55,68);
+--weather-mist:rgb(196,205,214);
+/* feedback */
+--feedback-success:rgb(63,169,123);
+--feedback-warning:rgb(229,169,60);
+--feedback-error:rgb(181,87,87);
+/* semantic */
+--surface-background:var(--base-cream);
+--surface-card:var(--neutral-0);
+--text-primary:var(--base-ink);
+--text-secondary:var(--neutral-600);
+--text-onprimary:var(--neutral-0);
+--border-default:var(--neutral-200);
+--brand-default:var(--primary-700);
+--brand-pressed:var(--primary-800);
+--brand-subtle:var(--primary-50);
+--cta-default:var(--accent-lime);
+--cta-text:var(--base-ink);
+}

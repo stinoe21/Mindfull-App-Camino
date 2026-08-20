@@ -8,7 +8,9 @@ Lees bij twijfel het document dat bij je vraag hoort. Dit is de volledige lijst,
 |---|---|
 | Wat bouwen we wel en expliciet niet in v1 | `docs/scope.md` |
 | Hoe de app zich hoort te gedragen: toon, houding, wat we nooit doen | `docs/productprincipes.md` |
-| Tokens, componenten, assets, en hoe Figma en de repo zich verhouden | `docs/design-system.md` |
+| De afspraken rond design: tokens, schermregels, assets, en hoe Figma, Claude Design en de repo zich verhouden | `docs/design-system.md` |
+| Een concrete kleur, maat, component of schermopbouw opzoeken | `packages/ui/README.md`, of de skill `mind-design` |
+| Wat er moet gebeuren om het ontwerp in React Native te krijgen | `docs/van-ontwerp-naar-app.md` |
 | Welke tabellen en velden bestaan, met bewaartermijn per veld | `docs/datamodel.md` |
 | Hoe de backend in elkaar zit, en hoe je er iets aan wijzigt | `docs/backend-draaiboek.md` |
 | Wat met Mind is afgesproken over privacy, en wat nog open staat | `docs/privacy-besluiten.md` |
@@ -19,7 +21,7 @@ Lees bij twijfel het document dat bij je vraag hoort. Dit is de volledige lijst,
 
 **Staat het antwoord in geen van deze bestanden, dan is het niet afgesproken.** Vraag ernaar, vul het niet zelf in. Dat geldt ook voor iets dat logisch of onvermijdelijk lijkt.
 
-Vier skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (een taak van begin tot eind, met de definition of done), `pr-check` (een pull request van een teamgenoot reviewen) en `backend-draaiboek` (al het werk aan Supabase: migraties, RLS en pushen).
+Zes skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (een taak van begin tot eind, met de definition of done), `pr-check` (een pull request van een teamgenoot reviewen), `backend-draaiboek` (al het werk aan Supabase: migraties, RLS en pushen), `mind-content` (iets opzoeken in de contentbibliotheek van Mind) en `mind-design` (iets opzoeken in het design system).
 
 `AGENTS.md` is een korte versie van dit bestand, voor agents die `CLAUDE.md` niet laden. Wijzigt hier een harde regel, werk die dan daar ook bij.
 
@@ -27,11 +29,11 @@ Vier skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (
 
 ## 0. Stand van zaken, lees dit eerst
 
-**Er staat nog geen app-code in deze repo.** De backend wel: sinds 13 augustus 2026 staat het Supabase-schema in `supabase/`, met de migraties, de seed met de vijf weerbeelden en het controlescript `supabase/tests/anonimisering.sql`. `apps/`, `packages/` en `package.json` bestaan nog niet. Alles hieronder over de app beschrijft dus hoe we gaan werken zodra die er is, niet wat je nu aantreft.
+**Er staat nog geen app-code in deze repo.** Wat er wel staat: de backend, sinds 13 augustus 2026, met het Supabase-schema in `supabase/`, de migraties, de seed met de vijf weerbeelden en het controlescript `supabase/tests/anonimisering.sql`. En het design system, sinds 20 augustus 2026, in `packages/ui`. `apps/` en `package.json` bestaan nog niet. Alles hieronder over de app beschrijft dus hoe we gaan werken zodra die er is, niet wat je nu aantreft.
 
 Wat dat concreet voor je betekent als je nu een taak oppakt:
 
-- **`packages/ui/tokens` bestaat nog niet.** De regel "nooit een hardcoded designwaarde" blijft staan, maar tot het scaffolden gebeurd is kun je er niet aan voldoen. Bouw dus nog geen UI.
+- **De tokens bestaan wel, de componenten nog niet.** `packages/ui/tokens` is gevuld, als CSS en als TypeScript, samen met de assets en de volledige specificatie van 41 schermen in `packages/ui/reference`. De regel "nooit een hardcoded designwaarde" is dus vanaf nu na te leven, en er is geen reden meer om een kleur of maat af te leiden of te verzinnen: zoek hem op. Bouwen kan nog niet, want `packages/ui/components` is leeg en de scaffold ontbreekt.
 - **`npm run typecheck`, `npm run lint` en `npm test` bestaan nog niet.** De definition of done in sectie 7 is nog niet af te vinken. De CI weet dat en slaat die stappen over zolang er geen `package.json` is.
 - **De routebestanden van de userflow bestaan nog niet.** Zie sectie 4.
 

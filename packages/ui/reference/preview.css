@@ -1,0 +1,6 @@
+/* Alleen om de kaarten in deze map lokaal in een browser te bekijken.
+ * De app gebruikt dit niet. Was styles.css in de Claude Design-export. */
+@import "../tokens/index.css";
+@import "./components/library/fig-tokens.css";
+@import "./components/fig-assets.css";
+@import "./components/library/fig-assets.css";

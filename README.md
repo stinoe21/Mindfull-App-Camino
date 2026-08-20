@@ -28,7 +28,9 @@ Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen
 | [docs/backend-draaiboek.md](docs/backend-draaiboek.md) | Hoe de backend in elkaar zit en de handelingen eraan: migraties, pushen, testen |
 | [content/mind/LEESMIJ.md](content/mind/LEESMIJ.md) | De contentbibliotheek van Mind: waar hij vandaan komt, wat er ontbreekt, en waarom hij nog niet de app in mag |
 | [docs/privacy-besluiten.md](docs/privacy-besluiten.md) | Wat is afgesproken met Mind, wat staat nog open, en wie is aan zet |
-| [docs/design-system.md](docs/design-system.md) | Tokens, assets, componenten, patterns, en hoe Figma en de repo zich verhouden |
+| [docs/design-system.md](docs/design-system.md) | De afspraken rond het design system: tokens, schermregels, assets, en hoe Figma, Claude Design en de repo zich verhouden |
+| [packages/ui/README.md](packages/ui/README.md) | Het design system zelf: hoe je tokens gebruikt en wijzigt, wat React Native niet zomaar overneemt, en wat er nog ontbreekt |
+| [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md) | De afvinklijst: alles wat er moet gebeuren om het ontwerp één op één in React Native te krijgen |
 | [docs/assets-en-media.md](docs/assets-en-media.md) | Wat in de bundle hoort en wat in Storage, compressie, caching en egress |
 | [docs/limieten-en-misbruik.md](docs/limieten-en-misbruik.md) | Rate limits, waarom de check-in-teller persoonlijk moet zijn, en wat de anonieme pool niet kan |
 | [docs/setup-github.md](docs/setup-github.md) | Eenmalige repo-instellingen, door de eigenaar |
@@ -44,6 +46,7 @@ Deze laden automatisch bij alle drie de teamleden. Aanroepen kan ook expliciet:
 | `/pr-check` | Een pull request van een teamgenoot reviewen |
 | `/backend-draaiboek` | Al het werk aan Supabase: migraties, RLS en pushen naar dev |
 | `/mind-content` | Iets opzoeken in de content van Mind: challenges, gidsen, zelftests, ervaringsverhalen |
+| `/mind-design` | Iets opzoeken in het design system: kleuren, maten, schermopbouw, componenten, de letterlijke check-in-teksten |
 
 Weet je niet hoe iets werkt, vraag het gewoon aan Claude in de projectmap. Hij kent deze afspraken.
 
@@ -68,6 +71,8 @@ git push --force-with-lease           # draft PR openen
 
 Het samenwerkingsraamwerk staat, en de backend ook: sinds 13 augustus 2026 staat het Supabase-schema met de anonieme collectieve store in `supabase/`, inclusief het controlescript `supabase/tests/anonimisering.sql`. De app zelf nog niet. Verder bevat deze repo documentatie, configuratie, en sinds 20 augustus 2026 de contentbibliotheek van Mind in `content/mind/`: 339 pagina's als Markdown, zodat we er onderweg in kunnen zoeken zonder bereik. Let op: die is naslag en nog geen goedgekeurde contentbron voor de app, zie [content/mind/LEESMIJ.md](content/mind/LEESMIJ.md).
 
+Sinds diezelfde dag staat ook het **design system** in `packages/ui`: tokens, assets, de vijf lettertypes en de volledige specificatie van 41 uitgewerkte schermen, overgenomen uit Claude Design. Er hoeft dus geen kleur of maat meer afgeleid of verzonnen te worden. De React Native-componenten moeten nog gebouwd worden, en wat daarvoor nodig is staat als afvinklijst in [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md).
+
 **Deze twee blokkeren al het andere werk, in deze volgorde:**
 
 - [ ] **Scope v1 vastleggen in `docs/scope.md`**, vanaf het Figma-board. Een sessie met z'n drieën. Zolang dit leeg is stopt elke agent terecht met een vraag in plaats van te bouwen.
@@ -78,8 +83,10 @@ Daarna pas:
 - [ ] Mind vragen het Apple Developer-account vroeg aan te vragen (langste doorlooptijd; hun actie, niet de onze)
 - [x] ~~Monorepo of één platte app~~ **Monorepo**, besloten 30 juli 2026: `apps/mobile`, `apps/admin`, `packages/ui` en `packages/types`. De admin is een CMS-webapp waar Mind content in zet, en de app geeft die weer. Ze delen de database en de gegenereerde types, niet het beeld.
 - [ ] Kiezen welk framework `apps/admin` krijgt en waar die gedeployed wordt. Pas nodig als de mobiele app staat: die is de prioriteit.
-- [ ] **Kiezen: welke UI-kit is de basis, of bouwen we eigen componenten?** Er hangen nu acht community-kits aan het Figma-bestand en geen eigen library. Beide kan, allebei tegelijk niet. Zie `docs/design-system.md`.
+- [x] ~~Kiezen: welke UI-kit is de basis, of bouwen we eigen componenten?~~ **Eigen componenten**, beantwoord door de overname van het design system op 20 augustus 2026. Een geleende set generieke besturingselementen blijft voor auth en formulieren, zie `packages/ui/reference/components/library`.
 - [ ] Verdelen wie welk van de acht onderdelen doet, zie `docs/taakverdeling.md`
-- [ ] Design tokens plus de basiscomponenten, in alle states
+- [x] ~~Design tokens~~ **Staan in `packages/ui/tokens`** sinds 20 augustus 2026, als CSS en als TypeScript.
+- [ ] De basiscomponenten naar React Native, in alle states. De specificatie ligt klaar in `packages/ui/reference`.
+- [ ] De vier pakketten toevoegen die het ontwerp nodig heeft: `expo-image`, `expo-font`, `react-native-svg` en `expo-linear-gradient`. Alle vier zitten in Expo Go, dus geen development build nodig. Zie [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md).
 - [ ] Elk scherm uit de userflow als leeg routebestand aanmaken
 - [ ] Userflow vertalen naar 15 tot 20 taken op het board

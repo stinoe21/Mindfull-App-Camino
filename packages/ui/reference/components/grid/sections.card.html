@@ -1,0 +1,26 @@
+<!-- @dsCard group="Components" viewport="440x460" name="Sections & shelves" subtitle="Section header + horizontal shelf for open-ended collections" -->
+<html><head><link rel="stylesheet" href="../../preview.css"><script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script><script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script><script src="../../_ds_bundle.js"></script></head>
+<body style="margin:0;background:var(--surface-background);font-family:var(--font-body)">
+<div id="root"></div>
+<script type="text/babel">
+const {ContentSection,ContentShelf,ShelfCard,ContentGrid,ContentCard}=window.MINDDesignSystem_fbcbe3;
+function Demo(){return (
+<div style={{padding:20,display:"flex",flexDirection:"column",gap:28,width:402,boxSizing:"border-box"}}>
+<ContentSection title="Challenges voor jou" note="Kleine stappen, geen opdrachten." action="Alles bekijken">
+  <ContentShelf>
+    <ShelfCard tone="purple" label="CHALLENGE" title="Weerpraatje" meta="3 min"/>
+    <ShelfCard tone="sun" label="TIP" title="Beter slapen" meta="5 min"/>
+    <ShelfCard tone="coral" label="CHALLENGE" title="Even naar buiten" meta="10 min"/>
+  </ContentShelf>
+</ContentSection>
+<ContentSection title="Naslagwerk" action="Alle onderwerpen">
+  <ContentGrid>
+    <ContentCard tone="white" label="BRON: MIND" title="Piekeren doorbreken"/>
+    <ContentCard tone="white" label="BRON: MIND" title="Slaap en stress"/>
+  </ContentGrid>
+</ContentSection>
+</div>
+);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body></html>

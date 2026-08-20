@@ -1,0 +1,20 @@
+<!-- @dsCard group="Components" viewport="700x360" name="Card" subtitle="One card shape, five tone fills" -->
+<html><head><link rel="stylesheet" href="../../preview.css"><script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script><script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script><script src="../../_ds_bundle.js"></script></head>
+<body style="margin:0;background:var(--surface-background);font-family:var(--font-body)">
+<div id="root"></div>
+<script type="text/babel">
+const {Card}=window.MINDDesignSystem_fbcbe3;
+function T({children}){return <span style={{fontFamily:"var(--font-display)",fontSize:18,color:"var(--text-primary)"}}>{children}</span>}
+function P({children}){return <span style={{fontFamily:"var(--font-body)",fontSize:13,color:"var(--text-secondary)"}}>{children}</span>}
+function Demo(){return (
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,padding:24}}>
+<Card tone="white"><T>Even inchecken?</T><P>Neem een momentje voor jezelf.</P></Card>
+<Card tone="primary"><T>Rustig met wat mist</T><P>28% van de check-ins vandaag</P></Card>
+<Card tone="purple"><T>Het lijkt altijd onmogelijk...</T><P>Dagelijkse quote</P></Card>
+<Card tone="sun"><T>MIND Hulplijn</T><P>Kom gratis in contact.</P></Card>
+<Card tone="outline"><P>Zoek een onderwerp...</P></Card>
+</div>
+);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body></html>

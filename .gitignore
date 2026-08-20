@@ -45,3 +45,8 @@ yarn-error.log*
 # Test / coverage
 coverage/
 .nyc_output/
+
+# Bronbestanden die te groot zijn om met z'n drieen te klonen op Camino-wifi.
+# Het uitgepakte en gecomprimeerde resultaat staat wel in de repo:
+# "Weerbericht Design System.zip" -> packages/ui, zie packages/ui/README.md
+*.zip
