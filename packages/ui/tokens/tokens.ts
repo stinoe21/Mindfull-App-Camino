@@ -93,87 +93,95 @@ export const fontStacks = {
   ui: "\"Inter\",-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,sans-serif",
 } as const;
 
-/** De typeschaal. letterSpacing staat in em en moet in RN omgerekend worden. */
+/**
+ * De snitten die geladen moeten zijn voordat er iets getekend wordt.
+ * De naam is precies de sleutel waaronder expo-font hem registreert, en dus
+ * precies wat `type` als fontFamily gebruikt. De bestanden staan in
+ * packages/ui/assets/fonts.
+ */
+export const fontFaces = [
+  "AveriaLibre-LightItalic",
+  "AveriaSerifLibre-Italic",
+  "AveriaSerifLibre-Regular",
+  "OpenSans-Regular",
+  "OpenSans-SemiBold",
+] as const;
+
+/**
+ * De typeschaal, klaar voor een React Native Text.
+ *
+ * Let op: hier staat bewust GEEN fontWeight en GEEN fontStyle. De snit in
+ * fontFamily draagt die al. Zet je ze er alsnog bij, dan maakt Android er een
+ * nagemaakte vetdruk of schuinstand bovenop, en dan klopt het beeld niet meer
+ * met het ontwerp.
+ *
+ * letterSpacing staat in punten, al omgerekend uit de em-waarde in de CSS.
+ */
 export const type = {
   h1: {
     fontSize: 32,
     lineHeight: 38,
-    fontFamily: fonts.display,
-    fontWeight: "400",
+    fontFamily: "AveriaSerifLibre-Regular",
   },
   h2: {
     fontSize: 24,
     lineHeight: 30,
-    fontFamily: fonts.display,
-    fontWeight: "400",
+    fontFamily: "AveriaSerifLibre-Regular",
   },
   h3: {
     fontSize: 20,
     lineHeight: 26,
-    fontFamily: fonts.display,
-    fontWeight: "400",
+    fontFamily: "AveriaSerifLibre-Regular",
   },
   display: {
     fontSize: 44,
     lineHeight: 48,
-    fontFamily: fonts.display,
-    fontWeight: "400",
+    fontFamily: "AveriaSerifLibre-Regular",
   },
   accentH2Italic: {
     fontSize: 24,
     lineHeight: 30,
-    fontStyle: "italic",
   },
   quote: {
     fontSize: 21,
     lineHeight: 28,
-    fontFamily: fonts.display,
-    fontWeight: "400",
-    fontStyle: "italic",
+    fontFamily: "AveriaSerifLibre-Italic",
   },
   subtitle: {
     fontSize: 20,
     lineHeight: 26,
-    fontFamily: fonts.displayAlt,
-    fontWeight: "300",
-    fontStyle: "italic",
+    fontFamily: "AveriaLibre-LightItalic",
   },
   bodyEmphasis: {
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: fonts.body,
-    fontWeight: "600",
+    fontFamily: "OpenSans-SemiBold",
   },
   body: {
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: fonts.body,
-    fontWeight: "400",
+    fontFamily: "OpenSans-Regular",
   },
   bodySmall: {
     fontSize: 14,
     lineHeight: 20,
-    fontFamily: fonts.body,
-    fontWeight: "400",
+    fontFamily: "OpenSans-Regular",
   },
   labelButton: {
     fontSize: 14,
     lineHeight: 20,
-    fontFamily: fonts.body,
-    fontWeight: "600",
+    fontFamily: "OpenSans-SemiBold",
   },
   labelCaption: {
     fontSize: 12,
     lineHeight: 16,
-    fontFamily: fonts.body,
-    fontWeight: "600",
+    fontFamily: "OpenSans-SemiBold",
   },
   labelOverline: {
     fontSize: 11,
     lineHeight: 16,
-    fontFamily: fonts.body,
-    fontWeight: "600",
     letterSpacing: 0.66,
+    fontFamily: "OpenSans-SemiBold",
   },
 } as const;
 

@@ -2,7 +2,7 @@
 
 Het design system van Mentale Weerbericht. Overgenomen op 20 augustus 2026 uit de Claude Design-export `Weerbericht Design System.zip`, die op zijn beurt is opgebouwd uit het Figma-bestand *Back-to-Being, App Design Volledige appflow* (41 uitgewerkte schermen).
 
-**Dit vervangt het plan dat in `docs/design-system.md` stond.** De tokens zijn niet meer af te leiden of te verzinnen, ze liggen vast. Zie dat document voor de afspraken eromheen, dit bestand voor hoe je het gebruikt.
+**Dit vervangt het plan dat in `docs/design-system.md` stond.** De tokens zijn niet meer af te leiden of te verzinnen, ze liggen vast. Zie dat document voor de afspraken eromheen, dit bestand voor hoe je het gebruikt, en **`docs/van-ontwerp-naar-app.md` voor de lijst van alles wat er moet gebeuren om dit in React Native te krijgen.**
 
 ```
 tokens/       de bron: kleuren, typografie, spacing, radii, fonts
@@ -10,6 +10,7 @@ tokens/       de bron: kleuren, typografie, spacing, radii, fonts
   tokens.ts   GEGENEREERD, wat React Native leest
   generate.mjs
 assets/       mascotte, hero-achtergronden, nav-icoon
+  fonts/      de vijf snitten die de typeschaal gebruikt, met hun OFL-licentie
 reference/    de export zelf: componentspecificatie, specimen, klikbaar prototype
 components/   hier komen de React Native-componenten, zie de README daar
 ```
@@ -50,7 +51,8 @@ Waarom twee vormen en niet één: de adminwebapp en Claude Design lezen CSS-vari
 
 | Uit de export | Wat er in de app moet gebeuren |
 |---|---|
-| `tokens/fonts.css` importeert Google Fonts over het netwerk | Werkt niet in een app en niet offline. De drie families moeten meegebundeld worden. Zie open punten. |
+| `tokens/fonts.css` importeert Google Fonts over het netwerk | Alleen voor het web. De app laadt de `.ttf`-bestanden uit `assets/fonts` met `expo-font`. |
+| Een familie plus een `fontWeight` | Werkt niet bij een eigen font: Android maakt dan een vetdruk na. Daarom wijst elke rol in `type` naar één snit, en staat er bewust geen `fontWeight` of `fontStyle` bij. |
 | `letterSpacing` in `em` | Al omgerekend naar punten in `tokens.ts` (`labelOverline` staat op `0.66`). |
 | `shadow.card` is een `inset` schaduw | React Native kent geen inset. Dit wordt `borderWidth: 1` met `borderColor: colors.borderDefault`. De token staat er als beschrijving, niet om door te geven aan een `style`. |
 | Componenten in `reference/components/` zijn React **DOM** | `<div>`, `className`, CSS-variabelen. Ze draaien niet in React Native. Lees ze als specificatie, niet als code om te kopiëren. |
@@ -88,11 +90,10 @@ De originele zip blijft buiten git: 45 MB is te veel om drie mensen op Camino-wi
 
 Deze staan hier omdat ze een beslissing van ons drieën zijn, niet omdat ze vergeten zijn.
 
-1. **WebP vraagt om `expo-image`.** Bevestigd in de documentatie: `expo-image` ondersteunt WebP op iOS, Android en web. De ingebouwde `<Image>` van React Native ondersteunt het ook, maar op Android alleen met een extra Fresco-dependency in `android/app/build.gradle`, en dat betekent in Expo een config plugin. `expo-image` is één `npx expo install` en is toch al wat je wil voor schermvullende beeldvlakken. Het blijft een dependency-besluit, zie `CLAUDE.md` sectie 5. Zeggen we nee, dan gaan de zes achtergronden terug naar PNG en kost dat ongeveer 2,6 MB in plaats van 127 KB.
-2. **De fonts moeten mee de bundle in.** Averia Serif Libre, Averia Libre en Open Sans staan nu als Google Fonts-import, en dat werkt niet in een app zonder netwerk. Dit vraagt `expo-font` plus de fontbestanden in de repo. Ook een dependency-besluit.
-3. **De mascotte voor `zicht` is nooit geëxporteerd.** `MascotteInput` valt voor die vraag terug op `mascot-main.svg`. Eén van de vier check-in-vragen mist dus zijn eigen beeld. Dit is een blokkade voor de check-in, geen randgeval.
-4. **De drie mascotte-poses staan op 354 bij 136 pixels** en worden op 128 punten hoog getoond. Dat is ongeveer 1x, dus op een retina-scherm wordt het zacht. Ze horen op 3x geëxporteerd te worden, of als SVG zoals `mascot-main.svg` al is.
-5. **`accent-h2-italic` wordt nergens gebruikt** en heeft geen familie. Niet zelf ingevuld, zie `CLAUDE.md`: wat niet is afgesproken vullen we niet in.
-6. **`--font-ui` (Inter) is dood.** `HERKOMST.md` noemt de Inter-specificatie op de knop verouderd en zegt dat de typeschaal wint. De token staat er nog; weghalen kan zodra iemand bevestigt dat er niets aan hangt.
-7. **De feedbackkleuren komen in geen enkel scherm voor.** Ze bestaan voor echte systeemfeedback (formuliervalidatie, foutmeldingen). Gebruik ze daar en nergens anders: de stemming van iemand krijgt geen stoplichtkleur.
-8. **De componenten moeten nog naar React Native.** `components/` is nu leeg. Dat is bewust: dat is bouwwerk, geen overname.
+1. **Vier pakketten toevoegen.** `expo-image` (WebP en de achtergronden), `expo-font` (de snitten), `react-native-svg` (de mascotte en de navigatiebalk zijn vectors) en `expo-linear-gradient` (de hero die in de crèmekleur vervaagt). Alle vier zitten in Expo Go, dus geen development build en geen native configuratie. Het blijft een dependency-besluit, zie `CLAUDE.md` sectie 5, en het hoort in dezelfde PR als de scaffold.
+2. **De mascotte voor `zicht` is nooit geëxporteerd.** `MascotteInput` valt voor die vraag terug op `mascot-main.svg`. Eén van de vier check-in-vragen mist dus zijn eigen beeld. Dit is een blokkade voor de check-in, geen randgeval.
+3. **De drie mascotte-poses staan op 354 bij 136 pixels** en worden op 128 punten hoog getoond. Dat is ongeveer 1x, dus op een retina-scherm wordt het zacht. Ze horen op 3x geëxporteerd te worden, of als SVG zoals `mascot-main.svg` al is.
+4. **`accent-h2-italic` wordt nergens gebruikt** en heeft geen familie. Niet zelf ingevuld, zie `CLAUDE.md`: wat niet is afgesproken vullen we niet in.
+5. **`--font-ui` (Inter) is dood.** `HERKOMST.md` noemt de Inter-specificatie op de knop verouderd en zegt dat de typeschaal wint. De token staat er nog; weghalen kan zodra iemand bevestigt dat er niets aan hangt.
+6. **De feedbackkleuren komen in geen enkel scherm voor.** Ze bestaan voor echte systeemfeedback (formuliervalidatie, foutmeldingen). Gebruik ze daar en nergens anders: de stemming van iemand krijgt geen stoplichtkleur.
+7. **De componenten moeten nog naar React Native.** `components/` is nu leeg. Dat is bewust: dat is bouwwerk, geen overname.

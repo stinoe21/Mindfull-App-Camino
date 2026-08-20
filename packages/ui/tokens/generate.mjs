@@ -8,7 +8,7 @@
 // Draaien:  node packages/ui/tokens/generate.mjs
 // Alleen Node stdlib, geen dependency.
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -113,6 +113,55 @@ if (zonderFamilie.length && zonderFamilie.join() !== "accentH2Italic") {
   throw new Error(`Typerol zonder familie: ${zonderFamilie.join(", ")}. Vul aan in typography.css.`);
 }
 
+// --------------------------------------------------- fontbestanden voor RN
+//
+// Op het web kies je een snit met font-weight en font-style, en de browser
+// pakt de juiste uit de familie. React Native doet dat niet betrouwbaar bij een
+// eigen font: op Android is de bestandsnaam de familienaam, en een gewicht dat
+// je erbovenop zet levert een nagemaakte vetdruk op in plaats van de echte snit.
+//
+// Daarom krijgt elke rol hier het bestand dat er echt bij hoort, en zetten we
+// fontWeight en fontStyle in `type` juist NIET: de snit draagt ze al.
+const FACES = {
+  "display|400|normal": "AveriaSerifLibre-Regular",
+  "display|400|italic": "AveriaSerifLibre-Italic",
+  "displayAlt|300|italic": "AveriaLibre-LightItalic",
+  "body|400|normal": "OpenSans-Regular",
+  "body|600|normal": "OpenSans-SemiBold",
+};
+
+const typeRN = new Map();
+for (const [role, style] of typeRoles) {
+  const out = { fontSize: style.fontSize, lineHeight: style.lineHeight };
+  if (style.letterSpacing !== undefined) out.letterSpacing = style.letterSpacing;
+  if (style.fontFamily !== undefined) {
+    const familyKey = style.fontFamily.replace(/^fonts\./, "");
+    const weight = (style.fontWeight ?? '"400"').replace(/"/g, "");
+    const fontStyle = (style.fontStyle ?? '"normal"').replace(/"/g, "");
+    const key = `${familyKey}|${weight}|${fontStyle}`;
+    const face = FACES[key];
+    if (!face) {
+      throw new Error(
+        `Geen fontbestand voor ${role} (${key}). Voeg de snit toe aan ` +
+          `packages/ui/assets/fonts en aan FACES in dit script, of pas de rol aan.`
+      );
+    }
+    out.fontFamily = `"${face}"`;
+  }
+  typeRN.set(role, out);
+}
+
+const usedFaces = [...new Set(Object.values(FACES))].sort();
+
+// Een snit die in FACES staat maar niet als bestand bestaat, valt in de app stil
+// terug op het systeemfont. Dat is precies het soort fout dat je pas op een
+// telefoon ziet, dus vangen we hem hier.
+const fontDir = join(here, "..", "assets", "fonts");
+const ontbrekend = usedFaces.filter((f) => !existsSync(join(fontDir, `${f}.ttf`)));
+if (ontbrekend.length) {
+  throw new Error(`Fontbestand ontbreekt in assets/fonts: ${ontbrekend.join(", ")}`);
+}
+
 // ------------------------------------------------------- spacing en radii
 
 const space = [];
@@ -135,7 +184,7 @@ const lines = (pairs, fmt, indent = "  ") =>
 const str = (v) => JSON.stringify(String(v));
 const raw = (v) => String(v);
 
-const typeBlock = [...typeRoles]
+const typeBlock = [...typeRN]
   .map(([role, style]) => {
     const inner = Object.entries(style)
       .map(([k, v]) => `    ${k}: ${v},`)
@@ -143,6 +192,8 @@ const typeBlock = [...typeRoles]
     return `  ${role}: {\n${inner}\n  },`;
   })
   .join("\n");
+
+const faceBlock = usedFaces.map((f) => `  ${JSON.stringify(f)},`).join("\n");
 
 const out = `// GEGENEREERD BESTAND. Niet met de hand wijzigen.
 // Bron: packages/ui/tokens/*.css. Opnieuw genereren met:
@@ -171,7 +222,26 @@ export const fontStacks = {
 ${lines(fontStacks, str)}
 } as const;
 
-/** De typeschaal. letterSpacing staat in em en moet in RN omgerekend worden. */
+/**
+ * De snitten die geladen moeten zijn voordat er iets getekend wordt.
+ * De naam is precies de sleutel waaronder expo-font hem registreert, en dus
+ * precies wat \`type\` als fontFamily gebruikt. De bestanden staan in
+ * packages/ui/assets/fonts.
+ */
+export const fontFaces = [
+${faceBlock}
+] as const;
+
+/**
+ * De typeschaal, klaar voor een React Native Text.
+ *
+ * Let op: hier staat bewust GEEN fontWeight en GEEN fontStyle. De snit in
+ * fontFamily draagt die al. Zet je ze er alsnog bij, dan maakt Android er een
+ * nagemaakte vetdruk of schuinstand bovenop, en dan klopt het beeld niet meer
+ * met het ontwerp.
+ *
+ * letterSpacing staat in punten, al omgerekend uit de em-waarde in de CSS.
+ */
 export const type = {
 ${typeBlock}
 } as const;

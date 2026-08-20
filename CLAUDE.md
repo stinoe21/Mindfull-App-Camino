@@ -10,6 +10,7 @@ Lees bij twijfel het document dat bij je vraag hoort. Dit is de volledige lijst,
 | Hoe de app zich hoort te gedragen: toon, houding, wat we nooit doen | `docs/productprincipes.md` |
 | De afspraken rond design: tokens, schermregels, assets, en hoe Figma, Claude Design en de repo zich verhouden | `docs/design-system.md` |
 | Een concrete kleur, maat, component of schermopbouw opzoeken | `packages/ui/README.md`, of de skill `mind-design` |
+| Wat er moet gebeuren om het ontwerp in React Native te krijgen | `docs/van-ontwerp-naar-app.md` |
 | Welke tabellen en velden bestaan, met bewaartermijn per veld | `docs/datamodel.md` |
 | Hoe de backend in elkaar zit, en hoe je er iets aan wijzigt | `docs/backend-draaiboek.md` |
 | Wat met Mind is afgesproken over privacy, en wat nog open staat | `docs/privacy-besluiten.md` |

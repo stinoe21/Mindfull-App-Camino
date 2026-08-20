@@ -19,10 +19,13 @@ Alles ligt vast in `packages/ui`. Verzin geen waarde, zoek hem op. De afspraken 
 | Hoe iets eruitziet | `packages/ui/reference/guidelines/*.card.html`, of het prototype in `reference/ui_kits/mind-app/index.html` |
 | Welke afbeeldingen er zijn | `packages/ui/assets/` |
 | Wat nog ontbreekt of open staat | `packages/ui/README.md`, sectie **Open punten** |
+| Wat er moet gebeuren om iets te bouwen | `docs/van-ontwerp-naar-app.md`, de afvinklijst |
 
 ## De regels die je niet mag breken
 
 **Tokens, nooit een letterlijke waarde.** Geen `#FEFEF4`, geen `padding: 18`. Gebruik `colors`, `type`, `space` en `radius` uit `packages/ui/tokens/tokens.ts`, en daarbinnen `colors` en niet `palette`.
+
+**Bij tekst: alleen `fontFamily`, nooit `fontWeight` of `fontStyle` erbij.** Elke rol in `type` wijst al naar de juiste snit. Zet je er een gewicht bovenop, dan maakt Android een vetdruk na en klopt het beeld niet meer met het ontwerp.
 
 **Eén kaartvorm en één knopvorm.** Kaarten radius 16, knoppen radius 999 in drie varianten (`primary` lime, `secondary` outline, `link` bare tekst). Een kaart verschilt alleen in kleur, nooit in vorm of padding. Bouw geen tweede variant die net iets anders is.
 

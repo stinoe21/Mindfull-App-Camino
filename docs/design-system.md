@@ -16,6 +16,7 @@ Wat er nu ligt:
 |---|---|
 | Tokens: kleuren, typografie, spacing, radii | **Vastgelegd.** `packages/ui/tokens`, ook als TypeScript voor React Native. |
 | Assets: mascotte, zes hero-achtergronden, nav-icoon | **In de repo**, gecomprimeerd. `packages/ui/assets`. |
+| De vijf lettertypes die de typeschaal gebruikt | **In de repo**, met licentie. `packages/ui/assets/fonts`. |
 | Schermregels, ontwerpprincipes, letterlijke teksten | **Vastgelegd.** `packages/ui/reference/HERKOMST.md`. |
 | Componentspecificatie: maten, varianten, vectorpaden | **Vastgelegd** als React DOM. `packages/ui/reference/components`. |
 | 41 schermen, klikbaar prototype | **Aanwezig.** `packages/ui/reference/ui_kits/mind-app/index.html`. |
@@ -24,6 +25,8 @@ Wat er nu ligt:
 | Het kitchen sink-scherm | **Nog niet opgezet.** Wacht op de scaffold. |
 
 De skill `mind-design` laadt automatisch en wijst je bij elke visuele vraag het juiste bestand aan. Gebruik die in plaats van te zoeken.
+
+**Wat er moet gebeuren om dit in React Native te krijgen, staat als afvinklijst in `van-ontwerp-naar-app.md`.** Dat is de plek om te beginnen als je gaat bouwen.
 
 **De belangrijkste gedragsregel is niet veranderd, alleen makkelijker geworden: verzin geen waarde, zoek hem op.** Vóór 20 augustus kon dat niet, want er was niets om op te zoeken. Nu wel, en daarmee vervalt het excuus.
 
@@ -264,8 +267,7 @@ Dit zijn beslissingen van ons drieën, geen vergeten werk. De technische variant
 
 | Wat | Waarom het nu telt |
 |---|---|
-| **`expo-image` als dependency** | De achtergronden staan in WebP. Dat werkt in Expo met `expo-image`, en met de ingebouwde `<Image>` alleen op Android met extra bouwconfiguratie. Zeggen we nee, dan gaan ze terug naar PNG en kost dat 2,6 MB in plaats van 127 KB. |
-| **De fonts meebundelen** | Averia Serif Libre, Averia Libre en Open Sans komen nu van Google Fonts over het netwerk. Dat werkt niet in een app en niet offline. Vraagt `expo-font` plus de fontbestanden. |
+| **Vier pakketten toevoegen** | `expo-image`, `expo-font`, `react-native-svg` en `expo-linear-gradient`. Alle vier zitten in Expo Go, dus geen development build en geen native configuratie. Zie `van-ontwerp-naar-app.md` deel 2. |
 | **De vierde check-in-pose** | De mascotte voor `zicht` is nooit geëxporteerd. Eén van de vier vragen mist zijn beeld. Dit blokkeert de check-in, en dat is de kernhandeling. |
 | **De mascotte-poses op 3x** | Nu 354 bij 136 pixels voor een weergave van 128 hoog. Op een retina-scherm wordt dat zacht. |
 | **Een link naar het bronbestand in Figma** | Zonder die link kunnen Max en Caesar niet bij het ontwerp, alleen bij wat is overgenomen. |

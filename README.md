@@ -30,6 +30,7 @@ Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen
 | [docs/privacy-besluiten.md](docs/privacy-besluiten.md) | Wat is afgesproken met Mind, wat staat nog open, en wie is aan zet |
 | [docs/design-system.md](docs/design-system.md) | De afspraken rond het design system: tokens, schermregels, assets, en hoe Figma, Claude Design en de repo zich verhouden |
 | [packages/ui/README.md](packages/ui/README.md) | Het design system zelf: hoe je tokens gebruikt en wijzigt, wat React Native niet zomaar overneemt, en wat er nog ontbreekt |
+| [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md) | De afvinklijst: alles wat er moet gebeuren om het ontwerp één op één in React Native te krijgen |
 | [docs/assets-en-media.md](docs/assets-en-media.md) | Wat in de bundle hoort en wat in Storage, compressie, caching en egress |
 | [docs/limieten-en-misbruik.md](docs/limieten-en-misbruik.md) | Rate limits, waarom de check-in-teller persoonlijk moet zijn, en wat de anonieme pool niet kan |
 | [docs/setup-github.md](docs/setup-github.md) | Eenmalige repo-instellingen, door de eigenaar |
@@ -70,7 +71,7 @@ git push --force-with-lease           # draft PR openen
 
 Het samenwerkingsraamwerk staat, en de backend ook: sinds 13 augustus 2026 staat het Supabase-schema met de anonieme collectieve store in `supabase/`, inclusief het controlescript `supabase/tests/anonimisering.sql`. De app zelf nog niet. Verder bevat deze repo documentatie, configuratie, en sinds 20 augustus 2026 de contentbibliotheek van Mind in `content/mind/`: 339 pagina's als Markdown, zodat we er onderweg in kunnen zoeken zonder bereik. Let op: die is naslag en nog geen goedgekeurde contentbron voor de app, zie [content/mind/LEESMIJ.md](content/mind/LEESMIJ.md).
 
-Sinds diezelfde dag staat ook het **design system** in `packages/ui`: tokens, assets en de volledige specificatie van 41 uitgewerkte schermen, overgenomen uit Claude Design. Er hoeft dus geen kleur of maat meer afgeleid of verzonnen te worden. De React Native-componenten moeten nog gebouwd worden, zie [packages/ui/README.md](packages/ui/README.md).
+Sinds diezelfde dag staat ook het **design system** in `packages/ui`: tokens, assets, de vijf lettertypes en de volledige specificatie van 41 uitgewerkte schermen, overgenomen uit Claude Design. Er hoeft dus geen kleur of maat meer afgeleid of verzonnen te worden. De React Native-componenten moeten nog gebouwd worden, en wat daarvoor nodig is staat als afvinklijst in [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md).
 
 **Deze twee blokkeren al het andere werk, in deze volgorde:**
 
@@ -86,6 +87,6 @@ Daarna pas:
 - [ ] Verdelen wie welk van de acht onderdelen doet, zie `docs/taakverdeling.md`
 - [x] ~~Design tokens~~ **Staan in `packages/ui/tokens`** sinds 20 augustus 2026, als CSS en als TypeScript.
 - [ ] De basiscomponenten naar React Native, in alle states. De specificatie ligt klaar in `packages/ui/reference`.
-- [ ] Beslissen over `expo-image` en het meebundelen van de fonts. Zonder die twee werken de achtergronden en de typografie niet in de app. Zie `packages/ui/README.md`.
+- [ ] De vier pakketten toevoegen die het ontwerp nodig heeft: `expo-image`, `expo-font`, `react-native-svg` en `expo-linear-gradient`. Alle vier zitten in Expo Go, dus geen development build nodig. Zie [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md).
 - [ ] Elk scherm uit de userflow als leeg routebestand aanmaken
 - [ ] Userflow vertalen naar 15 tot 20 taken op het board
