@@ -9,7 +9,7 @@ geen bron waar de app rechtstreeks uit leest.
 Twee bronnen, samengevoegd.
 
 1. **De scrape van 13 augustus 2026.** 259 pagina's van wijzijnmind.nl:
-   de hele psychipedia, 78 ervaringsverhalen, en de overzichtspagina's.
+   de hele psychipedia, 76 ervaringsverhalen, en de overzichtspagina's.
 2. **Het Excel van MIND**, `_bron/Overzicht voorlichtingsmaterialen voor back2being.xlsx`.
    Dat bevat vijf tabbladen met links naar materiaal dat MIND actief uitgeeft.
 

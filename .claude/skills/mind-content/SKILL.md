@@ -41,9 +41,9 @@ content/mind/
     challenges/**                               36 dagpagina's
     flyers-en-informatie/GIDSEN.md              <- begin hier voor gidsen
     flyers-en-informatie/**                     41 online gidsen
-    psychipedia/**                              ~190 pagina's over klachten en thema's
+    psychipedia/**                              174 pagina's over klachten en thema's
     zelftests-overzicht.md                      alle 12 tests met link
-  ervaringsverhaal/**                           78 verhalen
+  ervaringsverhaal/**                           76 verhalen
   mind-atlas/
   _bron/                                        het xlsx en de scripts
 ```
@@ -97,9 +97,9 @@ de gids geeft de tips en oefeningen.
 | **Themaspecials** | zelfde bestand | 4 stuks, 4 tot 5 dagen. Meer informatief dan opdrachtgericht. |
 | **Online gidsen** | `flyers-en-informatie/GIDSEN.md` | 46 onderwerpen. Vaak een versie voor jezelf en een voor naasten. |
 | **Zelftests** | `zelftests-overzicht.md` | 12 tests. **Alleen de titel en de link**, de vragen zitten er niet in. |
-| **Ervaringsverhalen** | `ervaringsverhaal/` | 78 verhalen van mensen zelf. Persoonlijk, geen advies. |
+| **Ervaringsverhalen** | `ervaringsverhaal/` | 76 verhalen van mensen zelf. Persoonlijk, geen advies. |
 
-Plus de psychipedia, de encyclopedie met ongeveer 190 pagina's.
+Plus de psychipedia, de encyclopedie met 174 pagina's.
 
 ---
 
