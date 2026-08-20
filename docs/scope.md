@@ -25,7 +25,7 @@ Dit board is de bron. Alles hieronder is een vertaling daarvan naar bouwbare tak
 
 - **Wij bouwen de app, Mind regelt de rest.** Mind is verwerkingsverantwoordelijke en regelt de accounts, de overeenkomsten en de DPIA.
 - **Wij dragen alles over aan Mind, en pas daarna gaat de app naar de App Store.** De overdracht is dus geen afronding maar een stap die vooraf gaat aan livegang.
-- **Er komt geen gebruikersdata in Supabase voor de overdracht.** Alleen de code gaat over.
+- **Er komt geen gebruikersdata in Supabase voor de overdracht.** Naast de code verhuist ook het Supabase-project zelf naar de organisatie van Mind, zie `privacy-besluiten.md`. Dat kan juist doordat er dan nog geen gebruikersdata in staat.
 - **Mind maakt het Apple Developer-account zelf aan en dient de app zelf in.** Wij komen daar niet aan. Hetzelfde geldt voor Google Play.
 - **De DPIA wordt uitgevoerd vóór de overdracht en vóór livegang.**
 
