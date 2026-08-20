@@ -1,0 +1,22 @@
+<!-- @dsCard group="Components" viewport="700x520" name="Backgrounds" subtitle="Hero gradient (result screens) & hero band (standard screens)" -->
+<html><head><link rel="stylesheet" href="../preview.css"><script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script><script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script><script src="../_ds_bundle.js"></script></head>
+<body style="margin:0;background:var(--surface-background);font-family:var(--font-body)">
+<div id="root"></div>
+<script type="text/babel">
+const {BackgroundHeroGradient,BackgroundHeroBand}=window.MINDDesignSystem_fbcbe3;
+const states=["default","zonnig","wolken","mist","wind","regen"];
+function Demo(){return (
+<div style={{display:"flex",flexDirection:"column",gap:16,padding:20}}>
+<div style={{fontSize:11,fontWeight:600,color:"var(--text-secondary)",fontFamily:"var(--font-body)"}}>HERO GRADIENT (480 tall, full-bleed result screens)</div>
+<div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+{states.map(s=>(<div key={s} style={{position:"relative",width:130,height:90,borderRadius:8,overflow:"hidden"}}><BackgroundHeroGradient state={s} style={{position:"absolute",left:0,top:0,width:130*(2580/480),height:90}}/></div>))}
+</div>
+<div style={{fontSize:11,fontWeight:600,color:"var(--text-secondary)",fontFamily:"var(--font-body)",marginTop:8}}>HERO BAND (200 tall, standard screens)</div>
+<div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+{states.map(s=>(<div key={s} style={{position:"relative",width:130,height:50,borderRadius:8,overflow:"hidden"}}><BackgroundHeroBand state={s} style={{position:"absolute",left:0,top:0,width:130*(2580/200)/6.45,height:50}}/></div>))}
+</div>
+</div>
+);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body></html>

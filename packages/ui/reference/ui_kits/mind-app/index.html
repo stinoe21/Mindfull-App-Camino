@@ -1,0 +1,280 @@
+<!-- @dsCard group="MIND App" viewport="440x900" name="Daily check-in flow" subtitle="Dashboard → weather check-in → outcome → challenges → profile" -->
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../preview.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+body{margin:0;background:var(--neutral-100);font-family:var(--font-body);display:flex;justify-content:center;padding:24px 0}
+.phone{position:relative;width:402px;height:874px;background:var(--surface-background);border-radius:36px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.18)}
+a{color:var(--primary-700)}a:hover{color:var(--primary-800)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {NavigationBar,MascotteVlieger,MascotteInput,BackgroundHeroBand,BackgroundHeroGradient,Button,Card,Chip,Slider}=window.MINDDesignSystem_fbcbe3;
+
+function TabBar({goto,active}){
+  const tabs=[["dashboard","Home"],["naslagwerk","Tips"],["checkin","Check in"],["challenges","Challenges"],["profiel","Profiel"]];
+  return (<div style={{position:"absolute",left:0,top:763,width:402,height:111}}>
+    <NavigationBar style={{position:"absolute",left:0,top:0,width:402,height:111}}/>
+    <div style={{position:"absolute",left:15,top:15,width:372,height:82,display:"flex"}}>
+      {tabs.map(([key,label])=>(<button key={key} onClick={()=>goto(key,key==="checkin"?0:undefined)} style={{flex:1,background:"transparent",border:"none",cursor:"pointer"}} aria-label={label}/>))}
+    </div>
+  </div>);
+}
+const Canvas=({top=176,pad="28px 24px 130px",children})=>(
+  <div style={{position:"absolute",left:0,top:0,right:0,bottom:0,overflowY:"auto"}}>
+    <div style={{height:top}}/>
+    <div style={{minHeight:`calc(100% - ${top}px)`,borderRadius:"24px 24px 0 0",background:"var(--surface-background)",display:"flex",flexDirection:"column",gap:16,padding:pad,boxSizing:"border-box"}}>{children}</div>
+  </div>
+);
+const Overlay=({top=200,children})=>(
+  <div style={{position:"absolute",left:0,top:0,right:0,bottom:0,overflowY:"auto"}}>
+    <div style={{height:top}}/>
+    <div style={{display:"flex",flexDirection:"column",gap:16,alignItems:"center",padding:"0 24px 40px",boxSizing:"border-box"}}>{children}</div>
+  </div>
+);
+const H1=({children})=><span style={{fontFamily:"var(--font-display)",fontSize:32,lineHeight:"38px",color:"var(--text-primary)",alignSelf:"stretch"}}>{children}</span>;
+const Sub=({children})=><span style={{fontFamily:"var(--font-display-alt)",fontWeight:300,fontStyle:"italic",fontSize:20,lineHeight:"26px",color:"var(--text-secondary)",alignSelf:"stretch"}}>{children}</span>;
+const H2=({children})=><span style={{fontFamily:"var(--font-display)",fontSize:24,lineHeight:"30px",color:"var(--text-primary)",alignSelf:"stretch"}}>{children}</span>;
+const H3=({children})=><span style={{fontFamily:"var(--font-display)",fontSize:20,lineHeight:"26px",color:"var(--text-primary)",alignSelf:"stretch"}}>{children}</span>;
+const Body=({children,secondary})=><span style={{fontFamily:"var(--font-body)",fontSize:14,lineHeight:"20px",color:secondary?"var(--text-secondary)":"var(--text-primary)",alignSelf:"stretch"}}>{children}</span>;
+
+const CHECKIN_STEPS=[
+  {key:"temperatuur",title:"Hoe is het weer in je hoofd?",left:"Guur",right:"Lekker zacht"},
+  {key:"wind",title:"Hoeveel wind staat er vandaag?",left:"Wind mee",right:"Wind tegen"},
+  {key:"zicht",title:"Hoe ver kun je kijken?",left:"Dichte mist",right:"Helder zicht"},
+  {key:"wisselvallig",title:"Hoe wisselvallig is je weer vandaag?",left:"Rustig",right:"Heel wisselvallig"},
+];
+
+function Dashboard({goto}){
+  return (<div style={{position:"relative",width:402,height:874}}>
+    <BackgroundHeroBand state="default" style={{position:"absolute",left:0,top:0,width:402,height:200}}/>
+    <Canvas>
+      <H1>Goedemorgen, Maria</H1>
+      <Sub>Hoe is je weer vandaag?</Sub>
+      <Card tone="white">
+        <H3>Even inchecken?</H3>
+        <Body secondary>Neem een momentje voor jezelf. Jouw check-in telt anoniem mee in het mentale weerbericht van Nederland.</Body>
+        <Button label="Even inchecken" variant="primary" onClick={()=>goto("checkin",0)} style={{marginTop:6}}/>
+      </Card>
+      <Card tone="primary">
+        <Body secondary>Het mentale weer van Nederland</Body>
+        <H3>Rustig met wat mist</H3>
+        <Body secondary>28% van de check-ins · 1.284 vandaag</Body>
+        <Button label="Bekijk het hele weerbericht" variant="link" onClick={()=>goto("weerbericht")}/>
+      </Card>
+      <Card tone="purple" style={{alignItems:"center",textAlign:"center"}}>
+        <span style={{fontFamily:"var(--font-display)",fontStyle:"italic",fontSize:21,lineHeight:"28px",color:"var(--text-primary)"}}>"Het lijkt altijd onmogelijk, totdat het gedaan is."</span>
+        <span style={{fontFamily:"var(--font-body)",fontWeight:600,fontSize:12,color:"var(--text-secondary)"}}>Dagelijkse quote · deel hem gerust</span>
+      </Card>
+      <H2>Tips voor jou</H2>
+      <div style={{display:"flex",gap:12}}><Chip label="Piekeren"/><Chip label="Energie"/></div>
+      <Card tone="sun">
+        <H3>MIND Hulplijn</H3>
+        <Body secondary>Kom gratis met onze professionals in contact. Ook via WhatsApp.</Body>
+        <Button label="Kom in contact" variant="secondary"/>
+      </Card>
+    </Canvas>
+    <TabBar goto={goto}/>
+  </div>);
+}
+
+function CheckInStep({step,idx,goto}){
+  const s=CHECKIN_STEPS[idx];
+
+  return (<div style={{position:"relative",width:402,height:874,background:"var(--surface-background)"}}>
+    <Canvas top={0} pad="28px 24px 28px">
+      <div style={{height:136,alignSelf:"stretch",display:"flex",justifyContent:"center"}}><MascotteInput state={s.key} assetBase="../../" style={{height:128}}/></div>
+      <span style={{fontFamily:"var(--font-body)",fontWeight:600,fontSize:11,letterSpacing:".06em",color:"var(--text-secondary)"}}>STAP {idx+1} van {CHECKIN_STEPS.length}</span>
+      <H3>{s.title}</H3>
+      <Body secondary>Geen goed of fout. Kies wat nu het dichtst in de buurt komt.</Body>
+      <Slider leftLabel={s.left} rightLabel={s.right} value={45} style={{alignSelf:"stretch"}}/>
+      <div style={{flex:1}}/>
+      <Button label={idx<CHECKIN_STEPS.length-1?"Verder":"Bekijk je weer"} variant="primary" fullWidth onClick={()=>idx<CHECKIN_STEPS.length-1?goto("checkin",idx+1):goto("bevestigd")}/>
+      <Button label="Sla vandaag over" variant="link" onClick={()=>goto("dashboard")}/>
+    </Canvas>
+  </div>);
+}
+
+function Bevestigd({goto}){
+  return (<div style={{position:"relative",width:402,height:874}}>
+    <BackgroundHeroGradient state="mist" style={{position:"absolute",left:0,top:0,width:402,height:480}}/>
+    <Overlay top={200}>
+      <MascotteVlieger state="mist" style={{width:110,height:86}}/>
+      <H1 style={{textAlign:"center"}}>Dankjewel voor je check-in</H1>
+      <span style={{fontFamily:"var(--font-body)",fontSize:16,lineHeight:"24px",color:"var(--text-secondary)",textAlign:"center"}}>Jouw weer telt anoniem mee in het mentale weerbericht van Nederland.</span>
+      <Button label="Bekijk je uitkomst" variant="primary" fullWidth onClick={()=>goto("uitkomst")}/>
+      <Button label="Terug naar dashboard" variant="secondary" fullWidth onClick={()=>goto("dashboard")}/>
+    </Overlay>
+    <TabBar goto={goto}/>
+  </div>);
+}
+
+function Uitkomst({goto}){
+  return (<div style={{position:"relative",width:402,height:874}}>
+    <BackgroundHeroGradient state="mist" style={{position:"absolute",left:0,top:0,width:402,height:480}}/>
+    <Overlay top={130}>
+      <MascotteVlieger state="mist" style={{width:110,height:86}}/>
+      <H3 style={{textAlign:"center"}}>Even niet alles scherp zien is oké.</H3>
+      <Body secondary>In de mist loop je stap voor stap, en dat is genoeg.</Body>
+      <Card tone="white" style={{alignSelf:"stretch"}}>
+        <span style={{fontFamily:"var(--font-body)",fontWeight:600,fontSize:11,letterSpacing:".06em",color:"var(--text-secondary)"}}>VOOR VANDAAG</span>
+        <H3>Doe vandaag een ding tegelijk.</H3>
+      </Card>
+      <Button label="Terug naar dashboard" variant="primary" fullWidth onClick={()=>goto("dashboard")}/>
+      <Button label="Deel je weer" variant="link"/>
+    </Overlay>
+    <TabBar goto={goto}/>
+  </div>);
+}
+
+function Weerbericht({goto}){
+  const rows=[["Zonnig","18%"],["Wolken","31%"],["Mist","28%"],["Wind","14%"],["Regen","9%"]];
+  return (<div style={{position:"relative",width:402,height:874}}>
+    <BackgroundHeroBand state="default" style={{position:"absolute",left:0,top:0,width:402,height:200}}/>
+    <Canvas>
+      <H1>Weerbericht Nederland</H1>
+      <Sub>Het mentale weer van vandaag, samen opgeteld.</Sub>
+      {rows.map(([label,pct])=>(
+        <Card key={label} tone="outline" style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between",padding:"14px 20px"}}>
+          <Body>{label}</Body><Body secondary>{pct}</Body>
+        </Card>
+      ))}
+      <Button label="Terug naar dashboard" variant="link" onClick={()=>goto("dashboard")}/>
+    </Canvas>
+    <TabBar goto={goto}/>
+  </div>);
+}
+
+function Challenges({goto}){
+  const list=[["RUST","Adempauze","± 4 min · MIND"],["BEWEGING","Buitenlucht","± 10 min · MIND"],["REFLECTIE","Drie lichtpuntjes",""],["SLAAP","Schermvrij kwartier","± 15 min · MIND"]];
+  return (<div style={{position:"relative",width:402,height:874}}>
+    <BackgroundHeroBand state="default" style={{position:"absolute",left:0,top:0,width:402,height:200}}/>
+    <Canvas>
+      <H1>Challenges</H1>
+      <Sub>Kleine stappen van MIND, groot verschil.</Sub>
+      <Card tone="primary">
+        <Body secondary>Dagelijkse challenge</Body>
+        <H3>Weerpraatje</H3>
+        <Body secondary>Stuur iemand een berichtje en vertel hoe jouw weer vandaag is.</Body>
+        <Button label="Start challenge" variant="primary" onClick={()=>goto("challenge-detail")}/>
+      </Card>
+      <H2>Alle mini-challenges</H2>
+      {list.map(([cat,title,meta])=>(
+        <Card key={title} tone="outline" style={{gap:4}} onClick={()=>goto("challenge-detail")}>
+          <Chip label={cat} style={{alignSelf:"flex-start",fontSize:10,padding:"4px 10px"}}/>
+          <H3 style={{fontSize:18}}>{title}</H3>
+          {meta&&<Body secondary>{meta}</Body>}
+        </Card>
+      ))}
+    </Canvas>
+    <TabBar goto={goto}/>
+  </div>);
+}
+
+function ChallengeDetail({goto}){
+  return (<div style={{position:"relative",width:402,height:874}}>
+    <BackgroundHeroBand state="default" style={{position:"absolute",left:0,top:0,width:402,height:200}}/>
+    <Canvas>
+      <Chip label="RUST"/>
+      <H1>Adempauze</H1>
+      <Body secondary>± 4 minuten · MIND</Body>
+      <Card tone="white">
+        <Body>Zoek een rustig plekje. Adem vier tellen in, houd vier tellen vast, en adem vier tellen uit. Herhaal dit tien keer.</Body>
+      </Card>
+      <Button label="Challenge afronden" variant="primary" fullWidth onClick={()=>goto("challenge-afgerond")}/>
+      <Button label="Terug naar challenges" variant="link" onClick={()=>goto("challenges")}/>
+    </Canvas>
+    <TabBar goto={goto}/>
+  </div>);
+}
+
+function ChallengeAfgerond({goto}){
+  return (<div style={{position:"relative",width:402,height:874}}>
+    <BackgroundHeroGradient state="zonnig" style={{position:"absolute",left:0,top:0,width:402,height:480}}/>
+    <Overlay top={200}>
+      <MascotteVlieger state="zonnig" style={{width:120,height:100}}/>
+      <H1 style={{textAlign:"center"}}>Mooi gedaan</H1>
+      <Body secondary>Je hebt de challenge afgerond. Kleine stappen tellen.</Body>
+      <Button label="Terug naar challenges" variant="primary" fullWidth onClick={()=>goto("challenges")}/>
+    </Overlay>
+    <TabBar goto={goto}/>
+  </div>);
+}
+
+function Naslagwerk({goto}){
+  const topics=["Slaap","Stress","Somberheid","Energie","Hooggevoelig"];
+  const articles=[["Beter slapen in vijf stappen","Bron: MIND"],["Piekeren doorbreken","Bron: MIND"]];
+  return (<div style={{position:"relative",width:402,height:874}}>
+    <BackgroundHeroBand state="default" style={{position:"absolute",left:0,top:0,width:402,height:200}}/>
+    <Canvas>
+      <H1>Naslagwerk</H1>
+      <Sub>Betrouwbare kennis, altijd met bron.</Sub>
+      <Card tone="outline" style={{width:"100%"}}><Body secondary>Zoek een onderwerp...</Body></Card>
+      <H2>Veel gezocht</H2>
+      <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>{topics.map(t=><Chip key={t} label={t}/>)}</div>
+      <H2>Artikelen</H2>
+      {articles.map(([t,src])=>(
+        <Card key={t} tone="outline">
+          <H3 style={{fontSize:18}}>{t}</H3>
+          <Body secondary>{src}</Body>
+        </Card>
+      ))}
+    </Canvas>
+    <TabBar goto={goto}/>
+  </div>);
+}
+
+function Profiel({goto}){
+  const rows=["Privacy & toestemmingen","Meldingen","Over deze app"];
+  return (<div style={{position:"relative",width:402,height:874}}>
+    <BackgroundHeroBand state="default" style={{position:"absolute",left:0,top:0,width:402,height:200}}/>
+    <Canvas>
+      <H1>Profiel</H1>
+      <Card tone="primary" style={{flexDirection:"row",alignItems:"center",gap:16}}>
+        <MascotteVlieger state="default" style={{width:56,height:38}}/>
+        <div style={{display:"flex",flexDirection:"column",gap:2}}>
+          <H3 style={{fontSize:20}}>Maria</H3>
+          <span style={{fontFamily:"var(--font-body)",fontWeight:600,fontSize:12,color:"var(--text-secondary)"}}>Checkt in sinds augustus 2026</span>
+        </div>
+      </Card>
+      <H2>Instellingen</H2>
+      {rows.map(r=>(
+        <Card key={r} tone="outline" style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
+          <Body>{r}</Body><span style={{color:"var(--text-secondary)"}}>›</span>
+        </Card>
+      ))}
+      <Card tone="sun">
+        <H3>MIND Hulplijn</H3>
+        <Body secondary>Kom gratis met onze professionals in contact.</Body>
+        <Button label="Kom in contact" variant="secondary"/>
+      </Card>
+    </Canvas>
+    <TabBar goto={goto}/>
+  </div>);
+}
+
+function App(){
+  const [screen,setScreen]=React.useState("dashboard");
+  const [step,setStep]=React.useState(0);
+  const goto=(s,idx)=>{setScreen(s);if(typeof idx==="number")setStep(idx);window.scrollTo(0,0);};
+  return (<div className="phone">
+    {screen==="dashboard"&&<Dashboard goto={goto}/>}
+    {screen==="checkin"&&<CheckInStep idx={step} goto={goto}/>}
+    {screen==="bevestigd"&&<Bevestigd goto={goto}/>}
+    {screen==="uitkomst"&&<Uitkomst goto={goto}/>}
+    {screen==="weerbericht"&&<Weerbericht goto={goto}/>}
+    {screen==="challenges"&&<Challenges goto={goto}/>}
+    {screen==="challenge-detail"&&<ChallengeDetail goto={goto}/>}
+    {screen==="challenge-afgerond"&&<ChallengeAfgerond goto={goto}/>}
+    {screen==="naslagwerk"&&<Naslagwerk goto={goto}/>}
+    {screen==="profiel"&&<Profiel goto={goto}/>}
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body></html>

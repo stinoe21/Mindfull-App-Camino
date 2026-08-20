@@ -2,50 +2,202 @@
 
 Het grootste risico bij drie parallelle agents is niet een merge-conflict. Dat is zichtbaar en oplosbaar. Het echte risico is dat het beeld langzaam uit elkaar loopt zonder dat iemand het merkt, want aan een diff zie je niet dat een scherm lelijk is geworden.
 
-Daarom leunen we niet op review, maar op drie mechanismen die het structureel onmogelijk maken.
+---
+
+## 0. Stand van zaken, lees dit eerst
+
+**Sinds 20 augustus 2026 staat het design system in de repo, in `packages/ui`.** Overgenomen uit de Claude Design-export `Weerbericht Design System.zip`, opgebouwd uit het Figma-bestand *Back-to-Being, App Design Volledige appflow* met 41 uitgewerkte schermen.
+
+Dat verandert het karakter van dit document. Grote delen hiervan beschreven vóór die datum een **plan**: welke tokens we zouden afleiden, welke componenten we zouden bouwen, hoe de Figma-structuur eruit zou moeten zien. Dat is nu grotendeels geen plan meer maar een gegeven.
+
+Wat er nu ligt:
+
+| | Status |
+|---|---|
+| Tokens: kleuren, typografie, spacing, radii | **Vastgelegd.** `packages/ui/tokens`, ook als TypeScript voor React Native. |
+| Assets: mascotte, zes hero-achtergronden, nav-icoon | **In de repo**, gecomprimeerd. `packages/ui/assets`. |
+| Schermregels, ontwerpprincipes, letterlijke teksten | **Vastgelegd.** `packages/ui/reference/HERKOMST.md`. |
+| Componentspecificatie: maten, varianten, vectorpaden | **Vastgelegd** als React DOM. `packages/ui/reference/components`. |
+| 41 schermen, klikbaar prototype | **Aanwezig.** `packages/ui/reference/ui_kits/mind-app/index.html`. |
+| React Native-componenten | **Nog niet gebouwd.** Dat is bouwwerk en wacht op de scaffold. |
+| De lint-regel tegen hardcoded waarden | **Nog niet opgezet.** Wacht op de scaffold. |
+| Het kitchen sink-scherm | **Nog niet opgezet.** Wacht op de scaffold. |
+
+De skill `mind-design` laadt automatisch en wijst je bij elke visuele vraag het juiste bestand aan. Gebruik die in plaats van te zoeken.
+
+**De belangrijkste gedragsregel is niet veranderd, alleen makkelijker geworden: verzin geen waarde, zoek hem op.** Vóór 20 augustus kon dat niet, want er was niets om op te zoeken. Nu wel, en daarmee vervalt het excuus.
 
 ---
 
-## 1. Eén tokenbestand, één eigenaar
+## 1. Waar wat staat, en welke laag wint
 
-Alle kleuren, spacing, radii, typografie, shadows en motion staan in `packages/ui/tokens`. Dat is de enige plek.
+Drie plekken, elk met één rol. Door elkaar halen is waar het misgaat.
 
-- Wie dat bestand wil wijzigen doet dat in een **aparte kleine pull request**, nooit als onderdeel van een feature.
-- De eigenaar (zie `docs/taakverdeling.md`) reviewt elke wijziging daar.
-- De **build** hangt nooit af van een live Figma-query. Tokens staan in git. Op de Camino heb je geen wifi te vertrouwen.
+| Waar | Rol |
+|---|---|
+| **Figma** | Waar het ontwerp gemaakt wordt. Bron voor wat er nog niet in de repo zit. |
+| **Claude Design** | De gedeelde visuele bibliotheek die we alle drie zien. Hier is het design system samengesteld. |
+| **De repo** | Bron voor de code. Tokens, assets en specificatie staan hier, en dit is wat de build gebruikt. |
+
+**De repo wint bij twijfel.** Dat is de omkering ten opzichte van hoe dit document er vóór 20 augustus stond, en het is bewust. Toen was er niets in de repo, dus won Figma. Nu is `packages/ui` het overgenomen resultaat van het ontwerpwerk, en is Figma de plek waar het volgende ontwerp gemaakt wordt. Wijkt een frame af van een token, dan is dat een gesprek en geen vrijbrief om het token te negeren.
+
+De **build hangt nooit af van een live Figma-query of een live Claude Design-query.** Tokens en assets staan in git. Op de Camino heb je geen wifi te vertrouwen, en een agent die op een netwerkaanroep wacht om een kleur te weten, staat stil.
+
+### Werkvolgorde als er iets wijzigt
+
+```
+ontwerp in Figma  ->  samenstellen in Claude Design  ->  overnemen in packages/ui  ->  bouwen
+```
+
+Eén richting op. Neem je iets over, doe dat dan in een **eigen kleine pull request** die binnen een halfuur gemerged wordt, nooit als bijvangst van een feature. `packages/ui/tokens/**` staat niet voor niets op de lijst in `CLAUDE.md` sectie 5.
+
+---
+
+## 2. Tokens
+
+Alles staat in `packages/ui/tokens`. Dat is de enige plek. Zie `packages/ui/README.md` voor hoe je ze wijzigt en opnieuw genereert.
+
+### Twee vormen, één bron
+
+De CSS-bestanden zijn de bron. `tokens.ts` wordt eruit gegenereerd met `node packages/ui/tokens/generate.mjs`.
+
+Waarom niet één: de adminwebapp en Claude Design lezen CSS-variabelen, React Native kan dat niet. Eén bron met een generator is beter dan twee lijsten die uit elkaar lopen zonder dat iemand het merkt. Wijzig `tokens.ts` dus nooit met de hand.
+
+### Drie lagen, en componenten raken maar één daarvan
+
+```
+primitief              semantisch                 component
+palette.primary700  -> colors.brandDefault     -> <Button variant="primary">
+palette.accentLime  -> colors.ctaDefault
+palette.baseCream   -> colors.surfaceBackground
+```
+
+Componentcode gebruikt **alleen de middelste kolom**. Zo kan een kleur wijzigen zonder dat er één component wordt aangeraakt.
+
+De semantische laag telt nu elf namen. Dat is dun, en dat is oké: hij groeit als je merkt dat je een primitieve naam voor de tweede keer nodig hebt, niet vooraf. Het alternatief, vooraf vijftig rollen verzinnen, levert veertig namen op die niemand gebruikt en die wel onderhouden moeten worden.
+
+### De naamgeving is die van de export, niet die van ons oude voorstel
+
+Dit document stelde eerder `color/action/primary` voor, met schuine strepen. De export gebruikt `--primary-700` en `--cta-default`, en `tokens.ts` maakt daar `palette.primary700` en `colors.ctaDefault` van.
+
+**De export wint.** Niet omdat die vorm beter is, maar omdat de tokens er al in staan en een hernoeming alleen maar kost. Eén naamruimte is het punt, welke van de twee is het niet.
+
+### De enige tokenregel die niet onderhandelbaar is
+
+**Er komt geen `mood/good` of `mood/bad`, in geen enkele vorm.** Weertypen zijn gelijkwaardig, zie `productprincipes.md` principe 3. De weertokens heten naar het weer, `weatherSun` en `weatherRain`, nooit naar een waardering.
+
+De feedbackkleuren (`feedbackSuccess`, `feedbackWarning`, `feedbackError`) bestaan in de tokens maar komen in geen van de 41 schermen voor. Ze zijn er voor **systeemfeedback**: formuliervalidatie, een mislukte verbinding. Gebruik ze daar en nergens anders. Iemands stemming krijgt geen stoplichtkleur.
 
 ### Tokens gelden ook voor de webapp, componenten niet
 
-De adminpagina en de analyticspagina worden een webapp, zie `scope.md`. De tokens zijn platte waarden en gelden daar net zo goed, en dat is precies waarom ze in een eigen package staan in plaats van in de app.
+De adminpagina en de analyticspagina worden een webapp, zie `scope.md`. De tokens zijn platte waarden en gelden daar net zo goed, en dat is precies waarom ze in een eigen package staan in plaats van in de app. Voor de webapp is `packages/ui/tokens/index.css` het startpunt.
 
-De componenten in `packages/ui/components` zijn React Native-componenten en draaien **niet** in een gewone webapp. Verwacht dus niet dat je daar dezelfde Button hergebruikt. Wat je hergebruikt is de laag eronder: kleuren, spacing, typografie, radii. Dat is genoeg om de twee op elkaar te laten lijken en het is de enige laag die de overstap zonder gedoe overleeft.
+De componenten in `packages/ui/components` worden React Native-componenten en draaien **niet** in een gewone webapp. Wat je hergebruikt is de laag eronder: kleuren, spacing, typografie, radii. Dat is genoeg om de twee op elkaar te laten lijken en het is de enige laag die de overstap zonder gedoe overleeft.
 
 Dat is ook geen verlies, want de webapp is een CMS voor medewerkers van Mind en niet iets dat een gebruiker ziet. Hij moet werkbaar zijn en niet stuk lijken. Alles wat daar in ontwerp in gaat zitten, gaat niet in de app zitten, en de app is wel wat beoordeeld wordt.
 
-### Namen zijn semantisch, niet letterlijk
+---
 
-Een token heet naar zijn **rol**, niet naar zijn waarde. Dus niet `color/green500` maar:
+## 3. De schermregels
+
+Dit is de sectie die er vóór de overname niet was, en het is de sectie die het beeld bij elkaar houdt. De volledige tekst staat in `packages/ui/reference/HERKOMST.md` onder *Screen layout rules*. Samengevat:
+
+1. **De gradient is de paginaachtergrond.** Het weerbeeld vult het scherm achter alles. Zet op een gewoon scherm nooit tekst rechtstreeks op de gradient.
+2. **Eén beige vel per scherm.** Alle inhoud zit in één kaart met radius 20, met 8 pixels marge links, rechts en onder, zodat er een randje gradient zichtbaar blijft. Het vel begint hoog; lager alleen op uitkomst- en felicitatieschermen.
+3. **Vulling in het vel is 20.** Alleen een shelf loopt door tot de rand.
+4. **Kaarten hebben 18 of 20 vulling, radius 16, 6 tussenruimte.** Eén kaartvorm, alleen hergekleurd.
+5. **Elke verzameling krijgt een sectiekop.** Secties staan 28 uit elkaar, kop naar inhoud is 12.
+6. **Shelf of grid, nooit allebei in één sectie.** Shelf voor een open einde, grid van twee gelijke kolommen voor een eindige set. Geen mozaïek.
+7. **Ritme boven variatie.** Een scherm leest: titel, één leidende kaart, dan secties. Varieer de kleur en het sectietype, nooit de kaartvorm of de vulling.
+8. **Spacing komt van de 4px-schaal.** Wat ertussen zit is een fout, geen keuze.
+
+Dit zijn regels en geen suggesties. Ze zijn afgelezen uit 41 schermen die er al zijn, dus een scherm dat zich er niet aan houdt valt op.
+
+**Bouw een nieuw scherm door deze opbouw te vullen, niet door componenten vanaf nul te stapelen.** Past het scherm er niet in, dan is dat het gesprek waard voordat je begint.
+
+---
+
+## 4. Componenten
+
+Zoek altijd eerst in `packages/ui/components`, en daarna in `packages/ui/reference/components`. Een tweede Button die net iets anders is, is hoe een design system sterft.
+
+### De set die uit het ontwerp komt
+
+Deze vijftien staan als specificatie klaar in `reference/components`, met exacte maten en varianten. Ze moeten nog naar React Native.
+
+| Component | Waarvoor |
+|---|---|
+| `ScreenCanvas` | Het schermomhulsel: gradient, vel, marges. Elk scherm zit erin. |
+| `Button` | Pilvorm, `primary` (lime), `secondary` (outline), `link`. |
+| `Card` | Eén vorm, radius 16, vijf kleurvullingen. |
+| `Chip` | Onderwerp- en categorielabel. |
+| `Slider` | De check-in-invoer. Twee uiteinden, geen oordeel. Vier hiervan vormen de hele check-in. |
+| `ContentSection` | Sectiekop met serif-titel, optionele regel en actie rechts. |
+| `ContentShelf` + `ShelfCard` | Horizontale rij voor een open verzameling, met de volgende kaart net zichtbaar. |
+| `ContentGrid` + `ContentCard` | Twee gelijke kolommen voor een eindige set. |
+| `MascotteVlieger` | De vlieger in zeven stemmings- en weerstaten. |
+| `MascotteInput` | Eén pose per check-invraag. **Andere familie dan hierboven, niet door elkaar halen.** |
+| `NavigationBar` | Zwevende tabbalk met vijf bestemmingen. |
+| `BackgroundHeroBand` | De hero van 200 hoog voor gewone schermen, zes weerstaten. |
+| `BackgroundHeroGradient` | De hero van 480 hoog voor uitkomstschermen, zes weerstaten. |
+
+Daarnaast staat er in `reference/components/library` een set geleende generieke besturingselementen: invoervelden, iconen, "Ga verder met Apple", "Ga verder met Google", een contactformulier. Die worden echt gebruikt door de onboarding- en formulierschermen. Grijp daarnaar voor auth en generieke formulieren in plaats van iets nieuws te tekenen.
+
+### Wat de app nodig heeft en het ontwerp nog niet levert
+
+Drie eisen uit `scope.md` en `datamodel.md` hebben geen component in de export. Dat zijn geen designkeuzes maar productvereisten, en ze blijven staan:
+
+- **Collectief weerbericht met een verplichte lege staat.** Het landelijke weerbericht mag pas getoond worden **boven een minimum aantal deelnemers**, anders is een uitkomst herleidbaar naar personen. Zie het board, connector `12:308`, en `datamodel.md`. Die staat is dus geen randgeval maar een privacymaatregel, en hij moet in de kitchen sink staan.
+- **De MIND Hulplijn is een route die overal bereikbaar is.** `HERKOMST.md` noemt dit een systeembreed punt, met de nuance dat het niet op letterlijk elk scherm hoeft. Waar hij wel en niet staat is een besluit dat nog niet genomen is, zie de open punten. Landt hij in de root layout van expo-router, dan is dat een gedeeld bestand en dus een eigen taak van de eigenaar.
+- **Een zoekresultaat toont altijd de bronpagina.** Geen chat, geen gegenereerd antwoord. Zie `productprincipes.md` principe 10. Bouw hier nooit een variant zonder bronvermelding.
+
+### Systeemstaten die nog ontworpen moeten worden
+
+`HERKOMST.md` noemt ze bij naam, als bekende gaten: fout- en offlinestaat, leeg weerbericht ("Kom later terug"), geen zoekresultaten, content achter consent, verlopen sessie, de tips bij het eerste gebruik, challenge ontgrendeld en afgerond.
+
+Dat ze benoemd zijn is winst: het is een lijst en geen verrassing. Maar de definition of done in `CLAUDE.md` sectie 7 eist een loading-, lege en foutstaat per scherm, en die staan dus nog niet in het ontwerp. Bouw je een scherm en heb je zo'n staat nodig, dan is dat een blokkade die je meldt.
+
+### Alle states, niet alleen de mooie
 
 ```
-color/background/default
-color/text/primary
-color/text/muted
-color/action/primary
-color/border/subtle
-gradient/weather/cloudy
-spacing/16
-radius/card
+default    pressed    focused    disabled
+loading    error      empty      success
 ```
 
-Waarom dit hard is: zonder afgesproken naamruimte verzinnen drie agents er drie, en dan heb je `colors.primary`, `color/action/primary` en `brand.green` naast elkaar staan. De lint-regel vangt hardcoded waarden, geen inconsistente namen. Dat kan alleen een afspraak.
+Let op één ding uit de export: de knoppen van MIND definiëren **geen** hover- of pressed-staat, want de app is alleen aanraakbediend. De geleende bibliotheekknop doet dat wel. Er staat niets in de weg om ze toe te voegen, maar het is dan onze afspraak en geen overgenomen ontwerp. Zet zo'n keuze in de kitchen sink, dan ziet iedereen hem.
 
-Eén naam die er expliciet **niet** komt: er is geen `color/mood/good` of `color/mood/bad`. Weertypen zijn gelijkwaardig, zie `productprincipes.md` principe 3. Een weertype krijgt een neutrale naam naar het weer zelf, nooit naar een waardering.
+---
 
-**De definitieve lijst wordt afgeleid uit het Figma-bestand**, niet hier verzonnen. Het patroon hierboven is de vorm, de inhoud komt uit Foundations. Zodra dat is uitgelezen komt de volledige lijst in `packages/ui/tokens` en is dit document daar de beschrijving van.
+## 5. Assets
 
-## 2. Een lint-regel die hardcoded waarden weigert
+De hele app rust op een weermetafoor, dus iconen, gradients en achtergronden zijn geen decoratie maar de kern van de betekenis. Een agent die er zelf een weericoon bij tekent in een andere stijl, breekt de metafoor waarvoor we nog goedkeuring van Mind moeten krijgen.
 
-Ongeveer twintig regels ESLint-config, en verreweg de goedkoopste maatregel met de grootste opbrengst. Het maakt het voor een agent onmogelijk om "even snel `#4A7C59`" te schrijven.
+Wat er is, in `packages/ui/assets`:
+
+| Map | Wat |
+|---|---|
+| `backgrounds/` | Zes hero-achtergronden: `default`, `zonnig`, `wolken`, `mist`, `wind`, `regen`. |
+| `mascot/` | `mascot-main.svg` plus drie check-in-poses. |
+| `nav/` | Het home-icoon van de tabbalk. |
+
+De overige navigatie-iconen zijn **geen losse bestanden**: ze zitten als vectorpaden in `reference/components/NavigationBar.jsx`. Dat is geen omissie maar hoe ze zijn aangeleverd. Wie de tabbalk naar React Native brengt, haalt de paden daaruit.
+
+Harde regels voor een agent:
+
+- **Introduceer nooit zelf een icoon, illustratie of mascottepose.** De set is gesloten. Ook geen tussenvorm, ook geen variant.
+- **Zet nooit een willekeurige afbeelding of stockfoto in de app.** Ook niet als placeholder, want placeholders blijven staan.
+- Mis je een asset, dan is dat een blokkade die je meldt, geen probleem dat je zelf oplost. Dat geldt nu concreet voor de vierde check-in-pose, zie de open punten.
+- Assets staan in de repo, niet in een live query. Zelfde reden als de tokens.
+
+Comprimeer alles voordat het de repo in gaat, zie `assets-en-media.md`: iconen als SVG, illustraties als WebP op kwaliteit 80 tot 85, en niets groter dan de plek waar het staat. De export hield zich daar niet aan, en dat kostte 45 MB voor 176 KB aan beeld.
+
+Content die **Mind zelf toevoegt** (artikelafbeeldingen, challenge-afbeeldingen) hoort niet hier maar in Supabase Storage. Dat is de scheiding uit `assets-en-media.md` en die verandert niet.
+
+---
+
+## 6. De lint-regel die hardcoded waarden weigert
+
+Ongeveer twintig regels ESLint-config, en verreweg de goedkoopste maatregel met de grootste opbrengst. Het maakt het voor een agent onmogelijk om "even snel `#FEFEF4`" te schrijven.
 
 Geweigerd in `apps/**` en `packages/ui/components/**`:
 
@@ -55,142 +207,26 @@ Geweigerd in `apps/**` en `packages/ui/components/**`:
 
 **TODO:** opzetten zodra de Expo-app gescaffold is. Dit is één van de eerste taken, vóór er features gebouwd worden. Anders sluit je de deur nadat het paard weg is.
 
-## 3. Een kitchen sink-scherm
+`packages/ui/reference/**` valt hier expliciet buiten. Dat is overgenomen specificatie en geen code die meebouwt, en die staat vol letterlijke waarden omdat dat het punt ervan is.
+
+## 7. Een kitchen sink-scherm
 
 `apps/mobile/src/app/_dev/kitchen-sink.tsx`: één verborgen route waar elke component in elke state staat.
 
 Eén screenshot en je ziet of er iets stuk is. Verplicht bij te werken zodra je een component maakt of wijzigt. Dit staat in de definition of done.
 
-## 4. Assets zijn een bibliotheek, geen map
-
-Dit is het mechanisme dat we bijna vergaten, en juist bij deze app het meest kan kosten. De hele app rust op een weermetafoor, dus iconen, gradients en achtergronden zijn geen decoratie maar de kern van de betekenis. Een agent die er zelf een weericoon bij tekent in een andere stijl, breekt de metafoor waarvoor we nog goedkeuring van Mind moeten krijgen.
-
-Wat onder beheer staat:
-
-| Soort | Regel |
-|---|---|
-| Navigatie-iconen | Vaste set, als component of instance. Geen losse SVG's ernaast. |
-| Actie-iconen | Idem. |
-| Weer-iconen | **De set is gesloten.** Er is er precies één per weertype uit `datamodel.md`. Geen tussenvormen, geen varianten. |
-| Achtergrondillustraties en textures | Vaste namen, vaste toepassingsregels. |
-| Gradients | Als token, niet als losse CSS. Zie `gradient/weather/*`. |
-| Onboarding-illustraties | Vaste set, hoort bij de schermen uit de flow. |
-
-Harde regels voor een agent:
-
-- **Introduceer nooit een nieuwe iconstijl** en meng geen twee sets.
-- **Zet nooit een willekeurige afbeelding of stockfoto in de app.** Ook niet als placeholder, want placeholders blijven staan.
-- Mis je een asset, dan is dat een blokkade die je meldt, geen probleem dat je zelf oplost.
-- Assets staan in de repo, niet in een live Figma-query. Zelfde reden als de tokens.
+Tot dat scherm bestaat is `packages/ui/reference/ui_kits/mind-app/index.html` het dichtstbijzijnde: open dat in een browser en je ziet de hele flow.
 
 ---
 
-## Componenten
-
-Elke component heeft **alle** states, niet alleen de mooie:
-
-```
-default    pressed    focused    disabled
-loading    error      empty      success
-```
-
-Zoek altijd eerst in `packages/ui/components` voordat je iets nieuws bouwt. Een tweede Button die net iets anders is, is hoe een design system sterft.
-
-Een component legt zijn varianten vast als properties, niet als losse copieën:
-
-```
-Button
-  type:  primary | secondary | ghost
-  size:  small | default
-  state: default | pressed | disabled
-  icon:  none | left | right
-```
-
-### De set voor v1
-
-Vóór vertrek bouwen, in alle states. Bouw ze niet onderweg, want dan bouwt iedereen tegelijk zijn eigen variant.
-
-| Component | Waarvoor | Board |
-|---|---|---|
-| Button | Overal | |
-| Input | Inloggen, zoeken | `12:149`, `12:191` |
-| Navigation | Zeven bestemmingen vanaf het dashboard | `12:173` |
-| Card | Basis voor de drie kaarten hieronder | |
-| Weather option | De keuze in de weer-check-in | `12:182` |
-| Challenge card | Challenges op weekbasis, kernfunctie | `12:185` |
-| Content card | Persoonlijk naslagwerk | `12:188` |
-| Quote card | Dagelijkse quote, voor iedereen gelijk | `12:179` |
-| Search result | **Toont altijd de bronpagina.** Geen chat, geen gegenereerd antwoord. | `12:191` |
-| Collective weather | Het weerbericht van Nederland | `12:202` |
-| Consent row | Twee losse consents, apart intrekbaar | `12:136`, `12:139` |
-| Settings row | Profiel en instellingen | `12:194` |
-| Support CTA | De MIND Hulplijn, **persistent op elk scherm** | `12:176` |
-| Gate screen | De verplichte stappen zonder Skip | `74:230`, `12:155` |
-| Bottom sheet | | |
-| Toast | Feedback en foutmeldingen | |
-
-Drie daarvan hebben een eis die geen designkeuze is:
-
-- **Collective weather** heeft een verplichte lege staat. Het landelijke weerbericht mag pas getoond worden **boven een minimum aantal deelnemers**, anders is een uitkomst herleidbaar naar personen. Zie het board, connector `12:308`, en `datamodel.md`. Die staat is dus geen randgeval maar een privacymaatregel, en hij moet in de kitchen sink staan.
-- **Support CTA** is persistent op elk scherm en hoort dus in de root layout van expo-router. Dat is een gedeeld bestand: dat is een eigen taak van de eigenaar, geen bijvangst van een feature.
-- **Search result** toont altijd de bron. Bouw hier nooit een variant zonder bronvermelding, zie `productprincipes.md` principe 10.
-
-## Patterns
-
-Tussen losse componenten en volledige schermen zit een laag die we misten. Een pattern is een vaste combinatie die meerdere keren terugkomt, met een vaste opbouw:
-
-```
-onboarding page      titel, illustratie, korte tekst, één primaire actie
-gate page            verplichte stap, geen Skip, geen weg terug omheen
-selection page       een keuze uit een gesloten set
-consent page         uitleg, wat er gebeurt, wat er niet gebeurt, expliciete keuze
-dashboard section    kop, inhoud, en een lege staat die niet leeg voelt
-detail page          één onderwerp, één actie
-settings list        rijen, groepen, en de destructieve actie onderaan
-empty state          altijd ontworpen, nooit een lege lijst
-error state          begrijpelijke taal, een uitweg, geen technische code
-```
-
-Bouw een nieuw scherm door een pattern te kiezen en te vullen, niet door componenten vanaf nul te stapelen. Past het scherm in geen enkel pattern, dan is dat het gesprek waard voordat je begint.
-
----
-
-## Figma en Claude Design
-
-We gebruiken drie plekken en die hebben elk één rol. Door elkaar halen is waar het misgaat.
-
-| Waar | Rol |
-|---|---|
-| **Figma** | Bron voor userflow, dataflow en hoe schermen eruitzien. Leesbaar via de Figma MCP. |
-| **De repo** | Bron voor de code. Tokens, componenten en assets staan hier en dit is wat de build gebruikt. |
-| **Claude Design** | Gedeelde visuele bibliotheek die we alle drie zien, gesynchroniseerd via `/design-sync`. |
-
-De volgorde is belangrijk: **tokens vaststellen in de repo, dan componenten bouwen, dan naar Claude Design pushen als gedeelde referentie.** Niet andersom, want dan wordt design de bottleneck en zit er iemand te wachten op een plaatje.
-
-**Besloten op 13 augustus 2026: we bouwen één gedeeld design system in Claude Design, agents halen niet ieder voor zich losse frames uit Figma.** Figma blijft de plek waar het ontwerp gemaakt wordt en de repo blijft wat de build gebruikt, maar de referentie waar de drie agents tegenaan bouwen is de gedeelde bibliotheek in Claude Design, gesynchroniseerd via `/design-sync`. Zo kijken drie agents naar hetzelfde beeld in plaats van drie keer los naar Figma, en is het vooraf klaargezet in plaats van onderweg opgehaald. Het opzetten hoort bij het tokenwerk van de eigenaar en gebeurt vóór vertrek.
-
-### Figma MCP gebruiken
-
-Komt uit de **Figma-plugin**, niet uit `.mcp.json`: `claude plugin install figma@claude-plugins-official`, besloten op 30 juli 2026. Bij het eerste gebruik autoriseer je via de browser. Zie `ONBOARDING.md` stap 3.
-
-Nuttig om te vragen:
-
-- de variables uit het Foundations-bestand, om tokens uit af te leiden
-- een specifiek frame, met de node-ID uit de Figma-URL
-- welke componenten er in de library staan
-
-Wat je er **niet** mee doet: rechtstreeks Figma-output als code in de repo plakken. Dat levert altijd hardcoded waarden op, en dan doet de lint-regel zijn werk en heb je het dubbel gedaan.
-
----
-
-## Figma-bestanden
+## 8. Figma-bestanden
 
 **Userflow (board, FigJam):**
 https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow
 
-Dit is een **board**, geen design file, en dat vraagt een ander gereedschap. Gecontroleerd op 29 juli 2026: de MCP leest het board volledig uit, inclusief alle vormen, verbindingen en labels. Handmatig overtypen naar `docs/scope.md` is dus niet nodig.
+Dit is een **board**, geen design file, en dat vraagt een ander gereedschap. Gecontroleerd op 29 juli 2026: de MCP leest het board volledig uit, inclusief alle vormen, verbindingen en labels.
 
-Vraag het zo op, met de tool `get_figjam` en niet met `get_design_context`:
+Vraag het op met `get_figjam` en niet met `get_design_context`:
 
 ```
 fileKey: jwNUZRHmpKfqTCeUnFcVdP
@@ -199,79 +235,40 @@ nodeId:  0:1        (de root, dus het hele board)
 
 De blauwe cilinders op het board (`ENG_DATABASE`) markeren per stap welke data wordt opgeslagen. Dat is de bron voor `docs/datamodel.md`, inclusief de grondslag per veld.
 
-**Styleguide (design file):**
+**App Design Volledige appflow (design file):** het bestand waar het design system uit komt. Elf pagina's, waarvan `Foundations`, `MIND-Prototype-volledige-appflow` (41 schermen), `App-flow-v2`, `MIND-Prototype-uitleg` en twee pagina's met oudere schermen.
+
+**We hebben hier geen URL van in de repo, en dat is een gat.** De export vermeldt het bestand als read-only gekoppeld, zonder publieke link. Zolang die link ontbreekt kunnen Max en Caesar niet bij de bron, alleen bij wat wij hebben overgenomen. Zie de open punten.
+
+**Styleguide (design file), achterhaald:**
 https://www.figma.com/design/H1EUAgE86CsYg0LfYTNd0M/Stylguide-App-MIND
 
-Gecontroleerd op 30 juli 2026 via de MCP. Wat er staat:
+Dit was tot 20 augustus 2026 de bron voor de tokens. Eén pagina, met een palet in vijf families (Blue, Red, Purple, Yellow, Violet) met een licht- en donkervariant en uitgezochte contrastratio's per tekstgrootte, plus een aanzet tot rollen (`Primary`, `Secundary`, `Base`).
 
-- **Een kleurenpalet met vijf families:** Blue, Red, Purple, Yellow en Violet. Per kleur staan Name, Hex, Rgb en een Base, plus een aparte contrastmeting voor **Large Text** en **Small Text**. Er is een Light- en een Dark-variant.
-- **Een aanzet tot een semantische laag:** `Primary`, `Secundary`, `Base` en `State/accent`.
-- **Typografie:** Headers, Subheaders en Base.
-- **Twee schermen al uitgewerkt:** een Challenge Screen (`41:68`) en Info Hoogsensitief (`41:71`). De challenge-content sluit aan op de Mind-campagne "Leg je telefoon weg", zie `privacy-besluiten.md`.
+**Ontwerp hier niet meer tegenaan.** Het is een ander en ouder bestand dan waar het design system uit komt, met een ander opgebouwd palet. Wat er staat is niet fout, maar het is niet wat de app gebruikt, en twee palletten naast elkaar is precies hoe het beeld uit elkaar loopt.
 
-Dat de contrastratio's per tekstgrootte al zijn uitgezocht is winst: dat is normaal het werk dat blijft liggen tot iemand er bij App Review op valt.
+Twee dingen uit dat bestand zijn het bewaren waard en horen alsnog een plek te krijgen: de **contrastmetingen per tekstgrootte**, want dat is normaal het werk dat blijft liggen tot iemand er bij App Review op valt, en de vraag of er een **donkere modus** komt. Het nieuwe systeem heeft er geen, de oude styleguide wel. Zie de open punten.
 
-### Twee dingen die aandacht vragen
+De acht community-libraries die aan de oude styleguide hangen (Material 3, Simple Design System, iOS, macOS, watchOS, visionOS) waren een risico zolang onbeslist was of we een kit als basis namen. **Die vraag is beantwoord door de overname:** MIND heeft eigen componenten. De geleende bibliotheek in `reference/components/library` is bewust beperkt tot generieke besturingselementen die echt gebruikt worden. Gebruik een kit verder als referentie en niet als bron.
 
-**Er hangen acht community-libraries aan het bestand:** Material 3 Design Kit, Simple Design System, iOS en iPadOS 26, iOS en iPadOS 27, macOS 26, macOS 27, watchOS 26 en visionOS 26. Er is geen eigen gepubliceerde library.
+### Nieuwe output landt naast het goedgekeurde werk
 
-Dat is prima om mee te ontwerpen, maar het wordt een probleem zodra een scherm componenten uit die kits als instance gebruikt. Dan bouwen we tegen Material 3 of tegen Apple-componenten die niet in `packages/ui` staan, en dan klopt de code niet met het ontwerp. Er staat nu al een `Examples/Home-Mobile` in het bestand die uit de Simple Design System komt, met carousel en cards die niet uit ons eigen systeem komen.
-
-Dit is dezelfde regel als voor assets, en hij vraagt één beslissing: **welke kit is de basis, of bouwen we onze eigen componenten?** Beide kan, maar niet allebei tegelijk. Zolang dit open staat, gebruik een kit als referentie en niet als bron.
-
-**`Secundary` is een typo** en dat wordt straks een tokennaam. Nu goedzetten is gratis, later een zoek-en-vervang door de hele codebase.
-
-### Van styleguide naar tokens
-
-De kleuren zijn nu **primitief** benoemd (Blue, Red, Purple) met een aanzet tot rollen (Primary, Secondary). Dat is precies de goede richting, en het patroon uit de sectie hierboven is de volgende stap: de primitieven blijven bestaan als onderste laag, en daarbovenop komt de semantische laag die de app gebruikt.
-
-```
-primitief          semantisch (wat de app gebruikt)
-blue/500     ->    color/action/primary
-gray/900     ->    color/text/primary
-gray/500     ->    color/text/muted
-```
-
-Componentcode verwijst **alleen** naar de rechterkolom. Zo kan een kleur wijzigen zonder dat er één component aangeraakt hoeft te worden.
-
-## Figma-bestandsstructuur
-
-De opbouw loopt één richting op: elke laag gebruikt alleen wat eronder al vastligt.
-
-```
-00 Foundations       kleuren, typografie, spacing, radii, motion
-01 Assets            iconen, illustraties, textures, gradients
-02 Components        met alle states
-03 Patterns          vaste combinaties, zie hierboven
-04 Reference Screens drie tot vijf volledig uitgewerkte schermen
-05 Full Flow         de complete flow, samengesteld uit het bovenstaande
-06 Agent Playground  waar nieuwe output landt
-```
-
-**Stand op 30 juli 2026:** de styleguide heeft **één pagina** waar alles op staat, met één frame `Styleguide App Mind` van 1920 bij 1080. De indeling hierboven is dus nog een voorstel en geen beschrijving.
-
-Dat is nu geen probleem. Het wordt er een zodra er meer dan een handvol schermen bijkomen, want dan kan niemand meer een frame vinden en gaan agents de verkeerde node ophalen. De opsplitsing is werk voor de eigenaar van het design system en hoort vóór het bouwen van de tokens.
-
-Koppel elk scherm uit `docs/scope.md` aan zijn node-ID. Dan kan een agent het juiste frame ophalen zonder te zoeken.
-
-### Reference screens eerst
-
-Werk drie tot vijf schermen volledig uit voordat de rest wordt ontworpen. Die schermen zijn daarna de visuele maat: elk volgend scherm wordt daaruit afgeleid in plaats van opnieuw bedacht.
-
-Op basis van de userflow zijn dit de logische vijf:
-
-| Scherm | Waarom dit een referentie is | Status |
-|---|---|---|
-| Challenge detail | Het patroon voor alle detailpagina's | **Staat al in de styleguide**, `41:68` |
-| Naslagwerk-artikel | Het patroon voor content en voor bronvermelding | **Begonnen**, Info Hoogsensitief `41:71` |
-| Dashboard, Mijn Mentale Weer | De spil van de app, en het scherm met de meeste soorten inhoud naast elkaar | Nog doen |
-| Weer-check-in | Hier gebeurt de kernhandeling, en de toon is hier het meest kwetsbaar | Nog doen |
-| Profiel en instellingen | Het patroon voor lijsten, en waar consent wordt ingetrokken | Nog doen |
-
-Twee van de vijf zijn dus al onderweg, en het zijn precies de twee die het contentpatroon vastleggen. Wat nog mist is de spil (dashboard) en de kernhandeling (check-in).
-
-### Agent Playground
-
-Nieuwe output van een agent, of een variant waar nog niet over besloten is, landt op **06 Agent Playground**. Niet in Foundations, niet in Components, niet in de goedgekeurde reference screens.
+Een variant waar nog niet over besloten is, hoort niet in Foundations, niet tussen de componenten en niet in de goedgekeurde schermen. Zet er een aparte pagina voor aan.
 
 Dat is dezelfde regel als onze branches, alleen in Figma: je werkt naast het goedgekeurde werk en het wordt pas onderdeel daarvan als de eigenaar het overzet. Zonder deze afspraak is één enthousiaste agent genoeg om een component library stil te laten wegdrijven.
+
+---
+
+## 9. Wat open staat
+
+Dit zijn beslissingen van ons drieën, geen vergeten werk. De technische varianten hiervan staan met meer detail in `packages/ui/README.md`.
+
+| Wat | Waarom het nu telt |
+|---|---|
+| **`expo-image` als dependency** | De achtergronden staan in WebP. Dat werkt in Expo met `expo-image`, en met de ingebouwde `<Image>` alleen op Android met extra bouwconfiguratie. Zeggen we nee, dan gaan ze terug naar PNG en kost dat 2,6 MB in plaats van 127 KB. |
+| **De fonts meebundelen** | Averia Serif Libre, Averia Libre en Open Sans komen nu van Google Fonts over het netwerk. Dat werkt niet in een app en niet offline. Vraagt `expo-font` plus de fontbestanden. |
+| **De vierde check-in-pose** | De mascotte voor `zicht` is nooit geëxporteerd. Eén van de vier vragen mist zijn beeld. Dit blokkeert de check-in, en dat is de kernhandeling. |
+| **De mascotte-poses op 3x** | Nu 354 bij 136 pixels voor een weergave van 128 hoog. Op een retina-scherm wordt dat zacht. |
+| **Een link naar het bronbestand in Figma** | Zonder die link kunnen Max en Caesar niet bij het ontwerp, alleen bij wat is overgenomen. |
+| **Donkere modus: wel of niet** | Het overgenomen systeem heeft er geen. De oude styleguide had wel een licht- en donkervariant. Nu beslissen is goedkoop, later betekent het elke kleur opnieuw langslopen. |
+| **Waar de Hulplijn zichtbaar is** | Systeembreed, maar niet per se op elk scherm. Zolang dat niet vastligt bouwt iedereen het net anders in. |
+| **Contrastcontrole** | De oude styleguide had ratio's per tekstgrootte, het nieuwe systeem niet. Voor App Review en voor de doelgroep is dit geen detail. |

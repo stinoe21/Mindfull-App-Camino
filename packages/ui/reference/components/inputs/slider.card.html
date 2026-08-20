@@ -1,0 +1,13 @@
+<!-- @dsCard group="Components" viewport="700x220" name="Check-in Slider" subtitle="Non-judgmental two-ended input" -->
+<html><head><link rel="stylesheet" href="../../preview.css"><script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script><script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script><script src="../../_ds_bundle.js"></script></head>
+<body style="margin:0;background:var(--surface-background);font-family:var(--font-body)">
+<div id="root"></div>
+<script type="text/babel">
+const {Slider}=window.MINDDesignSystem_fbcbe3;
+function Demo(){return (<div style={{padding:24,display:"flex",flexDirection:"column",gap:14}}>
+<Slider leftLabel="Guur" rightLabel="Lekker zacht" value={38}/>
+<Slider leftLabel="Wisselvallig" rightLabel="Stabiel" value={70}/>
+</div>);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body></html>

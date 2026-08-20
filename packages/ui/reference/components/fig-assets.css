@@ -1,0 +1,11 @@
+/* Assetverwijzingen omgezet bij het overnemen in de repo: de export had drie
+ * kopieen van dezelfde afbeeldingen onder hashnamen. Er is er nu een, onder
+ * een leesbare naam, in packages/ui/assets. Zie packages/ui/README.md. */
+.fig-asset-054dfe02e425078f-1891fd6c { background: url(../kit-assets/054dfe02e425078f.webp) center / contain no-repeat, linear-gradient(var(--schemes-surface-container-high),var(--schemes-surface-container-high)); }
+.fig-asset-1b7c333b1db90b48 { background: url(../../assets/backgrounds/hero-wolken.webp) center / cover no-repeat; }
+.fig-asset-2d76afdf8003b24a { background: url(../../assets/backgrounds/hero-wind.webp) center / cover no-repeat; }
+.fig-asset-2f4a875b3bf21bdb { background: url(../../assets/backgrounds/hero-default.webp) center / cover no-repeat; }
+.fig-asset-69c975fb5b8b0073 { background: url(../../assets/backgrounds/hero-regen.webp) center / cover no-repeat; }
+.fig-asset-6c3af41e9f7294a3 { background: url(../../assets/backgrounds/hero-mist.webp) center / cover no-repeat; }
+.fig-asset-f3e771cda8e7097c { background: url(../../assets/backgrounds/hero-zonnig.webp) center / cover no-repeat; }
+.fig-asset-f5317619e0cf05bd-efecbe4d { background: url(../../assets/nav/nav-home-icon.webp) 34.618% 0.003% / 454.792% 548.837% no-repeat; }

@@ -1,0 +1,23 @@
+<!-- @dsCard group="Components" viewport="780x460" name="Mascotte / Vlieger" subtitle="Kite mascot mood states" -->
+<html><head><link rel="stylesheet" href="../preview.css"><script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script><script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script><script src="../_ds_bundle.js"></script></head>
+<body style="margin:0;background:var(--surface-background);font-family:var(--font-body)">
+<div id="root"></div>
+<script type="text/babel">
+const {MascotteVlieger}=window.MINDDesignSystem_fbcbe3;
+// Intake is laid out as a stretch-height row, so it collapses without an explicit height.
+const states=[["default",null],["zonnig",null],["wolken",null],["mist",null],["wind",null],["regen",null],["intake",152]];
+function Demo(){return (
+<div style={{display:"flex",flexWrap:"wrap",gap:16,padding:28}}>
+{states.map(([s,h])=>(
+<div key={s} style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-end",gap:10,width:170,height:190,boxSizing:"border-box"}}>
+<div style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",overflow:"visible"}}>
+<MascotteVlieger state={s} style={h?{height:h,transform:"scale(.8)"}:{transform:"scale(.8)"}}/>
+</div>
+<span style={{fontFamily:"var(--font-body)",fontSize:11,color:"var(--text-secondary)"}}>{s}</span>
+</div>
+))}
+</div>
+);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body></html>

@@ -1,0 +1,9 @@
+<!-- @dsCard group="Colors" viewport="700x140" name="Accent & Feedback" subtitle="CTA lime, and success/warning/error" -->
+<html><head><link rel="stylesheet" href="../preview.css"></head>
+<body style="margin:0;font-family:var(--font-body)">
+<div style="display:flex;padding:20px 24px;gap:14px">
+<script>
+document.currentScript.replaceWith(...[['accent-lime','CTA lime'],['accent-coral','Coral'],['accent-yellow','Yellow'],['accent-magenta','Magenta'],['feedback-success','Success'],['feedback-warning','Warning'],['feedback-error','Error']].map(([k,l])=>{const d=document.createElement('div');d.style="display:flex;flex-direction:column;gap:6px;width:80px";d.innerHTML=`<div style="height:44px;border-radius:8px;background:var(--${k});box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)"></div><span style="font-size:10px;color:var(--text-secondary)">${l}</span>`;return d;}));
+</script>
+</div>
+</body></html>

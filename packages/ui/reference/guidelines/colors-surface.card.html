@@ -1,0 +1,9 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Surface & Base" subtitle="App background cream + card white + ink" -->
+<html><head><link rel="stylesheet" href="../preview.css"></head>
+<body style="margin:0;font-family:var(--font-body)">
+<div style="display:flex;padding:20px 24px;gap:14px">
+<script>
+document.currentScript.replaceWith(...[['base-cream','App background'],['surface-card','Card surface'],['base-ink','Ink text'],['border-default','Border']].map(([k,l])=>{const d=document.createElement('div');d.style="display:flex;flex-direction:column;gap:6px;width:100px";d.innerHTML=`<div style="height:44px;border-radius:8px;background:var(--${k});box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)"></div><span style="font-size:10px;color:var(--text-secondary)">${l}</span>`;return d;}));
+</script>
+</div>
+</body></html>

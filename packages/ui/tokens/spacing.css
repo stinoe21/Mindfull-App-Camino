@@ -1,0 +1,6 @@
+:root{
+--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;
+--radius-sm:8px;--radius-md:16px;--radius-lg:24px;--radius-pill:999px;--radius-xl:28px;
+--shadow-card:inset 0 0 0 1px rgba(0,0,0,0.08);
+--shadow-card-border:inset 0 0 0 1px var(--border-default);
+}

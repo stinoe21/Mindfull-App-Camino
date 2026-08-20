@@ -1,0 +1,14 @@
+<!-- @dsCard group="Components" viewport="420x150" name="Navigation Bar" subtitle="5-item floating tab bar — frosted panel over hero art" -->
+<html><head><link rel="stylesheet" href="../preview.css"><script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script><script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script><script src="../_ds_bundle.js"></script></head>
+<body style="margin:0;background:var(--surface-background);font-family:var(--font-body)">
+<div id="root"></div>
+<script type="text/babel">
+const {NavigationBar,BackgroundHeroBand}=window.MINDDesignSystem_fbcbe3;
+function Demo(){return (
+<div style={{position:"relative",width:402,height:140,margin:"5px 9px",overflow:"hidden",borderRadius:12}}>
+  <BackgroundHeroBand state="default" style={{position:"absolute",left:0,bottom:0,width:402,height:200}}/>
+  <NavigationBar style={{position:"absolute",left:0,top:15}}/>
+</div>);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body></html>

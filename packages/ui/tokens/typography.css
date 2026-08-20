@@ -1,0 +1,32 @@
+/* Typografie.
+ *
+ * Afwijking van de Claude Design-export, bewust en met bron. De export liet bij
+ * display, quote, body, body-small en de labels de familie en het gewicht weg en
+ * leunde op de CSS-cascade. React Native kent geen cascade: een Text zonder
+ * fontFamily valt terug op het systeemfont, en dan is Averia weg zonder dat
+ * iemand het merkt. Daarom staat elke rol hier compleet.
+ *
+ * Herkomst per waarde: de specimen-kaarten in reference/guidelines/type-*.card.html.
+ *   display / h1 / h2 / h3 / quote  -> var(--font-display)      Averia Serif Libre
+ *   subtitle                        -> var(--font-display-alt)  Averia Libre light italic
+ *   body / body-small / labels      -> var(--font-body)         Open Sans
+ *   quote en subtitle staan cursief in de specimen.
+ *
+ * accent-h2-italic staat in de export maar wordt nergens gebruikt en heeft geen
+ * familie. Niet zelf ingevuld: zie packages/ui/README.md, open punten.
+ */
+:root{
+--text-h1-size:32px;--text-h1-line:38px;--text-h1-family:var(--font-display);--text-h1-weight:400;
+--text-h2-size:24px;--text-h2-line:30px;--text-h2-family:var(--font-display);--text-h2-weight:400;
+--text-h3-size:20px;--text-h3-line:26px;--text-h3-family:var(--font-display);--text-h3-weight:400;
+--text-display-size:44px;--text-display-line:48px;--text-display-family:var(--font-display);--text-display-weight:400;
+--text-accent-h2-italic-size:24px;--text-accent-h2-italic-line:30px;--text-accent-h2-italic-style:italic;
+--text-quote-size:21px;--text-quote-line:28px;--text-quote-family:var(--font-display);--text-quote-weight:400;--text-quote-style:italic;
+--text-subtitle-size:20px;--text-subtitle-line:26px;--text-subtitle-family:var(--font-display-alt);--text-subtitle-weight:300;--text-subtitle-style:italic;
+--text-body-emphasis-size:16px;--text-body-emphasis-line:24px;--text-body-emphasis-family:var(--font-body);--text-body-emphasis-weight:600;
+--text-body-size:16px;--text-body-line:24px;--text-body-family:var(--font-body);--text-body-weight:400;
+--text-body-small-size:14px;--text-body-small-line:20px;--text-body-small-family:var(--font-body);--text-body-small-weight:400;
+--text-label-button-size:14px;--text-label-button-line:20px;--text-label-button-family:var(--font-body);--text-label-button-weight:600;
+--text-label-caption-size:12px;--text-label-caption-line:16px;--text-label-caption-family:var(--font-body);--text-label-caption-weight:600;
+--text-label-overline-size:11px;--text-label-overline-line:16px;--text-label-overline-family:var(--font-body);--text-label-overline-weight:600;--text-label-overline-tracking:0.06em;
+}

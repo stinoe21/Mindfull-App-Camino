@@ -1,0 +1,30 @@
+<!-- @dsCard group="Shared Library" viewport="760x760" name="Shared library" subtitle="Generic controls borrowed from another kit — not MIND's own vocabulary" -->
+<html><head><link rel="stylesheet" href="../../preview.css"><script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script><script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script><script src="../../_ds_bundle.js"></script></head>
+<body style="margin:0;background:var(--surface-background);font-family:var(--font-body)">
+<div id="root"></div>
+<script type="text/babel">
+const L=window.MINDDesignSystem_fbcbe3;
+const Row=({label,children})=>(<div style={{display:"flex",flexDirection:"column",gap:8,padding:"12px 0",borderBottom:"1px solid var(--border-default)"}}>
+  <span style={{fontFamily:"var(--font-body)",fontWeight:600,fontSize:11,letterSpacing:".04em",color:"var(--text-secondary)"}}>{label.toUpperCase()}</span>
+  <div style={{display:"flex",gap:10,alignItems:"center",flexWrap:"wrap"}}>{children}</div>
+</div>);
+function Demo(){return (
+<div style={{padding:24,display:"flex",flexDirection:"column",gap:2}}>
+  <Row label="Button (generic)"><L.LibraryButton/></Row>
+  <Row label="Button Group"><L.ButtonGroup/></Row>
+  <Row label="Input Field"><L.InputField/></Row>
+  <Row label="Textarea Field"><L.TextareaField/></Row>
+  <Row label="Icon button - standard"><L.IconButtonStandard/></Row>
+  <Row label="Chevron right / down"><L.ChevronRight/><L.ChevronDown/></Row>
+  <Row label="Star / stars filled"><L.Star/><L.StarsFilled/></Row>
+  <Row label="X / close / check_small"><L.X/><L.Close/><L.CheckSmall/></Row>
+  <Row label="Continue with Apple / Google"><L.ContinueWithAppleCentreFixed/><L.ContinueWithGoogleCentreFixed/></Row>
+  <Row label="Focus indicator"><L.FocusIndicator/></Row>
+  <Row label="Arrow up-right / arrow_forward"><L.ArrowUpRight/><L.ArrowForward/></Row>
+  <Row label="Icons/check_24px"><L.IconsCheck24px/></Row>
+  <Row label="Form Contact"><L.FormContact/></Row>
+</div>
+);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body></html>
