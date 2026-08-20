@@ -10,9 +10,9 @@ Dit is dus geen tweede regelset. Bij twijfel of tegenspraak wint `CLAUDE.md`.
 
 ## Stand van zaken
 
-**Er staat nog geen app-code in deze repo.** Geen `apps/`, geen `packages/`, geen `package.json`. De backend wel: het Supabase-schema staat in `supabase/`, met de migraties en het controlescript. De tokens waar hieronder naar verwezen wordt bestaan dus nog niet, en de checks uit de definition of done zijn nog niet te draaien.
+**De app draait, maar er staat nog geen enkel scherm in.** `apps/mobile` is gescaffold (Expo SDK 57, expo-router) en `npm run typecheck`, `npm run lint` en `npm test` zijn groen. De tokens staan in `packages/ui/tokens`, de componenten in `packages/ui/components` nog niet. De twintig routebestanden van de userflow staan er leeg, met per stuk een verwijzing naar hun specificatie.
 
-Eerst moet `docs/scope.md` ingevuld worden en daarna de Expo-app gescaffold, allebei door het team en niet door een agent. Zie `CLAUDE.md` sectie 0. Word je gevraagd een feature te bouwen en is dat nog niet gebeurd, meld dat dan.
+Wat nog moet: `docs/scope.md` invullen, door het team en niet door een agent. Zie `CLAUDE.md` sectie 0. Word je gevraagd een productbeslissing te nemen die daar had moeten staan, meld dat dan in plaats van hem zelf te nemen.
 
 ---
 

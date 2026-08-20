@@ -20,9 +20,11 @@ Wat er nu ligt:
 | Schermregels, ontwerpprincipes, letterlijke teksten | **Vastgelegd.** `packages/ui/reference/HERKOMST.md`. |
 | Componentspecificatie: maten, varianten, vectorpaden | **Vastgelegd** als React DOM. `packages/ui/reference/components`. |
 | 41 schermen, klikbaar prototype | **Aanwezig.** `packages/ui/reference/ui_kits/mind-app/index.html`. |
-| React Native-componenten | **Nog niet gebouwd.** Dat is bouwwerk en wacht op de scaffold. |
-| De lint-regel tegen hardcoded waarden | **Nog niet opgezet.** Wacht op de scaffold. |
-| Het kitchen sink-scherm | **Nog niet opgezet.** Wacht op de scaffold. |
+| De app die dit alles toont | **Draait**, sinds 20 augustus 2026. `apps/mobile`, Expo SDK 57. |
+| De vijf lettertypes geladen in de app | **Gedaan.** `apps/mobile/src/theme/fonts.ts` en de root layout. |
+| De lint-regel tegen hardcoded waarden | **Staat aan**, sinds 20 augustus 2026. `eslint.config.js`. Kleur en typografie zijn een fout, losse maten een waarschuwing. |
+| Het kitchen sink-scherm | **Staat er**, op `/_dev/kitchen-sink`: de typeschaal, alle kleuren, en een link naar elk scherm. |
+| React Native-componenten | **Nog niet gebouwd.** `packages/ui/components` is leeg. Dat is het echte bouwwerk. |
 
 De skill `mind-design` laadt automatisch en wijst je bij elke visuele vraag het juiste bestand aan. Gebruik die in plaats van te zoeken.
 

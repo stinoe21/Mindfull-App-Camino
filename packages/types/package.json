@@ -1,0 +1,8 @@
+{
+  "name": "@mind/types",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeScript-types, gegenereerd uit het Supabase-schema. Nooit met de hand schrijven.",
+  "main": "./index.ts",
+  "types": "./index.ts"
+}

@@ -31,7 +31,9 @@ jobs:
       - uses: actions/setup-node@v4
         if: steps.scaffold.outputs.ready == 'true'
         with:
-          node-version: 20
+          # Node 24 en niet lager: npm test draait de testrunner van Node
+          # rechtstreeks op TypeScript, en dat kan pas vanaf 24 zonder vlag.
+          node-version: 24
           cache: npm
 
       - name: Install
