@@ -1,0 +1,54 @@
+---
+title: "Ervaringsverhaal van Annelies over haar chronische slapeloosheid"
+bron: https://wijzijnmind.nl/psychische-klachten/psychipedia/slapeloosheid/annelies-chronische-slapeloosheid
+opgehaald: 2026-08-13
+---
+
+# Ervaringsverhaal van Annelies over haar chronische slapeloosheid
+
+**Die gedachte beheerste twintig jaar lang het leven van Annelies (42). "Ik dacht dat ik het maar moest accepteren, tot ik bij een slaaptraining leerde dat ik later naar bed moest gaan om moe genoeg te worden."**
+
+“Als je een been breekt en in het gips zit, ziet iedereen wat er aan de hand is. Maar als je lijdt aan slapeloosheid, ziet niemand dit aan je. Hoe vermoeid je ook bent, een beetje make-up doet wonderen. Daardoor werden mijn slaapproblemen niet altijd begrepen. Als ik erover vertelde, hoorde ik soms: ‘Ach, een nachtje niet slapen, kan gebeuren.’ Ik voelde mij daardoor soms echt alleen op de wereld.”
+
+**Slechte smoes**
+
+“Mijn slaapproblemen begonnen nadat ik rond mijn twintigste een borstverkleining had laten doen. Na de operatie viel ik moeilijk in slaap en lag ik tot twee, drie uur ’s nachts klaarwakker in bed. Als ik eindelijk in slaap viel, werd ik vaak om vijf uur alweer wakker.
+
+’s Ochtends was ik gebroken. De operatie was niet ingrijpend en bovendien was ik blij met het resultaat. Er zat me verder niks dwars waarover ik ’s nachts piekerde. Naar de huisarts ging ik niet, omdat ik dacht dat ik het probleem zelf kon oplossen. Maar dat lukte niet: soms sliep ik amper drie uur per nacht, waardoor ik overdag niet vooruit te branden was. Ik woonde bij mijn ouders en werkte fulltime bij een bank, maar meldde me vaak ziek met de smoes dat ik buikpijn had. Slecht slapen vond ik geen goede reden om thuis te blijven. Overdag haalde ik wat slaapuurtjes in, dan sliep ik wel door. Ik zegde ook regelmatig afspraken met vriendinnen af, mijn sociale wereld werd steeds kleiner.
+
+Ondertussen deed ik alles om weer goed te kunnen slapen: ontspanningsoefeningen, stoppen met koffie, homeopathische middelen slikken, een zelfhulpcursus Beter slapen van Teleac. Niets hielp.”
+
+**Steeds gefrustreerder**
+
+“In de loop der jaren verergerden mijn klachten, ik kreeg concentratieproblemen, was erg prikkelbaar, ik reageerde heel kribbig en kon weinig hebben. Met mijn leven was niks mis, maar lichamelijk was ik uitgeput. Ik moest mezelf vooruit slepen. Ik besloot toch naar de huisarts te gaan en kreeg slaapmedicijnen voorgeschreven. Deze hielpen niet of maar   
+tijdelijk. Vrienden en collega’s die ik vertelde over mijn slaapproblemen, reageerden met: ‘Je ziet het niet aan je, je ziet er uitgerust uit.’ Een beetje poeder kon veel verhullen. Of ze gaven goedbedoelde adviezen: ‘Zorg dat je geen koffie en wijn drinkt ’s avonds, ga een rondje lopen voor het slapen, neem wat minder hooi op je vork...’
+
+Inmiddels had ik alles geprobeerd, tot aan het maken van een nachtwandeling toe. Iedere nacht was voor mij een nachtmerrie. Ik hield sterk vast aan acht uur slaap, omdat ik dacht dat dat normaal was. Ik ging dus al vaak gespannen naar bed. Op zondag tankte ik vaak bij en sliep ik door tot één uur ’s middags. Maar waarom sliep ik overdag wel? De weekenden in bed liggen was geen oplossing want dan zou ik mijn dag-nachtritme omgooien. Het frustreerde me: waarom kon ik niet slapen? Mijn slaapprobleem stond ook mijn ambities in de weg. Ik begon aan een taalcursus, maar maakte die niet af. Vaak duurde een les tot tien uur ’s avonds, en daarvoor was ik te moe. Ik begon steeds meer aan mezelf te twijfelen.”
+
+**Therapie en pillen**
+
+“Drie uur slaap per nacht werd normaal. Na enkele jaren zette ik een knop om, ik hield me voor dat het ook goed was als ik op bed lag en rustte. Mijn vermoeidheid moest ik maar accepteren. Hierdoor veranderde mijn slaappatroon: ik viel vrij snel in slaap, maar werd vervolgens om drie uur wakker en kon dan niet doorslapen. Vaak viel ik pas om zes uur weer in slaap. Niet echt een verbetering. Omdat de huisarts verder niks voor mij kon doen, bezocht ik een personal coach om te kijken of mij misschien iets dwarszat uit het verleden waardoor ik nu slecht sliep. Daar kwam niks uit.
+
+Daarop liet ik me door de huisarts doorverwijzen naar een slaapcentrum, waar ze zeiden dat ik waarschijnlijk een stofje miste waardoor ik niet kon slapen. Er was niks tegen te doen, behalve cognitieve therapie om bepaalde slaapgedachten te veranderen. Ik moest mezelf bijvoorbeeld voorhouden ‘ik mag niet slapen’, waardoor ik juist in slaap zou vallen. Ook dat hielp niet. Ze adviseerden mij antidepressiva te slikken, omdat een lage dosis kon helpen bij het doorslapen. Ik was daar geen voorstander van, ook vanwege de vele bijwerkingen, waaronder gewichtstoename.
+
+Hooguit één keer in de week gebruikte ik slaappillen om bij te tanken. Dan sliep ik een nacht door, maar overdag kampte ik met de bijwerkingen. Zo tobde ik jaren door.”
+
+**Echt moe**
+
+“Rond mijn dertigste leerde ik Kees kennen. We waren gelukkig, trouwden redelijk snel en hadden rust en stabiliteit in ons leven. Toch kreeg ik het slapen niet onder controle. ’s Nachts was ik gefocust op geluiden. Als Kees zacht snurkte, hoorde ik dat, ook al deed ik oordoppen in. Soms ging ik dan op de logeerkamer liggen. Een paar jaar na ons trouwen beviel ik van een tweeling. Ik was al gewend aan weinig slaap, daarin veranderde de komst van de  
+tweeling niets. Als zij overdag naar bed gingen, deed ik een power nap. Daarmee kon ik redelijk de dag doorkomen.
+
+Naarmate ze ouder en actiever werden, moest ik mezelf continu opladen om een leuke en gezellige moeder te blijven. Het gezinsleven werd drukker, ik werd prikkelbaarder. Ik had een kort lontje, reageerde geïrriteerd naar Kees en de kinderen. Ik zag als een berg op tegen het huishouden, na het stofzuigen moest ik even op de bank liggen. De kinderen uit school halen en koken deed ik met tegenzin. Het ging gewoon bijna niet. Als ik echt moest bijtanken, vroeg ik of mijn ouders wilden oppassen. Af en toe ging ik naar de huisarts voor een slaaptablet. Het dieptepunt bereikte ik toen de tweeling vier jaar was. ‘Jij bent altijd moe’, zeiden de kinderen tegen me. Dat kwam hard aan, want ik wilde wél gezellig doen. Soms dacht ik: had ik maar geen kinderen, dan was het een stuk makkelijker. Ik huilde veel in die tijd en dat hield maar niet op. Het hele gezin had onder mijn slaapprobleem te lijden. Op aandringen van Kees meldde ik me voor langere tijd ziek. Zo kon het niet langer doorgaan. Ik bezocht nogmaals een slaapcentrum. Dit keer kreeg ik elektroden op mijn hoofd en een kastje op mijn lichaam waarmee ze twee dagen lang mijn zuurstofniveau en hersenactiviteit zouden registreren. Daar moest ik mee naar mijn werk en mee slapen. Dat vond ik niet zo erg, zolang er maar wat werd gevonden. Het enige wat daaruit kwam, was dat ik in de overgang naar de diepere slaap wakker werd en niet in de remslaap kwam. Het kwam vaker voor, er was niets tegen te doen, werd me verteld. Er zat niks anders op dan mijn slaapprobleem te accepteren. Tot ik niet lang daarna een artikel las over een slaapcentrum waarvan de resultaten veelbelovend waren. Het voelde als de laatste strohalm en bij de huisarts vroeg ik om een verwijsbrief. Na het aanhoren van mijn verhaal zeiden de slaapdeskundigen dat ik waarschijnlijk iets in mezelf moest veranderen. Ik volgde één dag in de week een slaaptraining en deelde in een groep mijn ervaringen met andere cliënten die soms helemaal niet sliepen.
+
+Dat luchtte mij een beetje op, het kon dus nog erger. Ik moest vertellen hoe laat ik naar bed ging en hoe lang ik gemiddeld sliep. Daarna kreeg ik strikte slaaptijden voorgeschreven, ik mocht niet voor één uur ’s nachts naar bed gaan en moest om half zes de wekker zetten. Een hele opgave, want ik was gewend om uiterlijk om elf uur naar bed te gaan. Om één uur was ik echt moe. Die laatste uren mocht ik geen tv kijken, laptop gebruiken of lezen en de slaapkamer was alleen om te slapen. Het was wennen. Als ik ’s ochtends mijn bed uit ging, sliep de rest van het gezin nog. Dan ging ik een stukje wandelen. Het doel van mijn nieuwe slaapschema was om de slaapdruk op te voeren, waardoor mijn hersenen het signaal zouden afgeven dat ik moest gaan slapen. Uiteindelijk zou daardoor de vicieuze cirkel van mijn slaapprobleem worden doorbroken. Ik merkte dat ik langer sliep, geleidelijk ging ik naar vier uur en een kwartier. Zelf was ik daar niet tevreden mee, maar in het slaapcentrum zeiden ze dat het een topprestatie was.
+
+Ik had in mijn hoofd geprent dat ik zes tot zeven uur moest slapen. Ik kreeg te horen dat er geen richtlijn bestaat, de één heeft acht uur slaap nodig, de ander heeft aan zes uur voldoende. Ik merkte wel dat ik met vier uur slaap meer uitgerust was. Ik hield het slaapschema vier maanden vol, tot de zomervakantie. Wat moest ik tijdens onze vakantie doen om vijf uur ’s ochtends? Ik liet het schema los, maar merkte direct dat mijn slaap minder werd. Ik moest dus blijven volhouden.”
+
+**Mooier leven**
+
+“Alweer een jaar geleden begon ik aan het aangepaste slaapschema en nog steeds ga ik rond één uur naar bed. Ik word om half zes wakker maar slaap wel vierenhalf uur aan een stuk door. Dat is voor mij een grote verbetering. Heel soms ga ik eerder naar bed, maar dan lig ik midden in de nacht wakker. En dan duurt wachten tot de wekker gaat héél lang. De slaapdruk opvoeren klinkt simpel, maar het is een moeizaam proces. Het is geen kwestie van enkele weken proberen, het gaat om maandenlang serieus aan de slag gaan. Ik heb ook gemerkt dat het helpt als ik mijn agenda niet volplan en bewust rustmomenten inbouw. Als het in mijn hoofd rustig is, slaap ik beter. Als ik me voorheen enthousiast en geestelijk topfit voelde, dacht ik vaak: ik heb het gevoel dat ik over daken kan springen. Alleen liet mijn lichaam me in de steek; altijd sjouwde ik die vermoeidheid met me mee. Die is nu grotendeels weg.
+
+Toch blijft mijn slaap soms een last. Als ik een weekendje weg ben met vriendinnen, slaap ik beter in een kamer voor mezelf. En soms verkies ik nog de logeerkamer voor de slaapkamer. Slapeloosheid is niet heel zichtbaar, daarom is het belangrijk erover te praten en hulp te vragen. Nu heb ik in de weekenden energie en verlang ik niet meer naar mijn bed op zondag. Ik heb zin om dingen te ondernemen, ben minder prikkelbaar en kan er zijn voor mijn man en kinderen. Afgelopen jaar heb ik ook een cursus Spaans opgepakt. Die kleine dingen samen maken mijn leven mooier. Naast een ander slaappatroon ligt de oplossing voor mij ook in acceptatie. Ik zie in dat ik misschien nooit langer dan vijf uur zal slapen en dat hoeft ook niet, zolang ik maar uitrust. Die paar uur meer maken echt enorm verschil in mijn leven.”
+
+_Dit verhaal werd eerder gepubliceerd in het tijdschrift Vriendin.  
+Gepubliceerd door Fonds Psychische Gezondheid/MIND met toestemming van de auteur._
