@@ -12,7 +12,9 @@ Dit is dus geen tweede regelset. Bij twijfel of tegenspraak wint `CLAUDE.md`.
 
 **De app draait, maar er staat nog geen enkel scherm in.** `apps/mobile` is gescaffold (Expo SDK 57, expo-router) en `npm run typecheck`, `npm run lint` en `npm test` zijn groen. De tokens staan in `packages/ui/tokens`, de componenten in `packages/ui/components` nog niet. De twintig routebestanden van de userflow staan er leeg, met per stuk een verwijzing naar hun specificatie.
 
-Wat nog moet: `docs/scope.md` invullen, door het team en niet door een agent. Zie `CLAUDE.md` sectie 0. Word je gevraagd een productbeslissing te nemen die daar had moeten staan, meld dat dan in plaats van hem zelf te nemen.
+Sinds 20 augustus 2026 staat de contentbibliotheek van Mind in `content/mind/`: 339 pagina's naslag om in te zoeken. Let op: dat is **nog geen goedgekeurde contentbron voor de app**, zie `content/mind/LEESMIJ.md` voordat je er iets uit overneemt.
+
+Wat nog moet: het concept in `docs/scope.md` bevestigen en de resterende TODO's daar beslissen, door het team en niet door een agent. Zie `CLAUDE.md` sectie 0. Word je gevraagd een productbeslissing te nemen die daar had moeten staan, meld dat dan in plaats van hem zelf te nemen.
 
 ---
 
@@ -53,7 +55,8 @@ Het betekent **niet** dat alleen die persoon daar mag werken, en het betekent ni
 | Wat bouwen we wel en niet | `docs/scope.md` |
 | Hoe de app zich hoort te gedragen | `docs/productprincipes.md` |
 | Afspraken rond design: tokens, schermregels, assets, Figma | `docs/design-system.md` |
-| Een concrete kleur, maat, component of schermopbouw | `packages/ui/README.md` |
+| Een concrete kleur, maat, component of schermopbouw | `packages/ui/README.md`, of `.claude/skills/mind-design/SKILL.md` |
+| Iets opzoeken in de content van Mind: challenges, gidsen, zelftests, ervaringsverhalen | `content/mind/LEESMIJ.md`, of `.claude/skills/mind-content/SKILL.md` |
 | Wat er moet gebeuren om het ontwerp in React Native te krijgen | `docs/van-ontwerp-naar-app.md` |
 | Welke data we opslaan en hoe lang | `docs/datamodel.md` |
 | Hoe de backend in elkaar zit en hoe je er iets aan wijzigt | `docs/backend-draaiboek.md` |
