@@ -86,14 +86,24 @@ De zesde hero-achtergrond zat alleen onder een hashnaam in de componentmap en ni
 
 De originele zip blijft buiten git: 45 MB is te veel om drie mensen op Camino-wifi te laten klonen. Hij staat op de laptop van Stijn en het systeem staat in Claude Design.
 
+## Hoe je dit importeert
+
+```ts
+import { colors, type, space, radius } from "@mind/ui";
+```
+
+Eén importpunt, `packages/ui/index.ts`. Er is een lint-regel die hardcoded kleur en typografie weigert, zie `eslint.config.js`, en er is een test die de invarianten bewaakt (`npm test`): elke typerol heeft een echt lettertypebestand, geen enkele rol draagt zelf een gewicht, en geen token waardeert een gemoedstoestand.
+
 ## Open punten
 
 Deze staan hier omdat ze een beslissing van ons drieën zijn, niet omdat ze vergeten zijn.
 
-1. **Vier pakketten toevoegen.** `expo-image` (WebP en de achtergronden), `expo-font` (de snitten), `react-native-svg` (de mascotte en de navigatiebalk zijn vectors) en `expo-linear-gradient` (de hero die in de crèmekleur vervaagt). Alle vier zitten in Expo Go, dus geen development build en geen native configuratie. Het blijft een dependency-besluit, zie `CLAUDE.md` sectie 5, en het hoort in dezelfde PR als de scaffold.
-2. **De mascotte voor `zicht` is nooit geëxporteerd.** `MascotteInput` valt voor die vraag terug op `mascot-main.svg`. Eén van de vier check-in-vragen mist dus zijn eigen beeld. Dit is een blokkade voor de check-in, geen randgeval.
+1. ~~Vier pakketten toevoegen.~~ **Gedaan op 20 augustus 2026**, in de scaffold-PR. `expo-image`, `expo-font`, `react-native-svg` en `expo-linear-gradient` staan in `apps/mobile/package.json`, alle vier in Expo Go. Zie `docs/van-ontwerp-naar-app.md` deel 2.
+2. ~~De mascotte voor `zicht` is nooit geëxporteerd.~~ **Besloten op 20 augustus 2026: we doen het met drie.** Die vraag valt terug op `mascot-main.svg`, en dat is de afspraak en geen noodgreep. Niet alsnog om een vierde vragen.
 3. **De drie mascotte-poses staan op 354 bij 136 pixels** en worden op 128 punten hoog getoond. Dat is ongeveer 1x, dus op een retina-scherm wordt het zacht. Ze horen op 3x geëxporteerd te worden, of als SVG zoals `mascot-main.svg` al is.
 4. **`accent-h2-italic` wordt nergens gebruikt** en heeft geen familie. Niet zelf ingevuld, zie `CLAUDE.md`: wat niet is afgesproken vullen we niet in.
 5. **`--font-ui` (Inter) is dood.** `HERKOMST.md` noemt de Inter-specificatie op de knop verouderd en zegt dat de typeschaal wint. De token staat er nog; weghalen kan zodra iemand bevestigt dat er niets aan hangt.
 6. **De feedbackkleuren komen in geen enkel scherm voor.** Ze bestaan voor echte systeemfeedback (formuliervalidatie, foutmeldingen). Gebruik ze daar en nergens anders: de stemming van iemand krijgt geen stoplichtkleur.
-7. **De componenten moeten nog naar React Native.** `components/` is nu leeg. Dat is bewust: dat is bouwwerk, geen overname.
+7. **De componenten moeten nog naar React Native.** `components/` is nu leeg. Dat is bewust: dat is bouwwerk, geen overname. De volgorde staat in `docs/van-ontwerp-naar-app.md` deel 5, en de eerste is `ScreenCanvas`.
+8. **De kleurtokens en de weercodes heten niet hetzelfde.** De achtergronden in `assets/backgrounds` volgen de database (`hero-zonnig`, `hero-wolken`, `hero-mist`, `hero-wind`, `hero-regen`), de kleurtokens zijn Engels: `weatherSun`, `weatherCloud`, `weatherRain`, `weatherStorm`, `weatherMist`. Er is dus een `storm` zonder weerbeeld en een `wind` zonder kleur. Zolang niemand een weerkleur per weerbeeld opzoekt gaat dat goed. Bij het uitkomstscherm wordt het een keuze, en die is aan ons drieën.
+9. **De 4px-schaal mist de tussenmaten die het ontwerp wel gebruikt.** `HERKOMST.md` noemt 14, 18 en 28 als bewuste waarden, en `space` kent ze niet. Daarom is de lint-regel op maten een waarschuwing en geen fout: zie de uitleg in `eslint.config.js`.

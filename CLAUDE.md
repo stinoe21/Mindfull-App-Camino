@@ -29,20 +29,24 @@ Zes skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (e
 
 ## 0. Stand van zaken, lees dit eerst
 
-**Er staat nog geen app-code in deze repo.** Wat er wel staat: de backend, sinds 13 augustus 2026, met het Supabase-schema in `supabase/`, de migraties, de seed met de vijf weerbeelden en het controlescript `supabase/tests/anonimisering.sql`. En het design system, sinds 20 augustus 2026, in `packages/ui`. `apps/` en `package.json` bestaan nog niet. Alles hieronder over de app beschrijft dus hoe we gaan werken zodra die er is, niet wat je nu aantreft.
+**De app draait, maar er staat nog geen enkel scherm in.** Wat er wel staat:
+
+- **De backend**, sinds 13 augustus 2026: het Supabase-schema in `supabase/`, de migraties, de seed met de vijf weerbeelden en het controlescript `supabase/tests/anonimisering.sql`.
+- **Het design system**, sinds 20 augustus 2026, in `packages/ui`: de tokens als CSS en als TypeScript, de assets, de vijf lettertypes en de volledige specificatie van 41 schermen in `packages/ui/reference`.
+- **De scaffold**, sinds 20 augustus 2026: Expo SDK 57 met expo-router in `apps/mobile`, als npm workspace naast `packages/ui` en `packages/types`. `npm install` en `npm start`, en hij draait op Expo Go en op de Simulator.
 
 Wat dat concreet voor je betekent als je nu een taak oppakt:
 
-- **De tokens bestaan wel, de componenten nog niet.** `packages/ui/tokens` is gevuld, als CSS en als TypeScript, samen met de assets en de volledige specificatie van 41 schermen in `packages/ui/reference`. De regel "nooit een hardcoded designwaarde" is dus vanaf nu na te leven, en er is geen reden meer om een kleur of maat af te leiden of te verzinnen: zoek hem op. Bouwen kan nog niet, want `packages/ui/components` is leeg en de scaffold ontbreekt.
-- **`npm run typecheck`, `npm run lint` en `npm test` bestaan nog niet.** De definition of done in sectie 7 is nog niet af te vinken. De CI weet dat en slaat die stappen over zolang er geen `package.json` is.
-- **De routebestanden van de userflow bestaan nog niet.** Zie sectie 4.
+- **De tokens bestaan, de componenten nog niet.** `packages/ui/components` is leeg. Zoek een waarde op in `packages/ui/tokens` of met de skill `mind-design`, en leid er nooit een af. Er is een lint-regel in `eslint.config.js` die hardcoded kleur en typografie weigert.
+- **`npm run typecheck`, `npm run lint` en `npm test` bestaan en zijn groen.** De definition of done in sectie 7 is dus af te vinken, en dat is vanaf nu geen vrijblijvende stap meer.
+- **De twintig routebestanden van de userflow staan er**, in `apps/mobile/src/app`, allemaal leeg met een omschrijving en een verwijzing naar hun specificatie. Een feature bouwen is dat ene bestand vullen plus nieuwe bestanden ernaast zetten. Zie sectie 4.
+- **Elk scherm toont nu "NOG TE BOUWEN".** Dat komt uit `apps/mobile/src/components/NogTeBouwen.tsx`. Die component is scaffold en geen design system: bouw er niets op voort, en hij verdwijnt zodra het laatste routebestand gevuld is.
 
-Er staan twee dingen voor, in deze volgorde, en het zijn allebei geen agent-taken:
+Er staat nog één ding voor, en dat is geen agent-taak:
 
-1. **`docs/scope.md` invullen** vanaf het Figma-board. Dat is een besluit van de drie samen. Zolang dat leeg is, mag je geen productbeslissing nemen en is stoppen en vragen het juiste antwoord.
-2. **De Expo-app scaffolden.** Dat raakt `package.json`, `app.config.ts` en de tokens, dus het is per sectie 5 een eigen pull request van de eigenaar.
+> **`docs/scope.md` invullen.** Dat is een besluit van de drie samen. Zolang de TODO's daar staan, mag je geen productbeslissing nemen en is stoppen en vragen het juiste antwoord. De bron is niet meer alleen het Figma-board: het design system in `packages/ui/reference/HERKOMST.md` legt de kernlus, de ontwerpprincipes en de letterlijke teksten al vast.
 
-Pas daarna is een feature-taak uitvoerbaar. Word je gevraagd iets te bouwen en klopt bovenstaande nog steeds, zeg dat dan in plaats van alvast iets neer te zetten.
+Word je gevraagd iets te bouwen waarvoor het antwoord in `scope.md` had moeten staan, zeg dat dan in plaats van alvast iets neer te zetten.
 
 ---
 
