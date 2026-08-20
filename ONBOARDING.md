@@ -241,7 +241,72 @@ Je Claude kent deze bestanden en verwijst ernaar, maar lees deze vier zelf een k
 
 De volledige index staat in `README.md`. Kom je iets tegen dat in geen enkel document staat, dan is het niet afgesproken: vraag ernaar en vul het niet zelf in. Dat is geen formaliteit maar de reden dat we met drie parallelle agents niet uit elkaar lopen.
 
-## 8. Je eerste taak
+## 8. Hoe branches je map veranderen
+
+Hier struikelt iedereen een keer over. Lees dit voordat je je eerste branch maakt, dan schrik je straks niet.
+
+### Je hebt één map, git wisselt de inhoud om
+
+Een branch is **geen aparte map** en hij staat niet "op GitHub in plaats van bij jou". Het is een andere versie van dezelfde map.
+
+Je map staat altijd op een branch. Ook nu, ook als je er nooit over nadenkt. Tot je eerste `git checkout -b` stond hij op `main`, en daarom viel het niet op.
+
+Wissel je van branch, dan past git de inhoud van je map aan. Bestanden verschijnen en verdwijnen. **Dat is geen storing, dat is het hele punt.** Deed git het niet, dan lag al het werk van alle branches door elkaar in één map en kon je nooit meer zien wat bij welke taak hoort.
+
+Denk aan één bureau en een archiefkast. Je legt één dossier tegelijk op het bureau. De rest ligt niet weg, die ligt in de kast.
+
+### Er zijn drie plekken
+
+| Plek | Wat er staat |
+|---|---|
+| Je zichtbare map | Eén versie tegelijk. Dit zie je in VSCode en dit bewerk je. |
+| `.git`, verborgen in diezelfde map | Alle versies van alle branches. Staat lokaal op je laptop. |
+| GitHub | Een kopie, zodat de andere twee erbij kunnen. |
+
+De archiefkast is dus `.git`. Hij staat in je projectmap, je ziet hem alleen niet.
+
+### Je branch bestaat op twee plekken
+
+```bash
+git branch -a
+```
+
+Je ziet je branch twee keer: `feat/iets` is die van jou, `remotes/origin/feat/iets` is die op GitHub. `git push` stuurt jouw versie erheen, `git pull` haalt hun versie op. Ze lopen tijdelijk uit de pas en dat is normaal.
+
+Een branch ontstaat dus **bij jou**, niet bij het pushen. Pushen maakt er alleen een kopie van.
+
+### De hele cyclus
+
+1. Begin op `main` en haal het laatste op: `git checkout main` en `git pull`
+2. Maak je branch: `git checkout -b feat/<korte-naam>`. Dit gebeurt op je laptop, GitHub weet er nog niets van.
+3. Werk. Gewoon in je map, zoals altijd.
+4. Commit. Nu ligt je werk vast in `.git`.
+5. Push. **Nu pas** bestaat je branch ook op GitHub en kunnen de anderen hem zien.
+6. Open een pull request. Dat is het verzoek: mag dit bij `main`?
+7. Iemand mergt. Nu zit je werk in `main` op GitHub, maar nog niet bij jou.
+8. Ga terug en haal op: `git checkout main` en `git pull`. **Nu** staat het ook in jouw map.
+
+De commando's staan compleet in de skill `werkwijze`, met rebase erbij. Vraag je Claude ernaar.
+
+**Stap 8 wordt het vaakst overgeslagen.** Sla je hem over, dan blijf je op je oude branch hangen, zie je het werk van de anderen niet, en lijkt er van alles kwijt.
+
+### Twee dingen om te onthouden
+
+**Zoek je een bestand dat er niet is, kijk eerst op welke branch je staat.**
+
+```bash
+git branch --show-current
+```
+
+Staat een map niet in `main`, dan is de PR waarschijnlijk nog niet gemerged. Er is dan niets kwijt: het bestaat gewoon nog niet in die versie.
+
+**Zorg dat `git status` schoon is voordat je wisselt.** Heb je niet-gecommitte wijzigingen, dan weigert git de checkout of neemt hij ze mee naar de andere branch. Allebei verwarrend. Eerst committen, dan wisselen.
+
+### Nee, je verliest niets
+
+Zolang je gecommit hebt, staat alles in `.git`. Wisselen van branch gooit nooit iets weg, het legt alleen iets anders op je bureau. Twijfel je: commit eerst, dan kan er niets misgaan.
+
+## 9. Je eerste taak
 
 1. Pak een issue van het board dat op `Ready` staat en wijs jezelf toe. Staat er nog geen board, en dat is nu het geval, vraag dan aan Stijn welke taak je pakt.
 2. Maak een branch: `git checkout -b feat/<korte-naam>`
