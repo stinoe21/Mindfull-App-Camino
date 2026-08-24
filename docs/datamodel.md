@@ -76,7 +76,7 @@ Vier varianten van hetzelfde lek, zodat niemand ze per ongeluk opnieuw introduce
 - Een oplopende `id` verraadt de invoegvolgorde, ook zonder tijdstip. **`uuid v7` ook**, want die is tijdgeordend. `weather_hourly` heeft daarom alleen de sleutel (dag, uurblok, weerbeeld), en die wijst een totaal aan en geen inzending.
 - De systeemkolommen `ctid` en `xmin` verraden op elke tabel de invoegvolgorde van rijen, en die kun je niet weghalen. Dit was de reden om van losse rijen naar totalen te gaan: zonder rij per inzending is er geen volgorde die iets over een inzending zegt. Zie hieronder.
 - WAL en point-in-time recovery leggen elke insert vast met zijn transactietijd, op de milliseconde. **PITR staat daarom uit op dit project en moet uit blijven.**
-- Realtime zendt inserts live uit met een tijdstempel. **Realtime staat daarom uit op de collectieve tabellen.**
+- Realtime zendt inserts live uit met een tijdstempel. **Realtime staat daarom uit op de collectieve tabel.**
 
 ### Waarom er totalen per uurblok staan
 
