@@ -1,14 +1,22 @@
 // Startpunt.
 //
-// Hier hoort de keuze te komen tussen de onboarding en het dashboard, op basis
-// van de sessie. Zolang er geen auth is, gaat de app direct naar het dashboard,
-// zodat de flow te doorlopen is. De onboarding is bereikbaar via /welkom en via
-// het kitchen sink-scherm.
-//
-// Specificatie: docs/scope.md
+// Kiest tussen de onboarding en het dashboard op basis van wat er lokaal
+// bekend is: is de onboarding ooit afgerond, dan direct naar het dashboard.
+// Tijdens het lezen blijft het scherm leeg in de achtergrondkleur; dat is
+// een tel, geen laadscherm waard.
 
 import { Redirect } from "expo-router";
+import { useEffect, useState } from "react";
+
+import { leesInstellingen } from "@/features/profiel/instellingen";
 
 export default function Start() {
-  return <Redirect href="/dashboard" />;
+  const [doel, zetDoel] = useState<"/dashboard" | "/welkom" | null>(null);
+
+  useEffect(() => {
+    leesInstellingen().then((i) => zetDoel(i.onboardingAfgerond ? "/dashboard" : "/welkom"));
+  }, []);
+
+  if (!doel) return null;
+  return <Redirect href={doel} />;
 }
