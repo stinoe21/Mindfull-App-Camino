@@ -36,7 +36,7 @@ export default function CheckInUitkomst() {
     // Empty state: nog geen check-in vandaag.
     return (
       <ScreenCanvas variant="overlay" state="default" sheetTop={200}>
-        <MascotteVlieger state="default" hoogte={90} />
+        <MascotteVlieger state="wolken" hoogte={90} />
         <AppText rol="h2" centreer>Nog geen check-in vandaag</AppText>
         <AppText rol="body" kleur="secondary" centreer>
           Doe eerst de check-in, dan staat hier jouw weer van vandaag.

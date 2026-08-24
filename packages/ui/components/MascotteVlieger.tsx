@@ -1891,9 +1891,12 @@ function Staat6() {
       <View style={{
         position: "relative",
         width: 80,
+        // Hersteld bij het genereren: de DOM-bron leunde op stretch binnen een
+        // fit-content-rij; in RN klapt dat naar hoogte 0. De hoogte komt uit
+        // het absolute kind (152.258).
+        height: 152.258,
         overflow: "hidden",
         flexShrink: 0,
-        alignSelf: "stretch",
       }}>
         <View style={{
           position: "absolute",

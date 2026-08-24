@@ -27,7 +27,7 @@ export default function CheckInBevestigd() {
 
   return (
     <ScreenCanvas variant="overlay" state={weerbeeld ?? "default"} sheetTop={200}>
-      <MascotteVlieger state={weerbeeld ?? "default"} hoogte={90} />
+      <MascotteVlieger state={weerbeeld ?? "wolken"} hoogte={90} />
       <AppText rol="h1" centreer>Dankjewel voor je check-in</AppText>
       <AppText rol="body" kleur="secondary" centreer>
         Jouw weer telt anoniem mee in het mentale weerbericht van Nederland.
