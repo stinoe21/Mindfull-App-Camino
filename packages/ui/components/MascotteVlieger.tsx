@@ -2077,7 +2077,7 @@ function Staat6() {
               position: "absolute",
               left: 0,
               top: 0,
-              transform: "matrix(0.742,-0.671,0.671,0.742,7.742,71.469)",
+              transform: [{ translateX: 7.742 }, { translateY: 71.469 }, { rotate: "-42.123deg" } ],
               transformOrigin: "0 0",
               width: 18.065,
               height: 33.548,
