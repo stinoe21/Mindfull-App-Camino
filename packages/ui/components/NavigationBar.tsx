@@ -2,14 +2,15 @@
 // bestemmingen en "Check in" in het midden, over de hero-illustratie.
 // Specificatie: packages/ui/reference/components/NavigationBar.jsx (378:1557).
 //
-// De frosted achtergrond is in de referentie rgba(255,255,249,0.4); hier is
-// dat de kaartkleur-token met een opacity-laag, zodat er geen losse kleur in
-// de code staat. Echte blur vraagt een extra pakket en dat voegen we niet
-// zomaar toe (CLAUDE.md sectie 5); gemeld in de PR.
+// De frosted achtergrond volgt de referentie: rgba(255,255,249,0.4) over een
+// blur. De blur komt van expo-blur (besloten door Stijn op 24 augustus 2026),
+// de 0.4-laag is de kaartkleur-token met opacity, zodat er geen losse kleur
+// in de code staat.
 //
 // Deze component is bewust dom: de items komen binnen als lijst, de navigatie
 // zelf woont in de route-layout.
 
+import { BlurView } from "expo-blur";
 import type { ReactNode } from "react";
 import { Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -41,6 +42,11 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
         overflow: "hidden",
       }}
     >
+      <BlurView
+        intensity={50}
+        tint="light"
+        style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 0 }}
+      />
       <View
         style={{
           position: "absolute",
