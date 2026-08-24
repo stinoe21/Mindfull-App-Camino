@@ -1,16 +1,19 @@
-// De echte navigatiebalk uit het ontwerp: een zwevende pil met vijf
-// bestemmingen en "Check in" in het midden, over de hero-illustratie.
-// Specificatie: packages/ui/reference/components/NavigationBar.jsx (378:1557).
+// De navigatiebalk uit het ontwerp, gebouwd zoals een echte app hem nodig
+// heeft: een zwevende frosted pil met vijf bestemmingen, boven de
+// home-indicator (geen tap-conflict met het home-gebaar), en een verloop naar
+// de achtergrondkleur dat de zone onder de pil afdekt zodat er nooit losse
+// content onder de balk zichtbaar is.
 //
-// De frosted achtergrond volgt de referentie: rgba(255,255,249,0.4) over een
-// blur. De blur komt van expo-blur (besloten door Stijn op 24 augustus 2026),
-// de 0.4-laag is de kaartkleur-token met opacity, zodat er geen losse kleur
-// in de code staat.
+// Referentie: packages/ui/reference/components/NavigationBar.jsx (378:1557):
+// pil van 82 hoog met 15 marge, frosted rgba(255,255,249,0.4) over blur. De
+// blur komt van expo-blur (besloten door Stijn op 24 augustus 2026); de
+// 0.4-laag en het verloop zijn afgeleid van tokens, geen losse kleuren.
 //
 // Deze component is bewust dom: de items komen binnen als lijst, de navigatie
 // zelf woont in de route-layout.
 
 import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 import type { ReactNode } from "react";
 import { Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -18,6 +21,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors, radius, space } from "../tokens/tokens.ts";
 
 import { AppText } from "./AppText.tsx";
+
+const TRANSPARANT = colors.surfaceBackground.replace("rgb(", "rgba(").replace(")", ",0)");
+const BIJNA_DEKKEND = colors.surfaceBackground.replace("rgb(", "rgba(").replace(")", ",0.95)");
 
 export type NavItem = {
   key: string;
@@ -29,58 +35,70 @@ export type NavItem = {
 
 export function NavigationBar({ items }: { items: NavItem[] }) {
   const insets = useSafeAreaInsets();
+  // Boven de home-indicator; zonder indicator 14 uit de referentie.
+  const bodem = Math.max(insets.bottom, 14);
+
   return (
-    <View
-      pointerEvents="box-none"
-      style={{
-        position: "absolute",
-        left: 15,
-        right: 15,
-        bottom: insets.bottom > 0 ? insets.bottom : space[4],
-        height: 82,
-        borderRadius: radius.pill,
-        overflow: "hidden",
-      }}
-    >
-      <BlurView
-        intensity={50}
-        tint="light"
-        style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 0 }}
+    <View pointerEvents="box-none" style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
+      {/* Dekt de zone onder en achter de pil af, zodat scrollende content
+          in het verloop verdwijnt in plaats van onder de balk uit te steken. */}
+      <LinearGradient
+        pointerEvents="none"
+        colors={[TRANSPARANT, BIJNA_DEKKEND, colors.surfaceBackground]}
+        locations={[0, 0.5, 1]}
+        style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: bodem + 82 + space[6] }}
       />
+      {/* 15 is de pilmarge uit de referentie (NavigationBar.jsx); bodem volgt
+          de safe area en is daarom geen schaalwaarde. */}
       <View
         style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          backgroundColor: colors.surfaceCard,
-          opacity: 0.4,
+          marginHorizontal: 15,
+          marginBottom: bodem,
+          height: 82,
+          borderRadius: radius.pill,
+          overflow: "hidden",
         }}
-      />
-      <View style={{ flex: 1, flexDirection: "row", alignItems: "stretch" }}>
-        {items.map((item) => (
-          <Pressable
-            key={item.key}
-            accessibilityRole="button"
-            accessibilityState={{ selected: item.actief }}
-            onPress={item.onPress}
-            style={({ pressed }) => ({
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-              gap: space[1],
-              opacity: pressed ? 0.7 : 1,
-            })}
-          >
-            <View style={{ height: 34, justifyContent: "center", alignItems: "center" }}>
-              {item.icoon(item.actief ? colors.textPrimary : colors.textSecondary)}
-            </View>
-            <AppText rol="labelCaption" kleur={item.actief ? "primary" : "secondary"}>
-              {item.label}
-            </AppText>
-          </Pressable>
-        ))}
+      >
+        <BlurView
+          intensity={50}
+          tint="light"
+          style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 0 }}
+        />
+        <View
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            backgroundColor: colors.surfaceCard,
+            opacity: 0.4,
+          }}
+        />
+        <View style={{ flex: 1, flexDirection: "row", alignItems: "stretch" }}>
+          {items.map((item) => (
+            <Pressable
+              key={item.key}
+              accessibilityRole="button"
+              accessibilityState={{ selected: item.actief }}
+              onPress={item.onPress}
+              style={({ pressed }) => ({
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                gap: space[1],
+                opacity: pressed ? 0.7 : 1,
+              })}
+            >
+              <View style={{ height: 34, justifyContent: "center", alignItems: "center" }}>
+                {item.icoon(item.actief ? colors.textPrimary : colors.textSecondary)}
+              </View>
+              <AppText rol="labelCaption" kleur={item.actief ? "primary" : "secondary"}>
+                {item.label}
+              </AppText>
+            </Pressable>
+          ))}
+        </View>
       </View>
     </View>
   );

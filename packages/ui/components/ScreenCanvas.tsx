@@ -31,7 +31,7 @@ export type ScreenCanvasProps = {
 
 export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, metNavRuimte = false, children }: ScreenCanvasProps) {
   const insets = useSafeAreaInsets();
-  const navRuimte = metNavRuimte ? 111 + space[3] : space[2];
+  const navRuimte = metNavRuimte ? 82 + Math.max(insets.bottom, 14) + space[6] : space[2];
 
   if (variant === "overlay") {
     const top = sheetTop ?? 200;
@@ -40,6 +40,8 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, met
         <BackgroundHeroGradient state={state} height={480} style={{ position: "absolute", left: 0, right: 0, top: 0 }} />
         <ScrollView
           style={{ flex: 1 }}
+          keyboardShouldPersistTaps="handled"
+          automaticallyAdjustKeyboardInsets
           contentContainerStyle={{
             flexGrow: 1,
             paddingTop: Math.max(top, insets.top + space[6]),
@@ -73,6 +75,8 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, met
       >
         <ScrollView
           style={{ flex: 1 }}
+          keyboardShouldPersistTaps="handled"
+          automaticallyAdjustKeyboardInsets
           contentContainerStyle={{
             padding: space[5],
             paddingBottom: insets.bottom + navRuimte + space[5],
