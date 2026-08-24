@@ -50,7 +50,7 @@ Dat stond hier eerder wel als de gratis route, met als enige kanttekening "overl
 
 Sinds `docs/privacy-besluiten.md` bestaat, staan in deze repo de namen van medewerkers van Mind, wanneer zij afwezig zijn, dat hun DPIA nog niet is uitgevoerd en dat de verwerkersovereenkomsten nog niet rond zijn. Dat is interne informatie van een derde partij, inclusief persoonsgegevens.
 
-Het weghalen in een nieuwe commit lost dat niet op: bij een publieke repo is de **history** net zo goed leesbaar, en die informatie zit er vanaf commit `34a2019` in.
+Het weghalen in een nieuwe commit lost dat niet op: bij een publieke repo is de **history** net zo goed leesbaar, en die informatie zit er vanaf commit `7410e0b` in.
 
 Zou je dit ooit alsnog willen, dan is de volgorde: eerst met Mind afstemmen, dan anonimiseren naar rollen in plaats van namen, dan de history herschrijven, en dan pas de zichtbaarheid omzetten. Niet andersom. Vier dollar per maand is goedkoper.
 
