@@ -1,15 +1,90 @@
 // Check-in, stap 1 tot 4
 //
-// De vier sliders. Vraagteksten en labelparen liggen woordelijk vast, niet parafraseren. Voortgang leest "STAP 2 van 4", kleine v.
-//
-// Specificatie: reference/HERKOMST.md, Canonical check-in copy
-//
-// Dit bestand is leeg neergezet bij de scaffold, zodat een feature-taak alleen
-// dit bestand plus nieuwe bestanden ernaast raakt en er geen merge-conflict kan
-// ontstaan. Zie CLAUDE.md sectie 4.
+// De vier sliders. Vraagteksten en labelparen liggen woordelijk vast in
+// HERKOMST.md (Canonical check-in copy): niet parafraseren. Voortgang leest
+// "STAP 2 van 4" met kleine v. De sliderwaarden blijven op het toestel.
+// "Sla vandaag over" is de eerlijke uitweg (no-guilt, productprincipes 4 en 6).
 
-import { NogTeBouwen } from "@/components/NogTeBouwen";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useState } from "react";
+import { ScrollView, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { colors, space } from "@mind/ui";
+import { AppText } from "@mind/ui/components/AppText";
+import { Button } from "@mind/ui/components/Button";
+import { MascotteInput } from "@mind/ui/components/MascotteInput";
+import { Slider } from "@mind/ui/components/Slider";
+
+import { leesInstellingen } from "@/features/profiel/instellingen";
+import { leesWaarden, resetWaarden, zetWaarde } from "@/features/weer/checkinSessie";
+import { bewaarWeerVanVandaag } from "@/features/weer/lokaalWeer";
+import { CHECKIN_STAPPEN, GERUSTSTELLING } from "@/features/weer/teksten";
+import { bepaalWeerbeeld } from "@/features/weer/weerbeeld";
+import { stuurWeerIn } from "@/features/weer/weerbericht";
 
 export default function CheckInStap() {
-  return <NogTeBouwen titel="Check-in, stap 1 tot 4" wat="De vier sliders. Vraagteksten en labelparen liggen woordelijk vast, niet parafraseren. Voortgang leest &quot;STAP 2 van 4&quot;, kleine v." />;
+  const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const params = useLocalSearchParams<{ stap: string }>();
+  const nummer = Number(params.stap);
+  const index = Number.isInteger(nummer) && nummer >= 1 && nummer <= CHECKIN_STAPPEN.length ? nummer - 1 : 0;
+  const stap = CHECKIN_STAPPEN[index];
+  const laatste = index === CHECKIN_STAPPEN.length - 1;
+
+  const [waarde, zetLokaleWaarde] = useState(leesWaarden()[stap.key]);
+  const [bezig, zetBezig] = useState(false);
+
+  const verder = async () => {
+    zetWaarde(stap.key, waarde);
+    if (!laatste) {
+      router.push(`/check-in/${index + 2}`);
+      return;
+    }
+    // Laatste stap: lokaal het weerbeeld bepalen, bewaren, en de anonieme
+    // bijdrage insturen als daarvoor toestemming is gegeven.
+    zetBezig(true);
+    const weerbeeld = bepaalWeerbeeld(leesWaarden());
+    const instellingen = await leesInstellingen();
+    let resultaat: string = "niet-gedeeld";
+    if (instellingen.consentWeerbericht) {
+      resultaat = await stuurWeerIn(weerbeeld);
+    }
+    const geteld = resultaat === "gelukt" || resultaat === "al-ingecheckt";
+    await bewaarWeerVanVandaag(weerbeeld, geteld);
+    resetWaarden();
+    zetBezig(false);
+    router.replace({ pathname: "/check-in/bevestigd", params: { melding: resultaat } });
+  };
+
+  const slaOver = () => {
+    resetWaarden();
+    router.replace("/dashboard");
+  };
+
+  return (
+    <ScrollView
+      style={{ flex: 1, backgroundColor: colors.surfaceBackground }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingTop: insets.top + 28,
+        paddingHorizontal: space[6],
+        paddingBottom: insets.bottom + 28,
+        gap: space[4],
+      }}
+    >
+      <View style={{ height: 136, alignItems: "center", justifyContent: "flex-end" }}>
+        <MascotteInput state={stap.key} hoogte={128} />
+      </View>
+      <AppText rol="labelOverline" kleur="secondary">
+        {"STAP " + (index + 1) + " van " + CHECKIN_STAPPEN.length}
+      </AppText>
+      <AppText rol="h3">{stap.vraag}</AppText>
+      <AppText rol="bodySmall" kleur="secondary">{GERUSTSTELLING}</AppText>
+      <Slider value={waarde} onChange={zetLokaleWaarde} leftLabel={stap.links} rightLabel={stap.rechts} />
+      <View style={{ flex: 1 }} />
+      <Button label={laatste ? "Bekijk je weer" : "Verder"} fullWidth bezig={bezig} onPress={verder} />
+      <Button label="Sla vandaag over" variant="link" fullWidth onPress={slaOver} />
+    </ScrollView>
+  );
 }

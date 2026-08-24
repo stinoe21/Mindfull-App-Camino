@@ -1,15 +1,77 @@
 // Jouw weer
 //
-// Het persoonlijke weerbeeld: vlieger, weerstaat en één zachte tip. Nooit een score, nooit goed of fout.
-//
-// Specificatie: docs/productprincipes.md, reference/HERKOMST.md
-//
-// Dit bestand is leeg neergezet bij de scaffold, zodat een feature-taak alleen
-// dit bestand plus nieuwe bestanden ernaast raakt en er geen merge-conflict kan
-// ontstaan. Zie CLAUDE.md sectie 4.
+// Het persoonlijke weerbeeld: vlieger, weerstaat en een zachte tip. Nooit een
+// score, nooit goed of fout (productprincipes 1 tot en met 4). De teksten voor
+// "mist" zijn canoniek uit het prototype; zie features/weer/teksten.ts.
 
-import { NogTeBouwen } from "@/components/NogTeBouwen";
+import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { Share, View } from "react-native";
+
+import { space } from "@mind/ui";
+import { AppText } from "@mind/ui/components/AppText";
+import { Button } from "@mind/ui/components/Button";
+import { Card } from "@mind/ui/components/Card";
+import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
+import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
+
+import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
+import { UITKOMSTEN } from "@/features/weer/teksten";
+
+import type { WeatherCode } from "@mind/types";
 
 export default function CheckInUitkomst() {
-  return <NogTeBouwen titel="Jouw weer" wat="Het persoonlijke weerbeeld: vlieger, weerstaat en één zachte tip. Nooit een score, nooit goed of fout." />;
+  const router = useRouter();
+  const [geladen, zetGeladen] = useState(false);
+  const [weerbeeld, zetWeerbeeld] = useState<WeatherCode | null>(null);
+
+  useEffect(() => {
+    leesWeerVanVandaag().then((data) => {
+      zetWeerbeeld(data?.weerbeeld ?? null);
+      zetGeladen(true);
+    });
+  }, []);
+
+  if (geladen && !weerbeeld) {
+    // Empty state: nog geen check-in vandaag.
+    return (
+      <ScreenCanvas variant="overlay" state="default" sheetTop={200}>
+        <MascotteVlieger state="default" hoogte={90} />
+        <AppText rol="h2" centreer>Nog geen check-in vandaag</AppText>
+        <AppText rol="body" kleur="secondary" centreer>
+          Doe eerst de check-in, dan staat hier jouw weer van vandaag.
+        </AppText>
+        <Button label="Even inchecken" fullWidth onPress={() => router.replace("/check-in/1")} />
+        <Button label="Terug naar dashboard" variant="link" onPress={() => router.replace("/dashboard")} />
+      </ScreenCanvas>
+    );
+  }
+
+  const tekst = weerbeeld ? UITKOMSTEN[weerbeeld] : null;
+
+  const deel = () => {
+    if (!tekst) return;
+    // Delen is een keuze van de gebruiker zelf; er gaat niets automatisch weg.
+    Share.share({ message: tekst.kop + " Dit is ongeveer mijn weer vandaag, via het Mentale Weerbericht van MIND." });
+  };
+
+  return (
+    <ScreenCanvas variant="overlay" state={weerbeeld ?? "default"} sheetTop={130}>
+      {weerbeeld ? <MascotteVlieger state={weerbeeld} hoogte={90} /> : null}
+      {tekst ? (
+        <View style={{ gap: space[2], alignSelf: "stretch", alignItems: "center" }}>
+          <AppText rol="h3" centreer>{tekst.kop}</AppText>
+          <AppText rol="bodySmall" kleur="secondary" centreer>{tekst.duiding}</AppText>
+        </View>
+      ) : null}
+      {tekst ? (
+        <Card tone="white" style={{ alignSelf: "stretch" }}>
+          <AppText rol="labelOverline" kleur="secondary">VOOR VANDAAG</AppText>
+          <AppText rol="h3">{tekst.tip}</AppText>
+        </Card>
+      ) : null}
+      <Button label="Terug naar dashboard" fullWidth onPress={() => router.replace("/dashboard")} />
+      <Button label="Deel je weer" variant="link" onPress={deel} />
+    </ScreenCanvas>
+  );
 }
