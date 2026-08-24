@@ -119,6 +119,10 @@ export default function Dashboard() {
               {topBericht.share + "% van de check-ins · " + topBericht.total + " vandaag"}
             </AppText>
           </>
+        ) : bericht.staat === "niet-ingelogd" ? (
+          <AppText rol="bodySmall" kleur="secondary">
+            Log in om het landelijke weerbericht van vandaag te zien.
+          </AppText>
         ) : bericht.staat === "leeg" ? (
           <AppText rol="bodySmall" kleur="secondary">
             Nog te weinig check-ins vandaag voor een landelijk beeld. Kom later terug.

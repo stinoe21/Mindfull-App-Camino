@@ -9,6 +9,7 @@ import { getSupabase } from "../backend/client.ts";
 export type WeerberichtStand =
   | { staat: "geladen"; rijen: WeatherToday[] }
   | { staat: "leeg" }
+  | { staat: "niet-ingelogd" }
   | { staat: "niet-verbonden" }
   | { staat: "fout" };
 
@@ -22,6 +23,13 @@ export async function haalWeerbericht(vernieuw = false): Promise<WeerberichtStan
     return cache;
   }
   try {
+    // weather_today is alleen voor ingelogde gebruikers (RLS-ontwerp). Zonder
+    // sessie is "log eerst in" de juiste melding, niet "geen verbinding".
+    const { data: sessie } = await client.auth.getSession();
+    if (!sessie.session) {
+      cache = { staat: "niet-ingelogd" };
+      return cache;
+    }
     const { data, error } = await client.rpc("weather_today");
     if (error) throw error;
     const rijen = (data ?? []) as WeatherToday[];

@@ -53,6 +53,17 @@ export default function Weerbericht() {
         </Card>
       ) : null}
 
+      {stand?.staat === "niet-ingelogd" ? (
+        <Card tone="primary">
+          <AppText rol="h3">Log eerst in</AppText>
+          <AppText rol="bodySmall" kleur="secondary">
+            Het landelijke weerbericht is er voor ingelogde gebruikers. Zo telt iedereen precies een
+            keer per dag mee.
+          </AppText>
+          <Button label="Inloggen" variant="secondary" onPress={() => router.push("/inloggen")} />
+        </Card>
+      ) : null}
+
       {stand?.staat === "niet-verbonden" || stand?.staat === "fout" ? (
         <Card tone="outline">
           <AppText rol="h3">Geen verbinding</AppText>
