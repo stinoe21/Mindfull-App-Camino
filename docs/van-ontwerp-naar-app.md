@@ -13,7 +13,7 @@ Het doel is letterlijk: **een scherm in de app moet niet lijken op het ontwerp, 
 | Waarvoor | Pakket | In Expo Go |
 |---|---|---|
 | De WebP-achtergronden en alle afbeeldingen | `expo-image` | ja |
-| De drie lettertypes | `expo-font` | ja |
+| De vijf lettertypes | `expo-font` | ja |
 | De mascotte en de navigatiebalk (die zijn vectors) | `react-native-svg` | ja |
 | De vervaging van de hero naar de crèmekleur | `expo-linear-gradient` | ja |
 
