@@ -12,7 +12,7 @@ Een mobiele app voor Stichting Mind, gebouwd door drie mensen tijdens het lopen 
 
 ## Nieuw in dit project?
 
-Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen, tokens aanmaken, MCP's activeren. Reken op een halfuur.
+Lees **[ONBOARDING.md](ONBOARDING.md)**. Daar staat alles: clonen, git instellen, tokens aanmaken, MCP's activeren. Reken op ongeveer 45 minuten.
 
 ## Waar staat wat
 
@@ -69,7 +69,7 @@ git push --force-with-lease           # draft PR openen
 
 ## Status
 
-Het samenwerkingsraamwerk staat, en de backend ook: sinds 13 augustus 2026 staat het Supabase-schema met de anonieme collectieve store in `supabase/`, inclusief het controlescript `supabase/tests/anonimisering.sql`. De app zelf nog niet. Verder bevat deze repo documentatie, configuratie, en sinds 20 augustus 2026 de contentbibliotheek van Mind in `content/mind/`: 339 pagina's als Markdown, zodat we er onderweg in kunnen zoeken zonder bereik. Let op: die is naslag en nog geen goedgekeurde contentbron voor de app, zie [content/mind/LEESMIJ.md](content/mind/LEESMIJ.md).
+Het samenwerkingsraamwerk staat, en de backend ook: sinds 13 augustus 2026 staat het Supabase-schema met de anonieme collectieve store in `supabase/`, inclusief het controlescript `supabase/tests/anonimisering.sql`. Verder bevat deze repo documentatie, configuratie, en sinds 20 augustus 2026 de contentbibliotheek van Mind in `content/mind/`: 339 pagina's als Markdown, zodat we er onderweg in kunnen zoeken zonder bereik. Let op: die is naslag en nog geen goedgekeurde contentbron voor de app, zie [content/mind/LEESMIJ.md](content/mind/LEESMIJ.md).
 
 Sinds diezelfde dag staat ook het **design system** in `packages/ui`: tokens, assets, de vijf lettertypes en de volledige specificatie van 41 uitgewerkte schermen, overgenomen uit Claude Design. Er hoeft dus geen kleur of maat meer afgeleid of verzonnen te worden.
 
@@ -77,7 +77,7 @@ En sinds 20 augustus 2026 draait de **app** ook: `apps/mobile`, Expo SDK 57 met 
 
 **Deze twee blokkeren al het andere werk, in deze volgorde:**
 
-- [ ] **Scope v1 vastleggen in `docs/scope.md`**, vanaf het Figma-board. Een sessie met z'n drieën. Zolang dit leeg is stopt elke agent terecht met een vraag in plaats van te bouwen.
+- [ ] **Scope v1 bevestigen in `docs/scope.md`.** Sinds 20 augustus 2026 grotendeels ingevuld vanuit het design system en het whiteboard. Wat rest is een korte sessie met z'n drieën: het concept bevestigen en de resterende TODO's beslissen. Op die open punten neemt geen agent een productbeslissing.
 - [x] ~~**Expo-app scaffolden**~~ **Gedaan op 20 augustus 2026.** Expo SDK 57, expo-router, npm workspaces, Metro ingesteld op de monorepo, de lettertypes geladen in de root layout, en de lint-regel tegen hardcoded designwaarden. CI groen op alle drie de laptops moet nog, dat kan pas als Max en Caesar de repo hebben.
 
 Daarna pas:
@@ -89,6 +89,6 @@ Daarna pas:
 - [ ] Verdelen wie welk van de acht onderdelen doet, zie `docs/taakverdeling.md`
 - [x] ~~Design tokens~~ **Staan in `packages/ui/tokens`** sinds 20 augustus 2026, als CSS en als TypeScript.
 - [ ] De basiscomponenten naar React Native, in alle states. De specificatie ligt klaar in `packages/ui/reference`.
-- [ ] De vier pakketten toevoegen die het ontwerp nodig heeft: `expo-image`, `expo-font`, `react-native-svg` en `expo-linear-gradient`. Alle vier zitten in Expo Go, dus geen development build nodig. Zie [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md).
-- [ ] Elk scherm uit de userflow als leeg routebestand aanmaken
+- [x] ~~De vier pakketten toevoegen die het ontwerp nodig heeft~~ **Gedaan op 20 augustus 2026.** `expo-image`, `expo-font`, `react-native-svg` en `expo-linear-gradient` staan in `apps/mobile`, alle vier in Expo Go, dus geen development build nodig. Zie [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md).
+- [x] ~~Elk scherm uit de userflow als leeg routebestand aanmaken~~ **Gedaan op 20 augustus 2026**: twintig routebestanden in `apps/mobile/src/app`, elk met een omschrijving en een verwijzing naar hun specificatie.
 - [ ] Userflow vertalen naar 15 tot 20 taken op het board
