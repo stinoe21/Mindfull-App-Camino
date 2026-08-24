@@ -53,7 +53,7 @@ cachePolicy: 'memory-disk'
 
 Daarmee overleeft een afbeelding een reload **en** een herstart van de app. Bij ontwikkelen betekent het dat een reset niet alles opnieuw over de lijn trekt.
 
-> `expo-image` is een nieuwe dependency en dus een aparte pull request. Het is wel de juiste: de standaard `Image` van React Native heeft geen schijfcache die je kunt sturen, en zonder deze cache is elke reset opnieuw egress.
+> `expo-image` zit sinds 20 augustus 2026 in `apps/mobile`, samen met de drie andere pakketten uit `van-ontwerp-naar-app.md`. Het is de juiste keuze: de standaard `Image` van React Native heeft geen schijfcache die je kunt sturen, en zonder deze cache is elke reset opnieuw egress.
 
 ### 2. Public bucket, geen signed URLs
 
