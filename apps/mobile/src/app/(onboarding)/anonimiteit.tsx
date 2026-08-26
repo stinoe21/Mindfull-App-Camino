@@ -18,6 +18,7 @@ import { Card } from "@mind/ui/components/Card";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
+import { WatIsHetWeerbericht } from "@/features/weer/WatIsHetWeerbericht";
 
 export default function Anonimiteit() {
   const router = useRouter();
@@ -50,6 +51,7 @@ export default function Anonimiteit() {
           Je antwoorden op de vier vragen verlaten je telefoon nooit. Je kunt dit altijd wijzigen in
           Instellingen.
         </AppText>
+        <WatIsHetWeerbericht />
       </Card>
 
       <Card tone="white">
