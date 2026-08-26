@@ -264,6 +264,14 @@ Daarna heb je twee routes, en ze werken allebei:
 - **Op je telefoon:** scan de QR-code met Expo Go. Dit is de snelste en werkt zonder Xcode.
 - **In de Simulator:** druk op `i` in de terminal. Xcode moet dan wel geïnstalleerd zijn en één keer geopend, zodat hij de Simulator-runtime heeft binnengehaald.
 
+  Zie je `Xcode must be fully installed before you can continue` terwijl Xcode wél in `/Applications` staat, dan wijst `xcode-select` nog naar de losse Command Line Tools in plaats van naar Xcode. Dat gebeurt als je ooit `xcode-select --install` hebt gedaan of Homebrew de tools heeft binnengehaald. Eenmalig oplossen:
+
+  ```bash
+  sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+  ```
+
+  Controleren: `xcode-select -p` hoort `/Applications/Xcode.app/Contents/Developer` te geven. Zonder deze stap start `npm start` gewoon, maar de `i` doet niets.
+
 Je ziet een app die je door de hele userflow laat lopen, met op elk scherm "NOG TE BOUWEN" en een omschrijving van wat daar hoort te komen. Dat is de bedoeling: de routes staan er, de schermen nog niet.
 
 **Controleer meteen het lettertype.** De koppen horen in Averia Serif Libre te staan, een licht handgetekende schreefletter. Zie je een gewone schreefloze systeemletter, dan zijn de fonts niet geladen en moet je dat eerst oplossen, want dan klopt straks geen enkel scherm. Kijk in `apps/mobile/src/theme/fonts.ts`.
