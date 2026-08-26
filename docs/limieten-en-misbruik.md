@@ -79,6 +79,56 @@ Waar dat hier concreet kan bijten:
 - **Het dashboard.** Haal het landelijke weerbericht één keer per sessie op en cache het, niet bij elke keer dat het scherm in beeld komt. Het verandert per dag, niet per seconde.
 - **Uploads.** Zet een maximale bestandsgrootte op de bucket, anders kan iemand een bestand van honderd megabyte uploaden en daarna downloaden.
 
+## 5. Beveiligingschecklist na de externe review van 25 augustus 2026
+
+Een security-engineer van buiten heeft de opzet doorgelicht. Hieronder elk punt, wat er al stond, en wat er op 26 augustus 2026 aan veranderd is. Wat een vinkje in het dashboard is, staat apart onderaan: dat komt niet mee in migraties en moet bij elke nieuwe omgeving opnieuw.
+
+### Herleidbaarheid: de vier scenario's
+
+| Scenario | Stand |
+|---|---|
+| **A. Via de platformlogs** | Bekend en het overgebleven venster, zie `datamodel.md` "Wat het uurblok niet oplost". Begrensd door de logbewaartermijn en door wie er in het dashboard kan. De app logt zelf niets inhoudelijks, en dat is een harde regel uit `CLAUDE.md` sectie 8. |
+| **B. Een bucket met te weinig inzendingen** | `weather_today()` geeft nul rijen onder de drempel van 10, en de app krijgt alleen dagpercentages, nooit de uurblokken. |
+| **C. Een huisgenoot die meekijkt op het dashboard** | **Was open, sinds 26 augustus dicht.** `weather_today()` telt alleen afgesloten uurblokken; het lopende blok is onzichtbaar. Zie `datamodel.md`. |
+| **D. Het dagslot als record** | Bewust: `profiles.last_checkin_on` is één datum, zegt dát iemand heeft ingecheckt en niet wát. Alleen de eigenaar leest zijn eigen rij, niemand mag schrijven. |
+
+### Supabase
+
+- **Service role key**: nooit in de app, nooit op een laptop, nooit voor een agent. `CLAUDE.md` sectie 9.
+- **`using (true)`** staat alleen op `weather_type`, de vijf labels, en sinds 26 augustus alleen nog voor `authenticated`. `weather_hourly` en `profiles` hebben geen enkele insert- of update-policy; schrijven kan alleen via `security definer`-functies met een leeg `search_path`. `WITH CHECK` is daardoor niet van toepassing: er is geen policy waar hij op zou horen.
+- **Edge Functions** gebruiken we niet. Komen ze er ooit, dan draaien ze standaard met de service role en moeten ze zelf de JWT controleren.
+- **Security advisor** meldt twee `security definer`-functies die door ingelogde gebruikers aan te roepen zijn: `submit_weather` en `weather_today`. Dat is het ontwerp, en `supabase/tests/anonimisering.sql` sectie 9 bewaakt dat `anon` niets kan en de beheerfuncties niet voor de app zijn.
+- **Realtime** staat op geen enkele tabel en **PITR** staat uit. Zie `backend-draaiboek.md`.
+
+### Auth en de app
+
+- **PKCE** staat sinds 26 augustus expliciet aan in `apps/mobile/src/lib/supabase.ts` (`flowType: "pkce"`). De e-mailcode (OTP) gebruikt geen redirect en heeft er niets aan; het is voor de OAuth-flows van Apple en Google zodra die aangaan.
+- **Custom scheme versus Universal/App Links.** De app heeft het custom scheme `mentaleweerbericht`. Een andere app op hetzelfde toestel kan dat scheme claimen en een redirect onderscheppen; met PKCE heeft die app aan de code niets zonder de verifier, dus het risico is klein, maar niet nul. Universal Links en App Links vragen een domein van Mind met een verificatiebestand erop, en dat domein is er nog niet. **Voorkeur voor de OAuth-taak: de native flows** (Sign in with Apple via `expo-apple-authentication`, Google via een id-token) met `signInWithIdToken`. Dan is er helemaal geen redirect en dus niets te onderscheppen. Beide zijn een nieuwe dependency en dus een aparte PR.
+- **Tokens op het toestel** staan in AsyncStorage, en dat is niet versleuteld. Met een gerooted of gejailbreakt toestel is de sessie te kopiëren. `expo-secure-store` lost dat op en is een nieuwe dependency: te besluiten, en te doen in de auth-taak. Tot dan geldt: de sessie geeft toegang tot één ding, insturen, en tot niets wat je kunt teruglezen.
+- **Sessies** verlopen na een uur en de refresh token roteert; dat is de standaard van Supabase en staat zo in het dashboard.
+- **Accountverwijdering** doet sinds 26 augustus het echte werk via `delete_own_account()`; scherm 19 wist daarna pas het toestel, nooit andersom.
+- **EAS Updates code signing** is niet van toepassing: de app gebruikt geen OTA-updates (`expo-updates` zit er niet in). Komt dat erin, dan gaat code signing tegelijk aan, want anders kan iedereen met publish-rechten of CI-toegang een JS-bundel naar alle gebruikers duwen.
+- **Secrets**: `.env*` staat in `.gitignore`, alleen `.env.example` zit in de repo en bevat geen waarden. CI (`.github/workflows/ci.yml`) heeft geen secrets nodig. Zet in GitHub **secret scanning met push protection** aan; dat is een repo-instelling en staat als actie in `setup-github.md`.
+- **Rate limiting en WAF**: sectie 1 tot en met 4 hierboven. Geen WAF, geen captcha, bewust. De bruteforce op de e-mailcode wordt begrensd door de verificatielimiet van Supabase (360 per uur per IP) en een code van zes cijfers die na tien minuten verloopt: zie de dashboardchecklist.
+
+### Checklist dashboard (niet in migraties, bij elke omgeving opnieuw)
+
+Onder **Authentication**:
+
+- [ ] **Confirm email** aan: een account zonder bevestigd e-mailadres mag niet bestaan, anders is één script genoeg om accounts te maken en het landelijke beeld te sturen.
+- [ ] **Leaked password protection** aan. Wij bieden geen wachtwoordlogin, maar de API wel; deze vlag kost niets. De security advisor meldt hem nu als uit.
+- [ ] **E-mail OTP**: lengte 6, geldigheid **600 seconden** en niet de standaard van een uur. Korter is niet handig op slechte wifi.
+- [ ] **Rate limits** op de standaardwaarden laten of strenger; nooit ruimer zonder reden. Zie sectie 1.
+- [ ] **Wachtwoordlogin uit** zodra het dashboard dat toestaat, of anders een minimale wachtwoordlengte van 12 en de lekcheck hierboven. De app biedt geen wachtwoordveld, dus elke wachtwoordlogin is een script.
+- [ ] **Redirect URLs**: alleen `mentaleweerbericht://**`. Geen wildcard op een domein dat niet van Mind is.
+
+Onder **Database** en **Settings**:
+
+- [ ] **PITR uit**, en uit laten.
+- [ ] **Realtime**: geen tabel in de publicatie `supabase_realtime`. `anonimisering.sql` sectie 6 controleert het.
+- [ ] **Network restrictions** op de directe databaseverbinding: niet nodig zolang niemand er direct op zit, wel zodra Mind een vaste beheerlocatie heeft.
+- [ ] **Wie er in het dashboard kan.** Dat is de maatregel tegen scenario A, en na de overdracht is dat aan Mind.
+
 ## Wat we niet bouwen
 
 - Geen captcha. Zou de misbruikvraag uit punt 3 verkleinen, maar het is een extra partij die gedrag van bezoekers meet, en dat past niet bij deze app. Wel te heroverwegen als er echt manipulatie optreedt.

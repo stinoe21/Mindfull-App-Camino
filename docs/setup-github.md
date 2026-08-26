@@ -121,6 +121,10 @@ Staat ingevuld met de echte usernames. GitHub stelt daarmee automatisch een revi
 
 ---
 
+## 7. Secret scanning met push protection
+
+Onder **Settings, Code security**: zet **Secret scanning** en **Push protection** aan. Dan weigert GitHub een push met een herkenbare sleutel erin, in plaats van hem achteraf te melden. Het is gratis op een private repo van een persoonlijk account sinds 2024, en het is de goedkoopste maatregel uit de checklist in `limieten-en-misbruik.md` sectie 5.
+
 ## Controle achteraf
 
 Test of de pre-push hook werkt. Dit hoort geweigerd te worden:

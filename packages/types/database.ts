@@ -94,6 +94,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      delete_own_account: { Args: never; Returns: undefined }
+      purge_inactive_accounts: { Args: { p_days?: number }; Returns: number }
       submit_weather: { Args: { p_weather: string }; Returns: undefined }
       weather_today: {
         Args: never

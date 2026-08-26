@@ -249,6 +249,60 @@ begin
 end $$;
 
 \echo ''
+\echo '=== 8. Telt weather_today() alleen afgesloten uurblokken? ==='
+
+do $$
+declare
+  v_def text;
+begin
+  select pg_get_functiondef('public.weather_today()'::regprocedure) into v_def;
+  -- Het lopende uurblok mag niet meetellen: wie het dashboard ververst
+  -- terwijl een huisgenoot incheckt, ziet anders de percentages verschuiven.
+  assert v_def ~ 'h\.hour\s*<\s*nu\.uur',
+    'weather_today() telt het lopende uurblok mee. Dan is een inzending live te zien binnenkomen.';
+end $$;
+
+\echo 'weather_today() telt alleen afgesloten uurblokken'
+
+\echo ''
+\echo '=== 9. Wie mag welke functie aanroepen? ==='
+
+select r.routine_name as functie, r.grantee, r.privilege_type
+  from information_schema.routine_privileges r
+ where r.routine_schema = 'public'
+   and r.grantee in ('anon', 'authenticated', 'PUBLIC')
+ order by r.routine_name, r.grantee;
+
+do $$
+declare
+  v_fout text;
+begin
+  -- anon mag helemaal niets aanroepen.
+  select string_agg(routine_name, ', ') into v_fout
+    from information_schema.routine_privileges
+   where routine_schema = 'public' and grantee in ('anon', 'PUBLIC');
+  assert v_fout is null,
+    format('anon of PUBLIC mag functies aanroepen: %s', v_fout);
+
+  -- De opruiming is niet voor de app.
+  select string_agg(routine_name, ', ') into v_fout
+    from information_schema.routine_privileges
+   where routine_schema = 'public' and grantee = 'authenticated'
+     and routine_name in ('purge_inactive_accounts', 'handle_new_user');
+  assert v_fout is null,
+    format('authenticated mag beheerfuncties aanroepen: %s', v_fout);
+
+  -- weather_type is dicht voor anon.
+  select string_agg(privilege_type, ', ') into v_fout
+    from information_schema.role_table_grants
+   where table_schema = 'public' and table_name = 'weather_type' and grantee = 'anon';
+  assert v_fout is null,
+    format('anon heeft rechten op weather_type: %s', v_fout);
+end $$;
+
+\echo 'anon kan niets aanroepen, de opruiming is niet voor de app'
+
+\echo ''
 \echo '======================================================================'
 \echo ' GESLAAGD. De collectieve tabel heeft geen kolom die naar een persoon'
 \echo ' kan wijzen, geen rij per inzending, geen tijd fijner dan een uur, en'
@@ -256,9 +310,13 @@ end $$;
 \echo ' app onzichtbaar, staat niet op realtime, en alle toegang loopt via'
 \echo ' functies met een vast search_path.'
 \echo ''
-\echo ' Wat dit NIET bewijst: wie live meekijkt terwijl een totaal ophoogt,'
-\echo ' ziet welk totaal net veranderde, zolang de platformlogs bestaan. Dat'
-\echo ' venster sluit vanzelf; de maatregel is beperkte dashboardtoegang.'
+\echo ' De app ziet alleen afgesloten uurblokken, dus een inzending is via'
+\echo ' het weerbericht niet live te zien binnenkomen.'
+\echo ''
+\echo ' Wat dit NIET bewijst: wie met DASHBOARDTOEGANG live meekijkt terwijl'
+\echo ' een totaal ophoogt, ziet welk totaal net veranderde, zolang de'
+\echo ' platformlogs bestaan. Dat venster sluit vanzelf; de maatregel is'
+\echo ' beperkte dashboardtoegang.'
 \echo ' Zie de kop van de migratie weather_hourly_totals en de DPIA.'
 \echo '======================================================================'
 \echo ''

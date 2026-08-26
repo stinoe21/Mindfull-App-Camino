@@ -36,5 +36,9 @@ export const supabase = createClient<Database>(url, anonKey, {
     autoRefreshToken: true,
     // Er is geen webredirect in een native app.
     detectSessionInUrl: false,
+    // PKCE is de standaard van supabase-js, maar niet in elke React Native-
+    // opzet; daarom expliciet. Bij een OAuth- of magic-link-redirect terug naar
+    // het custom scheme kan een onderschepte code zonder de verifier niets.
+    flowType: "pkce",
   },
 });
