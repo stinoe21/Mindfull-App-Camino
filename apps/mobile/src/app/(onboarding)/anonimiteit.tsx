@@ -19,6 +19,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 import { WatIsHetWeerbericht } from "@/features/weer/WatIsHetWeerbericht";
+import { UITLEG_ANONIMITEIT, UITLEG_DETAIL } from "@/features/weer/WeerberichtIntro";
 
 export default function Anonimiteit() {
   const router = useRouter();
@@ -43,14 +44,8 @@ export default function Anonimiteit() {
       </View>
 
       <Card tone="white">
-        <AppText rol="body">
-          Je check-in wordt op je telefoon omgezet in een weerbeeld. Alleen dat weerbeeld telt anoniem
-          mee in een landelijk totaal: zonder naam, zonder account, zonder tijdstip.
-        </AppText>
-        <AppText rol="bodySmall" kleur="secondary">
-          Je antwoorden op de vier vragen verlaten je telefoon nooit. Je kunt dit altijd wijzigen in
-          Instellingen.
-        </AppText>
+        <AppText rol="body">{UITLEG_ANONIMITEIT}</AppText>
+        <AppText rol="bodySmall" kleur="secondary">{UITLEG_DETAIL}</AppText>
         <WatIsHetWeerbericht />
       </Card>
 

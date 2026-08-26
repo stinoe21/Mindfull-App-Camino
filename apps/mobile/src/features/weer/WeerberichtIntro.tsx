@@ -29,12 +29,13 @@ export const INTRO =
 
 const UITLEG_KOP = "Hoe werkt dit?";
 
-// Woordelijk uit het onboardingscherm Anoniem meetellen, niet parafraseren.
-const UITLEG_ANONIMITEIT =
+// De canonieke uitleg van de anonimisering. Het onboardingscherm Anoniem
+// meetellen importeert deze twee zinnen; er is bewust een bron en geen kopie.
+export const UITLEG_ANONIMITEIT =
   "Je check-in wordt op je telefoon omgezet in een weerbeeld. Alleen dat weerbeeld telt anoniem " +
   "mee in een landelijk totaal: zonder naam, zonder account, zonder tijdstip.";
 
-const UITLEG_DETAIL =
+export const UITLEG_DETAIL =
   "Je antwoorden op de vier vragen verlaten je telefoon nooit. Je kunt dit altijd wijzigen in " +
   "Instellingen.";
 
@@ -51,7 +52,7 @@ export function WeerberichtIntro() {
           accessibilityRole="button"
           accessibilityLabel={UITLEG_KOP}
           onPress={() => zetOpen(true)}
-          hitSlop={space[2]}
+          hitSlop={space[3]}
           style={({ pressed }) => ({
             opacity: pressed ? 0.7 : 1,
             borderRadius: radius.pill,

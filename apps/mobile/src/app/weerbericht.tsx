@@ -38,7 +38,11 @@ export default function Weerbericht() {
         <AppText rol="subtitle" kleur="secondary">Het mentale weer van vandaag, samen opgeteld.</AppText>
       </View>
 
-      <WeerberichtIntro />
+      {/* De intro hoort bij een getoond weerbericht. Boven de lege staat zou
+          "alle check-ins van vandaag" tegenspreken wat eronder staat, en die
+          staat is sinds weather_today() alleen afgesloten uurblokken meetelt
+          elke dag voor 01:00 in beeld. */}
+      {stand?.staat === "geladen" ? <WeerberichtIntro /> : null}
 
       {stand === null ? (
         <Card tone="outline">

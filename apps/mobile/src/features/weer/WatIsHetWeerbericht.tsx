@@ -27,7 +27,7 @@ export function WatIsHetWeerbericht() {
         accessibilityRole="button"
         accessibilityLabel={VRAAG}
         onPress={() => zetOpen(true)}
-        hitSlop={space[2]}
+        hitSlop={space[3]}
         style={({ pressed }) => ({
           flexDirection: "row",
           alignItems: "center",
