@@ -16,6 +16,7 @@ import { Card } from "@mind/ui/components/Card";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { haalWeerbericht, type WeerberichtStand } from "@/features/weer/weerbericht";
+import { WeerberichtIntro } from "@/features/weer/WeerberichtIntro";
 
 export default function Weerbericht() {
   const router = useRouter();
@@ -36,6 +37,12 @@ export default function Weerbericht() {
         <AppText rol="h1">Weerbericht Nederland</AppText>
         <AppText rol="subtitle" kleur="secondary">Het mentale weer van vandaag, samen opgeteld.</AppText>
       </View>
+
+      {/* De intro hoort bij een getoond weerbericht. Boven de lege staat zou
+          "alle check-ins van vandaag" tegenspreken wat eronder staat, en die
+          staat is sinds weather_today() alleen afgesloten uurblokken meetelt
+          elke dag voor 01:00 in beeld. */}
+      {stand?.staat === "geladen" ? <WeerberichtIntro /> : null}
 
       {stand === null ? (
         <Card tone="outline">
