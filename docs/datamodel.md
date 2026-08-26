@@ -95,6 +95,8 @@ Dit hoort in de DPIA en het hoort niet weggepoetst te worden.
 - **De logbewaartermijn van het platform.** Na afloop daarvan bestaat de aanvullende informatie niet meer en valt er niets te reconstrueren, door niemand: een totaal kent zijn eigen verleden niet.
 - **Wie er bij het dashboard kan.** Dat is een organisatorische maatregel en hoort daarom in de DPIA en niet in dit document.
 
+**Wie het weerbericht ververst, zag tot 26 augustus 2026 een inzending binnenkomen.** Dit is een tweede venster, en het had geen dashboardtoegang nodig: `weather_today()` telde live op, dus een huisgenoot die het dashboard ververste op het moment dat iemand naast hem inchecke, zag de percentages verschuiven. De drempel van 10 en de afronding dempten dat, maar losten het niet op. Sinds de migratie `security_hardening` van 26 augustus 2026 telt `weather_today()` **alleen afgesloten uurblokken** mee. Een blok komt in één keer met al zijn inzendingen in beeld, en geen daarvan is nog aan een moment te koppelen. De prijs: voor 01:00 is er nooit een weerbericht en overdag loopt het beeld tot een uur achter. Dat is bewust, en het is de reden dat de app het beeld één keer per sessie ophaalt in plaats van bij elke keer dat het scherm in beeld komt.
+
 **Wees hier eerlijk over richting Paul.** Ten opzichte van de mail van 7 augustus is dit een aanscherping en geen afzwakking: de willekeurige code is geschrapt, en de losse rij is vervangen door een totaal waarmee het volgorde-restrisico is vervallen. Maar het uurblok, de totalen en het live-venster hierboven kent hij nog niet, en hij moet ze zelf kunnen wegen.
 
 De vraag die Paul op 6 augustus stelde, "op welk moment worden de individuele weerberichten losgekoppeld", heeft daarmee nog steeds hetzelfde antwoord: ze worden nooit losgekoppeld, want ze zijn nooit gekoppeld geweest. Er bestaat niet eens een rij per inzending.
@@ -202,10 +204,12 @@ Kolommen:
 Bevat gevoelige data?     Persoonsgegevens ja, gezondheidsgegevens nee. Er staat nergens in deze
                           tabel wát iemand heeft ingevuld, alleen dát hij op een dag heeft ingecheckt.
 Bewaartermijn:            Weg na 2 jaar inactiviteit, gemeten aan last_active_at, of eerder als de
-                          gebruiker zijn account zelf verwijdert. De opruiming zelf bestaat nog niet,
-                          zie de openstaande punten.
-Verwijderbaar door user?  Ja, via Profiel en instellingen. Verwijdert hij zijn account, dan gaat deze
-                          rij mee via de foreign key naar auth.users.
+                          gebruiker zijn account zelf verwijdert. De opruiming is de functie
+                          purge_inactive_accounts() (sinds 26 augustus 2026), niet aanroepbaar
+                          vanuit de app en nog NIET ingepland: zie de openstaande punten.
+Verwijderbaar door user?  Ja, via Profiel en instellingen, scherm 19. Dat roept delete_own_account()
+                          aan: de rij in auth.users gaat weg en deze rij en de sessies gaan mee via
+                          de cascade.
 Welke schermen lezen dit? Profiel, instellingen, weer-check-in (voor het dagslot).
 ```
 
@@ -263,7 +267,7 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 - [ ] **Wat is het minimumaantal deelnemers waarboven het landelijke weerbericht getoond mag worden?** Op het board staat bij connector `12:308` letterlijk "pas tonen boven een minimum aantal deelnemers", zonder getal. Gecontroleerd op 30 juli 2026. Dit is een privacymaatregel en geen designkeuze, dus het getal hoort hier te staan en niet in de code te worden bedacht. **Voorstel: 10.** Onder de drempel geeft `weather_today()` nul rijen terug en toont het dashboard de empty state. Bevestig het getal, dan staat het in de functie.
 - [ ] **Wat is de uitdrukkelijke toestemming onder art. 9 AVG precies?** Paul kondigde op 10 augustus aan hier nog op te finetunen. Dit valt samen met het punt hieronder over de twee consents, en is daarmee blokkerend geworden in plaats van een losse vraag.
 - [ ] **Welke twee consents zijn het, en wat staat er precies in?** Het board heeft twee losse, apart intrekbare consents (`12:136` en `12:139`) en `design-system.md` rekent op een Consent row met twee varianten. Waar ze over gaan en wat de tekst is, staat nergens. Dit blokkeert onderdeel 1 uit `taakverdeling.md`.
-- [ ] **Wat ruimt de bewaartermijn daadwerkelijk op, en wanneer draait dat?** Het veld voor laatste activiteit is nu besloten, maar een termijn van 2 jaar bestaat pas als er iets is dat periodiek verwijdert. Zolang dat er niet is, staat er een belofte in de privacyverklaring die de app niet nakomt. Dit moet in een migratie staan, want anders komt het niet mee in de overdracht en gaat de app bij Mind live zonder opruiming. Zie `privacy-besluiten.md`.
+- [ ] **Wat ruimt de bewaartermijn daadwerkelijk op, en wanneer draait dat?** Het "wat" is er sinds 26 augustus 2026: `purge_inactive_accounts(p_days default 730)` verwijdert accounts waarvan `last_active_at` ouder is dan twee jaar, en komt als migratie mee in de overdracht. "Inactief" is daarin: geen check-in in twee jaar, want alleen een check-in werkt `last_active_at` bij. Het "wanneer" staat nog open: de functie is niet ingepland, en pg_cron aanzetten is een eigen besluit van de drie. Tot dan is het een handeling van een beheerder in het dashboard. Zie `privacy-besluiten.md`.
 - [ ] **Wat staat er lokaal op het toestel, en hoe lang?** Dit is niet meer alleen onze vraag: Paul stelde hem op 10 augustus letterlijk ("Is er een bewaartermijn gesteld voor deze lokale gegevens?") en hij staat nog open. Uit het ontwerp volgt het antwoord al grotendeels: het persoonlijke weerbeeld staat lokaal en wordt aan het eind van de dag gewist, en er is geen lokale historie. Wat nog benoemd moet worden is wat er verder lokaal staat, zoals de sessietokens, en wat er gebeurt bij uitloggen. Dit hangt samen met de vraag of de app offline werkt.
 - [x] **Wil Mind meer zien dan de dagverdeling?** **Ja, besloten op 11 augustus 2026.** Sinds 13 augustus zijn dat totalen per (dag, uurblok, weerbeeld): het verloop binnen de dag en misbruikdetectie blijven mogelijk, zonder losse rijen. De sliderwaarden gaan nog steeds **niet** mee: dat is een aparte toezegging aan Paul en een vier-dimensionale waarde is een veel unievere vingerafdruk. Wil Mind die alsnog, dan is dat een nieuwe verwerking en gaat het eerst langs Paul.
 - [x] **Wie plant de rollup in, en waarmee?** **Vervallen op 13 augustus 2026: er is geen rollup meer.** De uurtotalen blijven staan omdat ze niet herleidbaar zijn; `weather_daily` en de rollup-functie zijn geschrapt, en daarmee is ook het pg_cron-besluit van tafel. Er kan dus ook niets vergeten worden. Wil Mind alsnog een bewaartermijn, dan is dat een kleine migratie.

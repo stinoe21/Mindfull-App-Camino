@@ -8,7 +8,7 @@ De inhoudelijke besluiten staan niet hier: wat we opslaan staat in `datamodel.md
 
 ## 1. Hoe de backend in elkaar zit
 
-De hele backend is op dit moment drie migratiebestanden in `supabase/migrations/`. Dat is geen tussenstand maar het ontwerp: klein, leesbaar, en elke wijziging is een bestand met een review erop.
+De hele backend is op dit moment vier migratiebestanden in `supabase/migrations/`. Dat is geen tussenstand maar het ontwerp: klein, leesbaar, en elke wijziging is een bestand met een review erop.
 
 Het idee in één alinea: het persoonlijke weerbeeld blijft op het toestel en wordt aan het eind van de dag gewist. De server kent maar twee dingen. Eén: **anonieme totalen**, per dag, uurblok en weerbeeld hoeveel inzendingen er waren; een inzending telt op bij een totaal en krijgt geen eigen rij. Twee: op het profiel **de datum van de laatste check-in**, zodat iemand één keer per dag meetelt. Tussen die twee loopt geen verbinding, en de tabellen zijn zo gebouwd dat die verbinding er ook niet bij kán: er is in de collectieve tabel geen kolom die een gebruiker of een exact moment kan aanduiden, en geen rij die één inzending vertegenwoordigt.
 
@@ -19,9 +19,12 @@ Dit is de volledige API van de backend. Alles wat hier niet staat, is voor de ap
 | Handeling | Hoe | Wat het doet |
 |---|---|---|
 | Insturen | `rpc('submit_weather', { p_weather: 'zonnig' })` | Zet eerst het dagslot op het profiel, telt dan anoniem op bij het uurtotaal. Eén transactie. Tweede keer op een dag: foutmelding "vandaag al ingecheckt". |
-| Weerbericht lezen | `rpc('weather_today')` | De percentages van vandaag. Geeft **nul rijen** onder de toondrempel; dat is meteen de empty state. |
-| Weertypen lezen | `select` op `weather_type` | De vijf weerbeelden met hun labels. |
+| Weerbericht lezen | `rpc('weather_today')` | De percentages van vandaag, over de **afgesloten uurblokken**. Het lopende blok telt niet mee, zodat niemand een inzending live ziet binnenkomen. Geeft **nul rijen** onder de toondrempel; dat is meteen de empty state, ook voor 01:00. |
+| Weertypen lezen | `select` op `weather_type` | De vijf weerbeelden met hun labels. Alleen ingelogd; voor het inloggen heeft de app ze niet nodig. |
 | Eigen profiel lezen | `select` op de eigen rij in `profiles` | Voor `last_checkin_on`, zodat de check-in-knop uit kan staan als iemand al heeft ingecheckt. |
+| Account verwijderen | `rpc('delete_own_account')` | Verwijdert de eigen rij in `auth.users`; profiel en sessies gaan mee via de cascade. Scherm 19. |
+
+Daarnaast is er één functie die de app **niet** mag aanroepen: `purge_inactive_accounts(p_days)`, de bewaartermijn van twee jaar. Alleen een beheerder of een geplande taak, en die planning is een open besluit.
 
 Schrijven op `profiles` kan niet vanuit de app, ook niet op je eigen rij: anders zet iemand zijn eigen dagslot terug. En `weather_hourly` is helemaal onzichtbaar: RLS staat aan en er is bewust geen enkele policy.
 
@@ -45,11 +48,12 @@ Waarom er geen rij per inzending is en geen tijdstip, staat uitgelegd in `datamo
 - **Realtime staat op geen enkele tabel.** Uitzenden van inserts met een moment erbij is precies het lek dat het uurblok dichthoudt.
 - **Geen GitHub-integratie op het Supabase-project.** Die blokkeert de overdracht aan Mind, zie `privacy-besluiten.md`.
 - **Wie er in het dashboard kan is een privacymaatregel**, geen gemak. Na de overdracht is dat aan Mind.
+- **De auth-instellingen in het dashboard** staan als checklist in `limieten-en-misbruik.md` sectie 5: e-mailbevestiging aan, lekwachtwoordbescherming aan, OTP-lengte en -geldigheid, en geen wachtwoordlogin als de app die niet aanbiedt. Ze komen niet mee in migraties, dus vink ze na elke nieuwe omgeving opnieuw af.
 
 ### Wat er bewust nog niet is
 
 - **Er is geen rollup en geen bewaartermijn op de uurtotalen.** Vervallen op 13 augustus 2026: de totalen zijn niet herleidbaar, dus er hoeft niets periodiek te draaien en er kan niets vergeten worden. Wil Mind alsnog een termijn, dan is dat een kleine migratie.
-- **De opruiming van inactieve accounts bestaat nog niet**, alleen het veld (`last_active_at`) om hem op te bouwen.
+- **De opruiming van inactieve accounts is niet ingepland.** De functie `purge_inactive_accounts()` bestaat sinds 26 augustus 2026, maar pg_cron aanzetten is een eigen besluit.
 - **Een eigen SMTP is pas voor livegang**, met een verwerkersovereenkomst erbij, zie `limieten-en-misbruik.md`.
 
 ---
@@ -98,5 +102,5 @@ Alleen de backendpunten; het volledige overzicht staat in `privacy-besluiten.md`
 
 - **De toondrempel (nu 10)** is een voorlopig getal dat Paul nog moet wegen.
 - **Een bewaartermijn op de uurtotalen** is er sinds 13 augustus 2026 niet: ze zijn niet herleidbaar. Wil Mind er toch een, dan is dat een kleine migratie; de vraag ligt bij Paul.
-- **De opruiming na twee jaar inactiviteit** moet nog gebouwd, inclusief wat "inactief" precies is.
+- **De opruiming na twee jaar inactiviteit** bestaat als functie maar draait nergens. Inplannen (pg_cron) of periodiek met de hand: te besluiten.
 - **De teksten van de twee consents** blokkeren de onboarding-flow; de vraag ligt bij Paul.
