@@ -1,7 +1,7 @@
 // "Wat is het mentale weerbericht?": een tikbare regel met het info-icoon
-// die de uitleg van het weerbericht uitklapt. Voor schermen die de term
-// noemen voordat de gebruiker het weerbericht ooit gezien heeft, zoals het
-// onboardingscherm Anoniem meetellen.
+// die de uitleg van het weerbericht in een popup opent. Voor schermen die
+// de term noemen voordat de gebruiker het weerbericht ooit gezien heeft,
+// zoals het onboardingscherm Anoniem meetellen.
 //
 // De uitlegtekst is INTRO uit WeerberichtIntro.tsx: een keer vastgelegd,
 // overal dezelfde zinnen. Zie daar voor de VOORSTEL-status van die copy.
@@ -13,6 +13,7 @@ import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 
 import { InfoIcoon } from "./infoIcoon";
+import { InfoPopup } from "./InfoPopup";
 import { INTRO } from "./WeerberichtIntro";
 
 const VRAAG = "Wat is het mentale weerbericht?";
@@ -21,12 +22,11 @@ export function WatIsHetWeerbericht() {
   const [open, zetOpen] = useState(false);
 
   return (
-    <View style={{ gap: space[2] }}>
+    <View>
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={VRAAG}
-        accessibilityState={{ expanded: open }}
-        onPress={() => zetOpen(!open)}
+        onPress={() => zetOpen(true)}
         hitSlop={space[2]}
         style={({ pressed }) => ({
           flexDirection: "row",
@@ -41,11 +41,9 @@ export function WatIsHetWeerbericht() {
         </AppText>
       </Pressable>
 
-      {open ? (
-        <AppText rol="bodySmall" kleur="secondary">
-          {INTRO}
-        </AppText>
-      ) : null}
+      <InfoPopup zichtbaar={open} kop={VRAAG} onSluiten={() => zetOpen(false)}>
+        <AppText rol="body">{INTRO}</AppText>
+      </InfoPopup>
     </View>
   );
 }

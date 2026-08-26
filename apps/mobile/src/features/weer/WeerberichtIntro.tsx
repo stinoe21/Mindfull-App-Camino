@@ -1,5 +1,5 @@
 // De introductie boven het landelijke weerbericht: wat is dit, waar komt het
-// vandaan, en een info-icoon dat een uitgebreidere uitleg uitklapt.
+// vandaan, en een info-icoon dat een uitgebreidere uitleg in een popup opent.
 //
 // De INTRO-zinnen zijn een VOORSTEL totdat ze in scope.md zijn bevestigd,
 // dezelfde afspraak als in teksten.ts. De uitgebreide uitleg hergebruikt
@@ -17,6 +17,7 @@ import { AppText } from "@mind/ui/components/AppText";
 import { Card } from "@mind/ui/components/Card";
 
 import { InfoIcoon } from "./infoIcoon";
+import { InfoPopup } from "./InfoPopup";
 
 // VOORSTEL: intro in gewone taal, twee korte zinnen (HERKOMST.md: body copy
 // zelden meer dan twee zinnen per kaart). Geen oordeel, collectieve framing.
@@ -49,8 +50,7 @@ export function WeerberichtIntro() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={UITLEG_KOP}
-          accessibilityState={{ expanded: open }}
-          onPress={() => zetOpen(!open)}
+          onPress={() => zetOpen(true)}
           hitSlop={space[2]}
           style={({ pressed }) => ({
             opacity: pressed ? 0.7 : 1,
@@ -62,17 +62,12 @@ export function WeerberichtIntro() {
         </Pressable>
       </View>
 
-      {open ? (
-        <View style={{ gap: space[2], marginTop: space[1] }}>
-          <AppText rol="bodyEmphasis">{UITLEG_KOP}</AppText>
-          <AppText rol="bodySmall" kleur="secondary">
-            {UITLEG_ANONIMITEIT}
-          </AppText>
-          <AppText rol="bodySmall" kleur="secondary">
-            {UITLEG_DETAIL}
-          </AppText>
-        </View>
-      ) : null}
+      <InfoPopup zichtbaar={open} kop={UITLEG_KOP} onSluiten={() => zetOpen(false)}>
+        <AppText rol="body">{UITLEG_ANONIMITEIT}</AppText>
+        <AppText rol="bodySmall" kleur="secondary">
+          {UITLEG_DETAIL}
+        </AppText>
+      </InfoPopup>
     </Card>
   );
 }
