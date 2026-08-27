@@ -17,6 +17,7 @@ import { Card } from "@mind/ui/components/Card";
 import { Chip } from "@mind/ui/components/Chip";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { aantalAfgerond, markeerAfgerond } from "@/features/content/voortgang";
 
@@ -34,7 +35,7 @@ export default function ChallengeDetail() {
 
   if (!challenge) {
     return (
-      <ScreenCanvas state="default">
+      <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
         <AppText rol="h1">Challenge niet gevonden</AppText>
         <AppText rol="body" kleur="secondary">Deze challenge bestaat niet of is verplaatst.</AppText>
         <Button label="Terug naar challenges" variant="secondary" onPress={() => router.back()} />
@@ -52,7 +53,7 @@ export default function ChallengeDetail() {
   };
 
   return (
-    <ScreenCanvas state="default">
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[2] }}>
         <Chip label={challenge.soort === "challenge" ? "CHALLENGE" : "THEMASPECIAL"} />
         <AppText rol="h1">{challenge.naam}</AppText>

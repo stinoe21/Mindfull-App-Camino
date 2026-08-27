@@ -18,6 +18,7 @@ import { Card } from "@mind/ui/components/Card";
 import { Chip } from "@mind/ui/components/Chip";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { getSupabase } from "@/features/backend/client";
 import {
   bewaarInstellingen,
@@ -60,7 +61,7 @@ export default function Instellingen() {
   };
 
   return (
-    <ScreenCanvas state="default">
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <AppText rol="h1">Instellingen</AppText>
 
       {!geladen ? (

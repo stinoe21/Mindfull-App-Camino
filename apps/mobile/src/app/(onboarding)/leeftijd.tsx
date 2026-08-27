@@ -12,6 +12,7 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 
 export default function Leeftijd() {
@@ -25,7 +26,7 @@ export default function Leeftijd() {
 
   if (teJong) {
     return (
-      <ScreenCanvas state="default">
+      <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
         <AppText rol="h1">Tot later</AppText>
         <Card tone="white">
           <AppText rol="body">
@@ -39,7 +40,7 @@ export default function Leeftijd() {
   }
 
   return (
-    <ScreenCanvas state="default">
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <AppText rol="h1">Ben je 16 jaar of ouder?</AppText>
       <AppText rol="body" kleur="secondary">
         Deze app is voor iedereen van 16 jaar en ouder. We vragen dit een keer, voordat je een account

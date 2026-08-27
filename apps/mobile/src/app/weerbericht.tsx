@@ -15,6 +15,7 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { haalWeerbericht, type WeerberichtStand } from "@/features/weer/weerbericht";
 import { WeerberichtIntro } from "@/features/weer/WeerberichtIntro";
 
@@ -32,7 +33,7 @@ export default function Weerbericht() {
   }, [laad]);
 
   return (
-    <ScreenCanvas state="default">
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">Weerbericht Nederland</AppText>
         <AppText rol="subtitle" kleur="secondary">Het mentale weer van vandaag, samen opgeteld.</AppText>
