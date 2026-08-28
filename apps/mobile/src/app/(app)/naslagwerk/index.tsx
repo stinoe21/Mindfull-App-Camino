@@ -18,7 +18,6 @@ import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
-import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { ARTIKELEN, ONDERWERPEN } from "@/features/content/data/artikelen";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 
@@ -68,7 +67,7 @@ export default function Naslagwerk() {
   const onderwerpen = [...ONDERWERPEN].sort((a, b) => gekozen(b) - gekozen(a));
 
   return (
-    <ScreenCanvas state="default" metNavRuimte terugKnop={<TerugNaarVorige />}>
+    <ScreenCanvas state="default" metNavRuimte>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">Naslagwerk</AppText>
         <AppText rol="subtitle" kleur="secondary">Betrouwbare kennis, altijd met bron.</AppText>

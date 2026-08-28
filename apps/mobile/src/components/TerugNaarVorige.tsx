@@ -1,9 +1,9 @@
 // De router-kant van de terug-knop: alleen zichtbaar als er echt iets is om
 // naar terug te gaan, en een tik dispatcht dezelfde GO_BACK-actie als de
-// hardware-terugknop op Android. Daardoor kunnen de twee nooit uit elkaar
-// lopen: op een subpagina popt hij de stack, op een tab (Profiel, Challenges,
-// Tips) springt hij naar Home, precies zoals de tab-navigator de hardware-
-// terugknop afhandelt (backBehavior "firstRoute").
+// hardware-terugknop op Android, zodat de twee nooit uit elkaar lopen.
+// Alleen subpagina's geven deze knop mee aan ScreenCanvas; de tabschermen
+// (Home, Tips, Challenges, Profiel) tonen hem bewust niet. De hardware-
+// terugknop springt daar nog wel naar Home (backBehavior "firstRoute").
 
 import { useNavigation } from "expo-router";
 

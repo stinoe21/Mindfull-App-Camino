@@ -15,7 +15,6 @@ import { Card } from "@mind/ui/components/Card";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
-import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { getSupabase } from "@/features/backend/client";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { leesInstellingen } from "@/features/profiel/instellingen";
@@ -49,7 +48,7 @@ export default function Profiel() {
   );
 
   return (
-    <ScreenCanvas state="default" metNavRuimte terugKnop={<TerugNaarVorige />}>
+    <ScreenCanvas state="default" metNavRuimte>
       <AppText rol="h1">Profiel</AppText>
 
       <Card tone="primary" style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
