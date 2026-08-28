@@ -24,6 +24,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { Slider } from "@mind/ui/components/Slider";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 import { leesWaarden, resetWaarden, zetWaarde } from "@/features/weer/checkinSessie";
 import { bewaarWeerVanVandaag, leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
@@ -33,8 +34,27 @@ import { CHECKIN_STAPPEN, GERUSTSTELLING } from "@/features/weer/teksten";
 import { bepaalWeerbeeld } from "@/features/weer/weerbeeld";
 import { stuurWeerIn } from "@/features/weer/weerbericht";
 
+// Alleen interface-teksten. De vraagteksten, de labelparen en GERUSTSTELLING
+// zijn canonieke check-in-copy (HERKOMST.md) en blijven bewust Nederlands.
+const nl = {
+  stapVan: "STAP {x} van {y}",
+  bekijkJeWeer: "Bekijk je weer",
+  verder: "Verder",
+  slaOver: "Sla vandaag over",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    stapVan: "STEP {x} of {y}",
+    bekijkJeWeer: "See your weather",
+    verder: "Continue",
+    slaOver: "Skip today",
+  },
+};
+
 export default function CheckInStap() {
   const router = useRouter();
+  const t = useVertaling(teksten);
   const insets = useSafeAreaInsets();
   const params = useLocalSearchParams<{ stap: string }>();
   const nummer = Number(params.stap);
@@ -117,14 +137,14 @@ export default function CheckInStap() {
         <MascotteInput state={stap.key} hoogte={128} />
       </View>
       <AppText rol="labelOverline" kleur="secondary">
-        {"STAP " + (index + 1) + " van " + CHECKIN_STAPPEN.length}
+        {t("stapVan").replace("{x}", String(index + 1)).replace("{y}", String(CHECKIN_STAPPEN.length))}
       </AppText>
       <AppText rol="h3">{stap.vraag}</AppText>
       <AppText rol="bodySmall" kleur="secondary">{GERUSTSTELLING}</AppText>
       <Slider value={waarde} onChange={zetLokaleWaarde} leftLabel={stap.links} rightLabel={stap.rechts} />
       <View style={{ flex: 1 }} />
-      <Button label={laatste ? "Bekijk je weer" : "Verder"} fullWidth bezig={bezig} onPress={verder} />
-      <Button label="Sla vandaag over" variant="link" fullWidth onPress={slaOver} />
+      <Button label={laatste ? t("bekijkJeWeer") : t("verder")} fullWidth bezig={bezig} onPress={verder} />
+      <Button label={t("slaOver")} variant="link" fullWidth onPress={slaOver} />
     </ScrollView>
     {/* Zelfde plek als op ScreenCanvas-schermen: net onder de statusbalk. */}
     <View style={{ position: "absolute", top: insets.top + space[1], left: space[3] }}>

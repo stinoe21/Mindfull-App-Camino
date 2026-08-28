@@ -9,15 +9,34 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { colors, radius, space, type } from "@mind/ui";
 
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+
+const nl = {
+  stackTitel: "Niet gevonden",
+  titel: "Deze pagina bestaat niet",
+  body: "Ga terug naar het begin, daar staat je weerbericht.",
+  knop: "Naar het dashboard",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    stackTitel: "Not found",
+    titel: "This page doesn't exist",
+    body: "Go back to the start, that's where your weather forecast is.",
+    knop: "To the dashboard",
+  },
+};
+
 export default function NietGevonden() {
+  const t = useVertaling(teksten);
   return (
     <>
-      <Stack.Screen options={{ title: "Niet gevonden" }} />
+      <Stack.Screen options={{ title: t("stackTitel") }} />
       <View style={styles.pagina}>
-        <Text style={styles.titel}>Deze pagina bestaat niet</Text>
-        <Text style={styles.body}>Ga terug naar het begin, daar staat je weerbericht.</Text>
+        <Text style={styles.titel}>{t("titel")}</Text>
+        <Text style={styles.body}>{t("body")}</Text>
         <Link href="/dashboard" style={styles.knop}>
-          <Text style={styles.knoptekst}>Naar het dashboard</Text>
+          <Text style={styles.knoptekst}>{t("knop")}</Text>
         </Link>
       </View>
     </>

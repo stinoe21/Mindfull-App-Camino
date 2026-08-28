@@ -24,6 +24,12 @@ export type Instellingen = {
   consentWeerbericht: boolean;
   /** Consent 2: voorwaarden en disclaimer geaccepteerd (grondslag overeenkomst). */
   consentVoorwaarden: boolean;
+  /**
+   * UI-taal (issue #47). "systeem" volgt de taal van het toestel. Bewust een
+   * losse literal-union en geen import uit features/i18n, zodat de opslag
+   * geen expo-localization meetrekt.
+   */
+  taal: "systeem" | "nl" | "en";
 };
 
 export const STANDAARD: Instellingen = {
@@ -33,6 +39,7 @@ export const STANDAARD: Instellingen = {
   voorkeuren: [],
   consentWeerbericht: false,
   consentVoorwaarden: false,
+  taal: "systeem",
 };
 
 // Dezelfde onderwerpen als het Naslagwerk, zodat een keuze hier direct

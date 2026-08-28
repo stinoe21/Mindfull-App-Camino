@@ -18,6 +18,7 @@ import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/Con
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ARTIKELEN } from "@/features/content/data/artikelen";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { QuoteKaart } from "@/features/content/QuoteKaart";
@@ -30,16 +31,78 @@ import { haalWeerbericht, type WeerberichtStand } from "@/features/weer/weerberi
 
 import type { WeatherCode } from "@mind/types";
 
-function begroeting(): string {
-  const uur = new Date().getHours();
-  if (uur < 6) return "Goedenacht";
-  if (uur < 12) return "Goedemorgen";
-  if (uur < 18) return "Goedemiddag";
-  return "Goedenavond";
-}
+// Alleen interface-teksten. {share}, {total} en {n} worden op de plek ingevuld.
+const nl = {
+  nacht: "Goedenacht",
+  morgen: "Goedemorgen",
+  middag: "Goedemiddag",
+  avond: "Goedenavond",
+  hoeWeer: "Hoe is je weer vandaag?",
+  jouwWeerOverline: "JOUW WEER VANDAAG",
+  bekijkJeWeer: "Bekijk je weer",
+  evenInchecken: "Even inchecken?",
+  evenIncheckenUitleg:
+    "Neem een momentje voor jezelf. Jouw check-in telt anoniem mee in het mentale weerbericht van Nederland.",
+  evenIncheckenKnop: "Even inchecken",
+  weerVanNederland: "Het mentale weer van Nederland",
+  berichtMeta: "{share}% van de check-ins · {total} vandaag",
+  nietIngelogd: "Log in om het landelijke weerbericht van vandaag te zien.",
+  teWeinig: "Nog te weinig check-ins vandaag voor een landelijk beeld. Kom later terug.",
+  berichtFout:
+    "Het landelijke beeld kon niet worden opgehaald. Zonder verbinding werkt de rest van de app gewoon.",
+  bekijkWeerbericht: "Bekijk het hele weerbericht",
+  challengesTitel: "Challenges voor jou",
+  challengesNote: "Kleine stappen, geen opdrachten.",
+  allesBekijken: "Alles bekijken",
+  labelChallenge: "CHALLENGE",
+  labelThemaspecial: "THEMASPECIAL",
+  onderdelenMeta: "{n} onderdelen · MIND",
+  tipsTitel: "Tips voor jou",
+  bronMind: "BRON: MIND",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    nacht: "Good night",
+    morgen: "Good morning",
+    middag: "Good afternoon",
+    avond: "Good evening",
+    hoeWeer: "How's your weather today?",
+    jouwWeerOverline: "YOUR WEATHER TODAY",
+    bekijkJeWeer: "See your weather",
+    evenInchecken: "Time to check in?",
+    evenIncheckenUitleg:
+      "Take a moment for yourself. Your check-in counts anonymously towards the mental weather forecast of the Netherlands.",
+    evenIncheckenKnop: "Check in",
+    weerVanNederland: "The mental weather of the Netherlands",
+    berichtMeta: "{share}% of the check-ins · {total} today",
+    nietIngelogd: "Log in to see today's national weather forecast.",
+    teWeinig: "Not enough check-ins yet today for a national picture. Come back later.",
+    berichtFout:
+      "The national picture couldn't be loaded. Without a connection the rest of the app still works.",
+    bekijkWeerbericht: "See the full weather forecast",
+    challengesTitel: "Challenges for you",
+    challengesNote: "Small steps, not assignments.",
+    allesBekijken: "See all",
+    labelChallenge: "CHALLENGE",
+    labelThemaspecial: "THEME SPECIAL",
+    onderdelenMeta: "{n} parts · MIND",
+    tipsTitel: "Tips for you",
+    bronMind: "SOURCE: MIND",
+  },
+};
 
 export default function Dashboard() {
   const router = useRouter();
+  const t = useVertaling(teksten);
+
+  const begroeting = (): string => {
+    const uur = new Date().getHours();
+    if (uur < 6) return t("nacht");
+    if (uur < 12) return t("morgen");
+    if (uur < 18) return t("middag");
+    return t("avond");
+  };
   const [weerbeeld, zetWeerbeeld] = useState<WeatherCode | null>(null);
   const [weerGeladen, zetWeerGeladen] = useState(false);
   const [bericht, zetBericht] = useState<WeerberichtStand | null>(null);
@@ -79,7 +142,7 @@ export default function Dashboard() {
     <ScreenCanvas state={weerbeeld ?? "default"} metNavRuimte>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{begroeting() + (naam ? ", " + naam : "")}</AppText>
-        <AppText rol="subtitle" kleur="secondary">Hoe is je weer vandaag?</AppText>
+        <AppText rol="subtitle" kleur="secondary">{t("hoeWeer")}</AppText>
       </View>
 
       {/* Slot 1: check-in of jouw weer van vandaag */}
@@ -93,20 +156,19 @@ export default function Dashboard() {
             <MascotteVlieger state={weerbeeld} hoogte={56} />
             {/* gap 2: titel en duiding dicht op elkaar, zoals in de sectiekop van de referentie */}
             <View style={{ flexShrink: 1, gap: 2 }}>
-              <AppText rol="labelOverline" kleur="secondary">JOUW WEER VANDAAG</AppText>
+              <AppText rol="labelOverline" kleur="secondary">{t("jouwWeerOverline")}</AppText>
               <AppText rol="h3">{UITKOMSTEN[weerbeeld].kop}</AppText>
             </View>
           </View>
-          <Button label="Bekijk je weer" variant="link" onPress={() => router.push("/check-in/uitkomst")} />
+          <Button label={t("bekijkJeWeer")} variant="link" onPress={() => router.push("/check-in/uitkomst")} />
         </Card>
       ) : (
         <Card tone="white">
-          <AppText rol="h3">Even inchecken?</AppText>
+          <AppText rol="h3">{t("evenInchecken")}</AppText>
           <AppText rol="bodySmall" kleur="secondary">
-            Neem een momentje voor jezelf. Jouw check-in telt anoniem mee in het mentale weerbericht van
-            Nederland.
+            {t("evenIncheckenUitleg")}
           </AppText>
-          <Button label="Even inchecken" onPress={() => router.push("/check-in/1")} />
+          <Button label={t("evenIncheckenKnop")} onPress={() => router.push("/check-in/1")} />
         </Card>
       )}
 
@@ -115,31 +177,30 @@ export default function Dashboard() {
 
       {/* Slot 2: het landelijke weerbericht */}
       <Card tone="primary">
-        <AppText rol="bodySmall" kleur="secondary">Het mentale weer van Nederland</AppText>
+        <AppText rol="bodySmall" kleur="secondary">{t("weerVanNederland")}</AppText>
         {bericht === null ? (
           <ActivityIndicator color={colors.brandDefault} />
         ) : bericht.staat === "geladen" && topBericht ? (
           <>
             <AppText rol="h3">{topBericht.label}</AppText>
             <AppText rol="bodySmall" kleur="secondary">
-              {topBericht.share + "% van de check-ins · " + topBericht.total + " vandaag"}
+              {t("berichtMeta").replace("{share}", String(topBericht.share)).replace("{total}", String(topBericht.total))}
             </AppText>
           </>
         ) : bericht.staat === "niet-ingelogd" ? (
           <AppText rol="bodySmall" kleur="secondary">
-            Log in om het landelijke weerbericht van vandaag te zien.
+            {t("nietIngelogd")}
           </AppText>
         ) : bericht.staat === "leeg" ? (
           <AppText rol="bodySmall" kleur="secondary">
-            Nog te weinig check-ins vandaag voor een landelijk beeld. Kom later terug.
+            {t("teWeinig")}
           </AppText>
         ) : (
           <AppText rol="bodySmall" kleur="secondary">
-            Het landelijke beeld kon niet worden opgehaald. Zonder verbinding werkt de rest van de app
-            gewoon.
+            {t("berichtFout")}
           </AppText>
         )}
-        <Button label="Bekijk het hele weerbericht" variant="link" onPress={() => router.push("/weerbericht")} />
+        <Button label={t("bekijkWeerbericht")} variant="link" onPress={() => router.push("/weerbericht")} />
       </Card>
 
       {/* Slot 3: de quote van de dag, voor iedereen gelijk */}
@@ -147,9 +208,9 @@ export default function Dashboard() {
 
       {/* Slot 4: challenges */}
       <ContentSection
-        title="Challenges voor jou"
-        note="Kleine stappen, geen opdrachten."
-        action="Alles bekijken"
+        title={t("challengesTitel")}
+        note={t("challengesNote")}
+        action={t("allesBekijken")}
         onAction={() => router.push("/challenges")}
       >
         <ContentShelf>
@@ -157,9 +218,9 @@ export default function Dashboard() {
             <ShelfCard
               key={c.slug}
               tone={c.soort === "challenge" ? "purple" : "coral"}
-              label={c.soort === "challenge" ? "CHALLENGE" : "THEMASPECIAL"}
+              label={c.soort === "challenge" ? t("labelChallenge") : t("labelThemaspecial")}
               title={c.naam}
-              meta={c.dagen.length + " onderdelen · MIND"}
+              meta={t("onderdelenMeta").replace("{n}", String(c.dagen.length))}
               onPress={() => router.push({ pathname: "/challenges/[challenge]", params: { challenge: c.slug } })}
             />
           ))}
@@ -167,13 +228,13 @@ export default function Dashboard() {
       </ContentSection>
 
       {/* Slot 5: naslagwerk */}
-      <ContentSection title="Tips voor jou" action="Alles bekijken" onAction={() => router.push("/naslagwerk")}>
+      <ContentSection title={t("tipsTitel")} action={t("allesBekijken")} onAction={() => router.push("/naslagwerk")}>
         <ContentShelf>
           {tips.map((a) => (
             <ShelfCard
               key={a.slug}
               tone="white"
-              label="BRON: MIND"
+              label={t("bronMind")}
               title={a.titel}
               meta={a.onderwerp}
               onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}

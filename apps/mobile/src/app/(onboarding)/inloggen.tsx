@@ -20,6 +20,7 @@ import { Card } from "@mind/ui/components/Card";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { getSupabase } from "@/features/backend/client";
 
 // De sleutels van Mind, zodra die er zijn. Zie docs/scope.md: aanzetten is dan
@@ -29,8 +30,62 @@ const GOOGLE_KLAAR = Boolean(process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID);
 
 const MIN_WACHTWOORD = 6;
 
+// Alleen interface-teksten. {naam}, {n} en {email} worden op de plek ingevuld.
+const nl = {
+  titel: "Inloggen",
+  ondertitel: "Zodat jouw check-in één keer per dag meetelt.",
+  socialNogNiet:
+    "Inloggen met {naam} is in deze testversie nog niet beschikbaar. Dat wordt aangezet zodra de sleutels van Mind er zijn.",
+  geenVerbinding: "Er is geen verbinding met de server. Probeer het later opnieuw.",
+  vulEmail: "Vul een e-mailadres in.",
+  vulWachtwoord: "Vul een wachtwoord in van minstens {n} tekens.",
+  verkeerdeCombinatie:
+    "Dit e-mailadres en wachtwoord horen niet bij elkaar. Nog geen account? Maak er dan een aan met deze gegevens.",
+  nietBevestigd: "Dit e-mailadres is nog niet bevestigd. Kijk in je mail voor de bevestigingslink.",
+  inloggenMislukt: "Inloggen is niet gelukt. Probeer het over een minuut opnieuw.",
+  aanmakenMislukt: "Het account kon niet worden aangemaakt. Probeer het over een minuut opnieuw.",
+  bevestigingsmail:
+    "We hebben een bevestigingsmail gestuurd naar {email}. Klik op de link en log daarna hier in.",
+  verderMetApple: "Verder met Apple",
+  verderMetGoogle: "Verder met Google",
+  emailPlaceholder: "Of vul je e-mailadres in",
+  emailLabel: "E-mailadres",
+  wachtwoordPlaceholder: "Wachtwoord",
+  wachtwoordLabel: "Wachtwoord",
+  inloggen: "Inloggen",
+  accountAanmaken: "Account aanmaken",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    titel: "Log in",
+    ondertitel: "So your check-in counts once per day.",
+    socialNogNiet:
+      "Logging in with {naam} isn't available yet in this test version. It's switched on as soon as Mind's keys are in place.",
+    geenVerbinding: "There's no connection to the server. Please try again later.",
+    vulEmail: "Enter an email address.",
+    vulWachtwoord: "Enter a password of at least {n} characters.",
+    verkeerdeCombinatie:
+      "This email address and password don't match. No account yet? Then create one with these details.",
+    nietBevestigd: "This email address hasn't been confirmed yet. Check your mail for the confirmation link.",
+    inloggenMislukt: "Logging in failed. Please try again in a minute.",
+    aanmakenMislukt: "The account couldn't be created. Please try again in a minute.",
+    bevestigingsmail:
+      "We've sent a confirmation email to {email}. Click the link and then log in here.",
+    verderMetApple: "Continue with Apple",
+    verderMetGoogle: "Continue with Google",
+    emailPlaceholder: "Or enter your email address",
+    emailLabel: "Email address",
+    wachtwoordPlaceholder: "Password",
+    wachtwoordLabel: "Password",
+    inloggen: "Log in",
+    accountAanmaken: "Create account",
+  },
+};
+
 export default function Inloggen() {
   const router = useRouter();
+  const t = useVertaling(teksten);
   const [email, zetEmail] = useState("");
   const [wachtwoord, zetWachtwoord] = useState("");
   const [bezig, zetBezig] = useState(false);
@@ -40,22 +95,22 @@ export default function Inloggen() {
   const client = getSupabase();
 
   const socialNogNiet = (naam: string) => {
-    zetMelding("Inloggen met " + naam + " is in deze testversie nog niet beschikbaar. Dat wordt aangezet zodra de sleutels van Mind er zijn.");
+    zetMelding(t("socialNogNiet").replace("{naam}", naam));
   };
 
   const controleerInvoer = (): boolean => {
     zetMelding(null);
     zetAanmakenMogelijk(false);
     if (!client) {
-      zetMelding("Er is geen verbinding met de server. Probeer het later opnieuw.");
+      zetMelding(t("geenVerbinding"));
       return false;
     }
     if (!email.includes("@")) {
-      zetMelding("Vul een e-mailadres in.");
+      zetMelding(t("vulEmail"));
       return false;
     }
     if (wachtwoord.length < MIN_WACHTWOORD) {
-      zetMelding("Vul een wachtwoord in van minstens " + MIN_WACHTWOORD + " tekens.");
+      zetMelding(t("vulWachtwoord").replace("{n}", String(MIN_WACHTWOORD)));
       return false;
     }
     return true;
@@ -68,12 +123,12 @@ export default function Inloggen() {
     zetBezig(false);
     if (error) {
       if (error.message.toLowerCase().includes("invalid login credentials")) {
-        zetMelding("Dit e-mailadres en wachtwoord horen niet bij elkaar. Nog geen account? Maak er dan een aan met deze gegevens.");
+        zetMelding(t("verkeerdeCombinatie"));
         zetAanmakenMogelijk(true);
       } else if (error.message.toLowerCase().includes("not confirmed")) {
-        zetMelding("Dit e-mailadres is nog niet bevestigd. Kijk in je mail voor de bevestigingslink.");
+        zetMelding(t("nietBevestigd"));
       } else {
-        zetMelding("Inloggen is niet gelukt. Probeer het over een minuut opnieuw.");
+        zetMelding(t("inloggenMislukt"));
       }
       return;
     }
@@ -86,31 +141,31 @@ export default function Inloggen() {
     const { data, error } = await client.auth.signUp({ email: email.trim(), password: wachtwoord });
     zetBezig(false);
     if (error) {
-      zetMelding("Het account kon niet worden aangemaakt. Probeer het over een minuut opnieuw.");
+      zetMelding(t("aanmakenMislukt"));
       return;
     }
     if (data.session) {
       router.push("/naam");
       return;
     }
-    zetMelding("We hebben een bevestigingsmail gestuurd naar " + email.trim() + ". Klik op de link en log daarna hier in.");
+    zetMelding(t("bevestigingsmail").replace("{email}", email.trim()));
   };
 
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
-        <AppText rol="h1">Inloggen</AppText>
-        <AppText rol="subtitle" kleur="secondary">Zodat jouw check-in één keer per dag meetelt.</AppText>
+        <AppText rol="h1">{t("titel")}</AppText>
+        <AppText rol="subtitle" kleur="secondary">{t("ondertitel")}</AppText>
       </View>
 
       <Button
-        label="Verder met Apple"
+        label={t("verderMetApple")}
         variant="secondary"
         fullWidth
         onPress={() => (APPLE_KLAAR ? socialNogNiet("Apple") : socialNogNiet("Apple"))}
       />
       <Button
-        label="Verder met Google"
+        label={t("verderMetGoogle")}
         variant="secondary"
         fullWidth
         onPress={() => (GOOGLE_KLAAR ? socialNogNiet("Google") : socialNogNiet("Google"))}
@@ -120,29 +175,29 @@ export default function Inloggen() {
         <TextInput
           value={email}
           onChangeText={zetEmail}
-          placeholder="Of vul je e-mailadres in"
+          placeholder={t("emailPlaceholder")}
           placeholderTextColor={colors.textSecondary}
           autoCapitalize="none"
           autoComplete="email"
           keyboardType="email-address"
           style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-          accessibilityLabel="E-mailadres"
+          accessibilityLabel={t("emailLabel")}
         />
       </Card>
       <Card tone="outline" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={wachtwoord}
           onChangeText={zetWachtwoord}
-          placeholder="Wachtwoord"
+          placeholder={t("wachtwoordPlaceholder")}
           placeholderTextColor={colors.textSecondary}
           autoCapitalize="none"
           autoComplete="password"
           secureTextEntry
           style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-          accessibilityLabel="Wachtwoord"
+          accessibilityLabel={t("wachtwoordLabel")}
         />
       </Card>
-      <Button label="Inloggen" fullWidth bezig={bezig} onPress={logIn} />
+      <Button label={t("inloggen")} fullWidth bezig={bezig} onPress={logIn} />
 
       {melding ? (
         <Card tone="outline">
@@ -151,7 +206,7 @@ export default function Inloggen() {
       ) : null}
 
       {aanmakenMogelijk ? (
-        <Button label="Account aanmaken" variant="secondary" fullWidth bezig={bezig} onPress={maakAccount} />
+        <Button label={t("accountAanmaken")} variant="secondary" fullWidth bezig={bezig} onPress={maakAccount} />
       ) : null}
 
     </ScreenCanvas>
