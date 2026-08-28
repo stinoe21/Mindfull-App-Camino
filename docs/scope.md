@@ -173,7 +173,7 @@ Dit is de belangrijkste lijst van dit document. Zonder harde non-goals groeit de
 
 | Niet in v1 | Waarom |
 |---|---|
-| **Meertaligheid** | Elke tekst in het ontwerp is Nederlands, tot de aanspreekvorm aan toe. Mind is een Nederlandse stichting. Een tweede taal betekent ook de hele contentbibliotheek vertalen, en dat is geen bouwwerk maar redactiewerk. |
+| **Meertaligheid van de content** | De contentbibliotheek van MIND (challenges, naslagwerk, ervaringsverhalen) blijft Nederlands: die vertalen is geen bouwwerk maar redactiewerk. De **UI-taal** is hierop sinds 28 augustus 2026 een uitzondering (issue #47): de interface wordt schakelbaar NL/EN, met de systeemtaal als standaard en de keuze in Instellingen. Consent-, hulplijn- en check-in-teksten blijven Nederlands tot er canonieke Engelse teksten zijn via Paul en MIND; de i18n-laag valt daar terug op het Nederlands. |
 | **Push-notificaties** | Er is geen enkel scherm voor toestemming of instellingen ervoor, en het ontwerp bouwt het dagelijkse moment expliciet **niet** op een herinnering maar op een eigen keuze ("Sla vandaag over"). Een notificatie die vraagt hoe je je voelt is bovendien precies het soort ding waar een DPIA vragen over stelt. |
 | **Offline-first synchronisatie** | De app moet zonder netwerk netjes falen, en dat staat in de definition of done. Een wachtrij die check-ins later alsnog wegschrijft is iets anders, en die botst met de begrenzing van één check-in per dag. |
 | **Delen met derden of hulpverleners** | Er is geen scherm voor, en het staat haaks op de belofte "Niemand kan zien wat jij hebt ingevuld". |
