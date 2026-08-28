@@ -3,7 +3,7 @@
 //
 // De INTRO-zinnen zijn een VOORSTEL totdat ze in scope.md zijn bevestigd,
 // dezelfde afspraak als in teksten.ts. De uitgebreide uitleg hergebruikt
-// woordelijk de copy van het onboardingscherm Anoniem meetellen
+// woordelijk de copy van het onboardingscherm Draag anoniem bij
 // (apps/mobile/src/app/(onboarding)/anonimiteit.tsx): die is al de vastgelegde
 // formulering van hoe de anonimisering werkt, dus hier geen tweede variant.
 //

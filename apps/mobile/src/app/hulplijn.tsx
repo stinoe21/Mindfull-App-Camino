@@ -36,7 +36,7 @@ export default function Hulplijn() {
           Kom gratis met onze professionals in contact. Ook via WhatsApp.
         </AppText>
         <AppText rol="bodySmall" kleur="secondary">
-          Je kan (anoniem) bellen, chatten, WhatsAppen of mailen met een van onze psychologen of
+          Je kan (anoniem) bellen, chatten, WhatsAppen of mailen met één van onze psychologen of
           maatschappelijk werkers.
         </AppText>
         <Button label="Kom in contact" onPress={() => Linking.openURL(HULP_URL)} />

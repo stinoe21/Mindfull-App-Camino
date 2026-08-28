@@ -78,7 +78,7 @@ export default function Inloggen() {
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">Inloggen</AppText>
-        <AppText rol="subtitle" kleur="secondary">Zodat jouw check-in een keer per dag meetelt.</AppText>
+        <AppText rol="subtitle" kleur="secondary">Zodat jouw check-in één keer per dag meetelt.</AppText>
       </View>
 
       {fase === "keuze" ? (
