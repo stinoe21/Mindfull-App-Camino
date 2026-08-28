@@ -27,7 +27,7 @@ De ingebouwde SMTP van Supabase is bedoeld om te testen, niet om te gebruiken. D
 
 Twee gevolgen:
 
-- **Tijdens ontwikkelen loop je er meteen tegenaan.** Drie mensen die een e-mail-login testen zijn binnen tien minuten door het uurquotum. Dat lijkt op een bug in de app en is het niet. Test daarom met Google of Apple; een lokale stack hebben we niet, zie `CLAUDE.md` sectie 9.
+- **Tijdens ontwikkelen loop je er meteen tegenaan.** Drie mensen die accounts aanmaken met **Confirm email** aan, zijn binnen tien minuten door het uurquotum aan bevestigingsmails. Dat lijkt op een bug in de app en is het niet. Hergebruik daarom tijdens het ontwikkelen een bestaand testaccount in plaats van steeds een nieuw aan te maken; een lokale stack hebben we niet, zie `CLAUDE.md` sectie 9.
 - **Voor livegang is een eigen SMTP verplicht**, want anders krijgt de helft van de gebruikers geen bevestigingsmail. Dat betekent een extra partij die e-mailadressen verwerkt, en dus **een verwerkersovereenkomst erbij**. Zie `privacy-besluiten.md`.
 
 ## 2. Eén check-in per dag, en die limiet moet aan de persoonlijke kant
@@ -102,24 +102,25 @@ Een security-engineer van buiten heeft de opzet doorgelicht. Hieronder elk punt,
 
 ### Auth en de app
 
-- **PKCE** staat sinds 26 augustus expliciet aan in `apps/mobile/src/lib/supabase.ts` (`flowType: "pkce"`). De e-mailcode (OTP) gebruikt geen redirect en heeft er niets aan; het is voor de OAuth-flows van Apple en Google zodra die aangaan.
+- **Inloggen gaat sinds 28 augustus met e-mail en wachtwoord** (`signInWithPassword` en `signUp` in `apps/mobile/src/app/(onboarding)/inloggen.tsx`, PR #54), en zonder account kom je de app niet in. Er is geen e-mailcode meer en geen anonieme login (`enable_anonymous_sign_ins = false`). De app eist minimaal 6 tekens (`MIN_WACHTWOORD`) en controleert het e-mailadres alleen op een `@`. **Open:** minimum naar 8 en een echte e-mailcontrole; dat is auth-logica en dus een eigen PR van de eigenaar. De knoppen voor Apple en Google staan er wel, maar doen nog niets.
+- **PKCE** staat sinds 26 augustus expliciet aan in `apps/mobile/src/lib/supabase.ts` (`flowType: "pkce"`). De wachtwoordlogin gebruikt geen redirect en heeft er niets aan; het is voor de OAuth-flows van Apple en Google zodra die aangaan.
 - **Custom scheme versus Universal/App Links.** De app heeft het custom scheme `mentaleweerbericht`. Een andere app op hetzelfde toestel kan dat scheme claimen en een redirect onderscheppen; met PKCE heeft die app aan de code niets zonder de verifier, dus het risico is klein, maar niet nul. Universal Links en App Links vragen een domein van Mind met een verificatiebestand erop, en dat domein is er nog niet. **Voorkeur voor de OAuth-taak: de native flows** (Sign in with Apple via `expo-apple-authentication`, Google via een id-token) met `signInWithIdToken`. Dan is er helemaal geen redirect en dus niets te onderscheppen. Beide zijn een nieuwe dependency en dus een aparte PR.
 - **Tokens op het toestel** staan in AsyncStorage, en dat is niet versleuteld. Met een gerooted of gejailbreakt toestel is de sessie te kopiëren. `expo-secure-store` lost dat op en is een nieuwe dependency: te besluiten, en te doen in de auth-taak. Tot dan geldt: de sessie geeft toegang tot één ding, insturen, en tot niets wat je kunt teruglezen.
 - **Sessies** verlopen na een uur en de refresh token roteert; dat is de standaard van Supabase en staat zo in het dashboard.
 - **Accountverwijdering** doet sinds 26 augustus het echte werk via `delete_own_account()`; scherm 19 wist daarna pas het toestel, nooit andersom.
 - **EAS Updates code signing** is niet van toepassing: de app gebruikt geen OTA-updates (`expo-updates` zit er niet in). Komt dat erin, dan gaat code signing tegelijk aan, want anders kan iedereen met publish-rechten of CI-toegang een JS-bundel naar alle gebruikers duwen.
 - **Secrets**: `.env*` staat in `.gitignore`, alleen `.env.example` zit in de repo en bevat geen waarden. CI (`.github/workflows/ci.yml`) heeft geen secrets nodig. Zet in GitHub **secret scanning met push protection** aan; dat is een repo-instelling en staat als actie in `setup-github.md`.
-- **Rate limiting en WAF**: sectie 1 tot en met 4 hierboven. Geen WAF, geen captcha, bewust. De bruteforce op de e-mailcode wordt begrensd door de verificatielimiet van Supabase (360 per uur per IP) en een code van zes cijfers die na tien minuten verloopt: zie de dashboardchecklist.
+- **Rate limiting en WAF**: sectie 1 tot en met 4 hierboven. Geen WAF, geen captcha, bewust. De bruteforce op een wachtwoord wordt begrensd door de aanmeldlimiet van Supabase per IP en door de lekcheck en de minimale lengte uit de dashboardchecklist; er is geen lockout per account, dus de wachtwoordlengte is de echte rem.
 
 ### Checklist dashboard (niet in migraties, bij elke omgeving opnieuw)
 
 Onder **Authentication**:
 
 - [ ] **Confirm email** aan: een account zonder bevestigd e-mailadres mag niet bestaan, anders is één script genoeg om accounts te maken en het landelijke beeld te sturen.
-- [ ] **Leaked password protection** aan. Wij bieden geen wachtwoordlogin, maar de API wel; deze vlag kost niets. De security advisor meldt hem nu als uit.
-- [ ] **E-mail OTP**: lengte 6, geldigheid **600 seconden** en niet de standaard van een uur. Korter is niet handig op slechte wifi.
+- [ ] **Leaked password protection** aan. De app logt sinds 28 augustus in met een wachtwoord, dus dit is geen formaliteit meer. De security advisor meldt hem nu als uit.
+- [ ] **Minimale wachtwoordlengte** in het dashboard gelijk aan of hoger dan wat de app eist (nu 6, streven 8), zodat een script langs de app niet met een korter wachtwoord kan.
 - [ ] **Rate limits** op de standaardwaarden laten of strenger; nooit ruimer zonder reden. Zie sectie 1.
-- [ ] **Wachtwoordlogin uit** zodra het dashboard dat toestaat, of anders een minimale wachtwoordlengte van 12 en de lekcheck hierboven. De app biedt geen wachtwoordveld, dus elke wachtwoordlogin is een script.
+- [ ] **Anonieme logins uit** en **e-mailcode/magic link uit** zodra het dashboard dat toestaat: de app gebruikt ze niet, dus elke aanroep ervan is een script.
 - [ ] **Redirect URLs**: alleen `mentaleweerbericht://**`. Geen wildcard op een domein dat niet van Mind is.
 
 Onder **Database** en **Settings**:
