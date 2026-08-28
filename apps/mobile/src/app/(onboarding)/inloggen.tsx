@@ -4,8 +4,9 @@
 // De Apple- en Google-knop zijn gebouwd "op een sleutel na" (docs/scope.md):
 // scherm, knop en foutafhandeling staan er, de configuratie komt uit
 // omgevingsvariabelen, en een ontbrekende waarde blokkeert de onboarding niet.
-// E-mail loopt via een inlogcode (OTP). Let op de SMTP-limiet tijdens testen:
-// docs/limieten-en-misbruik.md sectie 1.
+// E-mail loopt via e-mailadres en wachtwoord. Bestaat het account nog niet,
+// dan kan de gebruiker het met dezelfde gegevens aanmaken. Let op de
+// SMTP-limiet tijdens testen: docs/limieten-en-misbruik.md sectie 1.
 
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -25,15 +26,15 @@ import { getSupabase } from "@/features/backend/client";
 const APPLE_KLAAR = Boolean(process.env.EXPO_PUBLIC_APPLE_SERVICE_ID);
 const GOOGLE_KLAAR = Boolean(process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID);
 
-type Fase = "keuze" | "code" | "klaar";
+const MIN_WACHTWOORD = 6;
 
 export default function Inloggen() {
   const router = useRouter();
-  const [fase, zetFase] = useState<Fase>("keuze");
   const [email, zetEmail] = useState("");
-  const [code, zetCode] = useState("");
+  const [wachtwoord, zetWachtwoord] = useState("");
   const [bezig, zetBezig] = useState(false);
   const [melding, zetMelding] = useState<string | null>(null);
+  const [aanmakenMogelijk, zetAanmakenMogelijk] = useState(false);
 
   const client = getSupabase();
 
@@ -41,37 +42,57 @@ export default function Inloggen() {
     zetMelding("Inloggen met " + naam + " is in deze testversie nog niet beschikbaar. Dat wordt aangezet zodra de sleutels van Mind er zijn.");
   };
 
-  const stuurCode = async () => {
+  const controleerInvoer = (): boolean => {
     zetMelding(null);
+    zetAanmakenMogelijk(false);
     if (!client) {
       zetMelding("Er is geen verbinding met de server. Je kunt als testversie zonder account verdergaan.");
-      return;
+      return false;
     }
     if (!email.includes("@")) {
       zetMelding("Vul een e-mailadres in.");
-      return;
+      return false;
     }
-    zetBezig(true);
-    const { error } = await client.auth.signInWithOtp({ email: email.trim(), options: { shouldCreateUser: true } });
-    zetBezig(false);
-    if (error) {
-      zetMelding("De inlogcode kon niet worden verstuurd. Probeer het over een minuut opnieuw.");
-      return;
+    if (wachtwoord.length < MIN_WACHTWOORD) {
+      zetMelding("Vul een wachtwoord in van minstens " + MIN_WACHTWOORD + " tekens.");
+      return false;
     }
-    zetFase("code");
+    return true;
   };
 
-  const controleerCode = async () => {
-    zetMelding(null);
-    if (!client) return;
+  const logIn = async () => {
+    if (!controleerInvoer() || !client) return;
     zetBezig(true);
-    const { error } = await client.auth.verifyOtp({ email: email.trim(), token: code.trim(), type: "email" });
+    const { error } = await client.auth.signInWithPassword({ email: email.trim(), password: wachtwoord });
     zetBezig(false);
     if (error) {
-      zetMelding("Die code klopt niet of is verlopen. Vraag zo nodig een nieuwe aan.");
+      if (error.message.toLowerCase().includes("invalid login credentials")) {
+        zetMelding("Dit e-mailadres en wachtwoord horen niet bij elkaar. Nog geen account? Maak er dan een aan met deze gegevens.");
+        zetAanmakenMogelijk(true);
+      } else if (error.message.toLowerCase().includes("not confirmed")) {
+        zetMelding("Dit e-mailadres is nog niet bevestigd. Kijk in je mail voor de bevestigingslink.");
+      } else {
+        zetMelding("Inloggen is niet gelukt. Probeer het over een minuut opnieuw.");
+      }
       return;
     }
     router.push("/naam");
+  };
+
+  const maakAccount = async () => {
+    if (!controleerInvoer() || !client) return;
+    zetBezig(true);
+    const { data, error } = await client.auth.signUp({ email: email.trim(), password: wachtwoord });
+    zetBezig(false);
+    if (error) {
+      zetMelding("Het account kon niet worden aangemaakt. Probeer het over een minuut opnieuw.");
+      return;
+    }
+    if (data.session) {
+      router.push("/naam");
+      return;
+    }
+    zetMelding("We hebben een bevestigingsmail gestuurd naar " + email.trim() + ". Klik op de link en log daarna hier in.");
   };
 
   return (
@@ -81,65 +102,55 @@ export default function Inloggen() {
         <AppText rol="subtitle" kleur="secondary">Zodat jouw check-in één keer per dag meetelt.</AppText>
       </View>
 
-      {fase === "keuze" ? (
-        <>
-          <Button
-            label="Verder met Apple"
-            variant="secondary"
-            fullWidth
-            onPress={() => (APPLE_KLAAR ? socialNogNiet("Apple") : socialNogNiet("Apple"))}
-          />
-          <Button
-            label="Verder met Google"
-            variant="secondary"
-            fullWidth
-            onPress={() => (GOOGLE_KLAAR ? socialNogNiet("Google") : socialNogNiet("Google"))}
-          />
+      <Button
+        label="Verder met Apple"
+        variant="secondary"
+        fullWidth
+        onPress={() => (APPLE_KLAAR ? socialNogNiet("Apple") : socialNogNiet("Apple"))}
+      />
+      <Button
+        label="Verder met Google"
+        variant="secondary"
+        fullWidth
+        onPress={() => (GOOGLE_KLAAR ? socialNogNiet("Google") : socialNogNiet("Google"))}
+      />
 
-          <Card tone="outline" style={{ paddingVertical: space[2] }}>
-            <TextInput
-              value={email}
-              onChangeText={zetEmail}
-              placeholder="Of vul je e-mailadres in"
-              placeholderTextColor={colors.textSecondary}
-              autoCapitalize="none"
-              autoComplete="email"
-              keyboardType="email-address"
-              style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-              accessibilityLabel="E-mailadres"
-            />
-          </Card>
-          <Button label="Stuur mij een inlogcode" fullWidth bezig={bezig} onPress={stuurCode} />
-        </>
-      ) : null}
-
-      {fase === "code" ? (
-        <>
-          <Card tone="white">
-            <AppText rol="body">
-              {"We hebben een inlogcode gestuurd naar " + email.trim() + "."}
-            </AppText>
-          </Card>
-          <Card tone="outline" style={{ paddingVertical: space[2] }}>
-            <TextInput
-              value={code}
-              onChangeText={zetCode}
-              placeholder="Inlogcode"
-              placeholderTextColor={colors.textSecondary}
-              keyboardType="number-pad"
-              style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-              accessibilityLabel="Inlogcode"
-            />
-          </Card>
-          <Button label="Log in" fullWidth bezig={bezig} onPress={controleerCode} />
-          <Button label="Ander e-mailadres" variant="link" onPress={() => zetFase("keuze")} />
-        </>
-      ) : null}
+      <Card tone="outline" style={{ paddingVertical: space[2] }}>
+        <TextInput
+          value={email}
+          onChangeText={zetEmail}
+          placeholder="Of vul je e-mailadres in"
+          placeholderTextColor={colors.textSecondary}
+          autoCapitalize="none"
+          autoComplete="email"
+          keyboardType="email-address"
+          style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
+          accessibilityLabel="E-mailadres"
+        />
+      </Card>
+      <Card tone="outline" style={{ paddingVertical: space[2] }}>
+        <TextInput
+          value={wachtwoord}
+          onChangeText={zetWachtwoord}
+          placeholder="Wachtwoord"
+          placeholderTextColor={colors.textSecondary}
+          autoCapitalize="none"
+          autoComplete="password"
+          secureTextEntry
+          style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
+          accessibilityLabel="Wachtwoord"
+        />
+      </Card>
+      <Button label="Inloggen" fullWidth bezig={bezig} onPress={logIn} />
 
       {melding ? (
         <Card tone="outline">
           <AppText rol="bodySmall" kleur="secondary">{melding}</AppText>
         </Card>
+      ) : null}
+
+      {aanmakenMogelijk ? (
+        <Button label="Account aanmaken" variant="secondary" fullWidth bezig={bezig} onPress={maakAccount} />
       ) : null}
 
       {/* Testversie: zonder werkende sleutels of SMTP mag de onboarding niet
