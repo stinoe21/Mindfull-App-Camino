@@ -11,18 +11,38 @@ import { Button } from "@mind/ui/components/Button";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+
+const nl = {
+  titel: "Het mentale weerbericht",
+  ondertitel: "Dit is ongeveer mijn weer vandaag.",
+  uitleg:
+    "Check elke dag in met vier korte vragen. Je ziet jouw eigen weer, met een kleine tip voor vandaag, en je telt anoniem mee in het mentale weerbericht van Nederland.",
+  aanDeSlag: "Aan de slag",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    titel: "The mental weather forecast",
+    ondertitel: "This is roughly my weather today.",
+    uitleg:
+      "Check in every day with four short questions. You see your own weather, with a small tip for today, and you count anonymously towards the mental weather forecast of the Netherlands.",
+    aanDeSlag: "Get started",
+  },
+};
+
 export default function Welkom() {
   const router = useRouter();
+  const t = useVertaling(teksten);
   return (
     <ScreenCanvas variant="overlay" state="default" sheetTop={140}>
       <MascotteVlieger state="intake" hoogte={150} />
-      <AppText rol="h1" centreer>Het mentale weerbericht</AppText>
-      <AppText rol="subtitle" kleur="secondary" centreer>Dit is ongeveer mijn weer vandaag.</AppText>
+      <AppText rol="h1" centreer>{t("titel")}</AppText>
+      <AppText rol="subtitle" kleur="secondary" centreer>{t("ondertitel")}</AppText>
       <AppText rol="body" kleur="secondary" centreer>
-        Check elke dag in met vier korte vragen. Je ziet jouw eigen weer, met een kleine tip voor
-        vandaag, en je telt anoniem mee in het mentale weerbericht van Nederland.
+        {t("uitleg")}
       </AppText>
-      <Button label="Aan de slag" fullWidth onPress={() => router.push("/leeftijd")} />
+      <Button label={t("aanDeSlag")} fullWidth onPress={() => router.push("/leeftijd")} />
     </ScreenCanvas>
   );
 }
