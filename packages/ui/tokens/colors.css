@@ -45,8 +45,47 @@
 --purple-300:rgb(165,146,172);
 --purple-400:rgb(148,125,156);
 --purple-500:rgb(121,93,131);
-/* accent */
---accent-lime:rgb(207,230,52);
+--purple-600:rgb(110,85,119);
+--purple-700:rgb(86,66,93);
+--purple-800:rgb(67,51,72);
+--purple-900:rgb(51,39,55);
+/* lime: in Figma de tweede "Yellow"-reeks, Stylguide-App-MIND 11:879 */
+--lime-50:rgb(250,253,235);
+--lime-100:rgb(240,247,194);
+--lime-200:rgb(233,244,165);
+--lime-300:rgb(224,238,124);
+--lime-400:rgb(217,235,98);
+--lime-500:rgb(208,230,59);
+--lime-600:rgb(189,209,54);
+--lime-700:rgb(148,163,42);
+--lime-800:rgb(114,127,32);
+--lime-900:rgb(87,97,25);
+/* yellow (warm), Stylguide-App-MIND 11:756 */
+--yellow-50:rgb(255,252,244);
+--yellow-100:rgb(255,246,222);
+--yellow-200:rgb(255,241,206);
+--yellow-300:rgb(254,235,184);
+--yellow-400:rgb(254,231,170);
+--yellow-500:rgb(254,225,149);
+--yellow-600:rgb(231,205,136);
+--yellow-700:rgb(180,160,106);
+--yellow-800:rgb(140,124,82);
+--yellow-900:rgb(107,95,63);
+/* violet, Stylguide-App-MIND 11:1125 */
+--violet-50:rgb(254,245,255);
+--violet-100:rgb(251,224,255);
+--violet-200:rgb(249,209,255);
+--violet-300:rgb(246,188,255);
+--violet-400:rgb(245,175,255);
+--violet-500:rgb(242,155,255);
+--violet-600:rgb(220,141,232);
+--violet-700:rgb(172,110,181);
+--violet-800:rgb(133,85,140);
+--violet-900:rgb(102,65,107);
+/* accent: telkens de 500-stap van een reeks, als letterlijke waarde omdat
+   generate.mjs een var() als semantisch token leest. Lime was rgb(207,230,52)
+   en week daarmee af van Figma; sinds 28 augustus 2026 gelijk aan --lime-500. */
+--accent-lime:rgb(208,230,59);
 --accent-coral:rgb(241,160,140);
 --accent-yellow:rgb(254,225,149);
 --accent-magenta:rgb(242,155,255);
