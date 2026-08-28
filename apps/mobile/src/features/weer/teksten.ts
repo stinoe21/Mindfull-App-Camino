@@ -45,7 +45,7 @@ export const UITKOMSTEN: Record<WeatherCode, UitkomstTekst> = {
   mist: {
     kop: "Even niet alles scherp zien is oké.",
     duiding: "In de mist loop je stap voor stap, en dat is genoeg.",
-    tip: "Doe vandaag een ding tegelijk.",
+    tip: "Doe vandaag één ding tegelijk.",
   },
   wind: {
     kop: "Er staat vandaag wat wind.",

@@ -43,7 +43,7 @@ export default function Leeftijd() {
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <AppText rol="h1">Ben je 16 jaar of ouder?</AppText>
       <AppText rol="body" kleur="secondary">
-        Deze app is voor iedereen van 16 jaar en ouder. We vragen dit een keer, voordat je een account
+        Deze app is voor iedereen van 16 jaar en ouder. We vragen dit één keer, voordat je een account
         maakt.
       </AppText>
       <Button label="Ja, ik ben 16 of ouder" fullWidth onPress={bevestig} />

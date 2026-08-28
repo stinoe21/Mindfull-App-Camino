@@ -40,7 +40,7 @@ export default function Anonimiteit() {
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
-        <AppText rol="h1">Anoniem meetellen</AppText>
+        <AppText rol="h1">Draag anoniem bij</AppText>
         <AppText rol="subtitle" kleur="secondary">Niemand kan zien wat jij hebt ingevuld.</AppText>
       </View>
 

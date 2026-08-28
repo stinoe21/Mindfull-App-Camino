@@ -1,7 +1,7 @@
 // "Wat is het mentale weerbericht?": een tikbare regel met het info-icoon
 // die de uitleg van het weerbericht in een popup opent. Voor schermen die
 // de term noemen voordat de gebruiker het weerbericht ooit gezien heeft,
-// zoals het onboardingscherm Anoniem meetellen.
+// zoals het onboardingscherm Draag anoniem bij.
 //
 // De uitlegtekst is INTRO uit WeerberichtIntro.tsx: een keer vastgelegd,
 // overal dezelfde zinnen. Zie daar voor de VOORSTEL-status van die copy.

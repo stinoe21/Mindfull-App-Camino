@@ -65,7 +65,7 @@ export default function Weerbericht() {
         <Card tone="primary">
           <AppText rol="h3">Log eerst in</AppText>
           <AppText rol="bodySmall" kleur="secondary">
-            Het landelijke weerbericht is er voor ingelogde gebruikers. Zo telt iedereen precies een
+            Het landelijke weerbericht is er voor ingelogde gebruikers. Zo telt iedereen precies één
             keer per dag mee.
           </AppText>
           <Button label="Inloggen" variant="secondary" onPress={() => router.push("/inloggen")} />
