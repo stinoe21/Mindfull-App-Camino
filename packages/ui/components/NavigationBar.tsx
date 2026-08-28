@@ -9,6 +9,12 @@
 // blur komt van expo-blur (besloten door Stijn op 24 augustus 2026); de
 // 0.4-laag en het verloop zijn afgeleid van tokens, geen losse kleuren.
 //
+// Afwijking van de referentie, besloten door Stijn op 26 augustus 2026 (zie
+// docs/design-system.md, "Het ontwerp is een startpunt"): de pil is 64 in
+// plaats van 82 en staat dichter op de onderrand, zodat er meer scherm
+// overblijft voor de content. De 82 liet op toestellen met home-indicator
+// een brede witte zone onderin over.
+//
 // Deze component is bewust dom: de items komen binnen als lijst, de navigatie
 // zelf woont in de route-layout.
 
@@ -21,6 +27,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors, radius, space } from "../tokens/tokens.ts";
 
 import { AppText } from "./AppText.tsx";
+
+/** Hoogte van de pil; ScreenCanvas rekent hiermee voor de scrollruimte. */
+export const NAV_PIL_HOOGTE = 64;
 
 const TRANSPARANT = colors.surfaceBackground.replace("rgb(", "rgba(").replace(")", ",0)");
 const BIJNA_DEKKEND = colors.surfaceBackground.replace("rgb(", "rgba(").replace(")", ",0.95)");
@@ -35,8 +44,9 @@ export type NavItem = {
 
 export function NavigationBar({ items }: { items: NavItem[] }) {
   const insets = useSafeAreaInsets();
-  // Boven de home-indicator; zonder indicator 14 uit de referentie.
-  const bodem = Math.max(insets.bottom, 14);
+  // Dichter op de onderrand dan de referentie: de labels blijven boven de
+  // home-indicator, maar de pil zakt erin mee in plaats van erboven te zweven.
+  const bodem = Math.max(insets.bottom - space[3], space[2]);
 
   return (
     <View pointerEvents="box-none" style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
@@ -46,7 +56,7 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
         pointerEvents="none"
         colors={[TRANSPARANT, BIJNA_DEKKEND, colors.surfaceBackground]}
         locations={[0, 0.5, 1]}
-        style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: bodem + 82 + space[6] }}
+        style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: bodem + NAV_PIL_HOOGTE + space[6] }}
       />
       {/* 15 is de pilmarge uit de referentie (NavigationBar.jsx); bodem volgt
           de safe area en is daarom geen schaalwaarde. */}
@@ -54,7 +64,7 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
         style={{
           marginHorizontal: 15,
           marginBottom: bodem,
-          height: 82,
+          height: NAV_PIL_HOOGTE,
           borderRadius: radius.pill,
           overflow: "hidden",
         }}
@@ -90,7 +100,7 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
                 opacity: pressed ? 0.7 : 1,
               })}
             >
-              <View style={{ height: 34, justifyContent: "center", alignItems: "center" }}>
+              <View style={{ height: 28, justifyContent: "center", alignItems: "center" }}>
                 {item.icoon(item.actief ? colors.textPrimary : colors.textSecondary)}
               </View>
               <AppText rol="labelCaption" kleur={item.actief ? "primary" : "secondary"}>
