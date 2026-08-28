@@ -20,6 +20,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { ARTIKELEN } from "@/features/content/data/artikelen";
 import { CHALLENGES } from "@/features/content/data/challenges";
+import { QuoteKaart } from "@/features/content/QuoteKaart";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { EersteKeerUitleg } from "@/features/onboarding/EersteKeerUitleg";
 import { leesInstellingen } from "@/features/profiel/instellingen";
@@ -28,10 +29,6 @@ import { UITKOMSTEN } from "@/features/weer/teksten";
 import { haalWeerbericht, type WeerberichtStand } from "@/features/weer/weerbericht";
 
 import type { WeatherCode } from "@mind/types";
-
-// De dagelijkse quote is voor iedereen gelijk (board 12:179). Dit is de quote
-// uit het design system; een echte reeks van Mind is een openstaand punt.
-const QUOTE = "“Het lijkt altijd onmogelijk, totdat het gedaan is.”";
 
 function begroeting(): string {
   const uur = new Date().getHours();
@@ -145,11 +142,8 @@ export default function Dashboard() {
         <Button label="Bekijk het hele weerbericht" variant="link" onPress={() => router.push("/weerbericht")} />
       </Card>
 
-      {/* Slot 3: de dagelijkse quote, voor iedereen gelijk */}
-      <Card tone="purple" style={{ alignItems: "center" }}>
-        <AppText rol="quote" centreer>{QUOTE}</AppText>
-        <AppText rol="labelCaption" kleur="secondary">Dagelijkse quote · deel hem gerust</AppText>
-      </Card>
+      {/* Slot 3: de quote van de dag, voor iedereen gelijk */}
+      <QuoteKaart />
 
       {/* Slot 4: challenges */}
       <ContentSection
