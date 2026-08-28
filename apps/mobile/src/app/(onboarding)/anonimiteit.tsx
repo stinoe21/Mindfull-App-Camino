@@ -3,8 +3,9 @@
 // Legt woordelijk uit wat er met een check-in gebeurt, met de canonieke
 // zinnen uit het ontwerp: "Niemand kan zien wat jij hebt ingevuld." en
 // "Je kunt dit altijd wijzigen in Instellingen." Twee apart intrekbare
-// toestemmingen (docs/privacy-besluiten.md); de definitieve teksten liggen
-// bij Paul, de labels hier beschrijven feitelijk wat de schakelaar doet.
+// toestemmingen (docs/privacy-besluiten.md). De toestemming voor het
+// weerbericht is de tekst van Paul (28 augustus 2026), als expliciete keuze
+// ja of nee zonder standaardwaarde; de voorwaarden zijn een schakelaar.
 // De voorwaarden-stap heeft geen Skip (productprincipes 6).
 
 import { useRouter } from "expo-router";
@@ -19,17 +20,19 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
+import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
 import { WatIsHetWeerbericht } from "@/features/weer/WatIsHetWeerbericht";
 import { UITLEG_ANONIMITEIT, UITLEG_DETAIL } from "@/features/weer/WeerberichtIntro";
 
 export default function Anonimiteit() {
   const router = useRouter();
-  const [weerbericht, zetWeerbericht] = useState(true);
+  const [weerbericht, zetWeerbericht] = useState<boolean | null>(null);
   const [voorwaarden, zetVoorwaarden] = useState(false);
+  const compleet = weerbericht !== null && voorwaarden;
 
   const klaar = async () => {
     await bewaarInstellingen({
-      consentWeerbericht: weerbericht,
+      consentWeerbericht: weerbericht === true,
       consentVoorwaarden: voorwaarden,
       onboardingAfgerond: true,
     });
@@ -51,16 +54,10 @@ export default function Anonimiteit() {
       </Card>
 
       <Card tone="white">
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
-          <AppText rol="bodySmall" style={{ flexShrink: 1 }}>
-            Mijn check-in telt anoniem mee in het mentale weerbericht van Nederland
-          </AppText>
-          <Switch
-            value={weerbericht}
-            onValueChange={zetWeerbericht}
-            trackColor={{ true: colors.brandDefault, false: palette.neutral200 }}
-          />
-        </View>
+        <ToestemmingKeuze waarde={weerbericht} onKies={zetWeerbericht} />
+      </Card>
+
+      <Card tone="white">
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
           <AppText rol="bodySmall" style={{ flexShrink: 1 }}>
             Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is
@@ -73,15 +70,15 @@ export default function Anonimiteit() {
         </View>
       </Card>
 
-      {!voorwaarden ? (
+      {!compleet ? (
         <AppText rol="bodySmall" kleur="secondary">
-          Accepteer de voorwaarden om verder te gaan. Meetellen in het weerbericht is en blijft een vrije
-          keuze.
+          Maak een keuze over het weerbericht en accepteer de voorwaarden om verder te gaan. Nee zeggen
+          is een gewone keuze: de app werkt dan gewoon.
         </AppText>
       ) : null}
 
       <View style={{ flex: 1 }} />
-      <Button label="Naar de app" fullWidth disabled={!voorwaarden} onPress={klaar} />
+      <Button label="Naar de app" fullWidth disabled={!compleet} onPress={klaar} />
     </ScreenCanvas>
   );
 }

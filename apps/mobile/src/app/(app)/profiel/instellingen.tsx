@@ -29,6 +29,7 @@ import {
   VOORKEUR_OPTIES,
   type Instellingen as InstellingenType,
 } from "@/features/profiel/instellingen";
+import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
 
 export default function Instellingen() {
   const router = useRouter();
@@ -117,16 +118,7 @@ export default function Instellingen() {
             <AppText rol="bodySmall" kleur="secondary">
               Niemand kan zien wat jij hebt ingevuld. Je kunt dit altijd wijzigen.
             </AppText>
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
-              <AppText rol="bodySmall" style={{ flexShrink: 1 }}>
-                Mijn check-in telt anoniem mee in het mentale weerbericht van Nederland
-              </AppText>
-              <Switch
-                value={inst.consentWeerbericht}
-                onValueChange={(v) => wijzig({ consentWeerbericht: v })}
-                trackColor={{ true: colors.brandDefault, false: palette.neutral200 }}
-              />
-            </View>
+            <ToestemmingKeuze waarde={inst.consentWeerbericht} onKies={(v) => wijzig({ consentWeerbericht: v })} />
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
               <AppText rol="bodySmall" style={{ flexShrink: 1 }}>
                 Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is
