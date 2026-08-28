@@ -5,7 +5,9 @@
 // Eenmalig: na "Begrepen" of "Overslaan" komt hij niet meer terug. Bewust
 // geen overlay die de rest van het scherm afdekt (daar is geen scrim-token
 // voor, en de kaart is rustiger). De stand staat alleen op het toestel, onder
-// een eigen sleutel, en gaat mee weg met wisAlleLokaleData().
+// een eigen sleutel, en gaat mee weg met wisAlleLokaleData(). Hij staat onder
+// de check-in-kaart en gebruikt alleen tekstlinks, zodat de check-in de enige
+// primaire actie op het dashboard blijft.
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
@@ -73,7 +75,8 @@ export function EersteKeerUitleg() {
       <AppText rol="bodySmall" kleur="secondary">{huidig.tekst}</AppText>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
         <Button label="Overslaan" variant="link" onPress={klaar} />
-        <Button label={laatste ? "Begrepen" : "Volgende"} onPress={laatste ? klaar : () => zetStap(stap + 1)} />
+        {/* Tekstlinks, geen gevulde knop: de check-in-knop is de enige primaire op dit scherm. */}
+        <Button label={laatste ? "Begrepen" : "Volgende"} variant="link" onPress={laatste ? klaar : () => zetStap(stap + 1)} />
       </View>
     </Card>
   );
