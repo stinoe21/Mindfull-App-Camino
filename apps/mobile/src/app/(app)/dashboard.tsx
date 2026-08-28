@@ -21,6 +21,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { ARTIKELEN } from "@/features/content/data/artikelen";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
+import { EersteKeerUitleg } from "@/features/onboarding/EersteKeerUitleg";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { UITKOMSTEN } from "@/features/weer/teksten";
@@ -80,9 +81,16 @@ export default function Dashboard() {
   return (
     <ScreenCanvas state={weerbeeld ?? "default"} metNavRuimte>
       <View style={{ gap: space[1] }}>
-        <AppText rol="h1">{begroeting() + (naam ? ", " + naam : "")}</AppText>
+        {/* Instellingen als tekstlink: er is geen tandwiel in de assetbibliotheek. */}
+        <View style={{ flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between", gap: space[3] }}>
+          <AppText rol="h1" style={{ flexShrink: 1 }}>{begroeting() + (naam ? ", " + naam : "")}</AppText>
+          <Button label="Instellingen" variant="link" onPress={() => router.push("/profiel/instellingen")} />
+        </View>
         <AppText rol="subtitle" kleur="secondary">Hoe is je weer vandaag?</AppText>
       </View>
+
+      {/* Eenmalige rondleiding, alleen de eerste keer op het dashboard. */}
+      <EersteKeerUitleg />
 
       {/* Slot 1: check-in of jouw weer van vandaag */}
       {!weerGeladen ? (
