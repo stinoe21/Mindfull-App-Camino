@@ -34,7 +34,9 @@ export default function Voorkeuren() {
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">Waar wil je aan werken?</AppText>
-        <AppText rol="subtitle" kleur="secondary">Kies wat past. Dit blijft op je telefoon.</AppText>
+        <AppText rol="subtitle" kleur="secondary">
+          Kies wat past. Dit blijft op je telefoon, en je kunt het altijd aanpassen in Instellingen.
+        </AppText>
       </View>
 
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
