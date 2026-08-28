@@ -101,7 +101,7 @@ export default function CheckInUitkomst() {
             >
               <View style={{ flexShrink: 1 }}>
                 <AppText rol="bodyEmphasis">{a.titel}</AppText>
-                <AppText rol="labelCaption" kleur="secondary">{a.onderwerp + " · Bron: MIND"}</AppText>
+                <AppText rol="labelCaption" kleur="secondary">{a.onderwerp === a.titel ? "Bron: MIND" : a.onderwerp + " · Bron: MIND"}</AppText>
               </View>
               <AppText rol="body" kleur="secondary">{"›"}</AppText>
             </Card>
