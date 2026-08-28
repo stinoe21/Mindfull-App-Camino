@@ -91,13 +91,14 @@ export default function ChallengeDetail() {
       </View>
 
       {challenge.aanmeld ? (
-        <Card tone="white">
+        <Card tone="primary">
+          <AppText rol="h3">Wil je de volledige challenge?</AppText>
           <AppText rol="bodySmall" kleur="secondary">
-            De volledige challenge ontvang je per e-mail van MIND, in je eigen tempo.
+            Wat je hier ziet is een voorproefje: per onderdeel de inleiding. De volledige challenge, met
+            alle opdrachten en oefeningen, krijg je gratis per e-mail van MIND, in je eigen tempo.
           </AppText>
           <Button
-            label="Aanmelden bij MIND"
-            variant="secondary"
+            label="Aanmelden voor de volledige challenge"
             onPress={() => challenge.aanmeld && Linking.openURL(challenge.aanmeld)}
           />
         </Card>
