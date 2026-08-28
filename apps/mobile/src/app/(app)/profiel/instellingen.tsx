@@ -6,6 +6,8 @@
 //
 // De definitieve consent-teksten liggen bij Paul (docs/privacy-besluiten.md);
 // de labels hieronder beschrijven alleen feitelijk wat de schakelaar doet.
+// De toestemmingen-kaart blijft daarom bewust buiten de vertaallaag en dus
+// Nederlands, zie het besluit in issue #47 en docs/scope.md.
 
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -20,6 +22,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { getSupabase } from "@/features/backend/client";
+import { TAAL_OPTIES, useTaal } from "@/features/i18n/taal";
 import {
   bewaarInstellingen,
   leesInstellingen,
@@ -33,6 +36,7 @@ import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
 
 export default function Instellingen() {
   const router = useRouter();
+  const { keuze, kiesTaal, t } = useTaal();
   const [inst, zetInst] = useState<InstellingenType>(STANDAARD);
   const [geladen, zetGeladen] = useState(false);
   const [ingelogd, zetIngelogd] = useState(false);
@@ -70,47 +74,66 @@ export default function Instellingen() {
 
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
-      <AppText rol="h1">Instellingen</AppText>
+      <AppText rol="h1">{t("instellingen.titel")}</AppText>
 
       {!geladen ? (
         <Card tone="outline">
-          <AppText rol="bodySmall" kleur="secondary">Even laden...</AppText>
+          <AppText rol="bodySmall" kleur="secondary">{t("instellingen.laden")}</AppText>
         </Card>
       ) : (
         <>
           <Card tone="white">
-            <AppText rol="h3">Hoe mogen we je noemen?</AppText>
+            <AppText rol="h3">{t("instellingen.naam.titel")}</AppText>
             <AppText rol="bodySmall" kleur="secondary">
-              Alleen voor de begroeting. Leeg laten mag. Het blijft op je telefoon.
+              {t("instellingen.naam.uitleg")}
             </AppText>
             <Card tone="outline" style={{ paddingVertical: space[2] }}>
               <TextInput
                 value={naamInvoer}
                 onChangeText={zetNaamInvoer}
                 onEndEditing={() => wijzig({ naam: schoonNaam(naamInvoer) })}
-                placeholder="Je voornaam"
+                placeholder={t("instellingen.naam.placeholder")}
                 placeholderTextColor={colors.textSecondary}
                 maxLength={NAAM_MAX}
                 autoCapitalize="words"
                 autoCorrect={false}
                 returnKeyType="done"
                 style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-                accessibilityLabel="Je voornaam"
+                accessibilityLabel={t("instellingen.naam.placeholder")}
               />
             </Card>
           </Card>
 
           <Card tone="white">
-            <AppText rol="h3">Waar wil je aan werken?</AppText>
+            <AppText rol="h3">{t("instellingen.voorkeuren.titel")}</AppText>
             <AppText rol="bodySmall" kleur="secondary">
-              Dit bepaalt welke tips je als eerste ziet. Het blijft op je telefoon en gaat nooit naar de
-              server.
+              {t("instellingen.voorkeuren.uitleg")}
             </AppText>
             <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
               {VOORKEUR_OPTIES.map((o) => (
                 <Chip key={o} label={o} active={inst.voorkeuren.includes(o)} onPress={() => wisselVoorkeur(o)} />
               ))}
             </View>
+          </Card>
+
+          <Card tone="white">
+            <AppText rol="h3">{t("instellingen.taal.titel")}</AppText>
+            <AppText rol="bodySmall" kleur="secondary">
+              {t("instellingen.taal.uitleg")}
+            </AppText>
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
+              {TAAL_OPTIES.map((optie) => (
+                <Chip
+                  key={optie.keuze}
+                  label={t(optie.labelSleutel)}
+                  active={keuze === optie.keuze}
+                  onPress={() => kiesTaal(optie.keuze)}
+                />
+              ))}
+            </View>
+            <AppText rol="bodySmall" kleur="secondary">
+              {t("instellingen.taal.contentBlijftNederlands")}
+            </AppText>
           </Card>
 
           <Card tone="white">
@@ -131,11 +154,11 @@ export default function Instellingen() {
             </View>
           </Card>
 
-          {ingelogd ? <Button label="Uitloggen" variant="secondary" onPress={uitloggen} /> : null}
+          {ingelogd ? <Button label={t("instellingen.uitloggen")} variant="secondary" onPress={uitloggen} /> : null}
         </>
       )}
 
-      <Button label="Terug" variant="link" onPress={() => router.back()} />
+      <Button label={t("algemeen.terug")} variant="link" onPress={() => router.back()} />
     </ScreenCanvas>
   );
 }
