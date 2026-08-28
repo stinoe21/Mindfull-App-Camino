@@ -18,11 +18,45 @@ import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ARTIKELEN, ONDERWERPEN } from "@/features/content/data/artikelen";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 
+const nl = {
+  titel: "Naslagwerk",
+  ondertitel: "Betrouwbare kennis, altijd met bron.",
+  zoekPlaceholder: "Zoek een onderwerp...",
+  zoekLabel: "Zoek in het naslagwerk",
+  onderwerpen: "Onderwerpen",
+  artikelen: "Artikelen",
+  artikelenNote: "Alles uit de bibliotheek van MIND.",
+  nietsGevondenTitel: "Niets gevonden",
+  nietsGevonden: "Geen artikelen gevonden. Probeer een ander woord of onderwerp.",
+  nietsGevondenVoor: "Geen artikelen gevonden voor “{term}”. Probeer een ander woord of onderwerp.",
+  wisZoekopdracht: "Wis de zoekopdracht",
+  bronMind: "BRON: MIND",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    titel: "Reference library",
+    ondertitel: "Reliable knowledge, always with a source.",
+    zoekPlaceholder: "Search a topic...",
+    zoekLabel: "Search the reference library",
+    onderwerpen: "Topics",
+    artikelen: "Articles",
+    artikelenNote: "Everything from MIND's library.",
+    nietsGevondenTitel: "Nothing found",
+    nietsGevonden: "No articles found. Try another word or topic.",
+    nietsGevondenVoor: "No articles found for “{term}”. Try another word or topic.",
+    wisZoekopdracht: "Clear the search",
+    bronMind: "SOURCE: MIND",
+  },
+};
+
 export default function Naslagwerk() {
   const router = useRouter();
+  const t = useVertaling(teksten);
   const [invoer, zetInvoer] = useState("");
   const [zoekterm, zetZoekterm] = useState("");
   const [onderwerp, zetOnderwerp] = useState<string | null>(null);
@@ -69,22 +103,22 @@ export default function Naslagwerk() {
   return (
     <ScreenCanvas state="default" metNavRuimte>
       <View style={{ gap: space[1] }}>
-        <AppText rol="h1">Naslagwerk</AppText>
-        <AppText rol="subtitle" kleur="secondary">Betrouwbare kennis, altijd met bron.</AppText>
+        <AppText rol="h1">{t("titel")}</AppText>
+        <AppText rol="subtitle" kleur="secondary">{t("ondertitel")}</AppText>
       </View>
 
       <Card tone="outline" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={invoer}
           onChangeText={zetInvoer}
-          placeholder="Zoek een onderwerp..."
+          placeholder={t("zoekPlaceholder")}
           placeholderTextColor={colors.textSecondary}
           style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-          accessibilityLabel="Zoek in het naslagwerk"
+          accessibilityLabel={t("zoekLabel")}
         />
       </Card>
 
-      <ContentSection title="Onderwerpen">
+      <ContentSection title={t("onderwerpen")}>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
           {onderwerpen.map((o) => (
             <Chip key={o} label={o} active={onderwerp === o} onPress={() => zetOnderwerp(onderwerp === o ? null : o)} />
@@ -92,15 +126,15 @@ export default function Naslagwerk() {
         </View>
       </ContentSection>
 
-      <ContentSection title="Artikelen" note={"Alles uit de bibliotheek van MIND."}>
+      <ContentSection title={t("artikelen")} note={t("artikelenNote")}>
         {resultaten.length === 0 ? (
           <Card tone="outline">
-            <AppText rol="h3">Niets gevonden</AppText>
+            <AppText rol="h3">{t("nietsGevondenTitel")}</AppText>
             <AppText rol="bodySmall" kleur="secondary">
-              {"Geen artikelen gevonden" + (zoekterm ? " voor “" + zoekterm + "”" : "") + ". Probeer een ander woord of onderwerp."}
+              {zoekterm ? t("nietsGevondenVoor").replace("{term}", zoekterm) : t("nietsGevonden")}
             </AppText>
             <Button
-              label="Wis de zoekopdracht"
+              label={t("wisZoekopdracht")}
               variant="link"
               onPress={() => {
                 zetInvoer("");
@@ -114,7 +148,7 @@ export default function Naslagwerk() {
               <ContentCard
                 key={a.slug}
                 tone="white"
-                label="BRON: MIND"
+                label={t("bronMind")}
                 title={a.titel}
                 onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
               >

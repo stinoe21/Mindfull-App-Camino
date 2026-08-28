@@ -15,13 +15,41 @@ import { Card } from "@mind/ui/components/Card";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { getSupabase } from "@/features/backend/client";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 import { InstellingenGroep, InstellingenRij } from "@/features/profiel/InstellingenRij";
 
+const nl = {
+  titel: "Profiel",
+  evenKijken: "Even kijken...",
+  ingelogdAls: "Ingelogd als {email}",
+  ingelogd: "Ingelogd",
+  nietIngelogd: "Niet ingelogd",
+  logInUitleg: "Log in om anoniem mee te tellen in het weerbericht.",
+  inloggen: "Inloggen",
+  voorkeuren: "Voorkeuren en toestemmingen",
+  accountVerwijderen: "Account verwijderen",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    titel: "Profile",
+    evenKijken: "One moment...",
+    ingelogdAls: "Logged in as {email}",
+    ingelogd: "Logged in",
+    nietIngelogd: "Not logged in",
+    logInUitleg: "Log in to count anonymously towards the weather forecast.",
+    inloggen: "Log in",
+    voorkeuren: "Preferences and consents",
+    accountVerwijderen: "Delete account",
+  },
+};
+
 export default function Profiel() {
   const router = useRouter();
+  const t = useVertaling(teksten);
   const [email, zetEmail] = useState<string | null>(null);
   const [naam, zetNaam] = useState("");
   const [geladen, zetGeladen] = useState(false);
@@ -53,7 +81,7 @@ export default function Profiel() {
       {/* De ingang naar Instellingen rechtsboven. Nu als tekst; het tandwiel-
           icoon komt van de eigenaar en vervangt dan alleen deze knop. */}
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
-        <AppText rol="h1">Profiel</AppText>
+        <AppText rol="h1">{t("titel")}</AppText>
         <Button label="Instellingen" variant="link" onPress={() => router.push("/profiel/instellingen")} />
       </View>
 
@@ -63,17 +91,17 @@ export default function Profiel() {
         {/* gap 2: titel en duiding dicht op elkaar, zoals in de sectiekop van de referentie */}
         <View style={{ flexShrink: 1, gap: 2 }}>
           {!geladen ? (
-            <AppText rol="bodySmall" kleur="secondary">Even kijken...</AppText>
+            <AppText rol="bodySmall" kleur="secondary">{t("evenKijken")}</AppText>
           ) : email ? (
             <>
               <AppText rol="h3">{naam || email}</AppText>
-              <AppText rol="labelCaption" kleur="secondary">{naam ? "Ingelogd als " + email : "Ingelogd"}</AppText>
+              <AppText rol="labelCaption" kleur="secondary">{naam ? t("ingelogdAls").replace("{email}", email) : t("ingelogd")}</AppText>
             </>
           ) : (
             <>
-              <AppText rol="h3">Niet ingelogd</AppText>
+              <AppText rol="h3">{t("nietIngelogd")}</AppText>
               <AppText rol="labelCaption" kleur="secondary">
-                Log in om anoniem mee te tellen in het weerbericht.
+                {t("logInUitleg")}
               </AppText>
             </>
           )}
@@ -81,7 +109,7 @@ export default function Profiel() {
       </Card>
 
       {geladen && !email ? (
-        <Button label="Inloggen" variant="secondary" onPress={() => router.push("/inloggen")} />
+        <Button label={t("inloggen")} variant="secondary" onPress={() => router.push("/inloggen")} />
       ) : null}
 
       <InstellingenGroep titel="Voorkeuren">

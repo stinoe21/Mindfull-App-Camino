@@ -11,19 +11,38 @@ import { Button } from "@mind/ui/components/Button";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+
+const nl = {
+  titel: "Mooi gedaan",
+  uitleg: "Je hebt dit onderdeel afgerond. Kleine stappen tellen.",
+  verder: "Verder met de challenge",
+  terug: "Terug naar challenges",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    titel: "Well done",
+    uitleg: "You've completed this part. Small steps count.",
+    verder: "Continue with the challenge",
+    terug: "Back to challenges",
+  },
+};
+
 export default function ChallengeAfgerond() {
   const router = useRouter();
+  const t = useVertaling(teksten);
   const { challenge: slug } = useLocalSearchParams<{ challenge: string }>();
 
   return (
     <ScreenCanvas variant="overlay" state="zonnig" sheetTop={200}>
       <MascotteVlieger state="zonnig" hoogte={100} />
-      <AppText rol="h1" centreer>Mooi gedaan</AppText>
+      <AppText rol="h1" centreer>{t("titel")}</AppText>
       <AppText rol="body" kleur="secondary" centreer>
-        Je hebt dit onderdeel afgerond. Kleine stappen tellen.
+        {t("uitleg")}
       </AppText>
       <Button
-        label="Verder met de challenge"
+        label={t("verder")}
         fullWidth
         onPress={() =>
           slug
@@ -31,7 +50,7 @@ export default function ChallengeAfgerond() {
             : router.replace("/challenges")
         }
       />
-      <Button label="Terug naar challenges" variant="link" onPress={() => router.replace("/challenges")} />
+      <Button label={t("terug")} variant="link" onPress={() => router.replace("/challenges")} />
     </ScreenCanvas>
   );
 }

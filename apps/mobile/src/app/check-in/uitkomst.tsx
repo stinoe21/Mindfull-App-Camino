@@ -19,6 +19,7 @@ import { Card } from "@mind/ui/components/Card";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { UITKOMSTEN } from "@/features/weer/teksten";
@@ -27,20 +28,58 @@ import { UITLEG_ANONIMITEIT } from "@/features/weer/WeerberichtIntro";
 
 import type { WeatherCode } from "@mind/types";
 
-// Wat het insturen opleverde, in gewone taal. "niet-gedeeld" (consent uit)
-// krijgt bewust geen regel: wie niet meedoet, hoeft dat niet terug te lezen.
-const MELDINGEN: Record<string, string> = {
-  gelukt: "Dankjewel voor je check-in. Jouw weer telt anoniem mee in het mentale weerbericht van Nederland.",
-  "al-ingecheckt": "Dankjewel voor je check-in. Jouw weer telt anoniem mee in het mentale weerbericht van Nederland.",
-  "niet-verbonden":
+// Interface-teksten. De weerbeeld-uitkomsten (UITKOMSTEN) en de privacy-uitleg
+// zijn canonieke content en blijven Nederlands; de statusmeldingen en de
+// bediening hieronder zijn wel bediening. {melding}-sleutels lopen gelijk aan
+// de insturenuitkomst; "niet-gedeeld" krijgt bewust geen regel.
+const nl = {
+  meldingGelukt:
+    "Dankjewel voor je check-in. Jouw weer telt anoniem mee in het mentale weerbericht van Nederland.",
+  meldingNietVerbonden:
     "Er was geen verbinding, dus deze check-in kon niet meetellen in het landelijke weerbericht. Je eigen weer staat hier gewoon.",
-  "niet-ingelogd":
+  meldingNietIngelogd:
     "Je was niet ingelogd, dus deze check-in telt niet mee in het landelijke weerbericht. Je eigen weer staat hier gewoon.",
+  leegTitel: "Nog geen check-in vandaag",
+  leegUitleg: "Doe eerst de check-in, dan staat hier jouw weer van vandaag.",
+  evenInchecken: "Even inchecken",
+  terugDashboard: "Terug naar dashboard",
+  voorVandaag: "VOOR VANDAAG",
+  lezenAlsJeWilt: "LEZEN, ALS JE WILT",
+  bron: "Bron: MIND",
+  bekijkWeerbericht: "Bekijk het weerbericht van Nederland",
+  deelJeWeer: "Deel je weer",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    meldingGelukt:
+      "Thank you for your check-in. Your weather counts anonymously towards the mental weather forecast of the Netherlands.",
+    meldingNietVerbonden:
+      "There was no connection, so this check-in couldn't count towards the national weather forecast. Your own weather is still here.",
+    meldingNietIngelogd:
+      "You weren't logged in, so this check-in doesn't count towards the national weather forecast. Your own weather is still here.",
+    leegTitel: "No check-in yet today",
+    leegUitleg: "Do the check-in first, then your weather of the day will appear here.",
+    evenInchecken: "Check in",
+    terugDashboard: "Back to dashboard",
+    voorVandaag: "FOR TODAY",
+    lezenAlsJeWilt: "READ, IF YOU LIKE",
+    bron: "Source: MIND",
+    bekijkWeerbericht: "See the weather forecast of the Netherlands",
+    deelJeWeer: "Share your weather",
+  },
 };
 
 export default function CheckInUitkomst() {
   const router = useRouter();
+  const t = useVertaling(teksten);
   const { melding } = useLocalSearchParams<{ melding?: string }>();
+  const MELDINGEN: Record<string, string> = {
+    gelukt: t("meldingGelukt"),
+    "al-ingecheckt": t("meldingGelukt"),
+    "niet-verbonden": t("meldingNietVerbonden"),
+    "niet-ingelogd": t("meldingNietIngelogd"),
+  };
   const [geladen, zetGeladen] = useState(false);
   const [weerbeeld, zetWeerbeeld] = useState<WeatherCode | null>(null);
 
@@ -56,12 +95,12 @@ export default function CheckInUitkomst() {
     return (
       <ScreenCanvas variant="overlay" state="default" sheetTop={200}>
         <MascotteVlieger state="wolken" hoogte={90} />
-        <AppText rol="h2" centreer>Nog geen check-in vandaag</AppText>
+        <AppText rol="h2" centreer>{t("leegTitel")}</AppText>
         <AppText rol="body" kleur="secondary" centreer>
-          Doe eerst de check-in, dan staat hier jouw weer van vandaag.
+          {t("leegUitleg")}
         </AppText>
-        <Button label="Even inchecken" fullWidth onPress={() => router.replace("/check-in/1")} />
-        <Button label="Terug naar dashboard" variant="link" onPress={() => router.replace("/dashboard")} />
+        <Button label={t("evenInchecken")} fullWidth onPress={() => router.replace("/check-in/1")} />
+        <Button label={t("terugDashboard")} variant="link" onPress={() => router.replace("/dashboard")} />
       </ScreenCanvas>
     );
   }
@@ -85,13 +124,13 @@ export default function CheckInUitkomst() {
       ) : null}
       {tekst ? (
         <Card tone="white" style={{ alignSelf: "stretch" }}>
-          <AppText rol="labelOverline" kleur="secondary">VOOR VANDAAG</AppText>
+          <AppText rol="labelOverline" kleur="secondary">{t("voorVandaag")}</AppText>
           <AppText rol="h3">{tekst.tip}</AppText>
         </Card>
       ) : null}
       {weerbeeld ? (
         <View style={{ gap: space[2], alignSelf: "stretch" }}>
-          <AppText rol="labelOverline" kleur="secondary">LEZEN, ALS JE WILT</AppText>
+          <AppText rol="labelOverline" kleur="secondary">{t("lezenAlsJeWilt")}</AppText>
           {tipsBijWeer(weerbeeld).map((a) => (
             <Card
               key={a.slug}
@@ -101,7 +140,7 @@ export default function CheckInUitkomst() {
             >
               <View style={{ flexShrink: 1 }}>
                 <AppText rol="bodyEmphasis">{a.titel}</AppText>
-                <AppText rol="labelCaption" kleur="secondary">{a.onderwerp === a.titel ? "Bron: MIND" : a.onderwerp + " · Bron: MIND"}</AppText>
+                <AppText rol="labelCaption" kleur="secondary">{a.onderwerp === a.titel ? t("bron") : a.onderwerp + " · " + t("bron")}</AppText>
               </View>
               <AppText rol="body" kleur="secondary">{"›"}</AppText>
             </Card>
@@ -118,13 +157,13 @@ export default function CheckInUitkomst() {
         <WatIsHetWeerbericht />
       </Card>
       <Button
-        label="Bekijk het weerbericht van Nederland"
+        label={t("bekijkWeerbericht")}
         variant="secondary"
         fullWidth
         onPress={() => router.push("/weerbericht")}
       />
-      <Button label="Terug naar dashboard" fullWidth onPress={() => router.replace("/dashboard")} />
-      <Button label="Deel je weer" variant="link" onPress={deel} />
+      <Button label={t("terugDashboard")} fullWidth onPress={() => router.replace("/dashboard")} />
+      <Button label={t("deelJeWeer")} variant="link" onPress={deel} />
     </ScreenCanvas>
   );
 }

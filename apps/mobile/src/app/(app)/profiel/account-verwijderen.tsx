@@ -19,11 +19,45 @@ import { Card } from "@mind/ui/components/Card";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { getSupabase } from "@/features/backend/client";
 import { wisAlleLokaleData } from "@/features/profiel/instellingen";
 
+const nl = {
+  titel: "Account verwijderen",
+  uitleg:
+    "Als je je account verwijdert, verdwijnen je account en je profiel van de server. Alles wat op je telefoon is opgeslagen wordt gewist.",
+  uitlegAnoniem:
+    "Je eerdere check-ins tellen anoniem mee in het landelijke weerbericht. Daar staat niets in dat naar jou wijst, dus die aantallen kunnen niet worden teruggehaald of verwijderd.",
+  fout: "Het verwijderen is niet gelukt. Controleer je verbinding en probeer het opnieuw. Er is nog niets gewist.",
+  verwijderKnop: "Verwijder mijn account",
+  zekerTitel: "Weet je het zeker?",
+  zekerUitleg: "Dit kan niet ongedaan worden gemaakt.",
+  jaVerwijder: "Ja, verwijder alles",
+  neeToch: "Nee, toch niet",
+  terug: "Terug",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    titel: "Delete account",
+    uitleg:
+      "If you delete your account, your account and profile disappear from the server. Everything stored on your phone is erased.",
+    uitlegAnoniem:
+      "Your earlier check-ins count anonymously towards the national weather forecast. Nothing in there points to you, so those numbers can't be retrieved or removed.",
+    fout: "Deleting didn't work. Check your connection and try again. Nothing has been erased yet.",
+    verwijderKnop: "Delete my account",
+    zekerTitel: "Are you sure?",
+    zekerUitleg: "This can't be undone.",
+    jaVerwijder: "Yes, delete everything",
+    neeToch: "No, keep it",
+    terug: "Back",
+  },
+};
+
 export default function AccountVerwijderen() {
   const router = useRouter();
+  const t = useVertaling(teksten);
   const [bevestigen, zetBevestigen] = useState(false);
   const [bezig, zetBezig] = useState(false);
   const [melding, zetMelding] = useState<string | null>(null);
@@ -39,9 +73,7 @@ export default function AccountVerwijderen() {
         const { error } = await client.rpc("delete_own_account");
         if (error) {
           zetBezig(false);
-          zetMelding(
-            "Het verwijderen is niet gelukt. Controleer je verbinding en probeer het opnieuw. Er is nog niets gewist."
-          );
+          zetMelding(t("fout"));
           return;
         }
       }
@@ -57,27 +89,25 @@ export default function AccountVerwijderen() {
 
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
-      <AppText rol="h1">Account verwijderen</AppText>
+      <AppText rol="h1">{t("titel")}</AppText>
 
       <Card tone="white">
         <AppText rol="body">
-          Als je je account verwijdert, verdwijnen je account en je profiel van de server. Alles wat
-          op je telefoon is opgeslagen wordt gewist.
+          {t("uitleg")}
         </AppText>
         <AppText rol="bodySmall" kleur="secondary">
-          Je eerdere check-ins tellen anoniem mee in het landelijke weerbericht. Daar staat niets in dat
-          naar jou wijst, dus die aantallen kunnen niet worden teruggehaald of verwijderd.
+          {t("uitlegAnoniem")}
         </AppText>
       </Card>
 
       {!bevestigen ? (
-        <Button label="Verwijder mijn account" variant="secondary" fullWidth onPress={() => zetBevestigen(true)} />
+        <Button label={t("verwijderKnop")} variant="secondary" fullWidth onPress={() => zetBevestigen(true)} />
       ) : (
         <Card tone="outline">
-          <AppText rol="h3">Weet je het zeker?</AppText>
-          <AppText rol="bodySmall" kleur="secondary">Dit kan niet ongedaan worden gemaakt.</AppText>
-          <Button label="Ja, verwijder alles" fullWidth bezig={bezig} onPress={verwijder} />
-          <Button label="Nee, toch niet" variant="link" fullWidth onPress={() => zetBevestigen(false)} />
+          <AppText rol="h3">{t("zekerTitel")}</AppText>
+          <AppText rol="bodySmall" kleur="secondary">{t("zekerUitleg")}</AppText>
+          <Button label={t("jaVerwijder")} fullWidth bezig={bezig} onPress={verwijder} />
+          <Button label={t("neeToch")} variant="link" fullWidth onPress={() => zetBevestigen(false)} />
         </Card>
       )}
 
@@ -87,7 +117,7 @@ export default function AccountVerwijderen() {
         </Card>
       ) : null}
 
-      <Button label="Terug" variant="link" onPress={() => router.back()} />
+      <Button label={t("terug")} variant="link" onPress={() => router.back()} />
     </ScreenCanvas>
   );
 }

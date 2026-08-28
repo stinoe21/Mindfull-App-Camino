@@ -15,10 +15,28 @@ import { Chip } from "@mind/ui/components/Chip";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
+import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { bewaarInstellingen, VOORKEUR_OPTIES } from "@/features/profiel/instellingen";
+
+const nl = {
+  titel: "Waar wil je aan werken?",
+  ondertitel: "Kies wat past. Dit blijft op je telefoon, en je kunt het altijd aanpassen in Instellingen.",
+  verder: "Verder",
+  slaOver: "Sla over",
+} as const;
+const teksten: Woordenboek<typeof nl> = {
+  nl,
+  en: {
+    titel: "What would you like to work on?",
+    ondertitel: "Choose what fits. This stays on your phone, and you can always change it in Settings.",
+    verder: "Continue",
+    slaOver: "Skip",
+  },
+};
 
 export default function Voorkeuren() {
   const router = useRouter();
+  const t = useVertaling(teksten);
   const [gekozen, zetGekozen] = useState<string[]>([]);
 
   const wissel = (optie: string) => {
@@ -33,9 +51,9 @@ export default function Voorkeuren() {
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
-        <AppText rol="h1">Waar wil je aan werken?</AppText>
+        <AppText rol="h1">{t("titel")}</AppText>
         <AppText rol="subtitle" kleur="secondary">
-          Kies wat past. Dit blijft op je telefoon, en je kunt het altijd aanpassen in Instellingen.
+          {t("ondertitel")}
         </AppText>
       </View>
 
@@ -46,8 +64,8 @@ export default function Voorkeuren() {
       </View>
 
       <View style={{ flex: 1 }} />
-      <Button label="Verder" fullWidth onPress={() => verder(true)} />
-      <Button label="Sla over" variant="link" fullWidth onPress={() => verder(false)} />
+      <Button label={t("verder")} fullWidth onPress={() => verder(true)} />
+      <Button label={t("slaOver")} variant="link" fullWidth onPress={() => verder(false)} />
     </ScreenCanvas>
   );
 }
