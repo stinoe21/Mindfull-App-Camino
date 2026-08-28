@@ -20,6 +20,8 @@ export default function Challenges() {
   const challenges = CHALLENGES.filter((c) => c.soort === "challenge");
   const specials = CHALLENGES.filter((c) => c.soort === "themaspecial");
 
+  // Oneven aantal: alle kaarten volle breedte, anders blijft er een losse
+  // brede kaart onder twee halve hangen (design audit, 28 augustus 2026).
   const open = (slug: string) =>
     router.push({ pathname: "/challenges/[challenge]", params: { challenge: slug } });
 
@@ -43,7 +45,7 @@ export default function Challenges() {
         <ContentSection title="Challenges" note="In je eigen tempo, onderdeel voor onderdeel.">
           <ContentGrid>
             {challenges.map((c) => (
-              <ContentCard key={c.slug} tone="purple" label="CHALLENGE" title={c.naam} onPress={() => open(c.slug)}>
+              <ContentCard key={c.slug} full={challenges.length % 2 === 1} tone="purple" label="CHALLENGE" title={c.naam} onPress={() => open(c.slug)}>
                 <AppText rol="bodySmall" kleur="secondary">{c.dagen.length + " onderdelen · MIND"}</AppText>
               </ContentCard>
             ))}
@@ -55,7 +57,7 @@ export default function Challenges() {
         <ContentSection title="Themaspecials" note="Een paar dagen aandacht voor een thema.">
           <ContentGrid>
             {specials.map((c) => (
-              <ContentCard key={c.slug} tone="coral" label="THEMASPECIAL" title={c.naam} onPress={() => open(c.slug)}>
+              <ContentCard key={c.slug} full={specials.length % 2 === 1} tone="coral" label="THEMASPECIAL" title={c.naam} onPress={() => open(c.slug)}>
                 <AppText rol="bodySmall" kleur="secondary">{c.dagen.length + " onderdelen · MIND"}</AppText>
               </ContentCard>
             ))}
