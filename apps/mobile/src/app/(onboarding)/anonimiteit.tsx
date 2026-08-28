@@ -54,7 +54,7 @@ export default function Anonimiteit() {
       </Card>
 
       <Card tone="white">
-        <ToestemmingKeuze waarde={weerbericht} onKies={zetWeerbericht} />
+        <ToestemmingKeuze waarde={weerbericht} onKies={zetWeerbericht} metUitleg />
       </Card>
 
       <Card tone="white">
