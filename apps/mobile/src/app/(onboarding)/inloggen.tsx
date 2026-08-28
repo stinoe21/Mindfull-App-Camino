@@ -4,9 +4,10 @@
 // De Apple- en Google-knop zijn gebouwd "op een sleutel na" (docs/scope.md):
 // scherm, knop en foutafhandeling staan er, de configuratie komt uit
 // omgevingsvariabelen, en een ontbrekende waarde blokkeert de onboarding niet.
-// E-mail loopt via e-mailadres en wachtwoord. Bestaat het account nog niet,
-// dan kan de gebruiker het met dezelfde gegevens aanmaken. Let op de
-// SMTP-limiet tijdens testen: docs/limieten-en-misbruik.md sectie 1.
+// E-mail loopt via e-mailadres en wachtwoord, met een expliciete keuze tussen
+// inloggen en een account aanmaken. Staat "Confirm email" aan in Supabase, dan
+// levert aanmaken nog geen sessie op en komt er eerst een bevestigingsmail.
+// Let op de SMTP-limiet tijdens testen: docs/limieten-en-misbruik.md sectie 1.
 // Zonder account kom je de app niet in: er is geen doorgang langs dit scherm.
 
 import { useRouter } from "expo-router";
@@ -40,7 +41,8 @@ const nl = {
   vulEmail: "Vul een e-mailadres in.",
   vulWachtwoord: "Vul een wachtwoord in van minstens {n} tekens.",
   verkeerdeCombinatie:
-    "Dit e-mailadres en wachtwoord horen niet bij elkaar. Nog geen account? Maak er dan een aan met deze gegevens.",
+    "Dit e-mailadres en wachtwoord horen niet bij elkaar. Nog geen account? Kies dan hieronder voor account aanmaken.",
+  bestaatAl: "Er bestaat al een account met dit e-mailadres. Log daarmee in.",
   nietBevestigd: "Dit e-mailadres is nog niet bevestigd. Kijk in je mail voor de bevestigingslink.",
   inloggenMislukt: "Inloggen is niet gelukt. Probeer het over een minuut opnieuw.",
   aanmakenMislukt: "Het account kon niet worden aangemaakt. Probeer het over een minuut opnieuw.",
@@ -51,9 +53,12 @@ const nl = {
   emailPlaceholder: "Of vul je e-mailadres in",
   emailLabel: "E-mailadres",
   wachtwoordPlaceholder: "Wachtwoord",
+  wachtwoordKiezen: "Kies een wachtwoord (minstens {n} tekens)",
   wachtwoordLabel: "Wachtwoord",
   inloggen: "Inloggen",
   accountAanmaken: "Account aanmaken",
+  hebAlAccount: "Ik heb al een account",
+  nogGeenAccount: "Nog geen account? Maak er een aan",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -66,7 +71,8 @@ const teksten: Woordenboek<typeof nl> = {
     vulEmail: "Enter an email address.",
     vulWachtwoord: "Enter a password of at least {n} characters.",
     verkeerdeCombinatie:
-      "This email address and password don't match. No account yet? Then create one with these details.",
+      "This email address and password don't match. No account yet? Choose create account below.",
+    bestaatAl: "There is already an account with this email address. Log in with it.",
     nietBevestigd: "This email address hasn't been confirmed yet. Check your mail for the confirmation link.",
     inloggenMislukt: "Logging in failed. Please try again in a minute.",
     aanmakenMislukt: "The account couldn't be created. Please try again in a minute.",
@@ -77,9 +83,12 @@ const teksten: Woordenboek<typeof nl> = {
     emailPlaceholder: "Or enter your email address",
     emailLabel: "Email address",
     wachtwoordPlaceholder: "Password",
+    wachtwoordKiezen: "Choose a password (at least {n} characters)",
     wachtwoordLabel: "Password",
     inloggen: "Log in",
     accountAanmaken: "Create account",
+    hebAlAccount: "I already have an account",
+    nogGeenAccount: "No account yet? Create one",
   },
 };
 
@@ -90,9 +99,10 @@ export default function Inloggen() {
   const [wachtwoord, zetWachtwoord] = useState("");
   const [bezig, zetBezig] = useState(false);
   const [melding, zetMelding] = useState<string | null>(null);
-  const [aanmakenMogelijk, zetAanmakenMogelijk] = useState(false);
+  const [stand, zetStand] = useState<"inloggen" | "aanmaken">("inloggen");
 
   const client = getSupabase();
+  const aanmaken = stand === "aanmaken";
 
   const socialNogNiet = (naam: string) => {
     zetMelding(t("socialNogNiet").replace("{naam}", naam));
@@ -100,7 +110,6 @@ export default function Inloggen() {
 
   const controleerInvoer = (): boolean => {
     zetMelding(null);
-    zetAanmakenMogelijk(false);
     if (!client) {
       zetMelding(t("geenVerbinding"));
       return false;
@@ -124,7 +133,6 @@ export default function Inloggen() {
     if (error) {
       if (error.message.toLowerCase().includes("invalid login credentials")) {
         zetMelding(t("verkeerdeCombinatie"));
-        zetAanmakenMogelijk(true);
       } else if (error.message.toLowerCase().includes("not confirmed")) {
         zetMelding(t("nietBevestigd"));
       } else {
@@ -141,20 +149,28 @@ export default function Inloggen() {
     const { data, error } = await client.auth.signUp({ email: email.trim(), password: wachtwoord });
     zetBezig(false);
     if (error) {
-      zetMelding(t("aanmakenMislukt"));
+      if (error.message.toLowerCase().includes("already registered")) {
+        zetMelding(t("bestaatAl"));
+        zetStand("inloggen");
+      } else {
+        zetMelding(t("aanmakenMislukt"));
+      }
       return;
     }
     if (data.session) {
       router.push("/naam");
       return;
     }
+    // Zonder sessie is het account wel aangemaakt maar nog niet bevestigd.
+    // Een bestaand, al bevestigd adres komt hier ook terecht (Supabase verbergt dat).
+    zetStand("inloggen");
     zetMelding(t("bevestigingsmail").replace("{email}", email.trim()));
   };
 
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
-        <AppText rol="h1">{t("titel")}</AppText>
+        <AppText rol="h1">{aanmaken ? t("accountAanmaken") : t("titel")}</AppText>
         <AppText rol="subtitle" kleur="secondary">{t("ondertitel")}</AppText>
       </View>
 
@@ -188,7 +204,7 @@ export default function Inloggen() {
         <TextInput
           value={wachtwoord}
           onChangeText={zetWachtwoord}
-          placeholder={t("wachtwoordPlaceholder")}
+          placeholder={aanmaken ? t("wachtwoordKiezen").replace("{n}", String(MIN_WACHTWOORD)) : t("wachtwoordPlaceholder")}
           placeholderTextColor={colors.textSecondary}
           autoCapitalize="none"
           autoComplete="password"
@@ -197,7 +213,12 @@ export default function Inloggen() {
           accessibilityLabel={t("wachtwoordLabel")}
         />
       </Card>
-      <Button label={t("inloggen")} fullWidth bezig={bezig} onPress={logIn} />
+      <Button
+        label={aanmaken ? t("accountAanmaken") : t("inloggen")}
+        fullWidth
+        bezig={bezig}
+        onPress={aanmaken ? maakAccount : logIn}
+      />
 
       {melding ? (
         <Card tone="outline">
@@ -205,9 +226,15 @@ export default function Inloggen() {
         </Card>
       ) : null}
 
-      {aanmakenMogelijk ? (
-        <Button label={t("accountAanmaken")} variant="secondary" fullWidth bezig={bezig} onPress={maakAccount} />
-      ) : null}
+      <Button
+        label={aanmaken ? t("hebAlAccount") : t("nogGeenAccount")}
+        variant="link"
+        fullWidth
+        onPress={() => {
+          zetMelding(null);
+          zetStand(aanmaken ? "inloggen" : "aanmaken");
+        }}
+      />
 
     </ScreenCanvas>
   );
