@@ -46,6 +46,7 @@ export default function Dashboard() {
   const [weerGeladen, zetWeerGeladen] = useState(false);
   const [bericht, zetBericht] = useState<WeerberichtStand | null>(null);
   const [voorkeuren, zetVoorkeuren] = useState<string[]>([]);
+  const [naam, zetNaam] = useState("");
 
   useFocusEffect(
     useCallback(() => {
@@ -56,7 +57,9 @@ export default function Dashboard() {
         zetWeerGeladen(true);
       });
       leesInstellingen().then((i) => {
-        if (actief) zetVoorkeuren(i.voorkeuren);
+        if (!actief) return;
+        zetVoorkeuren(i.voorkeuren);
+        zetNaam(i.naam);
       });
       haalWeerbericht().then((stand) => {
         if (actief) zetBericht(stand);
@@ -77,7 +80,7 @@ export default function Dashboard() {
   return (
     <ScreenCanvas state={weerbeeld ?? "default"} metNavRuimte>
       <View style={{ gap: space[1] }}>
-        <AppText rol="h1">{begroeting()}</AppText>
+        <AppText rol="h1">{begroeting() + (naam ? ", " + naam : "")}</AppText>
         <AppText rol="subtitle" kleur="secondary">Hoe is je weer vandaag?</AppText>
       </View>
 

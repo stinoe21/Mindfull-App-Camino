@@ -71,7 +71,7 @@ export default function Inloggen() {
       zetMelding("Die code klopt niet of is verlopen. Vraag zo nodig een nieuwe aan.");
       return;
     }
-    router.push("/voorkeuren");
+    router.push("/naam");
   };
 
   return (
@@ -144,7 +144,7 @@ export default function Inloggen() {
 
       {/* Testversie: zonder werkende sleutels of SMTP mag de onboarding niet
           doodlopen (docs/scope.md). Deze doorgang verdwijnt bij livegang. */}
-      <Button label="Verder zonder account (testversie)" variant="link" fullWidth onPress={() => router.push("/voorkeuren")} />
+      <Button label="Verder zonder account (testversie)" variant="link" fullWidth onPress={() => router.push("/naam")} />
     </ScreenCanvas>
   );
 }

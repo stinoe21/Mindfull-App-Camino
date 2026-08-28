@@ -14,6 +14,11 @@ const SLEUTEL = "mind.instellingen";
 export type Instellingen = {
   onboardingAfgerond: boolean;
   leeftijdBevestigd: boolean;
+  /**
+   * Voornaam, alleen voor de begroeting. Blijft op het toestel: er is bewust
+   * geen naamveld in het datamodel (docs/datamodel.md). Leeg is prima.
+   */
+  naam: string;
   voorkeuren: string[];
   /** Consent 1: de check-in telt anoniem mee in het landelijke weerbericht. */
   consentWeerbericht: boolean;
@@ -24,6 +29,7 @@ export type Instellingen = {
 export const STANDAARD: Instellingen = {
   onboardingAfgerond: false,
   leeftijdBevestigd: false,
+  naam: "",
   voorkeuren: [],
   consentWeerbericht: false,
   consentVoorwaarden: false,
@@ -34,6 +40,13 @@ export const STANDAARD: Instellingen = {
 // van 27 augustus 2026: een eigen vocabulaire ("Verhalen van anderen") schiep
 // verkeerde verwachtingen en werkte nergens op door.
 export const VOORKEUR_OPTIES: string[] = ONDERWERPEN;
+
+// Lang genoeg voor elke voornaam, kort genoeg om geen verhaal te worden.
+export const NAAM_MAX = 30;
+
+export function schoonNaam(invoer: string): string {
+  return invoer.replace(/\s+/g, " ").trim().slice(0, NAAM_MAX);
+}
 
 export async function leesInstellingen(): Promise<Instellingen> {
   try {
