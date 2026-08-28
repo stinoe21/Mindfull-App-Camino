@@ -1,12 +1,14 @@
 // Instellingen
 //
-// Alles wat de gebruiker eerder koos is hier terug te draaien: de voorkeuren
-// en de twee apart intrekbare toestemmingen. "Je kunt dit altijd wijzigen in
-// Instellingen" is de belofte uit het ontwerp; dit is die plek.
+// Alles wat de gebruiker eerder koos is hier terug te draaien: naam, voorkeuren,
+// taal en de twee apart intrekbare toestemmingen. "Je kunt dit altijd wijzigen
+// in Instellingen" is de belofte uit het ontwerp; dit is die plek.
 //
-// De definitieve consent-teksten liggen bij Paul (docs/privacy-besluiten.md);
-// de labels hieronder beschrijven alleen feitelijk wat de schakelaar doet.
-// De toestemmingen-kaart blijft daarom bewust buiten de vertaallaag en dus
+// Opgebouwd als gegroepeerde lijst, dezelfde rijen als op Profiel: een kopje,
+// een kaart met rijen, en alleen uitleg waar die iets toevoegt.
+//
+// De definitieve consent-teksten liggen bij Paul (docs/privacy-besluiten.md).
+// De toestemmingen blijven daarom bewust buiten de vertaallaag en dus
 // Nederlands, zie het besluit in issue #47 en docs/scope.md.
 
 import { useRouter } from "expo-router";
@@ -15,7 +17,6 @@ import { Switch, TextInput, View } from "react-native";
 
 import { colors, palette, space, type } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
-import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { Chip } from "@mind/ui/components/Chip";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
@@ -32,6 +33,7 @@ import {
   VOORKEUR_OPTIES,
   type Instellingen as InstellingenType,
 } from "@/features/profiel/instellingen";
+import { InstellingenGroep, InstellingenRij } from "@/features/profiel/InstellingenRij";
 import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
 
 // Alleen interface-teksten. De consent-teksten liggen bij Paul en blijven
@@ -39,44 +41,44 @@ import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
 const nl = {
   titel: "Instellingen",
   laden: "Even laden...",
-  naamTitel: "Hoe mogen we je noemen?",
-  naamUitleg: "Alleen voor de begroeting. Leeg laten mag. Het blijft op je telefoon.",
-  naamPlaceholder: "Je voornaam",
-  voorkeurenTitel: "Waar wil je aan werken?",
-  voorkeurenUitleg:
-    "Dit bepaalt welke tips je als eerste ziet. Het blijft op je telefoon en gaat nooit naar de server.",
-  taalTitel: "Taal",
-  taalUitleg: "Kies de taal van de app. Systeem volgt de taal van je telefoon.",
+  groepNaam: "Begroeting",
+  naam: "Naam",
+  naamPlaceholder: "Optioneel",
+  naamUitleg: "Blijft op je telefoon.",
+  groepVoorkeuren: "Voorkeuren",
+  onderwerpen: "Onderwerpen",
+  onderwerpenUitleg: "Deze tips zie je als eerste.",
+  groepTaal: "Taal",
   taalSysteem: "Systeem",
   taalNederlands: "Nederlands",
   taalEngels: "English",
-  taalContentBlijftNederlands:
-    "De teksten van MIND, de check-in en de toestemmingen blijven voorlopig Nederlands.",
-  toestemmingenTitel: "Toestemmingen",
+  taalContentBlijftNederlands: "Teksten van MIND blijven Nederlands.",
+  groepToestemmingen: "Toestemmingen",
+  voorwaarden: "Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is",
+  groepAccount: "Account",
   uitloggen: "Uitloggen",
-  terug: "Terug",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "Settings",
     laden: "Loading...",
-    naamTitel: "What should we call you?",
-    naamUitleg: "Only for the greeting. Feel free to leave it empty. It stays on your phone.",
-    naamPlaceholder: "Your first name",
-    voorkeurenTitel: "What would you like to work on?",
-    voorkeurenUitleg:
-      "This decides which tips you see first. It stays on your phone and never goes to the server.",
-    taalTitel: "Language",
-    taalUitleg: "Choose the language of the app. System follows your phone's language.",
+    groepNaam: "Greeting",
+    naam: "Name",
+    naamPlaceholder: "Optional",
+    naamUitleg: "Stays on your phone.",
+    groepVoorkeuren: "Preferences",
+    onderwerpen: "Topics",
+    onderwerpenUitleg: "You see these tips first.",
+    groepTaal: "Language",
     taalSysteem: "System",
     taalNederlands: "Nederlands",
     taalEngels: "English",
-    taalContentBlijftNederlands:
-      "The texts from MIND, the check-in and the consents remain in Dutch for now.",
-    toestemmingenTitel: "Consents",
+    taalContentBlijftNederlands: "Texts from MIND remain in Dutch.",
+    groepToestemmingen: "Consents",
+    voorwaarden: "I accept the terms and understand that this app is not a care service",
+    groepAccount: "Account",
     uitloggen: "Log out",
-    terug: "Back",
   },
 };
 const TAAL_LABEL: Record<TaalKeuze, "taalSysteem" | "taalNederlands" | "taalEngels"> = {
@@ -134,83 +136,81 @@ export default function Instellingen() {
         </Card>
       ) : (
         <>
-          <Card tone="white">
-            <AppText rol="h3">{t("naamTitel")}</AppText>
-            <AppText rol="bodySmall" kleur="secondary">
-              {t("naamUitleg")}
-            </AppText>
-            <Card tone="outline" style={{ paddingVertical: space[2] }}>
-              <TextInput
-                value={naamInvoer}
-                onChangeText={zetNaamInvoer}
-                onEndEditing={() => wijzig({ naam: schoonNaam(naamInvoer) })}
-                placeholder={t("naamPlaceholder")}
-                placeholderTextColor={colors.textSecondary}
-                maxLength={NAAM_MAX}
-                autoCapitalize="words"
-                autoCorrect={false}
-                returnKeyType="done"
-                style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-                accessibilityLabel={t("naamPlaceholder")}
-              />
-            </Card>
-          </Card>
+          <InstellingenGroep titel={t("groepNaam")}>
+            <InstellingenRij
+              label={t("naam")}
+              omschrijving={t("naamUitleg")}
+              laatste
+              rechts={
+                <TextInput
+                  value={naamInvoer}
+                  onChangeText={zetNaamInvoer}
+                  onEndEditing={() => wijzig({ naam: schoonNaam(naamInvoer) })}
+                  placeholder={t("naamPlaceholder")}
+                  placeholderTextColor={colors.textSecondary}
+                  maxLength={NAAM_MAX}
+                  autoCapitalize="words"
+                  autoCorrect={false}
+                  returnKeyType="done"
+                  textAlign="right"
+                  style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false, flex: 1, minWidth: space[8] * 2 }}
+                  accessibilityLabel={t("naam")}
+                />
+              }
+            />
+          </InstellingenGroep>
 
-          <Card tone="white">
-            <AppText rol="h3">{t("voorkeurenTitel")}</AppText>
-            <AppText rol="bodySmall" kleur="secondary">
-              {t("voorkeurenUitleg")}
-            </AppText>
-            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
+          <InstellingenGroep titel={t("groepVoorkeuren")}>
+            <InstellingenRij label={t("onderwerpen")} omschrijving={t("onderwerpenUitleg")} laatste />
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2], paddingBottom: space[3] }}>
               {VOORKEUR_OPTIES.map((o) => (
                 <Chip key={o} label={o} active={inst.voorkeuren.includes(o)} onPress={() => wisselVoorkeur(o)} />
               ))}
             </View>
-          </Card>
+          </InstellingenGroep>
 
-          <Card tone="white">
-            <AppText rol="h3">{t("taalTitel")}</AppText>
-            <AppText rol="bodySmall" kleur="secondary">
-              {t("taalUitleg")}
-            </AppText>
-            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
-              {TAAL_KEUZES.map((optie) => (
-                <Chip
-                  key={optie}
-                  label={t(TAAL_LABEL[optie])}
-                  active={keuze === optie}
-                  onPress={() => kiesTaal(optie)}
-                />
-              ))}
-            </View>
-            <AppText rol="bodySmall" kleur="secondary">
-              {t("taalContentBlijftNederlands")}
-            </AppText>
-          </Card>
-
-          <Card tone="white">
-            <AppText rol="h3">{t("toestemmingenTitel")}</AppText>
-            <AppText rol="bodySmall" kleur="secondary">
-              Niemand kan zien wat jij hebt ingevuld. Je kunt dit altijd wijzigen.
-            </AppText>
-            <ToestemmingKeuze waarde={inst.consentWeerbericht} onKies={(v) => wijzig({ consentWeerbericht: v })} />
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
-              <AppText rol="bodySmall" style={{ flexShrink: 1 }}>
-                Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is
-              </AppText>
-              <Switch
-                value={inst.consentVoorwaarden}
-                onValueChange={(v) => wijzig({ consentVoorwaarden: v })}
-                trackColor={{ true: colors.brandDefault, false: palette.neutral200 }}
+          <InstellingenGroep titel={t("groepTaal")}>
+            {TAAL_KEUZES.map((optie, i) => (
+              <InstellingenRij
+                key={optie}
+                label={t(TAAL_LABEL[optie])}
+                omschrijving={optie === "en" ? t("taalContentBlijftNederlands") : undefined}
+                onPress={() => kiesTaal(optie)}
+                laatste={i === TAAL_KEUZES.length - 1}
+                rechts={
+                  <AppText rol="body" kleur={keuze === optie ? "primary" : "secondary"} accessibilityLabel={keuze === optie ? "gekozen" : undefined}>
+                    {keuze === optie ? "✓" : " "}
+                  </AppText>
+                }
               />
-            </View>
-          </Card>
+            ))}
+          </InstellingenGroep>
 
-          {ingelogd ? <Button label={t("uitloggen")} variant="secondary" onPress={uitloggen} /> : null}
+          {/* Bewust Nederlands en zonder vertaalsleutel, zie de kop van dit bestand. */}
+          <InstellingenGroep titel={t("groepToestemmingen")}>
+            <View style={{ paddingVertical: space[3], borderBottomWidth: 1, borderBottomColor: colors.borderDefault }}>
+              <ToestemmingKeuze waarde={inst.consentWeerbericht} onKies={(v) => wijzig({ consentWeerbericht: v })} />
+            </View>
+            <InstellingenRij
+              label={t("voorwaarden")}
+              laatste
+              rechts={
+                <Switch
+                  value={inst.consentVoorwaarden}
+                  onValueChange={(v) => wijzig({ consentVoorwaarden: v })}
+                  trackColor={{ true: colors.brandDefault, false: palette.neutral200 }}
+                />
+              }
+            />
+          </InstellingenGroep>
+
+          {ingelogd ? (
+            <InstellingenGroep titel={t("groepAccount")}>
+              <InstellingenRij label={t("uitloggen")} onPress={uitloggen} laatste />
+            </InstellingenGroep>
+          ) : null}
         </>
       )}
-
-      <Button label={t("terug")} variant="link" onPress={() => router.back()} />
     </ScreenCanvas>
   );
 }
