@@ -14,6 +14,7 @@ import { Button } from "@mind/ui/components/Button";
 import { Chip } from "@mind/ui/components/Chip";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { bewaarInstellingen, VOORKEUR_OPTIES } from "@/features/profiel/instellingen";
 
 export default function Voorkeuren() {
@@ -30,7 +31,7 @@ export default function Voorkeuren() {
   };
 
   return (
-    <ScreenCanvas state="default">
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">Waar wil je aan werken?</AppText>
         <AppText rol="subtitle" kleur="secondary">Kies wat past. Dit blijft op je telefoon.</AppText>

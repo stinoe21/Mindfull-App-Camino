@@ -16,6 +16,7 @@ import { Button } from "@mind/ui/components/Button";
 import { MascotteInput } from "@mind/ui/components/MascotteInput";
 import { Slider } from "@mind/ui/components/Slider";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 import { leesWaarden, resetWaarden, zetWaarde } from "@/features/weer/checkinSessie";
 import { bewaarWeerVanVandaag } from "@/features/weer/lokaalWeer";
@@ -63,6 +64,7 @@ export default function CheckInStap() {
   };
 
   return (
+    <View style={{ flex: 1 }}>
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surfaceBackground }}
       contentContainerStyle={{
@@ -86,5 +88,10 @@ export default function CheckInStap() {
       <Button label={laatste ? "Bekijk je weer" : "Verder"} fullWidth bezig={bezig} onPress={verder} />
       <Button label="Sla vandaag over" variant="link" fullWidth onPress={slaOver} />
     </ScrollView>
+    {/* Zelfde plek als op ScreenCanvas-schermen: net onder de statusbalk. */}
+    <View style={{ position: "absolute", top: insets.top + space[1], left: space[3] }}>
+      <TerugNaarVorige />
+    </View>
+    </View>
   );
 }

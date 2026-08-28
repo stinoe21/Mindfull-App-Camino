@@ -18,6 +18,7 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { getSupabase } from "@/features/backend/client";
 import { wisAlleLokaleData } from "@/features/profiel/instellingen";
 
@@ -55,7 +56,7 @@ export default function AccountVerwijderen() {
   };
 
   return (
-    <ScreenCanvas state="default">
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <AppText rol="h1">Account verwijderen</AppText>
 
       <Card tone="white">

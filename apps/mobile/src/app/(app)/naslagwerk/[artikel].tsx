@@ -15,6 +15,7 @@ import { Card } from "@mind/ui/components/Card";
 import { Chip } from "@mind/ui/components/Chip";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { ARTIKELEN } from "@/features/content/data/artikelen";
 
 export default function Artikel() {
@@ -24,7 +25,7 @@ export default function Artikel() {
 
   if (!artikel) {
     return (
-      <ScreenCanvas state="default">
+      <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
         <AppText rol="h1">Artikel niet gevonden</AppText>
         <AppText rol="body" kleur="secondary">Dit artikel bestaat niet of is verplaatst.</AppText>
         <Button label="Terug naar het naslagwerk" variant="secondary" onPress={() => router.back()} />
@@ -33,7 +34,7 @@ export default function Artikel() {
   }
 
   return (
-    <ScreenCanvas state="default">
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[2] }}>
         <Chip label={artikel.onderwerp} />
         <AppText rol="h1">{artikel.titel}</AppText>

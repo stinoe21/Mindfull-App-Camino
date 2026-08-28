@@ -18,6 +18,7 @@ import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { ARTIKELEN, ONDERWERPEN } from "@/features/content/data/artikelen";
 
 export default function Naslagwerk() {
@@ -45,7 +46,7 @@ export default function Naslagwerk() {
   });
 
   return (
-    <ScreenCanvas state="default" metNavRuimte>
+    <ScreenCanvas state="default" metNavRuimte terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">Naslagwerk</AppText>
         <AppText rol="subtitle" kleur="secondary">Betrouwbare kennis, altijd met bron.</AppText>

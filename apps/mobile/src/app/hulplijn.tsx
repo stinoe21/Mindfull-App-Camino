@@ -17,12 +17,14 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
+
 const HULP_URL = "https://wijzijnmind.nl/help-mij";
 
 export default function Hulplijn() {
   const router = useRouter();
   return (
-    <ScreenCanvas state="zonnig">
+    <ScreenCanvas state="zonnig" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">MIND Hulplijn</AppText>
         <AppText rol="subtitle" kleur="secondary">Praten helpt, en je hoeft niets alleen te doen.</AppText>

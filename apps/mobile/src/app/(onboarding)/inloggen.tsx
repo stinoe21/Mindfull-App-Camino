@@ -17,6 +17,7 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { getSupabase } from "@/features/backend/client";
 
 // De sleutels van Mind, zodra die er zijn. Zie docs/scope.md: aanzetten is dan
@@ -74,7 +75,7 @@ export default function Inloggen() {
   };
 
   return (
-    <ScreenCanvas state="default">
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">Inloggen</AppText>
         <AppText rol="subtitle" kleur="secondary">Zodat jouw check-in een keer per dag meetelt.</AppText>

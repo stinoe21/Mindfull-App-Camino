@@ -25,6 +25,7 @@ import { NavigationBar } from "@mind/ui/components/NavigationBar";
 import { NavIcoonHome } from "@mind/ui/components/NavIcoonHome";
 import { NavIcoonChallenges, NavIcoonCheckIn, NavIcoonProfiel, NavIcoonTips } from "@mind/ui/components/navIconen";
 import { Slider } from "@mind/ui/components/Slider";
+import { TerugKnop } from "@mind/ui/components/TerugKnop";
 import type { WeerStaat } from "@mind/ui/components/achtergronden";
 
 const ROUTES = [
@@ -96,6 +97,15 @@ export default function KitchenSink() {
             <AppText rol="bodySmall" kleur="secondary">Zelfde vorm, andere kleur. Toon volgt betekenis.</AppText>
           </Card>
         ))}
+      </View>
+
+      <Kop>TerugKnop</Kop>
+      <Text style={styles.note}>
+        {"Zweeft linksboven op subpagina's, via de prop terugKnop van ScreenCanvas. In de app rendert " +
+          "TerugNaarVorige hem alleen als er een vorig scherm op de stack staat."}
+      </Text>
+      <View style={styles.rij}>
+        <TerugKnop onPress={() => undefined} />
       </View>
 
       <Kop>Chip</Kop>

@@ -13,6 +13,7 @@ import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { CHALLENGES } from "@/features/content/data/challenges";
 
 export default function Challenges() {
@@ -24,7 +25,7 @@ export default function Challenges() {
     router.push({ pathname: "/challenges/[challenge]", params: { challenge: slug } });
 
   return (
-    <ScreenCanvas state="default" metNavRuimte>
+    <ScreenCanvas state="default" metNavRuimte terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">Challenges</AppText>
         <AppText rol="subtitle" kleur="secondary">Kleine stappen van MIND, groot verschil.</AppText>

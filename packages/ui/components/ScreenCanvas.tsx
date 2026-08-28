@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors, space } from "../tokens/tokens.ts";
 
 import { BackgroundHeroGradient } from "./BackgroundHeroGradient.tsx";
+import { TERUGKNOP_MAAT } from "./TerugKnop.tsx";
 import type { WeerStaat } from "./achtergronden.ts";
 
 const VEL_RADIUS = 20;
@@ -26,12 +27,24 @@ export type ScreenCanvasProps = {
   sheetTop?: number;
   /** Ruimte onderin voor de zwevende navigatiebalk. */
   metNavRuimte?: boolean;
+  /**
+   * De terug-knop linksboven, zwevend op de gradient boven het vel.
+   * Geef hier een element (in de app: TerugNaarVorige); de positionering
+   * gebeurt hier zodat hij op elk scherm exact gelijk staat. Bij de
+   * vel-variant schuift het vel mee omlaag zodat de knop erboven past.
+   */
+  terugKnop?: React.ReactNode;
   children?: React.ReactNode;
 };
 
-export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, metNavRuimte = false, children }: ScreenCanvasProps) {
+export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, metNavRuimte = false, terugKnop, children }: ScreenCanvasProps) {
   const insets = useSafeAreaInsets();
   const navRuimte = metNavRuimte ? 82 + Math.max(insets.bottom, 14) + space[6] : space[2];
+  // De knop staat net onder de statusbalk; het vel begint er vlak onder.
+  const terugKnopTop = insets.top + space[1];
+  const terugKnopOverlay = terugKnop ? (
+    <View style={{ position: "absolute", top: terugKnopTop, left: space[3] }}>{terugKnop}</View>
+  ) : null;
 
   if (variant === "overlay") {
     const top = sheetTop ?? 200;
@@ -53,11 +66,14 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, met
         >
           {children}
         </ScrollView>
+        {terugKnopOverlay}
       </View>
     );
   }
 
-  const top = Math.max(sheetTop ?? 56, insets.top + space[2]);
+  const top = terugKnop
+    ? Math.max(sheetTop ?? 56, terugKnopTop + TERUGKNOP_MAAT + space[1])
+    : Math.max(sheetTop ?? 56, insets.top + space[2]);
   return (
     <View style={{ flex: 1, backgroundColor: colors.surfaceBackground }}>
       <BackgroundHeroGradient state={state} height={top + 240} style={{ position: "absolute", left: 0, right: 0, top: 0 }} />
@@ -87,6 +103,7 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, met
           {children}
         </ScrollView>
       </View>
+      {terugKnopOverlay}
     </View>
   );
 }
