@@ -17,7 +17,8 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { haalWeerbericht, type WeerberichtStand } from "@/features/weer/weerbericht";
-import { WeerberichtIntro } from "@/features/weer/WeerberichtIntro";
+import { WatIsHetWeerbericht } from "@/features/weer/WatIsHetWeerbericht";
+import { UITLEG_ANONIMITEIT, WeerberichtIntro } from "@/features/weer/WeerberichtIntro";
 
 export default function Weerbericht() {
   const router = useRouter();
@@ -61,6 +62,15 @@ export default function Weerbericht() {
         </Card>
       ) : null}
 
+      {/* De lege staat liet driekwart scherm leeg; de uitleg hoort hier dan
+          wel, zodat je niet voor niets bent gekomen. */}
+      {stand?.staat === "leeg" ? (
+        <Card tone="outline">
+          <AppText rol="bodySmall" kleur="secondary">{UITLEG_ANONIMITEIT}</AppText>
+          <WatIsHetWeerbericht />
+        </Card>
+      ) : null}
+
       {stand?.staat === "niet-ingelogd" ? (
         <Card tone="primary">
           <AppText rol="h3">Log eerst in</AppText>
@@ -96,7 +106,6 @@ export default function Weerbericht() {
         </View>
       ) : null}
 
-      <Button label="Terug naar dashboard" variant="link" onPress={() => router.back()} />
     </ScreenCanvas>
   );
 }
