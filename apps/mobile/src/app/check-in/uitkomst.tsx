@@ -3,8 +3,12 @@
 // Het persoonlijke weerbeeld: vlieger, weerstaat en een zachte tip. Nooit een
 // score, nooit goed of fout (productprincipes 1 tot en met 4). De teksten voor
 // "mist" zijn canoniek uit het prototype; zie features/weer/teksten.ts.
+//
+// Sinds de feedback van Mind van 27 augustus 2026 kom je hier direct na de
+// check-in (zonder tussenscherm) en staat de bevestiging of melding over het
+// meetellen hier, via de melding-parameter.
 
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Share, View } from "react-native";
 
@@ -20,8 +24,20 @@ import { UITKOMSTEN } from "@/features/weer/teksten";
 
 import type { WeatherCode } from "@mind/types";
 
+// Wat het insturen opleverde, in gewone taal. "niet-gedeeld" (consent uit)
+// krijgt bewust geen regel: wie niet meedoet, hoeft dat niet terug te lezen.
+const MELDINGEN: Record<string, string> = {
+  gelukt: "Dankjewel voor je check-in. Jouw weer telt anoniem mee in het mentale weerbericht van Nederland.",
+  "al-ingecheckt": "Dankjewel voor je check-in. Jouw weer telt anoniem mee in het mentale weerbericht van Nederland.",
+  "niet-verbonden":
+    "Er was geen verbinding, dus deze check-in kon niet meetellen in het landelijke weerbericht. Je eigen weer staat hier gewoon.",
+  "niet-ingelogd":
+    "Je was niet ingelogd, dus deze check-in telt niet mee in het landelijke weerbericht. Je eigen weer staat hier gewoon.",
+};
+
 export default function CheckInUitkomst() {
   const router = useRouter();
+  const { melding } = useLocalSearchParams<{ melding?: string }>();
   const [geladen, zetGeladen] = useState(false);
   const [weerbeeld, zetWeerbeeld] = useState<WeatherCode | null>(null);
 
@@ -70,6 +86,15 @@ export default function CheckInUitkomst() {
           <AppText rol="h3">{tekst.tip}</AppText>
         </Card>
       ) : null}
+      {melding && MELDINGEN[melding] ? (
+        <AppText rol="bodySmall" kleur="secondary" centreer>{MELDINGEN[melding]}</AppText>
+      ) : null}
+      <Button
+        label="Bekijk het weerbericht van Nederland"
+        variant="secondary"
+        fullWidth
+        onPress={() => router.push("/weerbericht")}
+      />
       <Button label="Terug naar dashboard" fullWidth onPress={() => router.replace("/dashboard")} />
       <Button label="Deel je weer" variant="link" onPress={deel} />
     </ScreenCanvas>

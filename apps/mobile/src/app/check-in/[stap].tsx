@@ -55,7 +55,10 @@ export default function CheckInStap() {
     await bewaarWeerVanVandaag(weerbeeld, geteld);
     resetWaarden();
     zetBezig(false);
-    router.replace({ pathname: "/check-in/bevestigd", params: { melding: resultaat } });
+    // Direct door naar de uitkomst, zonder tussenscherm: feedback van Mind
+    // van 27 augustus 2026. De bevestiging en een eventuele melding staan op
+    // het uitkomstscherm zelf.
+    router.replace({ pathname: "/check-in/uitkomst", params: { melding: resultaat } });
   };
 
   const slaOver = () => {
