@@ -7,6 +7,7 @@
 // E-mail loopt via e-mailadres en wachtwoord. Bestaat het account nog niet,
 // dan kan de gebruiker het met dezelfde gegevens aanmaken. Let op de
 // SMTP-limiet tijdens testen: docs/limieten-en-misbruik.md sectie 1.
+// Zonder account kom je de app niet in: er is geen doorgang langs dit scherm.
 
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -46,7 +47,7 @@ export default function Inloggen() {
     zetMelding(null);
     zetAanmakenMogelijk(false);
     if (!client) {
-      zetMelding("Er is geen verbinding met de server. Je kunt als testversie zonder account verdergaan.");
+      zetMelding("Er is geen verbinding met de server. Probeer het later opnieuw.");
       return false;
     }
     if (!email.includes("@")) {
@@ -153,9 +154,6 @@ export default function Inloggen() {
         <Button label="Account aanmaken" variant="secondary" fullWidth bezig={bezig} onPress={maakAccount} />
       ) : null}
 
-      {/* Testversie: zonder werkende sleutels of SMTP mag de onboarding niet
-          doodlopen (docs/scope.md). Deze doorgang verdwijnt bij livegang. */}
-      <Button label="Verder zonder account (testversie)" variant="link" fullWidth onPress={() => router.push("/naam")} />
     </ScreenCanvas>
   );
 }
