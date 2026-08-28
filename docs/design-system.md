@@ -44,6 +44,8 @@ Drie plekken, elk met één rol. Door elkaar halen is waar het misgaat.
 | **Claude Design** | De gedeelde visuele bibliotheek die we alle drie zien. Hier is het design system samengesteld. |
 | **De repo** | Bron voor de code. Tokens, assets en specificatie staan hier, en dit is wat de build gebruikt. |
 
+**Het ontwerp is een startpunt, geen bevroren contract.** Besloten door Stijn op 26 augustus 2026, naar aanleiding van de terug-knop (PR #46): de 41 schermspecificaties en de referentiecomponenten beschrijven wat er ontworpen is, niet alles wat er mag bestaan. Een component of affordance die er niet in staat is dus geen overtreding, en een maat uit de referentie mag worden aangepast als het product erom vraagt. Wat blijft: de wijziging gebeurt binnen de tokens, in een eigen kleine PR, en wordt hier of in de componentcode gemotiveerd zodat de volgende weet dat het een besluit was en geen slordigheid. De gesloten assetbibliotheek en de tokenregel uit sectie 2 staan hier los van: die gaan over consistentie, niet over volledigheid.
+
 **De repo wint bij twijfel.** Dat is de omkering ten opzichte van hoe dit document er vóór 20 augustus stond, en het is bewust. Toen was er niets in de repo, dus won Figma. Nu is `packages/ui` het overgenomen resultaat van het ontwerpwerk, en is Figma de plek waar het volgende ontwerp gemaakt wordt. Wijkt een frame af van een token, dan is dat een gesprek en geen vrijbrief om het token te negeren.
 
 De **build hangt nooit af van een live Figma-query of een live Claude Design-query.** Tokens en assets staan in git. Op de Camino heb je geen wifi te vertrouwen, en een agent die op een netwerkaanroep wacht om een kleur te weten, staat stil.

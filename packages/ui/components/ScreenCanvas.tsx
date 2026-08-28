@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors, space } from "../tokens/tokens.ts";
 
 import { BackgroundHeroGradient } from "./BackgroundHeroGradient.tsx";
+import { NAV_PIL_HOOGTE } from "./NavigationBar.tsx";
 import { TERUGKNOP_MAAT } from "./TerugKnop.tsx";
 import type { WeerStaat } from "./achtergronden.ts";
 
@@ -39,7 +40,7 @@ export type ScreenCanvasProps = {
 
 export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, metNavRuimte = false, terugKnop, children }: ScreenCanvasProps) {
   const insets = useSafeAreaInsets();
-  const navRuimte = metNavRuimte ? 82 + Math.max(insets.bottom, 14) + space[6] : space[2];
+  const navRuimte = metNavRuimte ? NAV_PIL_HOOGTE + Math.max(insets.bottom - space[3], space[2]) + space[6] : space[2];
   // De knop staat net onder de statusbalk; het vel begint er vlak onder.
   const terugKnopTop = insets.top + space[1];
   const terugKnopOverlay = terugKnop ? (
