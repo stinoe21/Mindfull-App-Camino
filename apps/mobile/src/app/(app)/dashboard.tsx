@@ -67,9 +67,11 @@ export default function Dashboard() {
     }, [])
   );
 
-  const tips = ARTIKELEN.filter(
-    (a) => !voorkeuren.length || voorkeuren.includes("Praktische tips") || a.onderwerp !== "",
-  ).slice(0, 5);
+  // Artikelen uit de gekozen onderwerpen eerst, de rest erachter. Zonder
+  // gekozen voorkeuren is de volgorde gewoon die van de bibliotheek.
+  const tips = [...ARTIKELEN]
+    .sort((a, b) => Number(voorkeuren.includes(b.onderwerp)) - Number(voorkeuren.includes(a.onderwerp)))
+    .slice(0, 5);
   const topBericht = bericht?.staat === "geladen" ? [...bericht.rijen].sort((a, b) => b.share - a.share)[0] : null;
 
   return (

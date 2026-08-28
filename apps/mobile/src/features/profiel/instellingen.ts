@@ -7,6 +7,8 @@
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { ONDERWERPEN } from "../content/data/artikelen.ts";
+
 const SLEUTEL = "mind.instellingen";
 
 export type Instellingen = {
@@ -27,9 +29,11 @@ export const STANDAARD: Instellingen = {
   consentVoorwaarden: false,
 };
 
-// De neutrale categorieen uit het funnel-voorstel in docs/datamodel.md:
-// "waar wil je aan werken", geen diagnose-labels.
-export const VOORKEUR_OPTIES = ["Ontspanning", "Beweging", "Verhalen van anderen", "Praktische tips"];
+// Dezelfde onderwerpen als het Naslagwerk, zodat een keuze hier direct
+// bepaalt welke tips je als eerste ziet. Besloten na de feedback van Mind
+// van 27 augustus 2026: een eigen vocabulaire ("Verhalen van anderen") schiep
+// verkeerde verwachtingen en werkte nergens op door.
+export const VOORKEUR_OPTIES: string[] = ONDERWERPEN;
 
 export async function leesInstellingen(): Promise<Instellingen> {
   try {
