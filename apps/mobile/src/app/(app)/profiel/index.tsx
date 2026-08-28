@@ -18,6 +18,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { getSupabase } from "@/features/backend/client";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { leesInstellingen } from "@/features/profiel/instellingen";
+import { InstellingenGroep, InstellingenRij } from "@/features/profiel/InstellingenRij";
 
 export default function Profiel() {
   const router = useRouter();
@@ -49,7 +50,12 @@ export default function Profiel() {
 
   return (
     <ScreenCanvas state="default" metNavRuimte>
-      <AppText rol="h1">Profiel</AppText>
+      {/* De ingang naar Instellingen rechtsboven. Nu als tekst; het tandwiel-
+          icoon komt van de eigenaar en vervangt dan alleen deze knop. */}
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
+        <AppText rol="h1">Profiel</AppText>
+        <Button label="Instellingen" variant="link" onPress={() => router.push("/profiel/instellingen")} />
+      </View>
 
       <Card tone="primary" style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
         <MascotteVlieger state="wolken" hoogte={44} />
@@ -77,16 +83,46 @@ export default function Profiel() {
         <Button label="Inloggen" variant="secondary" onPress={() => router.push("/inloggen")} />
       ) : null}
 
-      <View style={{ gap: space[3] }}>
-        <Card tone="outline" onPress={() => router.push("/profiel/instellingen")} style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-          <AppText rol="body">Voorkeuren en toestemmingen</AppText>
-          <AppText rol="body" kleur="secondary">{"›"}</AppText>
-        </Card>
-        <Card tone="outline" onPress={() => router.push("/profiel/account-verwijderen")} style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-          <AppText rol="body">Account verwijderen</AppText>
-          <AppText rol="body" kleur="secondary">{"›"}</AppText>
-        </Card>
-      </View>
+      <InstellingenGroep titel="Jouw gegevens">
+        <InstellingenRij
+          label="Naam"
+          omschrijving={naam ? naam + " · alleen voor de begroeting, blijft op je telefoon" : "Nog niet ingevuld, mag leeg blijven"}
+          onPress={() => router.push("/profiel/instellingen")}
+        />
+        <InstellingenRij label="E-mailadres" omschrijving={email ?? "Niet ingelogd"} laatste />
+      </InstellingenGroep>
+
+      <InstellingenGroep titel="Voorkeuren">
+        <InstellingenRij
+          label="Onderwerpen"
+          omschrijving="Bepaalt welke tips je als eerste ziet"
+          onPress={() => router.push("/profiel/instellingen")}
+          laatste
+        />
+      </InstellingenGroep>
+
+      <InstellingenGroep titel="Privacy">
+        <InstellingenRij
+          label="Toestemmingen"
+          omschrijving="Meetellen in het weerbericht, en de voorwaarden"
+          onPress={() => router.push("/profiel/instellingen")}
+        />
+        <InstellingenRij
+          label="Wat er met je check-in gebeurt"
+          omschrijving="Hoe het anonieme weerbericht werkt"
+          onPress={() => router.push("/weerbericht")}
+        />
+        <InstellingenRij label="Privacyverklaring" omschrijving="Volgt zodra MIND de tekst online heeft" uit laatste />
+      </InstellingenGroep>
+
+      <InstellingenGroep titel="Account">
+        <InstellingenRij
+          label="Account verwijderen"
+          omschrijving="Haalt alles weg, op de server en op je telefoon"
+          onPress={() => router.push("/profiel/account-verwijderen")}
+          laatste
+        />
+      </InstellingenGroep>
 
       <HulplijnKaart />
     </ScreenCanvas>
