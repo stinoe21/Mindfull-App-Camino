@@ -1,6 +1,9 @@
 // GEGENEREERD BESTAND. Niet met de hand wijzigen.
 // Bron: content/mind/psychische-klachten/challenges/PROGRAMMAS.md en de
 // dagpagina's. Opnieuw genereren: node <scratchpad>/gen-content.mjs
+// De intro is de eerste echte alinea NA het navigatieblok "Ga snel naar:",
+// zonder kopjes, lijsten, afbeeldingen en bijschriften (fix van 28 augustus
+// 2026; daarvoor stond bij zestien onderdelen het navigatiefragment zelf).
 //
 // LET OP (open vraag aan MIND, zie content/mind/LEESMIJ.md): de dagpagina's
 // zijn bedoeld als mailreeks na aanmelding. Hier staat per dag alleen de titel
@@ -81,31 +84,31 @@ export const CHALLENGES: Challenge[] = [
     "dagen": [
       {
         "titel": "Herken jouw stress",
-        "intro": "Ga snel naar:"
+        "intro": "Iedereen ervaart wel eens stress. Om ervoor te zorgen dat stressvolle momenten in jouw leven niet leiden tot ongezonde stress, beginnen we vandaag bij de basis: het herkennen van stress. Waaraan merk jij dat je stress hebt?"
       },
       {
         "titel": "Ontspan",
-        "intro": "Ga snel naar:"
+        "intro": "Om ongezonde stress te voorkomen, moet je de dingen die je moeite kosten genoeg afwisselen met ontspannende dingen. Doe je dat niet, dan krijg je lichamelijk en mentaal niet de tijd om bij te komen. Dan stapelen spanning en vermoeidheid zich op en kan het je te veel worden. Toch lukt het veel mensen niet om echt de tijd te nemen om te ontspannen. Daarom geven we vandaag een les in ontspannen."
       },
       {
         "titel": "Slim omgaan met je tijd",
-        "intro": "Ga snel naar:"
+        "intro": "Heb jij altijd het gevoel tijd tekort te komen? Je kan leren om je tijd beter in te delen. Dat helpt je om rust te houden en geeft je handvatten om je minder door anderen te laten leiden. Vandaag krijg je een opdracht en drie tips om beter met je tijd om te kunnen gaan."
       },
       {
         "titel": "Stel grenzen en zeg nee",
-        "intro": "Ga snel naar:"
+        "intro": "Vind jij het lastig om je grenzen aan te geven en ‘nee’ te zeggen? Dan kan dat veel stress geven. Een keertje is natuurlijk niet zo erg, maar als dit vaak gebeurt dan is het belangrijk dat je voor jezelf opkomt en dat je kan zeggen wat je wil of juist niet wil. Dit noemen we ook wel assertiviteit. Hierdoor weten anderen waar ze aan toe zijn."
       },
       {
         "titel": "Werk aan je leefgewoonten",
-        "intro": "Ga snel naar:"
+        "intro": "Gezonde gewoonten maken je sterker en minder gevoelig voor stress. Daarom is het goed om af en toe stil te staan bij je leefstijl en wat je kan verbeteren. Vandaag ga je aan de slag met een gewoonte die je wilt veranderen."
       },
       {
         "titel": "Verander je gedachten",
-        "intro": "Ga snel naar:"
+        "intro": "Pieker jij veel en heb je vaak negatieve gedachten? De kans is groot dat jij veel stress ervaart. Vandaag krijg je opdrachten om piekeren aan te pakken en negatieve gedachten te vervangen door helpende gedachten."
       },
       {
         "titel": "Leef in het moment en accepteer teleurstellingen",
-        "intro": "Ga snel naar:"
+        "intro": "Mindfulness gaat over leven met aandacht. Door je aandacht volledig te richten op het hier en nu, leef je minder op de automatische piloot en geef je jezelf rust. Je bent bewust bezig met wat je ziet, hoort en voelt, zonder er direct iets mee te hoeven doen. Je hersenen zijn dan niet meer bezig met wat je allemaal nog wil of moet doen."
       }
     ]
   },
@@ -145,19 +148,19 @@ export const CHALLENGES: Challenge[] = [
     "dagen": [
       {
         "titel": "Wat zijn hormonen en wat doen ze?",
-        "intro": "Ga snel naar:"
+        "intro": "Op de eerste dag van deze themaspecial geven we je meer uitleg over wat hormonen zijn, wat hun rol is en hoe ze invloed kunnen hebben op onze gevoelens en gedrag."
       },
       {
         "titel": "Jouw hormonen van baby tot adolescent (0-18 jaar)",
-        "intro": "Ga snel naar:"
+        "intro": "In iedere fase van ons leven spelen hormonen een belangrijke rol. Al voordat je geboren bent, zijn er hormonen in je lichaam aan het werk. Zo maken jongens al het geslachtshormoon testosteron aan. Ook kunnen de hormonen die je moeder aanmaakt deels via de placenta naar jou als baby gaan. Het stresshormoon cortisol is hier een voorbeeld van. Als een moeder veel stress ervaart tijdens de zwangerschap, komt er ook meer stresshormoon van de moeder bij de baby. Dit kan invloed hebben op het stresssysteem van de nog ongeboren baby. Hierdoor kan iemand kwetsbaarder worden voor psychische klachten als depressie en angst of aandoeningen zoals hypertensie of obesitas."
       },
       {
         "titel": "Jouw hormonen van adolescent tot en met volwassene",
-        "intro": "Ga snel naar:"
+        "intro": "Ook als je niet meer in puberteit zit, spelen hormonen een belangrijke rol in je leven. Zoals we al op dag 1 zeiden, regelen hormonen van alles in je lichaam, van je vochthuishouding tot aan je stofwisseling en emoties en gedrag. Vandaag nemen we je mee naar de vruchtbare leeftijd. We vertellen over het effect van hormonen binnen je menstruatiecyclus en rondom zwangerschap. Hoe zijn ze van invloed op je gevoelens en gedrag en wat als ze je leven in de war schoppen? En hoe zit het eigenlijk met mannen en hormonen?"
       },
       {
         "titel": "Jouw hormonen van volwassene tot en met oudere",
-        "intro": "Ga snel naar:"
+        "intro": "Vanaf ongeveer 45 jaar vindt er bij vrouwen een afname plaats van geslachtshormonen. Je maakt steeds minder oestrogeen en testosteron aan en komt in de zogeheten ‘overgang’. Naast lichamelijke klachten, zoals opvliegers en pijn in je gewrichten, kan dit van invloed zijn op je stemming of de zin om te vrijen."
       }
     ]
   },
@@ -197,23 +200,23 @@ export const CHALLENGES: Challenge[] = [
     "dagen": [
       {
         "titel": "Wat is herstel?",
-        "intro": "Ga snel naar:"
+        "intro": "Veel mensen die te maken hebben met psychische problemen krijgen wel eens de vraag hoe het met hen gaat. Grote kans dat jij deze vraag ook wel eens krijgt. Het kan zijn dat hierbij het woord ‘herstel’ genoemd wordt. Bijvoorbeeld omdat je behandelaar aangeeft dat je bezig bent met je herstel. Of dat je deze term online tegenkomt. Maar wat is herstel nu eigenlijk? We vertellen je graag meer over wat het inhoudt, maar ook over wat het juist niet is."
       },
       {
         "titel": "Waarden en grenzen",
-        "intro": "Ga snel naar:"
+        "intro": "Om goed te kunnen herstellen, is het fijn te weten wat jij belangrijk vindt in je leven. Om op basis hiervan te leven en keuzes te maken. Naast te weten wat je wel wil, is het ook goed te weten wat je niet wil of waar je grenzen liggen. En om deze grenzen vervolgens aan te geven."
       },
       {
         "titel": "Eigen regie pakken",
-        "intro": "Ga snel naar:"
+        "intro": "Een belangrijk onderdeel van herstel is het (terug)pakken van eigen regie over je leven met een psychische kwetsbaarheid. Jij bepaalt hoe jij jouw leven vormgeeft op een manier die bij jou past."
       },
       {
         "titel": "Hulpmiddelen voor meer grip",
-        "intro": "Ga snel naar:"
+        "intro": "De laatste tijd is er gelukkig steeds meer aandacht voor herstel. Hierdoor zijn er steeds meer hulpmiddelen en trainingen beschikbaar die je hierbij kunnen ondersteunen. Hieronder lichten we een aantal van deze hulpmiddelen voor je uit."
       },
       {
         "titel": "De kracht van de omgeving",
-        "intro": "Ga snel naar:"
+        "intro": "Voor bijna ieder mens is het belangrijk zich verbonden te voelen met de mensen om zich heen. Het is dan ook niet voor niets een belangrijk onderdeel als het om herstel gaat. Waar de een veel heeft aan het contact met de mensen in de directe omgeving, zoals vrienden, familieleden, collega’s en kennissen, vindt de ander deze verbondenheid met name bij mensen die soortgelijke ervaringen hebben meegemaakt. Bij hen voelen ze zich gezien en gesteund."
       }
     ]
   }
