@@ -5,8 +5,8 @@
 // onder de twee tekens (docs/limieten-en-misbruik.md sectie 4): hier is het
 // filter lokaal, maar dezelfde regels houden het gedrag gelijk aan de afspraak.
 
-import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import { TextInput, View } from "react-native";
 
 import { colors, space, type } from "@mind/ui";
@@ -20,12 +20,28 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { ARTIKELEN, ONDERWERPEN } from "@/features/content/data/artikelen";
+import { leesInstellingen } from "@/features/profiel/instellingen";
 
 export default function Naslagwerk() {
   const router = useRouter();
   const [invoer, zetInvoer] = useState("");
   const [zoekterm, zetZoekterm] = useState("");
   const [onderwerp, zetOnderwerp] = useState<string | null>(null);
+  const [voorkeuren, zetVoorkeuren] = useState<string[]>([]);
+
+  // De voorkeuren kunnen tussendoor wijzigen in Instellingen, dus bij elke
+  // focus opnieuw lezen. Ze bepalen alleen de volgorde, nooit wat er te zien is.
+  useFocusEffect(
+    useCallback(() => {
+      let actief = true;
+      leesInstellingen().then((i) => {
+        if (actief) zetVoorkeuren(i.voorkeuren);
+      });
+      return () => {
+        actief = false;
+      };
+    }, [])
+  );
 
   // Debounce van 300 ms; onder de twee tekens zoeken we niet.
   useEffect(() => {
@@ -35,6 +51,8 @@ export default function Naslagwerk() {
     return () => clearTimeout(timer);
   }, [invoer]);
 
+  const gekozen = (naam: string) => Number(voorkeuren.includes(naam));
+
   const resultaten = ARTIKELEN.filter((a) => {
     if (onderwerp && a.onderwerp !== onderwerp) return false;
     if (!zoekterm) return true;
@@ -43,7 +61,11 @@ export default function Naslagwerk() {
       a.onderwerp.toLowerCase().includes(zoekterm) ||
       a.blokken.some((b) => b.tekst.toLowerCase().includes(zoekterm))
     );
-  });
+  }).sort((a, b) => gekozen(b.onderwerp) - gekozen(a.onderwerp));
+
+  // Jouw onderwerpen als eerste chips, zodat "waar wil je aan werken" hier
+  // zichtbaar terugkomt.
+  const onderwerpen = [...ONDERWERPEN].sort((a, b) => gekozen(b) - gekozen(a));
 
   return (
     <ScreenCanvas state="default" metNavRuimte terugKnop={<TerugNaarVorige />}>
@@ -65,7 +87,7 @@ export default function Naslagwerk() {
 
       <ContentSection title="Onderwerpen">
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
-          {ONDERWERPEN.map((o) => (
+          {onderwerpen.map((o) => (
             <Chip key={o} label={o} active={onderwerp === o} onPress={() => zetOnderwerp(onderwerp === o ? null : o)} />
           ))}
         </View>
