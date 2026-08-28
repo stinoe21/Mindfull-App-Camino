@@ -23,7 +23,12 @@ export default function AppLayout() {
       }}
       tabBar={({ state, navigation }) => {
         const actief = state.routes[state.index]?.name;
-        const naar = (route: string) => () => navigation.navigate(route);
+        // Een tik op een tab brengt je altijd naar het beginscherm van die tab,
+        // ook als je er al op staat en dieper zit (artikel, challenge,
+        // instellingen). Zonder "screen: index" laat navigate de geneste stack
+        // staan en gebeurt er bij nogmaals tikken niets. Home heeft geen stack.
+        const naar = (route: string) => () =>
+          route === "dashboard" ? navigation.navigate(route) : navigation.navigate(route, { screen: "index" });
         return (
           <NavigationBar
             items={[
