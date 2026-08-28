@@ -9,9 +9,9 @@
 
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Switch, View } from "react-native";
+import { Switch, TextInput, View } from "react-native";
 
-import { colors, palette, space } from "@mind/ui";
+import { colors, palette, space, type } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
@@ -23,6 +23,8 @@ import { getSupabase } from "@/features/backend/client";
 import {
   bewaarInstellingen,
   leesInstellingen,
+  NAAM_MAX,
+  schoonNaam,
   STANDAARD,
   VOORKEUR_OPTIES,
   type Instellingen as InstellingenType,
@@ -33,10 +35,12 @@ export default function Instellingen() {
   const [inst, zetInst] = useState<InstellingenType>(STANDAARD);
   const [geladen, zetGeladen] = useState(false);
   const [ingelogd, zetIngelogd] = useState(false);
+  const [naamInvoer, zetNaamInvoer] = useState("");
 
   useEffect(() => {
     leesInstellingen().then((i) => {
       zetInst(i);
+      zetNaamInvoer(i.naam);
       zetGeladen(true);
     });
     getSupabase()
@@ -70,6 +74,28 @@ export default function Instellingen() {
         </Card>
       ) : (
         <>
+          <Card tone="white">
+            <AppText rol="h3">Hoe mogen we je noemen?</AppText>
+            <AppText rol="bodySmall" kleur="secondary">
+              Alleen voor de begroeting. Leeg laten mag. Het blijft op je telefoon.
+            </AppText>
+            <Card tone="outline" style={{ paddingVertical: space[2] }}>
+              <TextInput
+                value={naamInvoer}
+                onChangeText={zetNaamInvoer}
+                onEndEditing={() => wijzig({ naam: schoonNaam(naamInvoer) })}
+                placeholder="Je voornaam"
+                placeholderTextColor={colors.textSecondary}
+                maxLength={NAAM_MAX}
+                autoCapitalize="words"
+                autoCorrect={false}
+                returnKeyType="done"
+                style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
+                accessibilityLabel="Je voornaam"
+              />
+            </Card>
+          </Card>
+
           <Card tone="white">
             <AppText rol="h3">Waar wil je aan werken?</AppText>
             <AppText rol="bodySmall" kleur="secondary">
