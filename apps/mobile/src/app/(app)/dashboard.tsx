@@ -85,9 +85,6 @@ export default function Dashboard() {
         <AppText rol="subtitle" kleur="secondary">Hoe is je weer vandaag?</AppText>
       </View>
 
-      {/* Eenmalige rondleiding, alleen de eerste keer op het dashboard. */}
-      <EersteKeerUitleg />
-
       {/* Slot 1: check-in of jouw weer van vandaag */}
       {!weerGeladen ? (
         <Card tone="white">
@@ -115,6 +112,9 @@ export default function Dashboard() {
           <Button label="Even inchecken" onPress={() => router.push("/check-in/1")} />
         </Card>
       )}
+
+      {/* Eenmalige rondleiding, onder de check-in: die blijft de hoofdrol houden. */}
+      <EersteKeerUitleg />
 
       {/* Slot 2: het landelijke weerbericht */}
       <Card tone="primary">
