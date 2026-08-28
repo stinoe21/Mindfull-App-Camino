@@ -19,6 +19,7 @@ import { Card } from "@mind/ui/components/Card";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
+import { tipsBijWeer } from "@/features/content/weerNaarTips";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { UITKOMSTEN } from "@/features/weer/teksten";
 
@@ -85,6 +86,25 @@ export default function CheckInUitkomst() {
           <AppText rol="labelOverline" kleur="secondary">VOOR VANDAAG</AppText>
           <AppText rol="h3">{tekst.tip}</AppText>
         </Card>
+      ) : null}
+      {weerbeeld ? (
+        <View style={{ gap: space[2], alignSelf: "stretch" }}>
+          <AppText rol="labelOverline" kleur="secondary">LEZEN, ALS JE WILT</AppText>
+          {tipsBijWeer(weerbeeld).map((a) => (
+            <Card
+              key={a.slug}
+              tone="outline"
+              onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
+              style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+            >
+              <View style={{ flexShrink: 1 }}>
+                <AppText rol="bodyEmphasis">{a.titel}</AppText>
+                <AppText rol="labelCaption" kleur="secondary">{a.onderwerp + " · Bron: MIND"}</AppText>
+              </View>
+              <AppText rol="body" kleur="secondary">{"›"}</AppText>
+            </Card>
+          ))}
+        </View>
       ) : null}
       {melding && MELDINGEN[melding] ? (
         <AppText rol="bodySmall" kleur="secondary" centreer>{MELDINGEN[melding]}</AppText>
