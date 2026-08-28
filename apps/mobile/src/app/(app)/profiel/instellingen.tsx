@@ -62,6 +62,9 @@ export default function Instellingen() {
   const uitloggen = async () => {
     await getSupabase()?.auth.signOut();
     zetIngelogd(false);
+    // Zonder account kom je de app niet in: terug naar het begin.
+    router.dismissAll();
+    router.replace("/welkom");
   };
 
   return (
