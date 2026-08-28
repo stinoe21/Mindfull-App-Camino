@@ -86,7 +86,7 @@ export default function Profiel() {
       <InstellingenGroep titel="Jouw gegevens">
         <InstellingenRij
           label="Naam"
-          omschrijving={naam ? naam + " · alleen voor de begroeting, blijft op je telefoon" : "Nog niet ingevuld, mag leeg blijven"}
+          omschrijving={naam || "Nog niet ingevuld"}
           onPress={() => router.push("/profiel/instellingen")}
         />
         <InstellingenRij label="E-mailadres" omschrijving={email ?? "Niet ingelogd"} laatste />
@@ -95,7 +95,6 @@ export default function Profiel() {
       <InstellingenGroep titel="Voorkeuren">
         <InstellingenRij
           label="Onderwerpen"
-          omschrijving="Bepaalt welke tips je als eerste ziet"
           onPress={() => router.push("/profiel/instellingen")}
           laatste
         />
@@ -104,21 +103,18 @@ export default function Profiel() {
       <InstellingenGroep titel="Privacy">
         <InstellingenRij
           label="Toestemmingen"
-          omschrijving="Meetellen in het weerbericht, en de voorwaarden"
           onPress={() => router.push("/profiel/instellingen")}
         />
         <InstellingenRij
           label="Wat er met je check-in gebeurt"
-          omschrijving="Hoe het anonieme weerbericht werkt"
           onPress={() => router.push("/weerbericht")}
         />
-        <InstellingenRij label="Privacyverklaring" omschrijving="Volgt zodra MIND de tekst online heeft" uit laatste />
+        <InstellingenRij label="Privacyverklaring" omschrijving="Volgt" uit laatste />
       </InstellingenGroep>
 
       <InstellingenGroep titel="Account">
         <InstellingenRij
           label="Account verwijderen"
-          omschrijving="Haalt alles weg, op de server en op je telefoon"
           onPress={() => router.push("/profiel/account-verwijderen")}
           laatste
         />
