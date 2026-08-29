@@ -25,6 +25,18 @@ export const CHECKIN_STAPPEN: {
 
 export const GERUSTSTELLING = "Geen goed of fout. Kies wat nu het dichtst in de buurt komt.";
 
+// De naam van elk weerbeeld, zoals in de seed van weather_type
+// (supabase/migrations/20260811090612_seed_weather_types.sql). Daar is de
+// bron; wijzigt een label daar, dan hier ook. Lokaal gekopieerd omdat de
+// uitkomst ook zonder netwerk moet werken.
+export const WEER_NAMEN: Record<WeatherCode, string> = {
+  zonnig: "Zonnige dag",
+  wolken: "Wolkendag",
+  mist: "Mistige dag",
+  wind: "Winderige dag",
+  regen: "Regenachtige dag",
+};
+
 export type UitkomstTekst = {
   kop: string;
   duiding: string;
