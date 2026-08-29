@@ -10,8 +10,10 @@
 //
 // Reduce motion: dan geen schaal, wel de opacity, zodat er altijd feedback is.
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AccessibilityInfo, Animated, Pressable, type PressableProps, type StyleProp, type ViewStyle } from "react-native";
+import { useRef, useState, type ReactNode } from "react";
+import { Animated, Pressable, type PressableProps, type StyleProp, type ViewStyle } from "react-native";
+
+import { useMinderBeweging } from "./minderBeweging.ts";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -24,20 +26,8 @@ export type PressableScaleProps = Omit<PressableProps, "style" | "children"> & {
 
 export function PressableScale({ schaal = 0.98, style, onPressIn, onPressOut, children, ...rest }: PressableScaleProps) {
   const waarde = useRef(new Animated.Value(1)).current;
-  const [minderBeweging, zetMinderBeweging] = useState(false);
+  const minderBeweging = useMinderBeweging();
   const [ingedrukt, zetIngedrukt] = useState(false);
-
-  useEffect(() => {
-    let actief = true;
-    AccessibilityInfo.isReduceMotionEnabled().then((v) => {
-      if (actief) zetMinderBeweging(v);
-    });
-    const sub = AccessibilityInfo.addEventListener("reduceMotionChanged", zetMinderBeweging);
-    return () => {
-      actief = false;
-      sub.remove();
-    };
-  }, []);
 
   const naar = (doel: number) => {
     if (minderBeweging) {
