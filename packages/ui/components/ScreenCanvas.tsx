@@ -29,10 +29,19 @@ import type { WeerStaat } from "./achtergronden.ts";
 
 /** Elk direct kind verschijnt 60 ms na het vorige (Verschijn). */
 const STAGGER = 60;
+// 28 is een bewuste tussenmaat uit HERKOMST.md (sectieafstand, schermregel 5).
+const SECTIE_GAP = 28;
 
-function gestaffeld(children: ReactNode): ReactNode {
+// De wrapper strekt zich over de breedte en centreert binnenin, zodat zowel
+// gestrekte kaarten als een gecentreerde vlieger hun plek houden. Een kind dat
+// niets rendert trekt de gap van de ouder weer in.
+function gestaffeld(children: ReactNode, gap: number, centreer: boolean): ReactNode {
   return Children.map(children, (kind, i) =>
-    kind === null || kind === undefined || kind === false ? kind : <Verschijn vertraging={i * STAGGER}>{kind}</Verschijn>
+    kind === null || kind === undefined || kind === false ? kind : (
+      <Verschijn vertraging={i * STAGGER} gapOuder={gap} style={{ alignSelf: "stretch", alignItems: centreer ? "center" : "stretch" }}>
+        {kind}
+      </Verschijn>
+    )
   );
 }
 
@@ -89,7 +98,7 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
             alignItems: "center",
           }}
         >
-          {gestaffeld(children)}
+          {gestaffeld(children, space[4], true)}
         </Animated.ScrollView>
         {terugKnopOverlay}
       </View>
@@ -142,11 +151,10 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
           contentContainerStyle={{
             padding: space[5],
             paddingBottom: insets.bottom + navRuimte + space[5],
-            // 28 is een bewuste tussenmaat uit HERKOMST.md (sectieafstand).
-            gap: 28, // sectieafstand 28, HERKOMST.md schermregel 5
+            gap: SECTIE_GAP,
           }}
         >
-          {gestaffeld(children)}
+          {gestaffeld(children, SECTIE_GAP, false)}
         </Animated.ScrollView>
       </View>
       {terugKnopOverlay}

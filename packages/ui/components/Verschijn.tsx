@@ -10,7 +10,7 @@
 // Alleen bij de eerste mount, nooit bij een re-render. Bij minder beweging
 // staat alles meteen op zijn plek.
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Animated, Easing, type StyleProp, type ViewStyle } from "react-native";
 
 import { useMinderBeweging } from "./minderBeweging.ts";
@@ -20,6 +20,11 @@ export type VerschijnProps = {
   vertraging?: number;
   /** Schaal van 0.9 naar 1 met een spring, voor één landend element. */
   landing?: boolean;
+  /**
+   * De gap van de ouder. Rendert het kind niets (hoogte 0), dan trekt de
+   * wrapper die gap weer in, zodat een leeg kind geen gat achterlaat.
+   */
+  gapOuder?: number;
   style?: StyleProp<ViewStyle>;
   children?: ReactNode;
 };
@@ -27,10 +32,11 @@ export type VerschijnProps = {
 const DUUR = 260;
 const AFSTAND = 12;
 
-export function Verschijn({ vertraging = 0, landing = false, style, children }: VerschijnProps) {
+export function Verschijn({ vertraging = 0, landing = false, gapOuder = 0, style, children }: VerschijnProps) {
   const minder = useMinderBeweging();
   const voortgang = useRef(new Animated.Value(0)).current;
   const schaal = useRef(new Animated.Value(landing ? 0.9 : 1)).current;
+  const [leeg, zetLeeg] = useState(false);
 
   useEffect(() => {
     if (minder) {
@@ -53,8 +59,10 @@ export function Verschijn({ vertraging = 0, landing = false, style, children }: 
 
   return (
     <Animated.View
+      onLayout={gapOuder ? (e) => zetLeeg(e.nativeEvent.layout.height === 0) : undefined}
       style={[
         style,
+        leeg ? { marginTop: -gapOuder } : null,
         {
           opacity: voortgang,
           transform: [
