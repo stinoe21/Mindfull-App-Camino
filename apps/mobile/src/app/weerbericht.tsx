@@ -13,6 +13,7 @@ import { colors, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
+import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -77,7 +78,7 @@ export default function Weerbericht() {
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{t("titel")}</AppText>
-        <AppText rol="subtitle" kleur="secondary">{t("ondertitel")}</AppText>
+        <AppText rol="subtitle">{t("ondertitel")}</AppText>
       </View>
 
       {/* De intro hoort bij een getoond weerbericht. Boven de lege staat zou
@@ -94,9 +95,11 @@ export default function Weerbericht() {
       ) : null}
 
       {stand?.staat === "leeg" ? (
-        <Card tone="primary">
-          <AppText rol="h3">{t("leegTitel")}</AppText>
-          <AppText rol="bodySmall" kleur="secondary">
+        <Card tone="primary" style={{ alignItems: "center", gap: space[3] }}>
+          {/* Een beeld in de lege staat: de vlieger in de mist, want er is nog niets te zien. */}
+          <MascotteVlieger state="mist" hoogte={72} />
+          <AppText rol="h3" centreer>{t("leegTitel")}</AppText>
+          <AppText rol="bodySmall" centreer>
             {t("leegUitleg")}
           </AppText>
         </Card>

@@ -38,7 +38,7 @@ export default function Welkom() {
     <ScreenCanvas variant="overlay" state="default" sheetTop={140}>
       <MascotteVlieger state="intake" hoogte={150} />
       <AppText rol="h1" centreer>{t("titel")}</AppText>
-      <AppText rol="subtitle" kleur="secondary" centreer>{t("ondertitel")}</AppText>
+      <AppText rol="subtitle" centreer>{t("ondertitel")}</AppText>
       <AppText rol="body" kleur="secondary" centreer>
         {t("uitleg")}
       </AppText>

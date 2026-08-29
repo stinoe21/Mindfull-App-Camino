@@ -52,7 +52,7 @@ export default function Naam() {
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{t("titel")}</AppText>
-        <AppText rol="subtitle" kleur="secondary">
+        <AppText rol="subtitle">
           {t("ondertitel")}
         </AppText>
       </View>
