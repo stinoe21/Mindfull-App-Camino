@@ -18,6 +18,7 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
+import { Verschijn } from "@mind/ui/components/Verschijn";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
@@ -122,7 +123,12 @@ export default function CheckInUitkomst() {
 
   return (
     <ScreenCanvas variant="overlay" state={weerbeeld ?? "default"} sheetTop={130}>
-      {weerbeeld ? <MascotteVlieger state={weerbeeld} hoogte={90} /> : null}
+      {/* De vlieger landt: schaal 0.9 naar 1 met een spring. Erkennen, niet vieren. */}
+      {weerbeeld ? (
+        <Verschijn landing>
+          <MascotteVlieger state={weerbeeld} hoogte={90} />
+        </Verschijn>
+      ) : null}
       {/* Eerst het weer zelf, zoals in scherm 07 van het ontwerp: overline,
           de naam van het weerbeeld groot, dan de duiding. Zonder de naam las
           het scherm als een tip zonder weerbericht. */}

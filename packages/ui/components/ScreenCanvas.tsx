@@ -15,7 +15,8 @@
 //   "overlay"  uitkomst- en vieringsschermen: geen vel, inhoud direct op de
 //              volle gradient, zie het prototype (Bevestigd, Uitkomst, Afgerond)
 
-import { ScrollView, View } from "react-native";
+import { Children, useRef, type ReactNode } from "react";
+import { Animated, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors, radius, space } from "../tokens/tokens.ts";
@@ -23,7 +24,17 @@ import { colors, radius, space } from "../tokens/tokens.ts";
 import { BackgroundHeroGradient } from "./BackgroundHeroGradient.tsx";
 import { NAV_PIL_HOOGTE } from "./NavigationBar.tsx";
 import { TERUGKNOP_MAAT } from "./TerugKnop.tsx";
+import { Verschijn } from "./Verschijn.tsx";
 import type { WeerStaat } from "./achtergronden.ts";
+
+/** Elk direct kind verschijnt 60 ms na het vorige (Verschijn). */
+const STAGGER = 60;
+
+function gestaffeld(children: ReactNode): ReactNode {
+  return Children.map(children, (kind, i) =>
+    kind === null || kind === undefined || kind === false ? kind : <Verschijn vertraging={i * STAGGER}>{kind}</Verschijn>
+  );
+}
 
 /** Waar het vel begint als er hero-inhoud is: de band uit het prototype. */
 export const HERO_BAND = 200;
@@ -52,6 +63,7 @@ export type ScreenCanvasProps = {
 
 export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, heroInhoud, metNavRuimte = false, terugKnop, children }: ScreenCanvasProps) {
   const insets = useSafeAreaInsets();
+  const scrollY = useRef(new Animated.Value(0)).current;
   const navRuimte = metNavRuimte ? NAV_PIL_HOOGTE + Math.max(insets.bottom - space[3], space[2]) + space[6] : space[2];
   // De knop staat net onder de statusbalk; het vel begint er vlak onder.
   const terugKnopTop = insets.top + space[1];
@@ -64,7 +76,7 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
     return (
       <View style={{ flex: 1, backgroundColor: colors.surfaceBackground }}>
         <BackgroundHeroGradient state={state} height={480} style={{ position: "absolute", left: 0, right: 0, top: 0 }} />
-        <ScrollView
+        <Animated.ScrollView
           style={{ flex: 1 }}
           keyboardShouldPersistTaps="handled"
           automaticallyAdjustKeyboardInsets
@@ -77,8 +89,8 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
             alignItems: "center",
           }}
         >
-          {children}
-        </ScrollView>
+          {gestaffeld(children)}
+        </Animated.ScrollView>
         {terugKnopOverlay}
       </View>
     );
@@ -91,16 +103,22 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
   const top = terugKnop
     ? Math.max(sheetTop ?? standaardTop, terugKnopTop + TERUGKNOP_MAAT + space[1])
     : Math.max(sheetTop ?? standaardTop, insets.top + space[2]);
+  // Parallax: de hero schuift 0,4 keer mee omhoog bij scrollen en vervaagt,
+  // zodat de gradient een laag achter het vel wordt in plaats van een plaat.
+  const heroSchuif = scrollY.interpolate({ inputRange: [0, top], outputRange: [0, -top * 0.4], extrapolate: "clamp" });
+  const heroVervaag = scrollY.interpolate({ inputRange: [0, top * 0.7], outputRange: [1, 0], extrapolate: "clamp" });
   return (
     <View style={{ flex: 1, backgroundColor: colors.surfaceBackground }}>
-      <BackgroundHeroGradient state={state} height={top + 240} style={{ position: "absolute", left: 0, right: 0, top: 0 }} />
+      <Animated.View style={{ position: "absolute", left: 0, right: 0, top: 0, transform: [{ translateY: heroSchuif }] }}>
+        <BackgroundHeroGradient state={state} height={top + 240} />
+      </Animated.View>
       {heroInhoud ? (
-        <View
+        <Animated.View
           pointerEvents="box-none"
-          style={{ position: "absolute", left: 0, right: 0, top: insets.top, height: top - insets.top, alignItems: "center", justifyContent: "flex-end", paddingBottom: space[3] }}
+          style={{ position: "absolute", left: 0, right: 0, top: insets.top, height: top - insets.top, alignItems: "center", justifyContent: "flex-end", paddingBottom: space[3], opacity: heroVervaag, transform: [{ translateY: heroSchuif }] }}
         >
-          {heroInhoud}
-        </View>
+          <Verschijn style={{ alignSelf: "stretch", alignItems: "center" }}>{heroInhoud}</Verschijn>
+        </Animated.View>
       ) : null}
       <View
         style={{
@@ -115,10 +133,12 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
           overflow: "hidden",
         }}
       >
-        <ScrollView
+        <Animated.ScrollView
           style={{ flex: 1 }}
           keyboardShouldPersistTaps="handled"
           automaticallyAdjustKeyboardInsets
+          scrollEventThrottle={16}
+          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
           contentContainerStyle={{
             padding: space[5],
             paddingBottom: insets.bottom + navRuimte + space[5],
@@ -126,8 +146,8 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
             gap: 28, // sectieafstand 28, HERKOMST.md schermregel 5
           }}
         >
-          {children}
-        </ScrollView>
+          {gestaffeld(children)}
+        </Animated.ScrollView>
       </View>
       {terugKnopOverlay}
     </View>
