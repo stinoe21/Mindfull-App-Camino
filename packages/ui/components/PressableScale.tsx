@@ -5,10 +5,15 @@
 // element. Een spring naar 0.97 (knop) of 0.98 (grote kaart) voelt als een
 // aanraking. Alleen de Animated API van React Native, geen dependency.
 //
+// De stijl staat op de Pressable zelf (geanimeerd), niet op een binnenste
+// View: anders raken breedte en flexBasis van een kaart kwijt in de layout.
+//
 // Reduce motion: dan geen schaal, wel de opacity, zodat er altijd feedback is.
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AccessibilityInfo, Animated, Pressable, type PressableProps, type StyleProp, type ViewStyle } from "react-native";
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export type PressableScaleProps = Omit<PressableProps, "style" | "children"> & {
   /** Eindschaal bij indrukken. Standaard 0.98; knoppen gebruiken 0.97. */
@@ -20,6 +25,7 @@ export type PressableScaleProps = Omit<PressableProps, "style" | "children"> & {
 export function PressableScale({ schaal = 0.98, style, onPressIn, onPressOut, children, ...rest }: PressableScaleProps) {
   const waarde = useRef(new Animated.Value(1)).current;
   const [minderBeweging, zetMinderBeweging] = useState(false);
+  const [ingedrukt, zetIngedrukt] = useState(false);
 
   useEffect(() => {
     let actief = true;
@@ -42,19 +48,21 @@ export function PressableScale({ schaal = 0.98, style, onPressIn, onPressOut, ch
   };
 
   return (
-    <Pressable
+    <AnimatedPressable
       {...rest}
       onPressIn={(e) => {
+        zetIngedrukt(true);
         naar(schaal);
         onPressIn?.(e);
       }}
       onPressOut={(e) => {
+        zetIngedrukt(false);
         naar(1);
         onPressOut?.(e);
       }}
-      style={({ pressed }) => ({ opacity: pressed && minderBeweging ? 0.8 : 1 })}
+      style={[style, { transform: [{ scale: waarde }], opacity: ingedrukt && minderBeweging ? 0.8 : 1 }]}
     >
-      <Animated.View style={[style, { transform: [{ scale: waarde }] }]}>{children}</Animated.View>
-    </Pressable>
+      {children}
+    </AnimatedPressable>
   );
 }
