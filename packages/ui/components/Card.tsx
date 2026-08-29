@@ -8,15 +8,22 @@
 // De tonen komen uit de primitieve laag omdat de semantische laag er nog geen
 // namen voor heeft, zie packages/ui/README.md: die rol krijgen ze pas als dat
 // met z'n drieen is afgesproken.
+//
+// Sinds 29 augustus 2026 (designaudit): radius lg (24) in plaats van md, en
+// de witte toon heeft een rand. Wit op het crème vel is met het oog niet te
+// zien, en een schaduwtoken bestaat nog niet; de rand is de enige manier om
+// een kaart van het vel los te maken. Indrukken schaalt licht (PressableScale).
 
-import { Pressable, View, type StyleProp, type ViewStyle } from "react-native";
+import { View, type StyleProp, type ViewStyle } from "react-native";
 
 import { colors, palette, radius, space } from "../tokens/tokens.ts";
 
+import { PressableScale } from "./PressableScale.tsx";
+
 export type CardTone = "white" | "primary" | "purple" | "sun" | "coral" | "outline";
 
-const TONEN: Record<CardTone, ViewStyle> = {
-  white: { backgroundColor: colors.surfaceCard },
+export const TONEN: Record<CardTone, ViewStyle> = {
+  white: { backgroundColor: colors.surfaceCard, borderWidth: 1, borderColor: colors.borderDefault },
   primary: { backgroundColor: palette.primary50 },
   purple: { backgroundColor: palette.purple50 },
   sun: { backgroundColor: palette.weatherSun },
@@ -33,7 +40,7 @@ export type CardProps = {
 
 // 18 is een bewuste maat: kaartvulling 18/20, HERKOMST.md schermregel 4.
 const BASIS: ViewStyle = {
-  borderRadius: radius.md,
+  borderRadius: radius.lg,
   paddingVertical: 18,
   paddingHorizontal: space[5],
   gap: space[2],
@@ -42,13 +49,9 @@ const BASIS: ViewStyle = {
 export function Card({ tone = "white", children, onPress, style }: CardProps) {
   if (onPress) {
     return (
-      <Pressable
-        accessibilityRole="button"
-        onPress={onPress}
-        style={({ pressed }) => [BASIS, TONEN[tone], { opacity: pressed ? 0.7 : 1 }, style]}
-      >
+      <PressableScale accessibilityRole="button" onPress={onPress} style={[BASIS, TONEN[tone], style]}>
         {children}
-      </Pressable>
+      </PressableScale>
     );
   }
   return <View style={[BASIS, TONEN[tone], style]}>{children}</View>;

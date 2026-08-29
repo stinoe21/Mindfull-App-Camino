@@ -1,31 +1,43 @@
-// Het standaardscherm van MIND, zie HERKOMST.md "Screen layout rules":
-// de hero is de paginaachtergrond, alle inhoud staat in een beige vel met
-// radius 20 en 8 punten marge, zodat rondom een dun randje hero zichtbaar
-// blijft. Velvulling 20, secties 28 uit elkaar.
+// Het standaardscherm van MIND: de hero-gradient is de paginaachtergrond, en
+// daaroverheen schuift een beige vel op de volle breedte met ronde
+// bovenhoeken (radius xl, 28). Velvulling 20, secties 28 uit elkaar.
+//
+// Sinds 29 augustus 2026 (designaudit) volgt dit het prototype in
+// packages/ui/reference/ui_kits/mind-app en de Figma-schermen, niet meer het
+// "vel met 8 punten marge en radius 20" uit de eerste overname: dat liet nog
+// geen 60 punten gradient over en had geen plek voor de mascotte. Het vel
+// begint nu standaard op een echte band (statusbalk + 64), en met heroInhoud
+// (mascotte, begroeting) op 176, zodat het vel over de hero-inhoud heen
+// schuift.
 //
 // Twee varianten:
-//   "vel"      het standaardscherm: vel vanaf sheetTop (56), band erachter
+//   "vel"      het standaardscherm: vel vanaf sheetTop, band erachter
 //   "overlay"  uitkomst- en vieringsschermen: geen vel, inhoud direct op de
 //              volle gradient, zie het prototype (Bevestigd, Uitkomst, Afgerond)
 
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { colors, space } from "../tokens/tokens.ts";
+import { colors, radius, space } from "../tokens/tokens.ts";
 
 import { BackgroundHeroGradient } from "./BackgroundHeroGradient.tsx";
 import { NAV_PIL_HOOGTE } from "./NavigationBar.tsx";
 import { TERUGKNOP_MAAT } from "./TerugKnop.tsx";
 import type { WeerStaat } from "./achtergronden.ts";
 
-const VEL_RADIUS = 20;
-const VEL_MARGE = 8;
+/** Waar het vel begint als er hero-inhoud is: de band uit het prototype. */
+export const HERO_BAND = 176;
 
 export type ScreenCanvasProps = {
   variant?: "vel" | "overlay";
   state?: WeerStaat;
-  /** Waar het vel begint. Standaard 56; hoger op uitkomstschermen. */
+  /** Waar het vel begint. Standaard statusbalk + 64, of HERO_BAND met heroInhoud. */
   sheetTop?: number;
+  /**
+   * Wat er op de gradient staat, boven het vel: de mascotte, of een
+   * begroeting. Wordt gecentreerd in de band tussen statusbalk en vel.
+   */
+  heroInhoud?: React.ReactNode;
   /** Ruimte onderin voor de zwevende navigatiebalk. */
   metNavRuimte?: boolean;
   /**
@@ -38,7 +50,7 @@ export type ScreenCanvasProps = {
   children?: React.ReactNode;
 };
 
-export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, metNavRuimte = false, terugKnop, children }: ScreenCanvasProps) {
+export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, heroInhoud, metNavRuimte = false, terugKnop, children }: ScreenCanvasProps) {
   const insets = useSafeAreaInsets();
   const navRuimte = metNavRuimte ? NAV_PIL_HOOGTE + Math.max(insets.bottom - space[3], space[2]) + space[6] : space[2];
   // De knop staat net onder de statusbalk; het vel begint er vlak onder.
@@ -72,20 +84,33 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, met
     );
   }
 
+  // Zonder hero-inhoud een band van 64 onder de statusbalk; met hero-inhoud
+  // de volle band uit het prototype. Een terugknop schuift het vel nooit
+  // omhoog tot boven de knop.
+  const standaardTop = heroInhoud ? HERO_BAND : insets.top + space[12] + space[4];
   const top = terugKnop
-    ? Math.max(sheetTop ?? 56, terugKnopTop + TERUGKNOP_MAAT + space[1])
-    : Math.max(sheetTop ?? 56, insets.top + space[2]);
+    ? Math.max(sheetTop ?? standaardTop, terugKnopTop + TERUGKNOP_MAAT + space[1])
+    : Math.max(sheetTop ?? standaardTop, insets.top + space[2]);
   return (
     <View style={{ flex: 1, backgroundColor: colors.surfaceBackground }}>
       <BackgroundHeroGradient state={state} height={top + 240} style={{ position: "absolute", left: 0, right: 0, top: 0 }} />
+      {heroInhoud ? (
+        <View
+          pointerEvents="box-none"
+          style={{ position: "absolute", left: 0, right: 0, top: insets.top, height: top - insets.top, alignItems: "center", justifyContent: "flex-end", paddingBottom: space[3] }}
+        >
+          {heroInhoud}
+        </View>
+      ) : null}
       <View
         style={{
           position: "absolute",
-          left: VEL_MARGE,
-          right: VEL_MARGE,
+          left: 0,
+          right: 0,
           top,
-          bottom: VEL_MARGE,
-          borderRadius: VEL_RADIUS,
+          bottom: 0,
+          borderTopLeftRadius: radius.xl,
+          borderTopRightRadius: radius.xl,
           backgroundColor: colors.surfaceBackground,
           overflow: "hidden",
         }}

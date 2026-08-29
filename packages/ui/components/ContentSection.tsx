@@ -5,12 +5,13 @@
 // De shelf bloedt door tot de rand van het vel: de negatieve marge is gelijk
 // aan de velvulling (20), zodat de volgende kaart aan de rand piept.
 
-import { ScrollView, View, Pressable, type StyleProp, type ViewStyle } from "react-native";
+import { ScrollView, View, type StyleProp, type ViewStyle } from "react-native";
 
-import { colors, palette, radius, space } from "../tokens/tokens.ts";
+import { colors, radius, space } from "../tokens/tokens.ts";
 
 import { AppText } from "./AppText.tsx";
-import type { CardTone } from "./Card.tsx";
+import { TONEN, type CardTone } from "./Card.tsx";
+import { PressableScale } from "./PressableScale.tsx";
 
 export type ContentSectionProps = {
   title: string;
@@ -30,9 +31,9 @@ export function ContentSection({ title, note, action, onAction, children }: Cont
           {note ? <AppText rol="bodySmall" kleur="secondary">{note}</AppText> : null}
         </View>
         {action ? (
-          <Pressable accessibilityRole="button" onPress={onAction} style={({ pressed }) => ({ flexShrink: 0, opacity: pressed ? 0.7 : 1 })}>
+          <PressableScale accessibilityRole="button" onPress={onAction} schaal={0.96} style={{ flexShrink: 0 }}>
             <AppText rol="labelButton" kleur="brand">{action}</AppText>
-          </Pressable>
+          </PressableScale>
         ) : null}
       </View>
       {children}
@@ -59,14 +60,6 @@ export function ContentShelf({ bleed = space[5], children }: ContentShelfProps) 
   );
 }
 
-const TONEN: Record<CardTone, ViewStyle> = {
-  white: { backgroundColor: colors.surfaceCard },
-  primary: { backgroundColor: palette.primary50 },
-  purple: { backgroundColor: palette.purple50 },
-  sun: { backgroundColor: palette.weatherSun },
-  coral: { backgroundColor: palette.coral50 },
-  outline: { backgroundColor: colors.surfaceCard, borderWidth: 1, borderColor: colors.borderDefault },
-};
 
 export type ShelfCardProps = {
   tone?: CardTone;
@@ -91,7 +84,7 @@ export function ShelfCard({ tone = "white", label, title, meta, onPress, childre
     {
       width: 172,
       minHeight: 152,
-      borderRadius: radius.md,
+      borderRadius: radius.lg,
       paddingVertical: 18,
       paddingHorizontal: space[5],
       gap: 6,
@@ -101,9 +94,9 @@ export function ShelfCard({ tone = "white", label, title, meta, onPress, childre
   ];
   if (onPress) {
     return (
-      <Pressable accessibilityRole="button" onPress={onPress} style={({ pressed }) => [basis, { opacity: pressed ? 0.7 : 1 }]}>
+      <PressableScale accessibilityRole="button" onPress={onPress} style={basis}>
         {inhoud}
-      </Pressable>
+      </PressableScale>
     );
   }
   return <View style={basis}>{inhoud}</View>;

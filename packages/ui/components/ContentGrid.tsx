@@ -2,25 +2,18 @@
 // blok is een kolom of een volledige rij. Geen mozaiek, geen carrousel.
 // Specificatie: packages/ui/reference/components/grid/ContentGrid.jsx
 
-import { Pressable, View, type StyleProp, type ViewStyle } from "react-native";
+import { View, type StyleProp, type ViewStyle } from "react-native";
 
-import { colors, palette, radius, space } from "../tokens/tokens.ts";
+import { radius, space } from "../tokens/tokens.ts";
 
 import { AppText } from "./AppText.tsx";
-import type { CardTone } from "./Card.tsx";
+import { TONEN, type CardTone } from "./Card.tsx";
+import { PressableScale } from "./PressableScale.tsx";
 
 export function ContentGrid({ children }: { children?: React.ReactNode }) {
   return <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[3] }}>{children}</View>;
 }
 
-const TONEN: Record<CardTone, ViewStyle> = {
-  white: { backgroundColor: colors.surfaceCard },
-  primary: { backgroundColor: palette.primary50 },
-  purple: { backgroundColor: palette.purple50 },
-  sun: { backgroundColor: palette.weatherSun },
-  coral: { backgroundColor: palette.coral50 },
-  outline: { backgroundColor: colors.surfaceCard, borderWidth: 1, borderColor: colors.borderDefault },
-};
 
 export type ContentCardProps = {
   full?: boolean;
@@ -42,7 +35,7 @@ export function ContentCard({ full = false, tone = "white", label, title, onPres
   // 18 en 6 zijn bewuste maten: kaartvulling 18/20 met interne gap 6, HERKOMST.md schermregel 4.
   const basis: StyleProp<ViewStyle> = [
     {
-      borderRadius: radius.md,
+      borderRadius: radius.lg,
       paddingVertical: 18,
       paddingHorizontal: space[5],
       gap: 6,
@@ -53,9 +46,9 @@ export function ContentCard({ full = false, tone = "white", label, title, onPres
   ];
   if (onPress) {
     return (
-      <Pressable accessibilityRole="button" onPress={onPress} style={({ pressed }) => [basis, { opacity: pressed ? 0.7 : 1 }]}>
+      <PressableScale accessibilityRole="button" onPress={onPress} style={basis}>
         {inhoud}
-      </Pressable>
+      </PressableScale>
     );
   }
   return <View style={basis}>{inhoud}</View>;
