@@ -82,10 +82,12 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
             top: 0,
             bottom: 0,
             backgroundColor: colors.surfaceCard,
-            opacity: 0.4,
+            // 0.85 sinds 29 augustus 2026 (designaudit): op 0.4 was de pil
+            // niet van het vel te onderscheiden. De blur blijft eronder.
+            opacity: 0.85,
           }}
         />
-        <View style={{ flex: 1, flexDirection: "row", alignItems: "stretch" }}>
+        <View style={{ flex: 1, flexDirection: "row", alignItems: "stretch", paddingHorizontal: space[2], paddingVertical: space[2] }}>
           {items.map((item) => (
             <Pressable
               key={item.key}
@@ -97,13 +99,17 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
                 alignItems: "center",
                 justifyContent: "center",
                 gap: space[1],
+                borderRadius: radius.pill,
+                // De actieve tab krijgt een zachte pil achter icoon en label;
+                // alleen een vet label was te weinig verschil.
+                backgroundColor: item.actief ? colors.brandSubtle : "transparent",
                 opacity: pressed ? 0.7 : 1,
               })}
             >
               <View style={{ height: 28, justifyContent: "center", alignItems: "center" }}>
-                {item.icoon(item.actief ? colors.textPrimary : colors.textSecondary)}
+                {item.icoon(item.actief ? colors.brandDefault : colors.textSecondary)}
               </View>
-              <AppText rol="labelCaption" kleur={item.actief ? "primary" : "secondary"}>
+              <AppText rol="labelCaption" kleur={item.actief ? "brand" : "secondary"}>
                 {item.label}
               </AppText>
             </Pressable>

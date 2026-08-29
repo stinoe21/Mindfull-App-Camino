@@ -97,6 +97,11 @@ export default function KitchenSink() {
             <AppText rol="bodySmall" kleur="secondary">Zelfde vorm, andere kleur. Toon volgt betekenis.</AppText>
           </Card>
         ))}
+        <Card tone="white" onPress={() => undefined}>
+          <AppText rol="labelOverline" kleur="secondary">TIKBAAR</AppText>
+          <AppText rol="h3">Een kaart die indrukt</AppText>
+          <AppText rol="bodySmall" kleur="secondary">Schaalt naar 0.98 via PressableScale; bij reduce motion alleen opacity.</AppText>
+        </Card>
       </View>
 
       <Kop>TerugKnop</Kop>
