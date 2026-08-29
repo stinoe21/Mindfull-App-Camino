@@ -10,6 +10,7 @@ import { useState } from "react";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
+import { MascotMain } from "@mind/ui/components/MascotMain";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -53,7 +54,7 @@ export default function Leeftijd() {
 
   if (teJong) {
     return (
-      <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
+      <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
         <AppText rol="h1">{t("totLaterTitel")}</AppText>
         <Card tone="white">
           <AppText rol="body">
@@ -66,7 +67,7 @@ export default function Leeftijd() {
   }
 
   return (
-    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
       <AppText rol="h1">{t("vraag")}</AppText>
       <AppText rol="body" kleur="secondary">
         {t("uitleg")}
