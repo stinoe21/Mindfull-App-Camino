@@ -73,7 +73,7 @@ export type ShelfCardProps = {
 export function ShelfCard({ tone = "white", label, title, meta, onPress, children }: ShelfCardProps) {
   const inhoud = (
     <>
-      {label ? <AppText rol="labelOverline" kleur="secondary">{label}</AppText> : null}
+      {label ? <AppText rol="labelOverline" kleur="brand">{label}</AppText> : null}
       {title ? <AppText rol="h3">{title}</AppText> : null}
       {meta ? <AppText rol="bodySmall" kleur="secondary">{meta}</AppText> : null}
       {children}

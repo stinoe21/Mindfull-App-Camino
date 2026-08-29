@@ -27,7 +27,7 @@ export type ContentCardProps = {
 export function ContentCard({ full = false, tone = "white", label, title, onPress, children }: ContentCardProps) {
   const inhoud = (
     <>
-      {label ? <AppText rol="labelOverline" kleur="secondary">{label}</AppText> : null}
+      {label ? <AppText rol="labelOverline" kleur="brand">{label}</AppText> : null}
       {title ? <AppText rol="h3">{title}</AppText> : null}
       {children}
     </>

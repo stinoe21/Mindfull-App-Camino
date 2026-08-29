@@ -27,7 +27,7 @@ export default function Hulplijn() {
     <ScreenCanvas state="zonnig" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">MIND Hulplijn</AppText>
-        <AppText rol="subtitle" kleur="secondary">Praten helpt, en je hoeft niets alleen te doen.</AppText>
+        <AppText rol="subtitle">Praten helpt, en je hoeft niets alleen te doen.</AppText>
       </View>
 
       <Card tone="sun">

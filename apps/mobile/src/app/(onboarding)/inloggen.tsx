@@ -171,7 +171,7 @@ export default function Inloggen() {
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{aanmaken ? t("accountAanmaken") : t("titel")}</AppText>
-        <AppText rol="subtitle" kleur="secondary">{t("ondertitel")}</AppText>
+        <AppText rol="subtitle">{t("ondertitel")}</AppText>
       </View>
 
       <Button

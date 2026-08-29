@@ -14,7 +14,6 @@ import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
-import { Chip } from "@mind/ui/components/Chip";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -97,7 +96,8 @@ export default function ChallengeDetail() {
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[2] }}>
-        <Chip label={challenge.soort === "challenge" ? t("labelChallenge") : t("labelThemaspecial")} />
+        {/* Kicker in italic serif, zoals "Kleine stap" op het Figma Challenge Screen (41:68). */}
+        <AppText rol="subtitle">{challenge.soort === "challenge" ? "Challenge" : "Themaspecial"}</AppText>
         <AppText rol="h1">{challenge.naam}</AppText>
         <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(totaal))}</AppText>
       </View>
@@ -108,7 +108,7 @@ export default function ChallengeDetail() {
             {t("onderdeelVan").replace("{x}", String(klaar + 1)).replace("{y}", String(totaal))}
           </AppText>
           <AppText rol="h3">{huidig.titel}</AppText>
-          {huidig.intro ? <AppText rol="body" kleur="secondary">{huidig.intro}</AppText> : null}
+          {huidig.intro ? <AppText rol="body">{huidig.intro}</AppText> : null}
           <Button label={t("onderdeelAfronden")} onPress={rondAf} />
         </Card>
       ) : (

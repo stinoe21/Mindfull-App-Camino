@@ -28,6 +28,7 @@ const nl = {
   zoekPlaceholder: "Zoek een onderwerp",
   zoekLabel: "Zoek in het naslagwerk",
   onderwerpen: "Onderwerpen",
+  alles: "Alles",
   artikelen: "Artikelen",
   artikelenNote: "Alles uit de bibliotheek van MIND.",
   nietsGevondenTitel: "Niets gevonden",
@@ -40,10 +41,11 @@ const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "Reference library",
-    ondertitel: "Reliable knowledge, always with a source.",
-    zoekPlaceholder: "Search a topic...",
+    ondertitel: "Articles from MIND, always with a source.",
+    zoekPlaceholder: "Search a topic",
     zoekLabel: "Search the reference library",
     onderwerpen: "Topics",
+    alles: "All",
     artikelen: "Articles",
     artikelenNote: "Everything from MIND's library.",
     nietsGevondenTitel: "Nothing found",
@@ -104,7 +106,7 @@ export default function Naslagwerk() {
     <ScreenCanvas state="default" metNavRuimte>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{t("titel")}</AppText>
-        <AppText rol="subtitle" kleur="secondary">{t("ondertitel")}</AppText>
+        <AppText rol="subtitle">{t("ondertitel")}</AppText>
       </View>
 
       <Card tone="outline" style={{ paddingVertical: space[2] }}>
@@ -118,8 +120,11 @@ export default function Naslagwerk() {
         />
       </Card>
 
+      {/* Een actieve "Alles"-chip vooraan, zodat de rij als filter leest en niet
+          als decoratie (designaudit 29 augustus 2026). */}
       <ContentSection title={t("onderwerpen")}>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
+          <Chip label={t("alles")} active={onderwerp === null} onPress={() => zetOnderwerp(null)} />
           {onderwerpen.map((o) => (
             <Chip key={o} label={o} active={onderwerp === o} onPress={() => zetOnderwerp(onderwerp === o ? null : o)} />
           ))}
@@ -144,15 +149,18 @@ export default function Naslagwerk() {
           </Card>
         ) : (
           <ContentGrid>
-            {resultaten.map((a) => (
+            {/* Het eerste artikel breed en in kleur, de rest half en wit; het
+                onderwerp alleen als het iets toevoegt aan de titel. */}
+            {resultaten.map((a, i) => (
               <ContentCard
                 key={a.slug}
-                tone="white"
+                full={i === 0 || (i === resultaten.length - 1 && (resultaten.length - 1) % 2 === 1)}
+                tone={i === 0 ? "coral" : "white"}
                 label={t("bronMind")}
                 title={a.titel}
                 onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
               >
-                <AppText rol="bodySmall" kleur="secondary">{a.onderwerp}</AppText>
+                {a.onderwerp !== a.titel ? <AppText rol="bodySmall" kleur="secondary">{a.onderwerp}</AppText> : null}
               </ContentCard>
             ))}
           </ContentGrid>
