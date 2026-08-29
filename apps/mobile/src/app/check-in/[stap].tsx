@@ -82,11 +82,10 @@ export default function CheckInStap() {
         <MascotteVlieger state={vandaag} hoogte={90} />
         <AppText rol="h2" centreer>Je hebt vandaag al ingecheckt</AppText>
         <AppText rol="body" kleur="secondary" centreer>
-          Eén keer per dag is genoeg. Morgen kun je opnieuw inchecken; tot die tijd staat jouw weer van
-          vandaag voor je klaar.
+          Eén keer per dag is genoeg. Morgen kun je weer.
         </AppText>
-        <Button label="Bekijk jouw weer" fullWidth onPress={() => router.replace("/check-in/uitkomst")} />
-        <Button label="Terug naar dashboard" variant="link" onPress={() => router.replace("/dashboard")} />
+        <Button label="Bekijk je weer" fullWidth onPress={() => router.replace("/check-in/uitkomst")} />
+        <Button label="Terug naar Home" variant="link" onPress={() => router.replace("/dashboard")} />
       </ScreenCanvas>
     );
   }

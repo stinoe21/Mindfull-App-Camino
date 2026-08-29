@@ -28,12 +28,12 @@ const nl = {
   uitleg:
     "Als je je account verwijdert, verdwijnen je account en je profiel van de server. Alles wat op je telefoon is opgeslagen wordt gewist.",
   uitlegAnoniem:
-    "Je eerdere check-ins tellen anoniem mee in het landelijke weerbericht. Daar staat niets in dat naar jou wijst, dus die aantallen kunnen niet worden teruggehaald of verwijderd.",
+    "Je eerdere check-ins tellen anoniem mee in het landelijke weerbericht. Daar staat niets in dat naar jou wijst, dus die tellen blijven staan.",
   fout: "Het verwijderen is niet gelukt. Controleer je verbinding en probeer het opnieuw. Er is nog niets gewist.",
   verwijderKnop: "Verwijder mijn account",
   zekerTitel: "Weet je het zeker?",
   zekerUitleg: "Dit kan niet ongedaan worden gemaakt.",
-  jaVerwijder: "Ja, verwijder alles",
+  jaVerwijder: "Ja, verwijder mijn account",
   neeToch: "Nee, toch niet",
   terug: "Terug",
 } as const;

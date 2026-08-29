@@ -34,20 +34,20 @@ import type { WeatherCode } from "@mind/types";
 // de insturenuitkomst; "niet-gedeeld" krijgt bewust geen regel.
 const nl = {
   meldingGelukt:
-    "Dankjewel voor je check-in. Jouw weer telt anoniem mee in het mentale weerbericht van Nederland.",
+    "Dankjewel voor je check-in. Jouw weer telt anoniem mee in het mentale weer van Nederland.",
   meldingNietVerbonden:
-    "Er was geen verbinding, dus deze check-in kon niet meetellen in het landelijke weerbericht. Je eigen weer staat hier gewoon.",
+    "Geen verbinding: deze check-in telt niet mee in het weer van Nederland. Jouw weer staat hier.",
   meldingNietIngelogd:
-    "Je was niet ingelogd, dus deze check-in telt niet mee in het landelijke weerbericht. Je eigen weer staat hier gewoon.",
+    "Je was niet ingelogd: deze check-in telt niet mee in het weer van Nederland. Jouw weer staat hier.",
   leegTitel: "Nog geen check-in vandaag",
-  leegUitleg: "Doe eerst de check-in, dan staat hier jouw weer van vandaag.",
+  leegUitleg: "Na je check-in staat hier jouw weer van vandaag.",
   evenInchecken: "Even inchecken",
-  terugDashboard: "Terug naar dashboard",
+  terugDashboard: "Terug naar Home",
   jouwWeer: "JOUW MENTALE WEERBERICHT",
   voorVandaag: "VOOR VANDAAG",
   lezenAlsJeWilt: "LEZEN, ALS JE WILT",
   bron: "Bron: MIND",
-  bekijkWeerbericht: "Bekijk het weerbericht van Nederland",
+  bekijkWeerbericht: "Bekijk het weer van Nederland",
   deelJeWeer: "Deel je weer",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -62,12 +62,12 @@ const teksten: Woordenboek<typeof nl> = {
     leegTitel: "No check-in yet today",
     leegUitleg: "Do the check-in first, then your weather of the day will appear here.",
     evenInchecken: "Check in",
-    terugDashboard: "Back to dashboard",
+    terugDashboard: "Back to Home",
     jouwWeer: "YOUR MENTAL WEATHER",
     voorVandaag: "FOR TODAY",
     lezenAlsJeWilt: "READ, IF YOU LIKE",
     bron: "Source: MIND",
-    bekijkWeerbericht: "See the weather forecast of the Netherlands",
+    bekijkWeerbericht: "See the weather of the Netherlands",
     deelJeWeer: "Share your weather",
   },
 };

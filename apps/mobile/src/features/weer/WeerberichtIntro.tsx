@@ -25,7 +25,7 @@ import { InfoPopup } from "./InfoPopup";
 // WatIsHetWeerbericht.tsx: een keer vastgelegd, overal dezelfde zinnen.
 export const INTRO =
   "Dit is het mentale weer van Nederland: alle check-ins van vandaag, anoniem bij elkaar opgeteld. " +
-  "Zo zie je dat jouw weer er nooit alleen voor staat.";
+  "Zo zie je dat je niet de enige bent met dit weer.";
 
 const UITLEG_KOP = "Hoe werkt dit?";
 
@@ -33,7 +33,7 @@ const UITLEG_KOP = "Hoe werkt dit?";
 // meetellen importeert deze twee zinnen; er is bewust een bron en geen kopie.
 export const UITLEG_ANONIMITEIT =
   "Je check-in wordt op je telefoon omgezet in een weerbeeld. Alleen dat weerbeeld telt anoniem " +
-  "mee in een landelijk totaal: zonder naam, zonder account, zonder tijdstip.";
+  "mee in een landelijk totaal: zonder naam en zonder account.";
 
 export const UITLEG_DETAIL =
   "Je antwoorden op de vier vragen verlaten je telefoon nooit. Je kunt dit altijd wijzigen in " +

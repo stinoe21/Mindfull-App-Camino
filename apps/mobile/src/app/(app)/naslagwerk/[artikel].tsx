@@ -24,7 +24,7 @@ const nl = {
   nietGevondenUitleg: "Dit artikel bestaat niet of is verplaatst.",
   terugNaslagwerk: "Terug naar het naslagwerk",
   bron: "Bron: MIND",
-  leesOp: "Lees op wijzijnmind.nl",
+  leesOp: "Lees verder op wijzijnmind.nl",
   terug: "Terug",
 } as const;
 const teksten: Woordenboek<typeof nl> = {

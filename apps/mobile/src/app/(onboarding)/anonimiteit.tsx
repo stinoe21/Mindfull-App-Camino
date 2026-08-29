@@ -78,7 +78,7 @@ export default function Anonimiteit() {
       ) : null}
 
       <View style={{ flex: 1 }} />
-      <Button label="Naar de app" fullWidth disabled={!compleet} onPress={klaar} />
+      <Button label="Klaar" fullWidth disabled={!compleet} onPress={klaar} />
     </ScreenCanvas>
   );
 }

@@ -22,7 +22,7 @@ import { bewaarInstellingen, NAAM_MAX, schoonNaam } from "@/features/profiel/ins
 
 const nl = {
   titel: "Hoe mogen we je noemen?",
-  ondertitel: "Alleen voor de begroeting. Je naam blijft op je telefoon en gaat nooit naar de server.",
+  ondertitel: "Alleen voor de begroeting. Je naam blijft op je telefoon.",
   placeholder: "Je voornaam",
   verder: "Verder",
   slaOver: "Sla over",

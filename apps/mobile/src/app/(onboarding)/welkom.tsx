@@ -15,16 +15,16 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 
 const nl = {
   titel: "Het mentale weerbericht",
-  ondertitel: "Dit is ongeveer mijn weer vandaag.",
+  ondertitel: "Hoe is je weer vandaag?",
   uitleg:
-    "Check elke dag in met vier korte vragen. Je ziet jouw eigen weer, met een kleine tip voor vandaag, en je telt anoniem mee in het mentale weerbericht van Nederland.",
+    "Vier korte vragen per dag. Je ziet jouw eigen weer, met één kleine tip. En je telt anoniem mee in het mentale weer van Nederland.",
   aanDeSlag: "Aan de slag",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "The mental weather forecast",
-    ondertitel: "This is roughly my weather today.",
+    ondertitel: "How's your weather today?",
     uitleg:
       "Check in every day with four short questions. You see your own weather, with a small tip for today, and you count anonymously towards the mental weather forecast of the Netherlands.",
     aanDeSlag: "Get started",

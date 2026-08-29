@@ -34,15 +34,15 @@ const MIN_WACHTWOORD = 6;
 // Alleen interface-teksten. {naam}, {n} en {email} worden op de plek ingevuld.
 const nl = {
   titel: "Inloggen",
-  ondertitel: "Zodat jouw check-in één keer per dag meetelt.",
+  ondertitel: "Met een account telt je check-in één keer per dag mee. Anoniem.",
   socialNogNiet:
-    "Inloggen met {naam} is in deze testversie nog niet beschikbaar. Dat wordt aangezet zodra de sleutels van Mind er zijn.",
-  geenVerbinding: "Er is geen verbinding met de server. Probeer het later opnieuw.",
+    "Inloggen met {naam} werkt in deze testversie nog niet. Gebruik voorlopig je e-mailadres.",
+  geenVerbinding: "Geen verbinding. Probeer het later opnieuw.",
   vulEmail: "Vul een e-mailadres in.",
   vulWachtwoord: "Vul een wachtwoord in van minstens {n} tekens.",
   verkeerdeCombinatie:
-    "Dit e-mailadres en wachtwoord horen niet bij elkaar. Nog geen account? Kies dan hieronder voor account aanmaken.",
-  bestaatAl: "Er bestaat al een account met dit e-mailadres. Log daarmee in.",
+    "E-mailadres en wachtwoord horen niet bij elkaar. Nog geen account? Maak er hieronder een aan.",
+  bestaatAl: "Er is al een account met dit e-mailadres. Je kunt daarmee inloggen.",
   nietBevestigd: "Dit e-mailadres is nog niet bevestigd. Kijk in je mail voor de bevestigingslink.",
   inloggenMislukt: "Inloggen is niet gelukt. Probeer het over een minuut opnieuw.",
   aanmakenMislukt: "Het account kon niet worden aangemaakt. Probeer het over een minuut opnieuw.",
@@ -50,7 +50,7 @@ const nl = {
     "We hebben een bevestigingsmail gestuurd naar {email}. Klik op de link en log daarna hier in.",
   verderMetApple: "Verder met Apple",
   verderMetGoogle: "Verder met Google",
-  emailPlaceholder: "Of vul je e-mailadres in",
+  emailPlaceholder: "E-mailadres",
   emailLabel: "E-mailadres",
   wachtwoordPlaceholder: "Wachtwoord",
   wachtwoordKiezen: "Kies een wachtwoord (minstens {n} tekens)",

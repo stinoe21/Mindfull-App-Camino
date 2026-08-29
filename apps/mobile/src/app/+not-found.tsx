@@ -14,8 +14,8 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 const nl = {
   stackTitel: "Niet gevonden",
   titel: "Deze pagina bestaat niet",
-  body: "Ga terug naar het begin, daar staat je weerbericht.",
-  knop: "Naar het dashboard",
+  body: "Ga terug naar Home, daar staat jouw weer.",
+  knop: "Naar Home",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -23,7 +23,7 @@ const teksten: Woordenboek<typeof nl> = {
     stackTitel: "Not found",
     titel: "This page doesn't exist",
     body: "Go back to the start, that's where your weather forecast is.",
-    knop: "To the dashboard",
+    knop: "To Home",
   },
 };
 
