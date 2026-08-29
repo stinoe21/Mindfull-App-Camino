@@ -22,7 +22,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
-import { UITKOMSTEN } from "@/features/weer/teksten";
+import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
 import { WatIsHetWeerbericht } from "@/features/weer/WatIsHetWeerbericht";
 import { UITLEG_ANONIMITEIT } from "@/features/weer/WeerberichtIntro";
 
@@ -43,6 +43,7 @@ const nl = {
   leegUitleg: "Doe eerst de check-in, dan staat hier jouw weer van vandaag.",
   evenInchecken: "Even inchecken",
   terugDashboard: "Terug naar dashboard",
+  jouwWeer: "JOUW MENTALE WEERBERICHT",
   voorVandaag: "VOOR VANDAAG",
   lezenAlsJeWilt: "LEZEN, ALS JE WILT",
   bron: "Bron: MIND",
@@ -62,6 +63,7 @@ const teksten: Woordenboek<typeof nl> = {
     leegUitleg: "Do the check-in first, then your weather of the day will appear here.",
     evenInchecken: "Check in",
     terugDashboard: "Back to dashboard",
+    jouwWeer: "YOUR MENTAL WEATHER",
     voorVandaag: "FOR TODAY",
     lezenAlsJeWilt: "READ, IF YOU LIKE",
     bron: "Source: MIND",
@@ -110,15 +112,25 @@ export default function CheckInUitkomst() {
   const deel = () => {
     if (!tekst) return;
     // Delen is een keuze van de gebruiker zelf; er gaat niets automatisch weg.
-    Share.share({ message: tekst.kop + " Dit is ongeveer mijn weer vandaag, via het Mentale Weerbericht van MIND." });
+    Share.share({
+      message:
+        (weerbeeld ? WEER_NAMEN[weerbeeld] + ". " : "") +
+        tekst.kop +
+        " Dit is ongeveer mijn weer vandaag, via het Mentale Weerbericht van MIND.",
+    });
   };
 
   return (
     <ScreenCanvas variant="overlay" state={weerbeeld ?? "default"} sheetTop={130}>
       {weerbeeld ? <MascotteVlieger state={weerbeeld} hoogte={90} /> : null}
-      {tekst ? (
+      {/* Eerst het weer zelf, zoals in scherm 07 van het ontwerp: overline,
+          de naam van het weerbeeld groot, dan de duiding. Zonder de naam las
+          het scherm als een tip zonder weerbericht. */}
+      {tekst && weerbeeld ? (
         <View style={{ gap: space[2], alignSelf: "stretch", alignItems: "center" }}>
-          <AppText rol="h3" centreer>{tekst.kop}</AppText>
+          <AppText rol="labelOverline" kleur="secondary" centreer>{t("jouwWeer")}</AppText>
+          <AppText rol="h1" centreer>{WEER_NAMEN[weerbeeld]}</AppText>
+          <AppText rol="subtitle" centreer>{tekst.kop}</AppText>
           <AppText rol="bodySmall" kleur="secondary" centreer>{tekst.duiding}</AppText>
         </View>
       ) : null}
