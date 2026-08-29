@@ -67,6 +67,6 @@ export const UITKOMSTEN: Record<WeatherCode, UitkomstTekst> = {
   regen: {
     kop: "Een regenachtige dag mag er zijn.",
     duiding: "Regen hoeft niet opgelost, hij trekt voorbij.",
-    tip: "Wees vandaag wat zachter voor jezelf dan anders.",
+    tip: "Wees vandaag zacht voor jezelf.",
   },
 };

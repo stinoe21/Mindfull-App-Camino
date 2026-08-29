@@ -155,14 +155,12 @@ export default function Dashboard() {
         <ActivityIndicator color={colors.brandDefault} />
       ) : weerbeeld ? (
         <Card tone="white" onPress={() => router.push("/check-in/uitkomst")}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
-            <MascotteVlieger state={weerbeeld} hoogte={56} />
-            {/* gap 2: overline en titel dicht op elkaar, zoals in de sectiekop van de referentie */}
-            <View style={{ flexShrink: 1, gap: 2 }}>
-              <AppText rol="labelOverline" kleur="brand">{t("jouwWeerOverline")}</AppText>
-              <AppText rol="h3">{WEER_NAMEN[weerbeeld]}</AppText>
-              <AppText rol="bodySmall">{UITKOMSTEN[weerbeeld].kop}</AppText>
-            </View>
+          {/* De vlieger staat al op de hero; hier alleen het weer. gap 2: overline
+              en titel dicht op elkaar, zoals in de sectiekop van de referentie */}
+          <View style={{ gap: 2 }}>
+            <AppText rol="labelOverline" kleur="brand">{t("jouwWeerOverline")}</AppText>
+            <AppText rol="h3">{WEER_NAMEN[weerbeeld]}</AppText>
+            <AppText rol="bodySmall">{UITKOMSTEN[weerbeeld].kop}</AppText>
           </View>
           <AppText rol="labelButton" kleur="brand">{t("bekijkJeWeer")}</AppText>
         </Card>

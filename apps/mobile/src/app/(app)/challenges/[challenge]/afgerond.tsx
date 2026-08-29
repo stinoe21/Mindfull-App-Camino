@@ -14,8 +14,8 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 
 const nl = {
-  titel: "Mooi gedaan",
-  uitleg: "Je hebt dit onderdeel afgerond. Kleine stappen tellen.",
+  titel: "Dat was het voor vandaag",
+  uitleg: "Morgen staat de volgende dag klaar, als je wilt.",
   verder: "Verder met de challenge",
   terug: "Terug naar challenges",
 } as const;

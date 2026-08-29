@@ -17,13 +17,13 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 
 const nl = {
-  totLaterTitel: "Tot later",
+  totLaterTitel: "Nog niet voor jou",
   totLaterUitleg:
     "Deze app is voor iedereen van 16 jaar en ouder. Jonger? Dan kun je de app nu nog niet gebruiken.",
   terug: "Terug",
   vraag: "Ben je 16 jaar of ouder?",
   uitleg:
-    "Deze app is voor iedereen van 16 jaar en ouder. We vragen dit één keer, voordat je een account maakt.",
+    "Deze app is voor iedereen van 16 jaar en ouder. We vragen dit maar één keer.",
   ja: "Ja, ik ben 16 of ouder",
   nee: "Nee, ik ben jonger",
 } as const;

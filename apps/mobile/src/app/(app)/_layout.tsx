@@ -34,7 +34,7 @@ export default function AppLayout() {
             items={[
               { key: "dashboard", label: "Home", actief: actief === "dashboard", onPress: naar("dashboard"), icoon: () => <NavIcoonHome hoogte={30} /> },
               { key: "naslagwerk", label: "Tips", actief: actief === "naslagwerk", onPress: naar("naslagwerk"), icoon: (kleur) => <NavIcoonTips kleur={kleur} /> },
-              { key: "checkin", label: "Check in", onPress: () => router.push("/check-in/1"), icoon: (kleur) => <NavIcoonCheckIn kleur={kleur} /> },
+              { key: "checkin", label: "Inchecken", onPress: () => router.push("/check-in/1"), icoon: (kleur) => <NavIcoonCheckIn kleur={kleur} /> },
               { key: "challenges", label: "Challenges", actief: actief?.startsWith("challenges") ?? false, onPress: naar("challenges"), icoon: (kleur) => <NavIcoonChallenges kleur={kleur} /> },
               { key: "profiel", label: "Profiel", actief: actief?.startsWith("profiel") ?? false, onPress: naar("profiel"), icoon: (kleur) => <NavIcoonProfiel kleur={kleur} /> },
             ]}

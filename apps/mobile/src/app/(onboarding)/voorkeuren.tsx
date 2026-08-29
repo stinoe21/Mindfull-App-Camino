@@ -19,8 +19,8 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { bewaarInstellingen, VOORKEUR_OPTIES } from "@/features/profiel/instellingen";
 
 const nl = {
-  titel: "Waar wil je aan werken?",
-  ondertitel: "Kies wat past. Dit blijft op je telefoon, en je kunt het altijd aanpassen in Instellingen.",
+  titel: "Welke onderwerpen spreken je aan?",
+  ondertitel: "Kies wat past. Aanpassen kan altijd in Instellingen.",
   verder: "Verder",
   slaOver: "Sla over",
 } as const;

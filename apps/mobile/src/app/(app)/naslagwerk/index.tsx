@@ -24,16 +24,16 @@ import { leesInstellingen } from "@/features/profiel/instellingen";
 
 const nl = {
   titel: "Naslagwerk",
-  ondertitel: "Betrouwbare kennis, altijd met bron.",
-  zoekPlaceholder: "Zoek een onderwerp...",
+  ondertitel: "Artikelen van MIND, altijd met bron.",
+  zoekPlaceholder: "Zoek een onderwerp",
   zoekLabel: "Zoek in het naslagwerk",
   onderwerpen: "Onderwerpen",
   artikelen: "Artikelen",
   artikelenNote: "Alles uit de bibliotheek van MIND.",
   nietsGevondenTitel: "Niets gevonden",
-  nietsGevonden: "Geen artikelen gevonden. Probeer een ander woord of onderwerp.",
-  nietsGevondenVoor: "Geen artikelen gevonden voor “{term}”. Probeer een ander woord of onderwerp.",
-  wisZoekopdracht: "Wis de zoekopdracht",
+  nietsGevonden: "Probeer een ander woord.",
+  nietsGevondenVoor: "Niets gevonden voor “{term}”. Probeer een ander woord.",
+  wisZoekopdracht: "Wis zoekopdracht",
   bronMind: "BRON: MIND",
 } as const;
 const teksten: Woordenboek<typeof nl> = {

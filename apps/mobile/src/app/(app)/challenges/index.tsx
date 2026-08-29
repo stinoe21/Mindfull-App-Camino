@@ -18,16 +18,16 @@ import { CHALLENGES } from "@/features/content/data/challenges";
 
 const nl = {
   titel: "Challenges",
-  ondertitel: "Kleine stappen van MIND, groot verschil.",
+  ondertitel: "Kleine stappen, geen opdrachten.",
   leegTitel: "Nog geen challenges",
-  leegUitleg: "Er staan nog geen challenges klaar. Kom later terug.",
+  leegUitleg: "Binnenkort staan ze hier.",
   challengesTitel: "Challenges",
-  challengesNote: "In je eigen tempo, onderdeel voor onderdeel.",
+  challengesNote: "In je eigen tempo, dag voor dag.",
   labelChallenge: "CHALLENGE",
   specialsTitel: "Themaspecials",
   specialsNote: "Een paar dagen aandacht voor een thema.",
   labelThemaspecial: "THEMASPECIAL",
-  onderdelenMeta: "{n} onderdelen · MIND",
+  onderdelenMeta: "{n} dagen · MIND",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -42,7 +42,7 @@ const teksten: Woordenboek<typeof nl> = {
     specialsTitel: "Theme specials",
     specialsNote: "A few days of attention for one theme.",
     labelThemaspecial: "THEME SPECIAL",
-    onderdelenMeta: "{n} parts · MIND",
+    onderdelenMeta: "{n} days · MIND",
   },
 };
 

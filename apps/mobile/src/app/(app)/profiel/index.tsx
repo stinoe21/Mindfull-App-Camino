@@ -23,7 +23,7 @@ import { InstellingenGroep, InstellingenRij } from "@/features/profiel/Instellin
 
 const nl = {
   titel: "Profiel",
-  evenKijken: "Even kijken...",
+  evenKijken: "Even geduld.",
   ingelogdAls: "Ingelogd als {email}",
   ingelogd: "Ingelogd",
   nietIngelogd: "Niet ingelogd",
@@ -129,7 +129,7 @@ export default function Profiel() {
           label="Wat er met je check-in gebeurt"
           onPress={() => router.push("/weerbericht")}
         />
-        <InstellingenRij label="Privacyverklaring" omschrijving="Volgt" uit laatste />
+        <InstellingenRij label="Privacyverklaring" omschrijving="Binnenkort" uit laatste />
       </InstellingenGroep>
 
       <InstellingenGroep titel="Account">

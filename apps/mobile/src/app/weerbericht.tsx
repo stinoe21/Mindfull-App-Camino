@@ -22,21 +22,21 @@ import { WatIsHetWeerbericht } from "@/features/weer/WatIsHetWeerbericht";
 import { UITLEG_ANONIMITEIT, WeerberichtIntro } from "@/features/weer/WeerberichtIntro";
 
 const nl = {
-  titel: "Weerbericht Nederland",
+  titel: "Het mentale weer van Nederland",
   ondertitel: "Het mentale weer van vandaag, samen opgeteld.",
-  ophalen: "Het weerbericht wordt opgehaald.",
-  leegTitel: "Nog even geduld",
-  leegUitleg: "Er zijn vandaag nog te weinig check-ins om een landelijk beeld te tonen. Kom later terug.",
-  logInTitel: "Log eerst in",
+  ophalen: "Even geduld.",
+  leegTitel: "Nog te vroeg voor een beeld",
+  leegUitleg: "Nog te weinig check-ins voor een landelijk beeld. Later vandaag staat hier meer.",
+  logInTitel: "Hiervoor moet je ingelogd zijn",
   logInUitleg:
-    "Het landelijke weerbericht is er voor ingelogde gebruikers. Zo telt iedereen precies één keer per dag mee.",
+    "Zo telt iedereen één keer per dag mee.",
   inloggen: "Inloggen",
   geenVerbindingTitel: "Geen verbinding",
   geenVerbindingUitleg:
     "Het weerbericht kon niet worden opgehaald. Controleer je verbinding en probeer het opnieuw.",
   probeerOpnieuw: "Probeer opnieuw",
   totaalMeta: "{n} check-ins vandaag, allemaal anoniem.",
-  terugDashboard: "Terug naar dashboard",
+  terugDashboard: "Terug naar Home",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -55,7 +55,7 @@ const teksten: Woordenboek<typeof nl> = {
       "The weather forecast couldn't be loaded. Check your connection and try again.",
     probeerOpnieuw: "Try again",
     totaalMeta: "{n} check-ins today, all anonymous.",
-    terugDashboard: "Back to dashboard",
+    terugDashboard: "Back to Home",
   },
 };
 

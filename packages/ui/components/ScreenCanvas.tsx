@@ -26,7 +26,7 @@ import { TERUGKNOP_MAAT } from "./TerugKnop.tsx";
 import type { WeerStaat } from "./achtergronden.ts";
 
 /** Waar het vel begint als er hero-inhoud is: de band uit het prototype. */
-export const HERO_BAND = 176;
+export const HERO_BAND = 200;
 
 export type ScreenCanvasProps = {
   variant?: "vel" | "overlay";
