@@ -16,6 +16,7 @@ import { colors, palette, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
+import { MascotMain } from "@mind/ui/components/MascotMain";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -41,7 +42,7 @@ export default function Anonimiteit() {
   };
 
   return (
-    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">Draag anoniem bij</AppText>
         <AppText rol="subtitle">Niemand kan zien wat jij hebt ingevuld.</AppText>

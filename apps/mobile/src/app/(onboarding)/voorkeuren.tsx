@@ -12,6 +12,7 @@ import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Chip } from "@mind/ui/components/Chip";
+import { MascotMain } from "@mind/ui/components/MascotMain";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -49,7 +50,7 @@ export default function Voorkeuren() {
   };
 
   return (
-    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{t("titel")}</AppText>
         <AppText rol="subtitle">
