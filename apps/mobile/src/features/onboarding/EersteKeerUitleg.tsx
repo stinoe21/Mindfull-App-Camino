@@ -20,26 +20,18 @@ import { Card } from "@mind/ui/components/Card";
 
 const SLEUTEL = "mind.uitleg-gezien";
 
+// Twee stappen, niet vier (productprincipe 7 en de copy-audit van 29
+// augustus 2026): welkom was al een introscherm.
 const STAPPEN: { kop: string; tekst: string }[] = [
   {
     kop: "Zo werkt de app",
     tekst:
-      "Elke dag één korte check-in: vier schuifjes over hoe je je voelt. Daaruit komt jouw weerbeeld van vandaag. Niets daarvan is goed of fout.",
-  },
-  {
-    kop: "Jouw weer en het weer van Nederland",
-    tekst:
-      "Na de check-in zie je jouw weer met één zachte tip. Jouw weerbeeld telt anoniem mee in het mentale weerbericht van Nederland, als je daar toestemming voor gaf. Niemand ziet wat jij invulde.",
+      "Elke dag één korte check-in van vier vragen. Daaruit komt jouw weer van vandaag, met één zachte tip. Het telt anoniem mee in het mentale weer van Nederland, als je daar ja op zei.",
   },
   {
     kop: "Tips en challenges",
     tekst:
-      "Onder Tips staan artikelen van MIND, eerst over de onderwerpen die jij koos. Onder Challenges vind je kleine stappen voor een aantal dagen. Geen opdrachten, wel uitnodigingen.",
-  },
-  {
-    kop: "Alles is aan te passen",
-    tekst:
-      "Je naam, je onderwerpen en je toestemmingen staan in Instellingen, rechtsboven. Je kunt er altijd op terugkomen, en je account verwijderen kan ook.",
+      "Onder Tips staan artikelen van MIND, eerst over jouw onderwerpen. Onder Challenges vind je kleine stappen voor een paar dagen. Alles is aan te passen in Instellingen.",
   },
 ];
 
@@ -76,7 +68,7 @@ export function EersteKeerUitleg() {
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
         <Button label="Overslaan" variant="link" onPress={klaar} />
         {/* Tekstlinks, geen gevulde knop: de check-in-knop is de enige primaire op dit scherm. */}
-        <Button label={laatste ? "Begrepen" : "Volgende"} variant="link" onPress={laatste ? klaar : () => zetStap(stap + 1)} />
+        <Button label={laatste ? "Klaar" : "Volgende"} variant="link" onPress={laatste ? klaar : () => zetStap(stap + 1)} />
       </View>
     </Card>
   );

@@ -17,7 +17,9 @@ export function HulplijnKaart() {
       <AppText rol="bodySmall" kleur="secondary">
         Kom gratis met onze professionals in contact. Ook via WhatsApp.
       </AppText>
-      <Button label="Kom in contact" variant="secondary" onPress={() => router.push("/hulplijn")} />
+      {/* Primair, net als op de Hulplijn-pagina zelf: dit is het contactmoment
+          dat er op een zware dag toe doet (designaudit 29 augustus 2026). */}
+      <Button label="Kom in contact" onPress={() => router.push("/hulplijn")} />
     </Card>
   );
 }
