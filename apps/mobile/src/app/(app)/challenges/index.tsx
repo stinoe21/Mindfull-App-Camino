@@ -69,7 +69,7 @@ export default function Challenges() {
     router.push({ pathname: "/challenges/[challenge]", params: { challenge: slug } });
 
   return (
-    <ScreenCanvas state="default" metNavRuimte>
+    <ScreenCanvas state="default" kopTitel={t("titel")} metNavRuimte>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{t("titel")}</AppText>
         <AppText rol="subtitle">{t("ondertitel")}</AppText>

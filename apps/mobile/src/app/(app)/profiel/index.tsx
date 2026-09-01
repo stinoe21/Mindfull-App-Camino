@@ -77,7 +77,7 @@ export default function Profiel() {
   );
 
   return (
-    <ScreenCanvas state="default" metNavRuimte>
+    <ScreenCanvas state="default" kopTitel={t("titel")} metNavRuimte>
       {/* De ingang naar Instellingen rechtsboven. Nu als tekst; het tandwiel-
           icoon komt van de eigenaar en vervangt dan alleen deze knop. */}
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
