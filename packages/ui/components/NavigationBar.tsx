@@ -82,15 +82,17 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
             top: 0,
             bottom: 0,
             backgroundColor: colors.surfaceCard,
-            // 0.85 sinds 29 augustus 2026 (designaudit): op 0.4 was de pil
-            // niet van het vel te onderscheiden. De blur blijft eronder.
-            opacity: 0.85,
+            // Vrijwel dekkend wit met dunne scheidingslijnen, zoals de
+            // navigatiebalk in Figma (83:543), sinds 1 september 2026. De blur
+            // blijft eronder voor de rand van scrollende content.
+            opacity: 0.95,
           }}
         />
         <View style={{ flex: 1, flexDirection: "row", alignItems: "stretch", paddingHorizontal: space[2], paddingVertical: space[2] }}>
-          {items.map((item) => (
+          {items.map((item, i) => (
+            <View key={item.key} style={{ flex: 1, flexDirection: "row", alignItems: "stretch" }}>
+            {i > 0 ? <View style={{ width: 1, marginVertical: space[3], backgroundColor: colors.borderDefault }} /> : null}
             <Pressable
-              key={item.key}
               accessibilityRole="button"
               accessibilityState={{ selected: item.actief }}
               onPress={item.onPress}
@@ -113,6 +115,7 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
                 {item.label}
               </AppText>
             </Pressable>
+            </View>
           ))}
         </View>
       </View>
