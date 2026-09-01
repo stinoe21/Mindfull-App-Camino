@@ -14,8 +14,8 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 
 const nl = {
-  titel: "Het mentale weerbericht",
-  ondertitel: "Hoe is je weer vandaag?",
+  titel: "Weer MIND",
+  ondertitel: "Weer even mindful. Hoe is je weer vandaag?",
   uitleg:
     "Vier korte vragen per dag. Je ziet jouw eigen weer, met één kleine tip. En je telt anoniem mee in het mentale weer van Nederland.",
   aanDeSlag: "Aan de slag",
@@ -23,8 +23,8 @@ const nl = {
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
-    titel: "The mental weather forecast",
-    ondertitel: "How's your weather today?",
+    titel: "Weer MIND",
+    ondertitel: "Mindful again. How's your weather today?",
     uitleg:
       "Check in every day with four short questions. You see your own weather, with a small tip for today, and you count anonymously towards the mental weather forecast of the Netherlands.",
     aanDeSlag: "Get started",
