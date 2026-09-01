@@ -112,7 +112,7 @@ export default function ChallengeDetail() {
       {/* Beeldtegel zoals op het Figma Challenge Screen (41:68). Tot MIND
           beelden levert staat de vlieger erin; geen eigen illustratie. */}
       <View style={{ height: 160, borderRadius: radius.lg, backgroundColor: palette.purple50, alignItems: "center", justifyContent: "center" }}>
-        <MascotteVlieger state={allesKlaar ? "zonnig" : "default"} hoogte={96} />
+        <MascotteVlieger state={allesKlaar ? "zonnig" : "wolken"} hoogte={96} />
       </View>
 
       {huidig ? (
