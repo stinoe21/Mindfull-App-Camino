@@ -43,9 +43,7 @@ const nl = {
   hoeWeer: "Hoe is je weer vandaag?",
   jouwWeerOverline: "JOUW WEER VANDAAG",
   bekijkJeWeer: "Bekijk je weer",
-  evenInchecken: "Even inchecken?",
-  evenIncheckenSub: "Neem een momentje voor jezelf",
-  evenIncheckenUitleg: "Kies het weer dat vandaag het best past. Jouw check-in telt anoniem mee in het mentale weer van Nederland.",
+  evenIncheckenUitleg: "Vier korte vragen, één minuut. Je check-in telt anoniem mee.",
   evenIncheckenKnop: "Even inchecken",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Dit weer zien we vandaag het vaakst",
@@ -69,9 +67,7 @@ const teksten: Woordenboek<typeof nl> = {
     hoeWeer: "How's your weather today?",
     jouwWeerOverline: "YOUR WEATHER TODAY",
     bekijkJeWeer: "See your weather",
-    evenInchecken: "Time to check in?",
-    evenIncheckenSub: "Take a moment for yourself",
-    evenIncheckenUitleg: "Pick the weather that fits today best. Your check-in counts anonymously towards the mental weather of the Netherlands.",
+    evenIncheckenUitleg: "Four short questions, one minute. Your check-in counts anonymously.",
     evenIncheckenKnop: "Check in",
     weerVanNederland: "The mental weather of the Netherlands",
     weerVanNederlandSub: "The weather we see most today",
@@ -165,17 +161,12 @@ export default function Dashboard() {
           <AppText rol="labelButton" kleur="brand">{t("bekijkJeWeer")}</AppText>
         </Card>
       ) : (
-        <View style={{ gap: space[3] }}>
-          <View style={{ gap: space[1] }}>
-            <AppText rol="h2">{t("evenInchecken")}</AppText>
-            <AppText rol="body">{t("evenIncheckenSub")}</AppText>
-          </View>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
-            <AppText rol="bodySmall" style={{ flex: 1 }}>{t("evenIncheckenUitleg")}</AppText>
-            <MascotMain hoogte={120} />
-          </View>
+        // De vraag staat al op de hero, de mascotte ook. Hier alleen één regel
+        // en de knop (ontdubbeling, 1 september 2026).
+        <Card tone="white" style={{ gap: space[3] }}>
+          <AppText rol="body">{t("evenIncheckenUitleg")}</AppText>
           <Button label={t("evenIncheckenKnop")} onPress={() => router.push("/check-in/1")} />
-        </View>
+        </Card>
       )}
 
       {/* Eenmalige rondleiding, onder de check-in: die blijft de hoofdrol houden. */}

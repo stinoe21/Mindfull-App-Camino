@@ -12,7 +12,6 @@ import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
-import { Chip } from "@mind/ui/components/Chip";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -58,7 +57,8 @@ export default function Artikel() {
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[2] }}>
-        <Chip label={artikel.onderwerp} />
+        {/* Het onderwerp alleen als het iets toevoegt aan de titel. */}
+        {artikel.onderwerp !== artikel.titel ? <AppText rol="subtitle">{artikel.onderwerp}</AppText> : null}
         <AppText rol="h1">{artikel.titel}</AppText>
       </View>
 

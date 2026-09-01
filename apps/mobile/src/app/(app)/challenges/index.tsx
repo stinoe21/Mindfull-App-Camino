@@ -87,14 +87,15 @@ export default function Challenges() {
       {/* Ritme in plaats van een raster (designaudit 29 augustus 2026): de
           eerste, of de challenge waar je mee bezig bent, staat breed in de
           zonkleur met voortgang; de rest half en wit. */}
+      {/* Geen sectiekop: de h1 zegt al "Challenges" (ontdubbeling, 1 september 2026). */}
       {challenges.length ? (
-        <ContentSection title={t("challengesTitel")} note={t("challengesNote")}>
+        <View>
           <ContentGrid>
             {challenges.map((c, i) => {
               const klaar = voortgang[c.slug] ?? 0;
               const actief = i === 0;
               return (
-                <ContentCard key={c.slug} full={actief || (i === challenges.length - 1 && (challenges.length - 1) % 2 === 1)} tone={actief ? "sun" : "white"} label={t("labelChallenge")} title={c.naam} onPress={() => open(c.slug)}>
+                <ContentCard key={c.slug} full={actief || (i === challenges.length - 1 && (challenges.length - 1) % 2 === 1)} tone={actief ? "sun" : "white"} title={c.naam} onPress={() => open(c.slug)}>
                   <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(c.dagen.length))}</AppText>
                   {klaar > 0 ? (
                     <View style={{ gap: space[1], marginTop: space[1] }}>
@@ -108,14 +109,14 @@ export default function Challenges() {
               );
             })}
           </ContentGrid>
-        </ContentSection>
+        </View>
       ) : null}
 
       {specials.length ? (
         <ContentSection title={t("specialsTitel")} note={t("specialsNote")}>
           <ContentGrid>
             {specials.map((c, i) => (
-              <ContentCard key={c.slug} full={i === 0 || (i === specials.length - 1 && (specials.length - 1) % 2 === 1)} tone={i === 0 ? "coral" : "white"} label={t("labelThemaspecial")} title={c.naam} onPress={() => open(c.slug)}>
+              <ContentCard key={c.slug} full={i === 0 || (i === specials.length - 1 && (specials.length - 1) % 2 === 1)} tone={i === 0 ? "coral" : "white"} title={c.naam} onPress={() => open(c.slug)}>
                 <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(c.dagen.length))}</AppText>
               </ContentCard>
             ))}

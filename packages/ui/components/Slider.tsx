@@ -66,7 +66,7 @@ export function Slider({ value, onChange, leftLabel, rightLabel, hint = "Schuif 
         justifyContent: "center",
       }}
     >
-      <AppText rol="bodySmall" kleur="secondary">{hint}</AppText>
+      {hint ? <AppText rol="bodySmall" kleur="secondary">{hint}</AppText> : null}
       {/* gap 10 volgt de referentie (Slider.jsx) */}
       <View style={{ gap: 10 }}>
         <View

@@ -96,8 +96,7 @@ export default function ChallengeDetail() {
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[2] }}>
-        {/* Kicker in italic serif, zoals "Kleine stap" op het Figma Challenge Screen (41:68). */}
-        <AppText rol="subtitle">{challenge.soort === "challenge" ? "Challenge" : "Themaspecial"}</AppText>
+        {/* Geen kicker: de naam zegt al "challenge" (ontdubbeling, 1 september 2026). */}
         <AppText rol="h1">{challenge.naam}</AppText>
         <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(totaal))}</AppText>
       </View>
@@ -120,8 +119,9 @@ export default function ChallengeDetail() {
         </Card>
       )}
 
+      {/* De dag die open staat, staat al in de kaart hierboven; de lijst toont de rest. */}
       <View style={{ gap: space[3] }}>
-        {challenge.dagen.map((dag, i) => (
+        {challenge.dagen.map((dag, i) => huidig && i === klaar ? null : (
           <Card key={dag.titel} tone="outline" style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <View style={{ flexShrink: 1 }}>
               <AppText rol="labelCaption" kleur="secondary">{t("onderdeelNr").replace("{n}", String(i + 1))}</AppText>

@@ -131,7 +131,7 @@ export default function Naslagwerk() {
         </View>
       </ContentSection>
 
-      <ContentSection title={t("artikelen")} note={t("artikelenNote")}>
+      <ContentSection title={t("artikelen")}>
         {resultaten.length === 0 ? (
           <Card tone="outline">
             <AppText rol="h3">{t("nietsGevondenTitel")}</AppText>
@@ -156,7 +156,6 @@ export default function Naslagwerk() {
                 key={a.slug}
                 full={i === 0 || (i === resultaten.length - 1 && (resultaten.length - 1) % 2 === 1)}
                 tone={i === 0 ? "coral" : "white"}
-                label={t("bronMind")}
                 title={a.titel}
                 onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
               >
