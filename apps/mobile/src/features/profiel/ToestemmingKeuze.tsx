@@ -15,10 +15,10 @@
 import { useState } from "react";
 import { View } from "react-native";
 
-import { space } from "@mind/ui";
+import { colors, radius, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
-import { Chip } from "@mind/ui/components/Chip";
+import { PressableScale } from "@mind/ui/components/PressableScale";
 
 export const TOESTEMMING_VRAAG =
   "Mag MIND jouw gekozen mentale “weerstatus” verwerken voor het anonieme, geaggregeerde Mentale Weerbericht?";
@@ -41,17 +41,57 @@ type Props = {
   metUitleg?: boolean;
 };
 
+// Eén keuzerij: een rondje links dat zich vult bij keuze, de tekst ernaast.
+// Leest als een formulier in plaats van als twee chips met een lange zin.
+function KeuzeRij({ label, gekozen, onPress }: { label: string; gekozen: boolean; onPress: () => void }) {
+  return (
+    <PressableScale
+      accessibilityRole="radio"
+      accessibilityState={{ checked: gekozen }}
+      onPress={onPress}
+      schaal={0.99}
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        gap: space[3],
+        paddingVertical: space[3],
+        paddingHorizontal: space[4],
+        borderRadius: radius.md,
+        borderWidth: 1,
+        borderColor: gekozen ? colors.brandDefault : colors.borderDefault,
+        backgroundColor: gekozen ? colors.brandSubtle : colors.surfaceCard,
+      }}
+    >
+      <View
+        style={{
+          width: space[5],
+          height: space[5],
+          borderRadius: radius.pill,
+          borderWidth: 2,
+          borderColor: gekozen ? colors.brandDefault : colors.borderDefault,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {gekozen ? <View style={{ width: space[3], height: space[3], borderRadius: radius.pill, backgroundColor: colors.brandDefault }} /> : null}
+      </View>
+      <AppText rol={gekozen ? "bodyEmphasis" : "body"} style={{ flexShrink: 1 }}>{label}</AppText>
+    </PressableScale>
+  );
+}
+
 export function ToestemmingKeuze({ waarde, onKies, metUitleg = false }: Props) {
   const [uitgeklapt, zetUitgeklapt] = useState(false);
   const toonUitleg = metUitleg || uitgeklapt;
 
   return (
     <View style={{ gap: space[3] }}>
-      <AppText rol={metUitleg ? "h3" : "bodyEmphasis"}>{TOESTEMMING_VRAAG}</AppText>
+      {/* De vraag als vette bodytekst, niet als kop: het is een formulierveld. */}
+      <AppText rol="bodyEmphasis">{TOESTEMMING_VRAAG}</AppText>
       {toonUitleg ? <AppText rol="bodySmall" kleur="secondary">{TOESTEMMING_UITLEG}</AppText> : null}
       <View style={{ gap: space[2] }} accessibilityRole="radiogroup">
-        <Chip label={TOESTEMMING_JA} active={waarde === true} onPress={() => onKies(true)} />
-        <Chip label={TOESTEMMING_NEE} active={waarde === false} onPress={() => onKies(false)} />
+        <KeuzeRij label={TOESTEMMING_JA} gekozen={waarde === true} onPress={() => onKies(true)} />
+        <KeuzeRij label={TOESTEMMING_NEE} gekozen={waarde === false} onPress={() => onKies(false)} />
       </View>
       {!metUitleg ? (
         <Button
