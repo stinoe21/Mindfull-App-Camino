@@ -54,6 +54,22 @@ export const UITDRUKKING_PER_SLUG: Record<string, Uitdrukking> = {
 
 type Lijn = { d: string; dik?: number; vul?: boolean };
 
+// Per uitdrukking een eigen tint uit het palet (lijf en schaduw), zodat het
+// rooster niet één kleur is. Koel en gedempt voor de zware onderwerpen,
+// warm en licht voor de lichte. Stijn, 1 september 2026.
+const KLEUR: Record<Uitdrukking, { lijf: string; schaduw: string }> = {
+  slaperig: { lijf: palette.purple200, schaduw: palette.purple400 },
+  gestrest: { lijf: palette.accentCoral, schaduw: palette.coral600 },
+  overspannen: { lijf: palette.yellow600, schaduw: palette.yellow700 },
+  somber: { lijf: palette.primary300, schaduw: palette.primary500 },
+  bang: { lijf: palette.violet300, schaduw: palette.violet500 },
+  piekerend: { lijf: palette.purple100, schaduw: palette.purple300 },
+  energiek: { lijf: palette.accentYellow, schaduw: palette.yellow600 },
+  "in-balans": { lijf: palette.lime200, schaduw: palette.lime500 },
+  ontspannen: { lijf: palette.primary100, schaduw: palette.primary300 },
+  standvastig: { lijf: palette.primary500, schaduw: palette.primary700 },
+};
+
 // Gezichten en attributen, als paden in het frame van 129 bij 99.
 const OGEN = {
   open: ["M52.5 37.5 v5.5", "M71.5 37.5 v5.5"],
@@ -179,15 +195,16 @@ export function VliegerOnderwerp({ onderwerp, slug, uitdrukking, hoogte = 56 }: 
   const schaal = hoogte / H;
   if (!gekozen) return <MascotteVlieger state="wolken" hoogte={hoogte} />;
   const g = UITDRUKKINGEN[gekozen];
+  const kleur = KLEUR[gekozen];
 
   return (
     <View style={{ width: W * schaal, height: H * schaal }} accessibilityLabel={"Vlieger, " + gekozen}>
-      <MascotteVlieger state="wolken" hoogte={hoogte} />
+      <MascotteVlieger state="wolken" hoogte={hoogte} kleur={kleur} />
       <Svg width={W * schaal} height={H * schaal} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", left: 0, top: 0 }}>
-        {/* Het originele gezicht afdekken met de lijfkleur van deze pose. */}
-        <Circle cx={52.5} cy={40} r={4.4} fill={palette.accentCoral} />
-        <Circle cx={71.5} cy={40} r={4.4} fill={palette.accentCoral} />
-        <Ellipse cx={59.5} cy={52} rx={7.5} ry={5.2} fill={palette.accentCoral} />
+        {/* Het originele gezicht afdekken met de lijfkleur. */}
+        <Circle cx={52.5} cy={40} r={4.4} fill={kleur.lijf} />
+        <Circle cx={71.5} cy={40} r={4.4} fill={kleur.lijf} />
+        <Ellipse cx={59.5} cy={52} rx={7.5} ry={5.2} fill={kleur.lijf} />
         {/* Ogen */}
         {g.rondeOgen ? (
           <>

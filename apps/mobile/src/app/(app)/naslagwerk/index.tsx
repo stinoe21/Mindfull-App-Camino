@@ -160,10 +160,12 @@ export default function Naslagwerk() {
                 title={a.titel}
                 onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
               >
-                {a.onderwerp !== a.titel ? <AppText rol="bodySmall" kleur="secondary">{a.onderwerp}</AppText> : null}
-                {/* De vlieger met het gezicht van dit onderwerp, rechtsonder in de kaart. */}
-                <View style={{ alignItems: "flex-end", marginTop: space[1] }}>
-                  <VliegerOnderwerp onderwerp={a.onderwerp} slug={a.slug} hoogte={i === 0 ? 64 : 44} />
+                {/* Geen ondertekst: het gezicht en de kleur zeggen het onderwerp.
+                    De vlieger staat altijd rechtsonder; de lege View houdt er
+                    ruimte voor vrij, zodat elke kaart dezelfde opbouw heeft. */}
+                <View style={{ height: i === 0 ? 72 : 56 }} />
+                <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
+                  <VliegerOnderwerp onderwerp={a.onderwerp} slug={a.slug} hoogte={i === 0 ? 72 : 52} />
                 </View>
               </ContentCard>
             ))}
