@@ -215,7 +215,7 @@ export default function Dashboard() {
             <ShelfTegel
               key={a.slug}
               label={a.titel}
-              beeld={<MascotteVlieger state="default" hoogte={56} />}
+              beeld={<MascotteVlieger state="wolken" hoogte={56} />}
               onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
             />
           ))}
