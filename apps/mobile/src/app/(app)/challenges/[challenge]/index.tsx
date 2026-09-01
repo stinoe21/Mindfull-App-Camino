@@ -10,10 +10,11 @@ import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
 
-import { space } from "@mind/ui";
+import { palette, radius, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
+import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -38,6 +39,9 @@ const nl = {
   volledigeUitleg:
     "Dit is een voorproefje. De hele challenge krijg je gratis per e-mail van MIND.",
   aanmelden: "Aanmelden bij MIND",
+  leesVerder: "Lees verder",
+  minder: "Minder",
+  meerChallenges: "Meer challenges",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -57,7 +61,10 @@ const teksten: Woordenboek<typeof nl> = {
     volledigeTitel: "Want the full challenge?",
     volledigeUitleg:
       "What you see here is a taster: the introduction for each part. You get the full challenge, with all the assignments and exercises, for free by email from MIND, at your own pace.",
-    aanmelden: "Sign up for the full challenge",
+    aanmelden: "Sign up with MIND",
+    leesVerder: "Read more",
+    minder: "Less",
+    meerChallenges: "More challenges",
   },
 };
 
@@ -67,6 +74,7 @@ export default function ChallengeDetail() {
   const { challenge: slug } = useLocalSearchParams<{ challenge: string }>();
   const challenge = CHALLENGES.find((c) => c.slug === slug);
   const [klaar, zetKlaar] = useState(0);
+  const [uitgeklapt, zetUitgeklapt] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -101,13 +109,23 @@ export default function ChallengeDetail() {
         <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(totaal))}</AppText>
       </View>
 
+      {/* Beeldtegel zoals op het Figma Challenge Screen (41:68). Tot MIND
+          beelden levert staat de vlieger erin; geen eigen illustratie. */}
+      <View style={{ height: 160, borderRadius: radius.lg, backgroundColor: palette.purple50, alignItems: "center", justifyContent: "center" }}>
+        <MascotteVlieger state={allesKlaar ? "zonnig" : "default"} hoogte={96} />
+      </View>
+
       {huidig ? (
         <Card tone="white">
-          <AppText rol="labelOverline" kleur="secondary">
+          <AppText rol="labelOverline" kleur="brand">
             {t("onderdeelVan").replace("{x}", String(klaar + 1)).replace("{y}", String(totaal))}
           </AppText>
           <AppText rol="h3">{huidig.titel}</AppText>
-          {huidig.intro ? <AppText rol="body">{huidig.intro}</AppText> : null}
+          {/* De intro van MIND is lang; vijf regels, en de rest op verzoek. */}
+          {huidig.intro ? <AppText rol="body" numberOfLines={uitgeklapt ? undefined : 5}>{huidig.intro}</AppText> : null}
+          {huidig.intro && huidig.intro.length > 240 ? (
+            <Button label={uitgeklapt ? t("minder") : t("leesVerder")} variant="link" onPress={() => zetUitgeklapt(!uitgeklapt)} />
+          ) : null}
           <Button label={t("onderdeelAfronden")} onPress={rondAf} />
         </Card>
       ) : (
@@ -145,7 +163,10 @@ export default function ChallengeDetail() {
         </Card>
       ) : null}
 
-      <Button label={t("terugNaarChallenges")} variant="link" onPress={() => router.back()} />
+      {/* Onderaan de weg naar de rest, als kaart zoals in Figma ("Meer challenges"). */}
+      <Card tone="primary" style={{ alignItems: "flex-start" }}>
+        <Button label={t("meerChallenges")} variant="secondary" onPress={() => router.back()} />
+      </Card>
     </ScreenCanvas>
   );
 }

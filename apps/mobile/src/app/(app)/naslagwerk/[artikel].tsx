@@ -8,10 +8,11 @@ import * as Linking from "expo-linking";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View } from "react-native";
 
-import { space } from "@mind/ui";
+import { palette, radius, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
-import { Card } from "@mind/ui/components/Card";
+import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
+import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -25,6 +26,7 @@ const nl = {
   bron: "Bron: MIND",
   leesOp: "Lees verder op wijzijnmind.nl",
   terug: "Terug",
+  meerTitel: "Meer uit het naslagwerk",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -35,6 +37,7 @@ const teksten: Woordenboek<typeof nl> = {
     bron: "Source: MIND",
     leesOp: "Read on wijzijnmind.nl",
     terug: "Back",
+    meerTitel: "More from the library",
   },
 };
 
@@ -54,29 +57,56 @@ export default function Artikel() {
     );
   }
 
+  // Eerst artikelen uit hetzelfde onderwerp, dan de rest; nooit dit artikel zelf.
+  const meer = [...ARTIKELEN]
+    .filter((a) => a.slug !== artikel.slug)
+    .sort((a, b) => Number(b.onderwerp === artikel.onderwerp) - Number(a.onderwerp === artikel.onderwerp))
+    .slice(0, 4);
+
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>
+      {/* Opbouw naar Figma Info-scherm (41:71): kicker, titel, beeldtegel,
+          metaregel, de eerste alinea vet, dan de rest, dan een knop en
+          een plank met meer uit hetzelfde onderwerp. */}
       <View style={{ gap: space[2] }}>
-        {/* Het onderwerp alleen als het iets toevoegt aan de titel. */}
         {artikel.onderwerp !== artikel.titel ? <AppText rol="subtitle">{artikel.onderwerp}</AppText> : null}
         <AppText rol="h1">{artikel.titel}</AppText>
       </View>
 
+      <View style={{ height: 160, borderRadius: radius.lg, backgroundColor: palette.purple50, alignItems: "center", justifyContent: "center" }}>
+        <MascotteVlieger state="default" hoogte={96} />
+      </View>
+
+      <AppText rol="labelCaption" kleur="secondary">{t("bron") + " · " + artikel.onderwerp}</AppText>
+
       {artikel.blokken.map((blok, i) => (
         <View key={i} style={{ gap: space[2] }}>
           {blok.kop ? <AppText rol="h3">{blok.kop}</AppText> : null}
-          <AppText rol="body">{blok.tekst}</AppText>
+          <AppText rol={i === 0 ? "bodyEmphasis" : "body"}>{blok.tekst}</AppText>
         </View>
       ))}
 
-      <Card tone="outline">
-        <AppText rol="bodySmall" kleur="secondary">{t("bron")}</AppText>
-        {artikel.bron ? (
-          <Button label={t("leesOp")} variant="link" onPress={() => Linking.openURL(artikel.bron)} />
-        ) : null}
-      </Card>
+      {artikel.bron ? (
+        <View style={{ alignItems: "flex-start" }}>
+          <Button label={t("leesOp")} onPress={() => Linking.openURL(artikel.bron)} />
+        </View>
+      ) : null}
 
-      <Button label={t("terug")} variant="link" onPress={() => router.back()} />
+      {meer.length ? (
+        <ContentSection title={t("meerTitel")}>
+          <ContentShelf>
+            {meer.map((a) => (
+              <ShelfCard
+                key={a.slug}
+                tone="primary"
+                title={a.titel}
+                meta={a.onderwerp === a.titel ? undefined : a.onderwerp}
+                onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
+              />
+            ))}
+          </ContentShelf>
+        </ContentSection>
+      ) : null}
     </ScreenCanvas>
   );
 }
