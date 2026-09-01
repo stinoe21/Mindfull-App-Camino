@@ -60,7 +60,8 @@ const OGEN = {
   dicht: ["M49.5 40 q3 2.6 6 0", "M68.5 40 q3 2.6 6 0"],
   blij: ["M49.5 41.5 q3 -3.4 6 0", "M68.5 41.5 q3 -3.4 6 0"],
   omhoog: ["M52.5 35 v4.5", "M71.5 35 v4.5"],
-  hangend: ["M49.5 38 l6 2.2", "M74.5 38 l-6 2.2"],
+  // Moe: half dichte ogen, een vlakke lijn met een klein oogwit eronder.
+  moe: ["M49.5 40 h6", "M68.5 40 h6", "M50.5 42.5 q2 1.6 4 0", "M69.5 42.5 q2 1.6 4 0"],
 };
 const MOND = {
   glimlach: "M54.5 50.5 q5 5.5 10 0",
@@ -91,12 +92,12 @@ const UITDRUKKINGEN: Record<Uitdrukking, { ogen: string[]; rondeOgen?: boolean; 
     ],
   },
   overspannen: {
-    ogen: OGEN.hangend,
-    mond: MOND.vlak,
+    ogen: OGEN.moe,
+    mond: MOND.klein,
+    // Stoom die traag omhoog kringelt: uitgeblust, niet boos.
     extra: [
-      { d: "M84 14 q3 -4 0 -8" },
-      { d: "M90 16 q3 -4 0 -8" },
-      { d: "M96 14 q3 -4 0 -8" },
+      { d: "M86 20 q-3 -4 0 -8 q3 -4 0 -8" },
+      { d: "M94 18 q-3 -4 0 -8 q3 -4 0 -8" },
     ],
   },
   somber: {
