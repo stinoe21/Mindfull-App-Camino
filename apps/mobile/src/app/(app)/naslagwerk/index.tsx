@@ -17,6 +17,7 @@ import { Chip } from "@mind/ui/components/Chip";
 import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
+import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ARTIKELEN, ONDERWERPEN } from "@/features/content/data/artikelen";
@@ -160,6 +161,10 @@ export default function Naslagwerk() {
                 onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
               >
                 {a.onderwerp !== a.titel ? <AppText rol="bodySmall" kleur="secondary">{a.onderwerp}</AppText> : null}
+                {/* De vlieger met het gezicht van dit onderwerp, rechtsonder in de kaart. */}
+                <View style={{ alignItems: "flex-end", marginTop: space[1] }}>
+                  <VliegerOnderwerp onderwerp={a.onderwerp} slug={a.slug} hoogte={i === 0 ? 64 : 44} />
+                </View>
               </ContentCard>
             ))}
           </ContentGrid>

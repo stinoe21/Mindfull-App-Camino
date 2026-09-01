@@ -12,7 +12,7 @@ import { palette, radius, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
-import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
+import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -74,7 +74,7 @@ export default function Artikel() {
       </View>
 
       <View style={{ height: 160, borderRadius: radius.lg, backgroundColor: palette.purple50, alignItems: "center", justifyContent: "center" }}>
-        <MascotteVlieger state="wolken" hoogte={96} />
+        <VliegerOnderwerp onderwerp={artikel.onderwerp} slug={artikel.slug} hoogte={96} />
       </View>
 
       <AppText rol="labelCaption" kleur="secondary">{t("bron") + " · " + artikel.onderwerp}</AppText>
