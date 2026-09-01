@@ -74,7 +74,7 @@ export default function Artikel() {
       </View>
 
       <View style={{ height: 160, borderRadius: radius.lg, backgroundColor: palette.purple50, alignItems: "center", justifyContent: "center" }}>
-        <MascotteVlieger state="default" hoogte={96} />
+        <MascotteVlieger state="wolken" hoogte={96} />
       </View>
 
       <AppText rol="labelCaption" kleur="secondary">{t("bron") + " · " + artikel.onderwerp}</AppText>
