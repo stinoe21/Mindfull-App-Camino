@@ -12,16 +12,16 @@
 
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View } from "react-native";
 
-import { colors, space } from "@mind/ui";
+import { colors, radius, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { MascotteInput } from "@mind/ui/components/MascotteInput";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { Slider } from "@mind/ui/components/Slider";
+import type { WeerStaat } from "@mind/ui/components/achtergronden";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
@@ -52,10 +52,18 @@ const teksten: Woordenboek<typeof nl> = {
   },
 };
 
+// De hero-staat per vraag (ontwerp 05: warm voor wind, 06: blauw voor zicht).
+// Alleen bestaande achtergronden; geen nieuwe assets.
+const HERO_PER_STAP: Record<(typeof CHECKIN_STAPPEN)[number]["key"], WeerStaat> = {
+  temperatuur: "zonnig",
+  wind: "wind",
+  zicht: "mist",
+  wisselvallig: "wolken",
+};
+
 export default function CheckInStap() {
   const router = useRouter();
   const t = useVertaling(teksten);
-  const insets = useSafeAreaInsets();
   const params = useLocalSearchParams<{ stap: string }>();
   const nummer = Number(params.stap);
   const index = Number.isInteger(nummer) && nummer >= 1 && nummer <= CHECKIN_STAPPEN.length ? nummer - 1 : 0;
@@ -120,36 +128,29 @@ export default function CheckInStap() {
     router.replace("/dashboard");
   };
 
+  // Ontwerpschermen 05 en 06: per vraag een eigen gradient met de mascotte
+  // erop, daaronder het vel met overline, vraag, geruststelling, de slider
+  // in een witte kaart, de knop en vier stippen.
   return (
-    <View style={{ flex: 1 }}>
-    <ScrollView
-      style={{ flex: 1, backgroundColor: colors.surfaceBackground }}
-      contentContainerStyle={{
-        flexGrow: 1,
-        paddingTop: insets.top + 28,
-        paddingHorizontal: space[6],
-        paddingBottom: insets.bottom + 28,
-        gap: space[4],
-      }}
-    >
-      <View style={{ height: 136, alignItems: "center", justifyContent: "flex-end" }}>
-        <MascotteInput state={stap.key} hoogte={128} />
+    <ScreenCanvas state={HERO_PER_STAP[stap.key]} terugKnop={<TerugNaarVorige />} heroInhoud={<MascotteInput state={stap.key} hoogte={112} />}>
+      <View style={{ gap: space[2] }}>
+        <AppText rol="labelOverline" kleur="brand">
+          {t("stapVan").replace("{x}", String(index + 1)).replace("{y}", String(CHECKIN_STAPPEN.length))}
+        </AppText>
+        <AppText rol="h2">{stap.vraag}</AppText>
+        <AppText rol="body">{GERUSTSTELLING}</AppText>
       </View>
-      <AppText rol="labelOverline" kleur="secondary">
-        {t("stapVan").replace("{x}", String(index + 1)).replace("{y}", String(CHECKIN_STAPPEN.length))}
-      </AppText>
-      <AppText rol="h3">{stap.vraag}</AppText>
-      <AppText rol="bodySmall" kleur="secondary">{GERUSTSTELLING}</AppText>
       {/* Geen hint in de kaart: de geruststelling erboven zegt het al. */}
       <Slider value={waarde} onChange={zetLokaleWaarde} leftLabel={stap.links} rightLabel={stap.rechts} hint="" />
-      <View style={{ flex: 1 }} />
-      <Button label={laatste ? t("bekijkJeWeer") : t("verder")} fullWidth bezig={bezig} onPress={verder} />
-      <Button label={t("slaOver")} variant="link" fullWidth onPress={slaOver} />
-    </ScrollView>
-    {/* Zelfde plek als op ScreenCanvas-schermen: net onder de statusbalk. */}
-    <View style={{ position: "absolute", top: insets.top + space[1], left: space[3] }}>
-      <TerugNaarVorige />
-    </View>
-    </View>
+      <View style={{ gap: space[3] }}>
+        <Button label={laatste ? t("bekijkJeWeer") : t("verder")} fullWidth bezig={bezig} onPress={verder} />
+        <Button label={t("slaOver")} variant="link" fullWidth onPress={slaOver} />
+      </View>
+      <View style={{ flexDirection: "row", justifyContent: "center", gap: space[2] }} accessibilityLabel={t("stapVan").replace("{x}", String(index + 1)).replace("{y}", String(CHECKIN_STAPPEN.length))}>
+        {CHECKIN_STAPPEN.map((s, i) => (
+          <View key={s.key} style={{ width: i === index ? space[5] : space[2], height: space[2], borderRadius: radius.pill, backgroundColor: i === index ? colors.brandDefault : colors.borderDefault }} />
+        ))}
+      </View>
+    </ScreenCanvas>
   );
 }
