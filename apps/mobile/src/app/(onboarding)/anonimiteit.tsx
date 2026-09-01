@@ -22,8 +22,6 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
-import { WatIsHetWeerbericht } from "@/features/weer/WatIsHetWeerbericht";
-import { UITLEG_ANONIMITEIT, UITLEG_DETAIL } from "@/features/weer/WeerberichtIntro";
 
 export default function Anonimiteit() {
   const router = useRouter();
@@ -48,19 +46,18 @@ export default function Anonimiteit() {
         <AppText rol="subtitle">Niemand kan zien wat jij hebt ingevuld.</AppText>
       </View>
 
-      <Card tone="white">
-        <AppText rol="body">{UITLEG_ANONIMITEIT}</AppText>
-        <AppText rol="bodySmall" kleur="secondary">{UITLEG_DETAIL}</AppText>
-        <WatIsHetWeerbericht />
-      </Card>
-
-      <Card tone="white">
+      {/* Eén formulier, twee velden. De uitleg over anonimiteit stond hier
+          ook nog eens los boven de toestemming; die staat op het weerbericht
+          zelf, met de infoknop (ontdubbeling, 1 september 2026). */}
+      <View style={{ gap: space[2] }}>
+        <AppText rol="labelOverline" kleur="brand">1 VAN 2</AppText>
         <ToestemmingKeuze waarde={weerbericht} onKies={zetWeerbericht} metUitleg />
-      </Card>
+      </View>
 
-      <Card tone="white">
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
-          <AppText rol="bodySmall" style={{ flexShrink: 1 }}>
+      <View style={{ gap: space[2] }}>
+        <AppText rol="labelOverline" kleur="brand">2 VAN 2</AppText>
+        <Card tone="white" style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
+          <AppText rol="body" style={{ flexShrink: 1 }}>
             Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is
           </AppText>
           <Switch
@@ -68,18 +65,17 @@ export default function Anonimiteit() {
             onValueChange={zetVoorwaarden}
             trackColor={{ true: colors.brandDefault, false: palette.neutral200 }}
           />
-        </View>
-      </Card>
+        </Card>
+      </View>
 
-      {!compleet ? (
-        <AppText rol="bodySmall" kleur="secondary">
-          Maak een keuze over het weerbericht en accepteer de voorwaarden om verder te gaan. Nee zeggen
-          is een gewone keuze: de app werkt dan gewoon.
-        </AppText>
-      ) : null}
-
-      <View style={{ flex: 1 }} />
-      <Button label="Klaar" fullWidth disabled={!compleet} onPress={klaar} />
+      <View style={{ gap: space[3] }}>
+        <Button label="Klaar" fullWidth disabled={!compleet} onPress={klaar} />
+        {!compleet ? (
+          <AppText rol="bodySmall" kleur="secondary" centreer>
+            Kies ja of nee en zet de voorwaarden aan. Nee is een prima keuze; de app werkt dan net zo goed.
+          </AppText>
+        ) : null}
+      </View>
     </ScreenCanvas>
   );
 }

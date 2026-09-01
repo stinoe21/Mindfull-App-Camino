@@ -166,8 +166,10 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
         </View>
       </Animated.ScrollView>
       {/* Zodra de hero weggeschoven is, blijft alleen een smalle crème balk met
-          de titel over, zodat je altijd weet waar je bent. */}
-      {kopTitel ? (
+          de titel over, zodat je altijd weet waar je bent. Met een terugknop
+          komt de balk er ook zonder titel, zodat de knop niet los over de
+          tekst van het vel zweeft. */}
+      {kopTitel || terugKnop ? (
         <Animated.View
           pointerEvents="none"
           style={{
@@ -185,7 +187,7 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
             opacity: kopZichtbaar,
           }}
         >
-          <AppText rol="bodyEmphasis">{kopTitel}</AppText>
+          {kopTitel ? <AppText rol="bodyEmphasis">{kopTitel}</AppText> : null}
         </Animated.View>
       ) : null}
       {terugKnopOverlay}
