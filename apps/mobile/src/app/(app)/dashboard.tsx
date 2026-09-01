@@ -37,6 +37,7 @@ import { WEATHER_CODES, type WeatherCode } from "@mind/types";
 
 // Alleen interface-teksten. {share}, {total} en {n} worden op de plek ingevuld.
 const nl = {
+  home: "Home",
   nacht: "Hallo",
   morgen: "Goedemorgen",
   middag: "Goedemiddag",
@@ -61,6 +62,7 @@ const nl = {
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
+    home: "Home",
     nacht: "Hello",
     morgen: "Good morning",
     middag: "Good afternoon",
@@ -146,7 +148,7 @@ export default function Dashboard() {
   );
 
   return (
-    <ScreenCanvas state={weerbeeld ?? "default"} heroInhoud={hero} metNavRuimte>
+    <ScreenCanvas state={weerbeeld ?? "default"} heroInhoud={hero} kopTitel={naam || t("home")} metNavRuimte>
       {/* Slot 1: de check-in, direct op het vel (ontwerp 03), of jouw weer van vandaag */}
       {!weerGeladen ? (
         <ActivityIndicator color={colors.brandDefault} />

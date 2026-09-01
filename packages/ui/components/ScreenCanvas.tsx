@@ -21,6 +21,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors, radius, space } from "../tokens/tokens.ts";
 
+import { AppText } from "./AppText.tsx";
 import { BackgroundHeroGradient } from "./BackgroundHeroGradient.tsx";
 import { NAV_PIL_HOOGTE } from "./NavigationBar.tsx";
 import { TERUGKNOP_MAAT } from "./TerugKnop.tsx";
@@ -47,6 +48,8 @@ function gestaffeld(children: ReactNode, gap: number, centreer: boolean): ReactN
 
 /** Waar het vel begint als er hero-inhoud is: de band uit het prototype. */
 export const HERO_BAND = 200;
+/** Hoogte van de titelbalk onder de statusbalk, als die verschijnt. */
+const KOP_HOOGTE = 44;
 
 export type ScreenCanvasProps = {
   variant?: "vel" | "overlay";
@@ -58,6 +61,11 @@ export type ScreenCanvasProps = {
    * begroeting. Wordt gecentreerd in de band tussen statusbalk en vel.
    */
   heroInhoud?: React.ReactNode;
+  /**
+   * Korte titel voor de smalle balk die bovenin verschijnt zodra de hero is
+   * weggescrold: op Home de naam, elders de schermtitel.
+   */
+  kopTitel?: string;
   /** Ruimte onderin voor de zwevende navigatiebalk. */
   metNavRuimte?: boolean;
   /**
@@ -70,7 +78,7 @@ export type ScreenCanvasProps = {
   children?: React.ReactNode;
 };
 
-export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, heroInhoud, metNavRuimte = false, terugKnop, children }: ScreenCanvasProps) {
+export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, heroInhoud, kopTitel, metNavRuimte = false, terugKnop, children }: ScreenCanvasProps) {
   const insets = useSafeAreaInsets();
   const scrollY = useRef(new Animated.Value(0)).current;
   const navRuimte = metNavRuimte ? NAV_PIL_HOOGTE + Math.max(insets.bottom - space[3], space[2]) + space[6] : space[2];
@@ -116,6 +124,8 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
   // zodat de gradient een laag achter het vel wordt in plaats van een plaat.
   const heroSchuif = scrollY.interpolate({ inputRange: [0, top], outputRange: [0, -top * 0.4], extrapolate: "clamp" });
   const heroVervaag = scrollY.interpolate({ inputRange: [0, top * 0.7], outputRange: [1, 0], extrapolate: "clamp" });
+  // De titelbalk verschijnt in de laatste 60 punten voordat het vel de bovenkant raakt.
+  const kopZichtbaar = scrollY.interpolate({ inputRange: [Math.max(0, top - insets.top - 60), Math.max(1, top - insets.top)], outputRange: [0, 1], extrapolate: "clamp" });
   return (
     <View style={{ flex: 1, backgroundColor: colors.surfaceBackground }}>
       <Animated.View style={{ position: "absolute", left: 0, right: 0, top: 0, transform: [{ translateY: heroSchuif }] }}>
@@ -129,34 +139,55 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
           <Verschijn style={{ alignSelf: "stretch", alignItems: "center" }}>{heroInhoud}</Verschijn>
         </Animated.View>
       ) : null}
-      <View
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top,
-          bottom: 0,
-          borderTopLeftRadius: radius.xl,
-          borderTopRightRadius: radius.xl,
-          backgroundColor: colors.surfaceBackground,
-          overflow: "hidden",
-        }}
+      {/* De hele pagina scrolt: het vel schuift over de hero heen omhoog, zodat
+          je bovenin de ruimte terugkrijgt zodra je scrolt (Stijn, 1 september
+          2026). Het vel is minstens zo hoog als het scherm, dus bij weinig
+          inhoud loopt het crème door tot onderaan. */}
+      <Animated.ScrollView
+        style={{ flex: 1 }}
+        keyboardShouldPersistTaps="handled"
+        automaticallyAdjustKeyboardInsets
+        scrollEventThrottle={16}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
+        contentContainerStyle={{ flexGrow: 1, paddingTop: top }}
       >
-        <Animated.ScrollView
-          style={{ flex: 1 }}
-          keyboardShouldPersistTaps="handled"
-          automaticallyAdjustKeyboardInsets
-          scrollEventThrottle={16}
-          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
-          contentContainerStyle={{
+        <View
+          style={{
+            flex: 1,
+            borderTopLeftRadius: radius.xl,
+            borderTopRightRadius: radius.xl,
+            backgroundColor: colors.surfaceBackground,
             padding: space[5],
             paddingBottom: insets.bottom + navRuimte + space[5],
             gap: SECTIE_GAP,
           }}
         >
           {gestaffeld(children, SECTIE_GAP, false)}
-        </Animated.ScrollView>
-      </View>
+        </View>
+      </Animated.ScrollView>
+      {/* Zodra de hero weggeschoven is, blijft alleen een smalle crème balk met
+          de titel over, zodat je altijd weet waar je bent. */}
+      {kopTitel ? (
+        <Animated.View
+          pointerEvents="none"
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            paddingTop: insets.top,
+            height: insets.top + KOP_HOOGTE,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: colors.surfaceBackground,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.borderDefault,
+            opacity: kopZichtbaar,
+          }}
+        >
+          <AppText rol="bodyEmphasis">{kopTitel}</AppText>
+        </Animated.View>
+      ) : null}
       {terugKnopOverlay}
     </View>
   );

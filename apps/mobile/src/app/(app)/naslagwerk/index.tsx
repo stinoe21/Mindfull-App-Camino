@@ -104,7 +104,7 @@ export default function Naslagwerk() {
   const onderwerpen = [...ONDERWERPEN].sort((a, b) => gekozen(b) - gekozen(a));
 
   return (
-    <ScreenCanvas state="default" metNavRuimte>
+    <ScreenCanvas state="default" kopTitel={t("titel")} metNavRuimte>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{t("titel")}</AppText>
         <AppText rol="subtitle">{t("ondertitel")}</AppText>
