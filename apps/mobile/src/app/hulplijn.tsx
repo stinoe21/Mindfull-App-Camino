@@ -31,7 +31,7 @@ export default function Hulplijn() {
       </View>
 
       <Card tone="sun">
-        <AppText rol="h3">Kom in contact</AppText>
+        {/* Geen kop: de knop heet al "Kom in contact" en de eerste zin ook. */}
         <AppText rol="body">
           Kom gratis met onze professionals in contact. Ook via WhatsApp.
         </AppText>

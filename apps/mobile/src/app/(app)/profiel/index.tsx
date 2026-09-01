@@ -86,7 +86,7 @@ export default function Profiel() {
       </View>
 
       {/* De kaart is de ingang naar je naam: tikken opent Instellingen. */}
-      <Card tone="primary" onPress={() => router.push("/profiel/instellingen")} style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
+      <Card tone="primary" style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
         <MascotteVlieger state="wolken" hoogte={44} />
         {/* gap 2: titel en duiding dicht op elkaar, zoals in de sectiekop van de referentie */}
         <View style={{ flexShrink: 1, gap: 2 }}>

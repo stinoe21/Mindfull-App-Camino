@@ -24,8 +24,6 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
-import { WatIsHetWeerbericht } from "@/features/weer/WatIsHetWeerbericht";
-import { UITLEG_ANONIMITEIT } from "@/features/weer/WeerberichtIntro";
 
 import type { WeatherCode } from "@mind/types";
 
@@ -168,12 +166,7 @@ export default function CheckInUitkomst() {
       {melding && MELDINGEN[melding] ? (
         <AppText rol="bodySmall" kleur="secondary" centreer>{MELDINGEN[melding]}</AppText>
       ) : null}
-      {/* Dezelfde privacy-uitleg als in de onboarding en op het weerbericht:
-          dit scherm is van jou, het landelijke beeld is anoniem. */}
-      <Card tone="outline" style={{ alignSelf: "stretch" }}>
-        <AppText rol="bodySmall" kleur="secondary">{UITLEG_ANONIMITEIT}</AppText>
-        <WatIsHetWeerbericht />
-      </Card>
+      {/* De privacy-uitleg staat op het weerbericht zelf; hier niet nog een keer. */}
       <Button
         label={t("bekijkWeerbericht")}
         variant="secondary"

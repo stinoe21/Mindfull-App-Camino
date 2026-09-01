@@ -24,10 +24,10 @@ import { UITLEG_ANONIMITEIT, WeerberichtIntro } from "@/features/weer/Weerberich
 
 const nl = {
   titel: "Het mentale weer van Nederland",
-  ondertitel: "Het mentale weer van vandaag, samen opgeteld.",
+  ondertitel: "Samen opgeteld, zonder namen.",
   ophalen: "Even geduld.",
   leegTitel: "Nog te vroeg voor een beeld",
-  leegUitleg: "Nog te weinig check-ins voor een landelijk beeld. Later vandaag staat hier meer.",
+  leegUitleg: "Later vandaag staat hier meer.",
   logInTitel: "Hiervoor moet je ingelogd zijn",
   logInUitleg:
     "Zo telt iedereen één keer per dag mee.",

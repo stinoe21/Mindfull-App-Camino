@@ -140,7 +140,8 @@ export default function CheckInStap() {
       </AppText>
       <AppText rol="h3">{stap.vraag}</AppText>
       <AppText rol="bodySmall" kleur="secondary">{GERUSTSTELLING}</AppText>
-      <Slider value={waarde} onChange={zetLokaleWaarde} leftLabel={stap.links} rightLabel={stap.rechts} />
+      {/* Geen hint in de kaart: de geruststelling erboven zegt het al. */}
+      <Slider value={waarde} onChange={zetLokaleWaarde} leftLabel={stap.links} rightLabel={stap.rechts} hint="" />
       <View style={{ flex: 1 }} />
       <Button label={laatste ? t("bekijkJeWeer") : t("verder")} fullWidth bezig={bezig} onPress={verder} />
       <Button label={t("slaOver")} variant="link" fullWidth onPress={slaOver} />
