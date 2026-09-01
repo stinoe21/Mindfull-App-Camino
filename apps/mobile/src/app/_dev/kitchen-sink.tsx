@@ -21,6 +21,8 @@ import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
 import { MascotteInput, type InputStaat } from "@mind/ui/components/MascotteInput";
 import { MascotteVlieger, type VliegerStaat } from "@mind/ui/components/MascotteVlieger";
+import { VliegerOnderwerp, type Uitdrukking } from "@mind/ui/components/VliegerOnderwerp";
+
 import { NavigationBar } from "@mind/ui/components/NavigationBar";
 import { NavIcoonHome } from "@mind/ui/components/NavIcoonHome";
 import { NavIcoonChallenges, NavIcoonCheckIn, NavIcoonProfiel, NavIcoonTips } from "@mind/ui/components/navIconen";
@@ -49,6 +51,7 @@ const ROUTES = [
 
 const WEER = ["weatherSun", "weatherCloud", "weatherRain", "weatherStorm", "weatherMist"] as const;
 const KAART_TONEN: CardTone[] = ["white", "primary", "purple", "sun", "coral", "outline"];
+const UITDRUKKINGEN: Uitdrukking[] = ["slaperig", "gestrest", "overspannen", "somber", "bang", "piekerend", "energiek", "in-balans", "ontspannen", "standvastig"];
 const VLIEGER_STATEN: VliegerStaat[] = ["default", "zonnig", "wolken", "mist", "wind", "regen", "intake"];
 const INPUT_STATEN: InputStaat[] = ["temperatuur", "wind", "zicht", "wisselvallig"];
 const HERO_STATEN: WeerStaat[] = ["default", "zonnig", "wolken", "mist", "wind", "regen"];
@@ -145,6 +148,16 @@ export default function KitchenSink() {
           <View key={staat} style={styles.mascotteVak}>
             <MascotteVlieger state={staat} hoogte={staat === "default" ? 24 : 60} />
             <Text style={styles.staalnaam}>{staat}</Text>
+          </View>
+        ))}
+      </View>
+
+      <Kop>VliegerOnderwerp, alle uitdrukkingen</Kop>
+      <View style={styles.rij}>
+        {UITDRUKKINGEN.map((u) => (
+          <View key={u} style={styles.mascotteVak}>
+            <VliegerOnderwerp uitdrukking={u} hoogte={60} />
+            <Text style={styles.staalnaam}>{u}</Text>
           </View>
         ))}
       </View>

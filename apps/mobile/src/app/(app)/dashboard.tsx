@@ -20,6 +20,7 @@ import { Card } from "@mind/ui/components/Card";
 import { ContentSection, ContentShelf, ShelfTegel } from "@mind/ui/components/ContentSection";
 import { MascotMain } from "@mind/ui/components/MascotMain";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
+import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
@@ -215,7 +216,7 @@ export default function Dashboard() {
             <ShelfTegel
               key={a.slug}
               label={a.titel}
-              beeld={<MascotteVlieger state="wolken" hoogte={56} />}
+              beeld={<VliegerOnderwerp onderwerp={a.onderwerp} slug={a.slug} hoogte={56} />}
               onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
             />
           ))}
