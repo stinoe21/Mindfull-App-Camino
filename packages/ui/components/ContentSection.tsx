@@ -7,7 +7,7 @@
 
 import { ScrollView, View, type StyleProp, type ViewStyle } from "react-native";
 
-import { colors, radius, space } from "../tokens/tokens.ts";
+import { colors, palette, radius, space } from "../tokens/tokens.ts";
 
 import { AppText } from "./AppText.tsx";
 import { TONEN, type CardTone } from "./Card.tsx";
@@ -60,6 +60,40 @@ export function ContentShelf({ bleed = space[5], children }: ContentShelfProps) 
   );
 }
 
+
+export type ShelfTegelProps = {
+  /** Wat er in de tegel staat: een beeld of, tot MIND beelden levert, de mascotte. */
+  beeld?: React.ReactNode;
+  label: string;
+  onPress?: () => void;
+};
+
+/**
+ * De kleine tegel van de tips-plank op Home, naar Figma Dashboard v4
+ * (162:1708 "Small carousel"): een vierkant van 96 in purple50 met het label
+ * eronder. Voor open verzamelingen waar de kaart zelf geen tekst hoeft te
+ * dragen.
+ */
+export function ShelfTegel({ beeld, label, onPress }: ShelfTegelProps) {
+  // 96 en 109 zijn de maten uit het Figma-frame (Item 01: 109 breed, tegel 96).
+  const inhoud = (
+    <>
+      <View style={{ width: 96, height: 96, borderRadius: radius.md, backgroundColor: palette.purple50, alignItems: "center", justifyContent: "center" }}>
+        {beeld}
+      </View>
+      <AppText rol="bodySmall" numberOfLines={2}>{label}</AppText>
+    </>
+  );
+  const basis: ViewStyle = { width: 109, gap: space[1] };
+  if (onPress) {
+    return (
+      <PressableScale accessibilityRole="button" onPress={onPress} style={basis}>
+        {inhoud}
+      </PressableScale>
+    );
+  }
+  return <View style={basis}>{inhoud}</View>;
+}
 
 export type ShelfCardProps = {
   tone?: CardTone;

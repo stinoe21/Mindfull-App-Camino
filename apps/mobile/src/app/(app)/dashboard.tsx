@@ -17,7 +17,7 @@ import { colors, palette, radius, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
-import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
+import { ContentSection, ContentShelf, ShelfTegel } from "@mind/ui/components/ContentSection";
 import { MascotMain } from "@mind/ui/components/MascotMain";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
@@ -209,14 +209,13 @@ export default function Dashboard() {
 
       {/* Slot 4: tips */}
       <ContentSection title={t("tipsTitel")} note={t("tipsNote")} action={t("allesBekijken")} onAction={() => router.push("/naslagwerk")}>
+        {/* Kleine tegels zoals in Figma (162:1708); de vlieger staat erin tot MIND beelden levert. */}
         <ContentShelf>
           {tips.map((a) => (
-            <ShelfCard
+            <ShelfTegel
               key={a.slug}
-              tone="white"
-              label={t("bronMind")}
-              title={a.titel}
-              meta={a.onderwerp === a.titel ? undefined : a.onderwerp}
+              label={a.titel}
+              beeld={<MascotteVlieger state="default" hoogte={56} />}
               onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
             />
           ))}
