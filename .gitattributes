@@ -1,6 +1,5 @@
-# Shell scripts moeten LF houden, ook op Windows. Met CRLF weigert sh ze
-# uit te voeren ("bad interpreter") en werkt de pre-push hook niet.
-*.sh        text eol=lf
+# De pre-push hook moet LF houden, ook op Windows. Met CRLF weigert sh hem
+# uit te voeren ("bad interpreter").
 .githooks/* text eol=lf
 
 # Lockfiles niet mergen, maar opnieuw genereren
