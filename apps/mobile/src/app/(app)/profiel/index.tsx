@@ -29,8 +29,6 @@ const nl = {
   nietIngelogd: "Niet ingelogd",
   logInUitleg: "Log in om anoniem mee te tellen in het weerbericht.",
   inloggen: "Inloggen",
-  voorkeuren: "Voorkeuren en toestemmingen",
-  accountVerwijderen: "Account verwijderen",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -42,8 +40,6 @@ const teksten: Woordenboek<typeof nl> = {
     nietIngelogd: "Not logged in",
     logInUitleg: "Log in to count anonymously towards the weather forecast.",
     inloggen: "Log in",
-    voorkeuren: "Preferences and consents",
-    accountVerwijderen: "Delete account",
   },
 };
 

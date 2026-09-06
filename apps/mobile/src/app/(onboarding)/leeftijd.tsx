@@ -15,7 +15,6 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
-import { bewaarInstellingen } from "@/features/profiel/instellingen";
 
 const nl = {
   totLaterTitel: "Nog niet voor jou",
@@ -47,8 +46,7 @@ export default function Leeftijd() {
   const t = useVertaling(teksten);
   const [teJong, zetTeJong] = useState(false);
 
-  const bevestig = async () => {
-    await bewaarInstellingen({ leeftijdBevestigd: true });
+  const bevestig = () => {
     router.push("/inloggen");
   };
 

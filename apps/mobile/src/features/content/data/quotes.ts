@@ -26,7 +26,8 @@ export const QUOTES: Quote[] = [
 ];
 
 /** Dezelfde quote voor iedereen op dezelfde dag, en elke dag een andere. */
-export function quoteVanVandaag(datum: Date = new Date()): Quote {
+export function quoteVanVandaag(): Quote {
+  const datum = new Date();
   const dagnummer = Math.floor(Date.UTC(datum.getFullYear(), datum.getMonth(), datum.getDate()) / 86_400_000);
   return QUOTES[dagnummer % QUOTES.length];
 }

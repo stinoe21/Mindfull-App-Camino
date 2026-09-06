@@ -113,8 +113,7 @@ export default function CheckInStap() {
     if (instellingen.consentWeerbericht) {
       resultaat = await stuurWeerIn(weerbeeld);
     }
-    const geteld = resultaat === "gelukt" || resultaat === "al-ingecheckt";
-    await bewaarWeerVanVandaag(weerbeeld, geteld);
+    await bewaarWeerVanVandaag(weerbeeld);
     resetWaarden();
     zetBezig(false);
     // Direct door naar de uitkomst, zonder tussenscherm: feedback van Mind

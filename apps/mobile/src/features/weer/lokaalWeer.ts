@@ -11,7 +11,7 @@ import type { WeatherCode } from "@mind/types";
 
 const SLEUTEL = "mind.lokaalweer";
 
-type Opgeslagen = { datum: string; weerbeeld: WeatherCode; gedeeld: boolean };
+type Opgeslagen = { datum: string; weerbeeld: WeatherCode };
 
 export function vandaagISO(): string {
   const nu = new Date();
@@ -37,19 +37,11 @@ export async function leesWeerVanVandaag(): Promise<Opgeslagen | null> {
   }
 }
 
-export async function bewaarWeerVanVandaag(weerbeeld: WeatherCode, gedeeld: boolean): Promise<void> {
+export async function bewaarWeerVanVandaag(weerbeeld: WeatherCode): Promise<void> {
   try {
-    const data: Opgeslagen = { datum: vandaagISO(), weerbeeld, gedeeld };
+    const data: Opgeslagen = { datum: vandaagISO(), weerbeeld };
     await AsyncStorage.setItem(SLEUTEL, JSON.stringify(data));
   } catch {
     // Niet kunnen bewaren is geen reden om de flow te blokkeren.
-  }
-}
-
-export async function wisLokaalWeer(): Promise<void> {
-  try {
-    await AsyncStorage.removeItem(SLEUTEL);
-  } catch {
-    // stil
   }
 }

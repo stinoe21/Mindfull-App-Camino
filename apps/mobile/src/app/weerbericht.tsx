@@ -37,7 +37,6 @@ const nl = {
     "Het weerbericht kon niet worden opgehaald. Controleer je verbinding en probeer het opnieuw.",
   probeerOpnieuw: "Probeer opnieuw",
   totaalMeta: "{n} check-ins vandaag, allemaal anoniem.",
-  terugDashboard: "Terug naar Home",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -56,7 +55,6 @@ const teksten: Woordenboek<typeof nl> = {
       "The weather forecast couldn't be loaded. Check your connection and try again.",
     probeerOpnieuw: "Try again",
     totaalMeta: "{n} check-ins today, all anonymous.",
-    terugDashboard: "Back to Home",
   },
 };
 

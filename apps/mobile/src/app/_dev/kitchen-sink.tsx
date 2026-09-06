@@ -38,7 +38,6 @@ const ROUTES = [
   ["Onboarding: anonimiteit", "/anonimiteit"],
   ["Dashboard", "/dashboard"],
   ["Check-in stap 1", "/check-in/1"],
-  ["Check-in bevestigd", "/check-in/bevestigd"],
   ["Check-in uitkomst", "/check-in/uitkomst"],
   ["Weerbericht van Nederland", "/weerbericht"],
   ["Naslagwerk", "/naslagwerk"],
