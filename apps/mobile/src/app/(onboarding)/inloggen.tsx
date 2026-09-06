@@ -25,11 +25,6 @@ import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { getSupabase } from "@/features/backend/client";
 
-// De sleutels van Mind, zodra die er zijn. Zie docs/scope.md: aanzetten is dan
-// configuratie, geen verbouwing.
-const APPLE_KLAAR = Boolean(process.env.EXPO_PUBLIC_APPLE_SERVICE_ID);
-const GOOGLE_KLAAR = Boolean(process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID);
-
 const MIN_WACHTWOORD = 6;
 
 // Alleen interface-teksten. {naam}, {n} en {email} worden op de plek ingevuld.
@@ -179,13 +174,13 @@ export default function Inloggen() {
         label={t("verderMetApple")}
         variant="secondary"
         fullWidth
-        onPress={() => (APPLE_KLAAR ? socialNogNiet("Apple") : socialNogNiet("Apple"))}
+        onPress={() => socialNogNiet("Apple")}
       />
       <Button
         label={t("verderMetGoogle")}
         variant="secondary"
         fullWidth
-        onPress={() => (GOOGLE_KLAAR ? socialNogNiet("Google") : socialNogNiet("Google"))}
+        onPress={() => socialNogNiet("Google")}
       />
 
       <Card tone="outline" style={{ paddingVertical: space[2] }}>

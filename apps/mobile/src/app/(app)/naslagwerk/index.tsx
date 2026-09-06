@@ -31,12 +31,10 @@ const nl = {
   onderwerpen: "Onderwerpen",
   alles: "Alles",
   artikelen: "Artikelen",
-  artikelenNote: "Alles uit de bibliotheek van MIND.",
   nietsGevondenTitel: "Niets gevonden",
   nietsGevonden: "Probeer een ander woord.",
   nietsGevondenVoor: "Niets gevonden voor “{term}”. Probeer een ander woord.",
   wisZoekopdracht: "Wis zoekopdracht",
-  bronMind: "BRON: MIND",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -48,12 +46,10 @@ const teksten: Woordenboek<typeof nl> = {
     onderwerpen: "Topics",
     alles: "All",
     artikelen: "Articles",
-    artikelenNote: "Everything from MIND's library.",
     nietsGevondenTitel: "Nothing found",
     nietsGevonden: "No articles found. Try another word or topic.",
     nietsGevondenVoor: "No articles found for “{term}”. Try another word or topic.",
     wisZoekopdracht: "Clear the search",
-    bronMind: "SOURCE: MIND",
   },
 };
 

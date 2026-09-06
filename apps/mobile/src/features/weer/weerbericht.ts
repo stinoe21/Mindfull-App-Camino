@@ -16,28 +16,25 @@ export type WeerberichtStand =
 let cache: WeerberichtStand | null = null;
 
 export async function haalWeerbericht(vernieuw = false): Promise<WeerberichtStand> {
-  if (cache && !vernieuw && cache.staat === "geladen") return cache;
+  // Alleen een geladen beeld wordt gecachet; elke andere stand wordt bij de
+  // volgende aanroep gewoon opnieuw geprobeerd.
+  if (cache && !vernieuw) return cache;
   const client = getSupabase();
-  if (!client) {
-    cache = { staat: "niet-verbonden" };
-    return cache;
-  }
+  if (!client) return { staat: "niet-verbonden" };
   try {
     // weather_today is alleen voor ingelogde gebruikers (RLS-ontwerp). Zonder
     // sessie is "log eerst in" de juiste melding, niet "geen verbinding".
     const { data: sessie } = await client.auth.getSession();
-    if (!sessie.session) {
-      cache = { staat: "niet-ingelogd" };
-      return cache;
-    }
+    if (!sessie.session) return { staat: "niet-ingelogd" };
     const { data, error } = await client.rpc("weather_today");
     if (error) throw error;
     const rijen = (data ?? []) as WeatherToday[];
-    cache = rijen.length ? { staat: "geladen", rijen } : { staat: "leeg" };
+    if (!rijen.length) return { staat: "leeg" };
+    cache = { staat: "geladen", rijen };
+    return cache;
   } catch {
-    cache = { staat: "fout" };
+    return { staat: "fout" };
   }
-  return cache;
 }
 
 export type InsturenResultaat = "gelukt" | "al-ingecheckt" | "niet-ingelogd" | "niet-verbonden";

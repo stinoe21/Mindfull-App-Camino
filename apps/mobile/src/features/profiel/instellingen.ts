@@ -13,7 +13,6 @@ const SLEUTEL = "mind.instellingen";
 
 export type Instellingen = {
   onboardingAfgerond: boolean;
-  leeftijdBevestigd: boolean;
   /**
    * Voornaam, alleen voor de begroeting. Blijft op het toestel: er is bewust
    * geen naamveld in het datamodel (docs/datamodel.md). Leeg is prima.
@@ -34,7 +33,6 @@ export type Instellingen = {
 
 export const STANDAARD: Instellingen = {
   onboardingAfgerond: false,
-  leeftijdBevestigd: false,
   naam: "",
   voorkeuren: [],
   consentWeerbericht: false,

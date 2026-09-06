@@ -57,7 +57,6 @@ const nl = {
   allesBekijken: "Alles bekijken",
   tipsTitel: "Tips voor jou",
   tipsNote: "Artikelen van MIND, eerst over jouw onderwerpen.",
-  bronMind: "BRON: MIND",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -82,7 +81,6 @@ const teksten: Woordenboek<typeof nl> = {
     allesBekijken: "See all",
     tipsTitel: "Tips for you",
     tipsNote: "Articles from MIND, your topics first.",
-    bronMind: "SOURCE: MIND",
   },
 };
 
