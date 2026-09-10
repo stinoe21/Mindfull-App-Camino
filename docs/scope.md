@@ -38,8 +38,8 @@ Van het whiteboard van 20 augustus 2026, zelfde status: concept.
 | Wat | Aantekening |
 |---|---|
 | Mentale weerbericht | Check-in plus landelijk beeld; backend staat al in main |
-| Challenges | De USP; content komt uit de bibliotheek van MIND. **Besloten op 10 september 2026:** MIND heeft via Stijn akkoord gegeven op de volledige daginhoud van de challenges en themaspecials in de app, met de mailreeks van MIND als alternatief; daarvoor stond per dag alleen de intro |
-| Mind-content, waaronder de psychipedia | Uit de contentbibliotheek in `content/` |
+| Challenges | De USP; content komt uit de bibliotheek van MIND. **Besloten op 10 september 2026:** MIND heeft via Stijn akkoord gegeven op de volledige daginhoud van de challenges en themaspecials in de app, met de mailreeks van MIND als alternatief; daarvoor stond per dag alleen de intro. **Tempo, voorlopig:** één dag per kalenderdag, met een bewuste stap ("Ik ben klaar voor dag n"); het precieze tempo ligt nog bij MIND, zie hieronder |
+| Mind-content, waaronder de psychipedia | Uit de contentbibliotheek in `content/`. **Besloten op 10 september 2026 (feedbacksessie MIND):** de online gidsen van MIND (47 stuks, praktische tips en technieken) zijn onderdeel van de app en hangen aan het onderwerp waar iemand naar kijkt; MIND leverde de lijst met actuele URL's. Zie de sectie over de feedbacksessie hieronder |
 | Hulplijn-integratie | De bestaande afspraak: doorverwijzing naar de MIND Hulplijn via WhatsApp, zonder identiteit vanuit de app, zie `privacy-besluiten.md` |
 | Quote-scheurkalender | Dagelijkse quote op het dashboard staat al op het board (`12:179`) en valt daarmee onder het dashboard-scherm uit de schermenlijst hieronder; of er daarnaast een eigen pagina komt, is nog een open keuze, en die pagina staat dus bewust niet in de twintig schermen |
 
@@ -145,9 +145,12 @@ De teksten van de check-in liggen woordelijk vast in `HERKOMST.md` onder *Canoni
 | 13 | Challenge afgerond | `(app)/challenges/[challenge]/afgerond` | Max |
 | 14 | Naslagwerk, met zoeken | `(app)/naslagwerk` | Caesar |
 | 15 | Artikel | `(app)/naslagwerk/[artikel]` | Caesar |
+| 15a | Online gids | `(app)/naslagwerk/gids/[gids]` | Stijn |
 | 16 | MIND Hulplijn | `hulplijn` | Stijn |
 
 De challenges zijn de reden dat iemand de app downloadt en terugkomt. Het naslagwerk en de artikelen komen uit de contentbibliotheek in `content/`, met bronvermelding "Bron: MIND" onder elk artikel.
+
+Scherm 15a is er sinds 10 september 2026: de online gidsen van MIND, gegenereerd uit `content/` met `scripts/gen-gidsen.mjs`. Een gids begint kort (intro en eerste tips), heeft de leespagina op wijzijnmind.nl hoog op het scherm als "Bekijk de online gids", klapt uit naar de volledige tekst en houdt de aanmeldpagina van MIND als route per mail. Gidsen hangen aan een onderwerp en staan daarmee op het artikel, in de tips op Home en in het naslagwerk.
 
 ### Profiel en beheer
 
@@ -166,6 +169,28 @@ Deze zijn geen eigen scherm maar wel eigen werk, en ze staan in de definition of
 
 - **De systeemstaten.** Fout en offline, leeg weerbericht, geen zoekresultaten, content achter consent, verlopen sessie, eerste-keer-tips, challenge ontgrendeld. Het ontwerp benoemt ze zelf als gat. **Besloten op 20 augustus 2026: we ontwerpen ze zelf**, uit de huisstijl, op het moment dat het eerste scherm ze nodig heeft.
 - **De navigatiebalk.** Vijf bestemmingen met "Check in" in het midden, een zwevende pil met frosted achtergrond. De vectorpaden liggen klaar. Er staat nu een tijdelijke standaardbalk.
+
+## Feedbacksessie MIND, verwerkt op 10 september 2026
+
+Stijn deelde op 10 september 2026 de samenvatting van de feedbacksessie MIND x Back to Being. Het algemene beeld was positief (rust, kleur, de vlieger). Wat daaruit een besluit is, staat hier; wat nog open ligt ook, zodat niemand het zelf invult.
+
+**Besloten en gebouwd:**
+
+- **Online gidsen** zijn onderdeel van de app, zie de must-have-tabel en scherm 15a. Ze staan op het artikel (als eerste, boven de uitleg), in "Tips voor jou" op Home en in het naslagwerk. Welke gids bij welk onderwerp hoort staat in `scripts/gen-gidsen.mjs`.
+- **Onboarding:** de weermetafoor wordt eenmalig uitgelegd, in twee, drie zinnen, voor de eerste check-in (welkomscherm) en niet dagelijks. De interesses blijven "onderwerpen die je aanspreken", nooit "waar heb je last van". De toestemming voor de weerstatus is een expliciete ja/nee-keuze zonder voorinvulling, met de tekst van Paul; of MIND per se een checkbox wil, is een vraag terug.
+- **Home** is rustiger: de tips staan direct onder de check-in, boven het landelijke beeld; de quote is een kleine kaart onderaan. Zonder gekozen interesses staan de onderwerpen in de volgorde van de bibliotheek.
+- **Challenges:** in de app en per mail, allebei. De aanmeldknop naar MIND blijft op elke challenge en elke gids staan, want de leadwerving (e-mail, straks Salesforce) moet blijven. Het tempo is voorlopig één dag per kalenderdag met een bewuste bevestiging per stap. Back to Being bedenkt geen eigen challenges; nieuwe challenges van MIND komen erbij via `content/` en de generator.
+
+**Open, nog niet gebouwd:**
+
+- **Tempo van de challenges.** MIND richtte de mailreeks bewust wekelijks in. Of een dag per kalenderdag past bij de mail- en telemarketingjourney, en of er na afronding een evaluatiejourney vanuit Salesforce komt, beoordeelt MIND intern. Zolang de voortgang niet wordt opgeslagen (zie `datamodel.md`) is het tempo alleen binnen een sessie afdwingbaar.
+- **Check-in-copy.** "Hoe is de temperatuur vandaag?" is besproken als alternatief, niet besloten. MIND doet na oplevering een aparte slag op alle copy. Tot die tijd blijft de canonieke check-in-copy staan.
+- **Slim zoeken.** Een kleine AI-laag die bestaande MIND-content vindt op een omschrijving, nadrukkelijk geen chatbot. Nog niet gebouwd: het zoeken is nu een lokaal trefwoordfilter. Vraagt een backend-aanroep, dus ook een besluit over privacy en limieten.
+- **Mentale weerkaart per provincie.** Blijft onderdeel van het concept, met een minimumaantal inzendingen per provincie dat MIND nog bevestigt en dat in het dashboard zichtbaar moet zijn. De app toont standaard heel Nederland, niet de provincie van de gebruiker. Er bestaat nog geen provincie in het datamodel; dat is een migratie en een anonimiseringsvraag.
+- **Hulplijn-tekst.** MIND wil hem preciezer: de MIND Hulplijn is voor wie advies of hulp zoekt en niet weet waar; voor "even van je af praten" zijn andere hulplijnen geschikter. De nieuwe tekst komt van MIND en wordt niet door ons geschreven.
+- **Privacyverklaring en voorwaarden** met Paul; MIND moet teksten na overdracht zelf via de webomgeving kunnen aanpassen.
+- **Communicatie van MIND** (waarschijnlijk Gitta, via Cisca/Francesca) kijkt voor oplevering mee naar design, kleur en merk.
+- **Planning:** pentest door een externe partij binnen twee weken na de sessie; overdracht binnen ongeveer een maand; premiere van de documentaire in november, niet op 24 november.
 
 ## Expliciet niet in v1
 
