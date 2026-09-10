@@ -5,12 +5,15 @@
 // Altijd lime op een licht neutraal spoor, nooit rood/groen: de twee uiteinden
 // zijn niet goed/slecht, alleen verschillend (productprincipes 3).
 //
-// Kaart 150 hoog, vulling 20/20/18, spoor 4 hoog, duim 20 met inktring 1,5.
+// Spoor 4 hoog, duim 20 met inktring 1,5. De witte kaart eromheen uit de
+// referentie (Slider.jsx, 150 hoog) is bewust vervallen, besluit Stijn
+// 10 september 2026: een invulvak leest als vragenlijst, en dat is precies
+// wat de check-in niet wil zijn. De slider staat los op het vel.
 
 import { useRef, useState } from "react";
 import { PanResponder, View } from "react-native";
 
-import { colors, palette, radius, space } from "../tokens/tokens.ts";
+import { colors, palette, radius } from "../tokens/tokens.ts";
 
 import { AppText } from "./AppText.tsx";
 
@@ -22,10 +25,9 @@ export type SliderProps = {
   onChange: (waarde: number) => void;
   leftLabel: string;
   rightLabel: string;
-  hint?: string;
 };
 
-export function Slider({ value, onChange, leftLabel, rightLabel, hint = "Schuif naar wat vandaag het best past." }: SliderProps) {
+export function Slider({ value, onChange, leftLabel, rightLabel }: SliderProps) {
   const [breedte, zetBreedte] = useState(0);
   const breedteRef = useRef(0);
   const onChangeRef = useRef(onChange);
@@ -51,56 +53,39 @@ export function Slider({ value, onChange, leftLabel, rightLabel, hint = "Schuif 
   const duimLinks = breedte > DUIM ? ((breedte - DUIM) * value) / 100 : 0;
 
   return (
-    <View
-      style={{
-        minHeight: 150,
-        borderRadius: radius.md,
-        backgroundColor: colors.surfaceCard,
-        borderWidth: 1,
-        borderColor: colors.borderDefault,
-        paddingTop: space[5],
-        paddingHorizontal: space[5],
-        // 20/20/18 en gap 10 volgen de slider-spec, HERKOMST.md Canonical check-in copy.
-        paddingBottom: 18,
-        gap: space[4],
-        justifyContent: "center",
-      }}
-    >
-      {hint ? <AppText rol="bodySmall" kleur="secondary">{hint}</AppText> : null}
-      {/* gap 10 volgt de referentie (Slider.jsx) */}
-      <View style={{ gap: 10 }}>
+    // gap 10 volgt de referentie (Slider.jsx)
+    <View style={{ gap: 10 }}>
+      <View
+        {...responder.panHandlers}
+        onLayout={(e) => {
+          breedteRef.current = e.nativeEvent.layout.width;
+          zetBreedte(e.nativeEvent.layout.width);
+        }}
+        accessible
+        accessibilityRole="adjustable"
+        accessibilityLabel={leftLabel + " tot " + rightLabel}
+        accessibilityValue={{ min: 0, max: 100, now: value }}
+        // Extra hoogte als raakvlak; het getekende spoor blijft 4.
+        style={{ height: 32, justifyContent: "center" }}
+      >
+        <View style={{ position: "absolute", left: 0, right: 0, height: 4, borderRadius: radius.pill, backgroundColor: palette.sliderTrackBase }} />
+        <View style={{ position: "absolute", left: 0, width: vulBreedte, height: 4, borderRadius: radius.pill, backgroundColor: colors.ctaDefault }} />
         <View
-          {...responder.panHandlers}
-          onLayout={(e) => {
-            breedteRef.current = e.nativeEvent.layout.width;
-            zetBreedte(e.nativeEvent.layout.width);
+          style={{
+            position: "absolute",
+            left: duimLinks,
+            width: DUIM,
+            height: DUIM,
+            borderRadius: radius.pill,
+            backgroundColor: colors.ctaDefault,
+            borderWidth: 1.5,
+            borderColor: colors.textPrimary,
           }}
-          accessible
-          accessibilityRole="adjustable"
-          accessibilityLabel={leftLabel + " tot " + rightLabel}
-          accessibilityValue={{ min: 0, max: 100, now: value }}
-          // Extra hoogte als raakvlak; het getekende spoor blijft 4.
-          style={{ height: 32, justifyContent: "center" }}
-        >
-          <View style={{ position: "absolute", left: 0, right: 0, height: 4, borderRadius: radius.pill, backgroundColor: palette.sliderTrackBase }} />
-          <View style={{ position: "absolute", left: 0, width: vulBreedte, height: 4, borderRadius: radius.pill, backgroundColor: colors.ctaDefault }} />
-          <View
-            style={{
-              position: "absolute",
-              left: duimLinks,
-              width: DUIM,
-              height: DUIM,
-              borderRadius: radius.pill,
-              backgroundColor: colors.ctaDefault,
-              borderWidth: 1.5,
-              borderColor: colors.textPrimary,
-            }}
-          />
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <AppText rol="labelCaption" kleur="secondary">{leftLabel}</AppText>
-          <AppText rol="labelCaption" kleur="secondary">{rightLabel}</AppText>
-        </View>
+        />
+      </View>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <AppText rol="labelCaption" kleur="secondary">{leftLabel}</AppText>
+        <AppText rol="labelCaption" kleur="secondary">{rightLabel}</AppText>
       </View>
     </View>
   );
