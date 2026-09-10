@@ -10,21 +10,25 @@
 //
 // Sinds 10 september 2026 (Stijn): het paarse vak met de quote erin las als
 // een formulierveld en paste niet bij de huisstijl. De quote is een
-// adempauze onderaan Home, geen mededeling en geen invulvak.
+// adempauze onderaan Home, geen mededeling en geen invulvak. Een tik op de
+// quote opent de pagina met de betekenis en wie het zei (/quote).
 //
 // "Deel" stuurt de tekst met naam via het deelvenster van het toestel naar
 // Instagram, WhatsApp of waar dan ook. Delen is altijd een keuze van de
 // gebruiker; er gaat niets vanzelf weg.
 
+import { useRouter } from "expo-router";
 import { Share, View } from "react-native";
 
 import { palette, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
+import { PressableScale } from "@mind/ui/components/PressableScale";
 
 import { quoteVanVandaag } from "./data/quotes.ts";
 
 export function QuoteKaart() {
+  const router = useRouter();
   const quote = quoteVanVandaag();
 
   const deel = () => {
@@ -34,20 +38,28 @@ export function QuoteKaart() {
   };
 
   return (
-    <View style={{ alignItems: "center", paddingVertical: space[4], paddingHorizontal: space[3], gap: space[1] }}>
-      {/* Het openingsteken als ornament. Het hangt hoog in zijn regel, dus de
-          quote wordt eronder omhoog getrokken zodat er geen lege regel tussen valt. */}
-      <AppText rol="display" style={{ color: palette.purple300, marginBottom: -space[4] }} accessibilityElementsHidden>
-        {"“"}
-      </AppText>
-      <AppText rol="quote" centreer>
-        {quote.tekst}
-      </AppText>
-      <View style={{ marginTop: space[2] }}>
-        <AppText rol="labelCaption" kleur="secondary" centreer>
-          {quote.auteur}
+    <View style={{ alignItems: "center", paddingVertical: space[4], gap: space[1] }}>
+      <PressableScale
+        accessibilityRole="button"
+        accessibilityLabel={quote.tekst + ", " + quote.auteur}
+        accessibilityHint="Opent de betekenis van deze quote"
+        onPress={() => router.push("/quote")}
+        style={{ alignItems: "center", paddingHorizontal: space[3], gap: space[1], alignSelf: "stretch" }}
+      >
+        {/* Het openingsteken als ornament. Het hangt hoog in zijn regel, dus de
+            quote wordt eronder omhoog getrokken zodat er geen lege regel tussen valt. */}
+        <AppText rol="display" style={{ color: palette.purple300, marginBottom: -space[4] }} accessibilityElementsHidden>
+          {"“"}
         </AppText>
-      </View>
+        <AppText rol="quote" centreer>
+          {quote.tekst}
+        </AppText>
+        <View style={{ marginTop: space[2] }}>
+          <AppText rol="labelCaption" kleur="secondary" centreer>
+            {quote.auteur}
+          </AppText>
+        </View>
+      </PressableScale>
       <View style={{ marginTop: space[4] }}>
         <Button label="Deel deze quote" variant="secondary" onPress={deel} />
       </View>
