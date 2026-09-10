@@ -222,7 +222,7 @@ export default function Inloggen() {
       />
 
       {melding ? (
-        <Card tone="outline">
+        <Card tone="white">
           <AppText rol="bodySmall" kleur="secondary">{melding}</AppText>
         </Card>
       ) : null}

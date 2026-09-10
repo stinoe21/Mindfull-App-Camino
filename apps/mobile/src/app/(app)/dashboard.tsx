@@ -71,8 +71,7 @@ const nl = {
   bekijkWeerbericht: "Bekijk het weer van Nederland",
   allesBekijken: "Alles bekijken",
   tipsTitel: "Tips voor jou",
-  tipsNote: "Uitleg en wat kan helpen, van MIND. Jouw onderwerpen eerst.",
-  bronMind: "BRON: MIND",
+  tipsNote: "Uitleg en wat kan helpen. Jouw onderwerpen eerst.",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -96,8 +95,7 @@ const teksten: Woordenboek<typeof nl> = {
     bekijkWeerbericht: "See the weather of the Netherlands",
     allesBekijken: "See all",
     tipsTitel: "Tips for you",
-    tipsNote: "Explained briefly and what can help, from MIND. Your topics first.",
-    bronMind: "SOURCE: MIND",
+    tipsNote: "Explained briefly and what can help. Your topics first.",
   },
 };
 

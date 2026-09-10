@@ -31,7 +31,7 @@ const nl = {
   specialsTitel: "Themaspecials",
   specialsNote: "Een paar dagen aandacht voor een thema.",
   labelThemaspecial: "THEMASPECIAL",
-  onderdelenMeta: "{n} dagen · MIND",
+  onderdelenMeta: "{n} dagen",
   dagVan: "Dag {x} van {y}",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -47,7 +47,7 @@ const teksten: Woordenboek<typeof nl> = {
     specialsTitel: "Theme specials",
     specialsNote: "A few days of attention for one theme.",
     labelThemaspecial: "THEME SPECIAL",
-    onderdelenMeta: "{n} days · MIND",
+    onderdelenMeta: "{n} days",
     dagVan: "Day {x} of {y}",
   },
 };
@@ -78,7 +78,7 @@ export default function Challenges() {
       </View>
 
       {CHALLENGES.length === 0 ? (
-        <Card tone="outline">
+        <Card tone="white">
           <AppText rol="h3">{t("leegTitel")}</AppText>
           <AppText rol="bodySmall" kleur="secondary">
             {t("leegUitleg")}

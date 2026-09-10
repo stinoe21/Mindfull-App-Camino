@@ -44,11 +44,10 @@ const nl = {
   leesVerder: "Lees verder",
   watKanHelpen: "Wat kan helpen",
   probeer: "Probeer dit eens",
-  verderLezen: "Verder lezen bij MIND",
-  allesOver: "Alles over {titel} bij MIND",
+  verderLezen: "Verder lezen op wijzijnmind.nl",
+  allesOver: "Alles over {titel}",
   gids: "De online gids: {titel}",
   gidsPerMail: "Gids per e-mail",
-  bron: "BRON: MIND",
   meerOnderwerp: "Meer over {onderwerp}",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -62,11 +61,10 @@ const teksten: Woordenboek<typeof nl> = {
     leesVerder: "Read more",
     watKanHelpen: "What can help",
     probeer: "Try this",
-    verderLezen: "Read more at MIND",
-    allesOver: "Everything about {titel} at MIND",
+    verderLezen: "Read more on wijzijnmind.nl",
+    allesOver: "Everything about {titel}",
     gids: "The online guide: {titel}",
     gidsPerMail: "Guide by email",
-    bron: "SOURCE: MIND",
     meerOnderwerp: "More about {onderwerp}",
   },
 };
@@ -173,8 +171,9 @@ export default function HouvastOnderwerp() {
         </Card>
       ) : null}
 
-      {/* 5. Verder lezen bij MIND: de volledige pagina's, en de mailroute van
-          MIND blijft bestaan (feedbacksessie: aanmelden op elke gids). */}
+      {/* 5. Verder lezen: de volledige pagina's op wijzijnmind.nl, en de
+          mailroute blijft bestaan (feedbacksessie: aanmelden op elke gids).
+          Geen bronvermelding: het is de app van MIND zelf (Stijn, 10 september 2026). */}
       <View style={{ gap: space[2] }}>
         <AppText rol="h3">{t("verderLezen")}</AppText>
         <View style={{ alignItems: "flex-start" }}>
@@ -182,7 +181,6 @@ export default function HouvastOnderwerp() {
           {houvast.gids ? <Button label={t("gids").replace("{titel}", houvast.gids.titel)} variant="link" onPress={() => Linking.openURL(houvast.gids!.url)} /> : null}
           {houvast.gids?.aanmeld ? <Button label={t("gidsPerMail")} variant="link" onPress={() => Linking.openURL(houvast.gids!.aanmeld!)} /> : null}
         </View>
-        <AppText rol="labelCaption" kleur="secondary">{t("bron")}</AppText>
       </View>
 
       {verwant.length ? (
