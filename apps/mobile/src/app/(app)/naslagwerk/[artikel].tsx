@@ -1,8 +1,9 @@
 // Artikel
 //
-// Een artikel uit het naslagwerk van Mind. Bronvermelding is verplicht:
-// "Bron: MIND" onder elk artikel (HERKOMST.md, Content fundamentals). Geen
-// gegenereerde antwoorden: altijd herleidbaar naar de bronpagina.
+// Een artikel uit de psychipedia. Geen bronvermelding: het is de app van
+// MIND zelf, dus "Bron: MIND" was een credit aan de opdrachtgever (Stijn,
+// 10 september 2026; dat vervangt de regel uit HERKOMST.md). Wel altijd de
+// link naar de volledige pagina, en geen gegenereerde antwoorden.
 
 import * as Linking from "expo-linking";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -26,12 +27,11 @@ const nl = {
   nietGevonden: "Artikel niet gevonden",
   nietGevondenUitleg: "Dit artikel bestaat niet of is verplaatst.",
   terugNaslagwerk: "Terug naar het naslagwerk",
-  bron: "Bron: MIND",
   leesOp: "Lees verder op wijzijnmind.nl",
   terug: "Terug",
   meerTitel: "Meer uit het naslagwerk",
   gidsOverline: "AAN DE SLAG",
-  gidsTitel: "Praktische tips van MIND",
+  gidsTitel: "Praktische tips",
   gidsUitleg: "In de online gids staan technieken die je vandaag kunt proberen.",
   gidsLabel: "Gids: {titel}",
 } as const;
@@ -41,12 +41,11 @@ const teksten: Woordenboek<typeof nl> = {
     nietGevonden: "Article not found",
     nietGevondenUitleg: "This article doesn't exist or has been moved.",
     terugNaslagwerk: "Back to the reference library",
-    bron: "Source: MIND",
     leesOp: "Read on wijzijnmind.nl",
     terug: "Back",
     meerTitel: "More from the library",
     gidsOverline: "GET STARTED",
-    gidsTitel: "Practical tips by MIND",
+    gidsTitel: "Practical tips",
     gidsUitleg: "The online guide has techniques you can try today.",
     gidsLabel: "Guide: {titel}",
   },
@@ -90,7 +89,6 @@ export default function Artikel() {
         <VliegerOnderwerp onderwerp={artikel.onderwerp} slug={artikel.slug} hoogte={96} />
       </View>
 
-      <AppText rol="labelCaption" kleur="secondary">{t("bron") + " · " + artikel.onderwerp}</AppText>
 
       {/* De gidsen bij dit onderwerp boven de tekst, hoog op het scherm: MIND
           wil handelingsperspectief boven uitleg (feedbacksessie, verwerkt

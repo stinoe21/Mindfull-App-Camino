@@ -168,7 +168,7 @@ export default function KitchenSink() {
       <ContentGrid>
         <ContentCard full tone="primary" label="VANDAAG" title="Het mentale weerbericht" />
         <ContentCard tone="purple" label="CHALLENGE" title="Weerpraatje" />
-        <ContentCard tone="white" label="BRON: MIND" title="Piekeren doorbreken" />
+        <ContentCard tone="white" label="GIDS" title="Piekeren doorbreken" />
       </ContentGrid>
 
       <Kop>MascotteVlieger, alle staten</Kop>
