@@ -32,3 +32,6 @@ export type WeatherToday = {
   total: number;
   share: number;
 };
+
+/** Een rij uit de RPC `weather_today_by_province`: per provincie het weerbeeld dat het vaakst voorkomt. */
+export type WeatherTodayProvince = WeatherToday & { province: string };

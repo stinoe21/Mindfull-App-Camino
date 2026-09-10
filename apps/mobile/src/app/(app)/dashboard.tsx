@@ -15,15 +15,17 @@ import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 
-import { colors, palette, radius, space } from "@mind/ui";
+import { colors, palette, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ContentSection, ContentShelf, ShelfTegel } from "@mind/ui/components/ContentSection";
+import { KaartNederland, type ProvincieCode } from "@mind/ui/components/KaartNederland";
 import { MascotMain } from "@mind/ui/components/MascotMain";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
+import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ARTIKELEN } from "@/features/content/data/artikelen";
@@ -34,10 +36,21 @@ import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { EersteKeerUitleg } from "@/features/onboarding/EersteKeerUitleg";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
-import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
-import { haalWeerbericht, type WeerberichtStand } from "@/features/weer/weerbericht";
+import { isProvincie } from "@/features/weer/provincies";
+import { WEER_NAMEN } from "@/features/weer/teksten";
+import { haalWeerbericht, haalWeerberichtProvincies, type WeerberichtStand } from "@/features/weer/weerbericht";
 
-import { WEATHER_CODES, type WeatherCode } from "@mind/types";
+import { WEATHER_CODES, type WeatherCode, type WeatherTodayProvince } from "@mind/types";
+
+// De weertint per weerbeeld, voor de provincies op de kaart. Genoemd naar het
+// weer en nooit naar een waardering (kitchen sink, Weertinten).
+const KAARTKLEUR: Record<WeatherCode, string> = {
+  zonnig: palette.weatherSun,
+  wolken: palette.weatherCloud,
+  mist: palette.weatherMist,
+  wind: palette.purple200,
+  regen: palette.weatherRain,
+};
 
 // Alleen interface-teksten. {share}, {total} en {n} worden op de plek ingevuld.
 const nl = {
@@ -48,11 +61,11 @@ const nl = {
   avond: "Goedenavond",
   hoeWeer: "Hoe is je weer vandaag?",
   jouwWeerOverline: "JOUW WEER VANDAAG",
-  bekijkJeWeer: "Bekijk je weer",
   evenIncheckenUitleg: "Vier korte vragen, één minuut. Je check-in telt anoniem mee.",
   evenIncheckenKnop: "Even inchecken",
   weerVanNederland: "Het mentale weer van Nederland",
-  weerVanNederlandSub: "Dit weer zien we vandaag het vaakst",
+  weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien",
+  kaartLeeg: "Een provincie kleurt zodra er genoeg check-ins zijn.",
   berichtMeta: "Op basis van {total} check-ins vandaag",
   nietIngelogd: "Log in om het weer van Nederland te zien.",
   teWeinig: "Nog te weinig check-ins voor een landelijk beeld. Later vandaag staat hier meer.",
@@ -73,11 +86,11 @@ const teksten: Woordenboek<typeof nl> = {
     avond: "Good evening",
     hoeWeer: "How's your weather today?",
     jouwWeerOverline: "YOUR WEATHER TODAY",
-    bekijkJeWeer: "See your weather",
     evenIncheckenUitleg: "Four short questions, one minute. Your check-in counts anonymously.",
     evenIncheckenKnop: "Check in",
     weerVanNederland: "The mental weather of the Netherlands",
-    weerVanNederlandSub: "The weather we see most today",
+    weerVanNederlandSub: "Per province, the weather we see most today",
+    kaartLeeg: "A province gets its colour once there are enough check-ins.",
     berichtMeta: "Based on {total} check-ins today",
     nietIngelogd: "Log in to see the weather of the Netherlands.",
     teWeinig: "Not enough check-ins yet for a national picture. Later today there will be more here.",
@@ -106,6 +119,7 @@ export default function Dashboard() {
   const [weerbeeld, zetWeerbeeld] = useState<WeatherCode | null>(null);
   const [weerGeladen, zetWeerGeladen] = useState(false);
   const [bericht, zetBericht] = useState<WeerberichtStand | null>(null);
+  const [provincies, zetProvincies] = useState<WeatherTodayProvince[]>([]);
   const [voorkeuren, zetVoorkeuren] = useState<string[]>([]);
   const [naam, zetNaam] = useState("");
 
@@ -124,6 +138,9 @@ export default function Dashboard() {
       });
       haalWeerbericht().then((stand) => {
         if (actief) zetBericht(stand);
+      });
+      haalWeerberichtProvincies().then((rijen) => {
+        if (actief) zetProvincies(rijen);
       });
       return () => {
         actief = false;
@@ -156,6 +173,10 @@ export default function Dashboard() {
     .slice(0, 6);
   const topBericht = bericht?.staat === "geladen" ? [...bericht.rijen].sort((a, b) => b.share - a.share)[0] : null;
   const topCode = topBericht && isWeerCode(topBericht.weather) ? topBericht.weather : null;
+  const kaartKleuren: Partial<Record<ProvincieCode, string>> = {};
+  for (const rij of provincies) {
+    if (isProvincie(rij.province) && isWeerCode(rij.weather)) kaartKleuren[rij.province] = KAARTKLEUR[rij.weather];
+  }
 
   // Op de hero: begroeting links, de vlieger rechts. Na de check-in staat hij
   // in het weer van vandaag; ervoor de hoofdmascotte.
@@ -175,15 +196,17 @@ export default function Dashboard() {
       {!weerGeladen ? (
         <ActivityIndicator color={colors.brandDefault} />
       ) : weerbeeld ? (
-        <Card tone="white" onPress={() => router.push("/check-in/uitkomst")}>
-          {/* De vlieger staat al op de hero; hier alleen het weer. gap 2: overline
-              en titel dicht op elkaar, zoals in de sectiekop van de referentie */}
-          <View style={{ gap: 2 }}>
+        <Card tone="white" onPress={() => router.push("/check-in/uitkomst")} style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
+          {/* Eén beeld en twee regels (Stijn, 10 september 2026): het weericoon
+              links, overline en naam rechts, en de kaart zelf opent de uitkomst.
+              gap 2: overline en titel dicht op elkaar, zoals in de sectiekop. */}
+          <WeerIcoon staat={weerbeeld} hoogte={48} />
+          <View style={{ flexShrink: 1, gap: 2 }}>
             <AppText rol="labelOverline" kleur="brand">{t("jouwWeerOverline")}</AppText>
             <AppText rol="h3">{WEER_NAMEN[weerbeeld]}</AppText>
-            <AppText rol="bodySmall">{UITKOMSTEN[weerbeeld].kop}</AppText>
           </View>
-          <AppText rol="labelButton" kleur="brand">{t("bekijkJeWeer")}</AppText>
+          <View style={{ flexGrow: 1 }} />
+          <AppText rol="body" kleur="brand">{"›"}</AppText>
         </Card>
       ) : (
         // De vraag staat al op de hero, de mascotte ook. Hier alleen één regel
@@ -221,28 +244,34 @@ export default function Dashboard() {
           <AppText rol="quote">{t("weerVanNederland")}</AppText>
           <AppText rol="bodySmall">{t("weerVanNederlandSub")}</AppText>
         </View>
+        {/* De kaart van Nederland per provincie (feedbacksessie MIND, verwerkt
+            10 september 2026) staat er altijd, standaard heel Nederland en
+            niet de provincie van de gebruiker; zonder data blijft hij neutraal.
+            Rechts het landelijke beeld of de reden dat het er nog niet is. */}
         {bericht === null ? (
           <ActivityIndicator color={colors.brandDefault} />
-        ) : bericht.staat === "geladen" && topBericht ? (
-          <>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: space[3] }}>
-              <View style={{ width: 96, height: 96, borderRadius: radius.md, backgroundColor: colors.surfaceBackground, alignItems: "center", justifyContent: "center" }}>
-                {topCode ? <MascotteVlieger state={topCode} hoogte={64} /> : null}
-              </View>
-              <View style={{ flexShrink: 1, gap: space[1] }}>
-                <AppText rol="h3">{topBericht.label}</AppText>
-                <AppText rol="h3">{topBericht.share + "%"}</AppText>
-              </View>
-            </View>
-            <AppText rol="body">{t("berichtMeta").replace("{total}", String(topBericht.total))}</AppText>
-          </>
-        ) : bericht.staat === "niet-ingelogd" ? (
-          <AppText rol="body">{t("nietIngelogd")}</AppText>
-        ) : bericht.staat === "leeg" ? (
-          <AppText rol="body">{t("teWeinig")}</AppText>
         ) : (
-          <AppText rol="body">{t("berichtFout")}</AppText>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
+            <KaartNederland breedte={132} kleuren={kaartKleuren} />
+            <View style={{ flexShrink: 1, gap: space[2] }}>
+              {bericht.staat === "geladen" && topBericht ? (
+                <>
+                  {topCode ? <WeerIcoon staat={topCode} hoogte={40} /> : null}
+                  <AppText rol="h3">{topBericht.label}</AppText>
+                  <AppText rol="h3">{topBericht.share + "%"}</AppText>
+                  <AppText rol="bodySmall">{t("berichtMeta").replace("{total}", String(topBericht.total))}</AppText>
+                </>
+              ) : bericht.staat === "niet-ingelogd" ? (
+                <AppText rol="body">{t("nietIngelogd")}</AppText>
+              ) : bericht.staat === "leeg" ? (
+                <AppText rol="body">{t("teWeinig")}</AppText>
+              ) : (
+                <AppText rol="body">{t("berichtFout")}</AppText>
+              )}
+            </View>
+          </View>
         )}
+        {bericht?.staat === "geladen" && provincies.length === 0 ? <AppText rol="bodySmall" kleur="secondary">{t("kaartLeeg")}</AppText> : null}
         <Button label={t("bekijkWeerbericht")} onPress={() => router.push("/weerbericht")} />
       </Card>
 
