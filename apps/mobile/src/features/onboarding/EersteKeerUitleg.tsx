@@ -31,7 +31,7 @@ const STAPPEN: { kop: string; tekst: string }[] = [
   {
     kop: "Houvast en challenges",
     tekst:
-      "Onder Houvast staat per onderwerp kort wat het is en wat kan helpen, eerst over jouw onderwerpen. Onder Challenges vind je kleine stappen voor een paar dagen. Alles is aan te passen in Instellingen.",
+      "Onder Houvast staat per onderwerp kort wat het is en wat kan helpen, eerst over jouw onderwerpen. Onder Challenges vind je kleine stappen voor een paar dagen. Alles is aan te passen onder Profiel.",
   },
 ];
 
