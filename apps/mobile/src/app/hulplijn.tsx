@@ -8,7 +8,6 @@
 // Wijzigt MIND de tekst, dan wijzigt hij hier, niet andersom.
 
 import * as Linking from "expo-linking";
-import { useRouter } from "expo-router";
 import { View } from "react-native";
 
 import { space } from "@mind/ui";
@@ -33,8 +32,9 @@ const ANDERE = [
   { label: "113 Zelfmoordpreventie, 0800 - 0113", url: "tel:08000113" },
 ];
 
+// Terug gaat via de terugknop op de hero (TerugNaarVorige); een tweede
+// "Terug" onderaan was dubbelop (Stijn, 10 september 2026).
 export default function Hulplijn() {
-  const router = useRouter();
   return (
     <ScreenCanvas state="zonnig" terugKnop={<TerugNaarVorige />}>
       <View style={{ gap: space[1] }}>
@@ -87,8 +87,6 @@ export default function Hulplijn() {
       <AppText rol="bodySmall" kleur="secondary">
         Deze app is geen hulpverlening en geen vervanging van professionele hulp.
       </AppText>
-
-      <Button label="Terug" variant="link" onPress={() => router.back()} />
     </ScreenCanvas>
   );
 }

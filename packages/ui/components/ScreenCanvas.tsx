@@ -49,7 +49,11 @@ function gestaffeld(children: ReactNode, gap: number, centreer: boolean): ReactN
 /** Waar het vel begint als er hero-inhoud is: de band uit het prototype. */
 export const HERO_BAND = 200;
 /** Hoogte van de titelbalk onder de statusbalk, als die verschijnt. */
-const KOP_HOOGTE = 44;
+// De smalle titelbalk is precies hoog genoeg voor de terugknop met aan beide
+// kanten dezelfde marge. Met 44 raakte de onderkant van het chipje de lijn
+// van de balk en leek hij afgesneden (Stijn, 10 september 2026).
+const KOP_MARGE = space[2];
+const KOP_HOOGTE = TERUGKNOP_MAAT + KOP_MARGE * 2;
 
 export type ScreenCanvasProps = {
   variant?: "vel" | "overlay";
@@ -82,8 +86,8 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
   const insets = useSafeAreaInsets();
   const scrollY = useRef(new Animated.Value(0)).current;
   const navRuimte = metNavRuimte ? NAV_PIL_HOOGTE + Math.max(insets.bottom - space[3], space[2]) + space[6] : space[2];
-  // De knop staat net onder de statusbalk; het vel begint er vlak onder.
-  const terugKnopTop = insets.top + space[1];
+  // De knop staat in het midden van de titelbalk; het vel begint er vlak onder.
+  const terugKnopTop = insets.top + KOP_MARGE;
   const terugKnopOverlay = terugKnop ? (
     <View style={{ position: "absolute", top: terugKnopTop, left: space[3] }}>{terugKnop}</View>
   ) : null;
@@ -118,7 +122,7 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
   // omhoog tot boven de knop.
   const standaardTop = heroInhoud ? HERO_BAND : insets.top + space[12] + space[4];
   const top = terugKnop
-    ? Math.max(sheetTop ?? standaardTop, terugKnopTop + TERUGKNOP_MAAT + space[1])
+    ? Math.max(sheetTop ?? standaardTop, terugKnopTop + TERUGKNOP_MAAT + KOP_MARGE)
     : Math.max(sheetTop ?? standaardTop, insets.top + space[2]);
   // Parallax: de hero schuift 0,4 keer mee omhoog bij scrollen en vervaagt,
   // zodat de gradient een laag achter het vel wordt in plaats van een plaat.
