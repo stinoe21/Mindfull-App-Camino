@@ -143,9 +143,10 @@ De teksten van de check-in liggen woordelijk vast in `HERKOMST.md` onder *Canoni
 | 11 | Challenges | `(app)/challenges` | Caesar |
 | 12 | Challenge, detail | `(app)/challenges/[challenge]` | Caesar |
 | 13 | Challenge afgerond | `(app)/challenges/[challenge]/afgerond` | Max |
-| 14 | Naslagwerk, met zoeken | `(app)/naslagwerk` | Caesar |
+| 14 | Houvast (de Tips-tab), met zoeken | `(app)/naslagwerk` | Caesar, sinds 10 september 2026 Stijn |
 | 15 | Artikel | `(app)/naslagwerk/[artikel]` | Caesar |
 | 15a | Online gids | `(app)/naslagwerk/gids/[gids]` | Stijn |
+| 15b | Houvast, één onderwerp | `(app)/naslagwerk/houvast/[onderwerp]` | Stijn |
 | 16 | MIND Hulplijn | `hulplijn` | Stijn |
 
 De challenges zijn de reden dat iemand de app downloadt en terugkomt. Het naslagwerk en de artikelen komen uit de contentbibliotheek in `content/`, met bronvermelding "Bron: MIND" onder elk artikel.
@@ -178,7 +179,8 @@ Stijn deelde op 10 september 2026 de samenvatting van de feedbacksessie MIND x B
 
 - **Online gidsen** zijn onderdeel van de app, zie de must-have-tabel en scherm 15a. Ze staan op het artikel (als eerste, boven de uitleg), in "Tips voor jou" op Home en in het naslagwerk. Welke gids bij welk onderwerp hoort staat in `scripts/gen-gidsen.mjs`.
 - **Onboarding:** de weermetafoor wordt eenmalig uitgelegd, in twee, drie zinnen, voor de eerste check-in (welkomscherm) en niet dagelijks. De interesses blijven "onderwerpen die je aanspreken", nooit "waar heb je last van". De toestemming voor de weerstatus is een expliciete ja/nee-keuze zonder voorinvulling, met de tekst van Paul; of MIND per se een checkbox wil, is een vraag terug.
-- **Home** is rustiger: de tips staan direct onder de check-in, boven het landelijke beeld; de quote is een kleine kaart onderaan. Zonder gekozen interesses staan de onderwerpen in de volgorde van de bibliotheek.
+- **Home** is rustiger: de tips staan direct onder de check-in, boven het landelijke beeld; de quote staat onderaan direct op het vel, met "Lees meer" (een pagina met wat de quote kan betekenen en wie het zei) en een deelknop. Zonder gekozen interesses staan de onderwerpen in de volgorde van de bibliotheek.
+- **Houvast** is de compacte kennislaag van de app (Stijn, 10 september 2026). Per onderwerp combineert die de uitleg uit MIND Psychipedia met de meest bruikbare tips en oefeningen uit de online gidsen. De gebruiker krijgt direct de kern te zien, kan extra uitleg uitklappen en kan voor het volledige naslagwerk doorklikken naar MIND. Psychipedia is de inhoudelijke basis (informatie over ruim honderd onderwerpen), de gidsen leveren de praktische laag erbovenop; die twee vullen elkaar aan. Opbouw van één onderwerp, bijvoorbeeld Piekeren: (1) kort uitgelegd, een paar regels uit de kern van Psychipedia; (2) "Meer over piekeren", uitklapbare verdieping; (3) "Wat kan helpen", drie tot vijf korte tips uit de gids die zelfstandig begrijpelijk en uitvoerbaar zijn; (4) "Probeer dit eens", alleen wanneer de gids echt een concrete oefening bevat, zoals de oefening van één minuut bij mindfulness; (5) "Verder lezen bij MIND". Designtechnisch bewust geen twee aparte blokken "Psychipedia" en "Gids": voor de gebruiker maakt de bronstructuur niet uit, die wil één goed onderwerp. De hiërarchie is begrijpen, praktisch houvast, verdieping. Een onderwerp als mindfulness hoeft daardoor niet als klacht geframed te worden: klachten, vaardigheden, situaties en hulpmiddelen bestaan in exact hetzelfde componentsysteem. De Tips-tab heet Houvast en toont de onderwerpen (voorkeuren voorop), met daaronder de gidsen zonder eigen onderwerp. Welke Psychipedia-pagina en welke gids bij een onderwerp horen staat in `scripts/gen-houvast.mjs`; de teksten zijn woordelijk van MIND.
 - **Challenges:** in de app en per mail, allebei. De aanmeldknop naar MIND blijft op elke challenge en elke gids staan, want de leadwerving (e-mail, straks Salesforce) moet blijven. Het tempo is voorlopig één dag per kalenderdag met een bewuste bevestiging per stap. Back to Being bedenkt geen eigen challenges; nieuwe challenges van MIND komen erbij via `content/` en de generator.
 
 - **Consent** is één formulier met één vorm van aanvinken (KeuzeVak): ja of nee voor de weerstatus (tekst van Paul, geen voorinvulling) en het vinkje voor de voorwaarden. Besloten door Stijn op 10 september 2026 na de sessie.
