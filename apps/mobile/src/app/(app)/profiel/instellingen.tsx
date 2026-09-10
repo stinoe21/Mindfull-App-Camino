@@ -13,12 +13,13 @@
 
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Switch, TextInput, View } from "react-native";
+import { TextInput, View } from "react-native";
 
-import { colors, palette, space, type } from "@mind/ui";
+import { colors, space, type } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Card } from "@mind/ui/components/Card";
 import { Chip } from "@mind/ui/components/Chip";
+import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -35,6 +36,7 @@ import {
 } from "@/features/profiel/instellingen";
 import { InstellingenGroep, InstellingenRij } from "@/features/profiel/InstellingenRij";
 import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
+import { isProvincie, PROVINCIE_CODES, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 
 // Alleen interface-teksten. De consent-teksten liggen bij Paul en blijven
 // bewust Nederlands en hardcoded in het scherm (issue #47, scope.md).
@@ -48,6 +50,10 @@ const nl = {
   groepVoorkeuren: "Voorkeuren",
   onderwerpen: "Onderwerpen",
   onderwerpenUitleg: "Deze tips zie je als eerste.",
+  groepProvincie: "Provincie",
+  provincie: "Waar in Nederland ben je?",
+  provincieUitleg: "Voor het mentale weer per provincie. Vrijwillig; de app vraagt nooit je locatie.",
+  provincieGeen: "Liever niet",
   groepTaal: "Taal",
   taalSysteem: "Systeem",
   taalNederlands: "Nederlands",
@@ -70,6 +76,10 @@ const teksten: Woordenboek<typeof nl> = {
     groepVoorkeuren: "Preferences",
     onderwerpen: "Topics",
     onderwerpenUitleg: "You see these tips first.",
+    groepProvincie: "Province",
+    provincie: "Where in the Netherlands are you?",
+    provincieUitleg: "For the mental weather per province. Voluntary; the app never asks for your location.",
+    provincieGeen: "Rather not",
     groepTaal: "Language",
     taalSysteem: "System",
     taalNederlands: "Nederlands",
@@ -169,6 +179,16 @@ export default function Instellingen() {
             </View>
           </InstellingenGroep>
 
+          <InstellingenGroep titel={t("groepProvincie")}>
+            <InstellingenRij label={t("provincie")} omschrijving={t("provincieUitleg")} laatste />
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2], paddingBottom: space[3] }}>
+              <Chip label={t("provincieGeen")} active={!isProvincie(inst.provincie)} onPress={() => wijzig({ provincie: null })} />
+              {PROVINCIE_CODES.map((code) => (
+                <Chip key={code} label={PROVINCIE_NAMEN[code]} active={inst.provincie === code} onPress={() => wijzig({ provincie: code })} />
+              ))}
+            </View>
+          </InstellingenGroep>
+
           <InstellingenGroep titel={t("groepTaal")}>
             {TAAL_KEUZES.map((optie, i) => (
               <InstellingenRij
@@ -191,17 +211,13 @@ export default function Instellingen() {
             <View style={{ paddingVertical: space[3], borderBottomWidth: 1, borderBottomColor: colors.borderDefault }}>
               <ToestemmingKeuze waarde={inst.consentWeerbericht} onKies={(v) => wijzig({ consentWeerbericht: v })} />
             </View>
-            <InstellingenRij
-              label={t("voorwaarden")}
-              laatste
-              rechts={
-                <Switch
-                  value={inst.consentVoorwaarden}
-                  onValueChange={(v) => wijzig({ consentVoorwaarden: v })}
-                  trackColor={{ true: colors.brandDefault, false: palette.neutral200 }}
-                />
-              }
-            />
+            <View style={{ paddingVertical: space[2] }}>
+              <KeuzeVak
+                label={t("voorwaarden")}
+                gekozen={inst.consentVoorwaarden}
+                onPress={() => wijzig({ consentVoorwaarden: !inst.consentVoorwaarden })}
+              />
+            </View>
           </InstellingenGroep>
 
           {ingelogd ? (

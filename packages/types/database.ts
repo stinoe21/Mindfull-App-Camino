@@ -46,18 +46,21 @@ export type Database = {
         Row: {
           day: string
           hour: number
+          province: string
           total: number
           weather: string
         }
         Insert: {
           day?: string
           hour?: number
+          province?: string
           total: number
           weather: string
         }
         Update: {
           day?: string
           hour?: number
+          province?: string
           total?: number
           weather?: string
         }
@@ -96,11 +99,21 @@ export type Database = {
     Functions: {
       delete_own_account: { Args: never; Returns: undefined }
       purge_inactive_accounts: { Args: { p_days?: number }; Returns: number }
-      submit_weather: { Args: { p_weather: string }; Returns: undefined }
+      submit_weather: { Args: { p_weather: string; p_province?: string }; Returns: undefined }
       weather_today: {
         Args: never
         Returns: {
           label: string
+          share: number
+          total: number
+          weather: string
+        }[]
+      }
+      weather_today_by_province: {
+        Args: never
+        Returns: {
+          label: string
+          province: string
           share: number
           total: number
           weather: string
