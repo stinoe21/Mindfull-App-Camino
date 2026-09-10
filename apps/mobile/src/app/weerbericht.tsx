@@ -88,7 +88,7 @@ export default function Weerbericht() {
       {stand?.staat === "geladen" ? <WeerberichtIntro /> : null}
 
       {stand === null ? (
-        <Card tone="outline">
+        <Card tone="white">
           <ActivityIndicator color={colors.brandDefault} />
           <AppText rol="bodySmall" kleur="secondary" centreer>{t("ophalen")}</AppText>
         </Card>
@@ -108,7 +108,7 @@ export default function Weerbericht() {
       {/* De lege staat liet driekwart scherm leeg; de uitleg hoort hier dan
           wel, zodat je niet voor niets bent gekomen. */}
       {stand?.staat === "leeg" ? (
-        <Card tone="outline">
+        <Card tone="white">
           <AppText rol="bodySmall" kleur="secondary">{UITLEG_ANONIMITEIT}</AppText>
           <WatIsHetWeerbericht />
         </Card>
@@ -125,7 +125,7 @@ export default function Weerbericht() {
       ) : null}
 
       {stand?.staat === "niet-verbonden" || stand?.staat === "fout" ? (
-        <Card tone="outline">
+        <Card tone="white">
           <AppText rol="h3">{t("geenVerbindingTitel")}</AppText>
           <AppText rol="bodySmall" kleur="secondary">
             {t("geenVerbindingUitleg")}
@@ -137,7 +137,7 @@ export default function Weerbericht() {
       {stand?.staat === "geladen" ? (
         <View style={{ gap: space[3] }}>
           {stand.rijen.map((rij) => (
-            <Card key={rij.weather} tone="outline" style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+            <Card key={rij.weather} tone="white" style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
               <AppText rol="body">{rij.label}</AppText>
               <AppText rol="bodyEmphasis" kleur="secondary">{rij.share}%</AppText>
             </Card>

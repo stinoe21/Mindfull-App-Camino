@@ -103,7 +103,7 @@ export default function AccountVerwijderen() {
       {!bevestigen ? (
         <Button label={t("verwijderKnop")} variant="secondary" fullWidth onPress={() => zetBevestigen(true)} />
       ) : (
-        <Card tone="outline">
+        <Card tone="white">
           <AppText rol="h3">{t("zekerTitel")}</AppText>
           <AppText rol="bodySmall" kleur="secondary">{t("zekerUitleg")}</AppText>
           <Button label={t("jaVerwijder")} fullWidth bezig={bezig} onPress={verwijder} />
@@ -112,7 +112,7 @@ export default function AccountVerwijderen() {
       )}
 
       {melding ? (
-        <Card tone="outline">
+        <Card tone="white">
           <AppText rol="bodySmall" kleur="secondary">{melding}</AppText>
         </Card>
       ) : null}
