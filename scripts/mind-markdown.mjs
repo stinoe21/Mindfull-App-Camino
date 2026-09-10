@@ -11,6 +11,7 @@
 // Gebruikt door scripts/gen-challenges.mjs en scripts/gen-gidsen.mjs.
 
 import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 // Kopjes waarvan de hele sectie huishouding is en niet in de app hoort.
 const HUISHOUDING = [
@@ -23,7 +24,7 @@ const HUISHOUDING = [
 
 // Losse alinea's die restjes van de website zijn: bijschriften bij vervallen
 // afbeeldingen en de cookie-teksten rond YouTube-embeds.
-const RESTJES = [/^figuur[.:]\s/i, /^foto:\s/i, /marketing cookies/i, /^werkt het filmpje niet\?/i];
+const RESTJES = [/^figuur[.:]\s/i, /^foto:\s/i, /marketing cookies/i, /^werkt het filmpje niet\?/i, /^er zijn geen resultaten gevonden/i];
 
 export function slugify(naam) {
   return naam
@@ -38,10 +39,47 @@ export function plat(tekst) {
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/__([^_]+)__/g, "$1")
+    .replace(/__/g, "") // een los opmaakteken zonder wederhelft
+    .replace(/(^|\s)_+(?=\S)/g, "$1") // idem, enkel, aan het begin van een woord
+    .replace(/_+(?=\s|$)/g, "") // idem, aan het eind van een woord
     .replace(/\*([^*]+)\*/g, "$1")
     .replace(/\s*_([^_]+)_\s*/g, " $1 ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+/** De frontmatter van een pagina als object (title, bron, opgehaald). */
+export function leesFrontmatter(pad) {
+  const md = readFileSync(pad, "utf8");
+  const blok = md.match(/^---\n([\s\S]*?)\n---\n/);
+  const uit = {};
+  if (!blok) return uit;
+  for (const regel of blok[1].split("\n")) {
+    const m = regel.match(/^(\w+):\s*(.*)$/);
+    if (m) uit[m[1]] = m[2].replace(/^"(.*)"$/, "$1");
+  }
+  return uit;
+}
+
+/**
+ * De tabel in GIDSEN.md naar een lijst { titel, url, slug, bestand, aanmeld }.
+ * bestand is het absolute pad van de lokale pagina, of null als de gids alleen
+ * als link bestaat. Gedeeld door gen-gidsen.mjs en gen-houvast.mjs.
+ */
+export function parseGidsenLijst(map, overslaan = new Set()) {
+  const md = readFileSync(join(map, "GIDSEN.md"), "utf8");
+  const gidsen = [];
+  for (const regel of md.split("\n")) {
+    const rij = regel.match(/^\| (.+?) \| (https:\/\/\S+) \| (.*?) \| (\S*) \|$/);
+    if (!rij) continue;
+    const [, titel, url, bestand, aanmeld] = rij;
+    const slug = url.replace(/\/$/, "").split("/").pop();
+    if (overslaan.has(slug)) continue;
+    const lokaal = bestand.match(/\]\(([^)]+)\)/);
+    gidsen.push({ titel: titel.trim(), url, slug, bestand: lokaal ? join(map, lokaal[1]) : null, aanmeld: aanmeld || undefined });
+  }
+  return gidsen;
 }
 
 /** Eén pagina naar { intro, blokken }. De H1 vervalt: de titel komt uit de lijst. */
@@ -54,6 +92,7 @@ export function parsePagina(pad) {
   let paragraaf = [];
   let lijst = null;
   let overslaan = false; // binnen een huishouding-sectie
+  let itemLooptDoor = false; // de vorige regel was een lijstitem, zonder witregel erna
   let navLijstVerwacht = false; // de lijst direct na "Ga snel naar:"
 
   const sluitParagraaf = () => {
@@ -93,17 +132,27 @@ export function parsePagina(pad) {
     }
     if (overslaan) continue;
 
-    const item = r.match(/^[*-]\s+(.*)$/);
+    // Opsommingen met een streepje of sterretje, en genummerde stappen
+    // ("1.  Bedenk je dat..."): de nummering is die van de app.
+    const item = r.match(/^(?:[*-]|\d+\.)\s+(.*)$/);
     if (item) {
       sluitParagraaf();
       lijst = lijst ?? [];
       lijst.push(item[1]);
+      itemLooptDoor = true;
       continue;
     }
     if (!r.trim()) {
       sluitParagraaf();
       // Een lege regel binnen een lijst laat de lijst doorlopen: MIND zet
       // witregels tussen de items.
+      itemLooptDoor = false;
+      continue;
+    }
+    // Een tekstregel direct onder een item, zonder witregel, hoort bij dat
+    // item ("1. Waar sta ik nu?" met de toelichting op de regel eronder).
+    if (lijst && itemLooptDoor) {
+      lijst[lijst.length - 1] += " " + r.trim();
       continue;
     }
     if (lijst) sluitLijst();

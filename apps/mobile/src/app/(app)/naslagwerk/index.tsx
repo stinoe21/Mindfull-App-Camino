@@ -1,14 +1,17 @@
-// Naslagwerk
+// Houvast
 //
-// De kennisbank van Mind, met zoeken. De content is gebundeld en lokaal, dus
-// zoeken werkt ook zonder netwerk. Debounce minimaal 300 ms en geen zoekopdracht
-// onder de twee tekens (docs/limieten-en-misbruik.md sectie 4): hier is het
-// filter lokaal, maar dezelfde regels houden het gedrag gelijk aan de afspraak.
+// De compacte kennislaag van de app (Stijn, 10 september 2026, docs/scope.md):
+// per onderwerp één pagina die de uitleg uit de psychipedia van MIND
+// combineert met de tips en oefeningen uit de online gids. Dit overzicht
+// toont de onderwerpen, jouw voorkeuren voorop, met de chips als filter en
+// daaronder de gidsen van MIND die geen eigen onderwerp hebben (voor naasten,
+// over ADHD, autisme, ...).
 //
-// Sinds 10 september 2026 (feedbacksessie MIND) is zoeken slim: je typt wat
-// er speelt ("ik slaap slecht") en features/content/zoeken.ts vertaalt dat
-// naar gidsen, artikelen en challenges. Zonder zoekterm blijft het overzicht
-// per onderwerp staan.
+// Zoeken is slim (feedbacksessie MIND): je typt wat er speelt ("ik slaap
+// slecht") en features/content/zoeken.ts vertaalt dat naar onderwerpen,
+// gidsen en challenges. Een gids of artikel dat bij een onderwerp hoort,
+// opent op dat onderwerp. Debounce minimaal 300 ms en geen zoekopdracht
+// onder de twee tekens (docs/limieten-en-misbruik.md sectie 4).
 
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
@@ -25,72 +28,73 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
-import { ARTIKELEN, ONDERWERPEN } from "@/features/content/data/artikelen";
+import { ONDERWERPEN } from "@/features/content/data/artikelen";
 import { GIDSEN } from "@/features/content/data/gidsen";
-import { gidsenVoor } from "@/features/content/gidsen";
-import { zoek } from "@/features/content/zoeken";
+import { houvastVoorArtikel, houvastVoorGids, houvastVoorVoorkeuren } from "@/features/content/houvast";
+import { zoek, type ZoekResultaat } from "@/features/content/zoeken";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 
 const nl = {
-  titel: "Naslagwerk",
-  ondertitel: "Gidsen en artikelen van MIND, altijd met bron.",
+  titel: "Houvast",
+  ondertitel: "Begrijpen, houvast en verdieping. Van MIND, altijd met bron.",
   zoekPlaceholder: "Waar loop je tegenaan? Bijvoorbeeld: ik slaap slecht",
   gevonden: "Gevonden voor jou",
-  gevondenNote: "Gidsen, artikelen en challenges van MIND die hierbij passen.",
+  gevondenNote: "Onderwerpen, gidsen en challenges van MIND die hierbij passen.",
   challenge: "CHALLENGE",
-  artikel: "ARTIKEL",
-  zoekLabel: "Zoek in het naslagwerk",
-  onderwerpen: "Onderwerpen",
-  alles: "Alles",
-  gidsen: "Online gidsen",
-  gidsenNote: "Praktische tips en technieken, eerst over jouw onderwerpen.",
-  alleGidsen: "Alle gidsen",
-  minderGidsen: "Minder",
+  onderwerp: "ONDERWERP",
   gids: "GIDS",
-  artikelen: "Artikelen",
-  artikelenNote: "Alles uit de bibliotheek van MIND.",
+  zoekLabel: "Zoek in Houvast",
+  onderwerpen: "Onderwerpen",
+  onderwerpenNote: "Kort uitgelegd, wat kan helpen en verder lezen bij MIND. Jouw onderwerpen eerst.",
+  alles: "Alles",
+  gidsen: "Meer gidsen van MIND",
+  gidsenNote: "Voor naasten, en over onderwerpen die hierboven niet staan.",
   nietsGevondenTitel: "Niets gevonden",
-  nietsGevonden: "Probeer een ander woord.",
   nietsGevondenVoor: "Niets gevonden voor “{term}”. Probeer het in andere woorden, bijvoorbeeld waar je last van hebt.",
+  nietsBijOnderwerp: "Nog geen onderwerpen bij deze keuze.",
   wisZoekopdracht: "Wis zoekopdracht",
-  bronMind: "BRON: MIND",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
-    titel: "Reference library",
-    ondertitel: "Guides and articles from MIND, always with a source.",
+    titel: "Houvast",
+    ondertitel: "Understanding, a foothold and depth. From MIND, always with a source.",
     zoekPlaceholder: "What are you running into? For example: I sleep badly",
     gevonden: "Found for you",
-    gevondenNote: "Guides, articles and challenges from MIND that fit.",
+    gevondenNote: "Topics, guides and challenges from MIND that fit.",
     challenge: "CHALLENGE",
-    artikel: "ARTICLE",
-    zoekLabel: "Search the reference library",
-    onderwerpen: "Topics",
-    alles: "All",
-    gidsen: "Online guides",
-    gidsenNote: "Practical tips and techniques, your topics first.",
-    alleGidsen: "All guides",
-    minderGidsen: "Fewer",
+    onderwerp: "TOPIC",
     gids: "GUIDE",
-    artikelen: "Articles",
-    artikelenNote: "Everything from MIND's library.",
+    zoekLabel: "Search Houvast",
+    onderwerpen: "Topics",
+    onderwerpenNote: "Explained briefly, what can help and more to read at MIND. Your topics first.",
+    alles: "All",
+    gidsen: "More guides by MIND",
+    gidsenNote: "For loved ones, and about topics not listed above.",
     nietsGevondenTitel: "Nothing found",
-    nietsGevonden: "No articles found. Try another word or topic.",
-    nietsGevondenVoor: "No articles found for “{term}”. Try another word or topic.",
+    nietsGevondenVoor: "Nothing found for “{term}”. Try other words, for example what you're struggling with.",
+    nietsBijOnderwerp: "No topics for this choice yet.",
     wisZoekopdracht: "Clear the search",
-    bronMind: "SOURCE: MIND",
   },
 };
 
-export default function Naslagwerk() {
+// Een zoekresultaat opent op zijn onderwerp als het er een heeft; anders op
+// de gids, het artikel of de challenge zelf.
+type Doel = { sleutel: string; soort: "onderwerp" | "gids" | "challenge"; titel: string; onderwerp?: string; slug: string };
+function doelVan(r: ZoekResultaat): Doel {
+  const h = r.soort === "gids" ? houvastVoorGids(r.slug) : r.soort === "artikel" ? houvastVoorArtikel(r.slug) : undefined;
+  if (h) return { sleutel: "onderwerp-" + h.slug, soort: "onderwerp", titel: h.titel, onderwerp: h.onderwerp, slug: h.slug };
+  if (r.soort === "challenge") return { sleutel: "challenge-" + r.slug, soort: "challenge", titel: r.titel, onderwerp: r.onderwerp, slug: r.slug };
+  return { sleutel: "gids-" + r.slug, soort: "gids", titel: r.titel, onderwerp: r.onderwerp, slug: r.slug };
+}
+
+export default function Houvast() {
   const router = useRouter();
   const t = useVertaling(teksten);
   const [invoer, zetInvoer] = useState("");
   const [zoekterm, zetZoekterm] = useState("");
   const [onderwerp, zetOnderwerp] = useState<string | null>(null);
   const [voorkeuren, zetVoorkeuren] = useState<string[]>([]);
-  const [alleGidsen, zetAlleGidsen] = useState(false);
 
   // De voorkeuren kunnen tussendoor wijzigen in Instellingen, dus bij elke
   // focus opnieuw lezen. Ze bepalen alleen de volgorde, nooit wat er te zien is.
@@ -116,53 +120,35 @@ export default function Naslagwerk() {
 
   const gekozen = (naam: string) => Number(voorkeuren.includes(naam));
 
-  // Slim zoeken: één gerangschikte lijst over gidsen, artikelen en challenges,
-  // binnen het gekozen onderwerp als er een chip actief is.
-  const gevonden = zoekterm ? zoek(zoekterm).filter((r) => !onderwerp || r.onderwerp === onderwerp) : [];
-  const openResultaat = (r: (typeof gevonden)[number]) => {
-    if (r.soort === "gids") router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: r.slug } });
-    else if (r.soort === "artikel") router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: r.slug } });
-    else router.push({ pathname: "/challenges/[challenge]", params: { challenge: r.slug } });
+  const openOnderwerp = (slug: string) => router.push({ pathname: "/naslagwerk/houvast/[onderwerp]", params: { onderwerp: slug } });
+  const openDoel = (d: Doel) => {
+    if (d.soort === "onderwerp") openOnderwerp(d.slug);
+    else if (d.soort === "gids") router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: d.slug } });
+    else router.push({ pathname: "/challenges/[challenge]", params: { challenge: d.slug } });
   };
 
-  const resultaten = ARTIKELEN.filter((a) => {
-    if (onderwerp && a.onderwerp !== onderwerp) return false;
-    if (!zoekterm) return true;
-    return (
-      a.titel.toLowerCase().includes(zoekterm) ||
-      a.onderwerp.toLowerCase().includes(zoekterm) ||
-      a.blokken.some((b) => b.tekst.toLowerCase().includes(zoekterm))
-    );
-  }).sort((a, b) => gekozen(b.onderwerp) - gekozen(a.onderwerp));
+  // Slim zoeken: één gerangschikte lijst, binnen het gekozen onderwerp als er
+  // een chip actief is; een gids en het artikel over hetzelfde onderwerp
+  // worden één resultaat.
+  const gevonden: Doel[] = [];
+  if (zoekterm) {
+    for (const r of zoek(zoekterm)) {
+      if (onderwerp && r.onderwerp !== onderwerp) continue;
+      const d = doelVan(r);
+      if (!gevonden.some((x) => x.sleutel === d.sleutel)) gevonden.push(d);
+    }
+  }
 
-  // De gidsen: zonder filter een plank met de gidsen bij een onderwerp (jouw
-  // onderwerpen eerst), of alle 46 als grid na "Alle gidsen". Met een
-  // onderwerp of zoekterm altijd een grid van wat erbij hoort. De gidsen
-  // zonder onderwerp (naasten, ADHD, autisme, ...) zijn zo wel te vinden.
-  const gidsFilter = zoekterm || onderwerp !== null;
-  const gidsen = gidsFilter
-    ? GIDSEN.filter((g) => {
-        if (onderwerp && g.onderwerp !== onderwerp) return false;
-        if (!zoekterm) return true;
-        return (
-          g.titel.toLowerCase().includes(zoekterm) ||
-          g.intro.toLowerCase().includes(zoekterm) ||
-          g.blokken.some((b) => (b.tekst ?? b.kop ?? "").toLowerCase().includes(zoekterm))
-        );
-      })
-    : alleGidsen
-      ? GIDSEN
-      : gidsenVoor(voorkeuren);
-  const gidsenAlsGrid = gidsFilter || alleGidsen;
-  const gidsTegel = (g: (typeof GIDSEN)[number]) => ({
-    label: t("gids"),
-    title: g.titel,
-    onPress: () => router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: g.slug } }),
-  });
+  const onderwerpen = houvastVoorVoorkeuren(voorkeuren).filter((h) => !onderwerp || h.onderwerp === onderwerp);
+
+  // De gidsen zonder eigen onderwerp: alleen zonder filter, als plank onderaan.
+  const losseGidsen = GIDSEN.filter((g) => !houvastVoorGids(g.slug));
 
   // Jouw onderwerpen als eerste chips, zodat "waar wil je aan werken" hier
   // zichtbaar terugkomt.
-  const onderwerpen = [...ONDERWERPEN].sort((a, b) => gekozen(b) - gekozen(a));
+  const chips = [...ONDERWERPEN].sort((a, b) => gekozen(b) - gekozen(a));
+
+  const label = (soort: Doel["soort"]) => (soort === "onderwerp" ? t("onderwerp") : soort === "gids" ? t("gids") : t("challenge"));
 
   return (
     <ScreenCanvas state="default" kopTitel={t("titel")} metNavRuimte>
@@ -184,14 +170,12 @@ export default function Naslagwerk() {
 
       {/* Een actieve "Alles"-chip vooraan, zodat de rij als filter leest en niet
           als decoratie (designaudit 29 augustus 2026). */}
-      <ContentSection title={t("onderwerpen")}>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
-          <Chip label={t("alles")} active={onderwerp === null} onPress={() => zetOnderwerp(null)} />
-          {onderwerpen.map((o) => (
-            <Chip key={o} label={o} active={onderwerp === o} onPress={() => zetOnderwerp(onderwerp === o ? null : o)} />
-          ))}
-        </View>
-      </ContentSection>
+      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
+        <Chip label={t("alles")} active={onderwerp === null} onPress={() => zetOnderwerp(null)} />
+        {chips.map((o) => (
+          <Chip key={o} label={o} active={onderwerp === o} onPress={() => zetOnderwerp(onderwerp === o ? null : o)} />
+        ))}
+      </View>
 
       {zoekterm ? (
         <ContentSection title={t("gevonden")} note={t("gevondenNote")}>
@@ -203,100 +187,68 @@ export default function Naslagwerk() {
             </Card>
           ) : (
             <ContentGrid>
-              {gevonden.map((r, i) => (
+              {gevonden.map((d, i) => (
                 <ContentCard
-                  key={r.soort + r.slug}
+                  key={d.sleutel}
                   full={i === 0 || (i === gevonden.length - 1 && (gevonden.length - 1) % 2 === 1)}
-                  tone={r.soort === "gids" ? "coral" : r.soort === "challenge" ? "purple" : "white"}
-                  label={r.soort === "gids" ? t("gids") : r.soort === "challenge" ? t("challenge") : t("artikel")}
-                  title={r.titel}
-                  onPress={() => openResultaat(r)}
+                  tone={d.soort === "challenge" ? "purple" : d.soort === "gids" ? "white" : "coral"}
+                  label={label(d.soort)}
+                  title={d.titel}
+                  onPress={() => openDoel(d)}
                 >
                   <View style={{ height: i === 0 ? 72 : 48 }} />
                   <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
-                    <VliegerOnderwerp onderwerp={r.onderwerp} slug={r.slug} hoogte={i === 0 ? 72 : 48} />
+                    <VliegerOnderwerp onderwerp={d.onderwerp} slug={d.slug} hoogte={i === 0 ? 72 : 48} />
                   </View>
                 </ContentCard>
               ))}
             </ContentGrid>
           )}
         </ContentSection>
-      ) : null}
-
-      {!zoekterm && gidsen.length ? (
-        <ContentSection
-          title={t("gidsen")}
-          note={gidsFilter ? undefined : t("gidsenNote")}
-          action={gidsFilter ? undefined : alleGidsen ? t("minderGidsen") : t("alleGidsen")}
-          onAction={() => zetAlleGidsen(!alleGidsen)}
-        >
-          {gidsenAlsGrid ? (
-            <ContentGrid>
-              {gidsen.map((g, i) => (
-                <ContentCard key={g.slug} {...gidsTegel(g)} tone="coral" full={i === gidsen.length - 1 && gidsen.length % 2 === 1}>
-                  <View style={{ height: 40 }} />
-                  <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
-                    <VliegerOnderwerp onderwerp={g.onderwerp} hoogte={44} />
-                  </View>
-                </ContentCard>
-              ))}
-            </ContentGrid>
+      ) : (
+        <ContentSection title={t("onderwerpen")} note={onderwerp ? undefined : t("onderwerpenNote")}>
+          {onderwerpen.length === 0 ? (
+            <Card tone="white">
+              <AppText rol="bodySmall" kleur="secondary">{t("nietsBijOnderwerp")}</AppText>
+            </Card>
           ) : (
-            <ContentShelf>
-              {gidsen.map((g) => (
-                <ShelfCard key={g.slug} {...gidsTegel(g)} tone="coral">
-                  <View style={{ position: "absolute", right: space[3], top: space[3] }}>
-                    <VliegerOnderwerp onderwerp={g.onderwerp} hoogte={44} />
+            <ContentGrid>
+              {/* Het eerste onderwerp breed en in kleur, de rest half en zand;
+                  de vlieger van het onderwerp rechtsonder, altijd op dezelfde plek. */}
+              {onderwerpen.map((h, i) => (
+                <ContentCard
+                  key={h.slug}
+                  full={i === 0 || (i === onderwerpen.length - 1 && (onderwerpen.length - 1) % 2 === 1)}
+                  tone={i === 0 ? "coral" : "white"}
+                  title={h.titel}
+                  onPress={() => openOnderwerp(h.slug)}
+                >
+                  <View style={{ height: i === 0 ? 72 : 56 }} />
+                  <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
+                    <VliegerOnderwerp onderwerp={h.onderwerp} slug={h.slug} hoogte={i === 0 ? 72 : 52} />
                   </View>
-                </ShelfCard>
+                </ContentCard>
               ))}
-            </ContentShelf>
+            </ContentGrid>
           )}
         </ContentSection>
-      ) : null}
-
-      {zoekterm ? null : (
-      <ContentSection title={t("artikelen")}>
-        {resultaten.length === 0 ? (
-          <Card tone="outline">
-            <AppText rol="h3">{t("nietsGevondenTitel")}</AppText>
-            <AppText rol="bodySmall" kleur="secondary">
-              {zoekterm ? t("nietsGevondenVoor").replace("{term}", zoekterm) : t("nietsGevonden")}
-            </AppText>
-            <Button
-              label={t("wisZoekopdracht")}
-              variant="link"
-              onPress={() => {
-                zetInvoer("");
-                zetOnderwerp(null);
-              }}
-            />
-          </Card>
-        ) : (
-          <ContentGrid>
-            {/* Het eerste artikel breed en in kleur, de rest half en wit; het
-                onderwerp alleen als het iets toevoegt aan de titel. */}
-            {resultaten.map((a, i) => (
-              <ContentCard
-                key={a.slug}
-                full={i === 0 || (i === resultaten.length - 1 && (resultaten.length - 1) % 2 === 1)}
-                tone={i === 0 ? "coral" : "white"}
-                title={a.titel}
-                onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
-              >
-                {/* Geen ondertekst: het gezicht en de kleur zeggen het onderwerp.
-                    De vlieger staat altijd rechtsonder; de lege View houdt er
-                    ruimte voor vrij, zodat elke kaart dezelfde opbouw heeft. */}
-                <View style={{ height: i === 0 ? 72 : 56 }} />
-                <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
-                  <VliegerOnderwerp onderwerp={a.onderwerp} slug={a.slug} hoogte={i === 0 ? 72 : 52} />
-                </View>
-              </ContentCard>
-            ))}
-          </ContentGrid>
-        )}
-      </ContentSection>
       )}
+
+      {!zoekterm && !onderwerp && losseGidsen.length ? (
+        <ContentSection title={t("gidsen")} note={t("gidsenNote")}>
+          <ContentShelf>
+            {losseGidsen.map((g) => (
+              <ShelfCard
+                key={g.slug}
+                label={t("gids")}
+                title={g.titel}
+                tone="primary"
+                onPress={() => router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: g.slug } })}
+              />
+            ))}
+          </ContentShelf>
+        </ContentSection>
+      ) : null}
     </ScreenCanvas>
   );
 }
