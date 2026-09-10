@@ -24,14 +24,14 @@ const SLEUTEL = "mind.uitleg-gezien";
 // augustus 2026): welkom was al een introscherm.
 const STAPPEN: { kop: string; tekst: string }[] = [
   {
-    kop: "Zo werkt de app",
+    kop: "Het weer als vergelijking",
     tekst:
-      "Elke dag één korte check-in van vier vragen. Daaruit komt jouw weer van vandaag, met één zachte tip. Het telt anoniem mee in het mentale weer van Nederland, als je daar ja op zei.",
+      "Hoe je je voelt, zeggen we hier in weer: zonnig, bewolkt, mist, wind of regen. Elke dag vier korte vragen, en daaruit komt jouw weer van vandaag met één zachte tip. Het telt anoniem mee in het mentale weer van Nederland, als je daar ja op zei.",
   },
   {
     kop: "Tips en challenges",
     tekst:
-      "Onder Tips staan artikelen van MIND, eerst over jouw onderwerpen. Onder Challenges vind je kleine stappen voor een paar dagen. Alles is aan te passen in Instellingen.",
+      "Onder Tips staan de gidsen en artikelen van MIND, eerst over jouw onderwerpen. Onder Challenges vind je kleine stappen voor een paar dagen. Alles is aan te passen in Instellingen.",
   },
 ];
 

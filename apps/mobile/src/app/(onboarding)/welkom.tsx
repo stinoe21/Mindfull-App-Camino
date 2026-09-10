@@ -13,20 +13,23 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 
+// De uitleg van de weermetafoor, eenmalig en voor de eerste check-in, in
+// twee, drie zinnen: gevraagd door MIND in de feedbacksessie (verwerkt 10
+// september 2026). Het is interface-copy; MIND doet later een eigen slag.
 const nl = {
   titel: "Weer MIND",
-  ondertitel: "Weer even mindful. Hoe is je weer vandaag?",
+  ondertitel: "Hoe is je weer vandaag?",
   uitleg:
-    "Vier korte vragen per dag. Je ziet jouw eigen weer, met één kleine tip. En je telt anoniem mee in het mentale weer van Nederland.",
+    "In deze app is het weer een vergelijking voor hoe je je voelt. Zonnig, bewolkt of regen: het zegt niets over wie je bent, alleen hoe vandaag voelt. Elke dag vier korte vragen, en je telt anoniem mee in het mentale weer van Nederland.",
   aanDeSlag: "Aan de slag",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "Weer MIND",
-    ondertitel: "Mindful again. How's your weather today?",
+    ondertitel: "How's your weather today?",
     uitleg:
-      "Check in every day with four short questions. You see your own weather, with a small tip for today, and you count anonymously towards the mental weather forecast of the Netherlands.",
+      "In this app the weather is a way of describing how you feel. Sunny, cloudy or rain: it says nothing about who you are, only how today feels. Four short questions a day, and you count anonymously towards the mental weather of the Netherlands.",
     aanDeSlag: "Get started",
   },
 };
