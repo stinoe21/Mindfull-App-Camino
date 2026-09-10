@@ -36,8 +36,8 @@ export const UITLEG_ANONIMITEIT =
   "mee in een landelijk totaal: zonder naam en zonder account.";
 
 export const UITLEG_DETAIL =
-  "Je antwoorden op de vier vragen verlaten je telefoon nooit. Je kunt dit altijd wijzigen in " +
-  "Instellingen.";
+  "Je antwoorden op de vier vragen verlaten je telefoon nooit. Je kunt dit altijd wijzigen onder " +
+  "Profiel.";
 
 export function WeerberichtIntro() {
   const [open, zetOpen] = useState(false);

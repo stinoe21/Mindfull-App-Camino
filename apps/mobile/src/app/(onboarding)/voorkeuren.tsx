@@ -21,7 +21,7 @@ import { bewaarInstellingen, VOORKEUR_OPTIES } from "@/features/profiel/instelli
 
 const nl = {
   titel: "Welke onderwerpen spreken je aan?",
-  ondertitel: "Kies wat past. Aanpassen kan altijd in Instellingen.",
+  ondertitel: "Kies wat past. Aanpassen kan altijd onder Profiel.",
   verder: "Verder",
   slaOver: "Sla over",
 } as const;
@@ -29,7 +29,7 @@ const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "Which topics appeal to you?",
-    ondertitel: "Choose what fits. You can always change it in Settings.",
+    ondertitel: "Choose what fits. You can always change it under Profile.",
     verder: "Continue",
     slaOver: "Skip",
   },
