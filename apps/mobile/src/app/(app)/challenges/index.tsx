@@ -13,9 +13,11 @@ import { Card } from "@mind/ui/components/Card";
 import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
+import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
+import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
 import { aantalAfgerond } from "@/features/content/voortgang";
 
 const nl = {
@@ -105,6 +107,12 @@ export default function Challenges() {
                       <AppText rol="labelCaption" kleur="brand">{t("dagVan").replace("{x}", String(Math.min(klaar, c.dagen.length))).replace("{y}", String(c.dagen.length))}</AppText>
                     </View>
                   ) : null}
+                  {/* De vlieger van het onderwerp rechtsonder, zoals in het
+                      naslagwerk; de lege View houdt er ruimte voor vrij. */}
+                  <View style={{ height: actief ? 56 : 44 }} />
+                  <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
+                    <VliegerOnderwerp onderwerp={ONDERWERP_PER_CHALLENGE[c.slug]} hoogte={actief ? 64 : 48} />
+                  </View>
                 </ContentCard>
               );
             })}
@@ -118,6 +126,10 @@ export default function Challenges() {
             {specials.map((c, i) => (
               <ContentCard key={c.slug} full={i === 0 || (i === specials.length - 1 && (specials.length - 1) % 2 === 1)} tone={i === 0 ? "coral" : "white"} title={c.naam} onPress={() => open(c.slug)}>
                 <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(c.dagen.length))}</AppText>
+                <View style={{ height: i === 0 ? 56 : 44 }} />
+                <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
+                  <VliegerOnderwerp onderwerp={ONDERWERP_PER_CHALLENGE[c.slug]} hoogte={i === 0 ? 64 : 48} />
+                </View>
               </ContentCard>
             ))}
           </ContentGrid>
