@@ -7,6 +7,11 @@
 // zonder vooraf aangevinkte optie, en geen schakelaar die standaard aan staat.
 // Zolang er geen keuze is gemaakt, is er geen toestemming.
 //
+// Sinds 10 september 2026 (Stijn): ja en nee zijn twee aanvinkvakjes van
+// dezelfde vorm als de voorwaarden (KeuzeVak), zodat de twee toestemmingen
+// er als één formulier uitzien. Ze sluiten elkaar uit; een schermlezer hoort
+// dat via de rol "radio".
+//
 // Twee standen. In de onboarding (metUitleg) staat de volledige uitleg erbij,
 // want daar wordt de toestemming geïnformeerd gegeven. Op Instellingen is de
 // keuze al gemaakt en gaat het om intrekken of opnieuw geven: dan alleen de
@@ -15,10 +20,10 @@
 import { useState } from "react";
 import { View } from "react-native";
 
-import { colors, radius, space } from "@mind/ui";
+import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
-import { PressableScale } from "@mind/ui/components/PressableScale";
+import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 
 export const TOESTEMMING_VRAAG =
   "Mag MIND jouw gekozen mentale “weerstatus” verwerken voor het anonieme, geaggregeerde Mentale Weerbericht?";
@@ -41,64 +46,27 @@ type Props = {
   metUitleg?: boolean;
 };
 
-// Eén keuzerij: een rondje links dat zich vult bij keuze, de tekst ernaast.
-// Leest als een formulier in plaats van als twee chips met een lange zin.
-function KeuzeRij({ label, gekozen, onPress }: { label: string; gekozen: boolean; onPress: () => void }) {
-  return (
-    <PressableScale
-      accessibilityRole="radio"
-      accessibilityState={{ checked: gekozen }}
-      onPress={onPress}
-      schaal={0.99}
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        gap: space[3],
-        paddingVertical: space[3],
-        paddingHorizontal: space[4],
-        borderRadius: radius.md,
-        borderWidth: 1,
-        borderColor: gekozen ? colors.brandDefault : colors.borderDefault,
-        backgroundColor: gekozen ? colors.brandSubtle : colors.surfaceCard,
-      }}
-    >
-      <View
-        style={{
-          width: space[5],
-          height: space[5],
-          borderRadius: radius.pill,
-          borderWidth: 2,
-          borderColor: gekozen ? colors.brandDefault : colors.borderDefault,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {gekozen ? <View style={{ width: space[3], height: space[3], borderRadius: radius.pill, backgroundColor: colors.brandDefault }} /> : null}
-      </View>
-      <AppText rol={gekozen ? "bodyEmphasis" : "body"} style={{ flexShrink: 1 }}>{label}</AppText>
-    </PressableScale>
-  );
-}
-
 export function ToestemmingKeuze({ waarde, onKies, metUitleg = false }: Props) {
   const [uitgeklapt, zetUitgeklapt] = useState(false);
   const toonUitleg = metUitleg || uitgeklapt;
 
   return (
-    <View style={{ gap: space[3] }}>
+    <View style={{ gap: space[2] }}>
       {/* De vraag als vette bodytekst, niet als kop: het is een formulierveld. */}
       <AppText rol="bodyEmphasis">{TOESTEMMING_VRAAG}</AppText>
       {toonUitleg ? <AppText rol="bodySmall" kleur="secondary">{TOESTEMMING_UITLEG}</AppText> : null}
-      <View style={{ gap: space[2] }} accessibilityRole="radiogroup">
-        <KeuzeRij label={TOESTEMMING_JA} gekozen={waarde === true} onPress={() => onKies(true)} />
-        <KeuzeRij label={TOESTEMMING_NEE} gekozen={waarde === false} onPress={() => onKies(false)} />
+      <View accessibilityRole="radiogroup">
+        <KeuzeVak rol="radio" label={TOESTEMMING_JA} gekozen={waarde === true} onPress={() => onKies(true)} />
+        <KeuzeVak rol="radio" label={TOESTEMMING_NEE} gekozen={waarde === false} onPress={() => onKies(false)} />
       </View>
       {!metUitleg ? (
-        <Button
-          label={uitgeklapt ? "Verberg de uitleg" : "Lees de uitleg"}
-          variant="link"
-          onPress={() => zetUitgeklapt(!uitgeklapt)}
-        />
+        <View style={{ alignItems: "flex-start" }}>
+          <Button
+            label={uitgeklapt ? "Verberg de uitleg" : "Lees de uitleg"}
+            variant="link"
+            onPress={() => zetUitgeklapt(!uitgeklapt)}
+          />
+        </View>
       ) : null}
     </View>
   );

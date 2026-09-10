@@ -4,6 +4,11 @@
 // zoeken werkt ook zonder netwerk. Debounce minimaal 300 ms en geen zoekopdracht
 // onder de twee tekens (docs/limieten-en-misbruik.md sectie 4): hier is het
 // filter lokaal, maar dezelfde regels houden het gedrag gelijk aan de afspraak.
+//
+// Sinds 10 september 2026 (feedbacksessie MIND) is zoeken slim: je typt wat
+// er speelt ("ik slaap slecht") en features/content/zoeken.ts vertaalt dat
+// naar gidsen, artikelen en challenges. Zonder zoekterm blijft het overzicht
+// per onderwerp staan.
 
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
@@ -23,12 +28,17 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ARTIKELEN, ONDERWERPEN } from "@/features/content/data/artikelen";
 import { GIDSEN } from "@/features/content/data/gidsen";
 import { gidsenVoor } from "@/features/content/gidsen";
+import { zoek } from "@/features/content/zoeken";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 
 const nl = {
   titel: "Naslagwerk",
   ondertitel: "Gidsen en artikelen van MIND, altijd met bron.",
-  zoekPlaceholder: "Zoek een onderwerp",
+  zoekPlaceholder: "Waar loop je tegenaan? Bijvoorbeeld: ik slaap slecht",
+  gevonden: "Gevonden voor jou",
+  gevondenNote: "Gidsen, artikelen en challenges van MIND die hierbij passen.",
+  challenge: "CHALLENGE",
+  artikel: "ARTIKEL",
   zoekLabel: "Zoek in het naslagwerk",
   onderwerpen: "Onderwerpen",
   alles: "Alles",
@@ -41,7 +51,7 @@ const nl = {
   artikelenNote: "Alles uit de bibliotheek van MIND.",
   nietsGevondenTitel: "Niets gevonden",
   nietsGevonden: "Probeer een ander woord.",
-  nietsGevondenVoor: "Niets gevonden voor “{term}”. Probeer een ander woord.",
+  nietsGevondenVoor: "Niets gevonden voor “{term}”. Probeer het in andere woorden, bijvoorbeeld waar je last van hebt.",
   wisZoekopdracht: "Wis zoekopdracht",
   bronMind: "BRON: MIND",
 } as const;
@@ -50,7 +60,11 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     titel: "Reference library",
     ondertitel: "Guides and articles from MIND, always with a source.",
-    zoekPlaceholder: "Search a topic",
+    zoekPlaceholder: "What are you running into? For example: I sleep badly",
+    gevonden: "Found for you",
+    gevondenNote: "Guides, articles and challenges from MIND that fit.",
+    challenge: "CHALLENGE",
+    artikel: "ARTICLE",
     zoekLabel: "Search the reference library",
     onderwerpen: "Topics",
     alles: "All",
@@ -101,6 +115,15 @@ export default function Naslagwerk() {
   }, [invoer]);
 
   const gekozen = (naam: string) => Number(voorkeuren.includes(naam));
+
+  // Slim zoeken: één gerangschikte lijst over gidsen, artikelen en challenges,
+  // binnen het gekozen onderwerp als er een chip actief is.
+  const gevonden = zoekterm ? zoek(zoekterm).filter((r) => !onderwerp || r.onderwerp === onderwerp) : [];
+  const openResultaat = (r: (typeof gevonden)[number]) => {
+    if (r.soort === "gids") router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: r.slug } });
+    else if (r.soort === "artikel") router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: r.slug } });
+    else router.push({ pathname: "/challenges/[challenge]", params: { challenge: r.slug } });
+  };
 
   const resultaten = ARTIKELEN.filter((a) => {
     if (onderwerp && a.onderwerp !== onderwerp) return false;
@@ -170,7 +193,37 @@ export default function Naslagwerk() {
         </View>
       </ContentSection>
 
-      {gidsen.length ? (
+      {zoekterm ? (
+        <ContentSection title={t("gevonden")} note={t("gevondenNote")}>
+          {gevonden.length === 0 ? (
+            <Card tone="white">
+              <AppText rol="h3">{t("nietsGevondenTitel")}</AppText>
+              <AppText rol="bodySmall" kleur="secondary">{t("nietsGevondenVoor").replace("{term}", zoekterm)}</AppText>
+              <Button label={t("wisZoekopdracht")} variant="link" onPress={() => zetInvoer("")} />
+            </Card>
+          ) : (
+            <ContentGrid>
+              {gevonden.map((r, i) => (
+                <ContentCard
+                  key={r.soort + r.slug}
+                  full={i === 0 || (i === gevonden.length - 1 && (gevonden.length - 1) % 2 === 1)}
+                  tone={r.soort === "gids" ? "coral" : r.soort === "challenge" ? "purple" : "white"}
+                  label={r.soort === "gids" ? t("gids") : r.soort === "challenge" ? t("challenge") : t("artikel")}
+                  title={r.titel}
+                  onPress={() => openResultaat(r)}
+                >
+                  <View style={{ height: i === 0 ? 72 : 48 }} />
+                  <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
+                    <VliegerOnderwerp onderwerp={r.onderwerp} slug={r.slug} hoogte={i === 0 ? 72 : 48} />
+                  </View>
+                </ContentCard>
+              ))}
+            </ContentGrid>
+          )}
+        </ContentSection>
+      ) : null}
+
+      {!zoekterm && gidsen.length ? (
         <ContentSection
           title={t("gidsen")}
           note={gidsFilter ? undefined : t("gidsenNote")}
@@ -202,6 +255,7 @@ export default function Naslagwerk() {
         </ContentSection>
       ) : null}
 
+      {zoekterm ? null : (
       <ContentSection title={t("artikelen")}>
         {resultaten.length === 0 ? (
           <Card tone="outline">
@@ -242,6 +296,7 @@ export default function Naslagwerk() {
           </ContentGrid>
         )}
       </ContentSection>
+      )}
     </ScreenCanvas>
   );
 }

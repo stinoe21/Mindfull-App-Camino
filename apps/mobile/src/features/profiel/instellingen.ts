@@ -30,6 +30,12 @@ export type Instellingen = {
    * geen expo-localization meetrekt.
    */
   taal: "systeem" | "nl" | "en";
+  /**
+   * Zelf gekozen provincie, voor het mentale weer per provincie (feedbacksessie
+   * MIND, verwerkt 10 september 2026). null is "liever niet". Gaat alleen mee
+   * als provincie bij het optellen van een check-in; nooit een locatie.
+   */
+  provincie: string | null;
 };
 
 export const STANDAARD: Instellingen = {
@@ -40,6 +46,7 @@ export const STANDAARD: Instellingen = {
   consentWeerbericht: false,
   consentVoorwaarden: false,
   taal: "systeem",
+  provincie: null,
 };
 
 // Dezelfde onderwerpen als het Naslagwerk, zodat een keuze hier direct
