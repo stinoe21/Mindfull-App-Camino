@@ -190,7 +190,7 @@ Stijn deelde op 10 september 2026 de samenvatting van de feedbacksessie MIND x B
 
 - **Geen bronvermelding.** Het is de app van MIND zelf: "Bron: MIND", "altijd met bron" en "van MIND" zijn uit de interface (Stijn, 10 september 2026). Dat vervangt de regel "Bron: MIND onder elk artikel" uit `packages/ui/reference/HERKOMST.md`. Links zeggen wel waar ze heen gaan (wijzijnmind.nl); de naam MIND Hulplijn en de consenttekst van Paul blijven.
 - **De Tips-tab heet Houvast**, net als het scherm. De actieve tab in de navigatiebalk staat op een zandpil, dezelfde tint als de basiskaart.
-- **Profiel is de instellingenpagina.** Eén pagina voor wie je bent, wat je koos en wat je toestaat; geen apart scherm Instellingen meer. De route `/profiel/instellingen` verwijst door. Scherm 16 en 17 in de tabel hierboven zijn daarmee één scherm.
+- **Profiel is de instellingenpagina.** Eén pagina voor wie je bent, wat je koos en wat je toestaat; geen apart scherm Instellingen meer. De route `/profiel/instellingen` verwijst door. Scherm 17 (Profiel) en scherm 18 (Instellingen) in de tabel hierboven zijn daarmee één scherm.
 - **Geen witte omrande vakken** voor staten en meldingen (laden, leeg, fout, bevestiging): die staan op zand. Alleen echte invoervelden houden een rand.
 
 **Open, nog niet gebouwd:**
