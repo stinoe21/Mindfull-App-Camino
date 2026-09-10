@@ -188,6 +188,11 @@ Stijn deelde op 10 september 2026 de samenvatting van de feedbacksessie MIND x B
 - **Hulplijn-tekst** is woordelijk van mindhulplijn.nl (opgehaald 10 september 2026): deskundig, anoniem en gratis advies, bel 0900-1450, WhatsApp, chat of mail, en "Voor een luisterend oor is er de Luisterlijn. Bij suïcidale gedachten is er 113 Zelfmoordpreventie." Dat vervangt de eerdere afspraak om geen nummers te noemen: het zijn de nummers zoals MIND ze zelf noemt, en de crisis-signposting-TODO hieronder is daarmee beantwoord met de tekst van MIND.
 - **Slim zoeken**, eerste laag: op het toestel, spreektaal naar stammen en synoniemen naar gidsen, artikelen en challenges. Geen chatbot, geen netwerk. Een AI-laag op de server kan er later bovenop.
 
+- **Geen bronvermelding.** Het is de app van MIND zelf: "Bron: MIND", "altijd met bron" en "van MIND" zijn uit de interface (Stijn, 10 september 2026). Dat vervangt de regel "Bron: MIND onder elk artikel" uit `packages/ui/reference/HERKOMST.md`. Links zeggen wel waar ze heen gaan (wijzijnmind.nl); de naam MIND Hulplijn en de consenttekst van Paul blijven.
+- **De Tips-tab heet Houvast**, net als het scherm. De actieve tab in de navigatiebalk staat op een zandpil, dezelfde tint als de basiskaart.
+- **Profiel is de instellingenpagina.** Eén pagina voor wie je bent, wat je koos en wat je toestaat; geen apart scherm Instellingen meer. De route `/profiel/instellingen` verwijst door. Scherm 16 en 17 in de tabel hierboven zijn daarmee één scherm.
+- **Geen witte omrande vakken** voor staten en meldingen (laden, leeg, fout, bevestiging): die staan op zand. Alleen echte invoervelden houden een rand.
+
 **Open, nog niet gebouwd:**
 
 - **Tempo van de challenges.** MIND richtte de mailreeks bewust wekelijks in. Of een dag per kalenderdag past bij de mail- en telemarketingjourney, en of er na afronding een evaluatiejourney vanuit Salesforce komt, beoordeelt MIND intern. Zolang de voortgang niet wordt opgeslagen (zie `datamodel.md`) is het tempo alleen binnen een sessie afdwingbaar.
