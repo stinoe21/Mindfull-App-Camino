@@ -113,16 +113,13 @@ export const CHALLENGES: Challenge[] = [
             "tekst": "Vraag aan jezelf: Is dit echt waar? Nou ja, op zich weet ik niet of ik de héle nacht niet slaap. Ik zal wel weer een keertje in slaap vallen. En ik weet nu natuurlijk ook nog niet hoe ik morgen dan functioneer. Misschien voel ik me morgen best prima."
           },
           {
-            "tekst": "En stel nou dat je gedachte wel waar is? _Als ik echt de hele nacht niet slaap, zou ik dat wel heel vervelend vinden. Maar ik kan het wel verdragen natuurlijk."
+            "tekst": "En stel nou dat je gedachte wel waar is? Als ik echt de hele nacht niet slaap, zou ik dat wel heel vervelend vinden. Maar ik kan het wel verdragen natuurlijk."
           },
           {
-            "tekst": "Ik kan ook even wat gaan lezen. En mijn moeder zei vroeger altijd: ‘Slaap je niet, dan rust je toch.’ Dat is wel een geruststellende gedachte!_"
+            "tekst": "Ik kan ook even wat gaan lezen. En mijn moeder zei vroeger altijd: ‘Slaap je niet, dan rust je toch.’ Dat is wel een geruststellende gedachte!"
           },
           {
-            "tekst": "Je kunt negatieve gedachten ook direct proberen te vervangen door positieve gedachten. Negatieve gedachte: L _ig ik weer wakker, te draaien en te woelen en naar het plafond te staren. Ik word er helemaal gek van!"
-          },
-          {
-            "tekst": "_"
+            "tekst": "Je kunt negatieve gedachten ook direct proberen te vervangen door positieve gedachten. Negatieve gedachte: Lig ik weer wakker, te draaien en te woelen en naar het plafond te staren. Ik word er helemaal gek van!"
           },
           {
             "tekst": "In plaats daarvan kun je bijvoorbeeld denken: Hm, wat heb ik toch een fijn bed. Ik lig lekker warm onder mijn dekbed en hoef nu even helemaal niets!"
@@ -444,10 +441,8 @@ export const CHALLENGES: Challenge[] = [
             "tekst": "Stap 1. Stel vast wat jij belangrijk vindt"
           },
           {
-            "tekst": "1. __Stel jezelf de vraag: Wat vind ik belangrijk in mijn leven; wat vind ik belangrijke waarden? Om je te helpen, noemen we hieronder al wat voorbeelden van waarden waaruit je kan kiezen. Maar voel je vrij om aan te vullen met andere waarden die bij jou passen."
-          },
-          {
             "lijst": [
+              "Stel jezelf de vraag: Wat vind ik belangrijk in mijn leven; wat vind ik belangrijke waarden? Om je te helpen, noemen we hieronder al wat voorbeelden van waarden waaruit je kan kiezen. Maar voel je vrij om aan te vullen met andere waarden die bij jou passen.",
               "Rust of uitdaging",
               "Verbondenheid of onafhankelijkheid",
               "Alleen of samen",
@@ -461,7 +456,9 @@ export const CHALLENGES: Challenge[] = [
             "tekst": "Andere voorbeelden van positieve persoonlijke waarden zijn: vertrouwen, religie/spiritualiteit, eerlijkheid, liefde, loyaliteit, veiligheid en zekerheid."
           },
           {
-            "tekst": "2. Maak nu een top 5 van de waarden die voor jou belangrijk zijn en die je terug wil laten komen in jouw leven. Rangschik ze op volgorde van belangrijkheid."
+            "lijst": [
+              "Maak nu een top 5 van de waarden die voor jou belangrijk zijn en die je terug wil laten komen in jouw leven. Rangschik ze op volgorde van belangrijkheid."
+            ]
           },
           {
             "tekst": "Stap 2. Stel doelen"
@@ -470,10 +467,10 @@ export const CHALLENGES: Challenge[] = [
             "tekst": "Geef jezelf antwoord op de volgende 2 vragen:"
           },
           {
-            "tekst": "1. Waar sta ik nu? Hoe gaat het (mentaal, lichamelijk, financieel en persoonlijk) met mij?"
-          },
-          {
-            "tekst": "2. Waar wil ik heen? Bepaal 3 doelen voor jezelf, omdat jij ze belangrijk vindt. Tip: schrijf alle doelen op die in je opkomen. Maak vervolgens een selectie in doelen voor nu en later. En stel vast met welke 3 doelen je dit jaar nog aan de slag wil."
+            "lijst": [
+              "Waar sta ik nu? Hoe gaat het (mentaal, lichamelijk, financieel en persoonlijk) met mij?",
+              "Waar wil ik heen? Bepaal 3 doelen voor jezelf, omdat jij ze belangrijk vindt. Tip: schrijf alle doelen op die in je opkomen. Maak vervolgens een selectie in doelen voor nu en later. En stel vast met welke 3 doelen je dit jaar nog aan de slag wil."
+            ]
           },
           {
             "kop": "Opdracht 2. Maak je keuze"
@@ -569,7 +566,7 @@ export const CHALLENGES: Challenge[] = [
             "tekst": "Natuurlijk hoef je niet te stoppen met social media. Social media is niet alleen maar slecht. Maar het kan geen kwaad eens te kijken of het ook wat minder kan. Want hoeveel tijd houd je wel niet over als je in plaats van 5 uur, 1 uur per dag op je telefoon zit te scrollen? En wat levert het op aan rust in je hoofd? Je hebt minder last van FOMO en een paar uur per dag minder vergelijken geeft lucht."
           },
           {
-            "tekst": "Doe mee met de Leg je telefoon weg challenge Van 21 tot en met 27 september 2026 organiseren we de Leg je telefoon weg challenge . Duizenden mensen gaan die week maximaal een half uur per dag hun smartphone gebruiken."
+            "tekst": "Doe mee met de Leg je telefoon weg challenge Van 21 tot en met 27 september 2026 organiseren we de Leg je telefoon weg challenge_. Duizenden mensen gaan die week maximaal een half uur per dag hun smartphone gebruiken."
           },
           {
             "linkLabel": "Doe je ook mee?",
@@ -732,7 +729,7 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Opdracht 1. Wat zijn jouw energiegevers en energienemers?"
           },
           {
-            "tekst": "Download deze pdf of pak pen en papier en trek een streep door het midden. Zet aan de linkerkant: Dit geeft mij energie en aan de rechterkant: Dit kost mij energie. Vul nu het schema in met de activiteiten uit jouw dagelijkse leven. Denk aan je studie of werk, familie, vrienden, sport, hobby’s, social media gebruik etc. Maak het zo concreet mogelijk. Schrijf bijvoorbeeld niet onder Dit kost mij energie : mijn studie/werk, maar benoem specifiek wat maakt dat jou dit energie kost. Misschien is het de tijd die je eraan kwijt bent of vind je studeren niet leuk om te doen. En misschien zijn er wel onderdelen die je wel energie geven? Zoals de voldoening wanneer je weer iets nieuws hebt geleerd."
+            "tekst": "Download deze pdf of pak pen en papier en trek een streep door het midden. Zet aan de linkerkant: Dit geeft mij energie en aan de rechterkant: Dit kost mij energie. Vul nu het schema in met de activiteiten uit jouw dagelijkse leven. Denk aan je studie of werk, familie, vrienden, sport, hobby’s, social media gebruik etc. Maak het zo concreet mogelijk. Schrijf bijvoorbeeld niet onder Dit kost mij energie_: mijn studie/werk, maar benoem specifiek wat maakt dat jou dit energie kost. Misschien is het de tijd die je eraan kwijt bent of vind je studeren niet leuk om te doen. En misschien zijn er wel onderdelen die je wel energie geven? Zoals de voldoening wanneer je weer iets nieuws hebt geleerd."
           },
           {
             "kop": "Opdracht 2. Zoek naar balans"
@@ -878,10 +875,10 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Opdracht 2a. Wat zijn jouw energienemers en energiegevers?"
           },
           {
-            "tekst": "Pak pen en papier en trek een streep door het midden. Zet aan de linkerkant: Dit geeft mij energie en aan de rechterkant: Dit kost mij energie . Vul het schema in met de activiteiten uit jouw dagelijks leven. Denk aan je werk, studie, familie/gezin, sport, vrijwilligerswerk, hobby’s, sociale contacten, huishouden, sociale media gebruik etc."
+            "tekst": "Pak pen en papier en trek een streep door het midden. Zet aan de linkerkant: Dit geeft mij energie en aan de rechterkant: Dit kost mij energie_. Vul het schema in met de activiteiten uit jouw dagelijks leven. Denk aan je werk, studie, familie/gezin, sport, vrijwilligerswerk, hobby’s, sociale contacten, huishouden, sociale media gebruik etc."
           },
           {
-            "tekst": "Maak het zo concreet mogelijk. Schrijf bijvoorbeeld niet onder Dit kost mij energie : mijn huishouden, maar benoem specifiek wat maakt dat jou dit energie kost. Misschien is het de tijd die je eraan kwijt bent of vind je de huishoudelijke taken niet leuk om te doen. Of je vindt het lastig dat je het steeds maar weer opnieuw moet doen. En misschien zijn er ook wel onderdelen van het huishouden die je wel energie geven? Zoals een tevreden gevoel wanneer je huis weer lekker schoon is."
+            "tekst": "Maak het zo concreet mogelijk. Schrijf bijvoorbeeld niet onder Dit kost mij energie_: mijn huishouden, maar benoem specifiek wat maakt dat jou dit energie kost. Misschien is het de tijd die je eraan kwijt bent of vind je de huishoudelijke taken niet leuk om te doen. Of je vindt het lastig dat je het steeds maar weer opnieuw moet doen. En misschien zijn er ook wel onderdelen van het huishouden die je wel energie geven? Zoals een tevreden gevoel wanneer je huis weer lekker schoon is."
           },
           {
             "kop": "Opdracht 2b. Zoek naar balans"
@@ -950,9 +947,6 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "tekst": "Er zijn verschillende manieren om te ontspannen. Soms helpt het om iets actiefs te doen waardoor je afleiding hebt en even niet met je hoofd in de stress zit. Op andere momenten helpt het juist om rust te nemen en ruimte te geven aan wat er in je omgaat. Beide soorten ontspanning zijn belangrijk: ze vullen elkaar aan."
-          },
-          {
-            "tekst": "Er zijn geen resultaten gevonden. Controleer de spelling of probeer een andere zoekterm."
           },
           {
             "tekst": "Voorbeelden van actieve ontspanning"
@@ -1029,16 +1023,12 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Opdracht: Vier stappen om je tijd te managen"
           },
           {
-            "tekst": "1. Maak een lijstje van alle taken die je vandaag wil doen."
-          },
-          {
-            "tekst": "2. Bedenk hoe belangrijk elke taak is en of het echt vandaag moet. Streep de taken die kunnen wachten weg. Het aantal taken voor vandaag moet wel haalbaar zijn."
-          },
-          {
-            "tekst": "3. Geef de taken een nummer. Nummer 1 is de activiteit of klus waar je mee gaat starten. Die moet echt vandaag en is het belangrijkste."
-          },
-          {
-            "tekst": "4. Werk de taken in de aangegeven volgorde af en geniet van het tevreden gevoel als je een streep door taak op de lijst haalt!"
+            "lijst": [
+              "Maak een lijstje van alle taken die je vandaag wil doen.",
+              "Bedenk hoe belangrijk elke taak is en of het echt vandaag moet. Streep de taken die kunnen wachten weg. Het aantal taken voor vandaag moet wel haalbaar zijn.",
+              "Geef de taken een nummer. Nummer 1 is de activiteit of klus waar je mee gaat starten. Die moet echt vandaag en is het belangrijkste.",
+              "Werk de taken in de aangegeven volgorde af en geniet van het tevreden gevoel als je een streep door taak op de lijst haalt!"
+            ]
           },
           {
             "tekst": "Probeer deze manier vaker in te zetten op dagen dat je veel moet doen."
@@ -1050,7 +1040,7 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Tip 1. Focus op één taak in plaats van veel tegelijk doen"
           },
           {
-            "tekst": "Vraag jezelf af: ' Gebruik ik mijn tijd op dit moment het best?'. Als het antwoord 'nee' is, stop dan even met wat je aan het doen bent en ga met je volle aandacht verder met wat nu het belangrijkste is."
+            "tekst": "Vraag jezelf af: '_Gebruik ik mijn tijd op dit moment het best?'. Als het antwoord 'nee' is, stop dan even met wat je aan het doen bent en ga met je volle aandacht verder met wat nu het belangrijkste is."
           },
           {
             "tekst": "Probeer te voorkomen dat je meerdere dingen tegelijk doet. Multitasken lijkt nuttig, maar dat is het niet. Het kost juist extra energie, maakt je sneller moe en zorgt er vaak voor dat je minder goed werk levert."
@@ -1189,7 +1179,7 @@ export const CHALLENGES: Challenge[] = [
             ]
           },
           {
-            "tekst": "Vind je het lastig om meteen 'nee' te zeggen? Dat is heel normaal. Je kan voor jezelf wat ruimte krijgen om na te denken over je antwoord door te zeggen: 'Ik moet even kijken of dat in mijn agenda lukt' of 'Ik laat je straks weten of dat uitkomt' ."
+            "tekst": "Vind je het lastig om meteen 'nee' te zeggen? Dat is heel normaal. Je kan voor jezelf wat ruimte krijgen om na te denken over je antwoord door te zeggen: 'Ik moet even kijken of dat in mijn agenda lukt' of 'Ik laat je straks weten of dat uitkomt'_."
           },
           {
             "tekst": "Wij schreven ook een online gids over ‘nee zeggen’. Daarin krijg je nog meer tips."
@@ -1204,13 +1194,11 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Opdracht: Pak een gewoonte aan"
           },
           {
-            "tekst": "1. Kies één ongezonde gewoonte die je aan wilt pakken. Bijvoorbeeld weinig bewegen, ongezond of veel eten, alcohol drinken of veel op je telefoon zitten. Het kan zijn dat je aan een paar verschillende dingen denkt, maar maak het jezelf niet te ingewikkeld en pak ze één voor één aan."
-          },
-          {
-            "tekst": "2. Beschrijf de gewoonte en welk gedrag daarbij hoort. Waarom wil je dit veranderen? Bijvoorbeeld: 'Ik wil minder op mijn telefoon zitten. Dit kost mij veel tijd die ik ook aan andere nuttige of leuke dingen kan besteden.'"
-          },
-          {
-            "tekst": "3. Schrijf op wat je wil bereiken en hoe je dat gaat aanpakken. Maak je doel concreet, niet te groot en haalbaar. Bijvoorbeeld: 'Ik wil maximaal een kwartier per dag op sociale media zitten. Ik ga een tijdslimiet instellen, zodat ik er niet langer op kan.'"
+            "lijst": [
+              "Kies één ongezonde gewoonte die je aan wilt pakken. Bijvoorbeeld weinig bewegen, ongezond of veel eten, alcohol drinken of veel op je telefoon zitten. Het kan zijn dat je aan een paar verschillende dingen denkt, maar maak het jezelf niet te ingewikkeld en pak ze één voor één aan.",
+              "Beschrijf de gewoonte en welk gedrag daarbij hoort. Waarom wil je dit veranderen? Bijvoorbeeld: 'Ik wil minder op mijn telefoon zitten. Dit kost mij veel tijd die ik ook aan andere nuttige of leuke dingen kan besteden.'",
+              "Schrijf op wat je wil bereiken en hoe je dat gaat aanpakken. Maak je doel concreet, niet te groot en haalbaar. Bijvoorbeeld: 'Ik wil maximaal een kwartier per dag op sociale media zitten. Ik ga een tijdslimiet instellen, zodat ik er niet langer op kan.'"
+            ]
           },
           {
             "kop": "Tips"
@@ -1285,19 +1273,13 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Stappenplan: daag je gedachten uit"
           },
           {
-            "tekst": "1. Situatie: Beschrijf kort wat er gebeurde, zonder je gedachten of gevoelens erbij te zetten. Voorbeeld: 'Mijn collega keek afkeurend toen ik iets uitlegde tijdens de vergadering.'"
-          },
-          {
-            "tekst": "2. Gevoel: Schrijf op wat je voelde (bijvoorbeeld bang, boos, verdrietig of beschaamd)."
-          },
-          {
-            "tekst": "3. Sterkte van het gevoel (0–10): Geef aan hoe sterk dat gevoel was."
-          },
-          {
-            "tekst": "4. Automatische gedachte: Wat dacht je op dat moment? Bijvoorbeeld: ' Mijn collega vindt dat ik het niet goed doe.'"
-          },
-          {
-            "tekst": "5. Hoe geloofwaardig vond je die gedachte (0–10)?"
+            "lijst": [
+              "Situatie: Beschrijf kort wat er gebeurde, zonder je gedachten of gevoelens erbij te zetten. Voorbeeld: 'Mijn collega keek afkeurend toen ik iets uitlegde tijdens de vergadering.'",
+              "Gevoel: Schrijf op wat je voelde (bijvoorbeeld bang, boos, verdrietig of beschaamd).",
+              "Sterkte van het gevoel (0–10): Geef aan hoe sterk dat gevoel was.",
+              "Automatische gedachte: Wat dacht je op dat moment? Bijvoorbeeld: '_Mijn collega vindt dat ik het niet goed doe.'",
+              "Hoe geloofwaardig vond je die gedachte (0–10)?"
+            ]
           },
           {
             "tekst": "Onderzoek de gedachte met deze vragen:"
@@ -1311,20 +1293,12 @@ export const CHALLENGES: Challenge[] = [
               "Wat is het beste dat er kan gebeuren?",
               "Wat is het meest realistische?",
               "Hoe zou een ander in deze situatie denken?",
-              "Wat zou ik tegen een vriend(in) zeggen die dit dacht?"
+              "Wat zou ik tegen een vriend(in) zeggen die dit dacht?",
+              "Bedenk een helpende gedachte: Formuleer een positievere of realistischer gedachte. Voorbeeld: '_Misschien keek mijn collega gewoon geconcentreerd en had het niks met mij te maken.'",
+              "Hoe geloofwaardig voelt deze nieuwe gedachte (0–10)?",
+              "Hoe geloofwaardig voelt de eerste gedachte nu (0–10)?",
+              "Hoe sterk is het gevoel nu (0–10)?"
             ]
-          },
-          {
-            "tekst": "7. Bedenk een helpende gedachte: Formuleer een positievere of realistischer gedachte. Voorbeeld: ' Misschien keek mijn collega gewoon geconcentreerd en had het niks met mij te maken.'"
-          },
-          {
-            "tekst": "8. Hoe geloofwaardig voelt deze nieuwe gedachte (0–10)?"
-          },
-          {
-            "tekst": "9. Hoe geloofwaardig voelt de eerste gedachte nu (0–10)?"
-          },
-          {
-            "tekst": "10. Hoe sterk is het gevoel nu (0–10)?"
           },
           {
             "kop": "Oefeningen voor thuis"
@@ -1493,7 +1467,7 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "lijst": [
-              "Luister naar de angstpodcast, aflevering 1. De keizerin van de emoties . Op Spotify staat deze podcast als volgt aangekondigd: ‘Daan en Remy gaan op zoek naar antwoorden op de ogenschijnlijk simpele vraag: wat is angst eigenlijk? Neuropsycholoog Erik Scherder vertelt over zijn hoogte- en wijdtevrees, Psychiater en psychotherapeut Nelleke Nicolai over het nut van angst en Daans moeder over de vroegste angsten van haar oudste zoon.’ Deze podcast is onderdeel van een reeks."
+              "Luister naar de angstpodcast, aflevering 1. De keizerin van de emoties_. Op Spotify staat deze podcast als volgt aangekondigd: ‘Daan en Remy gaan op zoek naar antwoorden op de ogenschijnlijk simpele vraag: wat is angst eigenlijk? Neuropsycholoog Erik Scherder vertelt over zijn hoogte- en wijdtevrees, Psychiater en psychotherapeut Nelleke Nicolai over het nut van angst en Daans moeder over de vroegste angsten van haar oudste zoon.’ Deze podcast is onderdeel van een reeks."
             ]
           },
           {
@@ -1539,13 +1513,13 @@ export const CHALLENGES: Challenge[] = [
             "tekst": "Naast het veranderen van je angstgedachten naar gedachten die je helpen, is het bij de behandeling van angst ook van belang om juist datgene op te zoeken waar je bang voor bent: exposure (blootstelling). Hier gaan we later verder op in."
           },
           {
-            "tekst": "Wil je meer lezen over de behandeling van een angststoornis, kijk dan eens naar de zorgstandaard Angstklachten en angststoornissen ."
+            "tekst": "Wil je meer lezen over de behandeling van een angststoornis, kijk dan eens naar de zorgstandaard Angstklachten en angststoornissen."
           },
           {
             "tekst": "Vind je dit te veel tekst? De ADF Stichting liet op basis van de zorgstandaard Angstklachten en angststoornissen een beeldverhaal ontwikkelen."
           },
           {
-            "tekst": "Ben je op zoek naar een behandelaar? Kijk dan eens op de website Kiezen in de ggz . Hier vind je handige informatie over ggz-instellingen, praktijken en behandelaren, wachttijden, vergoedingen en afstand tot de behandelaar."
+            "tekst": "Ben je op zoek naar een behandelaar? Kijk dan eens op de website Kiezen in de ggz_. Hier vind je handige informatie over ggz-instellingen, praktijken en behandelaren, wachttijden, vergoedingen en afstand tot de behandelaar."
           },
           {
             "kop": "De ervaringen van Zoë"
@@ -1554,7 +1528,7 @@ export const CHALLENGES: Challenge[] = [
             "tekst": "Zoë heeft een paniekstoornis. Wij vroegen haar vanuit haar ervaringen te reageren op de informatie die we jou per dag bieden:"
           },
           {
-            "tekst": "\" Ze zeggen altijd dat angst of paniek begint bij een gedachte. Maar op het moment dat je angst of paniek ervaart, lijken gedachten en gevoelens in elkaar over te gaan. Je weet dan niet meer wat eerst kwam en hoe je het moet stoppen. Bewust worden van die eerste gedachten vond ik dan ook heel lastig. Daarom ben ik een tijdje geleden begonnen met mindfulness via de app Calm. De app biedt een serie over angst, waarbij je meerdere oefeningen over angst krijgt en waar je onder andere leert te pauzeren tussen je gedachten en je gevoel en te observeren. Toen dit pauzeren mij lukte, kon ik inzien dat er een vals alarm was en geen echt gevaar. Ik ben dit meer een meer gaan oefenen en merk dat ik daardoor mijn angstgedachten sneller herken en mijn gevoel rustiger blijft.\""
+            "tekst": "\"_Ze zeggen altijd dat angst of paniek begint bij een gedachte. Maar op het moment dat je angst of paniek ervaart, lijken gedachten en gevoelens in elkaar over te gaan. Je weet dan niet meer wat eerst kwam en hoe je het moet stoppen. Bewust worden van die eerste gedachten vond ik dan ook heel lastig. Daarom ben ik een tijdje geleden begonnen met mindfulness via de app Calm. De app biedt een serie over angst, waarbij je meerdere oefeningen over angst krijgt en waar je onder andere leert te pauzeren tussen je gedachten en je gevoel en te observeren. Toen dit pauzeren mij lukte, kon ik inzien dat er een vals alarm was en geen echt gevaar. Ik ben dit meer een meer gaan oefenen en merk dat ik daardoor mijn angstgedachten sneller herken en mijn gevoel rustiger blijft.\""
           },
           {
             "tekst": "Natuurlijk is dit het verhaal van slechts één ervaringsdeskundige. Ervaringen zijn persoonlijk en kunnen overlappen, maar zeker ook verschillen. Wil jij nog meer ervaringen lezen? Bekijk dan eens deze ervaringsverhalen."
@@ -1565,8 +1539,8 @@ export const CHALLENGES: Challenge[] = [
           {
             "lijst": [
               "Bekijk op onze website de pagina over cognitieve gedragstherapie.",
-              "Lees dit artikel van Women’s Health met 5 nuttige strategieën om je angstige gedachten in bedwang te houden .",
-              "Mariëlle Faas van de ADF stichting schreef een persoonlijk blog : Hoe verander je angst in vertrouwen ? Luister jij liever? Ze heeft de blog ook ingesproken."
+              "Lees dit artikel van Women’s Health met 5 nuttige strategieën om je angstige gedachten in bedwang te houden_.",
+              "Mariëlle Faas van de ADF stichting schreef een persoonlijk blog : Hoe verander je angst in vertrouwen? Luister jij liever? Ze heeft de blog ook ingesproken."
             ]
           },
           {
@@ -1614,7 +1588,7 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Exposure therapie"
           },
           {
-            "tekst": "Exposure betekent blootstelling. Tijdens deze therapie kom je stap voor stap je angst onder ogen en ga je de confrontatie aan. Doordat je merkt dat hetgeen waar je bang voor bent niet gebeurt, nemen je angsten af of leer je er beter mee om te gaan. In onderstaande video van de VGCt (Vereniging voor Gedrags- en Cognitieve therapieën) zie je hoe een meisje met angst voor honden oefent met exposure van het Durfpoli-protocol ."
+            "tekst": "Exposure betekent blootstelling. Tijdens deze therapie kom je stap voor stap je angst onder ogen en ga je de confrontatie aan. Doordat je merkt dat hetgeen waar je bang voor bent niet gebeurt, nemen je angsten af of leer je er beter mee om te gaan. In onderstaande video van de VGCt (Vereniging voor Gedrags- en Cognitieve therapieën) zie je hoe een meisje met angst voor honden oefent met exposure van het Durfpoli-protocol_."
           },
           {
             "linkLabel": "Bekijk de video",
@@ -1633,7 +1607,7 @@ export const CHALLENGES: Challenge[] = [
             "tekst": "Zoë heeft een paniekstoornis. Wij vroegen haar vanuit haar ervaringen te reageren op de informatie die we jou per dag bieden:"
           },
           {
-            "tekst": "\" Vermijden is de grootste boosdoener bij angst en paniek, dus dat mag je niet doen… En dat is ook echt zo, maar wat kost het veel energie en wat kan het lastig zijn! Wat mij altijd heeft geholpen en nog steeds doet, is om kleine stapjes te zetten bij iets nieuws of iets 'engs'. Ik spreek met mezelf af dat ik niet alles in 1 keer hoef te kunnen en dat iedere stap al een stap in de goede richting is. Hierdoor merk ik dat de lading er een beetje af is, wat al voor minder stress zorgt. Ook vind ik het idee prettig dat ik altijd iemand kan bellen op het moment dat ik de angst/paniek omhoog voel komen. Wat mij ook helpt is een hele chille, rustige afspeellijst die ik opzet in een drukke omgeving, zodat ik het geluid om me heen kan wegfilteren. Door dit alles gaat het vaak heel goed. Succeservaringen probeer ik altijd een beetje te vieren voor mezelf. Het maakt de volgende keer net iets makkelijker.\""
+            "tekst": "\"_Vermijden is de grootste boosdoener bij angst en paniek, dus dat mag je niet doen… En dat is ook echt zo, maar wat kost het veel energie en wat kan het lastig zijn! Wat mij altijd heeft geholpen en nog steeds doet, is om kleine stapjes te zetten bij iets nieuws of iets 'engs'. Ik spreek met mezelf af dat ik niet alles in 1 keer hoef te kunnen en dat iedere stap al een stap in de goede richting is. Hierdoor merk ik dat de lading er een beetje af is, wat al voor minder stress zorgt. Ook vind ik het idee prettig dat ik altijd iemand kan bellen op het moment dat ik de angst/paniek omhoog voel komen. Wat mij ook helpt is een hele chille, rustige afspeellijst die ik opzet in een drukke omgeving, zodat ik het geluid om me heen kan wegfilteren. Door dit alles gaat het vaak heel goed. Succeservaringen probeer ik altijd een beetje te vieren voor mezelf. Het maakt de volgende keer net iets makkelijker.\""
           },
           {
             "tekst": "Natuurlijk is dit het verhaal van slechts één ervaringsdeskundige. Ervaringen zijn persoonlijk en kunnen overlappen, maar zeker ook verschillen. Wil jij nog meer ervaringen lezen? Bekijk dan eens deze ervaringsverhalen."
@@ -1643,8 +1617,8 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "lijst": [
-              "Lees het interview in Het Parool met Patricia van Oppen: Vermijden van angst zorgt voor grote problemen .",
-              "Psychologie Magazine over hun online training (€) Van angst naar lef : ‘In deze training leer je hoe je alledaagse angsten overwint en meer zelfvertrouwen ontwikkelt. Je gaat aan de slag met oefeningen die helpen om stap voor stap meer te durven en krijgt praktische tips om kalm te blijven in spannende situaties.’"
+              "Lees het interview in Het Parool met Patricia van Oppen: Vermijden van angst zorgt voor grote problemen_.",
+              "Psychologie Magazine over hun online training (€) Van angst naar lef_: ‘In deze training leer je hoe je alledaagse angsten overwint en meer zelfvertrouwen ontwikkelt. Je gaat aan de slag met oefeningen die helpen om stap voor stap meer te durven en krijgt praktische tips om kalm te blijven in spannende situaties.’"
             ]
           },
           {
@@ -1652,7 +1626,7 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "lijst": [
-              "365 Dagen Succesvol over hun podcastaflevering Je angst onder ogen zien : ‘In deze nieuwe 365-podcast bespreken David de Kock en Arjan Vergeer de grote vraag: leg jij je neer bij je angsten óf durf je je angsten te onderzoeken en onder ogen te komen? Dat laatste klinkt misschien spannend, maar het zou je zomaar eens kunnen helpen om ze te overwinnen.’"
+              "365 Dagen Succesvol over hun podcastaflevering Je angst onder ogen zien_: ‘In deze nieuwe 365-podcast bespreken David de Kock en Arjan Vergeer de grote vraag: leg jij je neer bij je angsten óf durf je je angsten te onderzoeken en onder ogen te komen? Dat laatste klinkt misschien spannend, maar het zou je zomaar eens kunnen helpen om ze te overwinnen.’"
             ]
           },
           {
@@ -1739,7 +1713,7 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Flyer met tips voor naasten van iemand met een angststoornis"
           },
           {
-            "tekst": "Jij wil je naaste natuurlijk zo goed mogelijk ondersteunen bij het omgaan met zijn of haar angst. Ook voor jou kan dit soms best pittig zijn, want hoe stimuleer je de ander bijvoorbeeld om professionele hulp te zoeken of hoe ga je met elkaar in gesprek? In de flyer Tips als iemand in je omgeving een angststoornis heeft , gaan we hier verder op in. Ook krijg je tips zoals hoe je goed voor jezelf blijft zorgen en hoe je jouw eigen grenzen blijft bewaken."
+            "tekst": "Jij wil je naaste natuurlijk zo goed mogelijk ondersteunen bij het omgaan met zijn of haar angst. Ook voor jou kan dit soms best pittig zijn, want hoe stimuleer je de ander bijvoorbeeld om professionele hulp te zoeken of hoe ga je met elkaar in gesprek? In de flyer Tips als iemand in je omgeving een angststoornis heeft_, gaan we hier verder op in. Ook krijg je tips zoals hoe je goed voor jezelf blijft zorgen en hoe je jouw eigen grenzen blijft bewaken."
           },
           {
             "linkLabel": "Download de flyer",
@@ -1766,7 +1740,7 @@ export const CHALLENGES: Challenge[] = [
           {
             "lijst": [
               "In het artikel De moed om bang te zijn van Psychologie Magazine vertellen 6 BN’ers over hun angsten.",
-              "In dit interview met de ADF stichting vertelt Erik Scherder, naar aanleiding van de al uitgezonden EO-televisieserie Erik Scherder laat zich niet kisten , open over zijn angst.",
+              "In dit interview met de ADF stichting vertelt Erik Scherder, naar aanleiding van de al uitgezonden EO-televisieserie Erik Scherder laat zich niet kisten_, open over zijn angst.",
               "Lees op de website van de ADF stichting diverse interviews van bekende en minder bekende mensen over hun ervaringen met angst.",
               "Op de website van MIND zijn veel verschillende ervaringsverhalen te lezen van mensen die last hebben van angst. Ook kan je jouw eigen verhaal vertellen."
             ]
@@ -1776,7 +1750,7 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "lijst": [
-              "Sacha Harland, zelf bekend met angstklachten, maakte de podcast reeks Bang, de podcast over angst . Wat hem hielp bij het overwinnen van zijn angsten was erover praten met anderen. In zijn podcastreeks gaat hij persoonlijke gesprekken aan met zijn gasten. Door zelf met anderen te praten over angst, hoopt hij dat de luisteraar dat ook gaat doen. Deze podcast is een reeks, luister de introductie."
+              "Sacha Harland, zelf bekend met angstklachten, maakte de podcast reeks Bang, de podcast over angst_. Wat hem hielp bij het overwinnen van zijn angsten was erover praten met anderen. In zijn podcastreeks gaat hij persoonlijke gesprekken aan met zijn gasten. Door zelf met anderen te praten over angst, hoopt hij dat de luisteraar dat ook gaat doen. Deze podcast is een reeks, luister de introductie."
             ]
           },
           {
@@ -1881,7 +1855,7 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Wat zijn hormonen en wat doen ze?"
           },
           {
-            "tekst": "Hormonen zijn stoffen die ons lichaam maakt. Dit gebeurt in de klieren van verschillende lichaamsdelen. Het woord hormoon stamt af van het Griekse woord hormao , dat ‘in beweging zetten’ betekent. Via het bloed sturen hormonen onze organen en weefsels aan om verschillende functies van ons lichaam te regelen. Zo stimuleren ze om aan het werk te gaan of remmen ze juist af."
+            "tekst": "Hormonen zijn stoffen die ons lichaam maakt. Dit gebeurt in de klieren van verschillende lichaamsdelen. Het woord hormoon stamt af van het Griekse woord hormao_, dat ‘in beweging zetten’ betekent. Via het bloed sturen hormonen onze organen en weefsels aan om verschillende functies van ons lichaam te regelen. Zo stimuleren ze om aan het werk te gaan of remmen ze juist af."
           },
           {
             "tekst": "Hormonen geven boodschappen door die effect hebben op verschillende processen in ons lichaam. Zoals op onze groei, voorplanting, stofwisseling, water- en zouthuishouding, emoties en gedrag. Deze themaspecial gaat vooral over de relatie tussen hormonen en je mind. Onze focus zal dus vooral liggen op emoties en gedrag."
@@ -1941,9 +1915,6 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "tekst": "Verschillende hormonen We noemden al een aantal hormonen (die vaak ook als neurotransmitter werken) in de voorbeelden hierboven. Hieronder hebben we een aantal belangrijke hormonen op een rijtje gezet met daarbij hun functie. We noemen ze los, maar zoals eerder benoemd, werken ze vaak samen en hebben ze invloed op elkaar."
-          },
-          {
-            "tekst": "Er zijn geen resultaten gevonden. Controleer de spelling of probeer een andere zoekterm."
           },
           {
             "tekst": "Serotonine is een belangrijk hormoon als het gaat om het reguleren van je emoties. Het hormoon heeft invloed op je stemming en speelt een rol bij o.a. somberheid, depressie en slaapproblemen."
@@ -2033,7 +2004,7 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "lijst": [
-              "Thijs Launspach en Lennard Toma bespreken in deze aflevering van hun podcast Hoe ben je zo?! : Welke invloed hebben hormonen op je persoonlijkheid?"
+              "Thijs Launspach en Lennard Toma bespreken in deze aflevering van hun podcast Hoe ben je zo?!_: Welke invloed hebben hormonen op je persoonlijkheid?"
             ]
           },
           {
@@ -2172,7 +2143,7 @@ export const CHALLENGES: Challenge[] = [
             "kop": "PMDD en PME"
           },
           {
-            "tekst": "Wist je dat er ook een stemmingsstoornis bestaat die PMDD heet? Dit staat voor het Engelse Premenstrual Dysphoric Disorder . Op de website van Stichting PMDD Nederland lees je er meer over. Je hebt dan in de periode tussen je eisprong en het begin van je menstruatie zoveel last van stemmingsklachten, dat het je niet goed lukt je dagelijkse dingen te doen."
+            "tekst": "Wist je dat er ook een stemmingsstoornis bestaat die PMDD heet? Dit staat voor het Engelse Premenstrual Dysphoric Disorder_. Op de website van Stichting PMDD Nederland lees je er meer over. Je hebt dan in de periode tussen je eisprong en het begin van je menstruatie zoveel last van stemmingsklachten, dat het je niet goed lukt je dagelijkse dingen te doen."
           },
           {
             "tekst": "Ook kan het zijn dat in de periode tussen eisprong en menstruatie al bestaande psychische klachten verergeren onder invloed van hormoonveranderingen. Je hebt bijvoorbeeld al een depressie of een angststoornis en in deze periode heb je nog meer last van je klachten. Dit noemen we ook wel PME (premenstruele exacerbatie). Lees ook hier meer informatie over op de website van PMDD Nederland."
@@ -2277,8 +2248,8 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "lijst": [
-              "In dit artikel van FunX Beseft wordt er ingegaan op De onbesproken mentale effecten van de anticonceptiepil .",
-              "Lees dit essay van de Volkskrant: Niet alleen maar kommer en kwel: waarom steeds meer vrouwen hun agenda aanpassen op hun menstruatiecyclus .",
+              "In dit artikel van FunX Beseft wordt er ingegaan op De onbesproken mentale effecten van de anticonceptiepil_.",
+              "Lees dit essay van de Volkskrant: Niet alleen maar kommer en kwel: waarom steeds meer vrouwen hun agenda aanpassen op hun menstruatiecyclus_.",
               "Neem eens een kijkje op de website memam.nl, het ervaringscentrum voor psychische klachten rondom zwangerschap.",
               "Wil jij meer lezen over postpartum depressie bij vaders? Lees dan dit artikel van Vakblad Vroeg of dit artikel ‘Na de baby zag ik het niet meer zitten’ van NEMO Kennislink.",
               "Wil je meer weten over welk effect een testosterontekort heeft op mannen? Lees dan dit artikel van RTL nieuws met ervaringsverhalen: Ja, ook mannen hebben weleens last van hun hormonen."
@@ -2289,7 +2260,7 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "lijst": [
-              "Wat is de impact van hormonen op je gedrag, gemoed en gezondheid? Een podcast van Eos Wetenschap, live op Fountainfest. ‘In deze podcast praten Anne Marieke Doornweerd (Universiteit Utrecht), Latifa El-Kaddouri (Dear Body) en Liesbeth Gijsel (Eos Wetenschap) je bij over de impact van hormonen.’ De focus ligt hierbij op de menstruatiecyclus en anticonceptie.",
+              "Wat is de impact van hormonen op je gedrag, gemoed en gezondheid?_Een podcast van Eos Wetenschap, live op Fountainfest. ‘In deze podcast praten Anne Marieke Doornweerd (Universiteit Utrecht), Latifa El-Kaddouri (Dear Body) en Liesbeth Gijsel (Eos Wetenschap) je bij over de impact van hormonen.’ De focus ligt hierbij op de menstruatiecyclus en anticonceptie.",
               "‘In Zwarte muisjes spreekt Maarten Dallinga met vrouwen die rond hun zwangerschap depressief en angstig werden, in een psychose raakten of PTSS kregen.’"
             ]
           }
@@ -2322,7 +2293,7 @@ export const CHALLENGES: Challenge[] = [
             "tekst": "Onderzoekers denken dat de hormoonveranderingen in de overgang een rol spelen bij slaapproblemen zoals moeite hebben met inslapen, wakker worden en lastig weer in slaap komen of heel vroeg wakker worden. Dit kan veel impact hebben op hoe jij je voelt. Naast fysieke klachten, omdat je lichaam ontregeld is, kan het ervoor zorgen dat jij je somberder voelt dan anders."
           },
           {
-            "tekst": "Gelukkig kan je veel doen om beter te slapen. Kan je hierbij wel wat hulp gebruiken? Meld je dan aan voor onze Beter Slapen Challenge . Je ontvangt dan 10 dagen om de dag een e-mail met opdrachten en tips voor een betere nachtrust."
+            "tekst": "Gelukkig kan je veel doen om beter te slapen. Kan je hierbij wel wat hulp gebruiken? Meld je dan aan voor onze Beter Slapen Challenge_. Je ontvangt dan 10 dagen om de dag een e-mail met opdrachten en tips voor een betere nachtrust."
           },
           {
             "kop": "Stemming"
@@ -2490,14 +2461,7 @@ export const CHALLENGES: Challenge[] = [
             "lijst": [
               "Lees op deze pagina van Mentaal Vitaal over geldzorgen en hoe je daarmee omgaat.",
               "Heb jij vragen of zorgen over geld? Bel of chat met Geldfit. Ga naar de website en klik in het menu op contact.",
-              "Lees het verhaal van Wendy op PorteRenee.nl. Ze maakt zich nu voor het eerst zorgen over een financiële crisis en het kopen van een woning."
-            ]
-          },
-          {
-            "tekst": "Tip: op deze website vind je nog meer artikelen, blogs en tips om met geld om te gaan."
-          },
-          {
-            "lijst": [
+              "Lees het verhaal van Wendy op PorteRenee.nl. Ze maakt zich nu voor het eerst zorgen over een financiële crisis en het kopen van een woning. Tip: op deze website vind je nog meer artikelen, blogs en tips om met geld om te gaan.",
               "Maak jij je veel zorgen over klimaatverandering? Lees dan dit artikel op klimaatpsychologie.commet o.a. tips om eco-emoties het hoofd te bieden.",
               "In dit artikel van OpenUp lees je over wat klimaatstress is, wat het doet met je mentale gezondheid en hoe je ermee omgaat."
             ]
@@ -2542,7 +2506,7 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Als praten lastig is"
           },
           {
-            "tekst": "Vind je het lastig om iemand in je omgeving te vinden met wie je kan praten? Bijvoorbeeld omdat je niet zoveel mensen om je heen hebt? Of omdat de meeste mensen in jouw omgeving niet open staan voor jouw verhaal of je niet goed kunnen steunen? Geef de moed niet op! Als iemand niet luistert, betekent dat niet dat dit bij iedereen zo is. Er zijn altijd mensen die wel geïnteresseerd zijn in jouw verhaal. Neem daarom iemand anders in je omgeving in vertrouwen. Of kom via het Connect portaal in contact met gelijkgestemden en wissel ervaringen uit. Ben je op zoek naar andere mensen die zich ook zorgen maken over het klimaat of de psychische gezondheid van mensen in Nederland? Scroll naar beneden en bekijk de linkjes onder meer lezen ."
+            "tekst": "Vind je het lastig om iemand in je omgeving te vinden met wie je kan praten? Bijvoorbeeld omdat je niet zoveel mensen om je heen hebt? Of omdat de meeste mensen in jouw omgeving niet open staan voor jouw verhaal of je niet goed kunnen steunen? Geef de moed niet op! Als iemand niet luistert, betekent dat niet dat dit bij iedereen zo is. Er zijn altijd mensen die wel geïnteresseerd zijn in jouw verhaal. Neem daarom iemand anders in je omgeving in vertrouwen. Of kom via het Connect portaal in contact met gelijkgestemden en wissel ervaringen uit. Ben je op zoek naar andere mensen die zich ook zorgen maken over het klimaat of de psychische gezondheid van mensen in Nederland? Scroll naar beneden en bekijk de linkjes onder meer lezen_."
           },
           {
             "tekst": "Merk jij dat praten over wat er allemaal speelt in de wereld steevast in een discussie eindigt? Bijvoorbeeld omdat jouw familie of vrienden er heel anders naar kijken of een sterke mening hebben die ze niet onder stoelen of banken steken? Dat kan behoorlijk lastig zijn! Probeer daarom afspraken te maken, zodat iedereen elkaar in zijn of haar waarde laat. Een afspraak kan zijn dat je bepaalde onderwerpen niet inhoudelijk met elkaar bespreekt, zoals klimaatverandering of de vluchtelingenstroom. Maar dat je elkaar wel vraagt naar gevoelens en elkaar hierbij steunt."
@@ -2917,7 +2881,7 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "lijst": [
-              "De Netfix-serie Headspace Guide to Meditation '__laat op een vriendelijke, geanimeerde manier de voordelen van meditatie zien en biedt technieken en begeleide meditaties waarmee je direct kunt beginnen.’"
+              "De Netfix-serie Headspace Guide to Meditation 'laat op een vriendelijke, geanimeerde manier de voordelen van meditatie zien en biedt technieken en begeleide meditaties waarmee je direct kunt beginnen.’"
             ]
           }
         ]
@@ -2972,7 +2936,7 @@ export const CHALLENGES: Challenge[] = [
             "kop": "Met vallen en opstaan"
           },
           {
-            "tekst": "Bij het proces van herstellen horen ups-and-downs . Een mindere periode kan heel lastig voelen, helemaal op het moment dat je het gevoel hebt dat je het onder controle hebt. Dit is heel normaal. Het betekent niet dat je helemaal terugvalt of dat de stappen die je hebt gezet voor niks zijn geweest."
+            "tekst": "Bij het proces van herstellen horen ups-and-downs_. Een mindere periode kan heel lastig voelen, helemaal op het moment dat je het gevoel hebt dat je het onder controle hebt. Dit is heel normaal. Het betekent niet dat je helemaal terugvalt of dat de stappen die je hebt gezet voor niks zijn geweest."
           },
           {
             "tekst": "Gun jezelf dan ook voldoende tijd en ruimte hiervoor. En probeer niet te hoge verwachtingen van jezelf te hebben. Bedenk je dat het een leerproces is. Een terugval kan je juist inzicht geven, bijvoorbeeld over wat er aan je terugval voorafging. En over wat je helpt en wat je juist niet helpt in je herstel."
@@ -3233,7 +3197,7 @@ export const CHALLENGES: Challenge[] = [
           {
             "lijst": [
               "Bekijk het herstelverhaal van Thijmen in deze video van GGZ NHN. Hij vertelt over hoe hij weer aan het werk ging na een periode thuis. En hoe een jobcoach hem hierbij ondersteunde.",
-              "Bekijk hier het herstelverhaal van Karin in de documentaire van Dimence: Ik en mijn schaduw . Opmerking: Hoewel ECT voor Karin helpend was, hoeft dit niet bij iedereen zo te werken.",
+              "Bekijk hier het herstelverhaal van Karin in de documentaire van Dimence: Ik en mijn schaduw_. Opmerking: Hoewel ECT voor Karin helpend was, hoeft dit niet bij iedereen zo te werken.",
               "Bekijk hier het herstelverhaal van een vrouw met een bipolaire stoornis, een video van Ervaring Rijk."
             ]
           },
@@ -3266,7 +3230,7 @@ export const CHALLENGES: Challenge[] = [
             "kop": "WRAP"
           },
           {
-            "tekst": "Een hulpmiddel dat veel gebruikt wordt, is het Wellness Recovery Action Plan (WRAP ). Dit is een groepstraining waarbij je een plan opstelt voor je eigen herstel. Je vult als het ware een gereedschapskist met daarin het gereedschap dat jij nodig hebt om je goed te voelen. Belangrijke sleutelbegrippen waar WRAP vanuit gaat, zijn: hoop, persoonlijke verantwoordelijkheid, eigen ontwikkeling, opkomen voor jezelf en steun. Een WRAP maak je voor verschillende velden, namelijk: dagelijks onderhoudsplan, triggers, vroege waarschuwingstekens, signalen van ontsporing, crisisplan en post-crisisplan."
+            "tekst": "Een hulpmiddel dat veel gebruikt wordt, is het Wellness Recovery Action Plan (WRAP_). Dit is een groepstraining waarbij je een plan opstelt voor je eigen herstel. Je vult als het ware een gereedschapskist met daarin het gereedschap dat jij nodig hebt om je goed te voelen. Belangrijke sleutelbegrippen waar WRAP vanuit gaat, zijn: hoop, persoonlijke verantwoordelijkheid, eigen ontwikkeling, opkomen voor jezelf en steun. Een WRAP maak je voor verschillende velden, namelijk: dagelijks onderhoudsplan, triggers, vroege waarschuwingstekens, signalen van ontsporing, crisisplan en post-crisisplan."
           },
           {
             "tekst": "In deze video vertellen ervaringsdeskundige Dick en Joline van GGZ NHN over wat de WRAP precies inhoudt."
@@ -3373,10 +3337,7 @@ export const CHALLENGES: Challenge[] = [
             "kop": "De kracht van contact met ervaringsgenoten"
           },
           {
-            "tekst": "Veel mensen ervaren verbondenheid door contact met andere mensen die (soortgelijke) psychische problemen ervaren of ervaren hebben. We noemen dit ook wel lotgenotencontact. De basis hiervan is het geven en ontvangen van steun of hulp waarbij eigen ervaringen centraal staan. Omdat niet iedereen lotgenotencontact een fijne term vindt, noemen we dit tegenwoordig steeds vaker peer support of contact met ervaringsgenoten. Er zijn steeds meer verschillende soorten, zowel online als offline. Veel cliëntenorganisaties bieden het aan. Nieuwsgierig? Neem eens een kijkje op een of meerdere websites van deze lidorganisaties van MIND. Plekken voor zelfhulp en lotgenotencontact kun je ook vinden op de MIND-Atlas ."
-          },
-          {
-            "tekst": "Er zijn geen resultaten gevonden. Controleer de spelling of probeer een andere zoekterm."
+            "tekst": "Veel mensen ervaren verbondenheid door contact met andere mensen die (soortgelijke) psychische problemen ervaren of ervaren hebben. We noemen dit ook wel lotgenotencontact. De basis hiervan is het geven en ontvangen van steun of hulp waarbij eigen ervaringen centraal staan. Omdat niet iedereen lotgenotencontact een fijne term vindt, noemen we dit tegenwoordig steeds vaker peer support of contact met ervaringsgenoten. Er zijn steeds meer verschillende soorten, zowel online als offline. Veel cliëntenorganisaties bieden het aan. Nieuwsgierig? Neem eens een kijkje op een of meerdere websites van deze lidorganisaties van MIND. Plekken voor zelfhulp en lotgenotencontact kun je ook vinden op de MIND-Atlas_."
           },
           {
             "tekst": "Uit onderzoek naar de online peer support community Depressie Connect, komen naast het ervaren van meer verbondenheid nog andere voordelen naar voren. Zo geven deelnemers aan dat ze zich emotioneel kunnen ontwikkelen door samen met anderen te reflecteren op ervaringen met depressie. En dat ze beter weten wat ze moeten doen wanneer ze klachten ervaren. Ook kan het helpen van anderen met de eigen persoonlijke ervaring bijdragen aan het betekenis geven aan de eigen depressie."
@@ -3405,13 +3366,10 @@ export const CHALLENGES: Challenge[] = [
             "linkUrl": "https://wijzijnmind.nl/mind-atlas"
           },
           {
-            "tekst": "Er zijn geen resultaten gevonden. Controleer de spelling of probeer een andere zoekterm."
-          },
-          {
             "kop": "MIND werkt aan de ondersteuning en ontwikkeling van zelfregienetwerken"
           },
           {
-            "tekst": "MIND werkt samen met anderen partijen, zoals de Nederlandse Vereniging voor Zelfregie en Herstel , aan de ondersteuning en ontwikkeling van zelfregienetwerken, zodat mensen met een psychische kwetsbaarheid overal in Nederland de ruimte hebben hun leven weer op te pakken en aan hun herstel kunnen werken met ervaringsgenoten (peer support). In deze video hoor je meer over het programma Herstel Dichtbij met steun van het Oranje Fonds."
+            "tekst": "MIND werkt samen met anderen partijen, zoals de Nederlandse Vereniging voor Zelfregie en Herstel, aan de ondersteuning en ontwikkeling van zelfregienetwerken, zodat mensen met een psychische kwetsbaarheid overal in Nederland de ruimte hebben hun leven weer op te pakken en aan hun herstel kunnen werken met ervaringsgenoten (peer support). In deze video hoor je meer over het programma Herstel Dichtbij met steun van het Oranje Fonds."
           },
           {
             "kop": "Meer kijken?"
@@ -3438,7 +3396,7 @@ export const CHALLENGES: Challenge[] = [
           },
           {
             "lijst": [
-              "In deze podcast gaat klinisch psycholoog Bas van Oosterhout in op het met elkaar praten over gevoelens. Hoe kan je bijvoorbeeld reageren als iemand anders iets vertelt wat je niet goed begrijpt of waarvan je niet zo goed weet wat je ermee moet? Luister naar Het ongemak van openheid , een podcast van Mentale Kracht 040."
+              "In deze podcast gaat klinisch psycholoog Bas van Oosterhout in op het met elkaar praten over gevoelens. Hoe kan je bijvoorbeeld reageren als iemand anders iets vertelt wat je niet goed begrijpt of waarvan je niet zo goed weet wat je ermee moet? Luister naar Het ongemak van openheid, een podcast van Mentale Kracht 040."
             ]
           }
         ]

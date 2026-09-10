@@ -28,9 +28,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
-import { ARTIKELEN } from "@/features/content/data/artikelen";
-import { GIDSEN } from "@/features/content/data/gidsen";
-import { gidsenVoor } from "@/features/content/gidsen";
+import { houvastVoorVoorkeuren } from "@/features/content/houvast";
 import { QuoteKaart } from "@/features/content/QuoteKaart";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { EersteKeerUitleg } from "@/features/onboarding/EersteKeerUitleg";
@@ -73,7 +71,7 @@ const nl = {
   bekijkWeerbericht: "Bekijk het weer van Nederland",
   allesBekijken: "Alles bekijken",
   tipsTitel: "Tips voor jou",
-  tipsNote: "Gidsen en artikelen van MIND, eerst over jouw onderwerpen.",
+  tipsNote: "Uitleg en wat kan helpen, van MIND. Jouw onderwerpen eerst.",
   bronMind: "BRON: MIND",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -98,7 +96,7 @@ const teksten: Woordenboek<typeof nl> = {
     bekijkWeerbericht: "See the weather of the Netherlands",
     allesBekijken: "See all",
     tipsTitel: "Tips for you",
-    tipsNote: "Guides and articles from MIND, your topics first.",
+    tipsNote: "Explained briefly and what can help, from MIND. Your topics first.",
     bronMind: "SOURCE: MIND",
   },
 };
@@ -148,29 +146,17 @@ export default function Dashboard() {
     }, [])
   );
 
-  // Tips: eerst de online gidsen van MIND (praktische tips, het belangrijkste
-  // punt uit de feedbacksessie), dan de artikelen; binnen beide de gekozen
-  // onderwerpen voorop. Zonder voorkeuren gewoon de volgorde van de lijst.
-  const gekozen = (onderwerp?: string) => Number(voorkeuren.includes(onderwerp ?? ""));
-  const tips = [
-    ...gidsenVoor(voorkeuren).map((g) => ({
-      slug: "gids-" + g.slug,
-      titel: g.titel,
-      onderwerp: g.onderwerp,
-      open: () => router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: g.slug } }),
-    })),
-    // Een artikel met dezelfde titel als een gids (Slapeloosheid, Stress) valt af.
-    ...ARTIKELEN.filter((a) => !GIDSEN.some((g) => g.titel === a.titel))
-      .sort((a, b) => gekozen(b.onderwerp) - gekozen(a.onderwerp))
-      .map((a) => ({
-        slug: a.slug,
-        titel: a.titel,
-        onderwerp: a.onderwerp,
-        open: () => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } }),
-      })),
-  ]
-    .sort((a, b) => gekozen(b.onderwerp) - gekozen(a.onderwerp))
-    .slice(0, 6);
+  // Tips: de onderwerpen uit Houvast (uitleg plus de tips uit de gids van
+  // MIND, sinds 10 september 2026), de gekozen onderwerpen voorop. Zonder
+  // voorkeuren gewoon de volgorde van de lijst.
+  const tips = houvastVoorVoorkeuren(voorkeuren)
+    .slice(0, 6)
+    .map((h) => ({
+      slug: h.slug,
+      titel: h.titel,
+      onderwerp: h.onderwerp,
+      open: () => router.push({ pathname: "/naslagwerk/houvast/[onderwerp]", params: { onderwerp: h.slug } }),
+    }));
   const topBericht = bericht?.staat === "geladen" ? [...bericht.rijen].sort((a, b) => b.share - a.share)[0] : null;
   const topCode = topBericht && isWeerCode(topBericht.weather) ? topBericht.weather : null;
   const kaartKleuren: Partial<Record<ProvincieCode, string>> = {};
