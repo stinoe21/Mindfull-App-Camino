@@ -1,10 +1,16 @@
 // De quote van de dag op Home.
 //
-// Sinds 10 september 2026 (feedbacksessie MIND: Home rustiger, de quote nam
-// te veel ruimte) een kleine paarse kaart onderaan het vel, in plaats van de
-// grote omrande kaart uit de Figma-styleguide (162:2416). Paars is de toon
-// voor de quote (zie Card). De grote handgetekende aanhalingstekens uit het
-// ontwerp staan nog niet in de assetbibliotheek.
+// Geen kaart: de quote staat direct op het vel, gecentreerd, in de
+// serif-italic typerol "quote" uit de styleguide (type-accent), met daarboven
+// een groot openingsteken als ornament in de paarse accenttint (paars is de
+// toon van de quote, zie Card). Dat teken is typografie in het displayfont en
+// geen asset; de handgetekende aanhalingstekens uit het Figma-ontwerp
+// (162:2416) staan niet in de assetbibliotheek. De naam eronder klein, en
+// een echte knop om te delen.
+//
+// Sinds 10 september 2026 (Stijn): het paarse vak met de quote erin las als
+// een formulierveld en paste niet bij de huisstijl. De quote is een
+// adempauze onderaan Home, geen mededeling en geen invulvak.
 //
 // "Deel" stuurt de tekst met naam via het deelvenster van het toestel naar
 // Instagram, WhatsApp of waar dan ook. Delen is altijd een keuze van de
@@ -12,10 +18,9 @@
 
 import { Share, View } from "react-native";
 
-import { space } from "@mind/ui";
+import { palette, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
-import { Card } from "@mind/ui/components/Card";
 
 import { quoteVanVandaag } from "./data/quotes.ts";
 
@@ -29,12 +34,23 @@ export function QuoteKaart() {
   };
 
   return (
-    <Card tone="purple">
-      <AppText rol="bodyEmphasis">{"“" + quote.tekst + "”"}</AppText>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
-        <AppText rol="labelCaption" kleur="secondary">{quote.auteur}</AppText>
-        <Button label="Deel" variant="link" onPress={deel} />
+    <View style={{ alignItems: "center", paddingVertical: space[4], paddingHorizontal: space[3], gap: space[1] }}>
+      {/* Het openingsteken als ornament. Het hangt hoog in zijn regel, dus de
+          quote wordt eronder omhoog getrokken zodat er geen lege regel tussen valt. */}
+      <AppText rol="display" style={{ color: palette.purple300, marginBottom: -space[4] }} accessibilityElementsHidden>
+        {"“"}
+      </AppText>
+      <AppText rol="quote" centreer>
+        {quote.tekst}
+      </AppText>
+      <View style={{ marginTop: space[2] }}>
+        <AppText rol="labelCaption" kleur="secondary" centreer>
+          {quote.auteur}
+        </AppText>
       </View>
-    </Card>
+      <View style={{ marginTop: space[4] }}>
+        <Button label="Deel deze quote" variant="secondary" onPress={deel} />
+      </View>
+    </View>
   );
 }
