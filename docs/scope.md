@@ -181,13 +181,17 @@ Stijn deelde op 10 september 2026 de samenvatting van de feedbacksessie MIND x B
 - **Home** is rustiger: de tips staan direct onder de check-in, boven het landelijke beeld; de quote is een kleine kaart onderaan. Zonder gekozen interesses staan de onderwerpen in de volgorde van de bibliotheek.
 - **Challenges:** in de app en per mail, allebei. De aanmeldknop naar MIND blijft op elke challenge en elke gids staan, want de leadwerving (e-mail, straks Salesforce) moet blijven. Het tempo is voorlopig één dag per kalenderdag met een bewuste bevestiging per stap. Back to Being bedenkt geen eigen challenges; nieuwe challenges van MIND komen erbij via `content/` en de generator.
 
+- **Consent** is één formulier met één vorm van aanvinken (KeuzeVak): ja of nee voor de weerstatus (tekst van Paul, geen voorinvulling) en het vinkje voor de voorwaarden. Besloten door Stijn op 10 september 2026 na de sessie.
+- **Mentale weer per provincie.** MIND heeft gezegd dat de provincie mee mag worden geteld. De gebruiker kiest zijn provincie zelf, vrijwillig, in de onboarding of in Instellingen; de app vraagt nooit locatie. Op Home staat een kaart van Nederland, standaard heel Nederland, per provincie gekleurd zodra die provincie de drempel haalt. Zie `datamodel.md` voor de kolom en de migratie van 10 september 2026.
+- **Hulplijn-tekst** is woordelijk van mindhulplijn.nl (opgehaald 10 september 2026): deskundig, anoniem en gratis advies, bel 0900-1450, WhatsApp, chat of mail, en "Voor een luisterend oor is er de Luisterlijn. Bij suïcidale gedachten is er 113 Zelfmoordpreventie." Dat vervangt de eerdere afspraak om geen nummers te noemen: het zijn de nummers zoals MIND ze zelf noemt, en de crisis-signposting-TODO hieronder is daarmee beantwoord met de tekst van MIND.
+- **Slim zoeken**, eerste laag: op het toestel, spreektaal naar stammen en synoniemen naar gidsen, artikelen en challenges. Geen chatbot, geen netwerk. Een AI-laag op de server kan er later bovenop.
+
 **Open, nog niet gebouwd:**
 
 - **Tempo van de challenges.** MIND richtte de mailreeks bewust wekelijks in. Of een dag per kalenderdag past bij de mail- en telemarketingjourney, en of er na afronding een evaluatiejourney vanuit Salesforce komt, beoordeelt MIND intern. Zolang de voortgang niet wordt opgeslagen (zie `datamodel.md`) is het tempo alleen binnen een sessie afdwingbaar.
 - **Check-in-copy.** "Hoe is de temperatuur vandaag?" is besproken als alternatief, niet besloten. MIND doet na oplevering een aparte slag op alle copy. Tot die tijd blijft de canonieke check-in-copy staan.
-- **Slim zoeken.** Een kleine AI-laag die bestaande MIND-content vindt op een omschrijving, nadrukkelijk geen chatbot. Nog niet gebouwd: het zoeken is nu een lokaal trefwoordfilter. Vraagt een backend-aanroep, dus ook een besluit over privacy en limieten.
-- **Mentale weerkaart per provincie.** Blijft onderdeel van het concept, met een minimumaantal inzendingen per provincie dat MIND nog bevestigt en dat in het dashboard zichtbaar moet zijn. De app toont standaard heel Nederland, niet de provincie van de gebruiker. Er bestaat nog geen provincie in het datamodel; dat is een migratie en een anonimiseringsvraag.
-- **Hulplijn-tekst.** MIND wil hem preciezer: de MIND Hulplijn is voor wie advies of hulp zoekt en niet weet waar; voor "even van je af praten" zijn andere hulplijnen geschikter. De nieuwe tekst komt van MIND en wordt niet door ons geschreven.
+- **Slim zoeken, de AI-laag.** De lokale laag staat; een serverlaag vraagt een backend-aanroep en dus een besluit over privacy en limieten.
+- **Drempel per provincie.** Nu 10, gelijk aan landelijk. MIND bevestigt het getal en het moet zichtbaar zijn in het dashboard van MIND.
 - **Privacyverklaring en voorwaarden** met Paul; MIND moet teksten na overdracht zelf via de webomgeving kunnen aanpassen.
 - **Communicatie van MIND** (waarschijnlijk Gitta, via Cisca/Francesca) kijkt voor oplevering mee naar design, kleur en merk.
 - **Planning:** pentest door een externe partij binnen twee weken na de sessie; overdracht binnen ongeveer een maand; premiere van de documentaire in november, niet op 24 november.
