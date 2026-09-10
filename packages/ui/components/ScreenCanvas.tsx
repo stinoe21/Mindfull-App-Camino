@@ -46,15 +46,27 @@ function gestaffeld(children: ReactNode, gap: number, centreer: boolean): ReactN
   );
 }
 
-/** Waar het vel begint als er hero-inhoud is: de band uit het prototype. */
-export const HERO_BAND = 200;
+/**
+ * De hero-band onder de statusbalk als er hero-inhoud is; het vel begint op
+ * statusbalk + HERO_BAND. Tot 10 september 2026 was het vel op een vaste 200
+ * vanaf de schermrand, de band uit het prototype, maar op een toestel met
+ * een hoge statusbalk (59 op iPhone 17) bleef daar te weinig van over: de
+ * begroeting zat tegen de statusbalk en de ondertitel tegen het vel (Stijn:
+ * "op elkaar geklompt"). 160 onder de statusbalk geeft de begroeting van
+ * twee regels plus ondertitel ruim lucht boven en onder.
+ */
+export const HERO_BAND = 160;
 /** Hoogte van de titelbalk onder de statusbalk, als die verschijnt. */
-const KOP_HOOGTE = 44;
+// De smalle titelbalk is precies hoog genoeg voor de terugknop met aan beide
+// kanten dezelfde marge. Met 44 raakte de onderkant van het chipje de lijn
+// van de balk en leek hij afgesneden (Stijn, 10 september 2026).
+const KOP_MARGE = space[2];
+const KOP_HOOGTE = TERUGKNOP_MAAT + KOP_MARGE * 2;
 
 export type ScreenCanvasProps = {
   variant?: "vel" | "overlay";
   state?: WeerStaat;
-  /** Waar het vel begint. Standaard statusbalk + 64, of HERO_BAND met heroInhoud. */
+  /** Waar het vel begint. Standaard statusbalk + 64, of statusbalk + HERO_BAND met heroInhoud. */
   sheetTop?: number;
   /**
    * Wat er op de gradient staat, boven het vel: de mascotte, of een
@@ -82,8 +94,8 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
   const insets = useSafeAreaInsets();
   const scrollY = useRef(new Animated.Value(0)).current;
   const navRuimte = metNavRuimte ? NAV_PIL_HOOGTE + Math.max(insets.bottom - space[3], space[2]) + space[6] : space[2];
-  // De knop staat net onder de statusbalk; het vel begint er vlak onder.
-  const terugKnopTop = insets.top + space[1];
+  // De knop staat in het midden van de titelbalk; het vel begint er vlak onder.
+  const terugKnopTop = insets.top + KOP_MARGE;
   const terugKnopOverlay = terugKnop ? (
     <View style={{ position: "absolute", top: terugKnopTop, left: space[3] }}>{terugKnop}</View>
   ) : null;
@@ -116,9 +128,9 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
   // Zonder hero-inhoud een band van 64 onder de statusbalk; met hero-inhoud
   // de volle band uit het prototype. Een terugknop schuift het vel nooit
   // omhoog tot boven de knop.
-  const standaardTop = heroInhoud ? HERO_BAND : insets.top + space[12] + space[4];
+  const standaardTop = heroInhoud ? insets.top + HERO_BAND : insets.top + space[12] + space[4];
   const top = terugKnop
-    ? Math.max(sheetTop ?? standaardTop, terugKnopTop + TERUGKNOP_MAAT + space[1])
+    ? Math.max(sheetTop ?? standaardTop, terugKnopTop + TERUGKNOP_MAAT + KOP_MARGE)
     : Math.max(sheetTop ?? standaardTop, insets.top + space[2]);
   // Parallax: de hero schuift 0,4 keer mee omhoog bij scrollen en vervaagt,
   // zodat de gradient een laag achter het vel wordt in plaats van een plaat.
@@ -134,7 +146,7 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
       {heroInhoud ? (
         <Animated.View
           pointerEvents="box-none"
-          style={{ position: "absolute", left: 0, right: 0, top: insets.top, height: top - insets.top, alignItems: "center", justifyContent: "flex-end", paddingBottom: space[3], opacity: heroVervaag, transform: [{ translateY: heroSchuif }] }}
+          style={{ position: "absolute", left: 0, right: 0, top: insets.top, height: top - insets.top, alignItems: "center", justifyContent: "flex-end", paddingBottom: space[6], opacity: heroVervaag, transform: [{ translateY: heroSchuif }] }}
         >
           <Verschijn style={{ alignSelf: "stretch", alignItems: "center" }}>{heroInhoud}</Verschijn>
         </Animated.View>
@@ -158,6 +170,9 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
             borderTopRightRadius: radius.xl,
             backgroundColor: colors.surfaceBackground,
             padding: space[5],
+            // Iets meer lucht aan de bovenkant van het vel dan aan de zijkanten:
+            // de eerste kaart mag niet tegen de ronde hoeken aan zitten.
+            paddingTop: space[6],
             paddingBottom: insets.bottom + navRuimte + space[5],
             gap: SECTIE_GAP,
           }}
