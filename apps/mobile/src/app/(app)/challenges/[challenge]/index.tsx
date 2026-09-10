@@ -4,9 +4,9 @@
 // 2026): de vlieger van het onderwerp staat op de hero, de dagen vormen een
 // zichtbaar pad, en de dag van vandaag staat direct op het vel, zonder kaart
 // eromheen. Het huidige onderdeel staat open; de rest volgt in eigen tempo
-// (weekbasis, geen dwang, no-guilt: productprincipes 4).
-// De volledige inhoud zit in de mailreeks van MIND; de aanmeldknop verwijst
-// daarnaar, precies zoals MIND vraagt (content/mind/LEESMIJ.md).
+// (weekbasis, geen dwang, no-guilt: productprincipes 4). De dag zelf doe je
+// op het dagscherm (dag/[dag].tsx), met de volledige inhoud van MIND; de
+// mailreeks van MIND blijft als alternatief bereikbaar via de aanmeldknop.
 
 import * as Linking from "expo-linking";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
@@ -18,6 +18,7 @@ import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
+import { PressableScale } from "@mind/ui/components/PressableScale";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
@@ -25,7 +26,7 @@ import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
-import { aantalAfgerond, markeerAfgerond } from "@/features/content/voortgang";
+import { aantalAfgerond } from "@/features/content/voortgang";
 
 const nl = {
   nietGevonden: "Challenge niet gevonden",
@@ -33,17 +34,15 @@ const nl = {
   terugNaarChallenges: "Terug naar challenges",
   onderdelenMeta: "{n} dagen · MIND",
   onderdeelVan: "DAG {x} van {y}",
-  onderdeelAfronden: "Klaar voor vandaag",
   allesGehadTitel: "Dit was de laatste dag",
   allesGehadUitleg: "Je kunt altijd terugbladeren of een andere challenge kiezen.",
   onderdeelNr: "Dag {n}",
   afgerond: "Afgerond",
-  volledigeTitel: "Wil je de volledige challenge?",
-  volledigeUitleg:
-    "Dit is een voorproefje. De hele challenge krijg je gratis per e-mail van MIND.",
+  startDag: "Start dag {n}",
+  verderDag: "Verder met dag {n}",
+  mailTitel: "Liever per e-mail?",
+  mailUitleg: "Je kunt deze challenge ook als mailreeks van MIND in je mailbox krijgen.",
   aanmelden: "Aanmelden bij MIND",
-  leesVerder: "Lees verder",
-  minder: "Minder",
   meerChallenges: "Meer challenges",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -54,17 +53,15 @@ const teksten: Woordenboek<typeof nl> = {
     terugNaarChallenges: "Back to challenges",
     onderdelenMeta: "{n} days · MIND",
     onderdeelVan: "DAY {x} of {y}",
-    onderdeelAfronden: "Done for today",
     allesGehadTitel: "You've done all the parts",
     allesGehadUitleg: "Well done. You can always look back or pick another challenge.",
     onderdeelNr: "Day {n}",
     afgerond: "Completed",
-    volledigeTitel: "Want the full challenge?",
-    volledigeUitleg:
-      "What you see here is a taster: the introduction for each part. You get the full challenge, with all the assignments and exercises, for free by email from MIND, at your own pace.",
+    startDag: "Start day {n}",
+    verderDag: "Continue with day {n}",
+    mailTitel: "Prefer email?",
+    mailUitleg: "You can also get this challenge as an email series from MIND.",
     aanmelden: "Sign up with MIND",
-    leesVerder: "Read more",
-    minder: "Less",
     meerChallenges: "More challenges",
   },
 };
@@ -75,7 +72,6 @@ export default function ChallengeDetail() {
   const { challenge: slug } = useLocalSearchParams<{ challenge: string }>();
   const challenge = CHALLENGES.find((c) => c.slug === slug);
   const [klaar, zetKlaar] = useState(0);
-  const [uitgeklapt, zetUitgeklapt] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -98,10 +94,8 @@ export default function ChallengeDetail() {
   const huidig = allesKlaar ? null : challenge.dagen[klaar];
   const onderwerp = ONDERWERP_PER_CHALLENGE[challenge.slug];
 
-  const rondAf = () => {
-    markeerAfgerond(challenge.slug, klaar + 1);
-    router.push({ pathname: "/challenges/[challenge]/afgerond", params: { challenge: challenge.slug } });
-  };
+  const openDag = (nummer: number) =>
+    router.push({ pathname: "/challenges/[challenge]/dag/[dag]", params: { challenge: challenge.slug, dag: String(nummer) } });
 
   return (
     <ScreenCanvas
@@ -131,7 +125,8 @@ export default function ChallengeDetail() {
         ))}
       </View>
 
-      {/* De dag van vandaag, direct op het vel: geen kaart, geen invulvak. */}
+      {/* De dag van vandaag als opstap, direct op het vel: titel, een paar
+          regels intro, en de knop naar het dagscherm waar je de dag echt doet. */}
       {huidig ? (
         <View style={{ gap: space[3] }}>
           <View style={{ gap: space[2] }}>
@@ -139,15 +134,13 @@ export default function ChallengeDetail() {
               {t("onderdeelVan").replace("{x}", String(klaar + 1)).replace("{y}", String(totaal))}
             </AppText>
             <AppText rol="h2">{huidig.titel}</AppText>
-            {/* De intro van MIND is soms lang; zes regels, en de rest op verzoek. */}
-            <AppText rol="body" numberOfLines={uitgeklapt ? undefined : 6}>{huidig.intro}</AppText>
+            <AppText rol="body" numberOfLines={3}>{huidig.intro}</AppText>
           </View>
-          {huidig.intro.length > 320 ? (
-            <View style={{ alignItems: "flex-start" }}>
-              <Button label={uitgeklapt ? t("minder") : t("leesVerder")} variant="link" onPress={() => zetUitgeklapt(!uitgeklapt)} />
-            </View>
-          ) : null}
-          <Button label={t("onderdeelAfronden")} fullWidth onPress={rondAf} />
+          <Button
+            label={(klaar > 0 ? t("verderDag") : t("startDag")).replace("{n}", String(klaar + 1))}
+            fullWidth
+            onPress={() => openDag(klaar + 1)}
+          />
         </View>
       ) : (
         <View style={{ gap: space[2] }}>
@@ -157,18 +150,14 @@ export default function ChallengeDetail() {
       )}
 
       {/* De andere dagen als pad: nummer en titel, geen kaartjes. Afgeronde
-          dagen krijgen een gevulde stip. */}
+          dagen krijgen een gevulde stip en zijn terug te lezen; wat nog komt
+          staat er alvast, zonder druk. */}
       <View style={{ gap: space[3] }}>
         {challenge.dagen.map((dag, i) => {
           if (huidig && i === klaar) return null;
           const gedaan = i < klaar;
-          return (
-            <View
-              key={dag.titel}
-              style={{ flexDirection: "row", alignItems: "center", gap: space[3] }}
-              accessible
-              accessibilityLabel={t("onderdeelNr").replace("{n}", String(i + 1)) + ": " + dag.titel + (gedaan ? ", " + t("afgerond") : "")}
-            >
+          const rij = (
+            <>
               <View
                 style={{
                   width: 28,
@@ -186,6 +175,22 @@ export default function ChallengeDetail() {
               <View style={{ flexShrink: 1 }}>
                 <AppText rol="body" kleur={gedaan ? "primary" : "secondary"}>{dag.titel}</AppText>
               </View>
+            </>
+          );
+          const label = t("onderdeelNr").replace("{n}", String(i + 1)) + ": " + dag.titel + (gedaan ? ", " + t("afgerond") : "");
+          return gedaan ? (
+            <PressableScale
+              key={dag.titel}
+              accessibilityRole="button"
+              accessibilityLabel={label}
+              onPress={() => openDag(i + 1)}
+              style={{ flexDirection: "row", alignItems: "center", gap: space[3] }}
+            >
+              {rij}
+            </PressableScale>
+          ) : (
+            <View key={dag.titel} style={{ flexDirection: "row", alignItems: "center", gap: space[3] }} accessible accessibilityLabel={label}>
+              {rij}
             </View>
           );
         })}
@@ -193,9 +198,9 @@ export default function ChallengeDetail() {
 
       {challenge.aanmeld ? (
         <Card tone="primary">
-          <AppText rol="h3">{t("volledigeTitel")}</AppText>
+          <AppText rol="h3">{t("mailTitel")}</AppText>
           <AppText rol="bodySmall" kleur="secondary">
-            {t("volledigeUitleg")}
+            {t("mailUitleg")}
           </AppText>
           <Button
             label={t("aanmelden")}
