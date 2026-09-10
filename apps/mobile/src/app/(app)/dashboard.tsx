@@ -3,8 +3,10 @@
 // De spil van de app, opgebouwd naar Dashboard v4 uit de Figma-styleguide
 // (162:1695) en ontwerpscherm 03, sinds 29 augustus 2026: de begroeting en de
 // mascotte staan op de hero, daaronder het vel met de check-in (of jouw weer
-// van vandaag), het mentale weer van Nederland, de quote van de dag, tips en
-// de Hulplijn. Challenges hebben hun eigen tab en staan hier niet meer.
+// van vandaag), de tips, het mentale weer van Nederland, de quote van de dag
+// en de Hulplijn. Challenges hebben hun eigen tab en staan hier niet meer.
+// Sinds 10 september 2026 (feedbacksessie MIND) staan de tips direct onder
+// de check-in en is de quote klein: minder tekst, handelingsperspectief eerst.
 // Elke slot heeft zijn eigen loading-, empty- en error-state. Het landelijke
 // beeld wordt een keer per sessie opgehaald en gecachet
 // (docs/limieten-en-misbruik.md sectie 4).
@@ -25,6 +27,8 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ARTIKELEN } from "@/features/content/data/artikelen";
+import { GIDSEN } from "@/features/content/data/gidsen";
+import { gidsenVoor } from "@/features/content/gidsen";
 import { QuoteKaart } from "@/features/content/QuoteKaart";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { EersteKeerUitleg } from "@/features/onboarding/EersteKeerUitleg";
@@ -56,7 +60,7 @@ const nl = {
   bekijkWeerbericht: "Bekijk het weer van Nederland",
   allesBekijken: "Alles bekijken",
   tipsTitel: "Tips voor jou",
-  tipsNote: "Artikelen van MIND, eerst over jouw onderwerpen.",
+  tipsNote: "Gidsen en artikelen van MIND, eerst over jouw onderwerpen.",
   bronMind: "BRON: MIND",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -81,7 +85,7 @@ const teksten: Woordenboek<typeof nl> = {
     bekijkWeerbericht: "See the weather of the Netherlands",
     allesBekijken: "See all",
     tipsTitel: "Tips for you",
-    tipsNote: "Articles from MIND, your topics first.",
+    tipsNote: "Guides and articles from MIND, your topics first.",
     bronMind: "SOURCE: MIND",
   },
 };
@@ -127,11 +131,29 @@ export default function Dashboard() {
     }, [])
   );
 
-  // Artikelen uit de gekozen onderwerpen eerst, de rest erachter. Zonder
-  // gekozen voorkeuren is de volgorde gewoon die van de bibliotheek.
-  const tips = [...ARTIKELEN]
-    .sort((a, b) => Number(voorkeuren.includes(b.onderwerp)) - Number(voorkeuren.includes(a.onderwerp)))
-    .slice(0, 5);
+  // Tips: eerst de online gidsen van MIND (praktische tips, het belangrijkste
+  // punt uit de feedbacksessie), dan de artikelen; binnen beide de gekozen
+  // onderwerpen voorop. Zonder voorkeuren gewoon de volgorde van de lijst.
+  const gekozen = (onderwerp?: string) => Number(voorkeuren.includes(onderwerp ?? ""));
+  const tips = [
+    ...gidsenVoor(voorkeuren).map((g) => ({
+      slug: "gids-" + g.slug,
+      titel: g.titel,
+      onderwerp: g.onderwerp,
+      open: () => router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: g.slug } }),
+    })),
+    // Een artikel met dezelfde titel als een gids (Slapeloosheid, Stress) valt af.
+    ...ARTIKELEN.filter((a) => !GIDSEN.some((g) => g.titel === a.titel))
+      .sort((a, b) => gekozen(b.onderwerp) - gekozen(a.onderwerp))
+      .map((a) => ({
+        slug: a.slug,
+        titel: a.titel,
+        onderwerp: a.onderwerp,
+        open: () => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } }),
+      })),
+  ]
+    .sort((a, b) => gekozen(b.onderwerp) - gekozen(a.onderwerp))
+    .slice(0, 6);
   const topBericht = bericht?.staat === "geladen" ? [...bericht.rijen].sort((a, b) => b.share - a.share)[0] : null;
   const topCode = topBericht && isWeerCode(topBericht.weather) ? topBericht.weather : null;
 
@@ -175,7 +197,24 @@ export default function Dashboard() {
       {/* Eenmalige rondleiding, onder de check-in: die blijft de hoofdrol houden. */}
       <EersteKeerUitleg />
 
-      {/* Slot 2: het mentale weer van Nederland, NL-weerkaart uit Figma (168:3854):
+      {/* Slot 2: tips, direct onder de check-in. MIND (feedbacksessie, verwerkt
+          10 september 2026): dit is inhoudelijk het relevantst voor de gebruiker,
+          dus hoger dan het landelijke beeld en de quote. */}
+      <ContentSection title={t("tipsTitel")} note={t("tipsNote")} action={t("allesBekijken")} onAction={() => router.push("/naslagwerk")}>
+        {/* Kleine tegels zoals in Figma (162:1708); de vlieger staat erin tot MIND beelden levert. */}
+        <ContentShelf>
+          {tips.map((tip) => (
+            <ShelfTegel
+              key={tip.slug}
+              label={tip.titel}
+              beeld={<VliegerOnderwerp onderwerp={tip.onderwerp} slug={tip.slug} hoogte={56} />}
+              onPress={tip.open}
+            />
+          ))}
+        </ContentShelf>
+      </ContentSection>
+
+      {/* Slot 3: het mentale weer van Nederland, NL-weerkaart uit Figma (168:3854):
           blauw primary100, witte icoontegel, limoenpil. */}
       <Card tone="primary" style={{ backgroundColor: palette.primary100, gap: space[4] }}>
         <View style={{ gap: space[1] }}>
@@ -207,23 +246,8 @@ export default function Dashboard() {
         <Button label={t("bekijkWeerbericht")} onPress={() => router.push("/weerbericht")} />
       </Card>
 
-      {/* Slot 3: de quote van de dag, voor iedereen gelijk */}
+      {/* Slot 4: de quote van de dag, voor iedereen gelijk, klein onderaan */}
       <QuoteKaart />
-
-      {/* Slot 4: tips */}
-      <ContentSection title={t("tipsTitel")} note={t("tipsNote")} action={t("allesBekijken")} onAction={() => router.push("/naslagwerk")}>
-        {/* Kleine tegels zoals in Figma (162:1708); de vlieger staat erin tot MIND beelden levert. */}
-        <ContentShelf>
-          {tips.map((a) => (
-            <ShelfTegel
-              key={a.slug}
-              label={a.titel}
-              beeld={<VliegerOnderwerp onderwerp={a.onderwerp} slug={a.slug} hoogte={56} />}
-              onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
-            />
-          ))}
-        </ContentShelf>
-      </ContentSection>
 
       <HulplijnKaart />
     </ScreenCanvas>

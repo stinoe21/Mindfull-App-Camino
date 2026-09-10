@@ -11,13 +11,16 @@ import { View } from "react-native";
 import { palette, radius, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
+import { Card } from "@mind/ui/components/Card";
 import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
+import { PressableScale } from "@mind/ui/components/PressableScale";
 import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ARTIKELEN } from "@/features/content/data/artikelen";
+import { gidsenBijOnderwerp } from "@/features/content/gidsen";
 
 const nl = {
   nietGevonden: "Artikel niet gevonden",
@@ -27,6 +30,10 @@ const nl = {
   leesOp: "Lees verder op wijzijnmind.nl",
   terug: "Terug",
   meerTitel: "Meer uit het naslagwerk",
+  gidsOverline: "AAN DE SLAG",
+  gidsTitel: "Praktische tips van MIND",
+  gidsUitleg: "In de online gids staan technieken die je vandaag kunt proberen.",
+  gidsLabel: "Gids: {titel}",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -38,6 +45,10 @@ const teksten: Woordenboek<typeof nl> = {
     leesOp: "Read on wijzijnmind.nl",
     terug: "Back",
     meerTitel: "More from the library",
+    gidsOverline: "GET STARTED",
+    gidsTitel: "Practical tips by MIND",
+    gidsUitleg: "The online guide has techniques you can try today.",
+    gidsLabel: "Guide: {titel}",
   },
 };
 
@@ -56,6 +67,8 @@ export default function Artikel() {
       </ScreenCanvas>
     );
   }
+
+  const gidsen = gidsenBijOnderwerp(artikel.onderwerp).slice(0, 3);
 
   // Eerst artikelen uit hetzelfde onderwerp, dan de rest; nooit dit artikel zelf.
   const meer = [...ARTIKELEN]
@@ -78,6 +91,30 @@ export default function Artikel() {
       </View>
 
       <AppText rol="labelCaption" kleur="secondary">{t("bron") + " · " + artikel.onderwerp}</AppText>
+
+      {/* De gidsen bij dit onderwerp boven de tekst, hoog op het scherm: MIND
+          wil handelingsperspectief boven uitleg (feedbacksessie, verwerkt
+          10 september 2026). */}
+      {gidsen.length ? (
+        <Card tone="coral">
+          <AppText rol="labelOverline" kleur="brand">{t("gidsOverline")}</AppText>
+          <AppText rol="h3">{t("gidsTitel")}</AppText>
+          <AppText rol="bodySmall">{t("gidsUitleg")}</AppText>
+          {gidsen.map((g) => (
+            <PressableScale
+              key={g.slug}
+              accessibilityRole="button"
+              onPress={() => router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: g.slug } })}
+              style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3], paddingVertical: space[1] }}
+            >
+              <View style={{ flexShrink: 1 }}>
+                <AppText rol="labelButton" kleur="brand">{t("gidsLabel").replace("{titel}", g.titel)}</AppText>
+              </View>
+              <AppText rol="body" kleur="brand">{"›"}</AppText>
+            </PressableScale>
+          ))}
+        </Card>
+      ) : null}
 
       {artikel.blokken.map((blok, i) => (
         <View key={i} style={{ gap: space[2] }}>

@@ -2,11 +2,10 @@
 //
 // Hier doe je de dag echt: de volledige inhoud van MIND (sinds 10 september
 // 2026 akkoord voor in de app), met de opdrachten, tips en links, en onderaan
-// de afronding. Alleen de eerstvolgende dag is af te ronden; eerdere dagen
-// zijn hier terug te lezen. De teksten zijn woordelijk van MIND en komen uit
-// het gegenereerde challenges.ts.
+// de afronding. Alleen de eerstvolgende dag is af te ronden, één per
+// kalenderdag (zie voortgang.ts); eerdere dagen zijn hier terug te lezen. De
+// teksten zijn woordelijk van MIND en komen uit het gegenereerde challenges.ts.
 
-import * as Linking from "expo-linking";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
@@ -21,7 +20,8 @@ import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
-import { aantalAfgerond, markeerAfgerond } from "@/features/content/voortgang";
+import { InhoudBlokken } from "@/features/content/InhoudBlokken";
+import { aantalAfgerond, markeerAfgerond, vandaagAlAfgerond } from "@/features/content/voortgang";
 
 const nl = {
   nietGevonden: "Dag niet gevonden",
@@ -73,7 +73,8 @@ export default function ChallengeDag() {
   }
 
   const totaal = challenge.dagen.length;
-  const isVandaag = nummer === klaar + 1;
+  // Alleen de eerstvolgende dag, en niet als er vandaag al een dag af is.
+  const isVandaag = nummer === klaar + 1 && !vandaagAlAfgerond(challenge.slug);
   const isAfgerond = nummer <= klaar;
 
   const rondAf = () => {
@@ -96,33 +97,7 @@ export default function ChallengeDag() {
 
       {dag.intro ? <AppText rol="bodyEmphasis">{dag.intro}</AppText> : null}
 
-      {dag.blokken.map((blok, i) => {
-        if (blok.kop) return <AppText key={i} rol="h3">{blok.kop}</AppText>;
-        if (blok.lijst) {
-          return (
-            <View key={i} style={{ gap: space[2] }}>
-              {blok.lijst.map((item) => (
-                <View key={item} style={{ flexDirection: "row", gap: space[2] }}>
-                  <AppText rol="body" kleur="brand">{"•"}</AppText>
-                  <View style={{ flexShrink: 1 }}>
-                    <AppText rol="body">{item}</AppText>
-                  </View>
-                </View>
-              ))}
-            </View>
-          );
-        }
-        if (blok.linkLabel && blok.linkUrl) {
-          const url = blok.linkUrl;
-          return (
-            <View key={i} style={{ alignItems: "flex-start" }}>
-              <Button label={blok.linkLabel} variant="link" onPress={() => Linking.openURL(url)} />
-            </View>
-          );
-        }
-        if (blok.tekst) return <AppText key={i} rol="body">{blok.tekst}</AppText>;
-        return null;
-      })}
+      <InhoudBlokken blokken={dag.blokken} />
 
       <AppText rol="labelCaption" kleur="secondary">{t("bron")}</AppText>
 
