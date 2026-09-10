@@ -3,8 +3,8 @@
 // Een challenge als pad, niet als formulier (herontwerp Stijn, 10 september
 // 2026): de vlieger van het onderwerp staat op de hero, de dagen vormen een
 // zichtbaar pad, en de dag van vandaag staat direct op het vel, zonder kaart
-// eromheen. Het huidige onderdeel staat open; de rest volgt in eigen tempo
-// (weekbasis, geen dwang, no-guilt: productprincipes 4). De dag zelf doe je
+// eromheen. Het huidige onderdeel staat open; de rest volgt één dag per
+// kalenderdag (geen dwang, no-guilt: productprincipes 4). De dag zelf doe je
 // op het dagscherm (dag/[dag].tsx), met de volledige inhoud van MIND; de
 // mailreeks van MIND blijft als alternatief bereikbaar via de aanmeldknop.
 
@@ -26,7 +26,7 @@ import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
-import { aantalAfgerond } from "@/features/content/voortgang";
+import { aantalAfgerond, vandaagAlAfgerond } from "@/features/content/voortgang";
 
 const nl = {
   nietGevonden: "Challenge niet gevonden",
@@ -39,7 +39,8 @@ const nl = {
   onderdeelNr: "Dag {n}",
   afgerond: "Afgerond",
   startDag: "Start dag {n}",
-  verderDag: "Verder met dag {n}",
+  verderDag: "Ik ben klaar voor dag {n}",
+  morgenVerder: "Goed bezig. Dag {n} staat morgen voor je klaar, dan heeft vandaag de tijd om in te dalen.",
   mailTitel: "Liever per e-mail?",
   mailUitleg: "Je kunt deze challenge ook als mailreeks van MIND in je mailbox krijgen.",
   aanmelden: "Aanmelden bij MIND",
@@ -58,7 +59,8 @@ const teksten: Woordenboek<typeof nl> = {
     onderdeelNr: "Day {n}",
     afgerond: "Completed",
     startDag: "Start day {n}",
-    verderDag: "Continue with day {n}",
+    verderDag: "I'm ready for day {n}",
+    morgenVerder: "Well done. Day {n} will be ready for you tomorrow, so today has time to settle.",
     mailTitel: "Prefer email?",
     mailUitleg: "You can also get this challenge as an email series from MIND.",
     aanmelden: "Sign up with MIND",
@@ -72,10 +74,13 @@ export default function ChallengeDetail() {
   const { challenge: slug } = useLocalSearchParams<{ challenge: string }>();
   const challenge = CHALLENGES.find((c) => c.slug === slug);
   const [klaar, zetKlaar] = useState(0);
+  const [wachtTotMorgen, zetWachtTotMorgen] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
-      if (challenge) zetKlaar(aantalAfgerond(challenge.slug));
+      if (!challenge) return;
+      zetKlaar(aantalAfgerond(challenge.slug));
+      zetWachtTotMorgen(vandaagAlAfgerond(challenge.slug));
     }, [challenge])
   );
 
@@ -126,7 +131,10 @@ export default function ChallengeDetail() {
       </View>
 
       {/* De dag van vandaag als opstap, direct op het vel: titel, een paar
-          regels intro, en de knop naar het dagscherm waar je de dag echt doet. */}
+          regels intro, en de knop naar het dagscherm waar je de dag echt doet.
+          Na een afgeronde dag komt de volgende pas morgen vrij, en de knop
+          vraagt om een bewuste stap ("Ik ben klaar voor dag n"): het tempo
+          uit de feedbacksessie met MIND, zie voortgang.ts. */}
       {huidig ? (
         <View style={{ gap: space[3] }}>
           <View style={{ gap: space[2] }}>
@@ -136,11 +144,15 @@ export default function ChallengeDetail() {
             <AppText rol="h2">{huidig.titel}</AppText>
             <AppText rol="body" numberOfLines={3}>{huidig.intro}</AppText>
           </View>
-          <Button
-            label={(klaar > 0 ? t("verderDag") : t("startDag")).replace("{n}", String(klaar + 1))}
-            fullWidth
-            onPress={() => openDag(klaar + 1)}
-          />
+          {wachtTotMorgen ? (
+            <AppText rol="bodySmall" kleur="secondary">{t("morgenVerder").replace("{n}", String(klaar + 1))}</AppText>
+          ) : (
+            <Button
+              label={(klaar > 0 ? t("verderDag") : t("startDag")).replace("{n}", String(klaar + 1))}
+              fullWidth
+              onPress={() => openDag(klaar + 1)}
+            />
+          )}
         </View>
       ) : (
         <View style={{ gap: space[2] }}>

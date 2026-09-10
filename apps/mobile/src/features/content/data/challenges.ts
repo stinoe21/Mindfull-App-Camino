@@ -6,7 +6,7 @@
 // via Stijn akkoord gegeven op het opnemen van de challenge-inhoud in de app
 // (daarvoor stond hier alleen de intro per dag, met de mailreeks als route).
 // De teksten zijn woordelijk van MIND; wat vervalt (afbeeldingen en
-// mail-huishouding) staat in de kop van scripts/gen-challenges.mjs.
+// mail-huishouding) staat in de kop van scripts/mind-markdown.mjs.
 
 export type ChallengeBlok = {
   kop?: string;

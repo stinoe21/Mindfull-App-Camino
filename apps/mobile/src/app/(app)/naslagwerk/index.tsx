@@ -15,21 +15,28 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { Chip } from "@mind/ui/components/Chip";
 import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
-import { ContentSection } from "@mind/ui/components/ContentSection";
+import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ARTIKELEN, ONDERWERPEN } from "@/features/content/data/artikelen";
+import { GIDSEN } from "@/features/content/data/gidsen";
+import { gidsenVoor } from "@/features/content/gidsen";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 
 const nl = {
   titel: "Naslagwerk",
-  ondertitel: "Artikelen van MIND, altijd met bron.",
+  ondertitel: "Gidsen en artikelen van MIND, altijd met bron.",
   zoekPlaceholder: "Zoek een onderwerp",
   zoekLabel: "Zoek in het naslagwerk",
   onderwerpen: "Onderwerpen",
   alles: "Alles",
+  gidsen: "Online gidsen",
+  gidsenNote: "Praktische tips en technieken, eerst over jouw onderwerpen.",
+  alleGidsen: "Alle gidsen",
+  minderGidsen: "Minder",
+  gids: "GIDS",
   artikelen: "Artikelen",
   artikelenNote: "Alles uit de bibliotheek van MIND.",
   nietsGevondenTitel: "Niets gevonden",
@@ -42,11 +49,16 @@ const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "Reference library",
-    ondertitel: "Articles from MIND, always with a source.",
+    ondertitel: "Guides and articles from MIND, always with a source.",
     zoekPlaceholder: "Search a topic",
     zoekLabel: "Search the reference library",
     onderwerpen: "Topics",
     alles: "All",
+    gidsen: "Online guides",
+    gidsenNote: "Practical tips and techniques, your topics first.",
+    alleGidsen: "All guides",
+    minderGidsen: "Fewer",
+    gids: "GUIDE",
     artikelen: "Articles",
     artikelenNote: "Everything from MIND's library.",
     nietsGevondenTitel: "Nothing found",
@@ -64,6 +76,7 @@ export default function Naslagwerk() {
   const [zoekterm, zetZoekterm] = useState("");
   const [onderwerp, zetOnderwerp] = useState<string | null>(null);
   const [voorkeuren, zetVoorkeuren] = useState<string[]>([]);
+  const [alleGidsen, zetAlleGidsen] = useState(false);
 
   // De voorkeuren kunnen tussendoor wijzigen in Instellingen, dus bij elke
   // focus opnieuw lezen. Ze bepalen alleen de volgorde, nooit wat er te zien is.
@@ -99,6 +112,31 @@ export default function Naslagwerk() {
     );
   }).sort((a, b) => gekozen(b.onderwerp) - gekozen(a.onderwerp));
 
+  // De gidsen: zonder filter een plank met de gidsen bij een onderwerp (jouw
+  // onderwerpen eerst), of alle 46 als grid na "Alle gidsen". Met een
+  // onderwerp of zoekterm altijd een grid van wat erbij hoort. De gidsen
+  // zonder onderwerp (naasten, ADHD, autisme, ...) zijn zo wel te vinden.
+  const gidsFilter = zoekterm || onderwerp !== null;
+  const gidsen = gidsFilter
+    ? GIDSEN.filter((g) => {
+        if (onderwerp && g.onderwerp !== onderwerp) return false;
+        if (!zoekterm) return true;
+        return (
+          g.titel.toLowerCase().includes(zoekterm) ||
+          g.intro.toLowerCase().includes(zoekterm) ||
+          g.blokken.some((b) => (b.tekst ?? b.kop ?? "").toLowerCase().includes(zoekterm))
+        );
+      })
+    : alleGidsen
+      ? GIDSEN
+      : gidsenVoor(voorkeuren);
+  const gidsenAlsGrid = gidsFilter || alleGidsen;
+  const gidsTegel = (g: (typeof GIDSEN)[number]) => ({
+    label: t("gids"),
+    title: g.titel,
+    onPress: () => router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: g.slug } }),
+  });
+
   // Jouw onderwerpen als eerste chips, zodat "waar wil je aan werken" hier
   // zichtbaar terugkomt.
   const onderwerpen = [...ONDERWERPEN].sort((a, b) => gekozen(b) - gekozen(a));
@@ -131,6 +169,38 @@ export default function Naslagwerk() {
           ))}
         </View>
       </ContentSection>
+
+      {gidsen.length ? (
+        <ContentSection
+          title={t("gidsen")}
+          note={gidsFilter ? undefined : t("gidsenNote")}
+          action={gidsFilter ? undefined : alleGidsen ? t("minderGidsen") : t("alleGidsen")}
+          onAction={() => zetAlleGidsen(!alleGidsen)}
+        >
+          {gidsenAlsGrid ? (
+            <ContentGrid>
+              {gidsen.map((g, i) => (
+                <ContentCard key={g.slug} {...gidsTegel(g)} tone="coral" full={i === gidsen.length - 1 && gidsen.length % 2 === 1}>
+                  <View style={{ height: 40 }} />
+                  <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
+                    <VliegerOnderwerp onderwerp={g.onderwerp} hoogte={44} />
+                  </View>
+                </ContentCard>
+              ))}
+            </ContentGrid>
+          ) : (
+            <ContentShelf>
+              {gidsen.map((g) => (
+                <ShelfCard key={g.slug} {...gidsTegel(g)} tone="coral">
+                  <View style={{ position: "absolute", right: space[3], top: space[3] }}>
+                    <VliegerOnderwerp onderwerp={g.onderwerp} hoogte={44} />
+                  </View>
+                </ShelfCard>
+              ))}
+            </ContentShelf>
+          )}
+        </ContentSection>
+      ) : null}
 
       <ContentSection title={t("artikelen")}>
         {resultaten.length === 0 ? (
