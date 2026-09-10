@@ -130,7 +130,8 @@ export default function CheckInStap() {
 
   // Ontwerpschermen 05 en 06: per vraag een eigen gradient met de mascotte
   // erop, daaronder het vel met overline, vraag, geruststelling, de slider
-  // in een witte kaart, de knop en vier stippen.
+  // los op het vel (de witte kaart is vervallen, zie Slider.tsx), de knop
+  // en vier stippen.
   return (
     <ScreenCanvas state={HERO_PER_STAP[stap.key]} terugKnop={<TerugNaarVorige />} heroInhoud={<MascotteInput state={stap.key} hoogte={112} />}>
       <View style={{ gap: space[2] }}>
@@ -140,8 +141,7 @@ export default function CheckInStap() {
         <AppText rol="h2">{stap.vraag}</AppText>
         <AppText rol="body">{GERUSTSTELLING}</AppText>
       </View>
-      {/* Geen hint in de kaart: de geruststelling erboven zegt het al. */}
-      <Slider value={waarde} onChange={zetLokaleWaarde} leftLabel={stap.links} rightLabel={stap.rechts} hint="" />
+      <Slider value={waarde} onChange={zetLokaleWaarde} leftLabel={stap.links} rightLabel={stap.rechts} />
       <View style={{ gap: space[3] }}>
         <Button label={laatste ? t("bekijkJeWeer") : t("verder")} fullWidth bezig={bezig} onPress={verder} />
         <Button label={t("slaOver")} variant="link" fullWidth onPress={slaOver} />
