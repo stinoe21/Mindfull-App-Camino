@@ -9,6 +9,11 @@
 // levert aanmaken nog geen sessie op en komt er eerst een bevestigingsmail.
 // Let op de SMTP-limiet tijdens testen: docs/limieten-en-misbruik.md sectie 1.
 // Zonder account kom je de app niet in: er is geen doorgang langs dit scherm.
+//
+// De voorwaarden en de disclaimer (geen hulpverlening) horen bij het account
+// (grondslag overeenkomst, board 12:133) en staan sinds 13 september 2026
+// (Stijn, UX-ronde) hier, bij het aanmaken en het inloggen, en niet meer
+// drie schermen later. Zonder vinkje geen knop; geen Skip (productprincipes 6).
 
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -18,12 +23,15 @@ import { colors, space, type } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
+import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 import { MascotMain } from "@mind/ui/components/MascotMain";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { getSupabase } from "@/features/backend/client";
+import { OnboardingVoortgang } from "@/features/onboarding/OnboardingVoortgang";
+import { bewaarInstellingen } from "@/features/profiel/instellingen";
 
 // De sleutels van Mind, zodra die er zijn. Zie docs/scope.md: aanzetten is dan
 // configuratie, geen verbouwing.
@@ -101,6 +109,7 @@ export default function Inloggen() {
   const [bezig, zetBezig] = useState(false);
   const [melding, zetMelding] = useState<string | null>(null);
   const [stand, zetStand] = useState<"inloggen" | "aanmaken">("inloggen");
+  const [voorwaarden, zetVoorwaarden] = useState(false);
 
   const client = getSupabase();
   const aanmaken = stand === "aanmaken";
@@ -141,6 +150,7 @@ export default function Inloggen() {
       }
       return;
     }
+    await bewaarInstellingen({ consentVoorwaarden: true });
     router.push("/naam");
   };
 
@@ -159,6 +169,7 @@ export default function Inloggen() {
       return;
     }
     if (data.session) {
+      await bewaarInstellingen({ consentVoorwaarden: true });
       router.push("/naam");
       return;
     }
@@ -170,6 +181,7 @@ export default function Inloggen() {
 
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
+      <OnboardingVoortgang stap={2} />
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{aanmaken ? t("accountAanmaken") : t("titel")}</AppText>
         <AppText rol="subtitle">{t("ondertitel")}</AppText>
@@ -214,10 +226,17 @@ export default function Inloggen() {
           accessibilityLabel={t("wachtwoordLabel")}
         />
       </Card>
+      {/* De voorwaarden-tekst is vastgelegd (scope.md) en blijft Nederlands. */}
+      <KeuzeVak
+        label="Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is"
+        gekozen={voorwaarden}
+        onPress={() => zetVoorwaarden(!voorwaarden)}
+      />
       <Button
         label={aanmaken ? t("accountAanmaken") : t("inloggen")}
         fullWidth
         bezig={bezig}
+        disabled={!voorwaarden}
         onPress={aanmaken ? maakAccount : logIn}
       />
 

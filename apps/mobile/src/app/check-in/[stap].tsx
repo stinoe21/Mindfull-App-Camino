@@ -6,11 +6,12 @@
 // "Sla vandaag over" is de eerlijke uitweg (no-guilt, productprincipes 4 en 6).
 //
 // Eén check-in per dag: staat er al een weerbeeld van vandaag op het toestel,
-// dan komen de sliders niet, maar een scherm dat zegt dat je vandaag al bent
-// geweest, met de weg naar jouw weer. Dat geldt voor elke ingang (tabbalk,
-// dashboard, deeplink), omdat het hier in het scherm zelf zit.
+// dan komen de sliders niet en ga je direct door naar jouw weer. Dat geldt
+// voor elke ingang (tabbalk, dashboard, deeplink), omdat het hier in het
+// scherm zelf zit. Het tussenscherm "Je hebt vandaag al ingecheckt" met twee
+// knoppen was een doodlopende straat (Stijn, UX-ronde 13 september 2026).
 
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Redirect, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 
@@ -18,7 +19,6 @@ import { colors, radius, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { MascotteInput } from "@mind/ui/components/MascotteInput";
-import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { Slider } from "@mind/ui/components/Slider";
 
@@ -78,17 +78,7 @@ export default function CheckInStap() {
   }
 
   if (vandaag) {
-    return (
-      <ScreenCanvas variant="overlay" state={vandaag} sheetTop={200}>
-        <MascotteVlieger state={vandaag} hoogte={90} />
-        <AppText rol="h2" centreer>Je hebt vandaag al ingecheckt</AppText>
-        <AppText rol="body" kleur="secondary" centreer>
-          Eén keer per dag is genoeg. Morgen kun je weer.
-        </AppText>
-        <Button label="Bekijk je weer" fullWidth onPress={() => router.replace("/check-in/uitkomst")} />
-        <Button label="Terug naar Home" variant="link" onPress={() => router.replace("/dashboard")} />
-      </ScreenCanvas>
-    );
+    return <Redirect href="/check-in/uitkomst" />;
   }
 
   const verder = async () => {

@@ -7,6 +7,10 @@
 // en de Hulplijn. Challenges hebben hun eigen tab en staan hier niet meer.
 // Sinds 10 september 2026 (feedbacksessie MIND) staan de tips direct onder
 // de check-in en is de quote klein: minder tekst, handelingsperspectief eerst.
+// Sinds 13 september 2026 (Stijn, UX-ronde) zegt Home niets twee keer: de
+// vraag staat op de hero en niet ook op de kaart, de eerste-keer-kaart is
+// weg (welkom en de onboarding waren al de introductie), en de sectie heet
+// Houvast, net als de tab.
 // Elke slot heeft zijn eigen loading-, empty- en error-state. Het landelijke
 // beeld wordt een keer per sessie opgehaald en gecachet
 // (docs/limieten-en-misbruik.md sectie 4).
@@ -31,24 +35,14 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { houvastVoorVoorkeuren } from "@/features/content/houvast";
 import { QuoteKaart } from "@/features/content/QuoteKaart";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
-import { EersteKeerUitleg } from "@/features/onboarding/EersteKeerUitleg";
 import { leesInstellingen } from "@/features/profiel/instellingen";
+import { KAARTKLEUR } from "@/features/weer/kaartKleuren";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { isProvincie } from "@/features/weer/provincies";
 import { WEER_NAMEN } from "@/features/weer/teksten";
 import { haalWeerbericht, haalWeerberichtProvincies, type WeerberichtStand } from "@/features/weer/weerbericht";
 
 import { WEATHER_CODES, type WeatherCode, type WeatherTodayProvince } from "@mind/types";
-
-// De weertint per weerbeeld, voor de provincies op de kaart. Genoemd naar het
-// weer en nooit naar een waardering (kitchen sink, Weertinten).
-const KAARTKLEUR: Record<WeatherCode, string> = {
-  zonnig: palette.weatherSun,
-  wolken: palette.weatherCloud,
-  mist: palette.weatherMist,
-  wind: palette.purple200,
-  regen: palette.weatherRain,
-};
 
 // Alleen interface-teksten. {share}, {total} en {n} worden op de plek ingevuld.
 const nl = {
@@ -59,20 +53,19 @@ const nl = {
   avond: "Goedenavond",
   hoeWeer: "Hoe is je weer vandaag?",
   jouwWeerOverline: "JOUW WEER VANDAAG",
-  evenIncheckenTitel: "Hoe is je weer vandaag?",
   evenIncheckenUitleg: "Vier korte vragen, één minuut.",
-  evenIncheckenKnop: "Even inchecken",
+  evenIncheckenKnop: "Inchecken",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien",
   kaartLeeg: "Een provincie kleurt zodra er genoeg check-ins zijn.",
   berichtMeta: "Op basis van {total} check-ins vandaag",
-  nietIngelogd: "Log in om het weer van Nederland te zien.",
+  nietIngelogd: "Log in om het mentale weer te zien.",
   teWeinig: "Nog te weinig check-ins voor een landelijk beeld. Later vandaag staat hier meer.",
   berichtFout: "Het landelijke beeld kon niet worden opgehaald. Zonder verbinding werkt de rest van de app gewoon.",
-  bekijkWeerbericht: "Bekijk het weer van Nederland",
+  bekijkWeerbericht: "Bekijk het mentale weer",
   allesBekijken: "Alles bekijken",
-  tipsTitel: "Tips voor jou",
-  tipsNote: "Uitleg en wat kan helpen. Jouw onderwerpen eerst.",
+  tipsTitel: "Houvast voor jou",
+  tipsNote: "Kort uitgelegd en wat kan helpen. Jouw onderwerpen eerst.",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -84,19 +77,18 @@ const teksten: Woordenboek<typeof nl> = {
     avond: "Good evening",
     hoeWeer: "How's your weather today?",
     jouwWeerOverline: "YOUR WEATHER TODAY",
-    evenIncheckenTitel: "How's your weather today?",
     evenIncheckenUitleg: "Four short questions, one minute.",
     evenIncheckenKnop: "Check in",
     weerVanNederland: "The mental weather of the Netherlands",
     weerVanNederlandSub: "Per province, the weather we see most today",
     kaartLeeg: "A province gets its colour once there are enough check-ins.",
     berichtMeta: "Based on {total} check-ins today",
-    nietIngelogd: "Log in to see the weather of the Netherlands.",
+    nietIngelogd: "Log in to see the mental weather.",
     teWeinig: "Not enough check-ins yet for a national picture. Later today there will be more here.",
     berichtFout: "The national picture couldn't be loaded. Without a connection the rest of the app still works.",
-    bekijkWeerbericht: "See the weather of the Netherlands",
+    bekijkWeerbericht: "See the mental weather",
     allesBekijken: "See all",
-    tipsTitel: "Tips for you",
+    tipsTitel: "Houvast for you",
     tipsNote: "Explained briefly and what can help. Your topics first.",
   },
 };
@@ -195,28 +187,22 @@ export default function Dashboard() {
           <AppText rol="body" kleur="brand">{"›"}</AppText>
         </Card>
       ) : (
-        // De vraag staat al op de hero, de mascotte ook. Hier de vijf
-        // weerbeelden als strook, één regel en de knop. Geen zin over anoniem
-        // meetellen: daar heeft de gebruiker al ja op gezegd bij de
-        // toestemming (Stijn, 13 september 2026).
+        // De vraag staat op de hero, de mascotte ook; de kaart herhaalt hem
+        // niet. Hier de vijf weerbeelden als strook, één regel en de knop.
+        // Geen zin over anoniem meetellen: daar heeft de gebruiker al ja op
+        // gezegd bij de toestemming (Stijn, 13 september 2026).
         <Card tone="sun" style={{ gap: space[3] }}>
           <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: space[2] }}>
             {WEATHER_CODES.map((code) => (
               <WeerIcoon key={code} staat={code} hoogte={36} />
             ))}
           </View>
-          <View style={{ gap: 2 }}>
-            <AppText rol="h3">{t("evenIncheckenTitel")}</AppText>
-            <AppText rol="bodySmall" kleur="secondary">{t("evenIncheckenUitleg")}</AppText>
-          </View>
+          <AppText rol="body" centreer>{t("evenIncheckenUitleg")}</AppText>
           <Button label={t("evenIncheckenKnop")} fullWidth onPress={() => router.push("/check-in/1")} />
         </Card>
       )}
 
-      {/* Eenmalige rondleiding, onder de check-in: die blijft de hoofdrol houden. */}
-      <EersteKeerUitleg />
-
-      {/* Slot 2: tips, direct onder de check-in. MIND (feedbacksessie, verwerkt
+      {/* Slot 2: Houvast, direct onder de check-in. MIND (feedbacksessie, verwerkt
           10 september 2026): dit is inhoudelijk het relevantst voor de gebruiker,
           dus hoger dan het landelijke beeld en de quote. */}
       <ContentSection title={t("tipsTitel")} note={t("tipsNote")} action={t("allesBekijken")} onAction={() => router.push("/naslagwerk")}>

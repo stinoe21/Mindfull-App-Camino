@@ -34,7 +34,7 @@ const nl = {
   evenKijken: "Even geduld.",
   ingelogd: "Ingelogd",
   nietIngelogd: "Niet ingelogd",
-  logInUitleg: "Log in om anoniem mee te tellen in het weerbericht.",
+  logInUitleg: "Log in om anoniem mee te tellen in het mentale weer.",
   inloggen: "Inloggen",
   groepJij: "Over jou",
   naam: "Voornaam",
@@ -50,14 +50,11 @@ const nl = {
   taalSysteem: "Systeem",
   taalNederlands: "Nederlands",
   taalEngels: "English",
-  toestemmingen: "Toestemmingen",
-  weerberichtJa: "Weerbericht: ja",
-  weerberichtNee: "Weerbericht: nee",
-  weerberichtGeen: "Nog niet gekozen",
   groepPrivacy: "Privacy",
-  watGebeurt: "Wat er met je check-in gebeurt",
-  privacyverklaring: "Privacyverklaring",
-  binnenkort: "Binnenkort",
+  toestemmingen: "Toestemmingen",
+  weerberichtJa: "Mentale weer: ja",
+  weerberichtNee: "Mentale weer: nee",
+  weerberichtGeen: "Nog niet gekozen",
   groepAccount: "Account",
   uitloggen: "Uitloggen",
   accountVerwijderen: "Account verwijderen",
@@ -69,7 +66,7 @@ const teksten: Woordenboek<typeof nl> = {
     evenKijken: "One moment...",
     ingelogd: "Logged in",
     nietIngelogd: "Not logged in",
-    logInUitleg: "Log in to count anonymously towards the weather forecast.",
+    logInUitleg: "Log in to count anonymously towards the mental weather.",
     inloggen: "Log in",
     groepJij: "About you",
     naam: "First name",
@@ -85,14 +82,11 @@ const teksten: Woordenboek<typeof nl> = {
     taalSysteem: "System",
     taalNederlands: "Nederlands",
     taalEngels: "English",
-    toestemmingen: "Consents",
-    weerberichtJa: "Forecast: yes",
-    weerberichtNee: "Forecast: no",
-    weerberichtGeen: "Not chosen yet",
     groepPrivacy: "Privacy",
-    watGebeurt: "What happens with your check-in",
-    privacyverklaring: "Privacy statement",
-    binnenkort: "Coming soon",
+    toestemmingen: "Consents",
+    weerberichtJa: "Mental weather: yes",
+    weerberichtNee: "Mental weather: no",
+    weerberichtGeen: "Not chosen yet",
     groepAccount: "Account",
     uitloggen: "Log out",
     accountVerwijderen: "Delete account",
@@ -189,13 +183,15 @@ export default function Profiel() {
       </InstellingenGroep>
 
       <InstellingenGroep titel={t("groepApp")}>
-        <InstellingenRij label={t("taal")} onPress={() => router.push("/profiel/taal")} rechts={<Waarde tekst={taalWaarde} />} />
-        <InstellingenRij label={t("toestemmingen")} onPress={() => router.push("/profiel/toestemmingen")} rechts={<Waarde tekst={toestemmingWaarde} />} laatste />
+        <InstellingenRij label={t("taal")} onPress={() => router.push("/profiel/taal")} rechts={<Waarde tekst={taalWaarde} />} laatste />
       </InstellingenGroep>
 
+      {/* De toestemmingen zijn de privacy-keuzes; de uitleg staat daar achter
+          "Lees de uitleg". De privacyverklaring komt hier als rij zodra Paul
+          hem oplevert (docs/privacy-besluiten.md); een dode rij "binnenkort"
+          stond er tot 13 september 2026 en is weg. */}
       <InstellingenGroep titel={t("groepPrivacy")}>
-        <InstellingenRij label={t("watGebeurt")} onPress={() => router.push("/weerbericht")} />
-        <InstellingenRij label={t("privacyverklaring")} omschrijving={t("binnenkort")} uit laatste />
+        <InstellingenRij label={t("toestemmingen")} onPress={() => router.push("/profiel/toestemmingen")} rechts={<Waarde tekst={toestemmingWaarde} />} laatste />
       </InstellingenGroep>
 
       <InstellingenGroep titel={t("groepAccount")}>
