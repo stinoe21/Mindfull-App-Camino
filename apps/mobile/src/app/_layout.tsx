@@ -10,12 +10,10 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { colors } from "@mind/ui";
 
-import { HulplijnKnop } from "@/features/hulplijn/HulplijnKnop";
 import { fontAssets } from "@/theme/fonts";
 
 // Het splashscreen blijft staan tot de snitten geladen zijn.
@@ -46,21 +44,15 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <StatusBar style="dark" />
-      <View style={{ flex: 1 }}>
-        <Stack
-          screenOptions={{
-            // Elk scherm tekent zijn eigen hero-gradient als paginaachtergrond,
-            // zie schermregel 1 in packages/ui/reference/HERKOMST.md. Een
-            // systeemheader zou daaroverheen liggen.
-            headerShown: false,
-            contentStyle: { backgroundColor: colors.surfaceBackground },
-          }}
-        />
-        {/* De Hulplijn op elk scherm, rechtsboven (productprincipe 9; besluit
-            Stijn, 13 september 2026). Hier en niet per scherm, zodat hij
-            nergens vergeten kan worden. */}
-        <HulplijnKnop />
-      </View>
+      <Stack
+        screenOptions={{
+          // Elk scherm tekent zijn eigen hero-gradient als paginaachtergrond,
+          // zie schermregel 1 in packages/ui/reference/HERKOMST.md. Een
+          // systeemheader zou daaroverheen liggen.
+          headerShown: false,
+          contentStyle: { backgroundColor: colors.surfaceBackground },
+        }}
+      />
     </SafeAreaProvider>
   );
 }
