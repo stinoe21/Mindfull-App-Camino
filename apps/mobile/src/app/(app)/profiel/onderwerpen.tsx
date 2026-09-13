@@ -8,7 +8,7 @@ import { View } from "react-native";
 
 import { space } from "@mind/ui";
 import { Chip } from "@mind/ui/components/Chip";
-import { kaartKleurVoor } from "@mind/ui/components/VliegerOnderwerp";
+import { chipKleurGekozenVoor, kaartKleurVoor } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { bewaarInstellingen, leesInstellingen, VOORKEUR_OPTIES } from "@/features/profiel/instellingen";
@@ -41,7 +41,7 @@ export default function ProfielOnderwerpen() {
     <KeuzePagina titel={t("titel")} uitleg={t("uitleg")}>
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
         {VOORKEUR_OPTIES.map((o) => (
-          <Chip key={o} label={o} active={voorkeuren.includes(o)} kleur={kaartKleurVoor(o)} onPress={() => wissel(o)} />
+          <Chip key={o} label={o} active={voorkeuren.includes(o)} kleur={kaartKleurVoor(o)} gekozenKleur={chipKleurGekozenVoor(o)} onPress={() => wissel(o)} />
         ))}
       </View>
     </KeuzePagina>
