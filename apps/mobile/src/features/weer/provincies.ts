@@ -1,10 +1,11 @@
 // De twaalf provincies, voor het mentale weer per provincie.
 //
 // Besloten na de feedbacksessie met MIND (verwerkt 10 september 2026): de
-// gebruiker kiest zelf, één keer en vrijwillig, in welke provincie hij woont.
-// Geen locatiebepaling: dat blijft in de lijst "wat we bewust niet opslaan"
-// in docs/datamodel.md. De keuze staat lokaal en gaat alleen mee als
-// provincie bij het optellen van een check-in, nooit als locatie op zich.
+// provincie telt mee bij een check-in. Sinds 13 september 2026 (Stijn) mag
+// de app hem via de locatie van het toestel bepalen, met toestemming van het
+// systeem en op het toestel zelf (features/weer/locatie.ts); anders kiest de
+// gebruiker zelf. De keuze staat lokaal en gaat alleen mee als provincie bij
+// het optellen van een check-in, nooit als locatie op zich.
 
 import type { ProvincieCode } from "@mind/ui/components/KaartNederland";
 
