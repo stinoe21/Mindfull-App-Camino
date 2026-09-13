@@ -1,10 +1,11 @@
 // Profiel: provincie
 //
-// Voor het mentale weer per provincie op Home. Het liefst via de locatie van
-// het toestel (sinds 13 september 2026, met toestemming van het systeem; de
-// coördinaten blijven op het toestel, zie features/weer/locatie.ts), anders
-// zelf gekozen, of helemaal niet: dan telt de check-in landelijk mee als
-// onbekend. Elke keuze wordt direct bewaard.
+// Voor het mentale weer per provincie op Home. De provincie komt normaal via
+// de locatie van het toestel, gevraagd in de onboarding bij de toestemming
+// voor het weerbericht (sinds 13 september 2026; de coördinaten blijven op
+// het toestel, zie features/weer/locatie.ts). Dit is de uitwijk: opnieuw
+// bepalen na een weigering, of zelf kiezen, of helemaal niet: dan telt de
+// check-in landelijk mee als onbekend. Elke keuze wordt direct bewaard.
 
 import { useEffect, useState } from "react";
 import { View } from "react-native";
@@ -23,7 +24,7 @@ import { isProvincie, PROVINCIE_CODES, PROVINCIE_NAMEN } from "@/features/weer/p
 
 const nl = {
   titel: "Provincie",
-  uitleg: "Voor het mentale weer per provincie. Je locatie blijft op je telefoon; alleen de provincie telt mee.",
+  uitleg: "Voor het mentale weer per provincie. De app bepaalt hem via je locatie; die blijft op je telefoon, alleen de provincie telt mee.",
   viaLocatie: "Via je locatie: {provincie}",
   gebruikLocatie: "Gebruik mijn locatie",
   opnieuw: "Opnieuw bepalen",
@@ -37,7 +38,7 @@ const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "Province",
-    uitleg: "For the mental weather per province. Your location stays on your phone; only the province counts.",
+    uitleg: "For the mental weather per province. The app determines it from your location; that stays on your phone, only the province counts.",
     viaLocatie: "From your location: {provincie}",
     gebruikLocatie: "Use my location",
     opnieuw: "Determine again",
