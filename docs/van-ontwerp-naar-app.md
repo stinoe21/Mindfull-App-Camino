@@ -150,7 +150,7 @@ Deze staan het bouwen niet in de weg, maar ze worden duurder naarmate je langer 
 - [ ] **De drie mascotte-poses staan op 354 bij 136 pixels** en worden op 128 punten hoog getoond. Dat is ongeveer 1x, dus op een telefoon wordt het zacht. Opnieuw exporteren op 3x, of als SVG. Dit is een vraag aan Mind.
 - [ ] **Een link naar het Figma-bronbestand in de repo.** Zonder die link kunnen Max en Caesar niet bij het ontwerp zelf.
 - [ ] **Donkere modus: wel of niet.** Nu beslissen is goedkoop, later betekent het elke kleur opnieuw langslopen. De app dwingt voorlopig licht af in `app.config.ts`, want een systeem dat zelf donker maakt levert onleesbare tekst op crèmekleur.
-- [x] **Waar de MIND Hulplijn zichtbaar is.** Op elk scherm, als chipje rechtsboven vanuit de root layout (13 september 2026).
+- [ ] **Waar de MIND Hulplijn zichtbaar is.** Nu als kaart onderaan Home en Profiel. Een chipje rechtsboven op elk scherm is geprobeerd en afgewezen (13 september 2026).
 - [ ] **Een app-icoon en een splash-illustratie.** Die zijn er niet. Voor Expo Go maakt dat niets uit, voor een build naar de stores wel, en een ontbrekend of verkeerd formaat is een afwijzingsreden. Het splashscherm heeft nu wel de goede crèmekleur, dus er flitst geen wit vlak.
 - [ ] **De kleurtokens en de weercodes heten niet hetzelfde.** De achtergronden volgen de database (`zonnig`, `wolken`, `mist`, `wind`, `regen`), de kleurtokens zijn Engels en er is een `weather-storm` zonder tegenhanger terwijl `wind` er geen heeft. Zolang niemand een weerkleur per weerbeeld opzoekt is dat geen probleem, maar bij het uitkomstscherm wordt het er wel een.
 

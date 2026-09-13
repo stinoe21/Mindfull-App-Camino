@@ -155,7 +155,7 @@ Daarnaast staat er in `reference/components/library` een set geleende generieke 
 Drie eisen uit `scope.md` en `datamodel.md` hebben geen component in de export. Dat zijn geen designkeuzes maar productvereisten, en ze blijven staan:
 
 - **Collectief weerbericht met een verplichte lege staat.** Het landelijke weerbericht mag pas getoond worden **boven een minimum aantal deelnemers**, anders is een uitkomst herleidbaar naar personen. Zie het board, connector `12:308`, en `datamodel.md`. Die staat is dus geen randgeval maar een privacymaatregel, en hij moet in de kitchen sink staan.
-- **De MIND Hulplijn is een route die overal bereikbaar is.** `HERKOMST.md` noemt dit een systeembreed punt. Besloten op 13 september 2026 (Stijn): een chipje "Hulplijn" rechtsboven op elk scherm, in de vorm van de terugknop, vanuit de root layout van expo-router (`features/hulplijn/HulplijnKnop.tsx`), verborgen op de Hulplijn-pagina zelf.
+- **De MIND Hulplijn is een route die overal bereikbaar is.** `HERKOMST.md` noemt dit een systeembreed punt, met de nuance dat het niet op letterlijk elk scherm hoeft. Nu: de Hulplijn-kaart onderaan Home en Profiel. Een chipje rechtsboven op elk scherm vanuit de root layout is op 13 september 2026 geprobeerd en afgewezen (Stijn: niet mooi). Waar hij verder nog komt is open, zie de open punten.
 - **Een zoekresultaat toont altijd de bronpagina.** Geen chat, geen gegenereerd antwoord. Zie `productprincipes.md` principe 10. Bouw hier nooit een variant zonder bronvermelding.
 
 ### Systeemstaten die nog ontworpen moeten worden
@@ -274,4 +274,5 @@ Dit zijn beslissingen van ons drieën, geen vergeten werk. De technische variant
 | **De mascotte-poses op 3x** | Nu 354 bij 136 pixels voor een weergave van 128 hoog. Op een retina-scherm wordt dat zacht. |
 | **Een link naar het bronbestand in Figma** | Zonder die link kunnen Max en Caesar niet bij het ontwerp, alleen bij wat is overgenomen. |
 | **Donkere modus: wel of niet** | Het overgenomen systeem heeft er geen. De oude styleguide had wel een licht- en donkervariant. Nu beslissen is goedkoop, later betekent het elke kleur opnieuw langslopen. |
+| **Waar de Hulplijn verder zichtbaar is** | Nu de kaart onderaan Home en Profiel. Een chipje in de titelbalk is afgewezen (13 september 2026); een andere vorm op Houvast, Challenges of tijdens de check-in is nog niet ontworpen. |
 | **Contrastcontrole** | De oude styleguide had ratio's per tekstgrootte, het nieuwe systeem niet. Voor App Review en voor de doelgroep is dit geen detail. |
