@@ -8,7 +8,8 @@
 // ja of nee zonder standaardwaarde. Sinds 10 september 2026 (Stijn) zijn de
 // twee toestemmingen één formulier met dezelfde aanvinkvakjes (KeuzeVak);
 // daarvoor was het een omrande keuzerij naast een systeemschakelaar.
-// De voorwaarden-stap heeft geen Skip (productprincipes 6).
+// De voorwaarden staan sinds 13 september 2026 bij het account (inloggen.tsx),
+// dus hier is nog één vraag over; die heeft geen Skip (productprincipes 6).
 //
 // De provincie hoort bij deze stap (Stijn, 13 september 2026): wie ja zegt
 // op het weerbericht, krijgt bij Klaar de locatievraag van het systeem, en
@@ -26,11 +27,11 @@ import { View } from "react-native";
 import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
-import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 import { MascotMain } from "@mind/ui/components/MascotMain";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
+import { OnboardingVoortgang } from "@/features/onboarding/OnboardingVoortgang";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
 import { bepaalProvincieViaLocatie } from "@/features/weer/locatie";
@@ -38,9 +39,8 @@ import { bepaalProvincieViaLocatie } from "@/features/weer/locatie";
 export default function Anonimiteit() {
   const router = useRouter();
   const [weerbericht, zetWeerbericht] = useState<boolean | null>(null);
-  const [voorwaarden, zetVoorwaarden] = useState(false);
   const [bezig, zetBezig] = useState(false);
-  const compleet = weerbericht !== null && voorwaarden;
+  const compleet = weerbericht !== null;
 
   const klaar = async () => {
     zetBezig(true);
@@ -58,7 +58,6 @@ export default function Anonimiteit() {
     }
     await bewaarInstellingen({
       consentWeerbericht: weerbericht === true,
-      consentVoorwaarden: voorwaarden,
       provincie,
       provincieViaLocatie,
       onboardingAfgerond: true,
@@ -70,16 +69,16 @@ export default function Anonimiteit() {
 
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
+      <OnboardingVoortgang stap={5} />
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">Draag anoniem bij</AppText>
         <AppText rol="subtitle">Niemand kan zien wat jij hebt ingevuld.</AppText>
       </View>
 
-      {/* Eén formulier, twee velden. De uitleg over anonimiteit stond hier
-          ook nog eens los boven de toestemming; die staat op het weerbericht
-          zelf, met de infoknop (ontdubbeling, 1 september 2026). */}
+      {/* De uitleg over anonimiteit stond hier ook nog eens los boven de
+          toestemming; die staat op het mentale weer zelf, met de infoknop
+          (ontdubbeling, 1 september 2026). */}
       <View style={{ gap: space[2] }}>
-        <AppText rol="labelOverline" kleur="brand">1 VAN 2</AppText>
         <ToestemmingKeuze waarde={weerbericht} onKies={zetWeerbericht} metUitleg />
         {/* Pas na ja: wat er bij Klaar gebeurt, zodat de locatievraag van het
             systeem niet uit de lucht komt vallen. */}
@@ -90,20 +89,11 @@ export default function Anonimiteit() {
         ) : null}
       </View>
 
-      <View style={{ gap: space[2] }}>
-        <AppText rol="labelOverline" kleur="brand">2 VAN 2</AppText>
-        <KeuzeVak
-          label="Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is"
-          gekozen={voorwaarden}
-          onPress={() => zetVoorwaarden(!voorwaarden)}
-        />
-      </View>
-
       <View style={{ gap: space[3] }}>
         <Button label="Klaar" fullWidth disabled={!compleet} bezig={bezig} onPress={klaar} />
         {!compleet ? (
           <AppText rol="bodySmall" kleur="secondary" centreer>
-            Kies ja of nee en vink de voorwaarden aan. Nee is een prima keuze; de app werkt dan net zo goed.
+            Kies ja of nee. Nee is een prima keuze; de app werkt dan net zo goed.
           </AppText>
         ) : null}
       </View>
