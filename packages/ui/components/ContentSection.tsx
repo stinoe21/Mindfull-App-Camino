@@ -65,6 +65,8 @@ export type ShelfTegelProps = {
   /** Wat er in de tegel staat: een beeld of, tot MIND beelden levert, de mascotte. */
   beeld?: React.ReactNode;
   label: string;
+  /** De tegelkleur, bijvoorbeeld de kleur van het onderwerp (kaartKleurVoor). Standaard purple50. */
+  kleur?: string;
   onPress?: () => void;
 };
 
@@ -74,11 +76,11 @@ export type ShelfTegelProps = {
  * eronder. Voor open verzamelingen waar de kaart zelf geen tekst hoeft te
  * dragen.
  */
-export function ShelfTegel({ beeld, label, onPress }: ShelfTegelProps) {
+export function ShelfTegel({ beeld, label, kleur, onPress }: ShelfTegelProps) {
   // 96 en 109 zijn de maten uit het Figma-frame (Item 01: 109 breed, tegel 96).
   const inhoud = (
     <>
-      <View style={{ width: 96, height: 96, borderRadius: radius.md, backgroundColor: palette.purple50, alignItems: "center", justifyContent: "center" }}>
+      <View style={{ width: 96, height: 96, borderRadius: radius.md, backgroundColor: kleur ?? palette.purple50, alignItems: "center", justifyContent: "center" }}>
         {beeld}
       </View>
       <AppText rol="bodySmall" numberOfLines={2}>{label}</AppText>
@@ -100,11 +102,13 @@ export type ShelfCardProps = {
   label?: string;
   title?: string;
   meta?: string;
+  /** Een eigen achtergrondkleur uit het palet (kaartKleurVoor); gaat voor tone. */
+  kleur?: string;
   onPress?: () => void;
   children?: React.ReactNode;
 };
 
-export function ShelfCard({ tone = "white", label, title, meta, onPress, children }: ShelfCardProps) {
+export function ShelfCard({ tone = "white", label, title, meta, kleur, onPress, children }: ShelfCardProps) {
   const inhoud = (
     <>
       {label ? <AppText rol="labelOverline" kleur="brand">{label}</AppText> : null}
@@ -125,6 +129,7 @@ export function ShelfCard({ tone = "white", label, title, meta, onPress, childre
       justifyContent: "flex-end",
     },
     TONEN[tone],
+    kleur ? { backgroundColor: kleur } : null,
   ];
   if (onPress) {
     return (

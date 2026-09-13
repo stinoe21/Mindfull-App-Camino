@@ -1,73 +1,58 @@
 // Profiel
 //
-// Eén pagina voor alles wat van jou is: wie je bent (naam, account), wat je
-// koos (onderwerpen, provincie, taal) en wat je toestaat (toestemmingen,
-// privacy). Sinds 10 september 2026 (Stijn): het losse Instellingen-scherm
-// en het overzicht met doorverwijzingen ernaartoe waren twee halve pagina's
-// "all over the place"; dit is er één, en /profiel/instellingen verwijst
-// hierheen zodat "je kunt dit altijd wijzigen" overal blijft kloppen.
+// Eén overzicht, zoals de instellingen van het toestel: wie je bent bovenaan,
+// daaronder korte rijen met de huidige waarde en een pagina per keuze
+// (naam, onderwerpen, provincie, taal, toestemmingen). Sinds 13 september
+// 2026 (Stijn): de vorige versie schreef alle keuzes en de volledige
+// toestemmingsteksten op één lange pagina uit, en dat was geen geheel. Nu
+// lees je in één oogopslag wat er staat en tik je door om iets te wijzigen.
 //
 // Geen profielfoto: die bestaat nergens in de flow (HERKOMST.md, Removed on
 // purpose). Er is geen naamveld in het datamodel; de voornaam komt uit de
 // lokale instellingen en verlaat het toestel nooit.
-//
-// De consent-teksten liggen bij Paul (docs/privacy-besluiten.md). Ze blijven
-// bewust buiten de vertaallaag en dus Nederlands, zie issue #47 en scope.md.
 
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
-import { TextInput, View } from "react-native";
+import { View } from "react-native";
 
-import { colors, space, type } from "@mind/ui";
+import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
-import { Chip } from "@mind/ui/components/Chip";
-import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { getSupabase } from "@/features/backend/client";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
-import { TAAL_KEUZES, useTaal, useVertaling, type TaalKeuze, type Woordenboek } from "@/features/i18n/taal";
-import {
-  bewaarInstellingen,
-  leesInstellingen,
-  NAAM_MAX,
-  schoonNaam,
-  STANDAARD,
-  VOORKEUR_OPTIES,
-  type Instellingen as InstellingenType,
-} from "@/features/profiel/instellingen";
+import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { leesInstellingen, STANDAARD, type Instellingen } from "@/features/profiel/instellingen";
 import { InstellingenGroep, InstellingenRij } from "@/features/profiel/InstellingenRij";
-import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
-import { isProvincie, PROVINCIE_CODES, PROVINCIE_NAMEN } from "@/features/weer/provincies";
+import { isProvincie, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 
 const nl = {
   titel: "Profiel",
   evenKijken: "Even geduld.",
-  ingelogdAls: "Ingelogd als {email}",
   ingelogd: "Ingelogd",
   nietIngelogd: "Niet ingelogd",
   logInUitleg: "Log in om anoniem mee te tellen in het weerbericht.",
   inloggen: "Inloggen",
-  groepNaam: "Naam",
+  groepJij: "Over jou",
   naam: "Voornaam",
-  naamPlaceholder: "Optioneel",
-  naamUitleg: "Alleen voor de begroeting. Blijft op je telefoon.",
-  groepOnderwerpen: "Onderwerpen",
-  onderwerpenUitleg: "Deze onderwerpen zie je als eerste.",
-  groepProvincie: "Provincie",
-  provincie: "Waar in Nederland ben je?",
-  provincieUitleg: "Voor het mentale weer per provincie. Vrijwillig; de app vraagt nooit je locatie.",
+  geenNaam: "Nog geen naam",
+  onderwerpen: "Onderwerpen",
+  geenOnderwerpen: "Nog niets gekozen",
+  meerOnderwerpen: "+{n}",
+  provincie: "Provincie",
   provincieGeen: "Liever niet",
-  groepTaal: "Taal",
+  groepApp: "App",
+  taal: "Taal",
   taalSysteem: "Systeem",
   taalNederlands: "Nederlands",
   taalEngels: "English",
-  taalContentBlijftNederlands: "Onderwerpen, gidsen en challenges blijven Nederlands.",
-  groepToestemmingen: "Toestemmingen",
-  voorwaarden: "Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is",
+  toestemmingen: "Toestemmingen",
+  weerberichtJa: "Weerbericht: ja",
+  weerberichtNee: "Weerbericht: nee",
+  weerberichtGeen: "Nog niet gekozen",
   groepPrivacy: "Privacy",
   watGebeurt: "Wat er met je check-in gebeurt",
   privacyverklaring: "Privacyverklaring",
@@ -81,28 +66,27 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     titel: "Profile",
     evenKijken: "One moment...",
-    ingelogdAls: "Logged in as {email}",
     ingelogd: "Logged in",
     nietIngelogd: "Not logged in",
     logInUitleg: "Log in to count anonymously towards the weather forecast.",
     inloggen: "Log in",
-    groepNaam: "Name",
+    groepJij: "About you",
     naam: "First name",
-    naamPlaceholder: "Optional",
-    naamUitleg: "Only for the greeting. Stays on your phone.",
-    groepOnderwerpen: "Topics",
-    onderwerpenUitleg: "You see these topics first.",
-    groepProvincie: "Province",
-    provincie: "Where in the Netherlands are you?",
-    provincieUitleg: "For the mental weather per province. Voluntary; the app never asks for your location.",
+    geenNaam: "No name yet",
+    onderwerpen: "Topics",
+    geenOnderwerpen: "Nothing chosen yet",
+    meerOnderwerpen: "+{n}",
+    provincie: "Province",
     provincieGeen: "Rather not",
-    groepTaal: "Language",
+    groepApp: "App",
+    taal: "Language",
     taalSysteem: "System",
     taalNederlands: "Nederlands",
     taalEngels: "English",
-    taalContentBlijftNederlands: "Topics, guides and challenges remain in Dutch.",
-    groepToestemmingen: "Consents",
-    voorwaarden: "I accept the terms and understand that this app is not a care service",
+    toestemmingen: "Consents",
+    weerberichtJa: "Forecast: yes",
+    weerberichtNee: "Forecast: no",
+    weerberichtGeen: "Not chosen yet",
     groepPrivacy: "Privacy",
     watGebeurt: "What happens with your check-in",
     privacyverklaring: "Privacy statement",
@@ -112,30 +96,31 @@ const teksten: Woordenboek<typeof nl> = {
     accountVerwijderen: "Delete account",
   },
 };
-const TAAL_LABEL: Record<TaalKeuze, "taalSysteem" | "taalNederlands" | "taalEngels"> = {
-  systeem: "taalSysteem",
-  nl: "taalNederlands",
-  en: "taalEngels",
-};
+
+/** De huidige waarde rechts in een rij, in de secundaire kleur, met de "›" ernaast. */
+function Waarde({ tekst }: { tekst: string }) {
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: space[2], flexShrink: 1 }}>
+      <AppText rol="bodySmall" kleur="secondary" numberOfLines={1}>{tekst}</AppText>
+      <AppText rol="body" kleur="secondary">{"›"}</AppText>
+    </View>
+  );
+}
 
 export default function Profiel() {
   const router = useRouter();
-  const { keuze, kiesTaal } = useTaal();
   const t = useVertaling(teksten);
-  const [inst, zetInst] = useState<InstellingenType>(STANDAARD);
-  const [naamInvoer, zetNaamInvoer] = useState("");
+  const { keuze } = useTaal();
+  const [inst, zetInst] = useState<Instellingen>(STANDAARD);
   const [email, zetEmail] = useState<string | null>(null);
   const [geladen, zetGeladen] = useState(false);
 
-  // Bij elke focus opnieuw lezen: je komt hier terug na inloggen of na een
-  // wijziging elders (provincie in de onboarding, toestemming in de check-in).
+  // Bij elke focus opnieuw lezen: je komt hier terug van elke keuzepagina.
   useFocusEffect(
     useCallback(() => {
       let actief = true;
       leesInstellingen().then((i) => {
-        if (!actief) return;
-        zetInst(i);
-        zetNaamInvoer(i.naam);
+        if (actief) zetInst(i);
       });
       const client = getSupabase();
       if (!client) {
@@ -153,15 +138,6 @@ export default function Profiel() {
     }, [])
   );
 
-  const wijzig = async (wijziging: Partial<InstellingenType>) => {
-    zetInst(await bewaarInstellingen(wijziging));
-  };
-
-  const wisselVoorkeur = (optie: string) => {
-    const nieuw = inst.voorkeuren.includes(optie) ? inst.voorkeuren.filter((v) => v !== optie) : [...inst.voorkeuren, optie];
-    wijzig({ voorkeuren: nieuw });
-  };
-
   const uitloggen = async () => {
     await getSupabase()?.auth.signOut();
     zetEmail(null);
@@ -170,7 +146,13 @@ export default function Profiel() {
     router.replace("/welkom");
   };
 
-  const naam = inst.naam;
+  const onderwerpenWaarde = inst.voorkeuren.length
+    ? inst.voorkeuren.slice(0, 2).join(", ") + (inst.voorkeuren.length > 2 ? " " + t("meerOnderwerpen").replace("{n}", String(inst.voorkeuren.length - 2)) : "")
+    : t("geenOnderwerpen");
+  const provincieWaarde = isProvincie(inst.provincie) ? PROVINCIE_NAMEN[inst.provincie] : t("provincieGeen");
+  const taalWaarde = keuze === "nl" ? t("taalNederlands") : keuze === "en" ? t("taalEngels") : t("taalSysteem");
+  const toestemmingWaarde =
+    inst.consentWeerbericht === true ? t("weerberichtJa") : inst.consentWeerbericht === false ? t("weerberichtNee") : t("weerberichtGeen");
 
   return (
     <ScreenCanvas state="default" kopTitel={t("titel")} metNavRuimte>
@@ -183,15 +165,10 @@ export default function Profiel() {
         <View style={{ flexShrink: 1, gap: 2 }}>
           {!geladen ? (
             <AppText rol="bodySmall" kleur="secondary">{t("evenKijken")}</AppText>
-          ) : email ? (
-            <>
-              <AppText rol="h3">{naam || email}</AppText>
-              <AppText rol="labelCaption" kleur="secondary">{naam ? t("ingelogdAls").replace("{email}", email) : t("ingelogd")}</AppText>
-            </>
           ) : (
             <>
-              <AppText rol="h3">{t("nietIngelogd")}</AppText>
-              <AppText rol="labelCaption" kleur="secondary">{t("logInUitleg")}</AppText>
+              <AppText rol="h3">{inst.naam || email || t("nietIngelogd")}</AppText>
+              <AppText rol="labelCaption" kleur="secondary">{email ? (inst.naam ? email : t("ingelogd")) : t("logInUitleg")}</AppText>
             </>
           )}
         </View>
@@ -199,74 +176,15 @@ export default function Profiel() {
 
       {geladen && !email ? <Button label={t("inloggen")} variant="secondary" onPress={() => router.push("/inloggen")} /> : null}
 
-      <InstellingenGroep titel={t("groepNaam")}>
-        <InstellingenRij
-          label={t("naam")}
-          omschrijving={t("naamUitleg")}
-          laatste
-          rechts={
-            <TextInput
-              value={naamInvoer}
-              onChangeText={zetNaamInvoer}
-              onEndEditing={() => wijzig({ naam: schoonNaam(naamInvoer) })}
-              placeholder={t("naamPlaceholder")}
-              placeholderTextColor={colors.textSecondary}
-              maxLength={NAAM_MAX}
-              autoCapitalize="words"
-              autoCorrect={false}
-              returnKeyType="done"
-              textAlign="right"
-              style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false, flex: 1, minWidth: space[8] * 2 }}
-              accessibilityLabel={t("naam")}
-            />
-          }
-        />
+      <InstellingenGroep titel={t("groepJij")}>
+        <InstellingenRij label={t("naam")} onPress={() => router.push("/profiel/naam")} rechts={<Waarde tekst={inst.naam || t("geenNaam")} />} />
+        <InstellingenRij label={t("onderwerpen")} onPress={() => router.push("/profiel/onderwerpen")} rechts={<Waarde tekst={onderwerpenWaarde} />} />
+        <InstellingenRij label={t("provincie")} onPress={() => router.push("/profiel/provincie")} rechts={<Waarde tekst={provincieWaarde} />} laatste />
       </InstellingenGroep>
 
-      <InstellingenGroep titel={t("groepOnderwerpen")}>
-        <InstellingenRij label={t("onderwerpenUitleg")} laatste />
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2], paddingBottom: space[3] }}>
-          {VOORKEUR_OPTIES.map((o) => (
-            <Chip key={o} label={o} active={inst.voorkeuren.includes(o)} onPress={() => wisselVoorkeur(o)} />
-          ))}
-        </View>
-      </InstellingenGroep>
-
-      <InstellingenGroep titel={t("groepProvincie")}>
-        <InstellingenRij label={t("provincie")} omschrijving={t("provincieUitleg")} laatste />
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2], paddingBottom: space[3] }}>
-          <Chip label={t("provincieGeen")} active={!isProvincie(inst.provincie)} onPress={() => wijzig({ provincie: null })} />
-          {PROVINCIE_CODES.map((code) => (
-            <Chip key={code} label={PROVINCIE_NAMEN[code]} active={inst.provincie === code} onPress={() => wijzig({ provincie: code })} />
-          ))}
-        </View>
-      </InstellingenGroep>
-
-      <InstellingenGroep titel={t("groepTaal")}>
-        {TAAL_KEUZES.map((optie, i) => (
-          <InstellingenRij
-            key={optie}
-            label={t(TAAL_LABEL[optie])}
-            omschrijving={optie === "en" ? t("taalContentBlijftNederlands") : undefined}
-            onPress={() => kiesTaal(optie)}
-            laatste={i === TAAL_KEUZES.length - 1}
-            rechts={
-              <AppText rol="body" kleur={keuze === optie ? "primary" : "secondary"} accessibilityLabel={keuze === optie ? "gekozen" : undefined}>
-                {keuze === optie ? "✓" : " "}
-              </AppText>
-            }
-          />
-        ))}
-      </InstellingenGroep>
-
-      {/* Bewust Nederlands en zonder vertaalsleutel, zie de kop van dit bestand. */}
-      <InstellingenGroep titel={t("groepToestemmingen")}>
-        <View style={{ paddingVertical: space[3], borderBottomWidth: 1, borderBottomColor: colors.borderDefault }}>
-          <ToestemmingKeuze waarde={inst.consentWeerbericht} onKies={(v) => wijzig({ consentWeerbericht: v })} />
-        </View>
-        <View style={{ paddingVertical: space[2] }}>
-          <KeuzeVak label={t("voorwaarden")} gekozen={inst.consentVoorwaarden} onPress={() => wijzig({ consentVoorwaarden: !inst.consentVoorwaarden })} />
-        </View>
+      <InstellingenGroep titel={t("groepApp")}>
+        <InstellingenRij label={t("taal")} onPress={() => router.push("/profiel/taal")} rechts={<Waarde tekst={taalWaarde} />} />
+        <InstellingenRij label={t("toestemmingen")} onPress={() => router.push("/profiel/toestemmingen")} rechts={<Waarde tekst={toestemmingWaarde} />} laatste />
       </InstellingenGroep>
 
       <InstellingenGroep titel={t("groepPrivacy")}>
