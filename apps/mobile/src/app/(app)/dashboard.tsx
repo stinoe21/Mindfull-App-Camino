@@ -23,7 +23,7 @@ import { ContentSection, ContentShelf, ShelfTegel } from "@mind/ui/components/Co
 import { KaartNederland, type ProvincieCode } from "@mind/ui/components/KaartNederland";
 import { MascotMain } from "@mind/ui/components/MascotMain";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
-import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
+import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 
@@ -214,6 +214,7 @@ export default function Dashboard() {
             <ShelfTegel
               key={tip.slug}
               label={tip.titel}
+              kleur={kaartKleurVoor(tip.onderwerp, tip.slug)}
               beeld={<VliegerOnderwerp onderwerp={tip.onderwerp} slug={tip.slug} hoogte={56} />}
               onPress={tip.open}
             />

@@ -20,11 +20,13 @@ export type ContentCardProps = {
   tone?: CardTone;
   label?: string;
   title?: string;
+  /** Een eigen achtergrondkleur uit het palet, bijvoorbeeld de kleur van het onderwerp (kaartKleurVoor); gaat voor tone. */
+  kleur?: string;
   onPress?: () => void;
   children?: React.ReactNode;
 };
 
-export function ContentCard({ full = false, tone = "white", label, title, onPress, children }: ContentCardProps) {
+export function ContentCard({ full = false, tone = "white", label, title, kleur, onPress, children }: ContentCardProps) {
   const inhoud = (
     <>
       {label ? <AppText rol="labelOverline" kleur="brand">{label}</AppText> : null}
@@ -43,6 +45,7 @@ export function ContentCard({ full = false, tone = "white", label, title, onPres
     },
     full ? { width: "100%" as const } : { flexGrow: 1, flexBasis: "45%" as const },
     TONEN[tone],
+    kleur ? { backgroundColor: kleur } : null,
   ];
   if (onPress) {
     return (

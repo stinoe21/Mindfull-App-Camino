@@ -15,7 +15,7 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
 import { PressableScale } from "@mind/ui/components/PressableScale";
-import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
+import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -133,7 +133,7 @@ export default function Artikel() {
             {meer.map((a) => (
               <ShelfCard
                 key={a.slug}
-                tone="primary"
+                kleur={kaartKleurVoor(a.onderwerp, a.slug)}
                 title={a.titel}
                 meta={a.onderwerp === a.titel ? undefined : a.onderwerp}
                 onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
