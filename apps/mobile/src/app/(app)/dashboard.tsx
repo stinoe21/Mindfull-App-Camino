@@ -59,7 +59,8 @@ const nl = {
   avond: "Goedenavond",
   hoeWeer: "Hoe is je weer vandaag?",
   jouwWeerOverline: "JOUW WEER VANDAAG",
-  evenIncheckenUitleg: "Vier korte vragen, één minuut. Je check-in telt anoniem mee.",
+  evenIncheckenTitel: "Hoe is je weer vandaag?",
+  evenIncheckenUitleg: "Vier korte vragen, één minuut.",
   evenIncheckenKnop: "Even inchecken",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien",
@@ -83,7 +84,8 @@ const teksten: Woordenboek<typeof nl> = {
     avond: "Good evening",
     hoeWeer: "How's your weather today?",
     jouwWeerOverline: "YOUR WEATHER TODAY",
-    evenIncheckenUitleg: "Four short questions, one minute. Your check-in counts anonymously.",
+    evenIncheckenTitel: "How's your weather today?",
+    evenIncheckenUitleg: "Four short questions, one minute.",
     evenIncheckenKnop: "Check in",
     weerVanNederland: "The mental weather of the Netherlands",
     weerVanNederlandSub: "Per province, the weather we see most today",
@@ -193,11 +195,21 @@ export default function Dashboard() {
           <AppText rol="body" kleur="brand">{"›"}</AppText>
         </Card>
       ) : (
-        // De vraag staat al op de hero, de mascotte ook. Hier alleen één regel
-        // en de knop (ontdubbeling, 1 september 2026).
-        <Card tone="white" style={{ gap: space[3] }}>
-          <AppText rol="body">{t("evenIncheckenUitleg")}</AppText>
-          <Button label={t("evenIncheckenKnop")} onPress={() => router.push("/check-in/1")} />
+        // De vraag staat al op de hero, de mascotte ook. Hier de vijf
+        // weerbeelden als strook, één regel en de knop. Geen zin over anoniem
+        // meetellen: daar heeft de gebruiker al ja op gezegd bij de
+        // toestemming (Stijn, 13 september 2026).
+        <Card tone="sun" style={{ gap: space[3] }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: space[2] }}>
+            {WEATHER_CODES.map((code) => (
+              <WeerIcoon key={code} staat={code} hoogte={36} />
+            ))}
+          </View>
+          <View style={{ gap: 2 }}>
+            <AppText rol="h3">{t("evenIncheckenTitel")}</AppText>
+            <AppText rol="bodySmall" kleur="secondary">{t("evenIncheckenUitleg")}</AppText>
+          </View>
+          <Button label={t("evenIncheckenKnop")} fullWidth onPress={() => router.push("/check-in/1")} />
         </Card>
       )}
 

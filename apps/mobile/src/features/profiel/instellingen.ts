@@ -36,6 +36,12 @@ export type Instellingen = {
    * als provincie bij het optellen van een check-in; nooit een locatie.
    */
   provincie: string | null;
+  /**
+   * De provincie komt via de locatie van het toestel (sinds 13 september
+   * 2026, met toestemming van het systeem). Dan wordt hij bij elke check-in
+   * opnieuw bepaald op het toestel; de coördinaten worden nooit bewaard.
+   */
+  provincieViaLocatie: boolean;
 };
 
 export const STANDAARD: Instellingen = {
@@ -47,6 +53,7 @@ export const STANDAARD: Instellingen = {
   consentVoorwaarden: false,
   taal: "systeem",
   provincie: null,
+  provincieViaLocatie: false,
 };
 
 // Dezelfde onderwerpen als het Naslagwerk, zodat een keuze hier direct

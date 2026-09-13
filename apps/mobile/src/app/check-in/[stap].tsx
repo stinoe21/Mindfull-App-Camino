@@ -24,8 +24,9 @@ import { Slider } from "@mind/ui/components/Slider";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
-import { leesInstellingen } from "@/features/profiel/instellingen";
+import { bewaarInstellingen, leesInstellingen } from "@/features/profiel/instellingen";
 import { leesWaarden, resetWaarden, zetWaarde } from "@/features/weer/checkinSessie";
+import { bepaalProvincieViaLocatie } from "@/features/weer/locatie";
 import { bewaarWeerVanVandaag, leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 
 import type { WeatherCode } from "@mind/types";
@@ -103,7 +104,18 @@ export default function CheckInStap() {
     const instellingen = await leesInstellingen();
     let resultaat: string = "niet-gedeeld";
     if (instellingen.consentWeerbericht) {
-      resultaat = await stuurWeerIn(weerbeeld, instellingen.provincie);
+      // Provincie via de locatie: op het moment zelf opnieuw bepalen, op het
+      // toestel (features/weer/locatie.ts); lukt dat niet, dan de laatst
+      // bekende. Alleen de provinciecode gaat mee, nooit de locatie.
+      let provincie = instellingen.provincie;
+      if (instellingen.provincieViaLocatie) {
+        const uitkomst = await bepaalProvincieViaLocatie();
+        if (uitkomst.status === "ok" && uitkomst.provincie !== provincie) {
+          provincie = uitkomst.provincie;
+          await bewaarInstellingen({ provincie });
+        }
+      }
+      resultaat = await stuurWeerIn(weerbeeld, provincie);
     }
     const geteld = resultaat === "gelukt" || resultaat === "al-ingecheckt";
     await bewaarWeerVanVandaag(weerbeeld, geteld);

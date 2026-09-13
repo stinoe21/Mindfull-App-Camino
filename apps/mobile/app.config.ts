@@ -34,6 +34,17 @@ const config: ExpoConfig = {
     "expo-image",
     "expo-font",
     [
+      // Locatie, alleen om de provincie te bepalen voor het mentale weer per
+      // provincie (Stijn, 13 september 2026). Grof, op het moment zelf, en de
+      // coördinaten blijven op het toestel: zie features/weer/locatie.ts.
+      "expo-location",
+      {
+        locationWhenInUsePermission: "Weer MIND gebruikt je locatie alleen om je provincie te bepalen voor het mentale weer per provincie. Je locatie blijft op je telefoon.",
+        isIosBackgroundLocationEnabled: false,
+        isAndroidBackgroundLocationEnabled: false,
+      },
+    ],
+    [
       "expo-splash-screen",
       {
         // Geen logo: dat is er nog niet. Wel de juiste kleur, zodat er bij het
