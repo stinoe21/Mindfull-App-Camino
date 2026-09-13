@@ -47,7 +47,7 @@ export default function Voorkeuren() {
 
   const verder = async (bewaren: boolean) => {
     if (bewaren) await bewaarInstellingen({ voorkeuren: gekozen });
-    router.push("/provincie");
+    router.push("/anonimiteit");
   };
 
   return (

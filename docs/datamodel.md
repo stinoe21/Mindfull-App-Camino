@@ -165,7 +165,7 @@ Kolommen:
   day      date      verplicht   De dag, gezet door de database in Europe/Amsterdam
   hour     smallint  verplicht   Uurblok 0 t/m 23, gezet door de database, met een check erop
   weather  text      verplicht   Verwijst naar weather_type.code
-  province text      verplicht   Zelf gekozen provincie of 'onbekend', sinds 10 september 2026; whitelist van twaalf
+  province text      verplicht   Provincie, via de locatie van het toestel of zelf gekozen, of 'onbekend'; sinds 10 september 2026, whitelist van twaalf
   total    integer   verplicht   Hoeveel inzendingen dit totaal telt, minimaal 1
 
 Bevat gevoelige data?     Nee, en dat is een eigenschap van de structuur en niet van de discipline
@@ -174,8 +174,9 @@ Bevat gevoelige data?     Nee, en dat is een eigenschap van de structuur en niet
                           vertegenwoordigt. De primary key (day, hour, weather, province) wijst
                           een totaal aan en geen inzending; hij bestaat omdat het optellen een
                           upsert is. De provincie (sinds 10 september 2026, op verzoek van MIND
-                          voor de weerkaart) is een zelf gekozen instelling en geen
-                          locatiebepaling; per provincie geldt dezelfde drempel van 10 voordat
+                          voor de weerkaart) is een code die op het toestel wordt bepaald, via
+                          de locatie of zelf gekozen, en nooit een coördinaat (zie "Wat we
+                          bewust niet opslaan"); per provincie geldt dezelfde drempel van 10 voordat
                           weather_today_by_province() hem teruggeeft, want drie inzendingen in
                           Zeeland zijn weer herleidbaar.
                           Een totaal kent geen volgorde en geen geschiedenis, dus er valt achteraf
@@ -288,7 +289,7 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 
 Deze lijst is net zo belangrijk als de tabellen zelf. Vul aan naarmate we beslissingen nemen.
 
-- Locatiegegevens. De provincie in `weather_hourly` (sinds 10 september 2026) is geen locatiegegeven: de gebruiker kiest hem zelf, vrijwillig, in de onboarding of in Instellingen, de app vraagt nooit de locatie van het toestel, en de keuze staat alleen lokaal en als onderdeel van een totaal.
+- Locatiegegevens. De provincie in `weather_hourly` (sinds 10 september 2026) is een provinciecode, geen locatie. Sinds 13 september 2026 (besluit Stijn) mag de app, met toestemming van het systeem, de locatie van het toestel gebruiken om die provincie te bepalen. Dat gebeurt grof, op het moment van de check-in, en volledig op het toestel: de coördinaten worden vergeleken met de provinciegrenzen van het CBS in de app zelf (`features/weer/locatie.ts`), gaan nooit naar een server of een geocoder, en worden nergens bewaard. Alleen de provinciecode staat lokaal en gaat mee in het totaal. De locatievraag van het systeem komt in de onboarding, direct na een ja op de toestemming voor het weerbericht; wie nee zegt op die toestemming krijgt hem niet. Wie de locatie weigert telt als 'onbekend' en kan onder Profiel alsnog zelf een provincie kiezen.
 - Contactgegevens van derden
 - **Het exacte tijdstip van een bijdrage aan het landelijke weerbericht.** Alleen het uurblok. Zie de sectie hierboven: een tijdstip is de sleutel, in een ander alfabet.
 - **Een sleutel die een inzending aanwijst.** De collectieve tabel heeft alleen de sleutel (dag, uurblok, weerbeeld), en die wijst een totaal aan. Geen rij-id, geen `uuid v7`, geen unique index daarbuiten: een geordende sleutel zou bovendien de volgorde verraden.
