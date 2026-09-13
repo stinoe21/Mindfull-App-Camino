@@ -14,10 +14,12 @@ import { AppText } from "./AppText.tsx";
 export type ChipProps = {
   label: string;
   active?: boolean;
+  /** De kleur in rust, bijvoorbeeld de kleur van het onderwerp (kaartKleurVoor). Standaard lichtblauw. */
+  kleur?: string;
   onPress?: () => void;
 };
 
-export function Chip({ label, active = false, onPress }: ChipProps) {
+export function Chip({ label, active = false, kleur, onPress }: ChipProps) {
   const inhoud = (
     <AppText rol="labelButton" style={{ color: active ? colors.textOnprimary : palette.primary800 }}>
       {label}
@@ -27,7 +29,7 @@ export function Chip({ label, active = false, onPress }: ChipProps) {
     paddingVertical: space[2],
     paddingHorizontal: space[4],
     borderRadius: radius.pill,
-    backgroundColor: active ? palette.primary700 : palette.primary50,
+    backgroundColor: active ? palette.primary700 : (kleur ?? palette.primary50),
     alignSelf: "flex-start" as const,
   };
   if (onPress) {

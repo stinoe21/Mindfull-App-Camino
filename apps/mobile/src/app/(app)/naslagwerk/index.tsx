@@ -173,7 +173,7 @@ export default function Houvast() {
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
         <Chip label={t("alles")} active={onderwerp === null} onPress={() => zetOnderwerp(null)} />
         {chips.map((o) => (
-          <Chip key={o} label={o} active={onderwerp === o} onPress={() => zetOnderwerp(onderwerp === o ? null : o)} />
+          <Chip key={o} label={o} active={onderwerp === o} kleur={kaartKleurVoor(o)} onPress={() => zetOnderwerp(onderwerp === o ? null : o)} />
         ))}
       </View>
 
