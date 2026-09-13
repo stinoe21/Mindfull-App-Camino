@@ -116,11 +116,12 @@ Twintig schermen. De specificatie staat in `packages/ui/reference`: `HERKOMST.md
 |---|---|---|---|
 | 1 | Welkom | `(onboarding)/welkom` | Caesar |
 | 2 | Leeftijdscheck 16+ | `(onboarding)/leeftijd` | Caesar |
-| 3 | Inloggen: Apple, Google, e-mail | `(onboarding)/inloggen` | Stijn |
+| 3 | Inloggen: Apple, Google, e-mail, met de voorwaarden | `(onboarding)/inloggen` | Stijn |
+| 3b | Voornaam, optioneel | `(onboarding)/naam` | Stijn |
 | 4 | Voorkeuren, keuze-chips | `(onboarding)/voorkeuren` | Caesar |
-| 5 | Anonimiteit en toestemming | `(onboarding)/anonimiteit` | Stijn |
+| 5 | Toestemming voor het mentale weer, met de locatievraag | `(onboarding)/anonimiteit` | Stijn |
 
-Scherm 2 is een harde toegangseis zonder Skip, en hij komt vóór het aanmaken van een account. Scherm 3 bouwen we zo dat er alleen nog een sleutel in hoeft, zie de sectie hierboven.
+Scherm 2 is een harde toegangseis zonder Skip, en hij komt vóór het aanmaken van een account. Scherm 3 bouwen we zo dat er alleen nog een sleutel in hoeft, zie de sectie hierboven. Sinds 13 september 2026 (Stijn, UX-ronde): elk scherm na Welkom toont "STAP x van 5" met stippen, zoals de check-in; de voorwaarden en de disclaimer (geen hulpverlening) staan als vinkje op scherm 3, bij het account waar ze bij horen (board 12:133), en scherm 5 houdt alleen de toestemming voor het mentale weer, met de locatievraag van het systeem bij Klaar. Er is geen eerste-keer-kaart meer op Home: Welkom en de onboarding zijn de introductie (productprincipe 7).
 
 ### De kernlus, dagelijks
 
@@ -168,7 +169,7 @@ Scherm 19 is een harde eis van Apple, richtlijn 5.1.1(v), en hij moet echt alle 
 
 Deze zijn geen eigen scherm maar wel eigen werk, en ze staan in de definition of done:
 
-- **De systeemstaten.** Fout en offline, leeg weerbericht, geen zoekresultaten, content achter consent, verlopen sessie, eerste-keer-tips, challenge ontgrendeld. Het ontwerp benoemt ze zelf als gat. **Besloten op 20 augustus 2026: we ontwerpen ze zelf**, uit de huisstijl, op het moment dat het eerste scherm ze nodig heeft.
+- **De systeemstaten.** Fout en offline, leeg weerbericht, geen zoekresultaten, content achter consent, verlopen sessie, challenge ontgrendeld. (De eerste-keer-tips op Home zijn op 13 september 2026 vervallen: Welkom en de onboarding zijn de introductie.) Het ontwerp benoemt ze zelf als gat. **Besloten op 20 augustus 2026: we ontwerpen ze zelf**, uit de huisstijl, op het moment dat het eerste scherm ze nodig heeft.
 - **De navigatiebalk.** Vijf bestemmingen met "Check in" in het midden, een zwevende pil met frosted achtergrond. De vectorpaden liggen klaar. Er staat nu een tijdelijke standaardbalk.
 
 ## Feedbacksessie MIND, verwerkt op 10 september 2026
@@ -189,7 +190,10 @@ Stijn deelde op 10 september 2026 de samenvatting van de feedbacksessie MIND x B
 - **Slim zoeken**, eerste laag: op het toestel, spreektaal naar stammen en synoniemen naar gidsen, artikelen en challenges. Geen chatbot, geen netwerk. Een AI-laag op de server kan er later bovenop.
 
 - **Geen bronvermelding.** Het is de app van MIND zelf: "Bron: MIND", "altijd met bron" en "van MIND" zijn uit de interface (Stijn, 10 september 2026). Dat vervangt de regel "Bron: MIND onder elk artikel" uit `packages/ui/reference/HERKOMST.md`. Links zeggen wel waar ze heen gaan (wijzijnmind.nl); de naam MIND Hulplijn en de consenttekst van Paul blijven.
-- **De Tips-tab heet Houvast**, net als het scherm. De actieve tab in de navigatiebalk staat op een zandpil, dezelfde tint als de basiskaart.
+- **De Tips-tab heet Houvast**, net als het scherm en de sectie op Home ("Houvast voor jou"). De actieve tab in de navigatiebalk staat op een zandpil, dezelfde tint als de basiskaart. Het overzicht toont één niveau (Stijn, 13 september 2026): zoeken plus het raster van onderwerpen, zonder de rij filterchips erboven.
+- **Eén naam per begrip** (Stijn, 13 september 2026). Het collectieve beeld heet in de interface overal **het mentale weer van Nederland** (kort: het mentale weer); "weerbericht" staat alleen nog in de consenttekst van Paul en in routenamen. De dagelijkse handeling heet **Inchecken** (tab en knop), de uitkomst **Jouw weer vandaag**. Na de check-in van vandaag gaat de Inchecken-tab direct naar Jouw weer.
+- **De pagina van het mentale weer toont de kaart per provincie**, groot met legenda, en daaronder de verdeling voor heel Nederland. Home toont dezelfde kaart klein.
+- **De MIND Hulplijn staat op elk scherm** als chipje rechtsboven, in de vorm van de terugknop, vanuit de root layout (Stijn, 13 september 2026). Dat beantwoordt het open ontwerpbesluit uit `design-system.md`. Daarnaast blijft de Hulplijn-kaart onderaan Home en Profiel.
 - **Profiel is de instellingenpagina.** Eén pagina voor wie je bent, wat je koos en wat je toestaat; geen apart scherm Instellingen meer. De route `/profiel/instellingen` verwijst door. Scherm 17 (Profiel) en scherm 18 (Instellingen) in de tabel hierboven zijn daarmee één scherm.
 - **Geen witte omrande vakken** voor staten en meldingen (laden, leeg, fout, bevestiging): die staan op zand. Alleen echte invoervelden houden een rand.
 
