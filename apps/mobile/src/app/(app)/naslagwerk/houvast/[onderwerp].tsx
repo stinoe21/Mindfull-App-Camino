@@ -27,7 +27,7 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
-import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
+import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
@@ -189,7 +189,7 @@ export default function HouvastOnderwerp() {
             {verwant.map((h) => (
               <ShelfCard
                 key={h.slug}
-                tone="coral"
+                kleur={kaartKleurVoor(h.onderwerp, h.slug)}
                 title={h.titel}
                 onPress={() => router.push({ pathname: "/naslagwerk/houvast/[onderwerp]", params: { onderwerp: h.slug } })}
               >
