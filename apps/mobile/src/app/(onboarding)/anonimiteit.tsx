@@ -9,6 +9,15 @@
 // twee toestemmingen één formulier met dezelfde aanvinkvakjes (KeuzeVak);
 // daarvoor was het een omrande keuzerij naast een systeemschakelaar.
 // De voorwaarden-stap heeft geen Skip (productprincipes 6).
+//
+// De provincie hoort bij deze stap (Stijn, 13 september 2026): wie ja zegt
+// op het weerbericht, krijgt bij Klaar de locatievraag van het systeem, en
+// de app bepaalt daaruit de provincie, op het toestel
+// (features/weer/locatie.ts). Geen eigen scherm en geen keuze die je later
+// in de instellingen moet aanzetten: dan doet niemand dat. Weigeren is
+// prima: dan telt de check-in als "onbekend", en onder Profiel kan iemand
+// alsnog zelf een provincie kiezen. Wie nee zegt op het weerbericht, krijgt
+// de locatievraag niet: dan is er geen provincie nodig.
 
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -24,19 +33,37 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
+import { bepaalProvincieViaLocatie } from "@/features/weer/locatie";
 
 export default function Anonimiteit() {
   const router = useRouter();
   const [weerbericht, zetWeerbericht] = useState<boolean | null>(null);
   const [voorwaarden, zetVoorwaarden] = useState(false);
+  const [bezig, zetBezig] = useState(false);
   const compleet = weerbericht !== null && voorwaarden;
 
   const klaar = async () => {
+    zetBezig(true);
+    // Met ja op het weerbericht: nu de locatie vragen, in de context van de
+    // toestemming die er net is gegeven. Elke uitkomst is goed; zonder
+    // provincie telt de check-in landelijk mee.
+    let provincie: string | null = null;
+    let provincieViaLocatie = false;
+    if (weerbericht === true) {
+      const uitkomst = await bepaalProvincieViaLocatie();
+      if (uitkomst.status === "ok") {
+        provincie = uitkomst.provincie;
+        provincieViaLocatie = true;
+      }
+    }
     await bewaarInstellingen({
       consentWeerbericht: weerbericht === true,
       consentVoorwaarden: voorwaarden,
+      provincie,
+      provincieViaLocatie,
       onboardingAfgerond: true,
     });
+    zetBezig(false);
     router.dismissAll();
     router.replace("/dashboard");
   };
@@ -54,6 +81,13 @@ export default function Anonimiteit() {
       <View style={{ gap: space[2] }}>
         <AppText rol="labelOverline" kleur="brand">1 VAN 2</AppText>
         <ToestemmingKeuze waarde={weerbericht} onKies={zetWeerbericht} metUitleg />
+        {/* Pas na ja: wat er bij Klaar gebeurt, zodat de locatievraag van het
+            systeem niet uit de lucht komt vallen. */}
+        {weerbericht === true ? (
+          <AppText rol="bodySmall" kleur="secondary">
+            Je telt dan ook mee in het weer van je provincie. Daarvoor vraagt je telefoon bij Klaar om je locatie. Die blijft op je telefoon; alleen de provincie telt mee.
+          </AppText>
+        ) : null}
       </View>
 
       <View style={{ gap: space[2] }}>
@@ -66,7 +100,7 @@ export default function Anonimiteit() {
       </View>
 
       <View style={{ gap: space[3] }}>
-        <Button label="Klaar" fullWidth disabled={!compleet} onPress={klaar} />
+        <Button label="Klaar" fullWidth disabled={!compleet} bezig={bezig} onPress={klaar} />
         {!compleet ? (
           <AppText rol="bodySmall" kleur="secondary" centreer>
             Kies ja of nee en vink de voorwaarden aan. Nee is een prima keuze; de app werkt dan net zo goed.
