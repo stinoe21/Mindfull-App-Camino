@@ -72,6 +72,29 @@ const KAARTKLEUR: Record<Uitdrukking, string> = {
   standvastig: palette.primary100,
 };
 
+// De gekozen stand van een onderwerpchip: dezelfde familie, twee stappen
+// dieper dan de kaart, zodat een aangevinkt onderwerp zijn kleur houdt en
+// toch duidelijk "aan" staat (Stijn, 13 september 2026: in petrol viel niet
+// op welke je had aangevinkt).
+const CHIPKLEUR_GEKOZEN: Record<Uitdrukking, string> = {
+  slaperig: palette.purple300,
+  gestrest: palette.coral400,
+  overspannen: palette.yellow500,
+  somber: palette.primary300,
+  bang: palette.violet400,
+  piekerend: palette.primary200,
+  energiek: palette.yellow500,
+  "in-balans": palette.lime400,
+  ontspannen: palette.violet300,
+  standvastig: palette.primary300,
+};
+
+/** De gekozen chipkleur bij een onderwerp; zonder onderwerp de merkkleur-tint. */
+export function chipKleurGekozenVoor(onderwerp?: string, slug?: string): string {
+  const gekozen = uitdrukkingVoor(onderwerp, slug);
+  return gekozen ? CHIPKLEUR_GEKOZEN[gekozen] : palette.primary200;
+}
+
 /** De kaartkleur bij een onderwerp of slug; zonder onderwerp de zandkaart. */
 export function kaartKleurVoor(onderwerp?: string, slug?: string): string {
   const gekozen = uitdrukkingVoor(onderwerp, slug);

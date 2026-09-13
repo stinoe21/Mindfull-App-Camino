@@ -59,14 +59,16 @@ export function Button({
           opacity: disabled ? 0.45 : pressed ? 0.7 : 1,
         },
         variant === "primary" && { backgroundColor: colors.ctaDefault },
-        variant === "secondary" && { borderWidth: 1.5, borderColor: colors.textPrimary },
+        // Sinds 13 september 2026 (Stijn): de rand en het label in de merkkleur
+        // in plaats van hard zwart, het enige harde zwart in een zachte taal.
+        variant === "secondary" && { borderWidth: 1.5, borderColor: colors.brandDefault },
         style,
       ]}
     >
       {bezig ? (
         <ActivityIndicator size="small" color={variant === "primary" ? colors.ctaText : colors.brandDefault} />
       ) : null}
-      <AppText rol="labelButton" kleur={variant === "link" ? "brand" : "cta"} style={variant === "secondary" && { color: colors.textPrimary }}>
+      <AppText rol="labelButton" kleur={variant === "link" ? "brand" : "cta"} style={variant === "secondary" && { color: colors.brandDefault }}>
         {label}
       </AppText>
     </Pressable>

@@ -14,20 +14,29 @@ import { AppText } from "./AppText.tsx";
 export type ChipProps = {
   label: string;
   active?: boolean;
+  /** De kleur in rust, bijvoorbeeld de kleur van het onderwerp (kaartKleurVoor). Standaard lichtblauw. */
+  kleur?: string;
+  /**
+   * De kleur als de chip aan staat, voor een meervoudige keuze: de chip houdt
+   * zijn onderwerpkleur (dieper) en krijgt een vinkje, in plaats van de petrol
+   * filterstand. Zonder deze prop is een actieve chip petrol met witte tekst.
+   */
+  gekozenKleur?: string;
   onPress?: () => void;
 };
 
-export function Chip({ label, active = false, onPress }: ChipProps) {
+export function Chip({ label, active = false, kleur, gekozenKleur, onPress }: ChipProps) {
+  const aangevinkt = active && gekozenKleur !== undefined;
   const inhoud = (
-    <AppText rol="labelButton" style={{ color: active ? colors.textOnprimary : palette.primary800 }}>
-      {label}
+    <AppText rol="labelButton" style={{ color: active && !aangevinkt ? colors.textOnprimary : aangevinkt ? colors.textPrimary : palette.primary800 }}>
+      {aangevinkt ? "✓ " + label : label}
     </AppText>
   );
   const basis = {
     paddingVertical: space[2],
     paddingHorizontal: space[4],
     borderRadius: radius.pill,
-    backgroundColor: active ? palette.primary700 : palette.primary50,
+    backgroundColor: aangevinkt ? gekozenKleur : active ? palette.primary700 : (kleur ?? palette.primary50),
     alignSelf: "flex-start" as const,
   };
   if (onPress) {
