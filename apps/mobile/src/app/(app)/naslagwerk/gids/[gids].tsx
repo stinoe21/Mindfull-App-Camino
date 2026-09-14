@@ -29,7 +29,7 @@ import { InhoudBlokken } from "@/features/content/InhoudBlokken";
 const nl = {
   nietGevonden: "Gids niet gevonden",
   nietGevondenUitleg: "Deze gids bestaat niet of is verplaatst.",
-  terugNaslagwerk: "Terug naar het naslagwerk",
+  terugNaslagwerk: "Terug naar Houvast",
   overline: "ONLINE GIDS",
   alleenLink: "Deze gids staat op wijzijnmind.nl, met praktische tips en technieken.",
   bekijkGids: "Bekijk de online gids",
@@ -45,7 +45,7 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     nietGevonden: "Guide not found",
     nietGevondenUitleg: "This guide doesn't exist or has been moved.",
-    terugNaslagwerk: "Back to the reference library",
+    terugNaslagwerk: "Back to Houvast",
     overline: "ONLINE GUIDE",
     alleenLink: "This guide is on wijzijnmind.nl, with practical tips and techniques.",
     bekijkGids: "Open the online guide",
@@ -86,7 +86,9 @@ export default function GidsScherm() {
     <ScreenCanvas
       state="default"
       terugKnop={<TerugNaarVorige />}
+      kopTitel={gids.titel}
       heroInhoud={gids.onderwerp ? <VliegerOnderwerp onderwerp={gids.onderwerp} hoogte={112} /> : <MascotteVlieger state="wolken" hoogte={112} />}
+      metNavRuimte
     >
       <View style={{ gap: space[2] }}>
         <AppText rol="labelOverline" kleur="brand">{t("overline")}</AppText>
@@ -105,7 +107,6 @@ export default function GidsScherm() {
           <Button label={t("leesAlles")} variant="secondary" onPress={() => zetUitgeklapt(true)} />
         </View>
       ) : null}
-
 
       {gids.aanmeld ? (
         <Card tone="primary">
