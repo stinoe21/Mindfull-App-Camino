@@ -1,0 +1,313 @@
+{
+  "slug": "stresstest",
+  "titel": "Stress-test",
+  "url": "https://formulier.wijzijnmind.nl/stresstest",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/r8EdjQQwDo9KP3OiIa1n.json",
+  "opgehaald": "2026-09-14",
+  "intro": "Doe de Stress-testDoor het maken van deze test breng je in kaart hoeveel stress jij ervaart. Het invullen van de test duurt een paar minuten. De stress-test is gebaseerd op de Nederlandse versie van de Perceived Stress Scale (PSS) uit 1983. S. Cohen, T. Kamarck, R. Mermelstein - A global measure of perceived stress.",
+  "noot": "Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+  "instrument": "",
+  "scoring": "som",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Hoe vaak ben je de afgelopen maand van streek geweest vanwege iets dat onverwachts gebeurde?",
+      "opties": [
+        {
+          "label": "Nooit",
+          "score": 0
+        },
+        {
+          "label": "Zelden",
+          "score": 1
+        },
+        {
+          "label": "Soms",
+          "score": 2
+        },
+        {
+          "label": "Vaak",
+          "score": 3
+        },
+        {
+          "label": "Heel vaak",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Hoe vaak heb je de afgelopen maand het gevoel gehad dat je geen controle had over de belangrijke dingen in je leven?",
+      "opties": [
+        {
+          "label": "Nooit",
+          "score": 0
+        },
+        {
+          "label": "Zelden",
+          "score": 1
+        },
+        {
+          "label": "Soms",
+          "score": 2
+        },
+        {
+          "label": "Vaak",
+          "score": 3
+        },
+        {
+          "label": "Heel vaak",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Hoe vaak heb je je de afgelopen maand zenuwachtig en gestrest gevoeld?",
+      "opties": [
+        {
+          "label": "Nooit",
+          "score": 0
+        },
+        {
+          "label": "Zelden",
+          "score": 1
+        },
+        {
+          "label": "Soms",
+          "score": 2
+        },
+        {
+          "label": "Vaak",
+          "score": 3
+        },
+        {
+          "label": "Heel vaak",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Hoe vaak heb je je de afgelopen maand zelfverzekerd gevoeld over je vermogen om met je persoonlijke problemen om te gaan?",
+      "opties": [
+        {
+          "label": "Nooit",
+          "score": 4
+        },
+        {
+          "label": "Zelden",
+          "score": 3
+        },
+        {
+          "label": "Soms",
+          "score": 2
+        },
+        {
+          "label": "Vaak",
+          "score": 1
+        },
+        {
+          "label": "Heel vaak",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Hoe vaak heb je de afgelopen maand het gevoel gehad dat de dingen gingen zoals je wenste?",
+      "opties": [
+        {
+          "label": "Nooit",
+          "score": 4
+        },
+        {
+          "label": "Zelden",
+          "score": 3
+        },
+        {
+          "label": "Soms",
+          "score": 2
+        },
+        {
+          "label": "Vaak",
+          "score": 1
+        },
+        {
+          "label": "Heel vaak",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Hoe vaak heb je de afgelopen maand gemerkt dat je niet alle dingen aankon die je moest doen?",
+      "opties": [
+        {
+          "label": "Nooit",
+          "score": 0
+        },
+        {
+          "label": "Zelden",
+          "score": 1
+        },
+        {
+          "label": "Soms",
+          "score": 2
+        },
+        {
+          "label": "Vaak",
+          "score": 3
+        },
+        {
+          "label": "Heel vaak",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Hoe vaak heb je de afgelopen maand irritaties in je leven onder controle kunnen houden?",
+      "opties": [
+        {
+          "label": "Nooit",
+          "score": 4
+        },
+        {
+          "label": "Zelden",
+          "score": 3
+        },
+        {
+          "label": "Soms",
+          "score": 2
+        },
+        {
+          "label": "Vaak",
+          "score": 1
+        },
+        {
+          "label": "Heel vaak",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Hoe vaak heb je de afgelopen maand het gevoel gehad dat je alles onder controle had?",
+      "opties": [
+        {
+          "label": "Nooit",
+          "score": 4
+        },
+        {
+          "label": "Zelden",
+          "score": 3
+        },
+        {
+          "label": "Soms",
+          "score": 2
+        },
+        {
+          "label": "Vaak",
+          "score": 1
+        },
+        {
+          "label": "Heel vaak",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "Hoe vaak ben je de afgelopen maand boos geweest vanwege zaken waar je geen controle over had?",
+      "opties": [
+        {
+          "label": "Nooit",
+          "score": 0
+        },
+        {
+          "label": "Zelden",
+          "score": 1
+        },
+        {
+          "label": "Soms",
+          "score": 2
+        },
+        {
+          "label": "Vaak",
+          "score": 3
+        },
+        {
+          "label": "Heel vaak",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "sleutel": "question_10",
+      "tekst": "Hoe vaak heb je de afgelopen maand het gevoel gehad dat de moeilijkheden zich zo hebben opgestapeld dat je ze niet kan overwinnen?",
+      "opties": [
+        {
+          "label": "Nooit",
+          "score": 0
+        },
+        {
+          "label": "Zelden",
+          "score": 1
+        },
+        {
+          "label": "Soms",
+          "score": 2
+        },
+        {
+          "label": "Vaak",
+          "score": 3
+        },
+        {
+          "label": "Heel vaak",
+          "score": 4
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell1",
+      "regels": [
+        {
+          "op": "<",
+          "waarde": 14
+        }
+      ],
+      "html": "<h2> Lage stress</h2>\nJe geeft aan weinig stress te ervaren en je over het algemeen ontspannen te voelen. Je hebt waarschijnlijk goede manieren om met stressvolle gebeurtenissen om te gaan. Ook ervaar je meestal controle over je leven. Dit betekent niet dat je helemaal geen stress ervaart, maar wel dat je weet wat je moet doen zodat het niet te veel invloed op je heeft.\n\n\n\n"
+    },
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 13
+        },
+        {
+          "op": "<",
+          "waarde": 27
+        }
+      ],
+      "html": "<h2> Gemiddelde stress</h2>\n Je geeft aan soms stress te ervaren. Je hebt momenten van spanning, maar je weet meestal hoe je ermee om moet gaan.\n Af en toe stress ervaren is normaal. Jij ervaart waarschijnlijk zowel stressvolle als ontspannen momenten. Het kan helpen om je bewust te zijn waar jij stress van krijgt en gezonde manieren te vinden om hiermee om te gaan.\n<p></p>Zou je graag eens met een professional willen praten over je stressklachten? Neem contact op met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. \n<p></p><b> Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.</b>"
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 26
+        },
+        {
+          "op": "<",
+          "waarde": 41
+        }
+      ],
+      "html": "<h2> Hoge stress</h2>\nJe geeft aan veel stress te ervaren, wat kan wijzen op overbelasting. Dit kan leiden tot mentale en lichamelijke klachten, zoals slaapproblemen, vermoeidheid, of prikkelbaarheid. Het is verstandig om te leren hoe je beter met stress kan omgaan en om hier eventueel ondersteuning bij te zoeken, bijvoorbeeld door ontspanningstechnieken of gesprekken met een hulpverlener.\n<p></p>Zou je graag eens met een professional willen praten over je stressklachten? Neem contact op met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. \n<p></p><b> Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.</b>"
+    }
+  ]
+}

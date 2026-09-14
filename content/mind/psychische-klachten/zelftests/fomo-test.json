@@ -1,0 +1,309 @@
+{
+  "slug": "fomo-test",
+  "titel": "FOMO test",
+  "url": "https://formulier.wijzijnmind.nl/fomo-test",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/3qcFG9uLSUwpGrm2NFbi.json",
+  "opgehaald": "2026-09-14",
+  "intro": "De FOMO test helpt je in te schatten hoeveel FOMO (Fear Of Missing Out) je ervaart. De test noemt 10 stellingen. Geef bij elke stelling aan in hoeverre dit bij jou past. Het invullen van deze test duurt een paar minuten.",
+  "noot": "FOMO is geen diagnose. En uit deze test volgt dus ook geen diagnose.",
+  "instrument": "Deze test is gebaseerd op de test van Przybylski et al., 2013.",
+  "scoring": "gemiddelde",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Ik ben bang dat anderen leukere ervaringen hebben dan ik",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Ik ben bang dat vrienden meer leuke ervaringen hebben dan ik",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Ik maak me zorgen als ik erachter kom dat vrienden plezier hebben zonder mij",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Ik voel mij onrustig als ik niet weet wat mijn vrienden aan het doen of van plan zijn",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Het is belangrijk dat ik de insider grappen/ onderonsjes van mijn vrienden begrijp",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Ik vraag mij soms af of ik niet te veel bezig ben met wat anderen aan het doen zijn",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Ik vind het vervelend als ik een kans mis om met vrienden af te spreken",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Als ik het naar mijn zin heb, vind ik het belangrijk om dit met anderen te delen",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "Wanneer ik een sociale activiteit mis, vind ik dat vervelend",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_10",
+      "tekst": "Als ik op vakantie ben of een dagje eropuit, zorg ik ervoor dat ik op de hoogte blijf van wat mijn vrienden doen",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": "<",
+          "waarde": 2
+        }
+      ],
+      "html": "Met jouw antwoorden op de test geef je aan <b>minder dan gemiddeld</b> FOMO te ervaren."
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 2
+        },
+        {
+          "op": "<=",
+          "waarde": 2.5
+        }
+      ],
+      "html": "Met jouw antwoorden op de test geef je aan <b>gemiddeld</b> FOMO te ervaren. Zit het jou af en toe wel in de weg? <a href=\"https://wijzijnmind.nl/psychische-klachten/psychipedia/fomo\" target=\"_blank\" style=\"color:#f68100\">Bekijk onze webpagina voor tips.</a>"
+    },
+    {
+      "sleutel": "resultWell4",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 2.5
+        }
+      ],
+      "html": "Met jouw antwoorden op de test geef je aan <b>meer dan gemiddeld</b> last te hebben van FOMO. <a href=\"https://wijzijnmind.nl/psychische-klachten/psychipedia/fomo\" target=\"_blank\" style=\"color:#f68100\">Bekijk onze webpagina voor tips.</a>\n<p></p>Zou je er graag eens met een professional over willen praten? Neem contact op met de <a href=\"https://www.mindhulplijn.nl\" target=\"_blank\" style=\"color:#f68100\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. "
+    }
+  ]
+}

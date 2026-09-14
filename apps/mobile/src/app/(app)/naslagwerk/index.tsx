@@ -43,6 +43,7 @@ import { leesBewaard, metInhoud, type BewaardeTipMetInhoud } from "@/features/co
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import type { Houvast as HouvastOnderwerp } from "@/features/content/data/houvast";
+import { ZELFTESTS } from "@/features/content/data/zelftests";
 import { zoek, type ZoekResultaat } from "@/features/content/zoeken";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 
@@ -64,6 +65,10 @@ const nl = {
   bewaardTitel: "Jouw bewaarde tips",
   oefening: "Oefening",
   aantal: "{n} onderwerpen",
+  testTitel: "Doe een test",
+  testNote: "Geen diagnose, wel inzicht. Een paar minuten per test.",
+  zelftest: "ZELFTEST",
+  aantalVragen: "{n} vragen",
   ookTitel: "Ook in Houvast",
   naastenTitel: "Voor naasten",
   naastenNote: "Als iemand in je omgeving het moeilijk heeft.",
@@ -93,6 +98,10 @@ const teksten: Woordenboek<typeof nl> = {
     bewaardTitel: "Your saved tips",
     oefening: "Exercise",
     aantal: "{n} topics",
+    testTitel: "Take a test",
+    testNote: "No diagnosis, but insight. A few minutes per test.",
+    zelftest: "SELF-TEST",
+    aantalVragen: "{n} questions",
     ookTitel: "Also in Houvast",
     naastenTitel: "For loved ones",
     naastenNote: "When someone close to you is struggling.",
@@ -293,6 +302,25 @@ export default function Houvast() {
               </ContentCard>
             ))}
           </ContentGrid>
+        </ContentSection>
+      ) : null}
+
+      {!zoekterm ? (
+        <ContentSection title={t("testTitel")} note={t("testNote")}>
+          {/* De twaalf zelftests van MIND (Stijn, 14 september 2026), als plank
+              in de kleur van hun onderwerp; de twee zonder onderwerp in zand. */}
+          <ContentShelf>
+            {ZELFTESTS.map((z) => (
+              <ShelfCard
+                key={z.slug}
+                kleur={kaartKleurVoor(z.onderwerp)}
+                label={t("zelftest")}
+                title={z.titel}
+                meta={t("aantalVragen").replace("{n}", String(z.vragen.length))}
+                onPress={() => router.push({ pathname: "/naslagwerk/zelftest/[test]", params: { test: z.slug } })}
+              />
+            ))}
+          </ContentShelf>
         </ContentSection>
       ) : null}
 
