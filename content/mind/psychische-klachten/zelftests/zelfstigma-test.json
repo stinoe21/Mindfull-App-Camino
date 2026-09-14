@@ -1,0 +1,511 @@
+{
+  "slug": "zelfstigma-test",
+  "titel": "description",
+  "url": "https://formulier.wijzijnmind.nl/zelfstigma-test",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/lwbt4iLtAd0LM7a9F1LI.json",
+  "opgehaald": "2026-09-14",
+  "intro": "Deze test heeft 20 vragen. De uitkomst laat zien in hoeverre je op dit moment last hebt van negatieve gedachten en gevoelens over je psychische klachten. De test is ontwikkeld door Samen Sterk zonder Stigma, samen met RIBW Brabant en de Toolbox Zelfstigma van Stichting ZON. Hij helpt je ontdekken of zelfstigma je in de weg zit.",
+  "noot": "Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+  "instrument": "",
+  "scoring": "gemiddelde",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Ik vind het moeilijk om de gevolgen van mijn psychische aandoening voor mijn leven, met anderen te bespreken.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Ik voel me schuldig als ik een afspraak niet kan nakomen door mijn psychische aandoening.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Ik voel me ongemakkelijk als ik in gezelschap iets zeg over mijn psychische aandoening.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Ik ben bang dat mensen kunnen zien dat ik een psychische aandoening heb.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Als ik naar een groepsactiviteit ga (zoals een feestje of bijeenkomst), ben ik van te voren zenuwachtig over wat mensen van me zullen denken.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Als ik vanwege mijn psychische aandoening een uitnodiging afsla en niet goed kan vertellen waarom, ben ik bang dat ik mensen kwijtraak.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Ik ga sociale situaties uit de weg om ongemakkelijke gedachten of gevoelens te vermijden.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Het oordeel van anderen maakt dat ik me minderwaardig voel.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "Ik voel me incompetent (niet goed genoeg) vanwege mijn psychische aandoening.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_10",
+      "tekst": "Ik oordeel negatief over mezelf.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_11",
+      "tekst": "Ik voel mij psychisch kwetsbaarder dan anderen, dit geeft mij het gevoel dat andere mensen beter zijn.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_12",
+      "tekst": "Ik ben bang dat mensen niet meer met me om willen gaan, omdat ik onder behandeling ben (geweest) voor een psychische aandoening.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_13",
+      "tekst": "Als ik iets zeg wat anderen niet begrijpen, schaam ik me voor mezelf.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_14",
+      "tekst": "Ik voel me tekort schieten in het contact met anderen.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_15",
+      "tekst": "In gezelschap voel ik me vaak de minste.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_16",
+      "tekst": "Ik ben gestopt met een activiteit die ik leuk vond omdat ik bang ben dat mensen oordelen over mijn psychische aandoening.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_17",
+      "tekst": "Ik wil wel contact maken met anderen, maar ik weet niet goed hoe ik dat moet aanpakken.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_18",
+      "tekst": "Ik vind dat ik maatschappelijk niet meetel.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_19",
+      "tekst": "Als ik moeite heb met het uitvoeren van een activiteit omdat ik last heb van mijn psychische aandoening, word ik boos op mezelf.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "sleutel": "question_20",
+      "tekst": "Ik voel me eenzaam vanwege mijn psychische aandoening.",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Soms",
+          "score": 25
+        },
+        {
+          "label": "Regelmatig",
+          "score": 50
+        },
+        {
+          "label": "Bijna altijd",
+          "score": 100
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultA",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 0
+        },
+        {
+          "op": "<",
+          "waarde": 25
+        }
+      ],
+      "html": "<p><b>Je score valt in categorie A: Geen of nauwelijks zelfstigma.</b></p>\n<p>Misschien wil je anderen helpen die hier wél mee wordtelen. Dat kan op verschillende manieren.</p>\n<p><b>Handige tips en hulpmiddelen</b></p>\n<ul>\n<li><a href=\"https://wijzijnmind.nl/psychische-klachten/psychipedia/stigma#Tips%20bij%20stigma\" target=\"_blank\" style=\"color:#f68100\">Zo help je een naaste met zelfstigma</a>: makkelijke tips om iemand te steunen.</li>\n<li><a href=\"https://mindplatform.nl/media/8478/download/Algemeen-Vertel-ik-het-wel-of-vertel-ik-het-niet-werkboekje.pdf?v=1\" target=\"_blank\" style=\"color:#f68100\">Digitale gids: 'Vertel ik het wel of vertel ik het niet'</a>: helpt je stap voor stap kiezen of je iets vertelt over je psychische klachten, wat je vertelt, aan wie en wanneer. Fijn voor jezelf of iemand in je omgeving.</li>\n<li><a href=\"https://mindplatform.nl/media/8428/download/SSzS-10-tips-voor-taal.pdf?v=1\" target=\"_blank\" style=\"color:#f68100\">10 tips voor destigmatiserende communicatie</a>: leer hoe je met woorden en beelden bijdraagt aan meer begrip en minder vooroordelen over mentale gezondheid.</li>\n</ul>"
+    },
+    {
+      "sleutel": "resultB",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 25
+        },
+        {
+          "op": "<",
+          "waarde": 50
+        }
+      ],
+      "html": "<p><b>Je score valt in categorie B: Soms zelfstigma.</b></p>\n<p>Je antwoorden laten zien dat je soms last hebt van zelfstigma. Dat betekent dat je soms minder positief over jezelf denkt door je psychische klachten of bang bent voor wat anderen ervan vinden. Zelfstigma kan je wel eens in de weg staan.</p>\n<p>Je krijgt deze uitslag om je te helpen zien of zelfstigma bij jou speelt. Het is geen oordeel over jou. Jij bepaalt zelf of je er iets mee wilt doen. Wil je ermee aan de slag, dan zijn er mensen en hulpmiddelen die je kunnen helpen.</p>\n<p><b>Tips en hulpmiddelen</b></p>\n<ul>\n<li><a href=\"https://formulier.wijzijnmind.nl/flyer_cognitieve_therapie\" target=\"_blank\" style=\"color:#f68100\">Tips bij negatieve gedachten en gevoelens</a>: leer ze herkennen en ombuigen.</li>\n<li><a href=\"https://mindplatform.nl/media/8478/download/Algemeen-Vertel-ik-het-wel-of-vertel-ik-het-niet-werkboekje.pdf?v=1\" target=\"_blank\" style=\"color:#f68100\">Digitale gids: 'Vertel ik het wel of vertel ik het niet'</a>: helpt je stap voor stap kiezen of je iets vertelt over je psychische klachten, wat je vertelt, aan wie en wanneer. Fijn voor jezelf of iemand in je omgeving.</li>\n<li><a href=\"https://kenniscentrumphrenos.nl/kennisproduct/doorontwikkeling-coral/\" target=\"_blank\" style=\"color:#f68100\">Keuzehulp CORAL 2.0</a>: helpt je afwegen of, wat en wanneer je iets wilt vertellen over je mentale gezondheid op je werk of bij solliciteren.</li>\n</ul>"
+    },
+    {
+      "sleutel": "resultC",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 50
+        },
+        {
+          "op": "<",
+          "waarde": 75
+        }
+      ],
+      "html": "<p><b>Je score valt in categorie C: Regelmatig zelfstigma.</b></p>\n<p>Je antwoorden laten zien dat je vaak last hebt van zelfstigma. Je denkt soms negatief over jezelf door je psychische klachten of bent bang voor het oordeel van anderen. Daardoor kun je minder zelfvertrouwen hebben of contacten vermijden.</p>\n<p>Denk eens na over:</p>\n<ul>\n<li>Wanneer voel jij je onzeker of kleiner worden?</li>\n<li>Komt dat door je eigen gedachten?</li>\n<li>Of door de angst voor het oordeel van anderen? </li>\n</ul>\n<p>Je krijgt deze uitslag om je te helpen zien of zelfstigma bij jou speelt. Het is geen oordeel over jou. Jij bepaalt zelf of je er iets mee wilt doen. Wil je ermee aan de slag, dan zijn er mensen en hulpmiddelen die je kunnen helpen.</p>\n<p><b>Tips en hulpmiddelen</b></p>\n<ul>\n<li><a href=\"https://formulier.wijzijnmind.nl/flyer_cognitieve_therapie\" target=\"_blank\" style=\"color:#f68100\">Tips bij negatieve gedachten en gevoelens</a>: leer ze herkennen en ombuigen.</li>\n<li><a href=\"https://mindplatform.nl/media/8478/download/Algemeen-Vertel-ik-het-wel-of-vertel-ik-het-niet-werkboekje.pdf?v=1\" target=\"_blank\" style=\"color:#f68100\">Digitale gids: 'Vertel ik het wel of vertel ik het niet'</a>: helpt je stap voor stap kiezen of je iets vertelt over je psychische klachten, wat je vertelt, aan wie en wanneer. Fijn voor jezelf of iemand in je omgeving.</li>\n<li><a href=\"https://kenniscentrumphrenos.nl/kennisproduct/doorontwikkeling-coral/\" target=\"_blank\" style=\"color:#f68100\">Keuzehulp CORAL 2.0</a>: helpt je afwegen of, wat en wanneer je iets wilt vertellen over je mentale gezondheid op je werk of bij solliciteren.</li>\n</ul>\n<p><b>Napraten?</b></p>\nBel of chat met de <a href=\"https://mindhulplijn.nl/\" target=\"_blank\" style=\"color:#f68100\">MIND Hulplijn</a> voor gratis, anoniem en deskundig advies.\n"
+    },
+    {
+      "sleutel": "resultD",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 75
+        },
+        {
+          "op": "<=",
+          "waarde": 100
+        }
+      ],
+      "html": "<p><b>Je score valt in categorie D: Vaak zelfstigma.</b></p>\n<p>Je antwoorden laten zien dat je vaak last hebt van zelfstigma. Je kan je minder waard voelen door je psychische klachten en misschien contact vermijden, omdat je bang bent voor het oordeel van anderen. </p>\n<p>Denk eens na over:</p>\n<ul>\n<li>Wanneer voel jij je onzeker of kleiner worden?</li>\n<li>Komt dat door je eigen gedachten?</li>\n<li>Of door de angst voor het oordeel van anderen? </li>\n</ul>\n<p>Je krijgt deze uitslag om je te helpen zien of zelfstigma bij jou speelt. Het is geen oordeel over jou. Jij bepaalt zelf of je er iets mee wilt doen. Wil je ermee aan de slag, dan zijn er mensen en hulpmiddelen die je kunnen helpen.</p>\n<p><b>Tips en hulpmiddelen</b></p>\n<ul>\n<li><a href=\"https://formulier.wijzijnmind.nl/flyer_cognitieve_therapie\" target=\"_blank\" style=\"color:#f68100\">Tips bij negatieve gedachten en gevoelens</a>: leer ze herkennen en ombuigen.</li>\n<li><a href=\"https://mindplatform.nl/media/8478/download/Algemeen-Vertel-ik-het-wel-of-vertel-ik-het-niet-werkboekje.pdf?v=1\" target=\"_blank\" style=\"color:#f68100\">Digitale gids: 'Vertel ik het wel of vertel ik het niet'</a>: helpt je stap voor stap kiezen of je iets vertelt over je psychische klachten, wat je vertelt, aan wie en wanneer. Fijn voor jezelf of iemand in je omgeving.</li>\n<li><a href=\"https://kenniscentrumphrenos.nl/kennisproduct/doorontwikkeling-coral/\" target=\"_blank\" style=\"color:#f68100\">Keuzehulp CORAL 2.0</a>: helpt je afwegen of, wat en wanneer je iets wilt vertellen over je mentale gezondheid op je werk of bij solliciteren.</li>\n</ul>\n<p><b>Napraten?</b></p>\nBel of chat met de <a href=\"https://mindhulplijn.nl/\" target=\"_blank\" style=\"color:#f68100\">MIND Hulplijn</a> voor gratis, anoniem en deskundig advies."
+    }
+  ]
+}

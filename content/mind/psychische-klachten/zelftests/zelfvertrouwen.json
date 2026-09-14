@@ -1,0 +1,269 @@
+{
+  "slug": "zelfvertrouwen",
+  "titel": "Zelfvertrouwentest",
+  "url": "https://formulier.wijzijnmind.nl/zelfvertrouwen",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/g8b2VGuBW1VYl8MHZSru.json",
+  "opgehaald": "2026-09-14",
+  "intro": "Doe de zelfvertrouwentestDoor het maken van deze test kan je een beeld krijgen van hoeveel zelfvertrouwen je hebt. De test bestaat uit 10 beschrijvingen die elk een gevoel over jezelf weergeven. Lees iedere beschrijving goed door en geef daarna aan of je het er: helemaal mee eens; mee eens; niet mee eens of helemaal niet mee eens bent. Dit is de Nederlandse vertaling van de Rosenberg Self-Esteem Scale © 1965 M. Rosenberg.",
+  "noot": "Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+  "instrument": "",
+  "scoring": "som",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Ik ben tevreden met mezelf",
+      "opties": [
+        {
+          "label": "Helemaal mee eens",
+          "score": 4
+        },
+        {
+          "label": "Mee eens",
+          "score": 3
+        },
+        {
+          "label": "Niet mee eens",
+          "score": 2
+        },
+        {
+          "label": "Helemaal niet mee eens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Ik denk wel eens dat ik het niet goed doe",
+      "opties": [
+        {
+          "label": "Helemaal mee eens",
+          "score": 1
+        },
+        {
+          "label": "Mee eens",
+          "score": 2
+        },
+        {
+          "label": "Niet mee eens",
+          "score": 3
+        },
+        {
+          "label": "Helemaal niet mee eens",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Ik vind dat ik een aantal goede kwaliteiten heb",
+      "opties": [
+        {
+          "label": "Helemaal mee eens",
+          "score": 4
+        },
+        {
+          "label": "Mee eens",
+          "score": 3
+        },
+        {
+          "label": "Niet mee eens",
+          "score": 2
+        },
+        {
+          "label": "Helemaal niet mee eens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Ik kan dingen net zo goed als de meeste anderen",
+      "opties": [
+        {
+          "label": "Helemaal mee eens",
+          "score": 4
+        },
+        {
+          "label": "Mee eens",
+          "score": 3
+        },
+        {
+          "label": "Niet mee eens",
+          "score": 2
+        },
+        {
+          "label": "Helemaal niet mee eens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Ik heb niet veel om trots op te zijn",
+      "opties": [
+        {
+          "label": "Helemaal mee eens",
+          "score": 1
+        },
+        {
+          "label": "Mee eens",
+          "score": 2
+        },
+        {
+          "label": "Niet mee eens",
+          "score": 3
+        },
+        {
+          "label": "Helemaal niet mee eens",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Ik voel me wel eens waardeloos",
+      "opties": [
+        {
+          "label": "Helemaal mee eens",
+          "score": 1
+        },
+        {
+          "label": "Mee eens",
+          "score": 2
+        },
+        {
+          "label": "Niet mee eens",
+          "score": 3
+        },
+        {
+          "label": "Helemaal niet mee eens",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Ik zou willen dat ik meer respect had voor mezelf",
+      "opties": [
+        {
+          "label": "Helemaal mee eens",
+          "score": 1
+        },
+        {
+          "label": "Mee eens",
+          "score": 2
+        },
+        {
+          "label": "Niet mee eens",
+          "score": 3
+        },
+        {
+          "label": "Helemaal niet mee eens",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Ik vind mezelf wel eens een mislukking",
+      "opties": [
+        {
+          "label": "Helemaal mee eens",
+          "score": 1
+        },
+        {
+          "label": "Mee eens",
+          "score": 2
+        },
+        {
+          "label": "Niet mee eens",
+          "score": 3
+        },
+        {
+          "label": "Helemaal niet mee eens",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "Ik denk positief over mezelf",
+      "opties": [
+        {
+          "label": "Helemaal mee eens",
+          "score": 4
+        },
+        {
+          "label": "Mee eens",
+          "score": 3
+        },
+        {
+          "label": "Niet mee eens",
+          "score": 2
+        },
+        {
+          "label": "Helemaal niet mee eens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_10",
+      "tekst": "Ik vind dat ik een waardevol persoon ben",
+      "opties": [
+        {
+          "label": "Helemaal mee eens",
+          "score": 4
+        },
+        {
+          "label": "Mee eens",
+          "score": 3
+        },
+        {
+          "label": "Niet mee eens",
+          "score": 2
+        },
+        {
+          "label": "Helemaal niet mee eens",
+          "score": 1
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell1",
+      "regels": [
+        {
+          "op": "<=",
+          "waarde": 24
+        }
+      ],
+      "html": "<h2>Niet veel zelfvertrouwen</h2>\nMet de antwoorden op de vragen geef je aan niet veel zelfvertrouwen te hebben.\nOp onze website kan je meer lezen over <a href=\" https://wijzijnmind.nl/psychische-klachten/psychipedia/zelfvertrouwen/5-tips-voor-meer-zelfvertrouwen\">zelfvertrouwen</a>. Ook geven we tips. \nHeb je er last van dat je weinig zelfvertrouwen hebt en zou je graag een deskundig, anoniem en gratis advies op maat willen? Neem dan contact op met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a>.\n"
+    },
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 25
+        },
+        {
+          "op": "<=",
+          "waarde": 34
+        }
+      ],
+      "html": "<h2>Gemiddeld zeker over jezelf</h2>\nMet de antwoorden op de vragen geef je aan gemiddeld zeker over jezelf te zijn. Waarschijnlijk heb je wel eens wat minder vertrouwen in jezelf, maar kan je je zelfvertrouwen weer omhoog krijgen door bijvoorbeeld vooral te kijken naar de dingen die goed gaan. Vind je dat je af en toe nog wel wat meer zelfvertrouwen kan gebruiken? Lees dan onze tips voor meer <a href=\" https://wijzijnmind.nl/psychische-klachten/psychipedia/zelfvertrouwen/5-tips-voor-meer-zelfvertrouwen\">zelfvertrouwen</a>."
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 35
+        }
+      ],
+      "html": "<h2>Veel zelfvertrouwen</h2>\nMet de antwoorden op de vragen geef je aan een flinke dosis zelfvertrouwen te hebben. Hou dat vast!"
+    }
+  ]
+}

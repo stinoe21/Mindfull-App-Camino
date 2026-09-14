@@ -1,0 +1,335 @@
+{
+  "slug": "mentaal_fit_op_je_werk_test",
+  "titel": "description",
+  "url": "https://formulier.wijzijnmind.nl/mentaal_fit_op_je_werk_test",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/UcSfeHjf7gh6LIn4cmCH.json",
+  "opgehaald": "2026-09-14",
+  "intro": "Deze test helpt je bij het inschatten van je mentale gezondheid in relatie tot je werk. De test bestaat uit 11 uitspraken. Kies bij elke uitspraak het antwoord dat het beste past.",
+  "noot": "Het is geen wetenschappelijke test en uit de test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+  "instrument": "",
+  "scoring": "som",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Ik stel haalbare doelen voor taken",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 5
+        },
+        {
+          "label": "Beetje eens",
+          "score": 4
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 2
+        },
+        {
+          "label": "Oneens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Het lukt mij om na en tussen het werk door goed te ontspannen",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 5
+        },
+        {
+          "label": "Beetje eens",
+          "score": 4
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 2
+        },
+        {
+          "label": "Oneens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Ik kan lastige situaties op het werk goed accepteren en loslaten waar ik geen invloed op heb",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 5
+        },
+        {
+          "label": "Beetje eens",
+          "score": 4
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 2
+        },
+        {
+          "label": "Oneens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Ik focus me meestal op 1 taak tegelijk",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 5
+        },
+        {
+          "label": "Beetje eens",
+          "score": 4
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 2
+        },
+        {
+          "label": "Oneens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Ik blijf vaak piekeren over situaties op het werk",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 1
+        },
+        {
+          "label": "Beetje eens",
+          "score": 2
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 4
+        },
+        {
+          "label": "Oneens",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Ik vind het makkelijk om mijn grenzen aan te geven en nee te zeggen als dat nodig is",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 5
+        },
+        {
+          "label": "Beetje eens",
+          "score": 4
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 2
+        },
+        {
+          "label": "Oneens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Ik heb vertrouwen dat ik goed ben in mijn werk",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 5
+        },
+        {
+          "label": "Beetje eens",
+          "score": 4
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 2
+        },
+        {
+          "label": "Oneens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Ik beweeg voldoende (minimaal een half uur per dag)",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 5
+        },
+        {
+          "label": "Beetje eens",
+          "score": 4
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 2
+        },
+        {
+          "label": "Oneens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "Ik eet en drink over het algemeen gezond (matig met koffie en alcohol)",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 5
+        },
+        {
+          "label": "Beetje eens",
+          "score": 4
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 2
+        },
+        {
+          "label": "Oneens",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_10",
+      "tekst": "Ik heb last van slaapproblemen",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 1
+        },
+        {
+          "label": "Beetje eens",
+          "score": 2
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 4
+        },
+        {
+          "label": "Oneens",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_11",
+      "tekst": "Ik vind het moeilijk hulp te vragen en/of te accepteren van mijn collega’s of werkgever",
+      "opties": [
+        {
+          "label": "Eens",
+          "score": 1
+        },
+        {
+          "label": "Beetje eens",
+          "score": 2
+        },
+        {
+          "label": "Niet eens of oneens",
+          "score": 3
+        },
+        {
+          "label": "Beetje oneens",
+          "score": 4
+        },
+        {
+          "label": "Oneens",
+          "score": 5
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell1",
+      "regels": [
+        {
+          "op": "<",
+          "waarde": 33
+        }
+      ],
+      "html": "<h2> Niet zo mentaal fit</h2>\n<p>Je geeft aan je niet zo mentaal fit te voelen in relatie tot je werk. Volgens deze test kan je nog veel dingen doen die positief bijdragen aan jouw mentale gezondheid op het werk.</p>\n\n<p>Maak je je zorgen over klachten die je ervaart, praat erover met iemand die je vertrouwt en bespreekt het met jouw huisarts.  De huisarts kan beoordelen wat er aan de hand is en je ondersteuning bieden, of je zo nodig doorverwijzen.</p>\n\n<p>Ook kan je contact opnemen met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. \n\n\n<p><em>Zoals eerder aangegeven helpt deze test bij het inschatten van je mentale gezondheid in relatie tot je werk. Het is geen wetenschappelijke test en uit de test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.</em></p>\n"
+    },
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 32
+        },
+        {
+          "op": "<",
+          "waarde": 44
+        }
+      ],
+      "html": "<h2>Redelijk mentaal fit</h2>\n<p>Je geeft aan je redelijk mentaal fit te voelen in relatie tot je werk. Hoewel je over het algemeen al wat tools in handen hebt hiervoor, is er nog van alles dat je kan doen dat positief bijdraagt aan je mentale gezondheid op het werk.&nbsp;</p>\n\n<p><em>Zoals eerder aangegeven helpt deze test bij het inschatten van je mentale gezondheid in relatie tot je werk. Het is geen wetenschappelijke test en uit de test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.</em></p>\n"
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 43
+        }
+      ],
+      "html": "<h2>Mentaal fit</h2>\n<p>Bravo! Je geeft aan je mentaal fit te voelen in relatie tot je werk en al van alles te doen dat positief bijdraagt aan jouw mentale gezondheid op het werk.</p>\n\n<p><em>Zoals eerder aangegeven helpt deze test bij het inschatten van je mentale gezondheid in relatie tot je werk. Het is geen wetenschappelijke test en uit de test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.</em></p>\n "
+    }
+  ]
+}
