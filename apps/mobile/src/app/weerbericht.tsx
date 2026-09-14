@@ -6,6 +6,9 @@
 // reference/ui_kits/mind-app/index.html (Weerbericht). Sinds 13 september
 // 2026 (Stijn, UX-ronde) staat de kaart per provincie ook hier, groot: Home
 // had de kaart en deze pagina alleen vijf regels, en dat was andersom.
+// Sinds 14 september 2026 (Stijn) staat hier geen uitleg over de anonimisering
+// meer, ook niet achter een info-icoon: dat staat al in de voorwaarden en de
+// toestemming, en een uitlegkaart op elke pagina kost meer dan hij oplevert.
 
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
@@ -27,8 +30,6 @@ import { isProvincie } from "@/features/weer/provincies";
 import { haalWeerbericht, haalWeerberichtProvincies, type WeerberichtStand } from "@/features/weer/weerbericht";
 
 import { WEATHER_CODES, type WeatherCode, type WeatherTodayProvince } from "@mind/types";
-import { WatIsHetWeerbericht } from "@/features/weer/WatIsHetWeerbericht";
-import { UITLEG_ANONIMITEIT, WeerberichtIntro } from "@/features/weer/WeerberichtIntro";
 
 const nl = {
   titel: "Het mentale weer van Nederland",
@@ -103,12 +104,6 @@ export default function Weerbericht() {
         <AppText rol="subtitle">{t("ondertitel")}</AppText>
       </View>
 
-      {/* De intro hoort bij een getoond weerbericht. Boven de lege staat zou
-          "alle check-ins van vandaag" tegenspreken wat eronder staat, en die
-          staat is sinds weather_today() alleen afgesloten uurblokken meetelt
-          elke dag voor 01:00 in beeld. */}
-      {stand?.staat === "geladen" ? <WeerberichtIntro /> : null}
-
       {stand === null ? (
         <Card tone="white">
           <ActivityIndicator color={colors.brandDefault} />
@@ -124,15 +119,6 @@ export default function Weerbericht() {
           <AppText rol="bodySmall" centreer>
             {t("leegUitleg")}
           </AppText>
-        </Card>
-      ) : null}
-
-      {/* De lege staat liet driekwart scherm leeg; de uitleg hoort hier dan
-          wel, zodat je niet voor niets bent gekomen. */}
-      {stand?.staat === "leeg" ? (
-        <Card tone="white">
-          <AppText rol="bodySmall" kleur="secondary">{UITLEG_ANONIMITEIT}</AppText>
-          <WatIsHetWeerbericht />
         </Card>
       ) : null}
 
