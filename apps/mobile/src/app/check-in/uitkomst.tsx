@@ -188,7 +188,7 @@ export default function CheckInUitkomst() {
           dubbelop (Stijn, UX-ronde 13 september 2026). */}
       <View style={{ gap: space[3] }}>
         <Button label={t("terugDashboard")} fullWidth onPress={() => router.replace("/dashboard")} />
-        <Button label={t("deelJeWeer")} variant="link" fullWidth onPress={deel} />
+        <Button label={t("deelJeWeer")} variant="secondary" fullWidth onPress={deel} />
       </View>
     </ScreenCanvas>
   );

@@ -199,7 +199,7 @@ export default function ZelftestScherm() {
             />
           ) : null}
           {extern.map((l) => (
-            <Button key={l.linkUrl} label={l.linkLabel} variant="link" onPress={() => Linking.openURL(l.linkUrl)} />
+            <Button key={l.linkUrl} label={l.linkLabel} variant="secondary" onPress={() => Linking.openURL(l.linkUrl)} />
           ))}
         </View>
       ) : null}
@@ -208,7 +208,7 @@ export default function ZelftestScherm() {
 
       <View style={{ gap: space[3] }}>
         <Button label={t("terug")} fullWidth onPress={() => router.back()} />
-        <Button label={t("opnieuw")} variant="link" onPress={opnieuw} />
+        <Button label={t("opnieuw")} variant="secondary" fullWidth onPress={opnieuw} />
       </View>
     </ScreenCanvas>
   );

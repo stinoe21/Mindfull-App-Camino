@@ -140,7 +140,9 @@ export default function FamilieScherm() {
           <AppText rol="labelOverline" kleur="brand">{t("challenge")}</AppText>
           <AppText rol="h3">{challenge.naam}</AppText>
           <AppText rol="bodySmall">{t("dagen").replace("{n}", String(challenge.dagen.length))}</AppText>
-          <AppText rol="labelButton" kleur="brand">{t("bekijkChallenge")}</AppText>
+          <View style={{ alignItems: "flex-start" }}>
+            <Button label={t("bekijkChallenge")} variant="secondary" onPress={() => router.push({ pathname: "/challenges/[challenge]", params: { challenge: challenge.slug } })} />
+          </View>
         </Card>
       ) : null}
     </ScreenCanvas>

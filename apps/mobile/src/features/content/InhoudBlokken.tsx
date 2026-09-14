@@ -45,7 +45,7 @@ export function InhoudBlokken({ blokken }: { blokken: InhoudBlok[] }) {
           const url = blok.linkUrl;
           return (
             <View key={i} style={{ alignItems: "flex-start" }}>
-              <Button label={blok.linkLabel} variant="link" onPress={() => Linking.openURL(url)} />
+              <Button label={blok.linkLabel} variant="secondary" onPress={() => Linking.openURL(url)} />
             </View>
           );
         }

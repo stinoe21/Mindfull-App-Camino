@@ -224,7 +224,9 @@ export default function Houvast() {
             <Card tone="white">
               <AppText rol="h3">{t("nietsGevondenTitel")}</AppText>
               <AppText rol="bodySmall" kleur="secondary">{t("nietsGevondenVoor").replace("{term}", zoekterm)}</AppText>
-              <Button label={t("wisZoekopdracht")} variant="link" onPress={() => zetInvoer("")} />
+              <View style={{ alignItems: "flex-start" }}>
+                <Button label={t("wisZoekopdracht")} variant="secondary" onPress={() => zetInvoer("")} />
+              </View>
             </Card>
           ) : (
             <ContentGrid>

@@ -91,7 +91,7 @@ export default function ProfielProvincie() {
         <Card tone="primary">
           <AppText rol="bodyEmphasis">{t("viaLocatie").replace("{provincie}", PROVINCIE_NAMEN[provincie])}</AppText>
           <View style={{ alignItems: "flex-start" }}>
-            <Button label={t("opnieuw")} variant="link" bezig={bezig} onPress={locatie} />
+            <Button label={t("opnieuw")} variant="secondary" bezig={bezig} onPress={locatie} />
           </View>
         </Card>
       ) : (

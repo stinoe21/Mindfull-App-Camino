@@ -74,9 +74,9 @@ export default function Hulplijn() {
 
       <Card tone="white">
         <AppText rol="bodyEmphasis">Voor een luisterend oor is er de Luisterlijn. Bij suïcidale gedachten is er 113 Zelfmoordpreventie.</AppText>
-        <View style={{ alignItems: "flex-start" }}>
+        <View style={{ gap: space[2], alignItems: "flex-start" }}>
           {ANDERE.map((a) => (
-            <Button key={a.url} label={a.label} variant="link" onPress={() => Linking.openURL(a.url)} />
+            <Button key={a.url} label={a.label} variant="secondary" onPress={() => Linking.openURL(a.url)} />
           ))}
         </View>
         <AppText rol="bodySmall" kleur="secondary">
