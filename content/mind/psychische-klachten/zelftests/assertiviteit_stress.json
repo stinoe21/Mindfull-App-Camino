@@ -1,0 +1,189 @@
+{
+  "slug": "assertiviteit_stress",
+  "titel": "description",
+  "url": "https://formulier.wijzijnmind.nl/assertiviteit_stress",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/SAOfZBwXOz6E5wwcvpyj.json",
+  "opgehaald": "2026-09-14",
+  "intro": "Doe de Assertiviteit test Assertiviteit gaat over opkomen voor jezelf, over het stellen van grenzen. Over zeggen wat je wilt en nodig hebt en zeggen wat je juist niet wilt. Kom jij voor jezelf op of cijfer je jezelf te veel weg?De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
+  "noot": "Het is geen wetenschappelijke test en uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+  "instrument": "",
+  "scoring": "som",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Word je snel boos als je kritiek krijgt?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Vraag je goede vrienden om steun als je dat nodig hebt?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Als iemand over jouw grenzen gaat, zeg je er dan iets van?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Ben je iemand die (te) snel ‘ja’ zegt als iemand een verzoek heeft?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Als het werk of andere bezigheden je eigenlijk teveel wordt, ga jij je dan nog harder inspannen?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Vraag je makkelijk hulp aan anderen (denk aan collega’s, familie, vrienden, buren)?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Laat je beslissingen of nieuwe ideeën liever aan anderen over?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Durf je voor je mening uit te komen als je bij anderen bent?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "Vraag je waar je recht op hebt (bijvoorbeeld voldoende pauzemomenten bij werk of vrijwilligerswerk)?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_10",
+      "tekst": "Wanneer je het ergens niet mee eens bent, slik je je mening dan meestal in?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell1",
+      "regels": [
+        {
+          "op": "<",
+          "waarde": 4
+        }
+      ],
+      "html": "<h2>Niet assertief</h2>\nMet jouw antwoorden geef je aan dat je niet goed voor jezelf opkomt. En dat je te veel rekening houdt met anderen. Dit maakt je gevoelig voor stress. Het is belangrijk om je grenzen aan te geven en anderen om steun te vragen als je dat nodig hebt. Mogelijk heb je wat aan onze tips uit onze <a href=\"https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/grenzen-stellen\">flyer</a>  \nmet tips en technieken om je grenzen te leren kennen en ze te stellen.\n\n<p></p>Maak je je zorgen? Praat erover met iemand die je vertrouwt. Advies nodig? Neem contact op met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. \n\n"
+    },
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 3
+        },
+        {
+          "op": "<",
+          "waarde": 7
+        }
+      ],
+      "html": " <h2>Niet zo assertief</h2>\n Met jouw antwoorden geef je aan dat uitkomen voor je mening of opkomen voor jezelf niet je sterkste punt is. Je neigt mogelijk naar aanpassing aan anderen. Dit maakt je gevoeliger voor stress. Het is belangrijk om goed je grenzen aan te geven en steun te vragen. Mogelijk heb je wat aan onze tips uit onze <a href=\"https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/grenzen-stellen\">flyer</a> met tips en technieken om je grenzen te leren kennen en ze te stellen.  \n<p></p>Maak je je zorgen? Praat erover met iemand die je vertrouwt. Advies nodig? Neem contact op met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. "
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 6
+        }
+      ],
+      "html": "<h2>Assertief</h2>\nMet jouw antwoorden geef je aan dat je goed in staat bent om voor jezelf op te komen. Je bent assertief. Dat is positief! Assertiviteit helpt je om stress de baas te blijven."
+    }
+  ]
+}

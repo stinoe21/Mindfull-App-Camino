@@ -1,0 +1,283 @@
+{
+  "slug": "depressietest",
+  "titel": "Depressietest",
+  "url": "https://formulier.wijzijnmind.nl/depressietest",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/SNEy18rJzAU3VFCqS01J.json",
+  "opgehaald": "2026-09-14",
+  "intro": "De depressietest helpt je bij het inschatten of je depressieve klachten ervaart. De test noemt 9 problemen. Geef bij elk probleem aan hoe vaak je daar last van hebt gehad in de afgelopen 2 weken . Het invullen van deze test duurt een paar minuten.",
+  "noot": "Uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+  "instrument": "De depressietest is een vertaling van de PHQ-9 en is ontwikkeld door drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke en collega's.",
+  "scoring": "som",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Weinig interesse of plezier in activiteiten",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Zich neerslachtig, depressief of hopeloos voelen",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Moeilijk inslapen, moeilijk doorslapen of te veel slapen",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Zich moe voelen of gebrek aan energie hebben",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Weinig eetlust of overmatig eten",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Een slecht gevoel hebben over jezelf, of het gevoel hebben dat je een mislukkeling bent of het gevoel dat je jezelf of jouw familie teleurgesteld hebt",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Problemen om je te concentreren, bijvoorbeeld om de krant te lezen of om tv te kijken",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Zo traag bewegen of zo langzaam spreken dat andere mensen dit opgemerkt kunnen hebben? Of het tegenovergestelde, zo zenuwachtig of rusteloos zijn dat je veel meer bewoog dan gebruikelijk",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "De gedachte dat je beter dood zou kunnen zijn of de gedachte jezelf op een bepaalde manier pijn te doen",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell1",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 0
+        },
+        {
+          "op": "<",
+          "waarde": 5
+        }
+      ],
+      "html": "<h2>Geen of minimale depressieve klachten</h2>\n<p>Met jouw antwoorden op de vragen geef je aan geen of bijna geen depressieve klachten te ervaren. </p>\n<p> </p> "
+    },
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 4
+        },
+        {
+          "op": "<",
+          "waarde": 10
+        }
+      ],
+      "html": "<h2>Milde depressieve klachten </h2>\n<p>Met jouw antwoorden op de vragen geef je aan milde depressieve klachten te ervaren. Als je wil, kan je deze vragenlijst over twee weken herhalen. </p>\n<p>Zou je graag eens met een professional willen praten over je klachten? Neem contact op met <a href=\"http://www.mindhulplijn.nl\">de MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat.</p> \n<p> <b>Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen. </b>"
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 9
+        },
+        {
+          "op": "<",
+          "waarde": 15
+        }
+      ],
+      "html": "<h2>Matige depressieve klachten</h2>\n<p> Met jouw antwoorden op de vragen geef je aan matige depressieve klachten te ervaren.  \n\nKomt deze uitslag overeen met hoe jij je voelt? Dan raden we je aan contact op te nemen met je huisarts om je klachten te bespreken. De huisarts kan samen met jou bekijken wat er aan de hand is. Als dat nodig is kan de huisarts je ondersteunen of je doorverwijzen voor hulp. \n<p>Zou je graag eens met een professional willen praten over je klachten? Neem contact op met <a href=\"http://www.mindhulplijn.nl\">de MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. </p>\n<p><b>Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.  </b></p>"
+    },
+    {
+      "sleutel": "resultWell4",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 14
+        },
+        {
+          "op": "<",
+          "waarde": 20
+        }
+      ],
+      "html": "<h2>Matig ernstige depressieve klachten </h2>\n<p>Met jouw antwoorden op de vragen geef je aan matig ernstige depressieve klachten te ervaren. Komt deze uitslag overeen met hoe jij je voelt? Dan raden we je aan contact op te nemen met je huisarts om je klachten te bespreken. De huisarts kan samen met jou bekijken wat er aan de hand is. Als dat nodig is kan de huisarts je ondersteunen of je doorverwijzen voor hulp.<p></p>    \n<p> Zou je graag eens met een professional willen praten over je klachten? Neem contact op met <a href=\"http://www.mindhulplijn.nl\">de MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. </p>\n\n<p>Denk je aan zelfdoding? 113 Zelfmoordpreventie is er voor je. Op <a href=\"http://www.113.nl\">113.nl</a>  kan je direct en anoniem in contact komen met hun hulpverleners. \n<p><b>Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.  </b></p>"
+    },
+    {
+      "sleutel": "resultWell5",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 19
+        },
+        {
+          "op": "<",
+          "waarde": 28
+        }
+      ],
+      "html": "<h2>Ernstige depressieve klachten </h2>\n<p>Met jouw antwoorden op de vragen geef je aan ernstige depressieve klachten te ervaren. Komt deze uitslag overeen met hoe jij je voelt? Dan raden we je aan contact op te nemen met je huisarts om je klachten te bespreken. De huisarts kan samen met jou bekijken wat er aan de hand is. Als dat nodig is kan de huisarts je ondersteunen of je doorverwijzen voor hulp. \n\n<p>Zou je graag eens met een professional willen praten over je klachten? Neem contact op met <a href=\"http://www.mindhulplijn.nl\">de MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. </p>   \n\n\n<p> Denk je aan zelfdoding? 113 Zelfmoordpreventie is er voor je. Op <a href=\"http://www.113.nl\">113.nl</a>  kan je direct en anoniem in contact komen met hun hulpverleners.  </p>\n<p><b>Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.  </b></p>"
+    }
+  ]
+}

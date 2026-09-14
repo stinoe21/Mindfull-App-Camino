@@ -1,0 +1,189 @@
+{
+  "slug": "stresstest_denkgewoonten",
+  "titel": "Stresstest: Denkgewoonten",
+  "url": "https://formulier.wijzijnmind.nl/stresstest_denkgewoonten",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/4jH1aQoYSYFsjy6JY1CR.json",
+  "opgehaald": "2026-09-14",
+  "intro": "Denkgewoonten zijn gedachten die we elke keer weer hebben in bepaalde situaties. Gedachten als ‘ik mag geen fouten maken’ en ‘belangrijke mensen in mijn omgeving moeten mij aardig vinden’ zijn hier voorbeelden van. Ze bepalen keer op keer hoe we ons voelen in bepaalde situaties en hoe we reageren. Denkgewoonten kunnen veel stress veroorzaken.De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
+  "noot": "Het is geen wetenschappelijke test en uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+  "instrument": "",
+  "scoring": "som",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Voel je je vaak verantwoordelijk voor alles en iedereen?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Geef je jezelf regelmatig een schouderklopje?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Mag je fouten maken van jezelf?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Vind je het erg belangrijk dat anderen je aardig vinden?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Ben je iemand die de dingen van de zonnige kant bekijkt?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Denk je regelmatig: ik ‘moet’ dit nog even, ik ‘moet’ dat nog even?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Denk je vaak dat een bepaalde klus te moeilijk is voor je?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Vind je van jezelf dat je goed kan relativeren?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "Ben je snel wantrouwig naar wat mensen zeggen of doen?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_10",
+      "tekst": "Kun je het gemakkelijk accepteren wanneer iets anders gaat dan je zou willen?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell1",
+      "regels": [
+        {
+          "op": "<",
+          "waarde": 4
+        }
+      ],
+      "html": "<h2> Je denkgewoonten geven veel stress</h2>\nMet jouw antwoorden geef je aan dat jouw denkgewoonten je een hoop stress bezorgen. Wist je dat de manier van denken invloed heeft op hoe je je voelt en gedraagt? Niet-helpende gedachten zorgen ervoor dat je vervelende gevoelens ervaart, terwijl helpende gedachten meer gewenste gevoelens oproepen. Je lijkt erg streng voor jezelf en maakt het jezelf daarmee niet gemakkelijk. Zoals bij de meeste ‘gewoonten’, kan je leren om dit te veranderen.\n<p></p>Je manier van denken veranderen, gaat natuurlijk niet van de ene op andere dag. Maar in de flyer onderaan deze pagina vind je twee oefeningen uit de cognitieve gedragstherapie die je hierbij op weg kunnen helpen. \n\n<p></p>Maak je je zorgen over klachten die je ervaart, praat erover met iemand die je vertrouwt en bespreekt het met jouw huisarts. Ook kan je contact opnemen met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. "
+    },
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 3
+        },
+        {
+          "op": "<",
+          "waarde": 7
+        }
+      ],
+      "html": "<h2>Je bent af en toe geneigd je druk te maken</h2>\nMet jouw antwoorden geef je aan af en toe de neiging te hebben om je drukker te maken dan nodig is. Neem je denkgewoonten eens bewust onder de loep. Dat kan je helpen makkelijker om te gaan met stressvolle situaties. In de flyer onderaan deze pagina vind je twee oefeningen uit de cognitieve gedragstherapie om je gedachten te onderzoeken en helpend te maken. \n\n<p></p>Maak je je zorgen over klachten die je ervaart, praat erover met iemand die je vertrouwt en bespreekt het met jouw huisarts. Ook kan je contact opnemen met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat."
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 6
+        }
+      ],
+      "html": "<h2> Je bekijkt situaties over het algemeen rustig</h2>\nMet jouw antwoorden geef je aan goed in staat te zijn om te relativeren en situaties over het algemeen rustig en optimistisch te bekijken. Je bent je bewust van je eigen kunnen en je eigen grenzen. Het maakt dat je waarschijnlijk geen onnodige stress ervaart. Sterker nog, je bent daardoor weerbaarder in stressvolle situaties. Heb je alsnog behoefte of interesse om meer te lezen over het veranderen van je denkpatronen en bijhorende oefeningen? In de flyer onderaan deze pagina vind je twee oefeningen uit de cognitieve gedragstherapie om je gedachten helpend te maken.  "
+    }
+  ]
+}
