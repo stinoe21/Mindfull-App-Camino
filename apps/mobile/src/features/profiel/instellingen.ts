@@ -31,15 +31,19 @@ export type Instellingen = {
    */
   taal: "systeem" | "nl" | "en";
   /**
-   * Zelf gekozen provincie, voor het mentale weer per provincie (feedbacksessie
-   * MIND, verwerkt 10 september 2026). null is "liever niet". Gaat alleen mee
-   * als provincie bij het optellen van een check-in; nooit een locatie.
+   * Provincie, voor het mentale weer per provincie (feedbacksessie MIND,
+   * verwerkt 10 september 2026). null is "liever niet" of onbekend. Gaat
+   * alleen mee als provincie bij het optellen van een check-in; nooit een
+   * locatie. Sinds 14 september 2026 (Stijn) is zelf kiezen weg: een vrije
+   * keuze maakte het te makkelijk om het beeld van een provincie te sturen.
    */
   provincie: string | null;
   /**
    * De provincie komt via de locatie van het toestel (sinds 13 september
    * 2026, met toestemming van het systeem). Dan wordt hij bij elke check-in
    * opnieuw bepaald op het toestel; de coördinaten worden nooit bewaard.
+   * Alleen als dit waar is telt de provincie mee; een eerder zelf gekozen
+   * provincie (van voor 14 september 2026) wordt genegeerd.
    */
   provincieViaLocatie: boolean;
 };

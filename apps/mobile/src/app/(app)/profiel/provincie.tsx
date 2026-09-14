@@ -1,26 +1,27 @@
 // Profiel: provincie
 //
-// Voor het mentale weer per provincie op Home. De provincie komt normaal via
+// Voor het mentale weer per provincie op Home. De provincie komt alleen via
 // de locatie van het toestel, gevraagd in de onboarding bij de toestemming
 // voor het weerbericht (sinds 13 september 2026; de coördinaten blijven op
-// het toestel, zie features/weer/locatie.ts). Dit is de uitwijk: opnieuw
-// bepalen na een weigering, of zelf kiezen, of helemaal niet: dan telt de
-// check-in landelijk mee als onbekend. Elke keuze wordt direct bewaard.
+// het toestel, zie features/weer/locatie.ts). Zelf een provincie kiezen kan
+// sinds 14 september 2026 (Stijn) niet meer: een vrije keuze maakte het te
+// makkelijk om het beeld van een provincie te sturen, zie docs/datamodel.md.
+// Wat hier nog kan: de locatie (opnieuw) laten bepalen na een weigering, of
+// liever niet per provincie meetellen. Dan telt de check-in landelijk mee als
+// onbekend. Elke keuze wordt direct bewaard.
 
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 
-import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
-import { Chip } from "@mind/ui/components/Chip";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { bewaarInstellingen, leesInstellingen } from "@/features/profiel/instellingen";
 import { KeuzePagina } from "@/features/profiel/KeuzePagina";
 import { bepaalProvincieViaLocatie } from "@/features/weer/locatie";
-import { isProvincie, PROVINCIE_CODES, PROVINCIE_NAMEN } from "@/features/weer/provincies";
+import { isProvincie, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 
 const nl = {
   titel: "Provincie",
@@ -28,11 +29,10 @@ const nl = {
   viaLocatie: "Via je locatie: {provincie}",
   gebruikLocatie: "Gebruik mijn locatie",
   opnieuw: "Opnieuw bepalen",
-  ofZelf: "Of kies zelf",
-  geen: "Liever niet",
-  geweigerd: "De app heeft geen toegang tot je locatie. Je kunt dat aanzetten in de instellingen van je telefoon, of hieronder zelf kiezen.",
+  lieverNiet: "Liever niet per provincie",
+  geweigerd: "De app heeft geen toegang tot je locatie. Je kunt dat aanzetten in de instellingen van je telefoon.",
   buiten: "We vinden geen Nederlandse provincie bij je locatie.",
-  mislukt: "Je locatie kon niet worden bepaald. Probeer het later opnieuw of kies zelf.",
+  mislukt: "Je locatie kon niet worden bepaald. Probeer het later opnieuw.",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -42,11 +42,10 @@ const teksten: Woordenboek<typeof nl> = {
     viaLocatie: "From your location: {provincie}",
     gebruikLocatie: "Use my location",
     opnieuw: "Determine again",
-    ofZelf: "Or choose yourself",
-    geen: "Rather not",
-    geweigerd: "The app has no access to your location. You can allow it in your phone's settings, or choose below.",
+    lieverNiet: "Rather not per province",
+    geweigerd: "The app has no access to your location. You can allow it in your phone's settings.",
     buiten: "We can't find a Dutch province at your location.",
-    mislukt: "Your location couldn't be determined. Try again later or choose yourself.",
+    mislukt: "Your location couldn't be determined. Try again later.",
   },
 };
 
@@ -78,16 +77,20 @@ export default function ProfielProvincie() {
     zetMelding(uitkomst.status === "geweigerd" ? t("geweigerd") : uitkomst.status === "buiten-nederland" ? t("buiten") : t("mislukt"));
   };
 
-  const kies = async (code: string | null) => {
-    zetProvincie(code);
+  // Liever niet: de provincie gaat weg en de check-in telt landelijk mee.
+  // Dit is de enige keuze zonder locatie, en die kan het beeld niet sturen.
+  const lieverNiet = async () => {
+    zetProvincie(null);
     zetViaLocatie(false);
     zetMelding(null);
-    await bewaarInstellingen({ provincie: code, provincieViaLocatie: false });
+    await bewaarInstellingen({ provincie: null, provincieViaLocatie: false });
   };
+
+  const bepaald = viaLocatie && isProvincie(provincie);
 
   return (
     <KeuzePagina titel={t("titel")} uitleg={t("uitleg")}>
-      {viaLocatie && isProvincie(provincie) ? (
+      {bepaald ? (
         <Card tone="primary">
           <AppText rol="bodyEmphasis">{t("viaLocatie").replace("{provincie}", PROVINCIE_NAMEN[provincie])}</AppText>
           <View style={{ alignItems: "flex-start" }}>
@@ -104,15 +107,11 @@ export default function ProfielProvincie() {
         </Card>
       ) : null}
 
-      <View style={{ gap: space[2] }}>
-        <AppText rol="labelOverline" kleur="secondary">{t("ofZelf").toUpperCase()}</AppText>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
-          <Chip label={t("geen")} active={!isProvincie(provincie)} onPress={() => kies(null)} />
-          {PROVINCIE_CODES.map((code) => (
-            <Chip key={code} label={PROVINCIE_NAMEN[code]} active={!viaLocatie && provincie === code} onPress={() => kies(code)} />
-          ))}
+      {bepaald ? (
+        <View style={{ alignItems: "flex-start" }}>
+          <Button label={t("lieverNiet")} variant="link" onPress={lieverNiet} />
         </View>
-      </View>
+      ) : null}
     </KeuzePagina>
   );
 }

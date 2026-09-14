@@ -58,6 +58,7 @@ Wat we er wel tegen hebben:
 - Een account aanmaken kost een geverifieerd e-mailadres of een Apple- of Google-login. Dat maakt honderd accounts duur.
 - De auth-limieten hierboven begrenzen hoe snel dat kan.
 - De limiet uit punt 2 begrenst het tot één bijdrage per account per dag.
+- **De provincie is niet zelf te kiezen** (sinds 14 september 2026, besluit Stijn). Hij komt alleen via de locatie van het toestel, op het toestel bepaald, zie `datamodel.md`. Per provincie is dezelfde drempel van 10 al genoeg om te kleuren, dus met een vrije keuze konden tien accounts een lege provincie sturen zonder er ooit te zijn geweest. Een gesimuleerde locatie blijft mogelijk, maar het is geen knop meer in de app. Wie de locatie weigert telt als "onbekend", landelijk.
 
 **Wat we wél kunnen: het achteraf herkennen.** De totalen staan per uurblok (sinds 13 augustus 2026, zie `datamodel.md`), en het behoud van dat uurverloop was precies de reden om niet op dagtellers uit te komen. Vierhonderd inzendingen in één uur waar de basislijn op veertig ligt, is zichtbaar. Bij een dagteller was dat niet te zien.
 
