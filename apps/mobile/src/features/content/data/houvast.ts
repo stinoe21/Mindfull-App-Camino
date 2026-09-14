@@ -1173,7 +1173,48 @@ export const HOUVAST: Houvast[] = [
       }
     ],
     "bron": "https://wijzijnmind.nl/psychische-klachten/psychipedia/paniekaanval",
-    "tips": [],
+    "tips": [
+      {
+        "kop": "Begrijp hoe een paniekaanval ontstaat",
+        "blokken": [
+          {
+            "tekst": "Als je last hebt van paniekaanvallen, helpt het om te begrijpen hoe een paniekaanval werkt. Een paniekaanval start vaak met lichamelijke angstverschijnselen, zoals hartkloppingen, misselijkheid, of een versnelde ademhaling. Tijdens een paniekaanval begrijp je deze symptomen verkeerd. Bij hartkloppingen denk je bijvoorbeeld dat er iets mis is met je hart. Door de verkeerde invulling die je gedachten eraan geven, nemen de angst en de lichamelijke klachten nog verder toe. Zo ontstaat een vicieuze cirkel:"
+          }
+        ]
+      },
+      {
+        "kop": "Vermijd niet",
+        "blokken": [
+          {
+            "tekst": "Als je al eens een paniekaanval hebt gehad, krijg je misschien de neiging om de plek waar je de paniekaanval hebt gehad te vermijden uit angst voor herhaling. Je krijgt als het ware angst voor de angst. Het is heel belangrijk om niet te gaan vermijden. Als je dat namelijk doet, leer je jezelf aan dat je je rustiger voelt als je niet naar de plek toe gaat waar je bang voor bent. Dat voelt even fijn. Maar vervolgens wordt de stap en de angst om daarheen te gaan alleen maar groter. Wees je angst dus de baas en ga de confrontatie aan. Alleen dan kan je ervaren dat waar je bang voor bent niet gebeurt."
+          }
+        ]
+      },
+      {
+        "kop": "Weet: angst wordt altijd minder",
+        "blokken": [
+          {
+            "tekst": "Als je toch een paniekaanval krijgt, dan is het goed om je te beseffen dat de angst ALTIJD weer zal zakken. De lichamelijke klachten die je tijdens een paniekaanval ervaart, gaan voorbij en worden vanzelf minder. Een angstig gevoel kan namelijk niet eeuwig aanhouden. Dat bestaat gewoonweg niet. Dit komt omdat je lichaam en hersenen niet in staat zijn om langdurig in de ‘hoogste staat van paraatheid’ te verkeren."
+          }
+        ]
+      },
+      {
+        "kop": "Leid jezelf af",
+        "blokken": [
+          {
+            "tekst": "Voel je een paniekaanval aankomen, leid jezelf dan af. Kijk om je heen en neem de omgeving in je op. Wat zie je? Wat doen andere mensen? Wat ook helpt, is jezelf een opdracht geven waarbij je moet nadenken. Tel bijvoorbeeld terug van honderd naar één, bedenk wat je de afgelopen week iedere dag gegeten hebt, of spel woorden achterstevoren zoals je naam en adres. Op deze manier moeten je hersenen zich bezighouden met iets anders dan de angst."
+          }
+        ]
+      },
+      {
+        "kop": "Focus op je ademhaling",
+        "blokken": [
+          {
+            "tekst": "Heb je een paniekaanval, focus dan op je ademhaling. Als mensen angstig of gespannen zijn, zijn ze geneigd steeds hoger te gaan ademhalen. Dus niet onderin de buik, maar hoog op de borst. Dat is een oppervlakkige, snelle en onrustige ademhaling. Je kan spanning in je lijf weghalen door bewust terug te gaan naar een diepe buikademhaling. Door je te focussen op je ademhaling, heb je minder aandacht voor je angst. Hierdoor zal de angst afnemen. Oefen thuis om te ontspannen via je ademhaling."
+          }
+        ]
+      }
+    ],
     "gids": {
       "slug": "paniekaanval",
       "titel": "Paniekaanval",
@@ -1820,7 +1861,48 @@ export const HOUVAST: Houvast[] = [
       }
     ],
     "bron": "https://wijzijnmind.nl/psychische-klachten/psychipedia/mentaal-fit",
-    "tips": [],
+    "tips": [
+      {
+        "kop": "Ontspan en doe leuke dingen",
+        "blokken": [
+          {
+            "tekst": "Zorg voor een goede balans tussen spanning en ontspanning. Houd goed voor jezelf in de gaten dat je perioden van activiteit afwisselt met perioden van rust. Hierbij is het belangrijk dat je niet steeds tot het uiterste gaat, maar op tijd rust neemt. Op deze manier ga je niet over je grenzen heen en put je jezelf dus ook niet uit. Heb jij moeite met ontspannen? Ontspanningsoefeningen kunnen hierbij helpen. Doe ook leuke dingen. Spreek buiten werktijd af met vrienden, besteed tijd aan hobby’s of kijk een film of serie. Het maakt niet uit wat je doet, als jij er maar plezier in hebt. En zet door als je er in eerste instantie geen zin in hebt. Het helpt je om je batterij weer op te laden en je zorgen even van je af te schudden."
+          }
+        ]
+      },
+      {
+        "kop": "Accepteer en laat los waarop je geen invloed hebt",
+        "blokken": [
+          {
+            "tekst": "Leer te accepteren. Veel mensen zijn bij tegenslagen of moeilijke situaties geneigd de vervelende gevoelens die daarbij horen, niet te willen ervaren. Maar doordat je van alles doet om deze gevoelens te veranderen, is de kans groot dat je voortdurend bezig bent met het probleem dat de vervelende gevoelens veroorzaakt. Zonde, helemaal als het dingen zijn die onvermijdelijk zijn en waar jij geen invloed op hebt. En het probleem wordt hierdoor misschien zelfs groter dan dat het in werkelijkheid is. Probeer de situatie daarom te aanvaarden, zoals die is. Door deze acceptatie zal je meer rust ervaren. Bovendien komt er zo weer ruimte vrij om met een heldere blik vooruit te kijken. Om te leren accepteren, kun je bijvoorbeeld meer lezen over mindfulness."
+          }
+        ]
+      },
+      {
+        "kop": "Stel haalbare doelen en focus je op 1 taak",
+        "blokken": [
+          {
+            "tekst": "Door realistische en haalbare doelen te stellen, zorg je ervoor dat je jezelf niet overvraagt. Wanneer je de lat te hoog legt, loop je het risico je doelen niet te behalen en met een teleurgesteld gevoel achter te blijven. Deel je klus in kleine, behapbare taken in. Met ieder behaald tussendoel kan je trots zijn op jezelf en kom je dichter bij je einddoel. Stel ook prioriteiten en probeer niet te multitasken. Focus je op 1 taak en begin pas met iets nieuws als de taak is afgerond. Het kan helpen om af en toe je telefoon even uit of op vliegtuigmodus te zetten, zodat je op gezette tijden ook echt niet gestoord kan worden."
+          }
+        ]
+      },
+      {
+        "kop": "Stop met piekeren",
+        "blokken": [
+          {
+            "tekst": "Blijf je vaak malen over problemen? Door te piekeren blijf je in loepjes denken en kom je niet tot een oplossing. Leer om, in plaats van te blijven nadenken over een probleem, je probleem daadwerkelijk in kaart te brengen en vervolgens op te lossen. Als dit niet mogelijk is, probeer het dan los te laten: je kan er toch niets aan veranderen. Lees ook onze tips om piekeren tegen te gaan."
+          }
+        ]
+      },
+      {
+        "kop": "Geef je grenzen aan en durf nee te zeggen",
+        "blokken": [
+          {
+            "tekst": "Ervaar jij stress omdat je het lastig vindt om nee te zeggen tegen je werkgever of je grenzen aan te geven aan je collega’s? Door steeds maar ja te zeggen, loop je het risico meer hooi op je vork te nemen dan goed voor je is. En door de ander niet te laten weten dat je het ergens niet mee eens bent, zal er niet veel veranderen. Door het stellen van grenzen kan je aan een ander duidelijk maken wat je wel en niet wil. Hierdoor weet diegene waar die aan toe is, want diegene kan namelijk niet jouw gedachten lezen. Wij schreven tips om je grenzen te leren kennen en aan te geven. Wil jij vaker nee zeggen? Bekijk dan de online gids met een oefening en tips om nee te leren zeggen."
+          }
+        ]
+      }
+    ],
     "gids": {
       "slug": "mentaal-fit-werk",
       "titel": "Hoe blijf ik mentaal fit op het werk?",
