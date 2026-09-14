@@ -26,10 +26,10 @@ import { gidsenBijOnderwerp } from "@/features/content/gidsen";
 const nl = {
   nietGevonden: "Artikel niet gevonden",
   nietGevondenUitleg: "Dit artikel bestaat niet of is verplaatst.",
-  terugNaslagwerk: "Terug naar het naslagwerk",
+  terugNaslagwerk: "Terug naar Houvast",
   leesOp: "Lees verder op wijzijnmind.nl",
   terug: "Terug",
-  meerTitel: "Meer uit het naslagwerk",
+  meerTitel: "Meer in Houvast",
   gidsOverline: "AAN DE SLAG",
   gidsTitel: "Praktische tips",
   gidsUitleg: "In de online gids staan technieken die je vandaag kunt proberen.",
@@ -40,10 +40,10 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     nietGevonden: "Article not found",
     nietGevondenUitleg: "This article doesn't exist or has been moved.",
-    terugNaslagwerk: "Back to the reference library",
+    terugNaslagwerk: "Back to Houvast",
     leesOp: "Read on wijzijnmind.nl",
     terug: "Back",
-    meerTitel: "More from the library",
+    meerTitel: "More in Houvast",
     gidsOverline: "GET STARTED",
     gidsTitel: "Practical tips",
     gidsUitleg: "The online guide has techniques you can try today.",
@@ -88,7 +88,6 @@ export default function Artikel() {
       <View style={{ height: 160, borderRadius: radius.lg, backgroundColor: palette.purple50, alignItems: "center", justifyContent: "center" }}>
         <VliegerOnderwerp onderwerp={artikel.onderwerp} slug={artikel.slug} hoogte={96} />
       </View>
-
 
       {/* De gidsen bij dit onderwerp boven de tekst, hoog op het scherm: MIND
           wil handelingsperspectief boven uitleg (feedbacksessie, verwerkt

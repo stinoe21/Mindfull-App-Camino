@@ -4,8 +4,8 @@
   "url": "https://formulier.wijzijnmind.nl/angsttest",
   "formulier": "https://cdn.novti.io/tenants/mind/forms/kEb6rUaapGTAFXQTdx4Z.json",
   "opgehaald": "2026-09-14",
-  "intro": "De angsttest helpt je bij het inschatten hoeveel last je hebt van angstklachten. Lees elke stelling goed door en geef aan hoe vaak je er in de afgelopen twee weken last van hebt gehad.Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
-  "noot": "",
+  "intro": "De angsttest helpt je bij het inschatten hoeveel last je hebt van angstklachten. Lees elke stelling goed door en geef aan hoe vaak je er in de afgelopen twee weken last van hebt gehad.",
+  "noot": "Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
   "instrument": "Dit is de Nederlandse vertaling van de GAD-7. Ontwikkeld door drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke en collega’s.",
   "scoring": "som",
   "vragen": [

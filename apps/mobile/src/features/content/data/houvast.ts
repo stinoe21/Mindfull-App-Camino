@@ -259,7 +259,7 @@ export const HOUVAST: Houvast[] = [
         "tekst": "Hierboven noemen we veelgehoorde stressklachten. Sommige klachten kunnen ook een lichamelijke oorzaak hebben. Als je hierover twijfelt, ga dan naar thuisarts.nl voor betrouwbare informatie over ziekte en gezondheid."
       },
       {
-        "tekst": "> Ik had laatst een examen voor mijn werk. Een week van tevoren, voelde ik me gestrest. Als ik eraan dacht, voelde ik dat echt in mijn lijf. Mijn hart ging sneller kloppen en het was alsof ik dan geen lucht kreeg, omdat ik hoog ademde."
+        "citaat": "Ik had laatst een examen voor mijn werk. Een week van tevoren, voelde ik me gestrest. Als ik eraan dacht, voelde ik dat echt in mijn lijf. Mijn hart ging sneller kloppen en het was alsof ik dan geen lucht kreeg, omdat ik hoog ademde."
       },
       {
         "kop": "Wanneer ontstaat stress?"
@@ -301,7 +301,7 @@ export const HOUVAST: Houvast[] = [
         "tekst": "Er zijn ook dingen die juist helpen om spanning beter aan te kunnen. Het helpt bijvoorbeeld als je steun krijgt van mensen om je heen en genoeg momenten hebt om te ontspannen. Ook is het belangrijk dat je het gevoel hebt zelf keuzes te kunnen maken in je leven, in plaats van dat alles voor je wordt bepaald. Daarnaast geeft het vaak kracht als je dingen doet die voor jou waardevol zijn, zoals werk of activiteiten die zinvol voelen of die je plezier geven. Zulke dingen maken dat je sterker staat, dit noemen we ook wel veerkracht."
       },
       {
-        "tekst": "> Meestal loopt alles wel, maar op het moment dat iets anders loopt dan verwacht, gaat het dus mis. Vooral als dit betekent dat ik in actie moet komen om dingen op te lossen of te regelen. Misgaan is misschien een groot woord en vaak gaat het om kleine dingen, maar ik merk wel dat ik dan stress ervaar. Denk aan een ziek kind als ik een deadline heb voor werk, een sportwedstrijd van een van de kinderen die niet goed in de agenda is gezet. - Lees het hele verhaal van Naomi. > > Naomi"
+        "citaat": "Meestal loopt alles wel, maar op het moment dat iets anders loopt dan verwacht, gaat het dus mis. Vooral als dit betekent dat ik in actie moet komen om dingen op te lossen of te regelen. Misgaan is misschien een groot woord en vaak gaat het om kleine dingen, maar ik merk wel dat ik dan stress ervaar. Denk aan een ziek kind als ik een deadline heb voor werk, een sportwedstrijd van een van de kinderen die niet goed in de agenda is gezet."
       },
       {
         "kop": "Hoe herstel je van ongezonde stress?"
@@ -320,9 +320,6 @@ export const HOUVAST: Houvast[] = [
       },
       {
         "tekst": "Waar heb jij stress van? Stress hoort bij het leven, maar soms wordt het te veel. Hoe ga jij om met stressvolle situaties? Deel jouw ervaring en help anderen met jouw verhaal."
-      },
-      {
-        "tekst": "Deel jouw verhaal"
       },
       {
         "kop": "Wat kan je doen bij stress?"
@@ -416,7 +413,7 @@ export const HOUVAST: Houvast[] = [
     "kort": "Werkstress is stress door of in je werksituatie. De stress hoeft niet veroorzaakt te worden door je werksituatie alleen. Ook de combinatie van veel druk op je werk én thuis kan voor stressklachten zorgen. Deze klachten kunnen ervoor zorgen dat je minder goed werkt levert.",
     "meer": [
       {
-        "tekst": "> Als ik stress ervaar, komt dat meestal doordat er veel dingen naast elkaar lopen. En er net iets te veel bij komt, boven op de dagelijkse dingen. Ik werk vier dagen in de week en wil graag goed presteren. Tegelijk wil ik er voor mijn kinderen zijn, ervoor zorgen dat ze het thuis fijn hebben. - Lees hoe Naomi omgaat met stress in een druk leven met werk en gezin >"
+        "citaat": "Als ik stress ervaar, komt dat meestal doordat er veel dingen naast elkaar lopen. En er net iets te veel bij komt, boven op de dagelijkse dingen. Ik werk vier dagen in de week en wil graag goed presteren. Tegelijk wil ik er voor mijn kinderen zijn, ervoor zorgen dat ze het thuis fijn hebben. - Lees hoe Naomi omgaat met stress in een druk leven met werk en gezin"
       },
       {
         "kop": "Gezonde en ongezonde werkstress"
@@ -681,9 +678,6 @@ export const HOUVAST: Houvast[] = [
       },
       {
         "tekst": "Herken je dit gevoel bij jezelf? Vraag onze tips aan die je helpen met een aanhoudende somberheid om te gaan."
-      },
-      {
-        "tekst": "Vraag de tips gratis aan"
       },
       {
         "kop": "Soorten depressies"
@@ -1258,9 +1252,6 @@ export const HOUVAST: Houvast[] = [
           "Je klachten hebben invloed op het dagelijks functioneren, op het werk, tijdens sociale activiteiten of in relaties.",
           "De sociale angststoornis is niet het gevolg van een lichamelijke aandoening of het gebruik van drugs of medicatie. Ook horen de klachten niet bij een andere stoornis."
         ]
-      },
-      {
-        "tekst": "Vraag de tips aan"
       },
       {
         "tekst": "Waarom een sociale angststoornis ontstaat, is nog niet precies bekend. Waarschijnlijk spelen zowel erfelijke als omgevingsfactoren een rol bij het ontstaan ervan."
@@ -2224,7 +2215,7 @@ export const HOUVAST: Houvast[] = [
         ]
       },
       {
-        "tekst": "> Dit is mijn persoonlijke reis geweest van vervelende lastpak en huilebalk naar tevreden HSP. Dankbaar gebruikmakend van mijn gekregen eigenschap en talent.\\- Lees het hele verhaal van Rixte Wisselo"
+        "citaat": "Dit is mijn persoonlijke reis geweest van vervelende lastpak en huilebalk naar tevreden HSP. Dankbaar gebruikmakend van mijn gekregen eigenschap en talent.\\"
       },
       {
         "kop": "Oorzaken van hoogsensitiviteit"
@@ -2243,9 +2234,6 @@ export const HOUVAST: Houvast[] = [
       },
       {
         "tekst": "MIND heeft nog meer tips en adviezen geschreven over de positieve kanten, maar ook over de uitdagingen van hoogsensitief zijn."
-      },
-      {
-        "tekst": "Vraag de info gratis aan"
       }
     ],
     "bron": "https://wijzijnmind.nl/psychische-klachten/psychipedia/hoogsensitiviteit",
@@ -2465,7 +2453,7 @@ export const HOUVAST: Houvast[] = [
         ]
       },
       {
-        "tekst": "> Het is een moment waarop ik stil sta bij mezelf, even de ‘stand’ opneem waarin ik verkeer. Veel mensen zien mindfulness als zweverig, maar dat is het voor mij beslist niet! Ik ben daar ook te nuchter voor. Voor mij is het een soort graadmeter waarop ik kan zien hoe ik in mijn vel zit. Ben ik tijdens de oefeningen snel afgeleid, dwalen mijn gedachten vaak af, dan weet ik dat ik te veel aan mijn hoofd heb. Tijd om maatregelen te nemen en het een beetje rustiger aan te doen. - Lees het hele verhaal van Jacques"
+        "citaat": "Het is een moment waarop ik stil sta bij mezelf, even de ‘stand’ opneem waarin ik verkeer. Veel mensen zien mindfulness als zweverig, maar dat is het voor mij beslist niet! Ik ben daar ook te nuchter voor. Voor mij is het een soort graadmeter waarop ik kan zien hoe ik in mijn vel zit. Ben ik tijdens de oefeningen snel afgeleid, dwalen mijn gedachten vaak af, dan weet ik dat ik te veel aan mijn hoofd heb. Tijd om maatregelen te nemen en het een beetje rustiger aan te doen."
       }
     ],
     "bron": "https://wijzijnmind.nl/psychische-klachten/psychipedia/mindfulness",

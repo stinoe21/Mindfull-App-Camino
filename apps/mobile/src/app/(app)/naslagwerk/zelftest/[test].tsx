@@ -38,7 +38,6 @@ const nl = {
   nietGevondenUitleg: "Deze test bestaat niet of is verplaatst.",
   terugOverzicht: "Terug naar Houvast",
   overline: "ZELFTEST",
-  vragen: "{n} vragen, een paar minuten.",
   start: "Start de test",
   vraagVan: "VRAAG {x} van {y}",
   vorige: "Vorige",
@@ -58,7 +57,6 @@ const teksten: Woordenboek<typeof nl> = {
     nietGevondenUitleg: "This test doesn't exist or has been moved.",
     terugOverzicht: "Back to Houvast",
     overline: "SELF-TEST",
-    vragen: "{n} questions, a few minutes.",
     start: "Start the test",
     vraagVan: "QUESTION {x} of {y}",
     vorige: "Previous",
@@ -117,12 +115,11 @@ export default function ZelftestScherm() {
           <AppText rol="labelOverline" kleur="brand">{t("overline")}</AppText>
           <AppText rol="h1">{test.titel}</AppText>
         </View>
+        {/* De intro van MIND zegt zelf al hoeveel stellingen het zijn en dat
+            het een paar minuten duurt; geen eigen regel eronder die dat herhaalt. */}
         <AppText rol="bodyEmphasis">{test.intro}</AppText>
         {test.noot ? <AppText rol="body">{test.noot}</AppText> : null}
-        <View style={{ gap: space[3] }}>
-          <AppText rol="bodySmall" kleur="secondary">{t("vragen").replace("{n}", String(test.vragen.length))}</AppText>
-          <Button label={t("start")} fullWidth onPress={() => zetFase("vragen")} />
-        </View>
+        <Button label={t("start")} fullWidth onPress={() => zetFase("vragen")} />
         {test.instrument ? <AppText rol="labelCaption" kleur="secondary">{test.instrument}</AppText> : null}
       </ScreenCanvas>
     );

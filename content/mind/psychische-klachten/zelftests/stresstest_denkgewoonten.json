@@ -1,10 +1,10 @@
 {
   "slug": "stresstest_denkgewoonten",
-  "titel": "Stresstest: Denkgewoonten",
+  "titel": "Denkgewoonten test",
   "url": "https://formulier.wijzijnmind.nl/stresstest_denkgewoonten",
   "formulier": "https://cdn.novti.io/tenants/mind/forms/4jH1aQoYSYFsjy6JY1CR.json",
   "opgehaald": "2026-09-14",
-  "intro": "Denkgewoonten zijn gedachten die we elke keer weer hebben in bepaalde situaties. Gedachten als ‘ik mag geen fouten maken’ en ‘belangrijke mensen in mijn omgeving moeten mij aardig vinden’ zijn hier voorbeelden van. Ze bepalen keer op keer hoe we ons voelen in bepaalde situaties en hoe we reageren. Denkgewoonten kunnen veel stress veroorzaken.De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
+  "intro": "Denkgewoonten zijn gedachten die we elke keer weer hebben in bepaalde situaties. Gedachten als ‘ik mag geen fouten maken’ en ‘belangrijke mensen in mijn omgeving moeten mij aardig vinden’ zijn hier voorbeelden van. Ze bepalen keer op keer hoe we ons voelen in bepaalde situaties en hoe we reageren. Denkgewoonten kunnen veel stress veroorzaken. De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
   "noot": "Het is geen wetenschappelijke test en uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
   "instrument": "",
   "scoring": "som",

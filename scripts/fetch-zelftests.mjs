@@ -61,22 +61,43 @@ const ontHtml = (s) =>
     .replace(/&eacute;/g, "é")
     .replace(/&euml;/g, "ë")
     .replace(/&[a-z]+;/g, "");
-const plat = (html) => ontHtml(html.replace(/<[^>]+>/g, "")).replace(/\s+/g, " ").trim();
+// Tags weg: een regeleinde of blok wordt een spatie (anders plakken zinnen
+// aan elkaar), een inline tag (<b>, <u>, <span>) verdwijnt zonder spatie
+// (anders komt er een spatie voor de punt).
+const plat = (html) =>
+  ontHtml(
+    html
+      .replace(/<(?:br|\/?p|\/?div|\/?h[1-6]|\/?li|\/?ul|\/?ol)\b[^>]*>/g, " ")
+      .replace(/<[^>]+>/g, "")
+  )
+    .replace(/\s+/g, " ")
+    .replace(/\s+([.,;:!?])/g, "$1")
+    .trim();
 
 // De intro op de pagina: de tekst in de content-container naast de titel,
 // in drie delen: de gewone intro, de vetgedrukte noot ("... is geen
-// diagnose") en de cursieve bronregel (het instrument).
+// diagnose") en de cursieve bronregel (het instrument). De kop van de
+// pagina ("Doe de stress-test") staat in een h1 of h2 en loopt op sommige
+// pagina's door tot na de intro; de kop zelf is de tekst tot de eerste <br>.
 function leesIntro(html) {
   const m = html.match(/<div[^>]*class="content-container">([\s\S]*?)<\/div>\s*<\/div>\s*<div[^>]*class="cell image-holder"/);
-  if (!m) return { intro: "", noot: "", instrument: "" };
-  let s = m[1].replace(/<h1>[\s\S]*?<\/h1>/, "");
-  const instrument = (s.match(/<i>([\s\S]*?)<\/i>/) || [])[1] || "";
-  s = s.replace(/<i>[\s\S]*?<\/i>/, "");
-  // De noot is het vette blok dat een eigen regel heeft (niet het "afgelopen week" midden in een zin).
-  const vetten = [...s.matchAll(/<b>([\s\S]*?)<\/b>/g)].map((x) => x[1]).filter((x) => /<br>|diagnose/i.test(x));
-  const noot = vetten.map((x) => plat(x)).filter(Boolean).join(" ");
-  for (const v of vetten) s = s.replace(`<b>${v}</b>`, " ");
-  return { intro: plat(s), noot, instrument: plat(instrument) };
+  if (!m) return { titel: "", intro: "", noot: "", instrument: "" };
+  let s = m[1];
+  const kop = s.match(/<h[12][^>]*>((?:(?!<br|<\/h[12]|<p\b)[\s\S])*)/);
+  const titel = kop ? plat(kop[1]) : "";
+  if (kop) s = s.replace(kop[1], " ");
+  // Het instrument is de cursieve bronregel: een hele zin, niet een los
+  // cursief woord midden in de intro ("helemaal mee eens").
+  const cursief = [...s.matchAll(/<i[^>]*>([\s\S]*?)<\/i>/g)].map((x) => x[1]).filter((x) => plat(x).length >= 40);
+  const instrument = cursief.map(plat).join(" ");
+  for (const c of cursief) s = s.replace(c, " ");
+  // De noot zijn de zinnen over de diagnose ("Uit deze test volgt geen
+  // diagnose. Alleen een psycholoog ..."). Op de site staan ze vet, maar
+  // sommige pagina's zetten de hele intro vet, dus we kijken naar de zinnen.
+  const zinnen = plat(s).match(/[^.!?]+[.!?]+(?:\s|$)/g) || [plat(s)];
+  const noot = zinnen.filter((z) => /diagnose/i.test(z)).join("").replace(/\s+/g, " ").trim();
+  const intro = zinnen.filter((z) => !/diagnose/i.test(z)).join("").replace(/\s+/g, " ").trim();
+  return { titel, intro, noot, instrument };
 }
 
 function* loop(componenten) {
@@ -133,8 +154,12 @@ for (const t of lijst) {
   const formUrl = (html.match(/initForm\('([^']+)'/) || [])[1];
   if (!formUrl) throw new Error(`geen formulier gevonden op ${t.url}`);
   const form = JSON.parse(await haal(formUrl));
-  const titel = (html.match(/"pageMetadata":\{[^}]*?"name":"([^"]+)"/) || [])[1] || t.titel;
-  const data = reduceer(form, { slug, titel, url: t.url, formulier: formUrl, opgehaald: OPGEHAALD, ...leesIntro(html) });
+  // De titel is de kop van de pagina zonder de aansporing ("Doe de
+  // angsttest" wordt "Angsttest"); ontbreekt de kop, dan de titel uit de lijst.
+  const { titel: kop, ...intro } = leesIntro(html);
+  const zonderDoe = kop.replace(/^doe de\s+/i, "");
+  const titel = zonderDoe ? zonderDoe.charAt(0).toUpperCase() + zonderDoe.slice(1) : t.titel;
+  const data = reduceer(form, { slug, titel, url: t.url, formulier: formUrl, opgehaald: OPGEHAALD, ...intro });
   writeFileSync(join(DOEL, `${slug}.json`), JSON.stringify(data, null, 2) + "\n");
   klaar.push({ slug, titel, vragen: data.vragen.length, uitslagen: data.uitslagen.length, scoring: data.scoring });
   console.log(`${slug}: ${data.vragen.length} vragen, ${data.uitslagen.length} uitslagen, ${data.scoring}`);
