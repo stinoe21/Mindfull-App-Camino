@@ -1857,8 +1857,81 @@ export const GIDSEN: Gids[] = [
     "titel": "KOPP/KOV",
     "url": "https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/kopp-kov",
     "aanmeld": "https://formulier.wijzijnmind.nl/flyer_koppkov",
-    "intro": "",
-    "blokken": []
+    "intro": "Als je opgroeit bij een ouder of ouders met psychische of verslavingsproblemen (ook wel KOPP/KOV genoemd) draag je hier vaak je hele leven de gevolgen van. Zo ook op volwassen leeftijd. Voorbeelden hiervan zijn: snel gevoelens van angst en spanning ervaren, je erg verantwoordelijk voelen voor anderen, relaties die stroef lopen, moeite hebben met het aangeven van grenzen en last hebben van schuldgevoelens en eenzaamheid. Welkom bij deze online gids met tips die je helpen hiermee om te gaan.",
+    "blokken": [
+      {
+        "kop": "Krijg inzicht in de invloed van KOPP/KOV op je leven"
+      },
+      {
+        "tekst": "Vaak helpt inzicht om beter met iets om te gaan. Ook al is het lang geleden, jouw vroegere thuissituatie kan nog steeds een stempel op jouw leven drukken. Misschien is het voor jou al heel duidelijk om welke gevolgen het gaat, maar het kan ook zijn dat je nog op zoek bent naar bepaalde puzzelstukjes. Verdiep je in het onderwerp KOPP/KOV en bekijk wat je bij jezelf herkent. Dit kan je helpen bepaalde patronen bij jezelf te zien en deze te doorbreken. Lees bijvoorbeeld onze informatie over KOPP/KOV en die van Naasten Centraal."
+      },
+      {
+        "tekst": "Ik begrijp mezelf nu, weet waar het vandaan komt en heb actieplannen die ik kan inzetten als ik ergens tegenaan loop zoals triggers van buitenaf of signalen van binnenuit. Ik heb geaccepteerd dat sommige dingen niet verdwijnen, maar dat ik ze wel kan verdragen."
+      },
+      {
+        "tekst": "KOPP/KOV volwassene"
+      },
+      {
+        "kop": "Geef je grenzen aan"
+      },
+      {
+        "tekst": "Veel KOPP/KOV volwassenen vinden het lastig om hun grenzen te herkennen en te stellen. Dit komt doordat er vroeger geen of weinig ruimte was voor jouw eigen behoeften, er geen duidelijke grenzen waren of dat er geen rekening met jouw grenzen werd gehouden. Zijn je ouders nog in jouw leven? Stel heldere grenzen naar je ouder(s) over wat je wel wil en kan doen en wat niet. Je mag zelf kiezen welke plek ze in je leven innemen. En hoeveel contact en welke vorm van contact voor jou goed voelt. Ook als dit geen contact is. Wat er speelt in het leven van je ouder(s), komt niet door jou en valt ook niet onder jouw verantwoordelijkheid. KOPP/KOV volwassenen kunnen schuldgevoelens ervaren vanuit verantwoordelijkheidsgevoel dat al op jonge leeftijd is ontstaan. Weet dat je niet de enige bent en dat je altijd je grenzen mag bewaken, ook al voelt dit onnatuurlijk."
+      },
+      {
+        "tekst": "Stel daarnaast duidelijke grenzen naar de mensen in je omgeving, zoals vrienden, familie en collega’s. Door grenzen te stellen en je hieraan te houden, pak je controle over je leven. Het is jouw leven en jij bepaalt hoe je dat vormgeeft. Kan je hierbij wel wat hulp gebruiken? Wij schreven een online gids met tips om je grenzen te leren kennen en aan te geven, waarbij je ook rekening houdt met de grenzen van de ander. Ook op de website van Naasten in Kracht vind je informatie en tips over grenzen stellen."
+      },
+      {
+        "kop": "Praat erover"
+      },
+      {
+        "tekst": "Vaak lucht het op om te praten over je gevoelens. Vertel iemand in je omgeving die je vertrouwt over de invloed van jouw jeugd. De meeste mensen reageren begripvol als iemand zich openstelt. Een luisterend oor kan al heel fijn zijn. Onthoud: jij bent de baas over wat je wel en niet wil vertellen. Het kan wel eens voorkomen dat iemand jou niet gelooft of begrijpt. Laat je hier niet te veel door beïnvloeden en besef dat jouw ervaring niet afhankelijk is van hoe anderen daarop reageren. Jij hebt het zo ervaren en het is niet aan anderen daarover te oordelen. Vind jij het moeilijk om over je gevoelens te praten? Wij schreveninfo en tips om te praten over hoe je je voelt."
+      },
+      {
+        "kop": "Zoek contact met andere volwassen KOPP/KOV kinderen"
+      },
+      {
+        "tekst": "KOPP/KOV kan ervoor zorgen dat jij je soms onbegrepen en misschien wel eenzaam voelt. Maar je bent niet de enige! Er lopen in Nederland veel meer mensen rond die hiermee te maken hebben. Het kan heel fijn zijn om eens te praten met mensen die ook opgegroeid zijn bij een kwetsbare ouder. Zo kan je echt ervaren dat je niet de enige bent en dit kan veel herkenning en steun geven. Wie weet kunnen anderen met je meedenken als je ergens tegenaan loopt: de kans is groot dat een ander eenzelfde soort probleem al eens eerder heeft meegemaakt. Naasten Centraal biedt verschillende vormen van lotgenotencontact, zoals contactgroepen, Facebookgroepen, e-mailondersteuning en telefonische ondersteuning voor een luisterend oor. Ben jij op zoek naar contact met gelijkgestemden? Via de Met Zonder Ouders Community kom je in contact met anderen die ook zijn opgegroeid met een ouder (of ouders) met psychische en/of verslavingsproblematiek."
+      },
+      {
+        "tekst": "Voel jij je eenzaam en ben jij op zoek naar handvatten om gevoelens van eenzaamheid aan te pakken? Lees onze tips."
+      },
+      {
+        "kop": "Probeer te accepteren dat je ervaringen als kind impact op je leven hebben"
+      },
+      {
+        "tekst": "Het kan zijn dat je nog dagelijks worstelt met gevoelens van verdriet en boosheid om wat jou is overkomen en om welke invloed dat nog steeds op jouw leven heeft. Dat is een logische reactie. Laat je boosheid en verdriet er zijn en duw het niet steeds weg. Probeer ook niet te oordelen dat je dit voelt. Je zal merken dat deze gevoelens hierdoor milder worden en het makkelijker wordt de situatie te accepteren, zoals die is. Dat klinkt misschien als makkelijker gezegd dan gedaan en vaak lukt dit niet van de ene op de andere dag. Maar door je hier bewust van te zijn en ermee bezig te gaan, ontstaat er steeds wat meer ruimte om er op een andere manier naar te kijken en er beter mee om te gaan."
+      },
+      {
+        "tekst": "Wat mij heel erg heeft geholpen om het te accepteren is het besef dat mijn moeder vanwege haar eigen problematiek niet de ‘middelen’ had om het anders te doen. Dat zij niet anders kon, betekent overigens niet dat zij niet de verantwoordelijkheid had om goed voor mij te zorgen. Dit besef geeft mij rust en zorgt ervoor dat ik met een zachtere blik naar mijn moeder kan kijken."
+      },
+      {
+        "tekst": "KOPP/KOV volwassene"
+      },
+      {
+        "kop": "Denk positief"
+      },
+      {
+        "tekst": "Waarschijnlijk weet je wel of heb je wel eens gehoord dat je gedachten veel invloed hebben op hoe je je voelt en je gedraagt. Zo zorgen negatieve gedachten voor een negatief gevoel en dragen positieve gedachten bij aan een positief gevoel. Het mooie is dat je kan leren om anders te denken. Als je inzicht hebt in je gedachtenpatronen, kan je hier invloed op uit gaan oefenen. Wil jij hiermee aan de slag? Doe dan onze oefeningen om je gedachten helpend te maken. Daarnaast kan het soms fijn zijn om ook eens stil te staan bij de goede eigenschappen van of leuke herinneringen aan jouw zieke ouder. Dit kan je soms bijna vergeten, doordat het ‘goede’ van je ouder wordt overschaduwd door de moeilijke momenten."
+      },
+      {
+        "kop": "Geloof in jezelf"
+      },
+      {
+        "tekst": "Je hebt veel meegemaakt. Dat heeft gemaakt tot wie je bent. Misschien ben je hierdoor op sommige vlakken ook wel sterker geworden. Denk aan doorzettingsvermogen, je in kunnen leven in andere mensen en de eigenschap om andere mensen de ruimte te geven om zichzelf te zijn. Sta eens stil bij jouw sterke kanten. Schrijf ze eventueel op in je telefoon of op een notitieblaadje en haal ze tevoorschijn op de momenten dat je het kan gebruiken."
+      },
+      {
+        "kop": "Wees lief voor jezelf"
+      },
+      {
+        "tekst": "Als er als kind niet goed voor je is gezorgd kan het moeilijk zijn om met begrip, vriendelijkheid en mildheid naar jezelf te kijken. Zonde, want hiermee doe je jezelf tekort. Wij benadrukken bij deze: Jij mag er zijn! Neem de tijd en ruimte voor hoe jij in het leven wil staan en de dingen te doen die voor jou goed voelen. En daar hoef je je niet schuldig over te voelen! Investeer in je eigen leven en doe leuke dingen waar je energie van krijgt en van ontspant. Heb je moeite om je te ontspannen? Doe onze ontspanningsoefeningen."
+      },
+      {
+        "kop": "Zoek hulp als dat nodig is"
+      },
+      {
+        "tekst": "Heb jij psychische of lichamelijke klachten die het moeilijk maken je dagelijkse dingen te doen? Als KOPP/KOV heb je een verhoogde kans om ook zelf psychische of verslavingsproblemen te krijgen. Je hoeft je hiervoor niet te schamen! Blijf er dus niet mee rondlopen als je er last van hebt. Zoek professionele hulp en begeleiding. Naar de huisarts gaan is een eerste stap om professionele hulp te vragen. Je huisarts kan je ondersteunen en je doorverwijzen als dat nodig is."
+      }
+    ]
   },
   {
     "slug": "helpende-gedachten",
@@ -2394,8 +2467,58 @@ export const GIDSEN: Gids[] = [
     "onderwerp": "Angst",
     "url": "https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/paniekaanval",
     "aanmeld": "https://formulier.wijzijnmind.nl/flyer_paniekaanvallen",
-    "intro": "",
-    "blokken": []
+    "intro": "Welkom bij deze online gids met praktische tips als je last hebt van paniekaanvallen. We helpen je een paniekaanval te begrijpen en geven je handvatten hoe hiermee om te gaan.",
+    "blokken": [
+      {
+        "kop": "Een paniekaanval in het kort"
+      },
+      {
+        "tekst": "Een paniekaanval is een intense aanval van angst en spanning. Je kan het gevoel krijgen gek te worden, de controle te verliezen of dood te gaan. Tijdens een paniekaanval ervaar je ook lichamelijke klachten, zoals koude rillingen, misselijkheid, zweten, trillen of druk op de borst. Een paniekaanval kan je als heel heftig ervaren. Heb je zelf wel eens een paniekaanval, of wordt iemand in je nabije omgeving wel eens door paniek overvallen? We hopen dat je iets hebt aan de tips op deze pagina."
+      },
+      {
+        "kop": "Begrijp hoe een paniekaanval ontstaat"
+      },
+      {
+        "tekst": "Als je last hebt van paniekaanvallen, helpt het om te begrijpen hoe een paniekaanval werkt. Een paniekaanval start vaak met lichamelijke angstverschijnselen, zoals hartkloppingen, misselijkheid, of een versnelde ademhaling. Tijdens een paniekaanval begrijp je deze symptomen verkeerd. Bij hartkloppingen denk je bijvoorbeeld dat er iets mis is met je hart. Door de verkeerde invulling die je gedachten eraan geven, nemen de angst en de lichamelijke klachten nog verder toe. Zo ontstaat een vicieuze cirkel:"
+      },
+      {
+        "kop": "Vermijd niet"
+      },
+      {
+        "tekst": "Als je al eens een paniekaanval hebt gehad, krijg je misschien de neiging om de plek waar je de paniekaanval hebt gehad te vermijden uit angst voor herhaling. Je krijgt als het ware angst voor de angst. Het is heel belangrijk om niet te gaan vermijden. Als je dat namelijk doet, leer je jezelf aan dat je je rustiger voelt als je niet naar de plek toe gaat waar je bang voor bent. Dat voelt even fijn. Maar vervolgens wordt de stap en de angst om daarheen te gaan alleen maar groter. Wees je angst dus de baas en ga de confrontatie aan. Alleen dan kan je ervaren dat waar je bang voor bent niet gebeurt."
+      },
+      {
+        "kop": "Weet: angst wordt altijd minder"
+      },
+      {
+        "tekst": "Als je toch een paniekaanval krijgt, dan is het goed om je te beseffen dat de angst ALTIJD weer zal zakken. De lichamelijke klachten die je tijdens een paniekaanval ervaart, gaan voorbij en worden vanzelf minder. Een angstig gevoel kan namelijk niet eeuwig aanhouden. Dat bestaat gewoonweg niet. Dit komt omdat je lichaam en hersenen niet in staat zijn om langdurig in de ‘hoogste staat van paraatheid’ te verkeren."
+      },
+      {
+        "kop": "Leid jezelf af"
+      },
+      {
+        "tekst": "Voel je een paniekaanval aankomen, leid jezelf dan af. Kijk om je heen en neem de omgeving in je op. Wat zie je? Wat doen andere mensen? Wat ook helpt, is jezelf een opdracht geven waarbij je moet nadenken. Tel bijvoorbeeld terug van honderd naar één, bedenk wat je de afgelopen week iedere dag gegeten hebt, of spel woorden achterstevoren zoals je naam en adres. Op deze manier moeten je hersenen zich bezighouden met iets anders dan de angst."
+      },
+      {
+        "kop": "Focus op je ademhaling"
+      },
+      {
+        "tekst": "Heb je een paniekaanval, focus dan op je ademhaling. Als mensen angstig of gespannen zijn, zijn ze geneigd steeds hoger te gaan ademhalen. Dus niet onderin de buik, maar hoog op de borst. Dat is een oppervlakkige, snelle en onrustige ademhaling. Je kan spanning in je lijf weghalen door bewust terug te gaan naar een diepe buikademhaling. Door je te focussen op je ademhaling, heb je minder aandacht voor je angst. Hierdoor zal de angst afnemen. Oefen thuis om te ontspannen via je ademhaling."
+      },
+      {
+        "kop": "Last van paniek of angst? Doe de fysiologische zucht"
+      },
+      {
+        "linkLabel": "Bekijk de video",
+        "linkUrl": "https://www.youtube.com/watch?v=ohxkKiCXpj4"
+      },
+      {
+        "kop": "Praat erover"
+      },
+      {
+        "tekst": "Maak je je zorgen over het krijgen van een paniekaanval, dan is het belangrijk om dit met anderen te delen. Praten lucht op! Door te praten over je problemen geef je voor jezelf toe dat ze er zijn. Door hardop te denken merk je wat voor klachten je hebt en in welke mate. En misschien ontdek je dat je niet de enige bent met dit probleem. Kan je wel wat hulp gebruiken met hoe je kan praten over je gevoel? Wij schreven een online gids met tips. Heb je regelmatig last van paniekaanvallen, dan raden wij je aan hierover te praten met je huisarts."
+      }
+    ]
   },
   {
     "slug": "piekeren",
@@ -2602,8 +2725,103 @@ export const GIDSEN: Gids[] = [
     "titel": "Psychische klachten bij ouderen",
     "url": "https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/psychische-klachten-ouderen",
     "aanmeld": "https://formulier.wijzijnmind.nl/flyer_psychische_klachten_ouderen",
-    "intro": "",
-    "blokken": []
+    "intro": "Welkom bij onze online gids met praktische tips die je helpen om te gaan met psychische klachten als je al wat ouder bent. Je vindt hier stappen die kunnen helpen bij contact houden met andere mensen, erover praten en hulp zoeken, je manier van denken aan te pakken en gezond te leven.",
+    "blokken": [
+      {
+        "kop": "Psychische klachten bij ouderen in het kort"
+      },
+      {
+        "tekst": "Je voelt je eenzaam, hebt steeds minder zin om dingen te ondernemen, bent angstig of somber, slaapt slecht, piekert veel, bent snel geïrriteerd of in de war. Dit zijn een aantal voorbeelden van psychische klachten waar je last van kan hebben. Ze kunnen ervoor zorgen dat het moeilijk is om je dagelijkse dingen te doen. Zoals koken, boodschappen doen en afspreken met familie of vrienden. Psychische problemen kunnen iedereen overkomen en kunnen ook op oudere leeftijd ontstaan of erger worden. Ze kunnen samengaan met het verlies van dierbaren, vragen over het leven en lichamelijke klachten die horen bij het ouder worden."
+      },
+      {
+        "tekst": "Zo kunnen lichamelijke klachten, een onderliggende ziekte of bijwerkingen van medicijnen psychische klachten veroorzaken of hier invloed op hebben. Tegelijkertijd kunnen psychische klachten zorgen voor lichamelijke klachten, bijvoorbeeld doordat je problemen hebt met slapen, je slecht eet en drinkt of meer alcohol drinkt."
+      },
+      {
+        "kop": "Houd contact met andere mensen"
+      },
+      {
+        "tekst": "Mensen die niet zo lekker in hun vel zitten, zijn soms geneigd zich terug te trekken en contacten met anderen uit de weg te gaan. Begrijpelijk, maar dit kan er juist voor zorgen dat je je eenzaam voelt of meer tijd hebt om te piekeren. Probeer daarom contact te houden en af te blijven spreken met vrienden, kennissen en familie. Heb je niet zoveel mensen om je heen? Bijvoorbeeld omdat je mensen in jouw omgeving hebt verloren? Dat is verdrietig. Maar wist je dat er verschillende mogelijkheden zijn om met andere mensen in contact te komen? Denk aan het doen van vrijwilligerswerk in de buurt of aan activiteiten die speciaal voor ouderen worden georganiseerd. Kijk bijvoorbeeld eens in het buurtkrantje of zoek op Google naar ‘activiteiten ouderen’ en vul daarbij jouw stad of gemeente in."
+      },
+      {
+        "kop": "Praat erover"
+      },
+      {
+        "tekst": "Hoewel de meeste mensen makkelijk praten over lichamelijke klachten, is dat bij psychische klachten niet altijd het geval. Iemand schaamt zich ervoor, heeft het gevoel niet sterk genoeg te zijn of wil anderen niet belasten met dit soort gevoelens. Herken je jezelf hierin en houd je je psychische klachten voor jezelf? Dit kan er juist voor zorgen dat jij je nog eenzamer of somberder voelt. En dat is helemaal niet nodig! Er zijn echt heel veel ouderen die dit ervaren. Het is dan ook absoluut niet iets om je voor te schamen en het is ook geen teken van zwakte."
+      },
+      {
+        "tekst": "Net als bij lichamelijke klachten, kan iedereen psychische klachten krijgen. Vaak lucht het op om te praten over je gevoelens en klachten met mensen in je omgeving, zoals familie, vrienden of de mensen die voor je zorgen. De meeste mensen reageren begripvol als iemand zich openstelt. Een luisterend oor kan al heel fijn zijn. Door mensen te betrekken, weten ze beter wat er in jou omgaat en kunnen ze je beter steunen. Misschien kom je er ook wel achter dat anderen dingen herkennen en kan je elkaar steunen. Dit draagt bij aan jouw of jullie gevoel er niet alleen voor te staan. Vind je het lastig om te praten over gevoelens en klachten? Wij schreven een online gids met tips."
+      },
+      {
+        "kop": "Zoek hulp"
+      },
+      {
+        "tekst": "Blijf er niet mee rondlopen als je klachten ervaart of twijfelt over wat er met je aan de hand is. Neem de mensen in je omgeving in vertrouwen en zoek professionele hulp. Naar de huisarts gaan is de eerste stap om professionele hulp te vragen. Je huisarts kan je ondersteunen en je doorverwijzen als dat nodig is voor bijvoorbeeld onderzoek of behandeling. Vraag, als je dat fijn vindt, iemand die je vertrouwt om met je mee te gaan. Woon je in een verpleeghuis? Praat erover met iemand die je verzorgt, of geef het aan bij je familie, zodat het verpleeghuis hulp kan inschakelen."
+      },
+      {
+        "kop": "Verminder het piekeren"
+      },
+      {
+        "tekst": "Merk je dat je veel piekert? Helaas leidt piekeren niet tot nieuwe inzichten of oplossingen. Veel piekeren kan er juist voor zorgen dat je je angstiger of somberder voelt. Wij geven je drie korte tips om hier meer controle over te krijgen:"
+      },
+      {
+        "lijst": [
+          "Zoek afleiding als je merkt dat je begint te piekeren.",
+          "Plan iedere dag een kwartier in waarin je heel bewust mag piekeren. Stop echt na dit kwartier! Plopt er toch een piekergedachte op? Schrijf het op en denk er pas over na in je piekerkwartier.",
+          "Stel jezelf zo weinig mogelijk de vraag \"wat als…?\", zodat je minder in de verleiding komt om hier allerlei antwoorden op te bedenken."
+        ]
+      },
+      {
+        "tekst": "Wil je uitgebreide uitleg over deze tips? Wij schreven een online gids met tips en technieken om piekeren tegen te gaan."
+      },
+      {
+        "kop": "Probeer anders te denken"
+      },
+      {
+        "tekst": "Wist je dat je met je manier van denken invloed kan uitoefenen op hoe je je voelt en gedraagt? Het mooie hiervan is dat je veel kan bereiken door je gedachten op een positieve manier te veranderen. Natuurlijk veranderen je gedachten niets aan de situatie waar je in zit en dat kan nog steeds heel vervelend zijn. Maar ze kunnen er wel voor zorgen dat de situatie beter te dragen is. Een voorbeeld: je ziet jouw kinderen en kleinkinderen minder dan je zou willen. Je kan dan denken: \"Ik ben niet zo belangrijk voor mijn kinderen en kleinkinderen, anders zouden ze me wel vaker op komen zoeken.\" Deze gedachten zijn niet helpend en maken je waarschijnlijk verdrietig of misschien wel boos. Je kan ook anders over de situatie denken: \"Mijn kinderen en kleinkinderen zie ik misschien niet zo veel, maar als ik ze zie is dat erg fijn. Ze hebben een druk leven en het is goed te begrijpen dat ze niet zo vaak langs kunnen komen als ik zou willen.\" De situatie is precies hetzelfde, maar de kans is groot dat jij je door deze gedachte een stuk fijner voelt."
+      },
+      {
+        "tekst": "Wil je aan de slag met je gedachten? Wij schreven een online gids met oefeningen om gedachten helpend te maken."
+      },
+      {
+        "kop": "Besteed aandacht aan het positieve"
+      },
+      {
+        "tekst": "Natuurlijk is het lastig om positief te blijven als je het lastig hebt. Maar het leven is nooit alleen maar negatief. Er zijn altijd positieve dingen te bedenken. Dat kunnen kleine dingen zijn, zoals een fijne wandeling die je hebt gemaakt, iemand die naar je lachte of een leuke film die je hebt gezien. Probeer een aantal dagen in de week minimaal 3 dingen te bedenken die fijn waren aan de dag."
+      },
+      {
+        "kop": "Blijf in beweging"
+      },
+      {
+        "tekst": "Bewegen heeft een goede invloed op onze hersenen en ook op psychische klachten. Probeer iedere week minimaal 2,5 uur matig intensief te bewegen. Verdeel dit over de week. Je beweegt matig intensief bij activiteiten waarbij je hartslag en ademhaling omhooggaan. Denk aan fietsen, tuinieren of zwemmen. Doe ook 2 keer per week spier- en botversterkende activiteiten, zoals dansen of fitness. Voor oudere mensen is het advies om ook balansoefeningen te doen. Denk aan oefeningen als op één been staan, over een lijn lopen of een voorwerp van de grond oppakken. Dit kan ook yoga zijn."
+      },
+      {
+        "tekst": "Vind je het lastig om voldoende te bewegen, omdat je lichamelijk niet meer zo sterk bent of omdat je lichamelijke klachten hebt? Bedenk dat het niet nodig is om je in het zweet te werken. In jouw eigen tempo een rondje om of naar de supermarkt, eventueel met hulpmiddelen, telt ook! Kan je nog wel goed bewegen, maar vind je het lastig jezelf te motiveren? Zoek iemand in je omgeving waarmee je het samendoet. Word lid van de sportschool of doe mee met een wandelgroep. Je kan elkaar motiveren en het is nog gezellig ook."
+      },
+      {
+        "kop": "Slaap voldoende"
+      },
+      {
+        "tekst": "Slapen is nodig om je lichaam en geest te laten herstellen van de dag. Door de klachten die je hebt, kan het zijn dat je moeite hebt met in slaap komen of dat je ’s nachts wakker ligt en weer lastig in slaap komt. Wat kan helpen om beter te slapen, is voor het slapengaan niet te veel meer te doen. Ook een slaapritueel helpt. Een slaapritueel bestaat uit een aantal vaste gewoonten die je dagelijks doet voor het slapengaan. Bijvoorbeeld iedere avond nog een stukje in een boek lezen en wat ontspannende oefeningen doen. Op zoek naar meer tips en handvatten om beter te slapen? Doe mee met de Beter Slapen Challenge. Je krijgt dan meerdere mails met opdrachten en tips voor een betere nachtrust."
+      },
+      {
+        "kop": "Ontspan en doe leuke dingen"
+      },
+      {
+        "tekst": "Het nemen van voldoende momenten van ontspanning is belangrijk. Waar de een ontspant van een warm bad, doet een ander dat van muziek luisteren of een goed boek lezen. Ook kan het per keer verschillen waar jij van ontspant. Bedenk wat jij allemaal leuk en ontspannend vindt en probeer hier iedere dag tijd voor te nemen. Vind je het moeilijk om te ontspannen? Sommige mensen hebben veel aan ontspanningsoefeningen."
+      },
+      {
+        "kop": "Eet gezond en drink voldoende"
+      },
+      {
+        "tekst": "Mensen die niet zo lekker in hun vel zitten, vinden het soms lastig om goed voor zichzelf te zorgen. Denk bijvoorbeeld aan gezond en vers blijven eten en voldoende drinken. Als je al wat ouder bent, kan je minder dorst ervaren terwijl je lichaam wel behoefte heeft aan vocht. Probeer hier zoveel mogelijk op te letten, want gezonde en voldoende voeding zorgt niet alleen voor een gezond lijf, maar ook voor een gezonde geest! Vind je het lastig om zelf boodschappen te doen en te koken? Op deze webpagina van het Voedingscentrum lees je tips over boodschappen doen (zoals online bestellen), tips bij het koken en over kant-en-klaarmaaltijden."
+      },
+      {
+        "kop": "Stop of verminder alcoholgebruik"
+      },
+      {
+        "tekst": "Drink je alcohol? Stop hiermee of gebruik dit zo weinig mogelijk. In plaats van dat jij je hierdoor beter voelt, kan het jouw psychische klachten verergeren. Ook is het zo dat ouderen gevoeliger worden voor alcohol. Doordat je stofwisseling trager werkt, heb je steeds minder alcohol nodig om hetzelfde effect te krijgen. Je lichaam heeft meer tijd nodig om alcohol af te breken. Daarnaast heeft alcohol vaak invloed op medicijnen. Het kan ervoor zorgen dat medicijnen te sterk gaan werken, de werking verstoord wordt of dat ze (bijna) niet meer werken. Vind je het lastig om te stoppen of te minderen? Op de website Alcoholinfo.nl lees je tips en vind je informatie over waar je terecht kan voor hulp. Drink je te veel en schaam je je daarvoor? Niet doen! Alcoholproblemen komen veel voor bij ouderen, je bent dus niet de enige!"
+      }
+    ]
   },
   {
     "slug": "psychose-in-je-omgeving",
@@ -2793,8 +3011,93 @@ export const GIDSEN: Gids[] = [
     "titel": "PTSS in je omgeving",
     "url": "https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/ptss-naasten",
     "aanmeld": "https://formulier.wijzijnmind.nl/flyer_ptss_naasten",
-    "intro": "",
-    "blokken": []
+    "intro": "Welkom bij deze online gids met tips die je helpen bij de omgang met een naaste met PTSS. Je vindt hier handvatten om beter te snappen wat de ander doormaakt en wat jij kan doen om te helpen. Ook bieden we je tips over hoe je goed voor jezelf blijft zorgen en zelf overeind blijft.",
+    "blokken": [
+      {
+        "kop": "PTSS in het kort"
+      },
+      {
+        "tekst": "Mensen met een posttraumatische-stressstoornis (PTSS) hebben een schokkende gebeurtenis meegemaakt en blijven last hebben van klachten. Voorbeelden van schokkende gebeurtenissen zijn lichamelijk, psychisch of seksueel geweld, een verkeersongeluk, oorlog of het verliezen van een dierbare."
+      },
+      {
+        "tekst": "Zo kan het zijn dat iemand met PTSS de gebeurtenis steeds opnieuw beleeft in het hoofd en last heeft van nachtmerries en slaapproblemen. Gedachten en dingen die aan de gebeurtenis doen denken, worden vermeden. Ook negatieve gedachten en gevoelens, nergens zin in hebben, prikkelbaar en snel boos zijn, kunnen horen bij PTSS. Veel mensen met PTSS schrikken snel en concentreren kost moeite. Het komt vaak voor dat iemand met PTSS zichzelf of anderen onterecht de schuld geeft van wat er is gebeurd."
+      },
+      {
+        "tekst": "Hoewel er verschillen zijn tussen de symptomen die mensen met PTSS ervaren, heeft het in de meeste gevallen veel invloed op het dagelijkse leven. Daarnaast heeft het meestal veel impact op het leven van mensen in de omgeving."
+      },
+      {
+        "kop": "Stimuleer om hulp te zoeken"
+      },
+      {
+        "tekst": "Veel mensen die een schokkende gebeurtenis hebben meegemaakt, voelen zich erna gespannen, moeten er veel aan denken of dromen erover. Dit gaat in de meeste gevallen vanzelf over. Blijft jouw naaste erg angstig of zijn er klachten die (mogelijk) passen bij PTSS? Bespreek jouw zorg, geef aan dat de ander er niet alleen voor staat en stimuleer om hulp te zoeken. Misschien wil jouw naaste het liefst vermijden om erover te praten. Weet dat dit hoort bij de PTSS en dat er behandelingen bestaan die echt kunnen helpen. Naar de huisarts gaan is een eerste stap om professionele hulp te vragen. De huisarts kan ondersteunen en doorverwijzen voor passende hulp. Jouw naaste kan het als steunend ervaren als jij meegaat naar deze afspraak."
+      },
+      {
+        "kop": "Krijg inzicht in PTSS"
+      },
+      {
+        "tekst": "Door je te verdiepen in de achtergronden, de symptomen en de aanpak van PTSS, leer je meer over wat het inhoudt en zal je jouw naaste wat beter begrijpen. Dit helpt je om er beter mee om te gaan. Op onze website vind je meer informatie over PTSS."
+      },
+      {
+        "tekst": "Voor mensen die zelf te maken hebben met PTSS schreven we een online gids met tips. Zoals tips over het zoeken van hulp en steun, jezelf de tijd geven en het aanhouden van een dagstructuur. Daarnaast zijn er goede boeken met betrouwbare informatie. Ook kan je vragen stellen aan de behandelaar. Bij sommige behandelingen worden er voorlichtingsbijeenkomsten aangeboden voor naasten."
+      },
+      {
+        "kop": "Ga met elkaar in gesprek"
+      },
+      {
+        "tekst": "Voor veel mensen met PTSS is het lastig om te praten over wat ze hebben meegemaakt, omdat ze vaak denken dat wat er gebeurd is hun eigen schuld is, het te pijnlijk is of omdat ze bang zijn om niet begrepen te worden. Dring niet aan, maar biedt de ander ruimte om met jou te praten. Neem het verhaal van jouw naaste altijd serieus en luister met aandacht, ook al heb je het verhaal al vaak gehoord. Erover praten en begrepen worden is erg belangrijk."
+      },
+      {
+        "tekst": "Neem ook schuldgevoelens serieus, al vind je ze nog zo onterecht. Hierover praten, kan namelijk helpen in het verwerkingsproces. Stel vragen zonder je op te dringen. Houd je woordkeuze neutraal en geef geen oordeel. Door aan te sluiten bij de woorden die jouw naaste zelf gebruikt, voelt diegene zich eerder begrepen. Maak de gevoelens en gedachten niet kleiner. Vraag bijvoorbeeld wat het voor de ander betekent zich zo te voelen. Zeg geen dingen als: \"Probeer het maar gauw te vergeten.\" Maak geen grapjes over de gebeurtenis en geef geen ongevraagde adviezen. Vraag in plaats daarvan wat de ander van jou verwacht en waarbij je kan helpen."
+      },
+      {
+        "kop": "Schep vertrouwen"
+      },
+      {
+        "tekst": "Veel mensen met PTSS vinden het lastig om de wereld of mensen om hen heen weer als veilig te ervaren. Jij kan daarin helpen door je aan afspraken te houden, door wat aan jou in vertrouwen is verteld niet verder te vertellen en door zelf eerlijk te zijn. Help jouw naaste weer vertrouwen in zichzelf op te bouwen, doordat diegene weer het gevoel van controle over het eigen leven krijgt. Neem daarom niet ongevraagd zorg uit handen en laat de ander zelf bepalen wat het beste is om te doen."
+      },
+      {
+        "kop": "Vermijd de stoel van hulpverlener"
+      },
+      {
+        "tekst": "Hoewel het goed is om jouw naaste te ondersteunen, betekent dat niet dat jij op de stoel van hulpverlener moet gaan zitten. Het is goed om op jouw manier te helpen en te steunen, maar neem geen taken over die eigenlijk bij de hulpverlening horen. Hulpverleners zijn hiervoor opgeleid en zo houd jij jouw relatie met je dierbare gezond. Bovendien zou je hiermee een veel belangrijkere rol opgeven, bijvoorbeeld die van broer of partner."
+      },
+      {
+        "kop": "Stel verwachtingen bij en accepteer"
+      },
+      {
+        "tekst": "Heb geduld! De gevolgen van een schokkende gebeurtenis kunnen maanden doorwerken en iemand is daar niet zomaar overheen. Ga er ook niet vanuit dat een behandeling alles snel ‘oplost’. Vaak gaat het om een langer proces met vallen en opstaan. Door niet te hoge verwachtingen en eisen te hebben, leg je niet te veel druk op de schouders van de ander."
+      },
+      {
+        "tekst": "Jouw naaste kan (tijdelijk) veranderen door de PTSS. Daar mag je verdrietig om zijn. Probeer te accepteren dat jij niet altijd iets kan doen. Soms is er voor die ander zijn al genoeg. Het klinkt misschien lastig, maar door de situatie te aanvaarden zoals die is, creëer je ruimte om het van een andere kant te bekijken."
+      },
+      {
+        "kop": "Zorg voor jezelf"
+      },
+      {
+        "tekst": "Door het zorgen voor jouw naaste, ben je misschien wel geneigd je eigen behoeftes minder belangrijk te maken. Niet doen! Bedenk daarbij dat het goed zorgen voor jezelf niet alleen een positief effect heeft op jouw eigen welzijn, maar dat het hierdoor juist beter lukt er voor de ander te zijn. Cijfer jezelf dus niet weg en blijf ook jouw eigen leven leiden. Onderhoud contact met andere mensen en doe leuke dingen waarvan je energie krijgt en waardoor je ontspant. Ontspanningsoefeningen kunnen hierbij helpen. Ook er af en toe over praten met mensen in je omgeving die je vertrouwt, lucht vaak erg op. Stel daarnaast grenzen naar je naaste toe. Geef aan waar je bij kan helpen en waarbij jij dat niet wil of kan. Vind je dat lastig? Wij schreven tips om je grenzen te leren kennen en aan te geven."
+      },
+      {
+        "kop": "Heb aandacht voor kinderen in het gezin"
+      },
+      {
+        "tekst": "Heb je kinderen en is je naaste met PTSS jouw partner of een ander kind in het gezin? Kinderen merken bijna altijd dat er iets aan de hand is, ook al lijkt dat soms niet zo. Leg ze uit wat er met hun vader/moeder of broer/zus aan de hand is en dat dit niet door hen komt. Uitleg helpt bij het ontwikkelen van manieren om er goed mee om te kunnen gaan. Probeer het onderwerp bespreekbaar te houden binnen het gezin. Geef aan dat jouw kinderen erover mogen praten en vragen mogen stellen. Het is belangrijk dat kinderen gezien en gehoord worden door de ouders en dat gevoelens er mogen zijn. Zorg er ook voor dat je kinderen genoeg afleiding hebben buitenshuis, weg van de spanning."
+      },
+      {
+        "kop": "Vraag hulp en neem hulp van anderen aan"
+      },
+      {
+        "tekst": "Als naaste van iemand met PTSS, kan jij ook behoefte hebben aan ondersteuning. Betrek als het even lukt familie en vrienden bij de zorg. Heb jij het door de situatie moeilijk en ervaar je problemen bij het doen van je dagelijkse dingen, je werk of sociale contacten? Aarzel dan niet om professionele hulp te zoeken. Maak een afspraak bij jouw huisarts. Je huisarts kan je ondersteunen om op de been te blijven, je adviezen geven over hoe je het beste voor de ander zorgt en je doorverwijzen voor passende hulp als dat nodig is."
+      },
+      {
+        "kop": "Zoek contact met andere naasten"
+      },
+      {
+        "tekst": "Het delen van ervaringen met andere naasten zorgt meestal voor herkenning en ‘lucht’ om met de situatie om te gaan. Veel mensen vinden het steunend om te ervaren dat ze niet de enige zijn met iemand in hun omgeving met dit soort klachten. Daarnaast kunnen anderen je misschien wel op weg helpen met de aanpak van problemen: de kans is groot dat een ander iets soortgelijks al eens eerder heeft meegemaakt."
+      },
+      {
+        "tekst": "MIND Naasten Centraal biedt, naast andere vormen van ondersteuning, contactgroepen op veel plaatsen in het land. En op de website Naasten in Kracht vind je informatie, tips, inspiratie en steun. Vooral van elkaar."
+      }
+    ]
   },
   {
     "slug": "relatiebreuk",
@@ -3442,8 +3745,69 @@ export const GIDSEN: Gids[] = [
     "onderwerp": "Energie",
     "url": "https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/mentaal-fit-werk",
     "aanmeld": "https://formulier.wijzijnmind.nl/flyer_mentaalfit_myb_112021",
-    "intro": "",
-    "blokken": []
+    "intro": "Als je lekker in je vel zit, heeft dit een positieve invloed op je werk. Je kan je beter concentreren en je krijgt meer werk gedaan. Ook kan plezier op het werk positief bijdragen aan hoe mentaal fit jij je voelt. Het tegenoverstelde kan ook aan de hand zijn. Wanneer jij je psychisch niet fit voelt, heeft dat meestal een negatief effect op hoe jij op je werk functioneert. Tegelijkertijd kan werk voor mentale klachten zorgen, zoals stress, piekeren of slaapproblemen. Bijvoorbeeld doordat de werkdruk hoog is, er net een reorganisatie is geweest of door een slechte relatie met een van je collega’s. Gelukkig zijn er veel manieren om hiermee om te gaan. Welkom bij deze online gids met tips die je kunnen helpen mentaal fit te worden of te blijven op het werk.",
+    "blokken": [
+      {
+        "kop": "Ontspan en doe leuke dingen"
+      },
+      {
+        "tekst": "Zorg voor een goede balans tussen spanning en ontspanning. Houd goed voor jezelf in de gaten dat je perioden van activiteit afwisselt met perioden van rust. Hierbij is het belangrijk dat je niet steeds tot het uiterste gaat, maar op tijd rust neemt. Op deze manier ga je niet over je grenzen heen en put je jezelf dus ook niet uit. Heb jij moeite met ontspannen? Ontspanningsoefeningen kunnen hierbij helpen. Doe ook leuke dingen. Spreek buiten werktijd af met vrienden, besteed tijd aan hobby’s of kijk een film of serie. Het maakt niet uit wat je doet, als jij er maar plezier in hebt. En zet door als je er in eerste instantie geen zin in hebt. Het helpt je om je batterij weer op te laden en je zorgen even van je af te schudden."
+      },
+      {
+        "kop": "Accepteer en laat los waarop je geen invloed hebt"
+      },
+      {
+        "tekst": "Leer te accepteren. Veel mensen zijn bij tegenslagen of moeilijke situaties geneigd de vervelende gevoelens die daarbij horen, niet te willen ervaren. Maar doordat je van alles doet om deze gevoelens te veranderen, is de kans groot dat je voortdurend bezig bent met het probleem dat de vervelende gevoelens veroorzaakt. Zonde, helemaal als het dingen zijn die onvermijdelijk zijn en waar jij geen invloed op hebt. En het probleem wordt hierdoor misschien zelfs groter dan dat het in werkelijkheid is. Probeer de situatie daarom te aanvaarden, zoals die is. Door deze acceptatie zal je meer rust ervaren. Bovendien komt er zo weer ruimte vrij om met een heldere blik vooruit te kijken. Om te leren accepteren, kun je bijvoorbeeld meer lezen over mindfulness."
+      },
+      {
+        "kop": "Stel haalbare doelen en focus je op 1 taak"
+      },
+      {
+        "tekst": "Door realistische en haalbare doelen te stellen, zorg je ervoor dat je jezelf niet overvraagt. Wanneer je de lat te hoog legt, loop je het risico je doelen niet te behalen en met een teleurgesteld gevoel achter te blijven. Deel je klus in kleine, behapbare taken in. Met ieder behaald tussendoel kan je trots zijn op jezelf en kom je dichter bij je einddoel. Stel ook prioriteiten en probeer niet te multitasken. Focus je op 1 taak en begin pas met iets nieuws als de taak is afgerond. Het kan helpen om af en toe je telefoon even uit of op vliegtuigmodus te zetten, zodat je op gezette tijden ook echt niet gestoord kan worden."
+      },
+      {
+        "kop": "Stop met piekeren"
+      },
+      {
+        "tekst": "Blijf je vaak malen over problemen? Door te piekeren blijf je in loepjes denken en kom je niet tot een oplossing. Leer om, in plaats van te blijven nadenken over een probleem, je probleem daadwerkelijk in kaart te brengen en vervolgens op te lossen. Als dit niet mogelijk is, probeer het dan los te laten: je kan er toch niets aan veranderen. Lees ook onze tips om piekeren tegen te gaan."
+      },
+      {
+        "kop": "Geef je grenzen aan en durf nee te zeggen"
+      },
+      {
+        "tekst": "Ervaar jij stress omdat je het lastig vindt om nee te zeggen tegen je werkgever of je grenzen aan te geven aan je collega’s? Door steeds maar ja te zeggen, loop je het risico meer hooi op je vork te nemen dan goed voor je is. En door de ander niet te laten weten dat je het ergens niet mee eens bent, zal er niet veel veranderen. Door het stellen van grenzen kan je aan een ander duidelijk maken wat je wel en niet wil. Hierdoor weet diegene waar die aan toe is, want diegene kan namelijk niet jouw gedachten lezen. Wij schreven tips om je grenzen te leren kennen en aan te geven. Wil jij vaker nee zeggen? Bekijk dan de online gids met een oefening en tips om nee te leren zeggen."
+      },
+      {
+        "kop": "Heb vertrouwen in jezelf"
+      },
+      {
+        "tekst": "Als je vertrouwen hebt in jezelf is het vaak makkelijker om te gaan met moeilijke situaties. Het opbouwen van zelfvertrouwen kan door uit te gaan van jouw sterke kanten en door uitdagingen aan te pakken. Schrijf eens op wat jouw sterke punten zijn. Noteer deze 3 punten op een kaartje of maak een notitie in je telefoon en haal ze tevoorschijn als je ze nodig hebt. Is er iets dat je spannend vindt om te doen? Ga het niet uit de weg. Begin niet te moeilijk en zorg dat wat je gaat doen haalbaar is, zodat je dit succesvol kan afronden. Zo ervaar je dat je het echt wel kan en ontwikkel je vertrouwen dat het je een volgende keer weer lukt. Wil jij een beeld krijgen hoeveel zelfvertrouwen je hebt? Doe de zelfvertrouwentest."
+      },
+      {
+        "kop": "Beweeg voldoende"
+      },
+      {
+        "tekst": "Eigenlijk weten we het allemaal wel, voldoende bewegen is belangrijk om zowel psychisch als lichamelijk gezond te blijven. Bedenk welke mogelijkheden jij hebt om iedere week minimaal 150 minuten matig intensief te bewegen en ga hiermee aan de slag. Verspreid het bewegen over meerdere dagen in de week. Je beweegt matig intensief bij activiteiten waarbij je hartslag omhooggaat, je ademhaling versnelt en je nog wel kan praten, zoals stevig doorwandelen, fietsen en tuinieren. Wat vind je leuk om te doen? Denk ook na over slimme combi’s, zoals een rondje wandelen tijdens je lunchpauze of als je een telefoongesprek hebt voor je werk."
+      },
+      {
+        "kop": "Eet en drink gezond"
+      },
+      {
+        "tekst": "Eet zo gezond mogelijk en wees matig met koffie en alcohol. Op de lange termijn voel je je hierdoor beter. Je voelt je fitter en je hebt meer energie."
+      },
+      {
+        "kop": "Pak slaapproblemen aan"
+      },
+      {
+        "tekst": "Slaap is heel belangrijk om je lichaam en geest te herstellen. Goede slaap draagt bij aan een uitgerust en fit gevoel, maar is voor veel mensen niet vanzelfsprekend. Gelukkig kan je veel doen om goed te slapen. Van het afbouwen van je activiteitenniveau tot je slaapkamer goed ventileren voordat je gaat slapen. Wil je aan de slag om beter te leren slapen? Meld je dan aan voor onze Beter Slapen challenge_."
+      },
+      {
+        "kop": "Vraag en accepteer hulp"
+      },
+      {
+        "tekst": "Bedenk dat je er niet alleen voor staat. Samen kan en weet je meer. Vraag je collega’s en leidinggevende om hulp of advies als je dit nodig hebt. Elkaar steunen geeft een positief gevoel. Ook leidt steun tot een hoger werkvermogen; de ervaring dat je goed in staat bent je werk te doen. Heb je psychische klachten die het jou moeilijk maken om te werken? Bespreek dit met je werkgever en vraag om begrip en praktische ondersteuning. Heb je nog geen psychische hulp? Blijf er niet mee rondlopen en zoek professionele hulp. Naar de huisarts gaan is een eerste stap om deze hulp te vragen. Jouw huisarts kan je ondersteunen en je doorverwijzen als dat nodig is."
+      }
+    ]
   },
   {
     "slug": "veilig-chatten-ai",

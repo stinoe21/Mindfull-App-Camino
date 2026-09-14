@@ -20,10 +20,11 @@ De app toont per gids de intro en de eerste tips, met de leespagina als
 maakt is `scripts/gen-gidsen.mjs`; welke gids bij welk onderwerp van de app
 hoort staat daar ook, want dat is een redactionele keuze en geen afleiding.
 
-Vijf gidsen waren op 20 augustus 2026 nog alleen pdf en zijn daarom niet als
-Markdown opgehaald (kolom "Bestand" leeg): mentaal fit op het werk, KOPP/KOV,
-paniekaanval, psychische klachten bij ouderen en PTSS in je omgeving. In de app
-staan die met titel en link, zonder intro. De "Nalatenschappen brochure" staat
+Vijf gidsen waren op 20 augustus 2026 nog alleen pdf: mentaal fit op het werk,
+KOPP/KOV, paniekaanval, psychische klachten bij ouderen en PTSS in je omgeving.
+Op 14 september 2026 stonden ze wel als pagina online en zijn ze alsnog
+opgehaald (Stijn: "hoezo staat psychische klachten bij ouderen nog steeds alleen
+online?"). De "Nalatenschappen brochure" staat
 wel in de lijst van MIND maar is fondsenwerving en geen gids voor gebruikers;
 die slaat het script over.
 
@@ -51,7 +52,7 @@ die slaat het script over.
 | Grenzen stellen | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/grenzen-stellen | [grenzen-stellen.md](grenzen-stellen.md) | https://formulier.wijzijnmind.nl/flyer_grenzen_stellen |
 | Hoogbegaafdheid | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/flyer-tips-bij-hoogbegaafdheid | [flyer-tips-bij-hoogbegaafdheid.md](../psychipedia/hoogbegaafdheid/flyer-tips-bij-hoogbegaafdheid.md) | https://formulier.wijzijnmind.nl/flyer_hoogbegaafd_online_website |
 | Hoogsensitiviteit | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/hoogsensitiviteit | [hoogsensitiviteit.md](hoogsensitiviteit.md) | https://formulier.wijzijnmind.nl/flyer_hoogsensitief |
-| KOPP/KOV | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/kopp-kov | geen, was pdf | https://formulier.wijzijnmind.nl/flyer_koppkov |
+| KOPP/KOV | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/kopp-kov | [kopp-kov.md](kopp-kov.md) | https://formulier.wijzijnmind.nl/flyer_koppkov |
 | Maak je gedachten helpend | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/helpende-gedachten | [helpende-gedachten.md](helpende-gedachten.md) | https://formulier.wijzijnmind.nl/flyer_cognitieve_therapie |
 | Mantelzorg | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/mantelzorg | [mantelzorg.md](mantelzorg.md) | https://formulier.wijzijnmind.nl/flyer_mantelzorg |
 | Mindfulness | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/mindfulness | [mindfulness.md](mindfulness.md) | https://formulier.wijzijnmind.nl/flyer_mindfulness |
@@ -60,19 +61,19 @@ die slaat het script over.
 | Narcisme in je omgeving | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/narcisme-in-je-omgeving | [narcisme-in-je-omgeving.md](narcisme-in-je-omgeving.md) | https://formulier.wijzijnmind.nl/flyer_narcisme |
 | Nee zeggen | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/nee-zeggen | [nee-zeggen.md](nee-zeggen.md) | https://formulier.wijzijnmind.nl/flyer_nee_zeggen |
 | Overprikkeld | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/overprikkeld | [overprikkeld.md](overprikkeld.md) | https://formulier.wijzijnmind.nl/flyer_overprikkeld |
-| Paniekaanval | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/paniekaanval | geen, was pdf | https://formulier.wijzijnmind.nl/flyer_paniekaanvallen |
+| Paniekaanval | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/paniekaanval | [paniekaanval.md](paniekaanval.md) | https://formulier.wijzijnmind.nl/flyer_paniekaanvallen |
 | Piekeren | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/piekeren | [piekeren.md](piekeren.md) | https://formulier.wijzijnmind.nl/flyer_piekeren |
 | Praten over hoe je je voelt | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/praten-over-hoe-je-je-voelt-tips-en-info | [praten-over-hoe-je-je-voelt-tips-en-info.md](../psychipedia/praten/praten-over-hoe-je-je-voelt-tips-en-info.md) | https://formulier.wijzijnmind.nl/flyer_praten_over_online_website |
-| Psychische klachten bij ouderen | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/psychische-klachten-ouderen | geen, was pdf | https://formulier.wijzijnmind.nl/flyer_psychische_klachten_ouderen |
+| Psychische klachten bij ouderen | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/psychische-klachten-ouderen | [psychische-klachten-ouderen.md](psychische-klachten-ouderen.md) | https://formulier.wijzijnmind.nl/flyer_psychische_klachten_ouderen |
 | Psychose in je omgeving | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/psychose-in-je-omgeving | [psychose-in-je-omgeving.md](psychose-in-je-omgeving.md) | https://formulier.wijzijnmind.nl/flyer_psychose_naasten |
 | PTSS | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/ptss | [ptss.md](ptss.md) | https://formulier.wijzijnmind.nl/flyer_ptss |
-| PTSS in je omgeving | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/ptss-naasten | geen, was pdf | https://formulier.wijzijnmind.nl/flyer_ptss_naasten |
+| PTSS in je omgeving | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/ptss-naasten | [ptss-naasten.md](ptss-naasten.md) | https://formulier.wijzijnmind.nl/flyer_ptss_naasten |
 | Relatiebreuk | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/relatiebreuk | [relatiebreuk.md](relatiebreuk.md) | https://formulier.wijzijnmind.nl/flyer_relatiebreuk |
 | Relatieproblemen | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/relatieproblemen | [relatieproblemen.md](relatieproblemen.md) | https://formulier.wijzijnmind.nl/flyer_relatieproblemen |
 | Rouw na het verlies van een dierbare | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/rouw | [rouw.md](rouw.md) | https://formulier.wijzijnmind.nl/flyer_rouw |
 | Slapeloosheid | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/slapeloosheid | [slapeloosheid.md](slapeloosheid.md) | https://formulier.wijzijnmind.nl/flyer_slapeloosheid |
 | Sociale angst | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/sociale-angst | [sociale-angst.md](sociale-angst.md) | https://formulier.wijzijnmind.nl/flyer_sociale_angst |
 | Stress | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/stress | [stress.md](stress.md) | https://formulier.wijzijnmind.nl/flyer_stress |
-| Hoe blijf ik mentaal fit op het werk? | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/mentaal-fit-werk | geen, was pdf | https://formulier.wijzijnmind.nl/flyer_mentaalfit_myb_112021 |
+| Hoe blijf ik mentaal fit op het werk? | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/mentaal-fit-werk | [mentaal-fit-werk.md](mentaal-fit-werk.md) | https://formulier.wijzijnmind.nl/flyer_mentaalfit_myb_112021 |
 | Veilig chatten met AI | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/veilig-chatten-ai | [veilig-chatten-ai.md](veilig-chatten-ai.md) | https://formulier.wijzijnmind.nl/flyer-chatten-ai |
 | Verslaving in je omgeving | https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/verslaving-naasten | [verslaving-naasten.md](verslaving-naasten.md) | https://formulier.wijzijnmind.nl/verslaving-naasten |
