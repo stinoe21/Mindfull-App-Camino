@@ -22,6 +22,8 @@ import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/Con
 import { KaartNederland } from "@mind/ui/components/KaartNederland";
 import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 import { Lijst, LijstRij } from "@mind/ui/components/LijstRij";
+import { Pager } from "@mind/ui/components/Pager";
+import { Segmenten } from "@mind/ui/components/Segmenten";
 import { MascotteInput, type InputStaat } from "@mind/ui/components/MascotteInput";
 import { MascotteVlieger, type VliegerStaat } from "@mind/ui/components/MascotteVlieger";
 import { VliegerOnderwerp, type Uitdrukking } from "@mind/ui/components/VliegerOnderwerp";
@@ -47,6 +49,7 @@ const ROUTES = [
   ["Weerbericht van Nederland", "/weerbericht"],
   ["Houvast", "/naslagwerk"],
   ["Houvast: familie Stress", "/naslagwerk/familie/stress"],
+  ["Houvast: onderwerp Piekeren", "/naslagwerk/houvast/piekeren"],
   ["Houvast: gidsen voor naasten", "/naslagwerk/gidsen/naasten"],
   ["Challenges", "/challenges"],
   ["Profiel", "/profiel"],
@@ -67,6 +70,7 @@ export default function KitchenSink() {
   const [schuif, zetSchuif] = useState(45);
   const [vinkje, zetVinkje] = useState(false);
   const [keuze, zetKeuze] = useState<"ja" | "nee" | null>(null);
+  const [segment, zetSegment] = useState(0);
 
   return (
     <ScrollView
@@ -166,6 +170,29 @@ export default function KitchenSink() {
           <ShelfCard tone="coral" label="CHALLENGE" title="Even naar buiten" meta="10 min" />
         </ContentShelf>
       </ContentSection>
+
+      <Kop>Segmenten (interactief)</Kop>
+      <Segmenten segmenten={["Uitleg", "Wat kan helpen", "Verder"]} actief={segment} onKies={zetSegment} />
+      <Segmenten segmenten={["Twee", "Segmenten"]} actief={1} onKies={() => undefined} />
+
+      <Kop>Pager (swipe)</Kop>
+      <Pager bleed={space[6]}>
+        <Card tone="white" style={{ flex: 1 }}>
+          <AppText rol="labelOverline" kleur="brand">TIP 1 van 3</AppText>
+          <AppText rol="h3">Een korte kaart</AppText>
+          <AppText rol="body">Eén zin.</AppText>
+        </Card>
+        <Card tone="white" style={{ flex: 1 }}>
+          <AppText rol="labelOverline" kleur="brand">TIP 2 van 3</AppText>
+          <AppText rol="h3">Een langere kaart</AppText>
+          <AppText rol="body">De kaarten in een rij krijgen allemaal de hoogte van de hoogste, zodat de stippen eronder niet verspringen tijdens het swipen.</AppText>
+        </Card>
+        <Card tone="purple" style={{ flex: 1 }}>
+          <AppText rol="labelOverline" kleur="brand">PROBEER DIT EENS</AppText>
+          <AppText rol="h3">De oefening</AppText>
+          <AppText rol="body">Altijd de laatste kaart, in paars.</AppText>
+        </Card>
+      </Pager>
 
       <Kop>Lijst met LijstRij</Kop>
       <Lijst>
