@@ -142,6 +142,9 @@ Deze vijftien staan als specificatie klaar in `reference/components`, met exacte
 | `ContentSection` | Sectiekop met serif-titel, optionele regel en actie rechts. |
 | `ContentShelf` + `ShelfCard` | Horizontale rij voor een open verzameling, met de volgende kaart net zichtbaar. |
 | `ContentGrid` + `ContentCard` | Twee gelijke kolommen voor een eindige set. |
+| `Lijst` + `LijstRij` | Rijen op het vel met een dunne lijn ertussen: titel, regel eronder, beeld links, "›" rechts. Sinds 14 september 2026. |
+| `Segmenten` | Twee tot vier panelen in één pil, één actief. Voor een pagina die anders één lange scroll zou zijn. Sinds 14 september 2026. |
+| `Pager` | Kaarten die je horizontaal swipet, één per scherm, de volgende piept aan de rand, stippen eronder. Sinds 14 september 2026. |
 | `MascotteVlieger` | De vlieger in zeven stemmings- en weerstaten. |
 | `MascotteInput` | Eén pose per check-invraag. **Andere familie dan hierboven, niet door elkaar halen.** |
 | `NavigationBar` | Zwevende tabbalk met vijf bestemmingen. |
