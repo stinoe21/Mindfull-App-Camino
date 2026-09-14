@@ -18,6 +18,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { OnboardingVoortgang } from "@/features/onboarding/OnboardingVoortgang";
 import { bewaarInstellingen, VOORKEUR_OPTIES } from "@/features/profiel/instellingen";
 
 const nl = {
@@ -52,6 +53,7 @@ export default function Voorkeuren() {
 
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
+      <OnboardingVoortgang stap={4} />
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{t("titel")}</AppText>
         <AppText rol="subtitle">

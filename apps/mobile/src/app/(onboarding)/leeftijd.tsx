@@ -15,6 +15,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { OnboardingVoortgang } from "@/features/onboarding/OnboardingVoortgang";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 
 const nl = {
@@ -68,6 +69,7 @@ export default function Leeftijd() {
 
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
+      <OnboardingVoortgang stap={1} />
       <AppText rol="h1">{t("vraag")}</AppText>
       <AppText rol="body" kleur="secondary">
         {t("uitleg")}
