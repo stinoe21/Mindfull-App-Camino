@@ -49,7 +49,7 @@ const nl = {
   geenUitslag: "Bij deze antwoorden hoort geen uitslag. Dat is een fout in de app, niet in jou.",
   opnieuw: "Doe de test opnieuw",
   terug: "Terug naar Houvast",
-  inHouvast: "{titel} in Houvast",
+  inHouvast: "Lees meer over {titel}",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -69,7 +69,7 @@ const teksten: Woordenboek<typeof nl> = {
     geenUitslag: "No result matches these answers. That's a bug in the app, not in you.",
     opnieuw: "Take the test again",
     terug: "Back to Houvast",
-    inHouvast: "{titel} in Houvast",
+    inHouvast: "Read more about {titel}",
   },
 };
 
@@ -101,14 +101,13 @@ export default function ZelftestScherm() {
     zetFase("intro");
   };
 
-  // Een link in de uitslag: naar het onderwerp in Houvast, naar de
-  // hulplijnpagina, of anders naar buiten.
-  const openLink = (url: string) => {
+  // De links uit de uitslagtekst van MIND. Een psychipedia-pagina wordt het
+  // onderwerp in Houvast; de link naar de Hulplijn vervalt hier, want die
+  // staat als kaart onder de uitslag (Stijn, 14 september 2026: contact met
+  // een mens mag niet dezelfde link zijn als verder lezen).
+  const houvastVoorLink = (url: string) => {
     const psychipedia = url.match(/wijzijnmind\.nl\/psychische-klachten\/psychipedia\/([a-z0-9-]+)/);
-    const h = psychipedia ? houvastVoorArtikel(psychipedia[1]) : undefined;
-    if (h) return router.push({ pathname: "/naslagwerk/houvast/[onderwerp]", params: { onderwerp: h.slug } });
-    if (/mindhulplijn\.nl/.test(url)) return router.push("/hulplijn");
-    Linking.openURL(url);
+    return psychipedia ? houvastVoorArtikel(psychipedia[1]) : undefined;
   };
 
   if (fase === "intro") {
@@ -172,7 +171,9 @@ export default function ZelftestScherm() {
   const uitslag = uitslagVoor(test, score);
   const tekstBlokken: InhoudBlok[] = (uitslag?.blokken ?? []).filter((b) => !b.linkUrl);
   const links = (uitslag?.blokken ?? []).filter((b): b is InhoudBlok & { linkLabel: string; linkUrl: string } => !!b.linkUrl && !!b.linkLabel);
-  const onderwerp = test.onderwerp ? houvastVoorArtikel(test.onderwerp.toLowerCase()) : undefined;
+  // Eén knop naar Houvast: het onderwerp uit de tekst, anders dat van de test.
+  const onderwerp = links.map((l) => houvastVoorLink(l.linkUrl)).find(Boolean) ?? (test.onderwerp ? houvastVoorArtikel(test.onderwerp.toLowerCase()) : undefined);
+  const extern = links.filter((l) => !houvastVoorLink(l.linkUrl) && !/mindhulplijn\.nl/.test(l.linkUrl));
 
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} kopTitel={test.titel} heroInhoud={hero} metNavRuimte>
@@ -189,18 +190,20 @@ export default function ZelftestScherm() {
         <AppText rol="body">{t("geenUitslag")}</AppText>
       )}
 
-      {links.length || onderwerp ? (
-        <View style={{ alignItems: "flex-start" }}>
-          {links.map((l) => (
-            <Button key={l.linkUrl} label={l.linkLabel} variant="link" onPress={() => openLink(l.linkUrl)} />
-          ))}
-          {onderwerp && !links.some((l) => /psychipedia/.test(l.linkUrl)) ? (
+      {/* Verder lezen: een gewone knop naar het onderwerp in Houvast, en
+          daaronder, los ervan, de Hulplijn-kaart: dat is contact met een mens. */}
+      {onderwerp || extern.length ? (
+        <View style={{ gap: space[2], alignItems: "flex-start" }}>
+          {onderwerp ? (
             <Button
-              label={t("inHouvast").replace("{titel}", onderwerp.titel)}
-              variant="link"
+              label={t("inHouvast").replace("{titel}", onderwerp.titel.toLowerCase())}
+              variant="secondary"
               onPress={() => router.push({ pathname: "/naslagwerk/houvast/[onderwerp]", params: { onderwerp: onderwerp.slug } })}
             />
           ) : null}
+          {extern.map((l) => (
+            <Button key={l.linkUrl} label={l.linkLabel} variant="link" onPress={() => Linking.openURL(l.linkUrl)} />
+          ))}
         </View>
       ) : null}
 
