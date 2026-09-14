@@ -23,8 +23,22 @@ const HUISHOUDING = [
 ];
 
 // Losse alinea's die restjes van de website zijn: bijschriften bij vervallen
-// afbeeldingen en de cookie-teksten rond YouTube-embeds.
-const RESTJES = [/^figuur[.:]\s/i, /^foto:\s/i, /marketing cookies/i, /^werkt het filmpje niet\?/i, /^er zijn geen resultaten gevonden/i];
+// afbeeldingen, de cookie-teksten rond YouTube-embeds, en de knopteksten
+// die zonder hun knop als losse regel achterblijven ("Vraag de tips aan",
+// "Deel jouw verhaal", "Doe mee met de Beter Slapen Challenge").
+const RESTJES = [
+  /^figuur[.:]\s/i,
+  /^foto:\s/i,
+  /^bron: pexels$/i,
+  /^datum \d/i,
+  /^kopp\/kov volwassene$/i,
+  /marketing cookies/i,
+  /^werkt het filmpje niet\?/i,
+  /^er zijn geen resultaten gevonden/i,
+  /^vraag de (tips|info|gids|flyer)( gratis)? aan$/i,
+  /^deel jouw verhaal$/i,
+  /^doe mee met de .*challenge$/i,
+];
 
 export function slugify(naam) {
   return naam
@@ -38,7 +52,8 @@ export function plat(tekst) {
   return tekst
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
-    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    // Vet mag een los sterretje bevatten ("ADD*, een subtype van ADHD").
+    .replace(/\*\*(.+?)\*\*/g, "$1")
     .replace(/__([^_]+)__/g, "$1")
     .replace(/__/g, "") // een los opmaakteken zonder wederhelft
     .replace(/(^|\s)_+(?=\S)/g, "$1") // idem, enkel, aan het begin van een woord
@@ -156,6 +171,22 @@ export function parsePagina(pad) {
       continue;
     }
     if (lijst) sluitLijst();
+
+    // Een citaat uit een ervaringsverhaal ("> Ik werd verteerd door angst.
+    // ... Lees het hele verhaal van Dirk."): het citaat blijft, als citaat;
+    // de verwijzing naar het hele verhaal vervalt, want dat staat niet in de app.
+    const citaat = r.match(/^>\s*(.*)$/);
+    if (citaat) {
+      sluitParagraaf();
+      sluitLijst();
+      const tekst = plat(citaat[1])
+        .replace(/\s*(?:-\s*)?lees (?:hier )?het hele verhaal van [^.]+\.?\s*$/i, "")
+        .trim();
+      // Een losse naam onder het citaat ("> Naomi") is de ondertekening; die
+      // vervalt met de verwijzing naar het verhaal.
+      if (tekst && !/^[\p{L}\s]{1,30}$/u.test(tekst)) blokken.push({ citaat: tekst });
+      continue;
+    }
 
     // Een YouTube-thumbnail wordt een link naar de video.
     const video = r.match(/^!\[[^\]]*\]\(https:\/\/img\.youtube\.com\/vi\/([^/]+)\/[^)]*\)/);

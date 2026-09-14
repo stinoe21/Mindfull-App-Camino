@@ -34,7 +34,7 @@ export const GIDSEN: Gids[] = [
     "titel": "AD(H)D",
     "url": "https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/adhd",
     "aanmeld": "https://formulier.wijzijnmind.nl/flyer_adhd_volwassenen",
-    "intro": "*Mensen met ADHD kunnen zich vaak moeilijk concentreren en zijn snel afgeleid (aandachtsproblemen). Ze handelen vaak impulsief en zijn overactief en onrustig (hyperactiviteit). Sommige mensen hebben vooral last van hyperactiviteit en impulsiviteit, anderen hebben een combinatie van hyperactiviteit, impulsiviteit en aandachtsproblemen en weer anderen hebben vooral last van de aandachtsproblemen. Wanneer dit laatste aan de hand is, hebben we het ook wel over ADD, een subtype van ADHD. Je bent dan vooral druk in je hoofd, maar komt niet druk over. Op deze pagina krijg je tips die je kunnen helpen bij het omgaan met ADHD. We gebruiken overal de overkoepelende term ADHD, waar ADD ook onder valt.**",
+    "intro": "Mensen met ADHD kunnen zich vaak moeilijk concentreren en zijn snel afgeleid (aandachtsproblemen). Ze handelen vaak impulsief en zijn overactief en onrustig (hyperactiviteit). Sommige mensen hebben vooral last van hyperactiviteit en impulsiviteit, anderen hebben een combinatie van hyperactiviteit, impulsiviteit en aandachtsproblemen en weer anderen hebben vooral last van de aandachtsproblemen. Wanneer dit laatste aan de hand is, hebben we het ook wel over ADD*, een subtype van ADHD. Je bent dan vooral druk in je hoofd, maar komt niet druk over. Op deze pagina krijg je tips die je kunnen helpen bij het omgaan met ADHD. We gebruiken overal de overkoepelende term ADHD, waar ADD ook onder valt.",
     "blokken": [
       {
         "kop": "Krijg inzicht in de ADHD"
@@ -106,7 +106,7 @@ export const GIDSEN: Gids[] = [
     "titel": "ADHD jongeren",
     "url": "https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/adhd-jongeren",
     "aanmeld": "https://formulier.wijzijnmind.nl/flyer_adhd",
-    "intro": "*Veel jongeren hebben wel eens concentratieproblemen, maken zo nu en dan slordigheidsfouten of kunnen moeilijk stilzitten. Maar bij sommige jongeren overheerst het gevoel van chaos en het gebrek aan concentratie en rust. Ze hebben moeite met het organiseren en plannen van het dagelijks leven. Schoolprestaties en werk kunnen hier erg onder lijden. Jongeren met deze klachten kunnen last hebben van ADHD (Attention Deficit Hyperactivity Disorder). Er bestaan verschillende vormen van ADHD, zoals ADD. We gebruiken hier overal de overkoepelende term ADHD.**",
+    "intro": "Veel jongeren hebben wel eens concentratieproblemen, maken zo nu en dan slordigheidsfouten of kunnen moeilijk stilzitten. Maar bij sommige jongeren overheerst het gevoel van chaos en het gebrek aan concentratie en rust. Ze hebben moeite met het organiseren en plannen van het dagelijks leven. Schoolprestaties en werk kunnen hier erg onder lijden. Jongeren met deze klachten kunnen last hebben van ADHD (Attention Deficit Hyperactivity Disorder). Er bestaan verschillende vormen van ADHD, zoals ADD.* We gebruiken hier overal de overkoepelende term ADHD.",
     "blokken": [
       {
         "tekst": "Op deze pagina krijg je als ouder van een jongere met ADHD verschillende tips die je op weg helpen bij de omgang met jouw kind."
@@ -1379,7 +1379,7 @@ export const GIDSEN: Gids[] = [
   },
   {
     "slug": "examenstress",
-    "titel": "examenstress (jongeren)",
+    "titel": "Examenstress (jongeren)",
     "onderwerp": "Stress",
     "url": "https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/examenstress",
     "aanmeld": "https://formulier.wijzijnmind.nl/flyer_examenstress",
@@ -1459,7 +1459,7 @@ export const GIDSEN: Gids[] = [
   },
   {
     "slug": "examenstress-ouders",
-    "titel": "examenstress (ouders)",
+    "titel": "Examenstress (ouders)",
     "onderwerp": "Stress",
     "url": "https://wijzijnmind.nl/psychische-klachten/flyers-en-informatie/examenstress-ouders",
     "aanmeld": "https://formulier.wijzijnmind.nl/flyer_examenstress_ouders",
@@ -1869,9 +1869,6 @@ export const GIDSEN: Gids[] = [
         "tekst": "Ik begrijp mezelf nu, weet waar het vandaan komt en heb actieplannen die ik kan inzetten als ik ergens tegenaan loop zoals triggers van buitenaf of signalen van binnenuit. Ik heb geaccepteerd dat sommige dingen niet verdwijnen, maar dat ik ze wel kan verdragen."
       },
       {
-        "tekst": "KOPP/KOV volwassene"
-      },
-      {
         "kop": "Geef je grenzen aan"
       },
       {
@@ -1903,9 +1900,6 @@ export const GIDSEN: Gids[] = [
       },
       {
         "tekst": "Wat mij heel erg heeft geholpen om het te accepteren is het besef dat mijn moeder vanwege haar eigen problematiek niet de ‘middelen’ had om het anders te doen. Dat zij niet anders kon, betekent overigens niet dat zij niet de verantwoordelijkheid had om goed voor mij te zorgen. Dit besef geeft mij rust en zorgt ervoor dat ik met een zachtere blik naar mijn moeder kan kijken."
-      },
-      {
-        "tekst": "KOPP/KOV volwassene"
       },
       {
         "kop": "Denk positief"
@@ -1964,9 +1958,6 @@ export const GIDSEN: Gids[] = [
       },
       {
         "tekst": "Een voorbeeld van een ingevuld G-schema:"
-      },
-      {
-        "tekst": "Datum 3-10-2025"
       },
       {
         "tekst": "Waar ben ik? Met wie ben ik? Wat gebeurt er? (gebeurtenis) Ik kom mijn buurman tegen op straat. Ik zeg hallo en groet. Hij groet niet terug."
@@ -2668,9 +2659,6 @@ export const GIDSEN: Gids[] = [
         "tekst": "Start gerust het gesprek met dat je het lastig vindt, omdat je wat persoonlijks wil delen. Het is niet erg als je emotioneel wordt of als je erdoor wordt geraakt, je mag dit ook best benoemen. Ook kan je gewoon aangeven als je je schaamt voor iets. Misschien is je verhaal in het begin door alle emotie wat onsamenhangend, probeer het dan gewoon opnieuw. Neem voldoende tijd om je verhaal te vertellen."
       },
       {
-        "tekst": "Bron: Pexels"
-      },
-      {
         "kop": "Kies het juiste moment"
       },
       {
@@ -2967,9 +2955,6 @@ export const GIDSEN: Gids[] = [
       },
       {
         "tekst": "Het kan heel fijn en steunend zijn om herkenning te vinden bij andere mensen die ook PTSS hebben of hebben gehad. Zo kan je echt ervaren dat je niet de enige bent. Anderen kunnen je misschien wel op weg helpen met de aanpak van problemen: de kans is groot dat een ander iets soortgelijks al eens eerder heeft meegemaakt. Ben jij op zoek naar contact met gelijkgestemden? Via het Connect portaal kan je per mail berichten uitwisselen met mensen met dezelfde interesses."
-      },
-      {
-        "tekst": "Bron: Pexels"
       },
       {
         "kop": "Accepteer"
@@ -3402,9 +3387,6 @@ export const GIDSEN: Gids[] = [
       },
       {
         "tekst": "Als je moeilijk in slaap valt ’s avonds raden we je aan om heel bewust aan de slag te gaan met het afbouwen van je activiteitenniveau en een slaapritueel in te voeren. Een slaapritueel bestaat uit een aantal vaste gewoonten die je dagelijks uitvoert voor het slapen gaan."
-      },
-      {
-        "tekst": "Doe mee met de Beter Slapen Challenge"
       },
       {
         "tekst": "Wil jij beter leren slapen? Doe mee met de gratis Beter Slapen Challenge en ontvang 10 dagen lang om de dag een e-mail met een uitdaging en tips voor een betere nachtrust. Ga op ontdekkingstocht met de handvatten die je van ons krijgt en kom te weten wat jou helpt beter te slapen."

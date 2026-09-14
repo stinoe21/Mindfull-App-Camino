@@ -446,10 +446,11 @@ export const ZELFTESTS: Zelftest[] = [
   },
   {
     "slug": "stresstest",
-    "titel": "Stress-test",
+    "titel": "Stresstest",
     "onderwerp": "Stress",
-    "intro": "Doe de Stress-testDoor het maken van deze test breng je in kaart hoeveel stress jij ervaart. Het invullen van de test duurt een paar minuten. De stress-test is gebaseerd op de Nederlandse versie van de Perceived Stress Scale (PSS) uit 1983. S. Cohen, T. Kamarck, R. Mermelstein - A global measure of perceived stress.",
+    "intro": "Door het maken van deze test breng je in kaart hoeveel stress jij ervaart. Het invullen van de test duurt een paar minuten.",
     "noot": "Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+    "instrument": "De stress-test is gebaseerd op de Nederlandse versie van de Perceived Stress Scale (PSS) uit 1983. S. Cohen, T. Kamarck, R. Mermelstein - A global measure of perceived stress.",
     "url": "https://formulier.wijzijnmind.nl/stresstest",
     "scoring": "som",
     "vragen": [
@@ -779,9 +780,9 @@ export const ZELFTESTS: Zelftest[] = [
   },
   {
     "slug": "stresstest_denkgewoonten",
-    "titel": "Stresstest: Denkgewoonten",
+    "titel": "Denkgewoontentest",
     "onderwerp": "Stress",
-    "intro": "Denkgewoonten zijn gedachten die we elke keer weer hebben in bepaalde situaties. Gedachten als ‘ik mag geen fouten maken’ en ‘belangrijke mensen in mijn omgeving moeten mij aardig vinden’ zijn hier voorbeelden van. Ze bepalen keer op keer hoe we ons voelen in bepaalde situaties en hoe we reageren. Denkgewoonten kunnen veel stress veroorzaken.De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
+    "intro": "Denkgewoonten zijn gedachten die we elke keer weer hebben in bepaalde situaties. Gedachten als ‘ik mag geen fouten maken’ en ‘belangrijke mensen in mijn omgeving moeten mij aardig vinden’ zijn hier voorbeelden van. Ze bepalen keer op keer hoe we ons voelen in bepaalde situaties en hoe we reageren. Denkgewoonten kunnen veel stress veroorzaken. De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
     "noot": "Het is geen wetenschappelijke test en uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
     "url": "https://formulier.wijzijnmind.nl/stresstest_denkgewoonten",
     "scoring": "som",
@@ -987,7 +988,7 @@ export const ZELFTESTS: Zelftest[] = [
     "slug": "depressietest",
     "titel": "Depressietest",
     "onderwerp": "Somberheid",
-    "intro": "De depressietest helpt je bij het inschatten of je depressieve klachten ervaart. De test noemt 9 problemen. Geef bij elk probleem aan hoe vaak je daar last van hebt gehad in de afgelopen 2 weken . Het invullen van deze test duurt een paar minuten.",
+    "intro": "De depressietest helpt je bij het inschatten of je depressieve klachten ervaart. De test noemt 9 problemen. Geef bij elk probleem aan hoe vaak je daar last van hebt gehad in de afgelopen 2 weken. Het invullen van deze test duurt een paar minuten.",
     "noot": "Uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
     "instrument": "De depressietest is een vertaling van de PHQ-9 en is ontwikkeld door drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke en collega's.",
     "url": "https://formulier.wijzijnmind.nl/depressietest",
@@ -1329,9 +1330,10 @@ export const ZELFTESTS: Zelftest[] = [
   },
   {
     "slug": "herfst_winterblues_test",
-    "titel": "Test: Gevoelig voor herfstdip of winterblues?",
+    "titel": "Herfstdip of winterblues",
     "onderwerp": "Somberheid",
-    "intro": "Deze test helpt je bij het inschatten of je klachten van een herfstdip of winterblues ervaart. De test noemt 10 stellingen, die je met ja of nee kan beantwoorden. We gaan er vanuit dat je de test in de herfst of winter beantwoordt. Het invullen van deze test duurt een paar minuten.Het is geen wetenschappelijke test en uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+    "intro": "Deze test helpt je bij het inschatten of je klachten van een herfstdip of winterblues ervaart. De test noemt 10 stellingen, die je met ja of nee kan beantwoorden. We gaan er vanuit dat je de test in de herfst of winter beantwoordt. Het invullen van deze test duurt een paar minuten.",
+    "noot": "Het is geen wetenschappelijke test en uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
     "url": "https://formulier.wijzijnmind.nl/herfst_winterblues_test",
     "scoring": "som",
     "vragen": [
@@ -1544,7 +1546,8 @@ export const ZELFTESTS: Zelftest[] = [
     "slug": "angsttest",
     "titel": "Angsttest",
     "onderwerp": "Angst",
-    "intro": "De angsttest helpt je bij het inschatten hoeveel last je hebt van angstklachten. Lees elke stelling goed door en geef aan hoe vaak je er in de afgelopen twee weken last van hebt gehad.Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+    "intro": "De angsttest helpt je bij het inschatten hoeveel last je hebt van angstklachten. Lees elke stelling goed door en geef aan hoe vaak je er in de afgelopen twee weken last van hebt gehad.",
+    "noot": "Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
     "instrument": "Dit is de Nederlandse vertaling van de GAD-7. Ontwikkeld door drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke en collega’s.",
     "url": "https://formulier.wijzijnmind.nl/angsttest",
     "scoring": "som",
@@ -1823,7 +1826,7 @@ export const ZELFTESTS: Zelftest[] = [
   },
   {
     "slug": "mentaal_fit_op_je_werk_test",
-    "titel": "description",
+    "titel": "Mentaal fit op je werk",
     "onderwerp": "Energie",
     "intro": "Deze test helpt je bij het inschatten van je mentale gezondheid in relatie tot je werk. De test bestaat uit 11 uitspraken. Kies bij elke uitspraak het antwoord dat het beste past.",
     "noot": "Het is geen wetenschappelijke test en uit de test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
@@ -2176,7 +2179,7 @@ export const ZELFTESTS: Zelftest[] = [
   },
   {
     "slug": "fomo-test",
-    "titel": "FOMO test",
+    "titel": "FOMO-test",
     "onderwerp": "Balans",
     "intro": "De FOMO test helpt je in te schatten hoeveel FOMO (Fear Of Missing Out) je ervaart. De test noemt 10 stellingen. Geef bij elke stelling aan in hoeverre dit bij jou past. Het invullen van deze test duurt een paar minuten.",
     "noot": "FOMO is geen diagnose. En uit deze test volgt dus ook geen diagnose.",
@@ -2498,9 +2501,9 @@ export const ZELFTESTS: Zelftest[] = [
   },
   {
     "slug": "stresstest-ontspanning-en-herstel",
-    "titel": "Stresstest: Ontspanning en herstel",
+    "titel": "Ontspanning en herstel",
     "onderwerp": "Ontspanning",
-    "intro": "Doe de Ontspanning en Herstel testVoor de één is ontspanning uitgaan met vrienden. Voor de ander is het met een goed boek op de bank zitten. Weer een ander gaat sporten. Ontspanning kan je mentaal of lichamelijk zoeken. Op een actieve of op een passieve manier. Het gaat erom die dingen te doen, die jouw hoofd leeg maken en je lichaam ontspannen, zodat je kan herstellen van (mentale) inspanning en stress. Neem jij voldoende tijd om te ontspannen?De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
+    "intro": "Voor de één is ontspanning uitgaan met vrienden. Voor de ander is het met een goed boek op de bank zitten. Weer een ander gaat sporten. Ontspanning kan je mentaal of lichamelijk zoeken. Op een actieve of op een passieve manier. Het gaat erom die dingen te doen, die jouw hoofd leeg maken en je lichaam ontspannen, zodat je kan herstellen van (mentale) inspanning en stress. Neem jij voldoende tijd om te ontspannen? De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
     "url": "https://formulier.wijzijnmind.nl/stresstest-ontspanning-en-herstel",
     "scoring": "som",
     "vragen": [
@@ -2699,9 +2702,9 @@ export const ZELFTESTS: Zelftest[] = [
   },
   {
     "slug": "assertiviteit_stress",
-    "titel": "description",
+    "titel": "Assertiviteitstest",
     "onderwerp": "Grenzen",
-    "intro": "Doe de Assertiviteit test Assertiviteit gaat over opkomen voor jezelf, over het stellen van grenzen. Over zeggen wat je wilt en nodig hebt en zeggen wat je juist niet wilt. Kom jij voor jezelf op of cijfer je jezelf te veel weg?De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
+    "intro": "Assertiviteit gaat over opkomen voor jezelf, over het stellen van grenzen. Over zeggen wat je wilt en nodig hebt en zeggen wat je juist niet wilt. Kom jij voor jezelf op of cijfer je jezelf te veel weg? De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
     "noot": "Het is geen wetenschappelijke test en uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
     "url": "https://formulier.wijzijnmind.nl/assertiviteit_stress",
     "scoring": "som",
@@ -2911,8 +2914,9 @@ export const ZELFTESTS: Zelftest[] = [
   {
     "slug": "zelfvertrouwen",
     "titel": "Zelfvertrouwentest",
-    "intro": "Doe de zelfvertrouwentestDoor het maken van deze test kan je een beeld krijgen van hoeveel zelfvertrouwen je hebt. De test bestaat uit 10 beschrijvingen die elk een gevoel over jezelf weergeven. Lees iedere beschrijving goed door en geef daarna aan of je het er: helemaal mee eens; mee eens; niet mee eens of helemaal niet mee eens bent. Dit is de Nederlandse vertaling van de Rosenberg Self-Esteem Scale © 1965 M. Rosenberg.",
+    "intro": "Door het maken van deze test kan je een beeld krijgen van hoeveel zelfvertrouwen je hebt. De test bestaat uit 10 beschrijvingen die elk een gevoel over jezelf weergeven. Lees iedere beschrijving goed door en geef daarna aan of je het er: helemaal mee eens; mee eens; niet mee eens of helemaal niet mee eens bent.",
     "noot": "Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+    "instrument": "Dit is de Nederlandse vertaling van de Rosenberg Self-Esteem Scale © 1965 M. Rosenberg.",
     "url": "https://formulier.wijzijnmind.nl/zelfvertrouwen",
     "scoring": "som",
     "vragen": [
@@ -3190,7 +3194,7 @@ export const ZELFTESTS: Zelftest[] = [
   },
   {
     "slug": "zelfstigma-test",
-    "titel": "description",
+    "titel": "Zelfstigmatest",
     "intro": "Deze test heeft 20 vragen. De uitkomst laat zien in hoeverre je op dit moment last hebt van negatieve gedachten en gevoelens over je psychische klachten. De test is ontwikkeld door Samen Sterk zonder Stigma, samen met RIBW Brabant en de Toolbox Zelfstigma van Stichting ZON. Hij helpt je ontdekken of zelfstigma je in de weg zit.",
     "noot": "Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
     "url": "https://formulier.wijzijnmind.nl/zelfstigma-test",
@@ -3637,7 +3641,7 @@ export const ZELFTESTS: Zelftest[] = [
             "tekst": "Misschien wil je anderen helpen die hier wél mee wordtelen. Dat kan op verschillende manieren."
           },
           {
-            "tekst": "Handige tips en hulpmiddelen"
+            "kop": "Handige tips en hulpmiddelen"
           },
           {
             "lijst": [
@@ -3690,7 +3694,7 @@ export const ZELFTESTS: Zelftest[] = [
             "tekst": "Je krijgt deze uitslag om je te helpen zien of zelfstigma bij jou speelt. Het is geen oordeel over jou. Jij bepaalt zelf of je er iets mee wilt doen. Wil je ermee aan de slag, dan zijn er mensen en hulpmiddelen die je kunnen helpen."
           },
           {
-            "tekst": "Tips en hulpmiddelen"
+            "kop": "Tips en hulpmiddelen"
           },
           {
             "lijst": [
@@ -3761,7 +3765,7 @@ export const ZELFTESTS: Zelftest[] = [
             "tekst": "Je krijgt deze uitslag om je te helpen zien of zelfstigma bij jou speelt. Het is geen oordeel over jou. Jij bepaalt zelf of je er iets mee wilt doen. Wil je ermee aan de slag, dan zijn er mensen en hulpmiddelen die je kunnen helpen."
           },
           {
-            "tekst": "Tips en hulpmiddelen"
+            "kop": "Tips en hulpmiddelen"
           },
           {
             "lijst": [
@@ -3779,7 +3783,7 @@ export const ZELFTESTS: Zelftest[] = [
             ]
           },
           {
-            "tekst": "Napraten?"
+            "kop": "Napraten?"
           },
           {
             "tekst": "Bel of chat met de MIND Hulplijn voor gratis, anoniem en deskundig advies."
@@ -3842,7 +3846,7 @@ export const ZELFTESTS: Zelftest[] = [
             "tekst": "Je krijgt deze uitslag om je te helpen zien of zelfstigma bij jou speelt. Het is geen oordeel over jou. Jij bepaalt zelf of je er iets mee wilt doen. Wil je ermee aan de slag, dan zijn er mensen en hulpmiddelen die je kunnen helpen."
           },
           {
-            "tekst": "Tips en hulpmiddelen"
+            "kop": "Tips en hulpmiddelen"
           },
           {
             "lijst": [
@@ -3860,7 +3864,7 @@ export const ZELFTESTS: Zelftest[] = [
             ]
           },
           {
-            "tekst": "Napraten?"
+            "kop": "Napraten?"
           },
           {
             "tekst": "Bel of chat met de MIND Hulplijn voor gratis, anoniem en deskundig advies."

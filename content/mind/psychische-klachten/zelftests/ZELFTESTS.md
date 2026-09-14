@@ -16,14 +16,14 @@ bewaart antwoorden noch uitslag (zie `docs/datamodel.md`).
 | Test | Vragen | Uitslagen | Score | Bestand |
 |---|---|---|---|---|
 | Angsttest | 7 | 4 | som | [angsttest.json](angsttest.json) |
-| description | 10 | 3 | som | [assertiviteit_stress.json](assertiviteit_stress.json) |
-| Stresstest: Denkgewoonten | 10 | 3 | som | [stresstest_denkgewoonten.json](stresstest_denkgewoonten.json) |
+| Assertiviteit test | 10 | 3 | som | [assertiviteit_stress.json](assertiviteit_stress.json) |
+| Denkgewoonten test | 10 | 3 | som | [stresstest_denkgewoonten.json](stresstest_denkgewoonten.json) |
 | Depressietest | 9 | 5 | som | [depressietest.json](depressietest.json) |
 | FOMO test | 10 | 3 | gemiddelde | [fomo-test.json](fomo-test.json) |
-| Test: Gevoelig voor herfstdip of winterblues? | 10 | 3 | som | [herfst_winterblues_test.json](herfst_winterblues_test.json) |
-| description | 11 | 3 | som | [mentaal_fit_op_je_werk_test.json](mentaal_fit_op_je_werk_test.json) |
-| Stresstest: Ontspanning en herstel | 10 | 3 | som | [stresstest-ontspanning-en-herstel.json](stresstest-ontspanning-en-herstel.json) |
+| Herfstdip of winterblues zelftest | 10 | 3 | som | [herfst_winterblues_test.json](herfst_winterblues_test.json) |
+| Hoe mentaal fit ben jij op het werk? | 11 | 3 | som | [mentaal_fit_op_je_werk_test.json](mentaal_fit_op_je_werk_test.json) |
+| Ontspanning en Herstel test | 10 | 3 | som | [stresstest-ontspanning-en-herstel.json](stresstest-ontspanning-en-herstel.json) |
 | Piekertest | 11 | 5 | som | [piekertest.json](piekertest.json) |
 | Stress-test | 10 | 3 | som | [stresstest.json](stresstest.json) |
 | Zelfvertrouwentest | 10 | 3 | som | [zelfvertrouwen.json](zelfvertrouwen.json) |
-| description | 20 | 4 | gemiddelde | [zelfstigma-test.json](zelfstigma-test.json) |
+| Zelfstigmatest | 20 | 4 | gemiddelde | [zelfstigma-test.json](zelfstigma-test.json) |

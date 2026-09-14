@@ -36,6 +36,25 @@ const ONDERWERP_PER_ZELFTEST = {
   stresstest: "Stress",
 };
 
+// De naam van de test in de app. De koppen op de pagina's van MIND lopen
+// uiteen ("Stress-test", "Denkgewoonten test", "Herfstdip of winterblues
+// zelftest", "Hoe mentaal fit ben jij op het werk?"); in de app staat overal
+// al ZELFTEST bij, dus hier één stijl. Redactionele keuze, net als het onderwerp.
+const TITEL_PER_ZELFTEST = {
+  piekertest: "Piekertest",
+  stresstest: "Stresstest",
+  stresstest_denkgewoonten: "Denkgewoontentest",
+  depressietest: "Depressietest",
+  herfst_winterblues_test: "Herfstdip of winterblues",
+  angsttest: "Angsttest",
+  mentaal_fit_op_je_werk_test: "Mentaal fit op je werk",
+  "fomo-test": "FOMO-test",
+  "stresstest-ontspanning-en-herstel": "Ontspanning en herstel",
+  assertiviteit_stress: "Assertiviteitstest",
+  zelfvertrouwen: "Zelfvertrouwentest",
+  "zelfstigma-test": "Zelfstigmatest",
+};
+
 // De volgorde in de app: de tests bij de families in de volgorde van Houvast,
 // daarna de twee zonder onderwerp.
 const VOLGORDE = [
@@ -81,6 +100,11 @@ function naarBlokken(html) {
   });
   s = s
     .replace(/<img[^>]*>/g, "")
+    // Een korte vette alinea zonder punt op een eigen regel is een tussenkop
+    // ("Tips en hulpmiddelen", "Napraten?"); de zelfstigmatest zet ze zo in
+    // plaats van als h3. Een vette zin ("Je score valt in categorie A: ...")
+    // blijft tekst.
+    .replace(/<p[^>]*>\s*<b>([^<.]{1,60}?)\s*<\/b>\s*<\/p>/g, "\n\n## $1\n\n")
     .replace(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/g, "\n\n## $1\n\n")
     .replace(/<li[^>]*>([\s\S]*?)<\/li>/g, "\n- $1")
     .replace(/<\/?(ul|ol)[^>]*>/g, "\n\n")
@@ -113,7 +137,7 @@ const tests = bestanden
   .map((f) => JSON.parse(readFileSync(join(BRON, f), "utf8")))
   .map((t) => ({
     slug: t.slug,
-    titel: t.titel,
+    titel: TITEL_PER_ZELFTEST[t.slug] ?? t.titel,
     onderwerp: ONDERWERP_PER_ZELFTEST[t.slug],
     intro: t.intro,
     noot: t.noot || undefined,
@@ -129,6 +153,7 @@ for (const t of tests) {
   if (!t.vragen.length) throw new Error(`${t.slug}: geen vragen`);
   if (!t.uitslagen.length) throw new Error(`${t.slug}: geen uitslagen`);
   if (VOLGORDE.indexOf(t.slug) < 0) throw new Error(`${t.slug}: niet in VOLGORDE`);
+  if (!TITEL_PER_ZELFTEST[t.slug]) throw new Error(`${t.slug}: geen titel in TITEL_PER_ZELFTEST`);
 }
 
 const kop = `// GEGENEREERD BESTAND. Niet met de hand wijzigen.

@@ -14,6 +14,8 @@ import { Button } from "@mind/ui/components/Button";
 export type InhoudBlok = {
   kop?: string;
   tekst?: string;
+  /** Een citaat uit een ervaringsverhaal, in de citaatletter. */
+  citaat?: string;
   lijst?: string[];
   linkLabel?: string;
   linkUrl?: string;
@@ -24,6 +26,7 @@ export function InhoudBlokken({ blokken }: { blokken: InhoudBlok[] }) {
     <>
       {blokken.map((blok, i) => {
         if (blok.kop) return <AppText key={i} rol="h3">{blok.kop}</AppText>;
+        if (blok.citaat) return <AppText key={i} rol="quote">{blok.citaat}</AppText>;
         if (blok.lijst) {
           return (
             <View key={i} style={{ gap: space[2] }}>
