@@ -148,8 +148,8 @@ Deze vijftien staan als specificatie klaar in `reference/components`, met exacte
 | `MascotteVlieger` | De vlieger in zeven stemmings- en weerstaten. |
 | `MascotteInput` | Eén pose per check-invraag. **Andere familie dan hierboven, niet door elkaar halen.** |
 | `NavigationBar` | Zwevende tabbalk met vijf bestemmingen. |
-| `BackgroundHeroBand` | De hero van 200 hoog voor gewone schermen, zes weerstaten. |
-| `BackgroundHeroGradient` | De hero van 480 hoog voor uitkomstschermen, zes weerstaten. |
+| `BackgroundHeroBand` | De hero van 200 hoog voor gewone schermen. Eén tekening, per weerstaat een kleurwas uit het palet (`achtergronden.ts`). |
+| `BackgroundHeroGradient` | De hero van 480 hoog die in het crème vervaagt. Dezelfde tekening en kleurwas als de band. |
 
 Daarnaast staat er in `reference/components/library` een set geleende generieke besturingselementen: invoervelden, iconen, "Ga verder met Apple", "Ga verder met Google", een contactformulier. Die worden echt gebruikt door de onboarding- en formulierschermen. Grijp daarnaar voor auth en generieke formulieren in plaats van iets nieuws te tekenen.
 
@@ -186,7 +186,7 @@ Wat er is, in `packages/ui/assets`:
 
 | Map | Wat |
 |---|---|
-| `backgrounds/` | Zes hero-achtergronden: `default`, `zonnig`, `wolken`, `mist`, `wind`, `regen`. |
+| `backgrounds/` | De hero-tekening `hero-default`. De vijf weerplaatjes (`hero-zonnig` en verder) staan er nog maar worden sinds 14 september 2026 niet meer geladen: het weer is een kleurwas uit het palet over de ene tekening, omdat de vijf plaatjes elk een eigen palet hadden en "zonnig" een paars was dat nergens anders voorkomt. |
 | `mascot/` | `mascot-main.svg` plus drie check-in-poses. |
 | `nav/` | Het home-icoon van de tabbalk. |
 
