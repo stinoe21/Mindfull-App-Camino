@@ -2,12 +2,17 @@
 //
 // De compacte kennislaag van de app (Stijn, 10 september 2026, docs/scope.md):
 // per onderwerp één pagina die de uitleg uit de psychipedia van MIND
-// combineert met de tips en oefeningen uit de online gids. Dit overzicht
-// toont de onderwerpen, jouw voorkeuren voorop, en daaronder de gidsen van
-// MIND die geen eigen onderwerp hebben (voor naasten, over ADHD, autisme, ...).
-// De rij chips als filter is sinds 13 september 2026 (Stijn, UX-ronde) weg:
-// tien families boven een raster van 27 onderwerpen was twee niveaus van
-// dezelfde indeling op één scherm. Zoeken is het filter.
+// combineert met de tips en oefeningen uit de online gids.
+//
+// Sinds 14 september 2026 (Stijn: "de onderwerpen zijn een lange scroll
+// onder elkaar, niet per onderdeel opgedeeld") toont dit overzicht de negen
+// families (Stress, Somberheid, Angst, ...) in plaats van alle 27 onderwerpen:
+// jouw voorkeuren voorop, elke familie in haar eigen kleur met haar vlieger.
+// Een familie opent haar pagina met de onderwerpen als lijst; een familie
+// met één onderwerp (Slaap) opent dat onderwerp direct. Onderaan twee
+// ingangen voor de gidsen zonder eigen onderwerp: voor naasten, en de andere
+// onderwerpen van MIND. De rij filterchips is sinds 13 september weg; zoeken
+// is het filter.
 //
 // Zoeken is slim (feedbacksessie MIND): je typt wat er speelt ("ik slaap
 // slecht") en features/content/zoeken.ts vertaalt dat naar onderwerpen,
@@ -24,13 +29,13 @@ import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
-import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
+import { ContentSection } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
-import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
-import { GIDSEN } from "@/features/content/data/gidsen";
-import { houvastVoorArtikel, houvastVoorGids, houvastVoorVoorkeuren } from "@/features/content/houvast";
+import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { familiesVoorVoorkeuren, type Familie } from "@/features/content/families";
+import { houvastVoorArtikel, houvastVoorGids } from "@/features/content/houvast";
 import { zoek, type ZoekResultaat } from "@/features/content/zoeken";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 
@@ -46,8 +51,12 @@ const nl = {
   zoekLabel: "Zoek in Houvast",
   onderwerpen: "Onderwerpen",
   onderwerpenNote: "Jouw onderwerpen eerst.",
-  gidsen: "Meer gidsen",
-  gidsenNote: "Voor naasten, en over onderwerpen die hierboven niet staan.",
+  aantal: "{n} onderwerpen",
+  ookTitel: "Ook in Houvast",
+  naastenTitel: "Voor naasten",
+  naastenNote: "Als iemand in je omgeving het moeilijk heeft.",
+  andereTitel: "Andere onderwerpen",
+  andereNote: "ADHD, autisme, PTSS en meer.",
   nietsGevondenTitel: "Niets gevonden",
   nietsGevondenVoor: "Niets gevonden voor “{term}”. Probeer het in andere woorden, bijvoorbeeld waar je last van hebt.",
   wisZoekopdracht: "Wis zoekopdracht",
@@ -66,8 +75,12 @@ const teksten: Woordenboek<typeof nl> = {
     zoekLabel: "Search Houvast",
     onderwerpen: "Topics",
     onderwerpenNote: "Your topics first.",
-    gidsen: "More guides",
-    gidsenNote: "For loved ones, and about topics not listed above.",
+    aantal: "{n} topics",
+    ookTitel: "Also in Houvast",
+    naastenTitel: "For loved ones",
+    naastenNote: "When someone close to you is struggling.",
+    andereTitel: "Other topics",
+    andereNote: "ADHD, autism, PTSD and more.",
     nietsGevondenTitel: "Nothing found",
     nietsGevondenVoor: "Nothing found for “{term}”. Try other words, for example what you're struggling with.",
     wisZoekopdracht: "Clear the search",
@@ -87,12 +100,13 @@ function doelVan(r: ZoekResultaat): Doel {
 export default function Houvast() {
   const router = useRouter();
   const t = useVertaling(teksten);
+  const { taal } = useTaal();
   const [invoer, zetInvoer] = useState("");
   const [zoekterm, zetZoekterm] = useState("");
   const [voorkeuren, zetVoorkeuren] = useState<string[]>([]);
 
-  // De voorkeuren kunnen tussendoor wijzigen in Instellingen, dus bij elke
-  // focus opnieuw lezen. Ze bepalen alleen de volgorde, nooit wat er te zien is.
+  // De voorkeuren kunnen tussendoor wijzigen op Profiel, dus bij elke focus
+  // opnieuw lezen. Ze bepalen alleen de volgorde, nooit wat er te zien is.
   useFocusEffect(
     useCallback(() => {
       let actief = true;
@@ -119,6 +133,12 @@ export default function Houvast() {
     else if (d.soort === "gids") router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: d.slug } });
     else router.push({ pathname: "/challenges/[challenge]", params: { challenge: d.slug } });
   };
+  // Een familie met één onderwerp heeft geen eigen pagina nodig.
+  const openFamilie = (f: Familie) => {
+    const enige = f.onderwerpen.length === 1 ? f.onderwerpen[0] : undefined;
+    if (enige) openOnderwerp(enige.slug);
+    else router.push({ pathname: "/naslagwerk/familie/[familie]", params: { familie: f.slug } });
+  };
 
   // Slim zoeken: één gerangschikte lijst; een gids en het artikel over
   // hetzelfde onderwerp worden één resultaat.
@@ -130,10 +150,7 @@ export default function Houvast() {
     }
   }
 
-  const onderwerpen = houvastVoorVoorkeuren(voorkeuren);
-
-  // De gidsen zonder eigen onderwerp, als plank onderaan.
-  const losseGidsen = GIDSEN.filter((g) => !houvastVoorGids(g.slug));
+  const families = familiesVoorVoorkeuren(voorkeuren);
 
   const label = (soort: Doel["soort"]) => (soort === "onderwerp" ? t("onderwerp") : soort === "gids" ? t("gids") : t("challenge"));
 
@@ -186,42 +203,41 @@ export default function Houvast() {
         </ContentSection>
       ) : (
         <ContentSection title={t("onderwerpen")} note={t("onderwerpenNote")}>
-          {onderwerpen.length === 0 ? null : (
-            <ContentGrid>
-              {/* Het eerste onderwerp breed, de rest half; elke kaart in de kleur
-                  van zijn onderwerp, met de vlieger rechtsonder, altijd op dezelfde plek. */}
-              {onderwerpen.map((h, i) => (
-                <ContentCard
-                  key={h.slug}
-                  full={i === 0 || (i === onderwerpen.length - 1 && (onderwerpen.length - 1) % 2 === 1)}
-                  kleur={kaartKleurVoor(h.onderwerp, h.slug)}
-                  title={h.titel}
-                  onPress={() => openOnderwerp(h.slug)}
-                >
-                  <View style={{ height: i === 0 ? 72 : 56 }} />
-                  <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
-                    <VliegerOnderwerp onderwerp={h.onderwerp} slug={h.slug} hoogte={i === 0 ? 72 : 52} />
-                  </View>
-                </ContentCard>
-              ))}
-            </ContentGrid>
-          )}
+          <ContentGrid>
+            {/* De eerste familie breed, de rest half; elke kaart in de kleur van
+                haar familie, met de vlieger rechtsonder, altijd op dezelfde plek.
+                Negen is oneven, dus de laatste is ook breed. */}
+            {families.map((f, i) => (
+              <ContentCard
+                key={f.slug}
+                full={i === 0 || i === families.length - 1}
+                kleur={kaartKleurVoor(f.naam)}
+                title={f.naam}
+                onPress={() => openFamilie(f)}
+              >
+                <AppText rol="bodySmall" kleur="secondary">
+                  {f.onderwerpen.length === 1 ? f.regel[taal] : t("aantal").replace("{n}", String(f.onderwerpen.length))}
+                </AppText>
+                <View style={{ height: i === 0 ? 56 : 44 }} />
+                <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
+                  <VliegerOnderwerp onderwerp={f.naam} hoogte={i === 0 ? 72 : 52} />
+                </View>
+              </ContentCard>
+            ))}
+          </ContentGrid>
         </ContentSection>
       )}
 
-      {!zoekterm && losseGidsen.length ? (
-        <ContentSection title={t("gidsen")} note={t("gidsenNote")}>
-          <ContentShelf>
-            {losseGidsen.map((g) => (
-              <ShelfCard
-                key={g.slug}
-                label={t("gids")}
-                title={g.titel}
-                tone="primary"
-                onPress={() => router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: g.slug } })}
-              />
-            ))}
-          </ContentShelf>
+      {!zoekterm ? (
+        <ContentSection title={t("ookTitel")}>
+          <ContentGrid>
+            <ContentCard tone="primary" title={t("naastenTitel")} onPress={() => router.push({ pathname: "/naslagwerk/gidsen/[groep]", params: { groep: "naasten" } })}>
+              <AppText rol="bodySmall" kleur="secondary">{t("naastenNote")}</AppText>
+            </ContentCard>
+            <ContentCard tone="purple" title={t("andereTitel")} onPress={() => router.push({ pathname: "/naslagwerk/gidsen/[groep]", params: { groep: "andere" } })}>
+              <AppText rol="bodySmall" kleur="secondary">{t("andereNote")}</AppText>
+            </ContentCard>
+          </ContentGrid>
         </ContentSection>
       ) : null}
     </ScreenCanvas>
