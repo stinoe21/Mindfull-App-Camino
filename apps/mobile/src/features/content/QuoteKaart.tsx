@@ -60,11 +60,11 @@ export function QuoteKaart() {
           </AppText>
         </View>
       </PressableScale>
-      {/* Twee acties op één rij: lezen als link, delen als knop. De link
-          maakt zichtbaar dat er een pagina achter de quote zit; de quote
-          zelf tikken doet hetzelfde (Stijn, 10 september 2026). */}
-      <View style={{ flexDirection: "row", alignItems: "center", gap: space[5], marginTop: space[4] }}>
-        <Button label="Lees meer" variant="link" onPress={() => router.push("/quote")} />
+      {/* Twee knoppen op één rij: lezen en delen. De knop maakt zichtbaar
+          dat er een pagina achter de quote zit; de quote zelf tikken doet
+          hetzelfde (Stijn, 10 september 2026; echte knoppen sinds 14 september). */}
+      <View style={{ flexDirection: "row", alignItems: "center", gap: space[3], marginTop: space[4] }}>
+        <Button label="Lees meer" variant="secondary" onPress={() => router.push("/quote")} />
         <Button label="Deel deze quote" variant="secondary" onPress={deel} />
       </View>
     </View>
