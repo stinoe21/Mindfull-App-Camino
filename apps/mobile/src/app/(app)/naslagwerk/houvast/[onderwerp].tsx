@@ -23,8 +23,8 @@
 // opbouw; een paneel zonder inhoud vervalt.
 
 import * as Linking from "expo-linking";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 
 import { space } from "@mind/ui";
@@ -41,6 +41,7 @@ import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnd
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { InhoudBlokken } from "@/features/content/InhoudBlokken";
+import { isBewaard, leesBewaard, wisselBewaard, type BewaardeTip } from "@/features/content/bewaard";
 import { challengeBijFamilie } from "@/features/content/families";
 import { houvastBijOnderwerp, houvastVoor } from "@/features/content/houvast";
 import type { HouvastTip } from "@/features/content/data/houvast";
@@ -56,6 +57,8 @@ const nl = {
   minder: "Minder",
   tipVan: "TIP {x} van {y}",
   probeer: "PROBEER DIT EENS",
+  bewaar: "Bewaar deze tip",
+  bewaard: "Bewaard",
   opMind: "Op wijzijnmind.nl",
   allesOver: "Alles over {titel}",
   gids: "De online gids: {titel}",
@@ -79,6 +82,8 @@ const teksten: Woordenboek<typeof nl> = {
     minder: "Less",
     tipVan: "TIP {x} of {y}",
     probeer: "TRY THIS",
+    bewaar: "Save this tip",
+    bewaard: "Saved",
     opMind: "On wijzijnmind.nl",
     allesOver: "Everything about {titel}",
     gids: "The online guide: {titel}",
@@ -102,16 +107,23 @@ function knip(tekst: string, aantal = 2): { kop: string; rest: string } {
 type Paneel = "uitleg" | "helpen" | "verder";
 const isPaneel = (p: string | undefined): p is Paneel => p === "uitleg" || p === "helpen" || p === "verder";
 
-// Eén tip als kaart in de pager: overline met de telling, de kop, en de
-// volledige tekst. De kaart vult de hoogte van de hoogste kaart in de rij.
-function TipKaart({ tip, overline, tone }: { tip: HouvastTip; overline: string; tone: "white" | "purple" }) {
+// Eén tip als kaart in de pager: overline met de telling, de kop, de
+// volledige tekst en onderaan "Bewaar deze tip". De kaart vult de hoogte van
+// de hoogste kaart in de rij, met de bewaarknop altijd onderaan.
+type TipKaartProps = { tip: HouvastTip; overline: string; tone: "white" | "purple"; bewaard: boolean; onBewaar: () => void; labels: { bewaar: string; bewaard: string } };
+function TipKaart({ tip, overline, tone, bewaard, onBewaar, labels }: TipKaartProps) {
   return (
     <Card tone={tone} style={{ flex: 1, gap: space[3] }}>
       <View style={{ gap: space[1] }}>
         <AppText rol="labelOverline" kleur="brand">{overline}</AppText>
         {tip.kop ? <AppText rol="h3">{tip.kop}</AppText> : null}
       </View>
-      <InhoudBlokken blokken={tip.blokken} />
+      <View style={{ flex: 1, gap: space[2] }}>
+        <InhoudBlokken blokken={tip.blokken} />
+      </View>
+      <View style={{ alignItems: "flex-start" }}>
+        <Button label={bewaard ? "✓ " + labels.bewaard : labels.bewaar} variant="link" onPress={onBewaar} />
+      </View>
     </Card>
   );
 }
@@ -119,12 +131,32 @@ function TipKaart({ tip, overline, tone }: { tip: HouvastTip; overline: string; 
 export default function HouvastOnderwerp() {
   const router = useRouter();
   const t = useVertaling(teksten);
-  // Een link kan direct op een paneel openen (?paneel=helpen), bijvoorbeeld
-  // vanaf Home naar de tips; zonder parameter begint de pagina bij de uitleg.
-  const { onderwerp: slug, paneel: startPaneel } = useLocalSearchParams<{ onderwerp: string; paneel?: string }>();
+  // Een link kan direct op een paneel openen (?paneel=helpen), en op een tip
+  // (&tip=2), bijvoorbeeld vanaf een bewaarde tip op Houvast; zonder
+  // parameters begint de pagina bij de uitleg.
+  const { onderwerp: slug, paneel: startPaneel, tip: startTip } = useLocalSearchParams<{ onderwerp: string; paneel?: string; tip?: string }>();
   const houvast = houvastVoor(slug);
   const [paneel, zetPaneel] = useState<Paneel>(isPaneel(startPaneel) ? startPaneel : "uitleg");
   const [alles, zetAlles] = useState(false);
+  const [bewaard, zetBewaard] = useState<BewaardeTip[]>([]);
+
+  // De bewaarde tips staan lokaal (features/content/bewaard.ts); bij elke
+  // focus opnieuw lezen, want ze kunnen op Houvast zelf gewijzigd zijn.
+  useFocusEffect(
+    useCallback(() => {
+      let actief = true;
+      leesBewaard().then((lijst) => {
+        if (actief) zetBewaard(lijst);
+      });
+      return () => {
+        actief = false;
+      };
+    }, [])
+  );
+  const wissel = (positie: number) => {
+    if (!slug) return;
+    wisselBewaard(slug, positie).then(zetBewaard);
+  };
 
   if (!houvast) {
     return (
@@ -187,11 +219,29 @@ export default function HouvastOnderwerp() {
       ) : null}
 
       {paneel === "helpen" ? (
-        <Pager>
+        <Pager start={Number(startTip) || 0}>
           {houvast.tips.map((tip, i) => (
-            <TipKaart key={i} tip={tip} tone="white" overline={t("tipVan").replace("{x}", String(i + 1)).replace("{y}", String(totaal))} />
+            <TipKaart
+              key={i}
+              tip={tip}
+              tone="white"
+              overline={t("tipVan").replace("{x}", String(i + 1)).replace("{y}", String(totaal))}
+              bewaard={isBewaard(bewaard, houvast.slug, i)}
+              onBewaar={() => wissel(i)}
+              labels={{ bewaar: t("bewaar"), bewaard: t("bewaard") }}
+            />
           ))}
-          {houvast.oefening ? <TipKaart key="oefening" tip={houvast.oefening} tone="purple" overline={t("probeer")} /> : null}
+          {houvast.oefening ? (
+            <TipKaart
+              key="oefening"
+              tip={houvast.oefening}
+              tone="purple"
+              overline={t("probeer")}
+              bewaard={isBewaard(bewaard, houvast.slug, houvast.tips.length)}
+              onBewaar={() => wissel(houvast.tips.length)}
+              labels={{ bewaar: t("bewaar"), bewaard: t("bewaard") }}
+            />
+          ) : null}
         </Pager>
       ) : null}
 
