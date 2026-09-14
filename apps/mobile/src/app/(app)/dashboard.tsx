@@ -39,7 +39,7 @@ import { leesInstellingen } from "@/features/profiel/instellingen";
 import { KAARTKLEUR } from "@/features/weer/kaartKleuren";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { isProvincie } from "@/features/weer/provincies";
-import { WEER_NAMEN } from "@/features/weer/teksten";
+import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
 import { haalWeerbericht, haalWeerberichtProvincies, type WeerberichtStand } from "@/features/weer/weerbericht";
 
 import { WEATHER_CODES, type WeatherCode, type WeatherTodayProvince } from "@mind/types";
@@ -162,7 +162,9 @@ export default function Dashboard() {
     <View style={{ flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", alignSelf: "stretch", paddingHorizontal: space[5], gap: space[3] }}>
       <View style={{ flexShrink: 1, gap: space[1] }}>
         <AppText rol="h1">{begroeting() + (naam ? ", " + naam : "")}</AppText>
-        <AppText rol="subtitle">{t("hoeWeer")}</AppText>
+        {/* Voor de check-in de vraag; erna de duiding van jouw weer, want de
+            vraag naast de kaart met je weer was dubbelop (Stijn, 14 september 2026). */}
+        <AppText rol="subtitle">{weerbeeld ? UITKOMSTEN[weerbeeld].kop : t("hoeWeer")}</AppText>
       </View>
       {weerbeeld ? <MascotteVlieger state={weerbeeld} hoogte={72} /> : <MascotMain hoogte={96} />}
     </View>
