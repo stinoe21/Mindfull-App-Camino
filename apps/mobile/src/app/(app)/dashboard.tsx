@@ -56,8 +56,8 @@ const nl = {
   evenIncheckenKnop: "Doe je mentale weer check-in",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien.",
-  berichtRegel: "Vandaag vooral een {weer}, op basis van {total} check-ins.",
-  provincieRegel: "Vooral een {weer}, {n} check-ins vandaag.",
+  berichtRegel: "Vandaag vooral een {weer} in Nederland.",
+  provincieRegel: "Vandaag vooral een {weer}.",
   provincieLeeg: "Nog te weinig check-ins voor een beeld.",
   nietIngelogd: "Log in om het mentale weer te zien.",
   teWeinig: "Nog te weinig check-ins voor een beeld. Later vandaag staat hier meer.",
@@ -84,8 +84,8 @@ const teksten: Woordenboek<typeof nl> = {
     evenIncheckenKnop: "Do your mental weather check-in",
     weerVanNederland: "The mental weather of the Netherlands",
     weerVanNederlandSub: "Per province, the weather we see most today.",
-    berichtRegel: "Mostly a {weer} today, based on {total} check-ins.",
-    provincieRegel: "Mostly a {weer}, {n} check-ins today.",
+    berichtRegel: "Mostly a {weer} in the Netherlands today.",
+    provincieRegel: "Mostly a {weer} today.",
     provincieLeeg: "Not enough check-ins yet for a picture.",
     nietIngelogd: "Log in to see the mental weather.",
     teWeinig: "Not enough check-ins yet for a picture. Later today there will be more here.",
@@ -248,8 +248,10 @@ export default function Dashboard() {
           pagina hoeft niet) op het vel als gewone sectie: de kaart is het
           beeld, de provincies in hun weerkleur, een legenda van de vijf
           weerbeelden en één regel eronder. Tik op een provincie voor haar
-          naam, weerbeeld en aantal check-ins. Nooit een waardering: de kleur
-          is het weer zelf (productprincipe 3). */}
+          naam en weerbeeld. Geen aantallen check-ins: die zeggen de gebruiker
+          niets, en dicht bij de drempel per provincie is een exact getal juist
+          wat je niet wilt tonen (Stijn, 15 september 2026). Nooit een
+          waardering: de kleur is het weer zelf (productprincipe 3). */}
       <ContentSection title={t("weerVanNederland")} note={t("weerVanNederlandSub")}>
         <View style={{ alignItems: "center", gap: space[4] }}>
           {bericht === null ? (
@@ -264,7 +266,7 @@ export default function Dashboard() {
                 <AppText rol="bodyEmphasis">{PROVINCIE_NAMEN[gekozenProvincie]}</AppText>
                 <AppText rol="bodySmall" kleur="secondary">
                   {gekozenRij
-                    ? t("provincieRegel").replace("{weer}", isWeerCode(gekozenRij.weather) ? WEER_NAMEN[gekozenRij.weather].toLowerCase() : gekozenRij.label.toLowerCase()).replace("{n}", String(gekozenRij.total))
+                    ? t("provincieRegel").replace("{weer}", isWeerCode(gekozenRij.weather) ? WEER_NAMEN[gekozenRij.weather].toLowerCase() : gekozenRij.label.toLowerCase())
                     : t("provincieLeeg")}
                 </AppText>
               </View>
@@ -282,7 +284,7 @@ export default function Dashboard() {
           {bericht === null ? null : (
             <AppText rol="bodySmall" kleur="secondary" centreer>
               {bericht.staat === "geladen" && topBericht
-                ? t("berichtRegel").replace("{weer}", topCode ? WEER_NAMEN[topCode].toLowerCase() : topBericht.label.toLowerCase()).replace("{total}", String(topBericht.total))
+                ? t("berichtRegel").replace("{weer}", topCode ? WEER_NAMEN[topCode].toLowerCase() : topBericht.label.toLowerCase())
                 : bericht.staat === "niet-ingelogd"
                   ? t("nietIngelogd")
                   : bericht.staat === "leeg"
