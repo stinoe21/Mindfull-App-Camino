@@ -42,13 +42,14 @@ export const QUOTES: Quote[] = [
     auteur: "Nederlands spreekwoord",
     betekenis:
       "Een zware periode voelt alsof hij nooit ophoudt, maar ook die heeft een einde. Het weer draait, altijd. Je hoeft de zon niet te forceren, alleen te weten dat hij komt.",
-    over: "Een van de oudste Nederlandse spreekwoorden, al eeuwen doorgegeven. Niemand weet wie het als eerste zei.",
+    over:
+      "Een van de oudste Nederlandse spreekwoorden, al in de zeventiende eeuw opgetekend en in bijna elke taal met een tegenhanger. Niemand weet wie het als eerste zei. Dat het over weer gaat, is geen toeval: het weer is het oudste beeld dat mensen hebben voor hoe ze zich voelen, en precies daarom heet deze app zoals hij heet.",
   },
   {
     tekst: "Je hoeft de hele trap niet te zien om de eerste tree te nemen.",
     auteur: "Martin Luther King jr.",
     betekenis:
-      "Je hoeft niet te weten hoe alles afloopt om te kunnen beginnen. Eén tree is genoeg voor nu. De volgende zie je vanzelf als je er staat.",
+      "Je hoeft niet te weten hoe alles afloopt om te kunnen beginnen. Eén tree is genoeg voor nu; de volgende zie je vanzelf als je er staat. Wie eerst de hele trap wil overzien, blijft beneden staan, en de meeste trappen zijn vanaf de eerste tree toch niet te overzien. Vertrouwen is niet weten dat het goed komt, maar de voet toch optillen.",
     over:
       "Martin Luther King jr. (1929-1968) was dominee en de bekendste leider van de Amerikaanse burgerrechtenbeweging. Hij kreeg in 1964 de Nobelprijs voor de Vrede.",
   },
@@ -80,8 +81,9 @@ export const QUOTES: Quote[] = [
     tekst: "Wees zacht voor jezelf. Je doet het beste wat je kunt.",
     auteur: "Onbekend",
     betekenis:
-      "Op een zware dag is doen wat lukt genoeg. Je hoeft jezelf niet strenger toe te spreken dan je een goede vriend zou doen. Zachtheid is geen zwakte, het is de toon waarop je verder kunt.",
-    over: "De herkomst van deze uitspraak is niet bekend. Hij wordt in veel vormen doorgegeven, precies omdat zoveel mensen hem herkennen.",
+      "Op een zware dag is doen wat lukt genoeg. Je hoeft jezelf niet strenger toe te spreken dan je een goede vriend zou doen. Zachtheid is geen zwakte, het is de toon waarop je verder kunt. Wie zichzelf hard aanpakt, raakt eerder uitgeput dan wie zichzelf een beetje ruimte gunt.",
+    over:
+      "De herkomst van deze uitspraak is niet bekend; hij wordt in veel vormen doorgegeven, precies omdat zoveel mensen hem herkennen. De gedachte erachter is wat de Amerikaanse psycholoog Kristin Neff zelfcompassie noemt: jezelf behandelen zoals je een goede vriend zou behandelen.",
   },
   {
     tekst: "Wij lijden vaker in de verbeelding dan in werkelijkheid.",
@@ -127,7 +129,7 @@ export const QUOTES: Quote[] = [
     tekst: "Een reis van duizend mijl begint met één stap.",
     auteur: "Laozi",
     betekenis:
-      "Hoe ver de weg ook is, er is altijd maar één stap tegelijk te zetten. Die ene stap is er vandaag. De rest van de reis hoeft nu nog niet.",
+      "Hoe ver de weg ook is, er is altijd maar één stap tegelijk te zetten. Die ene stap is er vandaag; de rest van de reis hoeft nu nog niet. Het bijzondere aan de zin is dat hij de duizend mijl niet ontkent, maar ze terugbrengt tot wat een mens kan: één stap. De eerste is meestal de zwaarste, omdat hij de beslissing bevat.",
     over:
       "Laozi was een Chinese denker uit de zesde eeuw voor Christus en geldt als de schrijver van de Daodejing, een van de oudste teksten over leven in balans.",
   },
@@ -221,7 +223,7 @@ export const QUOTES: Quote[] = [
     tekst: "Zelfs de langste nacht eindigt, en de zon komt op.",
     auteur: "Victor Hugo",
     betekenis:
-      "Een nacht die maar niet ophoudt, houdt toch op. Je hoeft er niets voor te doen; de zon komt uit zichzelf. Volhouden tot dan is genoeg.",
+      "Een nacht die maar niet ophoudt, houdt toch op. Je hoeft er niets voor te doen; de zon komt uit zichzelf, ongeacht hoe de nacht was. Volhouden tot dan is genoeg, en volhouden mag ook gewoon wachten zijn. De langste nacht van het jaar is meteen de dag waarop het licht weer begint te winnen.",
     over:
       "Victor Hugo (1802-1885) was een Franse schrijver, bekend van \"Les Misérables\" en \"De klokkenluider van de Notre-Dame\". De zin wordt breed aan hem toegeschreven.",
   },
@@ -260,8 +262,9 @@ export const QUOTES: Quote[] = [
     tekst: "Rust is geen luiheid. Soms is het de moedigste stap.",
     auteur: "Onbekend",
     betekenis:
-      "Stoppen voelt vaak als opgeven, terwijl het juist iets vraagt: durven niet doorgaan. Wie rust neemt, kiest ervoor niet leeg te lopen. Dat is een keuze, geen zwakte.",
-    over: "De herkomst van deze uitspraak is niet bekend. Hij wordt vaak gedeeld in kringen die schrijven over burn-out en zelfzorg.",
+      "Stoppen voelt vaak als opgeven, terwijl het juist iets vraagt: durven niet doorgaan. Wie rust neemt, kiest ervoor niet leeg te lopen. Dat is een keuze, geen zwakte. In een tijd waarin druk zijn als een verdienste geldt, is stilstaan soms het enige dat tegen de stroom in gaat.",
+    over:
+      "De herkomst van deze uitspraak is niet bekend. Hij wordt veel gedeeld door mensen die een burn-out hebben gehad en achteraf zagen dat ze te lang zijn doorgegaan. Dezelfde gedachte staat al in het Nederlandse spreekwoord over de boog die niet altijd gespannen kan zijn.",
   },
   {
     tekst: "Het leven wordt achterwaarts begrepen, maar moet voorwaarts geleefd worden.",
@@ -290,8 +293,9 @@ export const QUOTES: Quote[] = [
     tekst: "Alles wat je nodig hebt, is de wil om de volgende kleine stap te zetten.",
     auteur: "Onbekend",
     betekenis:
-      "Je hoeft niet alles te kunnen, alleen het volgende. Dat maakt de dag kleiner en dus haalbaarder. Grote dingen bestaan uit veel volgende kleine stappen.",
-    over: "Geen bekende auteur. De uitspraak wordt in veel varianten gedeeld, vaak in de context van herstel.",
+      "Je hoeft niet alles te kunnen, alleen het volgende. Dat maakt de dag kleiner en dus haalbaarder. Grote dingen bestaan uit veel volgende kleine stappen. En als de wil er even niet is, is dat ook informatie: dan is rusten de volgende stap.",
+    over:
+      "Geen bekende auteur. De uitspraak wordt in veel varianten gedeeld, vooral in de wereld van herstel en verslavingszorg, waar het principe van één stap tegelijk al sinds de jaren dertig de kern is. Het sluit aan bij de beroemde zin van Laozi over de reis van duizend mijl.",
   },
   {
     tekst: "De wond is de plek waar het licht binnenkomt.",
@@ -367,14 +371,14 @@ export const QUOTES: Quote[] = [
     tekst: "Val zeven keer, sta acht keer op.",
     auteur: "Japans spreekwoord",
     betekenis:
-      "Vallen hoort erbij, ook vaak. Wat telt, is dat je één keer vaker opstaat dan je valt. Dat is geen prestatie, het is gewoon doorgaan.",
+      "Vallen hoort erbij, ook vaak, en het spreekwoord telt de valpartijen niet als mislukking maar als deel van de reeks. Wat telt, is dat je één keer vaker opstaat dan je valt. Dat is geen prestatie, het is gewoon doorgaan. Wie terugvalt na een goede periode, is niet terug bij af: het is de zevende keer, niet de eerste.",
     over: "Een Japans spreekwoord (nana korobi ya oki) dat vaak wordt afgebeeld met een daruma-pop, die altijd weer rechtop rolt.",
   },
   {
     tekst: "Er zit een barst in alles. Zo komt het licht binnen.",
     auteur: "Leonard Cohen",
     betekenis:
-      "Niets is heel, en dat hoeft ook niet. Juist waar iets gebroken is, kan er iets binnen. Perfect zijn is niet de voorwaarde voor licht.",
+      "Niets is heel, en dat hoeft ook niet. Juist waar iets gebroken is, kan er iets binnen: een ander mens, hulp, een inzicht dat je in gave staat nooit had gekregen. Perfect zijn is niet de voorwaarde voor licht; de barst is het. Het lied zegt het ervoor ook: vergeet je perfecte offer, luid de klokken die nog kunnen luiden.",
     over:
       "Leonard Cohen (1934-2016) was een Canadese zanger en dichter. De regel komt uit zijn lied \"Anthem\" uit 1992, waar hij naar eigen zeggen tien jaar aan schreef.",
   },
@@ -484,7 +488,7 @@ export const QUOTES: Quote[] = [
     tekst: "Haastige spoed is zelden goed.",
     auteur: "Nederlands spreekwoord",
     betekenis:
-      "Onder druk wil je snel klaar zijn, en juist dan gaat het mis. Iets langzamer doen kost minder dan het lijkt. Het tempo mag van jou zijn.",
+      "Onder druk wil je snel klaar zijn, en juist dan gaat het mis. Iets langzamer doen kost minder dan het lijkt, en levert vaak op wat de haast had gekost: overzicht, adem, een beslissing die klopt. Het tempo mag van jou zijn. Wie zich opgejaagd voelt, mag zich afvragen door wie, en of die persoon er eigenlijk is.",
     over: "Een Nederlands rijmend spreekwoord dat al in de zeventiende eeuw werd opgeschreven. Vergelijkbare spreuken bestaan in het Latijn.",
   },
   {
@@ -516,7 +520,8 @@ export const QUOTES: Quote[] = [
     auteur: "Nederlands spreekwoord",
     betekenis:
       "Beginnen is het moeilijkste deel, en als dat gedaan is, is de helft al achter de rug. Niet omdat het werk kleiner is, maar omdat de drempel weg is. Een begin hoeft niet goed te zijn om te tellen.",
-    over: "Een Nederlands spreekwoord dat teruggaat op een Latijnse spreuk van Horatius: wie begonnen is, is halverwege.",
+    over:
+      "Een Nederlands spreekwoord dat teruggaat op een Latijnse spreuk van de dichter Horatius uit de eerste eeuw voor Christus: wie begonnen is, is halverwege. Het bestaat in bijna alle Europese talen en wordt in de psychologie bevestigd: de grootste weerstand zit voor de eerste stap, niet erna.",
   },
   {
     tekst: "Uit het lijden zijn de sterkste zielen voortgekomen.",
@@ -538,7 +543,7 @@ export const QUOTES: Quote[] = [
     tekst: "Je kunt niet twee keer in dezelfde rivier stappen.",
     auteur: "Heraclitus",
     betekenis:
-      "Alles stroomt, en jij ook. De dag van gisteren komt niet terug, maar de zwaarte van gisteren ook niet. Elke ochtend is het water anders.",
+      "Alles stroomt, en jij ook. De dag van gisteren komt niet terug, maar de zwaarte van gisteren ook niet: het water is anders, en jij bent anders. Elke ochtend is een nieuwe rivier. Wie denkt dat het altijd zo zal blijven, staat stil in een stroom die allang verder is.",
     over:
       "Heraclitus (circa 540-480 voor Christus) was een Griekse filosoof uit Efeze. Van hem zijn alleen fragmenten bewaard, en dit is het bekendste.",
   },
@@ -625,7 +630,8 @@ export const QUOTES: Quote[] = [
     auteur: "Nederlands spreekwoord",
     betekenis:
       "Een goede week bestaat uit kleine momenten, niet uit één grote gebeurtenis. Wat je vandaag doet, telt op, ook als het weinig lijkt. Kleine stappen tellen mee.",
-    over: "Een Nederlands spreekwoord dat oorspronkelijk over geld ging en al in de zeventiende eeuw werd opgetekend.",
+    over:
+      "Een Nederlands spreekwoord dat oorspronkelijk over geld ging en al in de zeventiende eeuw werd opgetekend, in de tijd dat spaarzaamheid een deugd was. Het geldt net zo goed voor energie, slaap en goede momenten: die sparen zich ook op in kleine porties.",
   },
   {
     tekst: "Wie naar de wereld kijkt met nieuwe ogen, maakt de echte ontdekkingsreis.",
@@ -639,7 +645,7 @@ export const QUOTES: Quote[] = [
     tekst: "Aandacht is de zeldzaamste en zuiverste vorm van vrijgevigheid.",
     auteur: "Simone Weil",
     betekenis:
-      "Iemand echt aandacht geven, zonder iets te willen, is een groot cadeau. Ook jezelf aandacht geven is dat. Het kost niets en het is schaars.",
+      "Iemand echt aandacht geven, zonder iets te willen of op te lossen, is een groot cadeau, en het is zeldzamer dan geld of advies. Ook jezelf aandacht geven is dat: even stilstaan bij hoe het gaat, zonder oordeel. Het kost niets en het is schaars. Een check-in is precies dat: een minuut aandacht voor jezelf.",
     over:
       "Simone Weil (1909-1943) was een Franse filosofe en mystica. De zin komt uit een brief aan een vriend, uit 1942.",
   },
@@ -679,7 +685,7 @@ export const QUOTES: Quote[] = [
     tekst: "Ook dit gaat voorbij.",
     auteur: "Perzisch gezegde",
     betekenis:
-      "Vier woorden die op elke dag passen: op een goede als herinnering, op een slechte als troost. Niets blijft zoals het is. Ook dit niet.",
+      "Vier woorden die op elke dag passen: op een goede als herinnering om ervan te genieten, op een slechte als troost. Niets blijft zoals het is, ook dit niet. Wie een paniekaanval, een sombere week of een slapeloze nacht doormaakt, heeft aan die vier woorden vaak meer dan aan een hele uitleg. Ze vragen niets, ze beloven alleen beweging.",
     over:
       "Een gezegde van Perzische oorsprong, vaak aan de soefi-dichters toegeschreven. Abraham Lincoln haalde het in 1859 aan als de wijste zin die hij kende.",
   },
@@ -703,7 +709,7 @@ export const QUOTES: Quote[] = [
     tekst: "Rivieren weten dit: er is geen haast. We komen er wel.",
     auteur: "A.A. Milne",
     betekenis:
-      "Een rivier stroomt gewoon. Hij duwt niet, hij komt aan. Dat je er vandaag nog niet bent, betekent alleen dat je nog onderweg bent.",
+      "Een rivier stroomt gewoon. Hij duwt niet, hij komt aan, en hij neemt de bochten die er zijn zonder zich af te vragen of het sneller kan. Dat je er vandaag nog niet bent, betekent alleen dat je nog onderweg bent. Haast verandert de lengte van de rivier niet, alleen hoe moe je bij de zee aankomt.",
     over:
       "A.A. Milne (1882-1956) was de schrijver van Winnie de Poeh. De zin wordt aan hem toegeschreven, maar staat niet letterlijk in de boeken; hij is in de geest van Poeh.",
   },
@@ -724,11 +730,12 @@ export const QUOTES: Quote[] = [
       "Audre Lorde (1934-1992) was een Amerikaanse dichter en activist. Ze schreef dit in 1988, terwijl ze aan kanker leed, in de bundel \"A Burst of Light\".",
   },
   {
-    tekst: "Het is beter om te lopen dan te rennen, en beter te staan dan te lopen.",
-    auteur: "Onbekend",
+    tekst: "Beter lopen dan rennen, beter staan dan lopen, beter zitten dan staan.",
+    auteur: "Indiaas gezegde",
     betekenis:
-      "Hoe minder je hoeft, hoe meer je er bent. Het gaat niet om hoe snel je gaat, maar of je erbij bent. Even stilstaan is soms de beste beweging.",
-    over: "Een uitspraak zonder vaste bron, in de geest van de oosterse wijsheidstradities.",
+      "Hoe minder je hoeft, hoe meer je er bent. Het gaat niet om hoe snel je gaat, maar of je erbij bent. Elke trede omlaag in tempo is een trede omhoog in aandacht. Even stilzitten is dan geen tijdverlies, maar de beste vorm van beweging.",
+    over:
+      "Een gezegde dat aan India wordt toegeschreven en in verschillende vormen circuleert, ook als \"beter liggen dan zitten\". Het vat de houding van meditatie samen: niet doen, maar zijn. Een precieze bron is niet bekend.",
   },
   {
     tekst: "Wie anderen kent is wijs; wie zichzelf kent is verlicht.",
@@ -736,7 +743,7 @@ export const QUOTES: Quote[] = [
     betekenis:
       "Anderen begrijpen is knap, jezelf begrijpen is zeldzamer. Weten wat je nodig hebt, wat je raakt en wanneer je op moet houden, is de moeilijkste kennis. Daar mag je je hele leven over doen.",
     over:
-      "Laozi was een Chinese denker uit de zesde eeuw voor Christus. De zin staat in hoofdstuk 33 van de Daodejing.",
+      "Laozi was een Chinese denker uit de zesde eeuw voor Christus en geldt als de schrijver van de Daodejing, een tekst van 81 korte hoofdstukken over leven in balans. De zin staat in hoofdstuk 33, dat ook zegt: wie zichzelf overwint, is sterk. Zelfkennis staat er dus boven kennis van anderen.",
   },
   {
     tekst: "Niet lachen, niet klagen, niet verafschuwen, maar begrijpen.",
@@ -750,7 +757,7 @@ export const QUOTES: Quote[] = [
     tekst: "Ik ben mijn hele leven bang geweest, maar ik heb me er nooit door laten tegenhouden.",
     auteur: "Georgia O'Keeffe",
     betekenis:
-      "Angst hoeft niet weg voordat je iets doet. Je kunt bang zijn en tegelijk doen wat je wilt. Die twee sluiten elkaar niet uit.",
+      "Angst hoeft niet weg voordat je iets doet. Je kunt bang zijn en tegelijk doen wat je wilt; die twee sluiten elkaar niet uit. Wie wacht tot de angst over is, wacht meestal voor altijd. De angst komt gewoon mee, en wordt onderweg vaak kleiner dan hij bij de deur was.",
     over:
       "Georgia O'Keeffe (1887-1986) was een Amerikaanse schilder, bekend van haar bloemen en landschappen uit New Mexico. Ze zei dit in een interview op latere leeftijd.",
   },
@@ -782,7 +789,7 @@ export const QUOTES: Quote[] = [
     tekst: "Geluk is niet een kwestie van intensiteit, maar van evenwicht, ritme en harmonie.",
     auteur: "Thomas Merton",
     betekenis:
-      "Geluk is geen piek, het is een ritme. Niet de beste dag ooit, maar een week die klopt. Dat is minder spannend en veel haalbaarder.",
+      "Geluk is geen piek, het is een ritme. Niet de beste dag ooit, maar een week die klopt: genoeg slaap, iemand spreken, iets doen met je handen, af en toe buiten. Dat is minder spannend en veel haalbaarder. Wie geluk zoekt in hoogtepunten, is tussen de hoogtepunten steeds ongelukkig.",
     over:
       "Thomas Merton (1915-1968) was een Amerikaanse trappistenmonnik en schrijver. De zin komt uit \"No Man Is an Island\" uit 1955.",
   },
@@ -837,7 +844,7 @@ export const QUOTES: Quote[] = [
     tekst: "Wie een berg verzet, begint met het wegdragen van kleine stenen.",
     auteur: "Confucius",
     betekenis:
-      "Een berg verzet je niet. Kleine stenen wel, en daar bestaat een berg uit. Vandaag één steen is genoeg.",
+      "Een berg verzet je niet. Kleine stenen wel, en daar bestaat een berg uit. Vandaag één steen is genoeg, en morgen weer een. Wie naar de berg blijft kijken, raakt ontmoedigd; wie naar de steen in zijn hand kijkt, is bezig.",
     over:
       "Confucius (551-479 voor Christus) was een Chinese denker wiens ideeën de Chinese cultuur eeuwenlang vormden. De zin wordt hem toegeschreven, maar staat niet letterlijk in de overgeleverde teksten.",
   },
@@ -869,15 +876,16 @@ export const QUOTES: Quote[] = [
     tekst: "Rome is niet in één dag gebouwd.",
     auteur: "Spreekwoord",
     betekenis:
-      "Wat groot en blijvend is, kostte tijd. Dat geldt voor steden en voor mensen. Dat je er nog niet bent, hoort bij iets bouwen.",
+      "Wat groot en blijvend is, kostte tijd. Dat geldt voor steden en voor mensen: herstel, een nieuwe gewoonte, vertrouwen na een klap. Dat je er nog niet bent, hoort bij iets bouwen, en zegt niets over of het lukt. Wie na een week al klaar wil zijn, bouwt geen Rome maar een tent.",
     over: "Een spreekwoord dat al in de twaalfde eeuw in het Frans werd opgeschreven en sindsdien in bijna alle Europese talen voorkomt.",
   },
   {
     tekst: "Wat er komt, laat je komen. Wat er gaat, laat je gaan.",
     auteur: "Onbekend",
     betekenis:
-      "Vasthouden aan wat weg wil, kost kracht. Tegenhouden wat komt, ook. Er is een houding daartussenin: laten. Die is rustiger.",
-    over: "Een uitspraak zonder vaste bron, die aansluit bij oude oosterse wijsheidstradities.",
+      "Vasthouden aan wat weg wil, kost kracht. Tegenhouden wat komt, ook. Er is een houding daartussenin: laten. Die is rustiger, en hij is te oefenen: bij een gevoel dat opkomt, bij een dag die anders loopt dan gepland, bij een mens die een andere kant op gaat.",
+    over:
+      "Een uitspraak zonder vaste bron. De gedachte is de kern van het taoïsme, waar Laozi het wu wei noemt: handelen door niet te forceren. In de boeddhistische traditie heet hetzelfde loslaten, en in de stoïcijnse: onderscheiden wat in je macht ligt en wat niet.",
   },
   {
     tekst: "De belemmering op de weg wordt de weg.",
@@ -891,9 +899,9 @@ export const QUOTES: Quote[] = [
     tekst: "Alles komt goed aan het eind. En als het niet goed is, is het niet het eind.",
     auteur: "Onbekend",
     betekenis:
-      "Dat het nu niet goed is, betekent dat het verhaal nog loopt. Het eind is er nog niet. Dat is geen belofte, maar wel een reden om de bladzij om te slaan.",
+      "Dat het nu niet goed is, betekent dat het verhaal nog loopt. Het eind is er nog niet. Dat is geen belofte, maar wel een reden om de bladzij om te slaan. Wie midden in een moeilijk hoofdstuk zit, leest nog niet het slot.",
     over:
-      "De uitspraak wordt vaak aan John Lennon toegeschreven, en ook aan de Braziliaanse schrijver Fernando Sabino. Geen van beide staat vast.",
+      "De uitspraak wordt vaak aan John Lennon toegeschreven, en ook aan de Braziliaanse schrijver Fernando Sabino, die in 1956 iets vergelijkbaars schreef. Geen van beide staat vast. De zin werd wereldwijd bekend door de film \"The Best Exotic Marigold Hotel\" uit 2011.",
   },
   {
     tekst: "Een dauwdruppelwereld. Het is een dauwdruppelwereld. En toch, en toch.",
@@ -915,7 +923,7 @@ export const QUOTES: Quote[] = [
     tekst: "In de geest van de beginner zijn er veel mogelijkheden, in die van de expert weinig.",
     auteur: "Shunryu Suzuki",
     betekenis:
-      "Niet weten hoe het moet, is geen achterstand. Het is ruimte. Wie alles al weet, ziet de openingen niet meer die de beginner wel ziet.",
+      "Niet weten hoe het moet, is geen achterstand. Het is ruimte: de beginner kijkt nog echt, de expert ziet alleen wat hij verwacht. Wie alles al weet, ziet de openingen niet meer die de beginner wel ziet. Ook naar jezelf kun je kijken als een beginner, zonder de conclusies van gisteren.",
     over:
       "Shunryu Suzuki (1904-1971) was een Japanse zenleraar die de zenpraktijk naar Amerika bracht. De zin is de openingsregel van \"Zen Mind, Beginner's Mind\" uit 1970.",
   },
@@ -931,7 +939,7 @@ export const QUOTES: Quote[] = [
     tekst: "Zolang er leven is, is er hoop.",
     auteur: "Cicero",
     betekenis:
-      "Zolang je er bent, kan het anders worden. Dat is de kleinste vorm van hoop die er is, en hij is genoeg voor een dag. Morgen zie je verder.",
+      "Zolang je er bent, kan het anders worden. Dat is de kleinste vorm van hoop die er is, en hij is genoeg voor een dag; morgen zie je verder. Hoop hoeft niet te weten hoe het beter wordt, alleen dat het kan. Wie er vandaag niets van gelooft, mag het lenen van iemand die het wel voor je gelooft.",
     over:
       "Cicero (106-43 voor Christus) was een Romeinse redenaar en politicus. Hij schreef dit in een brief aan zijn vriend Atticus, over een zieke.",
   },
@@ -1025,29 +1033,33 @@ export const QUOTES: Quote[] = [
     tekst: "Wat een dag ook brengt, hij brengt ook een avond.",
     auteur: "Onbekend",
     betekenis:
-      "Elke dag heeft een einde, ook een zware. Dat is geen oplossing, maar wel een grens. Tot de avond is genoeg om te halen.",
-    over: "Een uitspraak zonder vaste bron, in de geest van veel volkswijsheden over volhouden.",
+      "Elke dag heeft een einde, ook een zware. Dat is geen oplossing, maar wel een grens: je hoeft niet eindeloos vol te houden, alleen tot vanavond. Wie in een moeilijke periode zit, kan de tijd zo in stukken knippen die wel te dragen zijn. Morgen is een nieuwe dag, met een nieuwe avond.",
+    over:
+      "Een uitspraak zonder vaste bron. De gedachte komt in veel vormen terug, van het joodse gezegde dat elke dag genoeg heeft aan zijn eigen zorgen tot het principe van één dag tegelijk uit de herstelbeweging. Ook in de psychiatrie wordt het vaak gebruikt: bij een crisis is de eerste vraag hoe je de komende uren doorkomt, niet de komende maanden.",
   },
   {
     tekst: "Zelfs als je de weg niet ziet, kun je een stap zetten.",
     auteur: "Onbekend",
     betekenis:
-      "Je hoeft de hele route niet te kennen. Eén stap zie je meestal wel, ook in de mist. Daarna zie je de volgende.",
-    over: "Geen bekende auteur. De uitspraak wordt in veel varianten gedeeld en sluit aan bij de woorden van Martin Luther King over de trap.",
+      "Je hoeft de hele route niet te kennen. Eén stap zie je meestal wel, ook in de mist. Daarna zie je de volgende, en zo kom je verder dan het overzicht ooit had toegelaten. Wachten tot je alles overziet, is vaak een reden om nooit te beginnen.",
+    over:
+      "Geen bekende auteur. De uitspraak wordt in veel varianten gedeeld en sluit aan bij de woorden van Martin Luther King over de trap, en bij het Spaanse gezegde van de dichter Antonio Machado: er is geen weg, de weg ontstaat door te lopen.",
   },
   {
     tekst: "Je hoeft niet altijd sterk te zijn.",
     auteur: "Onbekend",
     betekenis:
-      "Sterk zijn wordt vaak verwacht, ook door jezelf. Maar niemand is het altijd. Een dag waarop je het niet bent, is gewoon een dag.",
-    over: "Geen bekende auteur. Een uitspraak die in veel vormen wordt gedeeld, vaak onder mensen die veel voor anderen zorgen.",
+      "Sterk zijn wordt vaak verwacht, ook door jezelf. Maar niemand is het altijd. Een dag waarop je het niet bent, is gewoon een dag, geen bewijs van falen. Wie altijd de sterke is, krijgt zelden de vraag hoe het echt gaat; af en toe niet sterk zijn, maakt die vraag mogelijk.",
+    over:
+      "Geen bekende auteur. De uitspraak wordt veel gedeeld onder mantelzorgers, ouders en mensen in de zorg: precies de groep die het meest voor anderen draagt en het minst om hulp vraagt. De Amerikaanse onderzoeker Brené Brown noemt het loslaten van dat pantser de kern van kwetsbaarheid.",
   },
   {
     tekst: "Op een dag zul je terugkijken en zien dat je het toch hebt gedaan.",
     auteur: "Onbekend",
     betekenis:
-      "Terwijl je erin zit, lijkt het nooit op te houden. Achteraf blijkt dat je het hebt gedragen, dag voor dag. Die dag komt, ook al zie je hem nu niet.",
-    over: "Geen bekende auteur. Een gedachte die in veel vormen wordt doorgegeven.",
+      "Terwijl je erin zit, lijkt het nooit op te houden. Achteraf blijkt dat je het hebt gedragen, dag voor dag, zonder dat je het doorhad. Die dag van terugkijken komt, ook al zie je hem nu niet. Wat je nu doet, is precies wat je dan bewondert.",
+    over:
+      "Geen bekende auteur. De gedachte komt terug bij Kierkegaard, die schreef dat het leven achterwaarts wordt begrepen, en in bijna elk ervaringsverhaal over herstel: mensen zien pas achteraf hoe ver ze zijn gekomen. Daarom wordt vaak aangeraden om af en toe terug te lezen wat je eerder opschreef.",
   },
   {
     tekst: "Mensen zijn net als glas-in-loodramen. Ze schitteren als de zon schijnt, maar in het donker zie je pas hun echte schoonheid, als er van binnen licht is.",
@@ -1077,7 +1089,7 @@ export const QUOTES: Quote[] = [
     tekst: "De roeping van de mens is mens te zijn.",
     auteur: "Multatuli",
     betekenis:
-      "Je hoeft geen held te zijn, geen succes, geen voorbeeld. Mens zijn is al de opdracht: voelen, twijfelen, opstaan, vallen. Dat doe je al.",
+      "Je hoeft geen held te zijn, geen succes, geen voorbeeld. Mens zijn is al de opdracht: voelen, twijfelen, opstaan, vallen, en dat doe je al, ook op de dagen dat je denkt dat je tekortschiet. Multatuli schreef het als aanklacht tegen mensen die zich achter een rol verschuilen. Voor wie zichzelf te streng beoordeelt, is het een vrijbrief.",
     over:
       "Multatuli (1820-1887), schrijversnaam van Eduard Douwes Dekker, schreef \"Max Havelaar\". Deze zin komt uit zijn \"Ideën\" en is een van zijn beroemdste.",
   },
@@ -1103,20 +1115,21 @@ export const QUOTES: Quote[] = [
     betekenis:
       "Vreugde en verdriet komen uit dezelfde bron. Hoe dieper je iets kunt voelen, hoe meer je van allebei kunt dragen. Verdriet is dus geen defect, het is de andere kant van kunnen genieten.",
     over:
-      "Kahlil Gibran (1883-1931) schreef dit in \"De profeet\" uit 1923, in het hoofdstuk over vreugde en verdriet.",
+      "Kahlil Gibran (1883-1931) was een Libanees-Amerikaanse dichter en schilder. Hij schreef dit in \"De profeet\" uit 1923, in het hoofdstuk over vreugde en verdriet, waar hij ook zegt: hoe dieper het verdriet in je kerft, hoe meer vreugde je kunt bevatten. Het boek is nooit uit druk geweest en in meer dan honderd talen vertaald.",
   },
   {
     tekst: "Wie zijn eigen tempo kent, komt aan.",
     auteur: "Onbekend",
     betekenis:
-      "Het tempo van een ander is niet het jouwe. Wie zijn eigen ritme volgt, houdt het langer vol en komt uiteindelijk verder. Langzaam is ook een tempo.",
-    over: "Geen bekende auteur. Een gedachte uit de wereld van het wandelen en hardlopen die veel breder van toepassing is.",
+      "Het tempo van een ander is niet het jouwe. Wie zijn eigen ritme volgt, houdt het langer vol en komt uiteindelijk verder. Langzaam is ook een tempo, en vergelijken met wie sneller gaat, is de snelste manier om uit je eigen ritme te raken. Wie na een zware periode weer opbouwt, heeft daar het meest aan.",
+    over:
+      "Geen bekende auteur. De gedachte komt uit de wereld van het wandelen en hardlopen, waar beginnende lopers steevast leren dat ze te hard van start gaan. Op de Camino, de pelgrimsroute naar Santiago waar deze app is bedacht, is het de eerste les die iedereen krijgt: loop je eigen tempo, anders haal je de tweede week niet.",
   },
   {
     tekst: "Als je snel wilt gaan, ga alleen. Als je ver wilt komen, ga samen.",
     auteur: "Afrikaans spreekwoord",
     betekenis:
-      "Alleen ben je sneller, maar je houdt het minder lang vol. Samen gaat het trager, en verder. Voor een lange weg is gezelschap geen luxe.",
+      "Alleen ben je sneller, maar je houdt het minder lang vol. Samen gaat het trager, en verder, omdat er iemand is die je opvangt op de dag dat jij het niet trekt. Voor een lange weg is gezelschap geen luxe. Herstel is bijna altijd een lange weg, en dus bijna nooit iets om alleen te doen.",
     over: "Wordt een Afrikaans spreekwoord genoemd, maar een precieze herkomst is niet bekend. Het is sinds de jaren negentig wereldwijd bekend.",
   },
   {
@@ -1146,8 +1159,9 @@ export const QUOTES: Quote[] = [
     tekst: "De mens die bang is, lijdt twee keer.",
     auteur: "Onbekend",
     betekenis:
-      "Eén keer in de angst vooraf, en één keer als het gebeurt. Als het niet gebeurt, blijft alleen de eerste keer over, en die was voor niets. Dat weten helpt niet altijd, maar wel soms.",
-    over: "Geen bekende auteur. De gedachte komt al bij Seneca en Montaigne voor en wordt in veel vormen herhaald.",
+      "Eén keer in de angst vooraf, en één keer als het gebeurt. Als het niet gebeurt, blijft alleen de eerste keer over, en die was voor niets. Dat weten helpt niet altijd, maar wel soms: het maakt piekeren tot iets wat je kunt herkennen, in plaats van iets wat je overkomt. De tweede keer is vaak minder erg dan de eerste.",
+    over:
+      "Geen bekende auteur. De gedachte komt al bij Seneca voor, die schreef dat we vaker lijden in de verbeelding dan in werkelijkheid, en bij Montaigne, wiens leven vol rampen was die nooit gebeurden. In moderne vorm is het de kern van de cognitieve gedragstherapie: angstige gedachten zijn voorspellingen, geen feiten.",
   },
   {
     tekst: "Ik heb geleerd dat, als je besluit genomen is, de angst afneemt.",
@@ -1158,11 +1172,12 @@ export const QUOTES: Quote[] = [
       "Rosa Parks (1913-2005) weigerde in 1955 haar zitplaats in een bus af te staan en werd daarmee een icoon van de burgerrechtenbeweging. De zin komt uit haar boek \"Quiet Strength\" uit 1994.",
   },
   {
-    tekst: "Je bent niet je fouten.",
+    tekst: "Je bent niet je fouten. Je bent degene die ervan kan leren.",
     auteur: "Onbekend",
     betekenis:
-      "Een fout is iets wat je deed, niet wie je bent. Je kunt hem betreuren zonder jezelf af te wijzen. Het verschil tussen die twee is groot.",
-    over: "Geen bekende auteur. Een gedachte die in veel vormen terugkomt in gesprekken over zelfcompassie.",
+      "Een fout is iets wat je deed, niet wie je bent. Je kunt hem betreuren zonder jezelf af te wijzen, en dat verschil is groot: spijt zet aan tot herstellen, schaamte zet aan tot verstoppen. Wie zichzelf niet gelijkstelt aan de fout, houdt ruimte om het de volgende keer anders te doen.",
+    over:
+      "Geen bekende auteur. Het onderscheid tussen schuld (ik deed iets verkeerds) en schaamte (ik ben verkeerd) is uitgebreid onderzocht door de Amerikaanse psychologen June Tangney en Brené Brown. Schuld blijkt gezond, schaamte niet: die hangt samen met somberheid en terugtrekken.",
   },
   {
     tekst: "Als je mededogen jezelf niet insluit, is het onvolledig.",
@@ -1181,17 +1196,18 @@ export const QUOTES: Quote[] = [
       "Václav Havel (1936-2011) was toneelschrijver en dissident en na de val van het communisme president van Tsjechië. De zin komt uit \"Disturbing the Peace\" uit 1986.",
   },
   {
-    tekst: "Vandaag is genoeg.",
-    auteur: "Onbekend",
+    tekst: "Maak je geen zorgen over morgen. Elke dag heeft genoeg aan zijn eigen kwaad.",
+    auteur: "Bergrede",
     betekenis:
-      "Je hoeft niet de hele week te dragen, alleen vandaag. En van vandaag alleen dit uur. Zo klein mag het zijn.",
-    over: "Geen bekende auteur. Een gedachte die in veel herstelprogramma's terugkomt als \"één dag tegelijk\".",
+      "Je hoeft niet de hele week te dragen, alleen vandaag. Morgen heeft zijn eigen zorgen, en die zijn nu nog niet van jou. Dat is geen oproep om niet vooruit te denken, maar een grens aan hoeveel je tegelijk hoeft te tillen. Van vandaag mag je zelfs alleen dit uur nemen.",
+    over:
+      "De zin komt uit de Bergrede in het evangelie van Matteüs, hoofdstuk 6, geschreven in de eerste eeuw. Hij is een van de meest aangehaalde bijbelteksten buiten de kerk, en de gedachte erachter is de basis van \"één dag tegelijk\", het motto van de herstelbeweging sinds de jaren dertig.",
   },
   {
     tekst: "Twijfel is geen prettige toestand, maar zekerheid is een belachelijke.",
     auteur: "Voltaire",
     betekenis:
-      "Niet weten voelt onrustig, en toch is het eerlijker dan zeker weten. Wie twijfelt, kijkt nog. Dat is geen zwakte, het is wakker zijn.",
+      "Niet weten voelt onrustig, en toch is het eerlijker dan zeker weten. Wie twijfelt, kijkt nog; wie zeker is, is gestopt met kijken. Dat is geen zwakte, het is wakker zijn. Ook over jezelf: wie zeker weet dat het nooit beter wordt, heeft een oordeel geveld over een toekomst die niemand kent.",
     over:
       "Voltaire (1694-1778) was een Franse schrijver en filosoof van de Verlichting. Hij schreef dit in 1770 in een brief aan Frederik de Grote.",
   },
@@ -1231,7 +1247,7 @@ export const QUOTES: Quote[] = [
     tekst: "Het geheim van vooruitkomen is beginnen.",
     auteur: "Mark Twain",
     betekenis:
-      "Er is geen truc, alleen een begin. Alles wat daarna komt, is makkelijker dan de eerste stap. Beginnen mag klein en slordig.",
+      "Er is geen truc, alleen een begin. Alles wat daarna komt, is makkelijker dan de eerste stap, omdat de drempel dan al is genomen. Beginnen mag klein en slordig: een mail openen, één zin schrijven, de schoenen aantrekken. Uitstel voelt als rust, maar kost meestal meer energie dan het begin zelf.",
     over:
       "Mark Twain (1835-1910) was een Amerikaanse schrijver. De zin wordt hem breed toegeschreven, maar de bron staat niet vast.",
   },
@@ -1239,23 +1255,25 @@ export const QUOTES: Quote[] = [
     tekst: "Wees geduldig met jezelf. Niets in de natuur bloeit het hele jaar.",
     auteur: "Onbekend",
     betekenis:
-      "Een boom is niet kapot als hij in de winter kaal is. Zo mag jij ook periodes hebben waarin er weinig groeit. Het seizoen komt terug.",
-    over: "Geen bekende auteur. De gedachte komt in veel vormen terug, vaak met het beeld van de seizoenen.",
+      "Een boom is niet kapot als hij in de winter kaal is. Hij doet in die maanden iets anders: wortels maken, kracht sparen. Zo mag jij ook periodes hebben waarin er aan de buitenkant weinig groeit. Het seizoen komt terug, en wat er dan bloeit, is in de stille tijd voorbereid.",
+    over:
+      "Geen bekende auteur. Het beeld van de seizoenen als levensfasen is oud: het staat al in Prediker (\"alles heeft zijn tijd\") en in de Chinese geneeskunde, waar de winter de tijd van rust en herstel is. Tuiniers weten dat een plant die het hele jaar bloeit, uitgeput raakt.",
   },
   {
     tekst: "Laat alles gebeuren: schoonheid en verschrikking. Ga gewoon door. Geen gevoel is het laatste.",
     auteur: "Rainer Maria Rilke",
     betekenis:
-      "Wat je nu voelt, is niet het eindpunt. Er komt altijd nog een gevoel na. Dat geldt voor de mooie en voor de vreselijke.",
+      "Wat je nu voelt, is niet het eindpunt. Er komt altijd nog een gevoel na, en dat geldt voor de mooie en voor de vreselijke. Het gedicht vraagt niet om het vreselijke te ontkennen, maar om het te laten gebeuren en door te lopen. Wie weet dat geen gevoel het laatste is, hoeft van geen enkel gevoel het einde te maken.",
     over:
-      "Rainer Maria Rilke (1875-1926) schreef deze regels in \"Het getijdenboek\" uit 1905, in vrije vertaling.",
+      "Rainer Maria Rilke (1875-1926) was een Duitstalige dichter uit Praag. De regels komen uit \"Het getijdenboek\" uit 1905, geschreven als een reeks gebeden, in vrije vertaling. \"Geen gevoel is het laatste\" is een van zijn meest geciteerde regels geworden, vooral in gesprekken over rouw.",
   },
   {
     tekst: "Wie leeft, ziet veel. Wie reist, ziet meer.",
     auteur: "Arabisch spreekwoord",
     betekenis:
       "Ervaring is niet alleen wat je meemaakt, maar ook wat je opzoekt. Een andere straat, een ander gesprek, een andere blik. Kleine reizen tellen ook.",
-    over: "Een spreekwoord uit de Arabische wereld, in veel varianten overgeleverd.",
+    over:
+      "Een spreekwoord uit de Arabische wereld, in veel varianten overgeleverd, uit een cultuur waarin reizen en handel eeuwenlang de manier waren om kennis op te doen. Het wordt vaak aangehaald bij de gedachte dat een andere omgeving, ook een kleine, iets doet met hoe je naar je eigen leven kijkt.",
   },
   {
     tekst: "Doe je beetje goed waar je bent; het zijn die beetjes goed bij elkaar die de wereld overspoelen.",
@@ -1269,8 +1287,9 @@ export const QUOTES: Quote[] = [
     tekst: "Een vriend is iemand die de melodie van je hart kent en hem voor je zingt als je hem vergeten bent.",
     auteur: "Onbekend",
     betekenis:
-      "Op sommige dagen weet je zelf niet meer wie je bent. Dan is er iemand die het nog wel weet. Dat is wat vriendschap doet: bewaren wat jij even kwijt bent.",
-    over: "De uitspraak wordt vaak aan Albert Einstein of aan Donna Roberts toegeschreven, maar een bron staat niet vast.",
+      "Op sommige dagen weet je zelf niet meer wie je bent. Dan is er iemand die het nog wel weet, en die je eraan herinnert zonder dat je erom hoeft te vragen. Dat is wat vriendschap doet: bewaren wat jij even kwijt bent. Daarom is contact houden in een moeilijke periode zo belangrijk, juist als je er geen zin in hebt.",
+    over:
+      "De uitspraak wordt vaak aan Albert Einstein of aan Donna Roberts toegeschreven, maar een bron staat niet vast. Het beeld van een vriend die je eigen melodie bewaart, past bij wat onderzoek naar eenzaamheid steeds laat zien: één mens die je echt kent, beschermt meer dan een grote kring kennissen.",
   },
   {
     tekst: "De dingen die je niet kunt veranderen, vragen om aanvaarding. De dingen die je wel kunt veranderen, vragen om moed.",
@@ -1292,8 +1311,9 @@ export const QUOTES: Quote[] = [
     tekst: "Wat je aandacht geeft, groeit.",
     auteur: "Onbekend",
     betekenis:
-      "Zorgen groeien als je ze water geeft, en het goede ook. Waar je naar kijkt, wordt groter. Dat is geen reden om weg te kijken van het moeilijke, wel om ook naar het goede te kijken.",
-    over: "Geen bekende auteur. Een gedachte die in veel vormen terugkomt, van tuinieren tot psychologie.",
+      "Zorgen groeien als je ze water geeft, en het goede ook. Waar je naar kijkt, wordt groter. Dat is geen reden om weg te kijken van het moeilijke, wel om ook naar het goede te kijken: een fijn gesprek, een uur zonder pijn, een dag die meeviel. Wie dat bewust opmerkt, traint het brein om het vaker te zien.",
+    over:
+      "Geen bekende auteur. De gedachte komt uit de tuin, maar wordt in de psychologie ondersteund: de Amerikaanse onderzoeker Martin Seligman liet zien dat het dagelijks opschrijven van drie goede dingen na een paar weken meetbaar effect heeft op hoe mensen zich voelen.",
   },
   {
     tekst: "Als je de regenboog wilt, moet je de regen verdragen.",
@@ -1323,14 +1343,15 @@ export const QUOTES: Quote[] = [
     tekst: "Sommige dagen zijn er om door te komen, niet om te winnen.",
     auteur: "Onbekend",
     betekenis:
-      "Niet elke dag hoeft goed te zijn. Sommige dagen zijn geslaagd als ze voorbij zijn. Dat is geen lage lat, het is een eerlijke.",
-    over: "Geen bekende auteur. Een uitspraak die veel wordt gedeeld onder mensen die met chronische klachten leven.",
+      "Niet elke dag hoeft goed te zijn. Sommige dagen zijn geslaagd als ze voorbij zijn, en dat is geen lage lat, het is een eerlijke. Wie op zo'n dag toch iets van zichzelf eist, verliest twee keer: de dag was al zwaar, en nu is hij ook nog mislukt. Doorkomen is op die dagen de hele opdracht.",
+    over:
+      "Geen bekende auteur. De uitspraak wordt veel gedeeld onder mensen die met chronische pijn, depressie of vermoeidheid leven, en die weten dat een goede week uit verschillende soorten dagen bestaat. Het sluit aan bij de \"lepeltheorie\" van Christine Miserandino: op sommige dagen heb je nu eenmaal minder lepels energie.",
   },
   {
     tekst: "Het is nooit te laat om te worden wie je had kunnen zijn.",
     auteur: "George Eliot",
     betekenis:
-      "Wat je had willen worden, is niet verlopen. Er is nog tijd, ook als je een andere weg hebt gelopen. Beginnen kan op elke leeftijd.",
+      "Wat je had willen worden, is niet verlopen. Er is nog tijd, ook als je een andere weg hebt gelopen of jaren bent kwijtgeraakt aan iets wat je klein hield. Beginnen kan op elke leeftijd, en wie het later doet, neemt meer mee dan wie het vroeg deed. De omweg was niet voor niets.",
     over:
       "George Eliot was de schrijversnaam van Mary Ann Evans (1819-1880), schrijfster van \"Middlemarch\". De zin wordt haar toegeschreven, maar is in haar werk niet gevonden.",
   },
@@ -1355,14 +1376,16 @@ export const QUOTES: Quote[] = [
     auteur: "Joods gezegde",
     betekenis:
       "Een kaars is klein, maar hij verlicht een hele kamer. Zo groot hoeft het goede niet te zijn om het donker te breken. Eén klein iets is genoeg.",
-    over: "Een gezegde uit de Joodse traditie, in verschillende vormen terug te vinden in de chassidische literatuur.",
+    over:
+      "Een gezegde uit de Joodse traditie, in verschillende vormen terug te vinden in de chassidische literatuur van de achttiende eeuw. Het wordt vaak aangehaald rond Chanoeka, het lichtfeest, waarbij elke avond één kaars meer wordt aangestoken: het licht groeit, het donker hoeft niet in één keer weg.",
   },
   {
-    tekst: "Vandaag hoef je alleen vandaag te doen.",
-    auteur: "Onbekend",
+    tekst: "Voor alles wat is geweest: dank. Voor alles wat komt: ja.",
+    auteur: "Dag Hammarskjöld",
     betekenis:
-      "De week, de maand, het jaar: die zijn er nog niet. Wat er is, is deze dag. Die is te overzien.",
-    over: "Geen bekende auteur. De gedachte komt terug in veel tradities, van de Bergrede tot herstelprogramma's.",
+      "Twee korte zinnen die het verleden en de toekomst allebei een plek geven. Dank voor wat was, ook het zware, omdat het je bracht waar je nu bent. En ja tegen wat komt, niet omdat je weet wat het is, maar omdat je het niet vooraf wilt afwijzen. Het is een houding van openstaan, geen belofte dat alles goed komt.",
+    over:
+      "Dag Hammarskjöld (1905-1961) was secretaris-generaal van de Verenigde Naties en kwam om bij een vliegtuigongeluk tijdens een vredesmissie in Congo. Hij kreeg postuum de Nobelprijs voor de Vrede. De regel komt uit zijn dagboek \"Merkstenen\", dat pas na zijn dood werd gevonden en uitgegeven.",
   },
   {
     tekst: "Verdriet is de prijs die we betalen voor liefde.",
@@ -1376,8 +1399,9 @@ export const QUOTES: Quote[] = [
     tekst: "Je hoeft niet het hele bos te kennen om de volgende boom te vinden.",
     auteur: "Onbekend",
     betekenis:
-      "Overzicht is fijn, maar niet nodig om verder te komen. De volgende boom zie je vanzelf. Zo kom je het hele bos door zonder het ooit helemaal te zien.",
-    over: "Geen bekende auteur. Een beeld dat vaak wordt gebruikt bij wandelen en bij herstel.",
+      "Overzicht is fijn, maar niet nodig om verder te komen. De volgende boom zie je vanzelf, en daarachter weer een. Zo kom je het hele bos door zonder het ooit helemaal te zien. Wie wacht tot het hele bos in kaart is, blijft aan de rand staan.",
+    over:
+      "Geen bekende auteur. Het beeld komt uit het wandelen, waar je in dicht bos alleen op de volgende markering loopt, en wordt veel gebruikt in de begeleiding bij herstel: niet het hele traject overzien, maar de volgende afspraak halen. Het is de tegenhanger van de uitdrukking \"door de bomen het bos niet meer zien\".",
   },
   {
     tekst: "Aan het eind van de dag kunnen we veel meer verdragen dan we denken.",
@@ -1391,8 +1415,9 @@ export const QUOTES: Quote[] = [
     tekst: "De beste tijd om te rusten is voordat je moe bent.",
     auteur: "Onbekend",
     betekenis:
-      "Rust is niet alleen iets voor als je op bent. Het werkt beter als het eerder komt. Een pauze nemen terwijl het nog gaat, is geen luiheid maar vooruitzien.",
-    over: "Geen bekende auteur. Een gedachte uit de wereld van het wandelen en de sport, breder toepasbaar.",
+      "Rust is niet alleen iets voor als je op bent. Het werkt beter als het eerder komt, omdat je dan nog iets hebt om mee te herstellen. Een pauze nemen terwijl het nog gaat, is geen luiheid maar vooruitzien. Wie pas stopt als het niet meer gaat, heeft veel langer nodig om weer op gang te komen.",
+    over:
+      "Geen bekende auteur. De gedachte komt uit de sport en het bergwandelen, waar gidsen op vaste tijden laten rusten, ongeacht of iemand moe is. In de zorg voor mensen met burn-out is het dezelfde les: de meeste mensen negeerden maandenlang de signalen voordat ze uitvielen.",
   },
   {
     tekst: "Alles wat menselijk is, mag genoemd worden. En alles wat genoemd wordt, wordt hanteerbaarder.",
@@ -1421,15 +1446,16 @@ export const QUOTES: Quote[] = [
     tekst: "Wees niet bang om langzaam te gaan. Wees alleen bang om stil te staan.",
     auteur: "Chinees spreekwoord",
     betekenis:
-      "Traag vooruit is prima. Het enige wat je in de weg staat, is helemaal niet meer bewegen. En zelfs dat mag soms even.",
+      "Traag vooruit is prima. Het enige wat je in de weg staat, is helemaal niet meer bewegen, en zelfs dat mag soms even, als rust. Het verschil zit in de bedoeling: rusten om verder te kunnen is iets anders dan stoppen uit ontmoediging. Een kleine stap per dag is over een jaar een lange weg.",
     over: "Een spreekwoord dat aan China wordt toegeschreven en in veel talen bekend is. Het wordt ook vaak aan Confucius toegeschreven, zonder bron.",
   },
   {
     tekst: "Wat je niet kunt zeggen, kun je soms wel opschrijven.",
     auteur: "Onbekend",
     betekenis:
-      "Praten lukt niet altijd. Schrijven vraagt geen luisteraar en geen goede timing. Wat op papier staat, is alvast uit je hoofd.",
-    over: "Geen bekende auteur. Een gedachte die veel schrijvers en therapeuten in eigen woorden herhalen.",
+      "Praten lukt niet altijd. Schrijven vraagt geen luisteraar en geen goede timing, en je kunt er zo lang over doen als je wilt. Wat op papier staat, is alvast uit je hoofd, en vaak ziet het er daar kleiner uit. Soms is het opschrijven de eerste stap naar het uitspreken.",
+    over:
+      "Geen bekende auteur. De Amerikaanse psycholoog James Pennebaker toonde in de jaren tachtig aan dat een kwartier per dag schrijven over wat je bezighoudt, na een paar dagen meetbaar effect heeft op hoe mensen zich voelen. Anne Frank schreef in haar dagboek dat papier geduldiger is dan mensen.",
   },
   {
     tekst: "Als de hele wereld zwijgt, heeft zelfs één stem kracht.",
@@ -1445,28 +1471,31 @@ export const QUOTES: Quote[] = [
     betekenis:
       "Hoe je je voelt, hangt meer samen met wat je denkt dan met wat er gebeurt. Dat betekent niet dat je alles kunt wegdenken, wel dat je gedachten er toe doen. Ze verdienen zorg.",
     over:
-      "Marcus Aurelius (121-180) schreef dit in zijn \"Persoonlijke notities\", in vrije vertaling.",
+      "Marcus Aurelius (121-180) was Romeins keizer en schreef zijn \"Persoonlijke notities\" voor zichzelf, in zijn tent tijdens veldtochten aan de Donau. Hij was niet van plan ze uit te geven. Deze zin staat er in vrije vertaling; hij is de kern van de stoïcijnse gedachte dat niet de gebeurtenissen maar je oordeel erover je gemoed bepaalt.",
   },
   {
     tekst: "Wie bloemen wil zien, moet de regen laten vallen.",
     auteur: "Onbekend",
     betekenis:
-      "Groei heeft regen nodig, hoe vervelend regen ook is. Wat je nu doormaakt, kan later blijken te zijn wat je nodig had. Dat weet je pas als het bloeit.",
-    over: "Geen bekende auteur. Een gedachte die in veel vormen terugkomt, vaak met het beeld van een tuin.",
+      "Groei heeft regen nodig, hoe vervelend regen ook is. Wat je nu doormaakt, kan later blijken te zijn wat je nodig had, al is dat geen reden om het nu fijn te vinden. Dat weet je pas als het bloeit. Wie de regen tegenhoudt, houdt ook de bloemen tegen.",
+    over:
+      "Geen bekende auteur. Het beeld komt in veel vormen terug, van het Hawaïaanse \"zonder regen geen regenboog\" tot de zin van Dolly Parton over de regenboog en de regen. In de psychologie heet het posttraumatische groei: een deel van de mensen komt uit een zware periode met meer diepgang dan ervoor.",
   },
   {
     tekst: "Wat jij als een einde ziet, ziet de vlinder als een begin.",
     auteur: "Onbekend",
     betekenis:
-      "De rups die verdwijnt, is niet weg. Hij wordt iets anders. Zo kan een einde ook een begin zijn dat je nog niet herkent.",
-    over: "Geen bekende auteur. Vaak aan Richard Bach of Laozi toegeschreven, maar bij geen van beiden terug te vinden.",
+      "De rups die verdwijnt, is niet weg. Hij wordt iets anders, en in de cocon ziet dat er eerst uit als afbraak. Zo kan een einde ook een begin zijn dat je nog niet herkent: een baan die stopt, een relatie die eindigt, een periode die voorbij is. Wat het wordt, zie je pas als het vliegt.",
+    over:
+      "Geen bekende auteur. De zin wordt vaak aan Richard Bach of aan Laozi toegeschreven, maar is bij geen van beiden terug te vinden. Het beeld van de vlinder als symbool van verandering is oud: het Griekse woord psyche betekent zowel ziel als vlinder.",
   },
   {
     tekst: "De geest is als water. Als hij rustig is, wordt alles helder.",
     auteur: "Onbekend",
     betekenis:
-      "In troebel water zie je niets, en dat ligt niet aan het water. Wacht tot het bezinkt, en het wordt vanzelf helder. Zo werkt het ook met een vol hoofd.",
-    over: "Een uitspraak zonder vaste bron, die in de traditie van zen en taoïsme staat.",
+      "In troebel water zie je niets, en dat ligt niet aan het water. Wacht tot het bezinkt, en het wordt vanzelf helder. Zo werkt het ook met een vol hoofd: roeren maakt het troebeler, even niets doen maakt het klaar. Een besluit dat je in troebel water neemt, is zelden het beste.",
+    over:
+      "Een uitspraak zonder vaste bron, die in de traditie van zen en taoïsme staat. Laozi vraagt in de Daodejing wie het geduld heeft om te wachten tot de modder bezinkt. Zenleraren gebruiken vaak een glas met zand en water om te laten zien wat meditatie doet.",
   },
   {
     tekst: "Zelfs de kleinste persoon kan de loop van de toekomst veranderen.",
@@ -1474,27 +1503,29 @@ export const QUOTES: Quote[] = [
     betekenis:
       "Je hoeft niet groot of sterk te zijn om iets te betekenen. In het verhaal is het de kleinste die het zwaarste draagt. Ook jouw kleine stap doet ertoe.",
     over:
-      "J.R.R. Tolkien (1892-1973) laat Galadriel dit zeggen in \"In de ban van de ring\", over Frodo de hobbit.",
+      "J.R.R. Tolkien (1892-1973) was taalkundige in Oxford en schreef \"In de ban van de ring\" tussen 1937 en 1949. De elfenkoningin Galadriel zegt dit over Frodo, de hobbit die de ring draagt: de kleinste en zwakste van het gezelschap, en daarom degene die het kan. In de film uit 2001 is het een van de meest geciteerde regels.",
   },
   {
     tekst: "Laat je niet ontmoedigen. Ook de langste weg gaat stap voor stap.",
     auteur: "Onbekend",
     betekenis:
-      "De lengte van de weg zegt niets over de grootte van een stap. Elke weg, ook de langste, bestaat uit gewone stappen. Die kun je zetten.",
-    over: "Geen bekende auteur. Een gedachte die aansluit bij de beroemde zin van Laozi over de reis van duizend mijl.",
+      "De lengte van de weg zegt niets over de grootte van een stap. Elke weg, ook de langste, bestaat uit gewone stappen, en die kun je zetten. Ontmoediging komt meestal van naar het eind kijken; de stap zelf is nooit het probleem. Wie alleen naar de volgende kilometer kijkt, loopt de hele route.",
+    over:
+      "Geen bekende auteur. De gedachte sluit aan bij de beroemde zin van Laozi over de reis van duizend mijl, en bij wat pelgrims op de Camino leren: de achthonderd kilometer naar Santiago loop je niet, je loopt elke dag twintig.",
   },
   {
     tekst: "Vertel je verhaal. Iemand heeft het nodig.",
     auteur: "Onbekend",
     betekenis:
-      "Wat je hebt meegemaakt, kan voor een ander een herkenning zijn. Je hoeft er niet trots op te zijn om het te delen. Alleen eerlijk.",
-    over: "Geen bekende auteur. Een uitspraak die veel gedeeld wordt onder ervaringsdeskundigen.",
+      "Wat je hebt meegemaakt, kan voor een ander een herkenning zijn: het bewijs dat die niet de enige is. Je hoeft er niet trots op te zijn om het te delen, en het hoeft ook niet afgerond te zijn. Alleen eerlijk. Wie zijn verhaal vertelt, helpt vaak een ander die het nog niet durft.",
+    over:
+      "Geen bekende auteur. De uitspraak wordt veel gedeeld onder ervaringsdeskundigen in de geestelijke gezondheidszorg, waar het delen van verhalen sinds de jaren negentig een vaste plek heeft in herstel. MIND werkt zelf al jaren met ervaringsverhalen, precies om deze reden.",
   },
   {
     tekst: "Wat je doet met wat je is overkomen, dat ben jij.",
     auteur: "Jean-Paul Sartre",
     betekenis:
-      "Je kiest niet wat je overkomt. Wel wat je ermee doet, en dat is uiteindelijk wie je bent. Die keuze ligt niet vast en mag elke dag opnieuw.",
+      "Je kiest niet wat je overkomt. Wel wat je ermee doet, en dat is uiteindelijk wie je bent: niet het verlies, maar hoe je ermee verder ging. Die keuze ligt niet vast en mag elke dag opnieuw. Ook een dag waarop je er niets mee doet, is een keuze die je morgen anders mag maken.",
     over:
       "Jean-Paul Sartre (1905-1980) was een Franse filosoof en schrijver. De zin is een vrije weergave van een gedachte uit zijn werk over vrijheid.",
   },
@@ -1502,35 +1533,39 @@ export const QUOTES: Quote[] = [
     tekst: "Wie zijn schaduw kent, staat steviger in het licht.",
     auteur: "Onbekend",
     betekenis:
-      "Je moeilijke kanten kennen, maakt je niet zwakker. Het maakt je eerlijker en steviger. Wat je niet wegduwt, kan je ook niet onderuit halen.",
-    over: "Geen bekende auteur. De gedachte gaat terug op het werk van Carl Jung over de schaduw, in eigen woorden.",
+      "Je moeilijke kanten kennen, maakt je niet zwakker. Het maakt je eerlijker en steviger, omdat je niet meer hoeft te schrikken van wat je in jezelf tegenkomt. Wat je niet wegduwt, kan je ook niet onderuit halen. Wie zijn eigen jaloezie, angst of boosheid kent, wordt er minder door gestuurd.",
+    over:
+      "Geen bekende auteur. De gedachte gaat terug op het werk van Carl Jung, die de \"schaduw\" beschreef: de kanten van jezelf die je liever niet ziet. Volgens Jung wordt een mens niet verlicht door zich licht voor te stellen, maar door het donker bewust te maken.",
   },
   {
-    tekst: "Ademen is genoeg.",
-    auteur: "Onbekend",
+    tekst: "Inademend kalmeer ik mijn lichaam. Uitademend glimlach ik.",
+    auteur: "Thich Nhat Hanh",
     betekenis:
-      "Er zijn momenten dat je niets meer kunt dan ademen. Dat is dan genoeg. De volgende adem komt vanzelf, en daarna weer een.",
-    over: "Geen bekende auteur. Een zin die in veel meditatietradities in eigen woorden terugkomt.",
+      "Het is een oefening van twee ademhalingen, en meer hoeft het niet te zijn. Op momenten dat alles te veel is, blijft de adem over: die gaat altijd door, en je kunt er iets aan koppelen. Bij het inademen laat je de schouders zakken, bij het uitademen ontspant het gezicht een beetje. Het lost niets op, maar het maakt een klein stukje ruimte waar er geen leek te zijn.",
+    over:
+      "Thich Nhat Hanh (1926-2022) was een Vietnamese zenmonnik die mindfulness naar het Westen bracht en door Martin Luther King werd voorgedragen voor de Nobelprijs voor de Vrede. De regels komen uit \"Being Peace\" uit 1987 en zijn de bekendste ademoefening uit zijn onderwijs.",
   },
   {
     tekst: "Verwacht niet dat je altijd vrolijk bent. Verwacht dat je altijd verandert.",
     auteur: "Onbekend",
     betekenis:
-      "Altijd blij zijn is geen haalbare eis. Altijd in beweging zijn wel. Wat je nu voelt, is een tussenstand.",
-    over: "Geen bekende auteur. Een gedachte die aansluit bij het beeld van het weer: het draait altijd.",
+      "Altijd blij zijn is geen haalbare eis, en wie hem zichzelf stelt, voelt zich op een gewone dag al mislukt. Altijd in beweging zijn is wel haalbaar, want dat gebeurt vanzelf. Wat je nu voelt, is een tussenstand, geen eindstand. Ook een goede dag is er een die voorbijgaat, en dat maakt hem niet minder waard.",
+    over:
+      "Geen bekende auteur. De gedachte sluit aan bij het beeld van deze app: gevoelens zijn weer, en het weer draait altijd. Onderzoek naar geluk laat zien dat mensen die vrolijkheid als norm zien, juist ongelukkiger worden; wie schommelingen normaal vindt, houdt het beter vol.",
   },
   {
     tekst: "De zon gaat ook op als je hem niet ziet.",
     auteur: "Onbekend",
     betekenis:
-      "Dat je het licht niet ziet, betekent niet dat het er niet is. Sommige dagen is het simpelweg bewolkt. De zon doet ondertussen gewoon zijn werk.",
-    over: "Geen bekende auteur. Een gedachte die in veel vormen terugkomt in liedjes en gedichten.",
+      "Dat je het licht niet ziet, betekent niet dat het er niet is. Sommige dagen is het simpelweg bewolkt, en op zo'n dag lijkt het alsof het altijd zo is geweest. De zon doet ondertussen gewoon zijn werk. Wat een sombere periode zo verraderlijk maakt, is dat ze zichzelf voordoet als de waarheid over alles.",
+    over:
+      "Geen bekende auteur. De gedachte komt in veel vormen terug in liedjes en gedichten, en ook in de psychologie: Aaron Beck, de grondlegger van de cognitieve therapie, beschreef hoe een depressie het zicht op verleden, heden en toekomst tegelijk verdonkert, zonder dat er buiten iets veranderd is.",
   },
   {
     tekst: "Ik ben niet wat mij is overkomen. Ik ben wat ik kies te worden.",
     auteur: "Carl Jung",
     betekenis:
-      "Je geschiedenis is echt, maar ze is niet je identiteit. Wie je wordt, is een keuze die je elke dag een beetje maakt. Die keuze is van jou.",
+      "Je geschiedenis is echt, maar ze is niet je identiteit. Wie je wordt, is een keuze die je elke dag een beetje maakt, in kleine dingen: opstaan, iemand bellen, één ding doen dat bij je past. Die keuze is van jou. Wat je is overkomen, mag een hoofdstuk zijn, maar het hoeft niet de titel te worden.",
     over:
       "Carl Jung (1875-1961) was een Zwitserse psychiater. De zin wordt hem breed toegeschreven, maar staat niet letterlijk in zijn werk.",
   },
@@ -1546,8 +1581,9 @@ export const QUOTES: Quote[] = [
     tekst: "Je hoeft niet te weten waarom je verdrietig bent om verdrietig te mogen zijn.",
     auteur: "Onbekend",
     betekenis:
-      "Een gevoel heeft geen reden nodig om echt te zijn. Soms is het er gewoon. Dat mag, ook zonder verklaring.",
-    over: "Geen bekende auteur. Een zin die veel therapeuten in eigen woorden gebruiken.",
+      "Een gevoel heeft geen reden nodig om echt te zijn. Soms is het er gewoon, en het zoeken naar een verklaring maakt het vaak zwaarder: nu ben je verdrietig én snap je het niet. Dat mag, ook zonder verklaring. Het waarom komt soms later, en soms helemaal niet, en het gevoel gaat toch weer over.",
+    over:
+      "Geen bekende auteur. De zin wordt veel gebruikt door therapeuten, omdat mensen zich vaak schamen voor een gevoel dat ze niet kunnen uitleggen. In de acceptatie- en commitmenttherapie is het een basisprincipe: een gevoel hoeft niet gerechtvaardigd te worden om er te mogen zijn.",
   },
   {
     tekst: "En de dag kwam dat het risico om in de knop te blijven pijnlijker was dan het risico om te bloeien.",
@@ -1561,7 +1597,7 @@ export const QUOTES: Quote[] = [
     tekst: "Het maakt niet uit hoe langzaam je gaat, zolang je niet stopt.",
     auteur: "Confucius",
     betekenis:
-      "Tempo is niet het punt. Doorgaan wel, in welk tempo dan ook. Stilstaan mag ook, zolang je daarna weer een stap zet.",
+      "Tempo is niet het punt. Doorgaan wel, in welk tempo dan ook, en dat is een geruststelling voor wie zich met anderen vergelijkt. Stilstaan mag ook, zolang je daarna weer een stap zet. Herstel gaat bijna nooit in een rechte lijn, en langzaam vooruit is nog steeds vooruit.",
     over:
       "Confucius (551-479 voor Christus) was een Chinese denker. De zin wordt hem breed toegeschreven, maar is in de overgeleverde teksten niet letterlijk gevonden.",
   },
@@ -1577,7 +1613,7 @@ export const QUOTES: Quote[] = [
     tekst: "We lopen elkaar allemaal gewoon naar huis.",
     auteur: "Ram Dass",
     betekenis:
-      "Niemand heeft het doel bereikt, iedereen is onderweg. Het enige wat we voor elkaar kunnen doen, is een stukje meelopen. Dat is al genoeg.",
+      "Niemand heeft het doel bereikt, iedereen is onderweg. Het enige wat we voor elkaar kunnen doen, is een stukje meelopen, en dat is al genoeg. Je hoeft een ander niet te redden en een ander hoeft jou niet te redden. Naast elkaar lopen, af en toe iets zeggen, en de weg samen een stuk korter maken: meer is het niet, en minder ook niet.",
     over:
       "Ram Dass (1931-2019) was een Amerikaanse spirituele leraar, geboren als Richard Alpert. De zin komt uit zijn boek \"How Can I Help?\" uit 1985.",
   },
@@ -1585,42 +1621,46 @@ export const QUOTES: Quote[] = [
     tekst: "Twijfel aan jezelf is normaal. Het betekent dat je iets probeert dat ertoe doet.",
     auteur: "Onbekend",
     betekenis:
-      "Als iets je niets kon schelen, zou je niet twijfelen. Twijfel is het bewijs dat het belangrijk voor je is. Dat maakt het niet fijner, wel begrijpelijker.",
-    over: "Geen bekende auteur. Een gedachte die in veel vormen terugkomt.",
+      "Als iets je niets kon schelen, zou je niet twijfelen. Twijfel is het bewijs dat het belangrijk voor je is, en dat maakt het niet fijner, wel begrijpelijker. Mensen die nooit aan zichzelf twijfelen, zijn meestal niet de mensen die je wilt zijn. De twijfel mag meelopen; hij hoeft niet te beslissen.",
+    over:
+      "Geen bekende auteur. De gedachte wordt vaak toegeschreven aan Charles Bukowski, die schreef dat het probleem van de wereld is dat de slimme mensen vol twijfel zitten en de domme vol zelfvertrouwen; die zin gaat terug op Bertrand Russell in 1933.",
   },
   {
     tekst: "Wees niet zo hard voor jezelf. Je bent er nog.",
     auteur: "Onbekend",
     betekenis:
-      "Dat je er nog bent, na alles, is al iets. Het is niet niets. Dat mag je meetellen op de dagen dat de rest niet lukt.",
-    over: "Geen bekende auteur. Een zin die veel wordt gedeeld in gesprekken over herstel.",
+      "Dat je er nog bent, na alles, is al iets. Het is niet niets: je hebt elke dag tot nu toe gehaald, ook de dagen waarvan je dacht dat het niet ging. Dat mag je meetellen op de dagen dat de rest niet lukt. Wie hard is voor zichzelf, vergeet meestal dit deel van de rekening.",
+    over:
+      "Geen bekende auteur. De zin wordt veel gedeeld in gesprekken over herstel, waar de eerste vraag vaak niet is wat er beter moet, maar wat iemand al heeft overleefd. Het is de kern van wat Kristin Neff zelfcompassie noemt: kijken naar jezelf zoals je naar een vriend zou kijken die hetzelfde had doorgemaakt.",
   },
   {
     tekst: "Een klein gebaar kan een groot verschil maken, vooral als niemand het ziet.",
     auteur: "Onbekend",
     betekenis:
-      "Het goede hoeft geen publiek. Een deur openhouden, een bericht sturen, een stille vriendelijkheid. Het telt, ook zonder dat iemand het weet.",
-    over: "Geen bekende auteur. Een gedachte die veel wordt herhaald in verschillende tradities.",
+      "Het goede hoeft geen publiek. Een deur openhouden, een bericht sturen, een stille vriendelijkheid: het telt, ook zonder dat iemand het weet. En het doet iets met jou, niet alleen met de ander. Wie zich somber voelt, merkt vaak dat iets kleins voor een ander de eigen dag ook lichter maakt.",
+    over:
+      "Geen bekende auteur. De gedachte komt in veel tradities terug: in de joodse leer geldt anoniem geven als de hoogste vorm, en in de Bergrede staat dat de linkerhand niet hoeft te weten wat de rechter doet. Onderzoek naar vriendelijkheid laat zien dat de gever er evenveel van opknapt als de ontvanger.",
   },
   {
     tekst: "Waar het hart vol van is, loopt de mond van over.",
     auteur: "Nederlands spreekwoord",
     betekenis:
-      "Wat je bezighoudt, komt er vanzelf uit. Dat is geen zwakte, het is hoe mensen werken. Erover praten hoort bij vol zijn.",
+      "Wat je bezighoudt, komt er vanzelf uit. Dat is geen zwakte, het is hoe mensen werken, en het spreekwoord veroordeelt het niet. Erover praten hoort bij vol zijn, en wie een vol hart heeft, mag het laten overlopen bij iemand die luistert. Wat je binnenhoudt, wordt zelden lichter.",
     over: "Een Nederlands spreekwoord dat teruggaat op een zin uit het Nieuwe Testament. Het wordt sinds de Statenvertaling in het Nederlands gebruikt.",
   },
   {
     tekst: "Soms is het dapperste wat je kunt doen, om hulp vragen.",
     auteur: "Onbekend",
     betekenis:
-      "Hulp vragen voelt als toegeven dat je het niet kunt. Het is eigenlijk toegeven dat je een mens bent. En dat vraagt meer moed dan doen alsof.",
-    over: "Geen bekende auteur. Een gedachte die in veel campagnes over mentale gezondheid in eigen woorden terugkomt.",
+      "Hulp vragen voelt als toegeven dat je het niet kunt. Het is eigenlijk toegeven dat je een mens bent, en dat vraagt meer moed dan doen alsof. De meeste mensen helpen graag en voelen zich zelfs vereerd als iemand het vraagt. Wat jou een last lijkt, is voor een ander vaak een blijk van vertrouwen.",
+    over:
+      "Geen bekende auteur. De gedachte komt in veel campagnes over mentale gezondheid terug, omdat uit onderzoek blijkt dat mensen gemiddeld jaren wachten voordat ze hulp zoeken, vooral mannen. MIND en de hulplijn in deze app bestaan precies om die drempel te verlagen.",
   },
   {
     tekst: "Alles heeft zijn tijd. Er is een tijd om te huilen en een tijd om te lachen.",
     auteur: "Prediker",
     betekenis:
-      "Niet alles hoeft tegelijk. Huilen heeft zijn eigen tijd, lachen ook, en ze wisselen elkaar af. Wat er nu is, is de tijd daarvoor.",
+      "Niet alles hoeft tegelijk. Huilen heeft zijn eigen tijd, lachen ook, en ze wisselen elkaar af zonder dat je dat hoeft te regelen. Wat er nu is, is de tijd daarvoor, en het hoeft niet meteen ook de tijd voor iets anders te zijn. Wie verdriet de ruimte geeft, merkt dat het lachen vanzelf zijn beurt krijgt.",
     over:
       "Prediker is een boek uit de Hebreeuwse Bijbel, geschreven rond de derde eeuw voor Christus. Dit is een vrije weergave van het beroemde derde hoofdstuk.",
   },
@@ -1628,14 +1668,15 @@ export const QUOTES: Quote[] = [
     tekst: "Een mens is nooit zo sterk als wanneer hij zijn zwakte toegeeft.",
     auteur: "Onbekend",
     betekenis:
-      "Toegeven dat iets niet gaat, vraagt meer dan volhouden dat het wel gaat. Daar zit een kracht in die niet op kracht lijkt. Het is de sterkte van eerlijk zijn.",
-    over: "Geen bekende auteur. De gedachte komt in veel vormen terug, ook bij Brené Brown.",
+      "Toegeven dat iets niet gaat, vraagt meer dan volhouden dat het wel gaat. Daar zit een kracht in die niet op kracht lijkt: de sterkte van eerlijk zijn. Wie zijn zwakte kan benoemen, hoeft er geen energie meer in te steken om hem te verbergen. Die energie komt vrij voor iets beters.",
+    over:
+      "Geen bekende auteur. De gedachte gaat terug op een zin van de apostel Paulus (\"als ik zwak ben, dan ben ik sterk\") en komt in moderne vorm terug bij Brené Brown, die in haar onderzoek zag dat mensen kwetsbaarheid bij anderen als moed ervaren en bij zichzelf als zwakte.",
   },
   {
     tekst: "Een dag zonder lachen is een verloren dag.",
     auteur: "Nicolas de Chamfort",
     betekenis:
-      "Lachen hoeft niet groot. Een glimlach om iets kleins telt ook. Zolang er ergens in de dag één zit, was hij niet voor niets.",
+      "Lachen hoeft niet groot. Een glimlach om iets kleins telt ook, en die is er vaker dan je achteraf denkt. Zolang er ergens in de dag één zit, was hij niet voor niets. Op een zware dag is de vraag niet of je gelukkig was, maar of er één moment was dat je even lichter werd.",
     over:
       "Nicolas de Chamfort (1741-1794) was een Franse schrijver van aforismen. De zin wordt vaak aan Charlie Chaplin toegeschreven, maar Chamfort schreef hem het eerst.",
   },
@@ -1643,7 +1684,7 @@ export const QUOTES: Quote[] = [
     tekst: "Blijf dicht bij alles wat je blij maakt dat je leeft.",
     auteur: "Hafez",
     betekenis:
-      "Wat je goed doet, verdient een plek dichtbij. Een mens, een plek, een gewoonte. Op moeilijke dagen is die nabijheid wat je overeind houdt.",
+      "Wat je goed doet, verdient een plek dichtbij: een mens, een plek, een gewoonte, muziek, een hond. Op moeilijke dagen is die nabijheid wat je overeind houdt, en juist dan is de neiging groot om het weg te duwen. Het helpt om op een goede dag op te schrijven wat je blij maakt dat je leeft, zodat je het op een slechte kunt teruglezen.",
     over:
       "Hafez (circa 1315-1390) was een Perzische dichter uit Shiraz. Deze regel is een vrije, populaire vertaling en niet letterlijk in zijn werk terug te vinden.",
   },
@@ -1651,8 +1692,9 @@ export const QUOTES: Quote[] = [
     tekst: "Niets is voor altijd, ook dit gevoel niet.",
     auteur: "Onbekend",
     betekenis:
-      "Een zwaar gevoel voelt eeuwig terwijl je erin zit. Maar gevoelens zijn weer, geen klimaat. Ze trekken over.",
-    over: "Geen bekende auteur. Een gedachte die aansluit bij het beeld van de app: gevoelens zijn weer.",
+      "Een zwaar gevoel voelt eeuwig terwijl je erin zit, en dat is precies wat het zo zwaar maakt: het lijkt geen einde te hebben. Maar gevoelens zijn weer, geen klimaat. Ze trekken over, ook als je er niets aan doet. Wie dat een paar keer heeft meegemaakt, kan het de volgende keer een beetje eerder geloven.",
+    over:
+      "Geen bekende auteur. De gedachte sluit aan bij het beeld van deze app en bij het Perzische \"ook dit gaat voorbij\". Uit onderzoek naar emoties blijkt dat een gevoel, als je het niet voedt met nieuwe gedachten, meestal binnen minuten van intensiteit verandert.",
   },
   {
     tekst: "Wees een lantaarn, een reddingsboot of een ladder.",
@@ -1663,32 +1705,36 @@ export const QUOTES: Quote[] = [
       "Rumi (1207-1273) was een Perzische dichter. De regel komt uit een vrije vertaling van zijn werk door Coleman Barks.",
   },
   {
-    tekst: "De dag komt op, of je wilt of niet. Dat is het mooie eraan.",
-    auteur: "Onbekend",
+    tekst: "De zon komt op en de zon gaat onder, en haast zich weer naar de plaats waar ze opkomt.",
+    auteur: "Prediker",
     betekenis:
-      "Je hoeft de nieuwe dag niet te verdienen. Hij komt gewoon. Dat is een van de weinige zekerheden, en een goede.",
-    over: "Geen bekende auteur.",
+      "Je hoeft de nieuwe dag niet te verdienen. Hij komt gewoon, of je er klaar voor bent of niet, en dat is een van de weinige zekerheden die er zijn. De zin klinkt eerst vermoeid, alsof alles maar doorgaat, maar er zit ook troost in: wat vandaag eindigt, begint morgen opnieuw. Ook na de slechtste nacht is de zon niet in staking gegaan.",
+    over:
+      "Prediker is een boek uit de Hebreeuwse Bijbel, geschreven rond de derde eeuw voor Christus door een schrijver die zichzelf de Prediker noemt. Het staat bekend om zijn nuchtere toon over de zin van het leven. Hemingway ontleende er de titel van zijn roman \"The Sun Also Rises\" aan.",
   },
   {
-    tekst: "Wat je vandaag niet redt, mag morgen.",
-    auteur: "Onbekend",
+    tekst: "Morgen is er weer een dag.",
+    auteur: "Margaret Mitchell",
     betekenis:
-      "Niet alles hoeft vandaag. Wat blijft liggen, is niet mislukt, het is verplaatst. Morgen is er ook nog.",
-    over: "Geen bekende auteur. Het tegenovergestelde van het spreekwoord over uitstel, en op sommige dagen waarder.",
+      "Niet alles hoeft vandaag. Wat blijft liggen, is niet mislukt, het is verplaatst, en morgen is er ook nog. De zin wordt in het boek uitgesproken door iemand die net alles is kwijtgeraakt, en juist daarom is hij geen makkelijke troost. Het is de beslissing om vanavond te stoppen met vechten en morgen opnieuw te kijken.",
+    over:
+      "Margaret Mitchell (1900-1949) schreef \"Gejaagd door de wind\", dat in 1936 verscheen en de Pulitzerprijs won. Het is de slotzin van het boek en van de film uit 1939, uitgesproken door Scarlett O'Hara, en een van de bekendste laatste zinnen uit de literatuur.",
   },
   {
     tekst: "Wat je ook voelt, je bent er niet alleen mee.",
     auteur: "Onbekend",
     betekenis:
-      "Wat jij voelt, voelen vandaag meer mensen dan je denkt. Dat neemt het niet weg, maar het maakt het minder eenzaam. Het weerbericht laat het zien.",
-    over: "Geen bekende auteur. Het is de gedachte achter het landelijke weerbericht in deze app.",
+      "Wat jij voelt, voelen vandaag meer mensen dan je denkt, ook in jouw straat. Dat neemt het niet weg, maar het maakt het minder eenzaam, en eenzaamheid is vaak het zwaarste deel. Het landelijke weerbericht in deze app laat het zien: op een mistige dag ben je zelden de enige met mist.",
+    over:
+      "Geen bekende auteur. Het is de gedachte achter het mentale weerbericht: ruim vier op de tien Nederlanders krijgt ooit in het leven met psychische klachten te maken, volgens onderzoek van het Trimbos-instituut. Dat betekent dat in elke volle tram iemand zit die vandaag hetzelfde voelt als jij.",
   },
   {
-    tekst: "Het mooiste weer is het weer dat er is.",
-    auteur: "Onbekend",
+    tekst: "Zonneschijn is heerlijk, regen verfrissend, wind maakt sterk, sneeuw maakt vrolijk. Er bestaat geen slecht weer, alleen verschillende soorten goed weer.",
+    auteur: "John Ruskin",
     betekenis:
-      "Wachten op beter weer is wachten op iets wat je niet in de hand hebt. Het weer dat er is, is het enige waar je iets mee kunt. Ook grijs weer heeft zijn eigen licht.",
-    over: "Geen bekende auteur. Een gedachte uit de wereld van het buitenleven.",
+      "Wachten op beter weer is wachten op iets wat je niet in de hand hebt. Het weer dat er is, is het enige waar je iets mee kunt, en elk soort heeft iets wat de andere soorten niet hebben. Zo bekeken heeft ook een grijze, natte dag zijn eigen kwaliteit: hij is stiller, trager, meer naar binnen gericht. Dat is geen doen alsof, het is anders kijken.",
+    over:
+      "John Ruskin (1819-1900) was een Engelse kunstcriticus en schrijver die de natuur tot in de kleinste wolk bestudeerde. De uitspraak wordt breed aan hem toegeschreven, maar is in zijn werk niet letterlijk gevonden. Ze past bij zijn overtuiging dat goed kijken de eerste stap naar waardering is.",
   },
 ];
 
