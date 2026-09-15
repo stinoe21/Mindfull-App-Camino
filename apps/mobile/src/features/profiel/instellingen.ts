@@ -45,7 +45,7 @@ export type Instellingen = {
    * coördinaten worden nooit bewaard. Alleen als dit waar is telt de
    * provincie mee; een eerder zelf gekozen provincie (van voor 14 september
    * 2026) wordt genegeerd. Dit is een afspiegeling van de toestemming van de
-   * telefoon, geen eigen instelling.
+   * telefoon, geen eigen instelling, en er is geen scherm voor in de app.
    */
   provincieViaLocatie: boolean;
 };
