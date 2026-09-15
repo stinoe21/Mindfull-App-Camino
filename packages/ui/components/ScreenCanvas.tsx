@@ -15,7 +15,7 @@
 //   "overlay"  uitkomst- en vieringsschermen: geen vel, inhoud direct op de
 //              volle gradient, zie het prototype (Bevestigd, Uitkomst, Afgerond)
 
-import { Children, isValidElement, useRef, type ReactNode } from "react";
+import { Children, isValidElement, useRef, useState, type ReactNode } from "react";
 import { Animated, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -104,6 +104,10 @@ export type ScreenCanvasProps = {
 export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, heroInhoud, kopTitel, metNavRuimte = false, terugKnop, children }: ScreenCanvasProps) {
   const insets = useSafeAreaInsets();
   const scrollY = useRef(new Animated.Value(0)).current;
+  // De gemeten hoogte van de hero-inhoud, zodat het vel omlaag schuift als
+  // de begroeting en de ondertitel samen meer regels nemen dan de band hoog
+  // is (Stijn, 15 september 2026: de kop zat tegen de statusbalk).
+  const [heroHoogte, zetHeroHoogte] = useState(0);
   const navRuimte = metNavRuimte ? NAV_PIL_HOOGTE + Math.max(insets.bottom - space[3], space[2]) + space[6] : space[2];
   // De knop staat in het midden van de titelbalk; het vel begint er vlak onder.
   const terugKnopTop = insets.top + KOP_MARGE;
@@ -140,9 +144,13 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
   // de volle band uit het prototype. Een terugknop schuift het vel nooit
   // omhoog tot boven de knop.
   const standaardTop = heroInhoud ? insets.top + HERO_BAND : insets.top + space[12] + space[4];
-  const top = terugKnop
-    ? Math.max(sheetTop ?? standaardTop, terugKnopTop + TERUGKNOP_MAAT + KOP_MARGE)
-    : Math.max(sheetTop ?? standaardTop, insets.top + space[2]);
+  // Nooit minder dan de inhoud van de hero nodig heeft: lucht erboven, de
+  // inhoud zelf, en de vaste marge onder de inhoud.
+  const heroNodig = heroInhoud && heroHoogte ? insets.top + space[3] + heroHoogte + space[6] : 0;
+  const top = Math.max(
+    terugKnop ? Math.max(sheetTop ?? standaardTop, terugKnopTop + TERUGKNOP_MAAT + KOP_MARGE) : Math.max(sheetTop ?? standaardTop, insets.top + space[2]),
+    heroNodig
+  );
   // Parallax: de hero schuift 0,4 keer mee omhoog bij scrollen en vervaagt,
   // zodat de gradient een laag achter het vel wordt in plaats van een plaat.
   const heroSchuif = scrollY.interpolate({ inputRange: [0, top], outputRange: [0, -top * 0.4], extrapolate: "clamp" });
@@ -159,7 +167,11 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
           pointerEvents="box-none"
           style={{ position: "absolute", left: 0, right: 0, top: insets.top, height: top - insets.top, alignItems: "center", justifyContent: "flex-end", paddingBottom: space[6], opacity: heroVervaag, transform: [{ translateY: heroSchuif }] }}
         >
-          <Verschijn style={{ alignSelf: "stretch", alignItems: "center" }}>{heroInhoud}</Verschijn>
+          <Verschijn style={{ alignSelf: "stretch", alignItems: "center" }}>
+            <View style={{ alignSelf: "stretch", alignItems: "center" }} onLayout={(e) => zetHeroHoogte(Math.round(e.nativeEvent.layout.height))}>
+              {heroInhoud}
+            </View>
+          </Verschijn>
         </Animated.View>
       ) : null}
       {/* De hele pagina scrolt: het vel schuift over de hero heen omhoog, zodat
