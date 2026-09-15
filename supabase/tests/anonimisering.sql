@@ -40,8 +40,10 @@ begin
   select count(*) into v_cols
     from information_schema.columns
    where table_schema = 'public' and table_name = 'weather_hourly';
-  assert v_cols = 4,
-    format('weather_hourly hoort 4 kolommen te hebben, gevonden: %s. Is er een kolom bijgekomen?', v_cols);
+  -- Vijf sinds de provincie erbij kwam (10 september 2026): day, hour,
+  -- weather, province, total.
+  assert v_cols = 5,
+    format('weather_hourly hoort 5 kolommen te hebben, gevonden: %s. Is er een kolom bijgekomen?', v_cols);
 
   -- Een uuid is een gebruiker. Een timestamp is een sleutel naar de logs, en
   -- daar is het hele ontwerp op gebouwd: het uur mag, de minuut niet.
@@ -112,15 +114,16 @@ begin
     format('De collectieve tabel verwijst naar iets anders dan weather_type: %s', v_fk);
 
   -- weather_hourly hoort precies EEN sleutel te hebben: de primary key op
-  -- (day, hour, weather). Die wijst een totaal aan en geen inzending, en hij
-  -- bestaat omdat het optellen een upsert is. Elke andere sleutel, of een
-  -- primary key met andere kolommen, kan wel iets aanwijsbaars introduceren.
+  -- (day, hour, weather, province). Die wijst een totaal aan en geen
+  -- inzending, en hij bestaat omdat het optellen een upsert is. Elke andere
+  -- sleutel, of een primary key met andere kolommen, kan wel iets
+  -- aanwijsbaars introduceren.
   select pg_get_constraintdef(oid) into v_pk
     from pg_constraint
    where conrelid = 'public.weather_hourly'::regclass
      and contype = 'p';
-  assert v_pk = 'PRIMARY KEY (day, hour, weather)',
-    format('weather_hourly hoort als enige sleutel PRIMARY KEY (day, hour, weather) te hebben, gevonden: %s', coalesce(v_pk, 'geen primary key'));
+  assert v_pk = 'PRIMARY KEY (day, hour, weather, province)',
+    format('weather_hourly hoort als enige sleutel PRIMARY KEY (day, hour, weather, province) te hebben, gevonden: %s', coalesce(v_pk, 'geen primary key'));
 
   select string_agg(indexrelid::regclass::text, ', ') into v_key
     from pg_index
@@ -189,7 +192,7 @@ begin
     format('anon of authenticated heeft rechten op de collectieve tabel: %s. Die hoort onzichtbaar te zijn.', v_grants);
 
   -- profiles mag gelezen worden, maar nooit geschreven: anders zet iemand zijn
-  -- eigen last_checkin_on terug en omzeilt hij het dagslot.
+  -- eigen last_checkin_on of last_checkin_part terug en omzeilt hij het slot.
   select string_agg(grantee || ': ' || privilege_type, ', ') into v_grants
     from information_schema.role_table_grants
    where table_schema = 'public'
@@ -199,6 +202,49 @@ begin
   assert v_grants is null,
     format('Er is meer dan leesrecht op profiles: %s', v_grants);
 end $$;
+
+\echo ''
+\echo '=== 5b. Staat er op het profiel echt geen weerbeeld? ==='
+
+select column_name, data_type
+  from information_schema.columns
+ where table_schema = 'public' and table_name = 'profiles'
+ order by ordinal_position;
+
+do $$
+declare
+  v_kolommen text;
+  v_weer     text;
+  v_check    boolean;
+begin
+  -- Het slot per dagdeel (sinds 15 september 2026) is een datum en een
+  -- dagdeel, meer niet. Elke kolom die het slot koppelt aan WAT iemand
+  -- invulde, breekt de scheiding tussen de twee stromen.
+  select string_agg(column_name, ', ' order by ordinal_position) into v_kolommen
+    from information_schema.columns
+   where table_schema = 'public' and table_name = 'profiles';
+  assert v_kolommen = 'id, last_active_at, last_checkin_on, last_checkin_part',
+    format('profiles hoort precies id, last_active_at, last_checkin_on en last_checkin_part te hebben, gevonden: %s', v_kolommen);
+
+  select string_agg(column_name, ', ') into v_weer
+    from information_schema.columns
+   where table_schema = 'public' and table_name = 'profiles'
+     and (column_name ilike '%weather%' or column_name ilike '%weer%' or column_name ilike '%mood%');
+  assert v_weer is null,
+    format('profiles heeft een kolom die naar een weerbeeld wijst: %s', v_weer);
+
+  -- Het dagdeel is 1 of 2 en niets fijners: geen uur, geen tijdstip.
+  select exists (
+    select 1 from pg_constraint
+     where conrelid = 'public.profiles'::regclass
+       and contype = 'c'
+       and pg_get_constraintdef(oid) ilike '%last_checkin_part%'
+  ) into v_check;
+  assert v_check,
+    'Er staat geen check op profiles.last_checkin_part die hem tot 1 of 2 begrenst.';
+end $$;
+
+\echo 'profiles kent alleen een datum en een dagdeel van de laatste bijdrage, geen weerbeeld'
 
 \echo ''
 \echo '=== 6. Staat realtime uit op de collectieve tabel? ==='
@@ -249,7 +295,7 @@ begin
 end $$;
 
 \echo ''
-\echo '=== 8. Telt weather_today() alleen afgesloten uurblokken? ==='
+\echo '=== 8. Tellen de leesfuncties alleen afgesloten uurblokken? ==='
 
 do $$
 declare
@@ -260,9 +306,14 @@ begin
   -- terwijl een huisgenoot incheckt, ziet anders de percentages verschuiven.
   assert v_def ~ 'h\.hour\s*<\s*nu\.uur',
     'weather_today() telt het lopende uurblok mee. Dan is een inzending live te zien binnenkomen.';
+
+  -- Hetzelfde voor de kaart per provincie, waar de totalen kleiner zijn.
+  select pg_get_functiondef('public.weather_today_by_province()'::regprocedure) into v_def;
+  assert v_def ~ 'h\.hour\s*<\s*nu\.uur',
+    'weather_today_by_province() telt het lopende uurblok mee. Dan is een inzending live te zien binnenkomen.';
 end $$;
 
-\echo 'weather_today() telt alleen afgesloten uurblokken'
+\echo 'weather_today() en weather_today_by_province() tellen alleen afgesloten uurblokken'
 
 \echo ''
 \echo '=== 9. Wie mag welke functie aanroepen? ==='
@@ -306,9 +357,10 @@ end $$;
 \echo '======================================================================'
 \echo ' GESLAAGD. De collectieve tabel heeft geen kolom die naar een persoon'
 \echo ' kan wijzen, geen rij per inzending, geen tijd fijner dan een uur, en'
-\echo ' als enige sleutel de bucket (dag, uurblok, weerbeeld). Hij is voor de'
-\echo ' app onzichtbaar, staat niet op realtime, en alle toegang loopt via'
-\echo ' functies met een vast search_path.'
+\echo ' als enige sleutel de bucket (dag, uurblok, weerbeeld, provincie). Hij'
+\echo ' is voor de app onzichtbaar, staat niet op realtime, en alle toegang'
+\echo ' loopt via functies met een vast search_path. Het profiel kent alleen'
+\echo ' de datum en het dagdeel van de laatste bijdrage, geen weerbeeld.'
 \echo ''
 \echo ' De app ziet alleen afgesloten uurblokken, dus een inzending is via'
 \echo ' het weerbericht niet live te zien binnenkomen.'
