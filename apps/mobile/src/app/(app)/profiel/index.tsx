@@ -27,6 +27,7 @@ import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { leesInstellingen, STANDAARD, type Instellingen } from "@/features/profiel/instellingen";
 import { InstellingenGroep, InstellingenRij } from "@/features/profiel/InstellingenRij";
+import { wisLokaalWeer } from "@/features/weer/lokaalWeer";
 import { isProvincie, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 
 const nl = {
@@ -136,6 +137,9 @@ export default function Profiel() {
 
   const uitloggen = async () => {
     await getSupabase()?.auth.signOut();
+    // Het weer van vandaag is van dit account: een volgend account op
+    // hetzelfde toestel begint schoon (ook het dagdeel dat al telde).
+    await wisLokaalWeer();
     zetEmail(null);
     // Zonder account kom je de app niet in: terug naar het begin.
     router.dismissAll();
