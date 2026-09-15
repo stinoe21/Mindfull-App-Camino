@@ -2,7 +2,7 @@
 //
 // Eén overzicht, zoals de instellingen van het toestel: wie je bent bovenaan,
 // daaronder korte rijen met de huidige waarde en een pagina per keuze
-// (naam, onderwerpen, provincie, taal, toestemmingen). Sinds 13 september
+// (naam, onderwerpen, taal, toestemmingen). Sinds 13 september
 // 2026 (Stijn): de vorige versie schreef alle keuzes en de volledige
 // toestemmingsteksten op één lange pagina uit, en dat was geen geheel. Nu
 // lees je in één oogopslag wat er staat en tik je door om iets te wijzigen.
@@ -10,6 +10,11 @@
 // Geen profielfoto: die bestaat nergens in de flow (HERKOMST.md, Removed on
 // purpose). Er is geen naamveld in het datamodel; de voornaam komt uit de
 // lokale instellingen en verlaat het toestel nooit.
+//
+// Geen rij voor de provincie (Stijn, 15 september 2026): die komt via de
+// locatie van het toestel, geregeld in de onboarding en bij de check-in, en
+// is niets om in te stellen. Wie niet per provincie wil meetellen, zet de
+// locatie uit in de instellingen van de telefoon.
 
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
@@ -27,7 +32,6 @@ import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { leesInstellingen, STANDAARD, type Instellingen } from "@/features/profiel/instellingen";
 import { InstellingenGroep, InstellingenRij } from "@/features/profiel/InstellingenRij";
-import { isProvincie, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 
 const nl = {
   titel: "Profiel",
@@ -42,9 +46,6 @@ const nl = {
   onderwerpen: "Onderwerpen",
   geenOnderwerpen: "Nog niets gekozen",
   meerOnderwerpen: "+{n}",
-  provincie: "Provincie",
-  provincieGeen: "Liever niet",
-  viaLocatie: "{provincie} (locatie)",
   groepApp: "App",
   taal: "Taal",
   taalSysteem: "Systeem",
@@ -74,9 +75,6 @@ const teksten: Woordenboek<typeof nl> = {
     onderwerpen: "Topics",
     geenOnderwerpen: "Nothing chosen yet",
     meerOnderwerpen: "+{n}",
-    provincie: "Province",
-    provincieGeen: "Rather not",
-    viaLocatie: "{provincie} (location)",
     groepApp: "App",
     taal: "Language",
     taalSysteem: "System",
@@ -145,11 +143,6 @@ export default function Profiel() {
   const onderwerpenWaarde = inst.voorkeuren.length
     ? inst.voorkeuren.slice(0, 2).join(", ") + (inst.voorkeuren.length > 2 ? " " + t("meerOnderwerpen").replace("{n}", String(inst.voorkeuren.length - 2)) : "")
     : t("geenOnderwerpen");
-  const provincieWaarde = isProvincie(inst.provincie)
-    ? inst.provincieViaLocatie
-      ? t("viaLocatie").replace("{provincie}", PROVINCIE_NAMEN[inst.provincie])
-      : PROVINCIE_NAMEN[inst.provincie]
-    : t("provincieGeen");
   const taalWaarde = keuze === "nl" ? t("taalNederlands") : keuze === "en" ? t("taalEngels") : t("taalSysteem");
   const toestemmingWaarde =
     inst.consentWeerbericht === true ? t("weerberichtJa") : inst.consentWeerbericht === false ? t("weerberichtNee") : t("weerberichtGeen");
@@ -178,8 +171,7 @@ export default function Profiel() {
 
       <InstellingenGroep titel={t("groepJij")}>
         <InstellingenRij label={t("naam")} onPress={() => router.push("/profiel/naam")} rechts={<Waarde tekst={inst.naam || t("geenNaam")} />} />
-        <InstellingenRij label={t("onderwerpen")} onPress={() => router.push("/profiel/onderwerpen")} rechts={<Waarde tekst={onderwerpenWaarde} />} />
-        <InstellingenRij label={t("provincie")} onPress={() => router.push("/profiel/provincie")} rechts={<Waarde tekst={provincieWaarde} />} laatste />
+        <InstellingenRij label={t("onderwerpen")} onPress={() => router.push("/profiel/onderwerpen")} rechts={<Waarde tekst={onderwerpenWaarde} />} laatste />
       </InstellingenGroep>
 
       <InstellingenGroep titel={t("groepApp")}>

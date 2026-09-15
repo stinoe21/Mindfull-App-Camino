@@ -16,9 +16,13 @@
 // de app bepaalt daaruit de provincie, op het toestel
 // (features/weer/locatie.ts). Geen eigen scherm en geen keuze die je later
 // in de instellingen moet aanzetten: dan doet niemand dat. Weigeren is
-// prima: dan telt de check-in als "onbekend", en onder Profiel kan iemand
-// alsnog zelf een provincie kiezen. Wie nee zegt op het weerbericht, krijgt
-// de locatievraag niet: dan is er geen provincie nodig.
+// prima: dan telt de check-in als "onbekend". Zelf een provincie kiezen kan
+// niet (14 september 2026, zie docs/datamodel.md). Wie nee zegt op het
+// weerbericht, krijgt de locatievraag niet: dan is er geen provincie nodig.
+//
+// De toestemming is hier het enige dat telt. Lukt de positie zelf even niet
+// (geen bereik, of een simulator zonder locatie), dan onthouden we toch dat
+// de locatie mag: de check-in bepaalt de provincie sowieso opnieuw.
 
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -51,10 +55,8 @@ export default function Anonimiteit() {
     let provincieViaLocatie = false;
     if (weerbericht === true) {
       const uitkomst = await bepaalProvincieViaLocatie();
-      if (uitkomst.status === "ok") {
-        provincie = uitkomst.provincie;
-        provincieViaLocatie = true;
-      }
+      provincieViaLocatie = uitkomst.status !== "geweigerd";
+      if (uitkomst.status === "ok") provincie = uitkomst.provincie;
     }
     await bewaarInstellingen({
       consentWeerbericht: weerbericht === true,

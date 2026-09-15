@@ -70,8 +70,9 @@ export async function stuurWeerIn(weerbeeld: string, provincie: string | null = 
   try {
     const { data } = await client.auth.getSession();
     if (!data.session) return "niet-ingelogd";
-    // De provincie is een zelf gekozen instelling; zonder keuze telt de
-    // check-in als "onbekend" mee. Zie de migratie van 10 september 2026.
+    // De provincie komt alleen via de locatie van het toestel
+    // (features/weer/locatie.ts); zonder provincie telt de check-in als
+    // "onbekend" mee. Zie de migratie van 10 september 2026.
     const { error } = await client.rpc("submit_weather", { p_weather: weerbeeld, p_province: provincie ?? "onbekend" });
     if (error) {
       if (error.message.includes("al ingecheckt")) return "al-ingecheckt";
