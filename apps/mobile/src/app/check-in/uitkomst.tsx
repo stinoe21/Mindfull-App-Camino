@@ -14,8 +14,8 @@
 // duiding, de tip op het vel en de leestips als lijst. De volle gradient
 // zonder vel met alles gecentreerd (variant "overlay") is hier weg.
 
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
+import { useCallback, useState } from "react";
 import { Share, View } from "react-native";
 
 import { space } from "@mind/ui";
@@ -31,7 +31,7 @@ import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { houvastVoorArtikel } from "@/features/content/houvast";
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
-import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
+import { dagdeelNu, leesWeerVanVandaag, toonTijd } from "@/features/weer/lokaalWeer";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
 
 import type { WeatherCode } from "@mind/types";
@@ -39,10 +39,18 @@ import type { WeatherCode } from "@mind/types";
 // Interface-teksten. De weerbeeld-uitkomsten (UITKOMSTEN) en de privacy-uitleg
 // zijn canonieke content en blijven Nederlands; de statusmeldingen en de
 // bediening hieronder zijn wel bediening. {melding}-sleutels lopen gelijk aan
-// de insturenuitkomst; "niet-gedeeld" krijgt bewust geen regel.
+// de insturenuitkomst; "niet-gedeeld" krijgt bewust geen regel. Sinds
+// 15 september 2026 mag je vaker inchecken: "al-bijgedragen" zegt eerlijk
+// dat het eigen weer is bijgewerkt maar de kaart dit dagdeel al had.
 const nl = {
   meldingGelukt:
     "Dankjewel voor je check-in. Jouw weer telt anoniem mee in het mentale weer van Nederland.",
+  meldingAlBijgedragenOchtend:
+    "Je weer is bijgewerkt. Voor het mentale weer van Nederland telde je check-in van vanochtend al mee.",
+  meldingAlBijgedragenMiddag:
+    "Je weer is bijgewerkt. Voor het mentale weer van Nederland telde je check-in van vanmiddag al mee.",
+  ingechecktOm: "Ingecheckt om {tijd}",
+  opnieuw: "Opnieuw inchecken",
   meldingNietVerbonden:
     "Geen verbinding: deze check-in telt niet mee in het mentale weer van Nederland. Jouw weer staat hier.",
   meldingNietIngelogd:
@@ -61,6 +69,12 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     meldingGelukt:
       "Thank you for your check-in. Your weather counts anonymously towards the mental weather forecast of the Netherlands.",
+    meldingAlBijgedragenOchtend:
+      "Your weather is updated. For the mental weather of the Netherlands, your check-in this morning already counted.",
+    meldingAlBijgedragenMiddag:
+      "Your weather is updated. For the mental weather of the Netherlands, your check-in this afternoon already counted.",
+    ingechecktOm: "Checked in at {tijd}",
+    opnieuw: "Check in again",
     meldingNietVerbonden:
       "There was no connection, so this check-in couldn't count towards the national weather forecast. Your own weather is still here.",
     meldingNietIngelogd:
@@ -82,19 +96,30 @@ export default function CheckInUitkomst() {
   const { melding } = useLocalSearchParams<{ melding?: string }>();
   const MELDINGEN: Record<string, string> = {
     gelukt: t("meldingGelukt"),
-    "al-ingecheckt": t("meldingGelukt"),
+    "al-bijgedragen": dagdeelNu() === 1 ? t("meldingAlBijgedragenOchtend") : t("meldingAlBijgedragenMiddag"),
     "niet-verbonden": t("meldingNietVerbonden"),
     "niet-ingelogd": t("meldingNietIngelogd"),
   };
   const [geladen, zetGeladen] = useState(false);
   const [weerbeeld, zetWeerbeeld] = useState<WeatherCode | null>(null);
+  const [tijd, zetTijd] = useState("");
 
-  useEffect(() => {
-    leesWeerVanVandaag().then((data) => {
-      zetWeerbeeld(data?.weerbeeld ?? null);
-      zetGeladen(true);
-    });
-  }, []);
+  // Bij elke focus opnieuw lezen: na "Opnieuw inchecken" kom je hier terug
+  // met een ander weerbeeld en een andere tijd.
+  useFocusEffect(
+    useCallback(() => {
+      let actief = true;
+      leesWeerVanVandaag().then((data) => {
+        if (!actief) return;
+        zetWeerbeeld(data?.weerbeeld ?? null);
+        zetTijd(data?.tijd ?? "");
+        zetGeladen(true);
+      });
+      return () => {
+        actief = false;
+      };
+    }, [])
+  );
 
   if (geladen && !weerbeeld) {
     // Empty state: nog geen check-in vandaag.
@@ -145,6 +170,7 @@ export default function CheckInUitkomst() {
         <View style={{ gap: space[2] }}>
           <AppText rol="labelOverline" kleur="brand">{t("jouwWeer")}</AppText>
           <AppText rol="h1">{WEER_NAMEN[weerbeeld]}</AppText>
+          {tijd ? <AppText rol="labelCaption" kleur="secondary">{t("ingechecktOm").replace("{tijd}", toonTijd(tijd))}</AppText> : null}
           <AppText rol="subtitle">{tekst.kop}</AppText>
           <AppText rol="body">{tekst.duiding}</AppText>
         </View>
@@ -186,9 +212,12 @@ export default function CheckInUitkomst() {
       {/* Eén primaire knop (productprincipe 5). Het mentale weer van Nederland
           staat op Home, direct onder jouw weer; een tweede knop ernaartoe was
           dubbelop (Stijn, UX-ronde 13 september 2026). */}
+      {/* Opnieuw inchecken kan altijd (Stijn, 15 september 2026); replace,
+          zodat de stap-schermen niet op de terugstapel stapelen. */}
       <View style={{ gap: space[3] }}>
         <Button label={t("terugDashboard")} fullWidth onPress={() => router.replace("/dashboard")} />
-        <Button label={t("deelJeWeer")} variant="secondary" fullWidth onPress={deel} />
+        <Button label={t("opnieuw")} variant="secondary" fullWidth onPress={() => router.replace("/check-in/1")} />
+        <Button label={t("deelJeWeer")} variant="link" fullWidth onPress={deel} />
       </View>
     </ScreenCanvas>
   );

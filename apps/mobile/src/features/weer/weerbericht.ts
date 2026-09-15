@@ -60,28 +60,36 @@ export async function haalWeerberichtProvincies(vernieuw = false): Promise<Weath
   }
 }
 
-export type InsturenResultaat = "gelukt" | "al-ingecheckt" | "niet-ingelogd" | "niet-verbonden";
+export type InsturenResultaat = "gelukt" | "al-bijgedragen" | "niet-ingelogd" | "niet-verbonden";
 
-// Insturen naar de anonieme pool. Het dagslot zit in submit_weather() aan de
-// serverkant; "vandaag al ingecheckt" is een normale flow en geen bug.
-export async function stuurWeerIn(weerbeeld: string, provincie: string | null = null): Promise<InsturenResultaat> {
+/** Wat het insturen opleverde, en bij "gelukt" het dagdeel (1 of 2) dat de server registreerde. */
+export type Insturen = { resultaat: InsturenResultaat; dagdeel: 1 | 2 | 0 };
+
+// Insturen naar de anonieme pool. Het slot per dagdeel zit in submit_weather()
+// aan de serverkant (sinds 15 september 2026: maximaal een bijdrage voor en
+// een vanaf 12.00 uur); "dit dagdeel al bijgedragen" is een normale flow en
+// geen bug. Tot de migratie gepusht is meldt een oudere server nog "vandaag
+// al ingecheckt"; die telt hier als hetzelfde.
+export async function stuurWeerIn(weerbeeld: string, provincie: string | null = null): Promise<Insturen> {
   const client = getSupabase();
-  if (!client) return "niet-verbonden";
+  if (!client) return { resultaat: "niet-verbonden", dagdeel: 0 };
   try {
     const { data } = await client.auth.getSession();
-    if (!data.session) return "niet-ingelogd";
-    // De provincie is een zelf gekozen instelling; zonder keuze telt de
-    // check-in als "onbekend" mee. Zie de migratie van 10 september 2026.
-    const { error } = await client.rpc("submit_weather", { p_weather: weerbeeld, p_province: provincie ?? "onbekend" });
+    if (!data.session) return { resultaat: "niet-ingelogd", dagdeel: 0 };
+    // De provincie komt alleen via de locatie van het toestel
+    // (features/weer/locatie.ts); zonder provincie telt de check-in als
+    // "onbekend" mee. Zie de migratie van 10 september 2026.
+    const { data: dagdeel, error } = await client.rpc("submit_weather", { p_weather: weerbeeld, p_province: provincie ?? "onbekend" });
     if (error) {
-      if (error.message.includes("al ingecheckt")) return "al-ingecheckt";
-      if (error.message.includes("niet ingelogd")) return "niet-ingelogd";
-      return "niet-verbonden";
+      if (error.message.includes("al bijgedragen") || error.message.includes("al ingecheckt")) return { resultaat: "al-bijgedragen", dagdeel: 0 };
+      if (error.message.includes("niet ingelogd")) return { resultaat: "niet-ingelogd", dagdeel: 0 };
+      return { resultaat: "niet-verbonden", dagdeel: 0 };
     }
     cache = null; // het landelijke beeld is veranderd
     cacheProvincies = null;
-    return "gelukt";
+    // Een oudere server geeft niets terug; dan geldt de klok van het toestel.
+    return { resultaat: "gelukt", dagdeel: dagdeel === 1 || dagdeel === 2 ? dagdeel : new Date().getHours() < 12 ? 1 : 2 };
   } catch {
-    return "niet-verbonden";
+    return { resultaat: "niet-verbonden", dagdeel: 0 };
   }
 }
