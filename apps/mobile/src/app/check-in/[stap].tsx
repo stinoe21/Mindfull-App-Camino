@@ -94,18 +94,26 @@ export default function CheckInStap() {
     const instellingen = await leesInstellingen();
     let resultaat: string = "niet-gedeeld";
     if (instellingen.consentWeerbericht) {
-      // Provincie alleen via de locatie: op het moment zelf opnieuw bepalen,
-      // op het toestel (features/weer/locatie.ts); lukt dat niet, dan de
-      // laatst bekende. Alleen de provinciecode gaat mee, nooit de locatie.
-      // Een provincie zonder locatie (zelf gekozen, van voor 14 september
-      // 2026) telt niet mee: dan is het "onbekend".
-      let provincie = instellingen.provincieViaLocatie ? instellingen.provincie : null;
-      if (instellingen.provincieViaLocatie) {
-        const uitkomst = await bepaalProvincieViaLocatie();
-        if (uitkomst.status === "ok" && uitkomst.provincie !== provincie) {
-          provincie = uitkomst.provincie;
-          await bewaarInstellingen({ provincie });
+      // Provincie alleen via de locatie, op het moment zelf bepaald op het
+      // toestel (features/weer/locatie.ts). Normaal is de toestemming al in
+      // de onboarding gegeven; wie de onboarding eerder deed, krijgt de vraag
+      // van het systeem hier één keer, daarna onthoudt de telefoon het.
+      // Lukt de positie even niet, dan de laatst bekende. Alleen de
+      // provinciecode gaat mee, nooit de locatie. Een provincie zonder
+      // locatie (zelf gekozen, van voor 14 september 2026) telt niet mee.
+      const uitkomst = await bepaalProvincieViaLocatie();
+      let provincie: string | null = null;
+      if (uitkomst.status === "ok") {
+        provincie = uitkomst.provincie;
+        if (provincie !== instellingen.provincie || !instellingen.provincieViaLocatie) {
+          await bewaarInstellingen({ provincie, provincieViaLocatie: true });
         }
+      } else if (uitkomst.status === "geweigerd") {
+        if (instellingen.provincie !== null || instellingen.provincieViaLocatie) {
+          await bewaarInstellingen({ provincie: null, provincieViaLocatie: false });
+        }
+      } else if (instellingen.provincieViaLocatie) {
+        provincie = instellingen.provincie;
       }
       resultaat = await stuurWeerIn(weerbeeld, provincie);
     }

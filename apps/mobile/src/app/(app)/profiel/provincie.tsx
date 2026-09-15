@@ -6,9 +6,9 @@
 // het toestel, zie features/weer/locatie.ts). Zelf een provincie kiezen kan
 // sinds 14 september 2026 (Stijn) niet meer: een vrije keuze maakte het te
 // makkelijk om het beeld van een provincie te sturen, zie docs/datamodel.md.
-// Wat hier nog kan: de locatie (opnieuw) laten bepalen na een weigering, of
-// liever niet per provincie meetellen. Dan telt de check-in landelijk mee als
-// onbekend. Elke keuze wordt direct bewaard.
+// Dit scherm laat zien wat de app heeft bepaald en kan dat opnieuw doen. Het
+// is geen instelling: wie niet per provincie wil meetellen, zet de locatie
+// uit in de instellingen van de telefoon, en telt landelijk mee als onbekend.
 
 import { useEffect, useState } from "react";
 import { View } from "react-native";
@@ -29,7 +29,6 @@ const nl = {
   viaLocatie: "Via je locatie: {provincie}",
   gebruikLocatie: "Gebruik mijn locatie",
   opnieuw: "Opnieuw bepalen",
-  lieverNiet: "Liever niet per provincie",
   geweigerd: "De app heeft geen toegang tot je locatie. Je kunt dat aanzetten in de instellingen van je telefoon.",
   buiten: "We vinden geen Nederlandse provincie bij je locatie.",
   mislukt: "Je locatie kon niet worden bepaald. Probeer het later opnieuw.",
@@ -42,7 +41,6 @@ const teksten: Woordenboek<typeof nl> = {
     viaLocatie: "From your location: {provincie}",
     gebruikLocatie: "Use my location",
     opnieuw: "Determine again",
-    lieverNiet: "Rather not per province",
     geweigerd: "The app has no access to your location. You can allow it in your phone's settings.",
     buiten: "We can't find a Dutch province at your location.",
     mislukt: "Your location couldn't be determined. Try again later.",
@@ -77,15 +75,6 @@ export default function ProfielProvincie() {
     zetMelding(uitkomst.status === "geweigerd" ? t("geweigerd") : uitkomst.status === "buiten-nederland" ? t("buiten") : t("mislukt"));
   };
 
-  // Liever niet: de provincie gaat weg en de check-in telt landelijk mee.
-  // Dit is de enige keuze zonder locatie, en die kan het beeld niet sturen.
-  const lieverNiet = async () => {
-    zetProvincie(null);
-    zetViaLocatie(false);
-    zetMelding(null);
-    await bewaarInstellingen({ provincie: null, provincieViaLocatie: false });
-  };
-
   const bepaald = viaLocatie && isProvincie(provincie);
 
   return (
@@ -105,12 +94,6 @@ export default function ProfielProvincie() {
         <Card tone="white">
           <AppText rol="bodySmall">{melding}</AppText>
         </Card>
-      ) : null}
-
-      {bepaald ? (
-        <View style={{ alignItems: "flex-start" }}>
-          <Button label={t("lieverNiet")} variant="link" onPress={lieverNiet} />
-        </View>
       ) : null}
     </KeuzePagina>
   );
