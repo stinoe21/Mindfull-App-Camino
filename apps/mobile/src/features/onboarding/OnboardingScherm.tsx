@@ -16,9 +16,11 @@
 // achtergrond heen en weer trekken.
 //
 // De vlieger (zelfde ronde): één mascotte in één kleur die je meeneemt, in
-// plaats van per stap een andere kleur. Eerst de zittende vlieger in blauw,
-// maar die was te passief; nu de staande mascotte, die per stap anders leunt,
-// zodat hij beweegt zonder animatie. Het design system kent alleen de
+// plaats van per stap een andere kleur. Hij wisselt per stap van gezicht en
+// van stand: gekanteld en om en om gespiegeld. Bij elk scherm waait hij één
+// keer aan (AanwaaiendeVlieger). De staande mascotte is geprobeerd en viel
+// af: die oogde minder. Alleen de lichte uitdrukkingen die er al waren (VliegerOnderwerp):
+// energiek, in balans en ontspannen. Het design system kent alleen de
 // zittende en de staande pose; een vliegende pose moet eerst getekend worden.
 // Het is decoratie, dus verborgen voor de schermlezer.
 //
@@ -29,32 +31,34 @@
 // zonder leeftijdscheck, account en toestemming.
 
 import { useNavigation, useRouter } from "expo-router";
-import type { ReactNode } from "react";
-import { View } from "react-native";
+import { useEffect, useRef, type ReactNode } from "react";
+import { AccessibilityInfo, Animated, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { space } from "@mind/ui";
+import { palette, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { TerugKnop, TERUGKNOP_MAAT } from "@mind/ui/components/TerugKnop";
-import { MascotMain } from "@mind/ui/components/MascotMain";
+import { VliegerOnderwerp, type Uitdrukking } from "@mind/ui/components/VliegerOnderwerp";
 
 import { OnboardingVoortgang } from "./OnboardingVoortgang";
 
-const VLIEGER_HOOGTE = 112;
+const VLIEGER_HOOGTE = 80;
 
-// De staande mascotte uit het design system (MascotMain): rechtop, duim
-// omhoog, in zijn eigen blauw. Stijn, 17 september 2026: de zittende vlieger
-// was te passief, "hij zit nu heel veel". Per stap leunt hij anders: naar de
-// kop toe, ervan af, of op zijn tenen. Stap 0 is Welkom.
-type Stand = { kantel: number; gespiegeld?: boolean; til?: number };
+// Eén kleur voor de hele onboarding: het blauw van de merkkleur.
+const MASCOTTE_KLEUR = { lijf: palette.primary200, schaduw: palette.primary400 };
+
+// Per stap een eigen gezicht en stand: leeftijd, account, naam, onderwerpen,
+// toestemming. Stap 0 is Welkom. "standvastig" doet niet mee: strakke
+// wenkbrauwen lazen op het accountscherm als boos (Stijn, 17 september 2026).
+type Stand = { gezicht: Uitdrukking; kantel: number; gespiegeld?: boolean };
 const PER_STAP: Record<number, Stand> = {
-  0: { kantel: 8 },
-  1: { kantel: -6, gespiegeld: true },
-  2: { kantel: 12, til: space[1] },
-  3: { kantel: -10 },
-  4: { kantel: 6, gespiegeld: true, til: space[1] },
-  5: { kantel: -4 },
+  0: { gezicht: "energiek", kantel: -8 },
+  1: { gezicht: "in-balans", kantel: 6, gespiegeld: true },
+  2: { gezicht: "ontspannen", kantel: -5 },
+  3: { gezicht: "energiek", kantel: 8, gespiegeld: true },
+  4: { gezicht: "in-balans", kantel: -7 },
+  5: { gezicht: "ontspannen", kantel: 5, gespiegeld: true },
 };
 
 type Props = {
@@ -63,6 +67,8 @@ type Props = {
   titel: string;
   /** Eén of twee korte zinnen onder de kop. */
   uitleg?: string;
+  /** Het gezicht van de vlieger. Standaard dat van de stap. */
+  uitdrukking?: Uitdrukking;
   /** Het eerste scherm (Welkom): er is niets om naar terug te gaan. */
   zonderTerug?: boolean;
   children: ReactNode;
@@ -74,7 +80,41 @@ function TerugInOnboarding() {
   return <TerugKnop onPress={() => (navigation.canGoBack() ? navigation.goBack() : router.replace("/welkom"))} />;
 }
 
-export function OnboardingScherm({ stap, titel, uitleg, zonderTerug = false, children }: Props) {
+// De vlieger waait bij elk scherm één keer aan vanuit de linkerbovenhoek en
+// deint uit tot zijn stand (Stijn, 17 september 2026: "dat hij vanuit een
+// hoek komt, zodat er wat meer levendigheid komt"). Eén keer, geen lus: daarna
+// staat hij stil. Wie in iOS of Android "minder beweging" aan heeft staan,
+// ziet hem meteen op zijn plek.
+function AanwaaiendeVlieger({ stand, gezicht }: { stand: Stand; gezicht: Uitdrukking }) {
+  const voortgang = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    let actief = true;
+    AccessibilityInfo.isReduceMotionEnabled()
+      .catch(() => false)
+      .then((minder) => {
+        if (!actief) return;
+        if (minder) voortgang.setValue(1);
+        else Animated.spring(voortgang, { toValue: 1, delay: 120, speed: 5, bounciness: 14, useNativeDriver: true }).start();
+      });
+    return () => {
+      actief = false;
+    };
+  }, [voortgang]);
+  const translateX = voortgang.interpolate({ inputRange: [0, 1], outputRange: [-VLIEGER_HOOGTE * 2, 0] });
+  const translateY = voortgang.interpolate({ inputRange: [0, 1], outputRange: [-VLIEGER_HOOGTE * 0.6, 0] });
+  const rotate = voortgang.interpolate({ inputRange: [0, 1], outputRange: [`${stand.kantel - 35}deg`, `${stand.kantel}deg`] });
+  return (
+    <Animated.View
+      accessibilityElementsHidden
+      importantForAccessibility="no-hide-descendants"
+      style={{ transform: [{ translateX }, { translateY }, { rotate }, { scaleX: stand.gespiegeld ? -1 : 1 }] }}
+    >
+      <VliegerOnderwerp uitdrukking={gezicht} hoogte={VLIEGER_HOOGTE} kleur={MASCOTTE_KLEUR} />
+    </Animated.View>
+  );
+}
+
+export function OnboardingScherm({ stap, titel, uitleg, uitdrukking, zonderTerug = false, children }: Props) {
   const insets = useSafeAreaInsets();
   const stand = PER_STAP[stap ?? 0] ?? PER_STAP[0];
   return (
@@ -87,14 +127,7 @@ export function OnboardingScherm({ stap, titel, uitleg, zonderTerug = false, chi
         {stap ? <OnboardingVoortgang stap={stap} /> : null}
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
-        <View
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-          // De staart steekt bij het leunen links uit; een kleine marge houdt hem op het vel.
-          style={{ marginLeft: space[2], transform: [{ translateY: -(stand.til ?? 0) }, { rotate: `${stand.kantel}deg` }, { scaleX: stand.gespiegeld ? -1 : 1 }] }}
-        >
-          <MascotMain hoogte={VLIEGER_HOOGTE} />
-        </View>
+        <AanwaaiendeVlieger stand={stand} gezicht={uitdrukking ?? stand.gezicht} />
         <View style={{ flex: 1 }}>
           <AppText rol="h2">{titel}</AppText>
         </View>

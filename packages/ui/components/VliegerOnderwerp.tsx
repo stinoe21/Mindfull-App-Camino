@@ -231,6 +231,8 @@ export type VliegerOnderwerpProps = {
   /** Rechtstreeks een uitdrukking, bijvoorbeeld voor de kitchen sink. */
   uitdrukking?: Uitdrukking;
   hoogte?: number;
+  /** Eén vaste kleur in plaats van de kleur van de uitdrukking: de mascotte van de onboarding. */
+  kleur?: { lijf: string; schaduw: string };
 };
 
 export function uitdrukkingVoor(onderwerp?: string, slug?: string): Uitdrukking | undefined {
@@ -239,12 +241,12 @@ export function uitdrukkingVoor(onderwerp?: string, slug?: string): Uitdrukking 
   return undefined;
 }
 
-export function VliegerOnderwerp({ onderwerp, slug, uitdrukking, hoogte = 56 }: VliegerOnderwerpProps) {
+export function VliegerOnderwerp({ onderwerp, slug, uitdrukking, hoogte = 56, kleur: eigenKleur }: VliegerOnderwerpProps) {
   const gekozen = uitdrukking ?? uitdrukkingVoor(onderwerp, slug);
   const schaal = hoogte / H;
   if (!gekozen) return <MascotteVlieger state="wolken" hoogte={hoogte} />;
   const g = UITDRUKKINGEN[gekozen];
-  const kleur = KLEUR[gekozen];
+  const kleur = eigenKleur ?? KLEUR[gekozen];
 
   return (
     <View style={{ width: W * schaal, height: H * schaal }} accessibilityLabel={"Vlieger, " + gekozen}>
