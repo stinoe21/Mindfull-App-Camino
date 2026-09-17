@@ -6,16 +6,13 @@
 
 import { useRouter } from "expo-router";
 import { useState } from "react";
+import { View } from "react-native";
 
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
-import { MascotMain } from "@mind/ui/components/MascotMain";
-import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
-
-import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
-import { OnboardingVoortgang } from "@/features/onboarding/OnboardingVoortgang";
+import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 
 const nl = {
@@ -55,27 +52,22 @@ export default function Leeftijd() {
 
   if (teJong) {
     return (
-      <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
-        <AppText rol="h1">{t("totLaterTitel")}</AppText>
+      <OnboardingScherm titel={t("totLaterTitel")}>
         <Card tone="white">
           <AppText rol="body">
             {t("totLaterUitleg")}
           </AppText>
         </Card>
         <Button label={t("terug")} variant="link" onPress={() => zetTeJong(false)} />
-      </ScreenCanvas>
+      </OnboardingScherm>
     );
   }
 
   return (
-    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
-      <OnboardingVoortgang stap={1} />
-      <AppText rol="h1">{t("vraag")}</AppText>
-      <AppText rol="body" kleur="secondary">
-        {t("uitleg")}
-      </AppText>
+    <OnboardingScherm stap={1} titel={t("vraag")} uitleg={t("uitleg")}>
+      <View style={{ flex: 1 }} />
       <Button label={t("ja")} fullWidth onPress={bevestig} />
       <Button label={t("nee")} variant="secondary" fullWidth onPress={() => zetTeJong(true)} />
-    </ScreenCanvas>
+    </OnboardingScherm>
   );
 }

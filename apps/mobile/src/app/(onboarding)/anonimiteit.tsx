@@ -27,11 +27,8 @@ import { View } from "react-native";
 import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
-import { MascotMain } from "@mind/ui/components/MascotMain";
-import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
-import { TerugNaarVorige } from "@/components/TerugNaarVorige";
-import { OnboardingVoortgang } from "@/features/onboarding/OnboardingVoortgang";
+import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
 import { bepaalProvincieViaLocatie } from "@/features/weer/locatie";
@@ -68,27 +65,26 @@ export default function Anonimiteit() {
   };
 
   return (
-    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
-      <OnboardingVoortgang stap={5} />
-      <View style={{ gap: space[1] }}>
-        <AppText rol="h1">Draag anoniem bij</AppText>
-        <AppText rol="subtitle">Niemand kan zien wat jij hebt ingevuld.</AppText>
-      </View>
-
+    <OnboardingScherm
+      stap={5}
+      titel="Draag anoniem bij"
+      uitleg="Niemand kan zien wat jij hebt ingevuld. Je kunt dit altijd wijzigen in Instellingen."
+    >
       {/* De uitleg over anonimiteit stond hier ook nog eens los boven de
           toestemming; die staat op het mentale weer zelf, met de infoknop
           (ontdubbeling, 1 september 2026). */}
       <View style={{ gap: space[2] }}>
-        <ToestemmingKeuze waarde={weerbericht} onKies={zetWeerbericht} metUitleg />
+        <ToestemmingKeuze waarde={weerbericht} onKies={zetWeerbericht} />
         {/* Pas na ja: wat er bij Klaar gebeurt, zodat de locatievraag van het
             systeem niet uit de lucht komt vallen. */}
         {weerbericht === true ? (
           <AppText rol="bodySmall" kleur="secondary">
-            Je telt dan ook mee in het weer van je provincie. Daarvoor vraagt je telefoon bij Klaar om je locatie. Die blijft op je telefoon; alleen de provincie telt mee.
+            Bij Klaar vraagt je telefoon om je locatie. Die blijft op je telefoon; alleen je provincie telt mee.
           </AppText>
         ) : null}
       </View>
 
+      <View style={{ flex: 1 }} />
       <View style={{ gap: space[3] }}>
         <Button label="Klaar" fullWidth disabled={!compleet} bezig={bezig} onPress={klaar} />
         {!compleet ? (
@@ -97,6 +93,6 @@ export default function Anonimiteit() {
           </AppText>
         ) : null}
       </View>
-    </ScreenCanvas>
+    </OnboardingScherm>
   );
 }

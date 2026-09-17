@@ -9,16 +9,12 @@ import { useState } from "react";
 import { View } from "react-native";
 
 import { space } from "@mind/ui";
-import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Chip } from "@mind/ui/components/Chip";
 import { chipKleurGekozenVoor, kaartKleurVoor } from "@mind/ui/components/VliegerOnderwerp";
-import { MascotMain } from "@mind/ui/components/MascotMain";
-import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
-import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
-import { OnboardingVoortgang } from "@/features/onboarding/OnboardingVoortgang";
+import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 import { bewaarInstellingen, VOORKEUR_OPTIES } from "@/features/profiel/instellingen";
 
 const nl = {
@@ -52,15 +48,7 @@ export default function Voorkeuren() {
   };
 
   return (
-    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
-      <OnboardingVoortgang stap={4} />
-      <View style={{ gap: space[1] }}>
-        <AppText rol="h1">{t("titel")}</AppText>
-        <AppText rol="subtitle">
-          {t("ondertitel")}
-        </AppText>
-      </View>
-
+    <OnboardingScherm stap={4} titel={t("titel")} uitleg={t("ondertitel")}>
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
         {VOORKEUR_OPTIES.map((o) => (
           <Chip key={o} label={o} active={gekozen.includes(o)} kleur={kaartKleurVoor(o)} gekozenKleur={chipKleurGekozenVoor(o)} onPress={() => wissel(o)} />
@@ -70,6 +58,6 @@ export default function Voorkeuren() {
       <View style={{ flex: 1 }} />
       <Button label={t("verder")} fullWidth onPress={() => verder(true)} />
       <Button label={t("slaOver")} variant="link" fullWidth onPress={() => verder(false)} />
-    </ScreenCanvas>
+    </OnboardingScherm>
   );
 }
