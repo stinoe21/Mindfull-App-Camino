@@ -28,7 +28,7 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 
 const nl = {
   titel: "Over deze app",
-  versie: "Weer MIND, versie {versie}",
+  versie: "Weertje, versie {versie}",
   geenHulpTitel: "Geen hulpverlening",
   // Woordelijk dezelfde zin als onderaan de Hulplijn-pagina.
   geenHulp: "Deze app is geen hulpverlening en geen vervanging van professionele hulp.",
@@ -42,7 +42,7 @@ const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "About this app",
-    versie: "Weer MIND, version {versie}",
+    versie: "Weertje, version {versie}",
     geenHulpTitel: "Not a care service",
     geenHulp: "This app is not a care service and does not replace professional help.",
     bronnenTitel: "Sources",

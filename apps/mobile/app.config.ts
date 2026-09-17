@@ -39,7 +39,7 @@ const config: ExpoConfig = {
       // coördinaten blijven op het toestel: zie features/weer/locatie.ts.
       "expo-location",
       {
-        locationWhenInUsePermission: "Weer MIND gebruikt je locatie alleen om je provincie te bepalen voor het mentale weer per provincie. Je locatie blijft op je telefoon.",
+        locationWhenInUsePermission: "Weertje gebruikt je locatie alleen om je provincie te bepalen voor het mentale weer per provincie. Je locatie blijft op je telefoon.",
         isIosBackgroundLocationEnabled: false,
         isAndroidBackgroundLocationEnabled: false,
       },
