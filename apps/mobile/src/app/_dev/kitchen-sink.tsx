@@ -58,6 +58,7 @@ const ROUTES = [
   ["Instellingen", "/profiel/instellingen"],
   ["Account verwijderen", "/profiel/account-verwijderen"],
   ["Hulplijn", "/hulplijn"],
+  ["Systeem: foutscherm", "/_dev/foutscherm"],
 ] as const;
 
 const WEER = ["weatherSun", "weatherCloud", "weatherRain", "weatherStorm", "weatherMist"] as const;
