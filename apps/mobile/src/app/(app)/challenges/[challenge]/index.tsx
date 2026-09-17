@@ -11,7 +11,7 @@
 import * as Linking from "expo-linking";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 
 import { colors, palette, radius, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
@@ -26,7 +26,7 @@ import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
-import { aantalAfgerond, laadVoortgang, vandaagAlAfgerond } from "@/features/content/voortgang";
+import { aantalAfgerond, laadVoortgang, vandaagAlAfgerond, wisChallenge } from "@/features/content/voortgang";
 
 const nl = {
   nietGevonden: "Challenge niet gevonden",
@@ -45,6 +45,12 @@ const nl = {
   mailUitleg: "Je kunt deze challenge ook als mailreeks in je mailbox krijgen.",
   aanmelden: "Aanmelden voor de mailreeks",
   meerChallenges: "Meer challenges",
+  stoppen: "Stoppen met deze challenge",
+  opnieuw: "Opnieuw beginnen",
+  stoppenVraag: "Stoppen met deze challenge?",
+  opnieuwVraag: "Opnieuw beginnen?",
+  wisUitleg: "Je voortgang in deze challenge wordt gewist. Pauzeren hoeft niet: een dag blijft gewoon klaarstaan tot je verdergaat.",
+  annuleer: "Annuleer",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -55,16 +61,22 @@ const teksten: Woordenboek<typeof nl> = {
     onderdelenMeta: "{n} days",
     onderdeelVan: "DAY {x} of {y}",
     allesGehadTitel: "You've done all the parts",
-    allesGehadUitleg: "Well done. You can always look back or pick another challenge.",
+    allesGehadUitleg: "You can always look back or pick another challenge.",
     onderdeelNr: "Day {n}",
     afgerond: "Completed",
     startDag: "Start day {n}",
     verderDag: "I'm ready for day {n}",
-    morgenVerder: "Well done. Day {n} will be ready for you tomorrow, so today has time to settle.",
+    morgenVerder: "Day {n} will be ready for you tomorrow, so today has time to settle.",
     mailTitel: "Prefer email?",
     mailUitleg: "You can also get this challenge as an email series.",
     aanmelden: "Sign up for the email series",
     meerChallenges: "More challenges",
+    stoppen: "Stop this challenge",
+    opnieuw: "Start again",
+    stoppenVraag: "Stop this challenge?",
+    opnieuwVraag: "Start again?",
+    wisUitleg: "Your progress in this challenge will be cleared. No need to pause: a day simply stays ready until you continue.",
+    annuleer: "Cancel",
   },
 };
 
@@ -107,6 +119,24 @@ export default function ChallengeDetail() {
   const allesKlaar = klaar >= totaal;
   const huidig = allesKlaar ? null : challenge.dagen[klaar];
   const onderwerp = ONDERWERP_PER_CHALLENGE[challenge.slug];
+
+  // Stoppen en opnieuw beginnen zijn dezelfde handeling: de voortgang van
+  // deze ene challenge wissen. Pauzeren bestaat niet als knop, want er is
+  // geen termijn: een dag blijft klaarstaan. Eerst vragen, want wissen kan
+  // niet terug (Stijn, 17 september 2026; gatenlijst D).
+  const wis = () =>
+    Alert.alert(allesKlaar ? t("opnieuwVraag") : t("stoppenVraag"), t("wisUitleg"), [
+      { text: t("annuleer"), style: "cancel" },
+      {
+        text: allesKlaar ? t("opnieuw") : t("stoppen"),
+        style: "destructive",
+        onPress: () => {
+          wisChallenge(challenge.slug);
+          zetKlaar(0);
+          zetWachtTotMorgen(false);
+        },
+      },
+    ]);
 
   const openDag = (nummer: number) =>
     router.push({ pathname: "/challenges/[challenge]/dag/[dag]", params: { challenge: challenge.slug, dag: String(nummer) } });
@@ -230,6 +260,7 @@ export default function ChallengeDetail() {
         </Card>
       ) : null}
 
+      {klaar > 0 ? <Button label={allesKlaar ? t("opnieuw") : t("stoppen")} variant="secondary" fullWidth onPress={wis} /> : null}
       <Button label={t("meerChallenges")} variant="link" fullWidth onPress={() => router.back()} />
     </ScreenCanvas>
   );

@@ -78,6 +78,12 @@ export function vandaagAlAfgerond(challenge: string): boolean {
   return voortgang.get(challenge)?.laatste === vandaag();
 }
 
+/** Wist de voortgang van één challenge: stoppen, of na afloop opnieuw beginnen. */
+export function wisChallenge(challenge: string): void {
+  voortgang.delete(challenge);
+  bewaar();
+}
+
 /** Wist de voortgang, in het geheugen en in de opslag. Bij uitloggen en account verwijderen. */
 export async function wisVoortgang(): Promise<void> {
   voortgang = new Map();

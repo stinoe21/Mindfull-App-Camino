@@ -16,9 +16,9 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
-import { CHALLENGES } from "@/features/content/data/challenges";
+import { CHALLENGES, type Challenge } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
-import { aantalAfgerond, laadVoortgang } from "@/features/content/voortgang";
+import { aantalAfgerond, laadVoortgang, laatsteActiviteit } from "@/features/content/voortgang";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 
 const nl = {
@@ -34,6 +34,9 @@ const nl = {
   labelThemaspecial: "THEMASPECIAL",
   onderdelenMeta: "{n} dagen",
   dagVan: "Dag {x} van {y}",
+  begintMet: "Begint met: {titel}",
+  nuDag: "Dag {x}: {titel}",
+  helemaalGedaan: "Alle dagen gedaan. Teruglezen kan altijd.",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -50,13 +53,16 @@ const teksten: Woordenboek<typeof nl> = {
     labelThemaspecial: "THEME SPECIAL",
     onderdelenMeta: "{n} days",
     dagVan: "Day {x} of {y}",
+    begintMet: "Starts with: {titel}",
+    nuDag: "Day {x}: {titel}",
+    helemaalGedaan: "All days done. You can always read back.",
   },
 };
 
 export default function Challenges() {
   const router = useRouter();
   const t = useVertaling(teksten);
-  const challenges = CHALLENGES.filter((c) => c.soort === "challenge");
+  const [laatst, zetLaatst] = useState<Record<string, string>>({});
   const specials = CHALLENGES.filter((c) => c.soort === "themaspecial");
   // Voortgang per challenge, opnieuw gelezen bij elke focus: je komt hier
   // terug vanaf een afgeronde dag.
@@ -65,13 +71,32 @@ export default function Challenges() {
     useCallback(() => {
       let actief = true;
       laadVoortgang().then(() => {
-        if (actief) zetVoortgang(Object.fromEntries(CHALLENGES.map((c) => [c.slug, aantalAfgerond(c.slug)])));
+        if (!actief) return;
+        zetVoortgang(Object.fromEntries(CHALLENGES.map((c) => [c.slug, aantalAfgerond(c.slug)])));
+        zetLaatst(Object.fromEntries(CHALLENGES.map((c) => [c.slug, laatsteActiviteit(c.slug) ?? ""])));
       });
       return () => {
         actief = false;
       };
     }, [])
   );
+
+  // Waar je mee bezig bent staat vooraan, de laatst aangeraakte eerst; de
+  // rest houdt de volgorde van de lijst (Stijn, 17 september 2026). Tot dan
+  // stond altijd de eerste uit de lijst breed, ook als je met een andere
+  // bezig was.
+  const bezig = (c: Challenge) => (voortgang[c.slug] ?? 0) > 0 && (voortgang[c.slug] ?? 0) < c.dagen.length;
+  const challenges = CHALLENGES.filter((c) => c.soort === "challenge").sort(
+    (a, b) => Number(bezig(b)) - Number(bezig(a)) || (bezig(a) && bezig(b) ? (laatst[b.slug] ?? "").localeCompare(laatst[a.slug] ?? "") : 0)
+  );
+  // Eén regel per kaart uit de inhoud van MIND zelf: de dag die klaarstaat, of
+  // waar de challenge mee begint. Alleen "5 dagen" zei niet wat je ging doen.
+  const regel = (c: Challenge): string => {
+    const klaar = voortgang[c.slug] ?? 0;
+    if (klaar >= c.dagen.length) return t("helemaalGedaan");
+    const dag = c.dagen[klaar];
+    return klaar > 0 ? t("nuDag").replace("{x}", String(klaar + 1)).replace("{titel}", dag.titel) : t("begintMet").replace("{titel}", dag.titel);
+  };
 
   // De laatste kaart wordt breed als hij anders alleen zou hangen.
   const open = (slug: string) =>
@@ -107,6 +132,7 @@ export default function Challenges() {
               return (
                 <ContentCard key={c.slug} full={actief || (i === challenges.length - 1 && (challenges.length - 1) % 2 === 1)} tone="sun" kleur={actief ? undefined : kaartKleurVoor(ONDERWERP_PER_CHALLENGE[c.slug])} title={c.naam} onPress={() => open(c.slug)}>
                   <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(c.dagen.length))}</AppText>
+                  <AppText rol="bodySmall">{regel(c)}</AppText>
                   {klaar > 0 ? (
                     <View style={{ gap: space[1], marginTop: space[1] }}>
                       <View style={{ height: space[1], borderRadius: radius.pill, backgroundColor: palette.sliderTrackBase, overflow: "hidden" }}>
@@ -134,6 +160,7 @@ export default function Challenges() {
             {specials.map((c, i) => (
               <ContentCard key={c.slug} full={i === 0 || (i === specials.length - 1 && (specials.length - 1) % 2 === 1)} kleur={kaartKleurVoor(ONDERWERP_PER_CHALLENGE[c.slug])} title={c.naam} onPress={() => open(c.slug)}>
                 <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(c.dagen.length))}</AppText>
+                  <AppText rol="bodySmall">{regel(c)}</AppText>
                 <View style={{ height: i === 0 ? 56 : 44 }} />
                 <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
                   <VliegerOnderwerp onderwerp={ONDERWERP_PER_CHALLENGE[c.slug]} hoogte={i === 0 ? 64 : 48} />
