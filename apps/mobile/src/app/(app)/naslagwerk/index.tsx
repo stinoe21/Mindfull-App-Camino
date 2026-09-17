@@ -37,6 +37,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { familiesVoorVoorkeuren, type Familie } from "@/features/content/families";
 import { houvastVoorArtikel, houvastVoorGids } from "@/features/content/houvast";
 import { leesBewaard, metInhoud, type BewaardeTipMetInhoud } from "@/features/content/bewaard";
@@ -339,6 +340,10 @@ export default function Houvast() {
           </ContentGrid>
         </ContentSection>
       ) : null}
+
+      {/* Onderaan elke tab, ook onder zoekresultaten: wie hier zoekt naar iets
+          zwaars, heeft de route naar een mens direct bij de hand. */}
+      <HulplijnKaart />
     </ScreenCanvas>
   );
 }
