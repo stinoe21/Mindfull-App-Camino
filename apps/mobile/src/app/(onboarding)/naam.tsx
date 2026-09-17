@@ -20,7 +20,6 @@ import { bewaarInstellingen, NAAM_MAX, schoonNaam } from "@/features/profiel/ins
 
 const nl = {
   titel: "Wat is je naam?",
-  ondertitel: "Alleen voor de begroeting.",
   placeholder: "Je voornaam",
   verder: "Verder",
   slaOver: "Sla over",
@@ -29,7 +28,6 @@ const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "What is your name?",
-    ondertitel: "Only for the greeting.",
     placeholder: "Your first name",
     verder: "Continue",
     slaOver: "Skip",
@@ -47,7 +45,7 @@ export default function Naam() {
   };
 
   return (
-    <OnboardingScherm stap={3} titel={t("titel")} uitleg={t("ondertitel")}>
+    <OnboardingScherm stap={3} titel={t("titel")}>
       <Card tone="outline" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={naam}
