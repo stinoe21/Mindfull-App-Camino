@@ -18,9 +18,10 @@ export const CHECKIN_STAPPEN: {
   rechts: string;
 }[] = [
   { key: "temperatuur", vraag: "Hoe is het weer in je hoofd?", links: "Guur", rechts: "Lekker zacht" },
-  { key: "wind", vraag: "Hoeveel wind staat er vandaag?", links: "Wind mee", rechts: "Wind tegen" },
+  // Links het zware weer, rechts het lichte, bij alle vier (Stijn, 17 september 2026).
+  { key: "wind", vraag: "Hoeveel wind heb je mee vandaag?", links: "Wind tegen", rechts: "Wind mee" },
   { key: "zicht", vraag: "Hoe ver kun je kijken?", links: "Dichte mist", rechts: "Helder zicht" },
-  { key: "wisselvallig", vraag: "Hoe wisselvallig is je weer vandaag?", links: "Rustig", rechts: "Heel wisselvallig" },
+  { key: "wisselvallig", vraag: "Hoe rustig is je weer vandaag?", links: "Heel wisselvallig", rechts: "Rustig" },
 ];
 
 export const GERUSTSTELLING = "Geen goed of fout. Kies wat nu het dichtst in de buurt komt.";
