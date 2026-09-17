@@ -19,6 +19,7 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
 import { aantalAfgerond, laadVoortgang } from "@/features/content/voortgang";
+import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 
 const nl = {
   titel: "Challenges",
@@ -142,6 +143,9 @@ export default function Challenges() {
           </ContentGrid>
         </ContentSection>
       ) : null}
+
+      {/* Onderaan elke tab, net als op Home en Profiel (productprincipes 9). */}
+      <HulplijnKaart />
     </ScreenCanvas>
   );
 }
