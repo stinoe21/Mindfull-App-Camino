@@ -4,7 +4,7 @@
 // het aanmaken van een account; onder de 16 geen toegang, en daarmee is
 // ouderlijke toestemming niet nodig (docs/datamodel.md).
 
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 
@@ -43,11 +43,13 @@ const teksten: Woordenboek<typeof nl> = {
 export default function Leeftijd() {
   const router = useRouter();
   const t = useVertaling(teksten);
+  // Wie op Welkom "Ik heb al een account" koos, neemt die keuze mee naar Inloggen.
+  const { stand } = useLocalSearchParams<{ stand?: string }>();
   const [teJong, zetTeJong] = useState(false);
 
   const bevestig = async () => {
     await bewaarInstellingen({ leeftijdBevestigd: true });
-    router.push("/inloggen");
+    router.push({ pathname: "/inloggen", params: stand === "inloggen" ? { stand } : {} });
   };
 
   if (teJong) {

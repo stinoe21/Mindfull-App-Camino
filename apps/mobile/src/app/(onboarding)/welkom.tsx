@@ -8,6 +8,11 @@
 // het Nederlands, en wie liever Engels leest hoeft daarvoor niet eerst de
 // hele onboarding door naar Profiel. De knop noemt de andere taal in die
 // taal zelf, zodat je hem ook herkent als je de huidige niet leest.
+//
+// Twee knoppen, zoals het eerste scherm van Ommetje: wie nieuw is kiest
+// Start, wie al een account heeft komt straks op Inloggen uit in plaats van
+// op Account aanmaken. De stappen ertussen blijven dezelfde, want de
+// leeftijdscheck heeft geen Skip en staat alleen op het toestel.
 
 import { useRouter } from "expo-router";
 import { View } from "react-native";
@@ -28,6 +33,7 @@ const nl = {
   watDoeJe: "Elke dag vier korte vragen, en je telt anoniem mee in het mentale weer van Nederland. Doe je mee?",
   andereTaal: "Switch to English",
   start: "Start",
+  hebAlAccount: "Ik heb al een account",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -38,6 +44,7 @@ const teksten: Woordenboek<typeof nl> = {
     watDoeJe: "Four short questions a day, and you count anonymously towards the mental weather of the Netherlands. Will you join?",
     andereTaal: "Terug naar Nederlands",
     start: "Start",
+    hebAlAccount: "I already have an account",
   },
 };
 
@@ -55,6 +62,12 @@ export default function Welkom() {
 
       <View style={{ flex: 1 }} />
       <Button label={t("start")} fullWidth onPress={() => router.push("/leeftijd")} />
+      <Button
+        label={t("hebAlAccount")}
+        variant="secondary"
+        fullWidth
+        onPress={() => router.push({ pathname: "/leeftijd", params: { stand: "inloggen" } })}
+      />
     </OnboardingScherm>
   );
 }
