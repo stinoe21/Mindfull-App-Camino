@@ -60,7 +60,7 @@ export async function haalWeerberichtProvincies(vernieuw = false): Promise<Weath
   }
 }
 
-export type InsturenResultaat = "gelukt" | "al-bijgedragen" | "niet-ingelogd" | "niet-verbonden";
+export type InsturenResultaat = "gelukt" | "al-bijgedragen" | "niet-ingelogd" | "niet-verbonden" | "mislukt";
 
 /** Wat het insturen opleverde, en bij "gelukt" het dagdeel (1 of 2) dat de server registreerde. */
 export type Insturen = { resultaat: InsturenResultaat; dagdeel: 1 | 2 | 0 };
@@ -83,7 +83,11 @@ export async function stuurWeerIn(weerbeeld: string, provincie: string | null = 
     if (error) {
       if (error.message.includes("al bijgedragen") || error.message.includes("al ingecheckt")) return { resultaat: "al-bijgedragen", dagdeel: 0 };
       if (error.message.includes("niet ingelogd")) return { resultaat: "niet-ingelogd", dagdeel: 0 };
-      return { resultaat: "niet-verbonden", dagdeel: 0 };
+      // Alleen "geen verbinding" zeggen als het dat ook is. Elke andere fout
+      // van de server kreeg die melding ook, en dan zocht je het probleem bij
+      // je wifi (Stijn zag het op 17 september 2026 met volle verbinding).
+      const geenNetwerk = /network request failed|failed to fetch|fetch failed|timeout/i.test(error.message);
+      return { resultaat: geenNetwerk ? "niet-verbonden" : "mislukt", dagdeel: 0 };
     }
     cache = null; // het landelijke beeld is veranderd
     cacheProvincies = null;

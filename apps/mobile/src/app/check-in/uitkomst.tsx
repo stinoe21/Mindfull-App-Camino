@@ -25,7 +25,6 @@ import { Lijst, LijstRij } from "@mind/ui/components/LijstRij";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { Verschijn } from "@mind/ui/components/Verschijn";
-import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -33,7 +32,7 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { houvastVoorArtikel } from "@/features/content/houvast";
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
-import { dagdeelNu, leesWeerVanVandaag, toonTijd } from "@/features/weer/lokaalWeer";
+import { dagdeelNu, leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
 
 import type { WeatherCode } from "@mind/types";
@@ -45,18 +44,13 @@ import type { WeatherCode } from "@mind/types";
 // 15 september 2026 mag je vaker inchecken: "al-bijgedragen" zegt eerlijk
 // dat het eigen weer is bijgewerkt maar de kaart dit dagdeel al had.
 const nl = {
-  meldingGelukt:
-    "Dankjewel voor je check-in. Jouw weer telt anoniem mee in het mentale weer van Nederland.",
-  meldingAlBijgedragenOchtend:
-    "Je weer is bijgewerkt. Voor het mentale weer van Nederland telde je check-in van vanochtend al mee.",
-  meldingAlBijgedragenMiddag:
-    "Je weer is bijgewerkt. Voor het mentale weer van Nederland telde je check-in van vanmiddag al mee.",
-  ingechecktOm: "Ingecheckt om {tijd}",
+  meldingGelukt: "Je weer telt anoniem mee in het mentale weer van Nederland.",
+  meldingAlBijgedragenOchtend: "Je weer is bijgewerkt. In het mentale weer van Nederland telde je vanochtend al mee.",
+  meldingAlBijgedragenMiddag: "Je weer is bijgewerkt. In het mentale weer van Nederland telde je vanmiddag al mee.",
   opnieuw: "Opnieuw inchecken",
-  meldingNietVerbonden:
-    "Geen verbinding: deze check-in telt niet mee in het mentale weer van Nederland. Jouw weer staat hier.",
-  meldingNietIngelogd:
-    "Je was niet ingelogd: deze check-in telt niet mee in het mentale weer van Nederland. Jouw weer staat hier.",
+  meldingNietVerbonden: "Geen verbinding. Je weer telt nu niet mee in het mentale weer van Nederland.",
+  meldingMislukt: "Meetellen in het mentale weer van Nederland lukte nu niet. Je eigen weer is wel bewaard.",
+  meldingNietIngelogd: "Je bent niet ingelogd. Je weer telt nu niet mee in het mentale weer van Nederland.",
   leegTitel: "Nog geen check-in vandaag",
   leegUitleg: "Na je check-in staat hier jouw weer van vandaag.",
   evenInchecken: "Inchecken",
@@ -69,18 +63,13 @@ const nl = {
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
-    meldingGelukt:
-      "Thank you for your check-in. Your weather counts anonymously towards the mental weather forecast of the Netherlands.",
-    meldingAlBijgedragenOchtend:
-      "Your weather is updated. For the mental weather of the Netherlands, your check-in this morning already counted.",
-    meldingAlBijgedragenMiddag:
-      "Your weather is updated. For the mental weather of the Netherlands, your check-in this afternoon already counted.",
-    ingechecktOm: "Checked in at {tijd}",
+    meldingGelukt: "Your weather counts anonymously towards the mental weather of the Netherlands.",
+    meldingAlBijgedragenOchtend: "Your weather is updated. You already counted towards the mental weather of the Netherlands this morning.",
+    meldingAlBijgedragenMiddag: "Your weather is updated. You already counted towards the mental weather of the Netherlands this afternoon.",
     opnieuw: "Check in again",
-    meldingNietVerbonden:
-      "There was no connection, so this check-in couldn't count towards the national weather forecast. Your own weather is still here.",
-    meldingNietIngelogd:
-      "You weren't logged in, so this check-in doesn't count towards the national weather forecast. Your own weather is still here.",
+    meldingNietVerbonden: "No connection. Your weather does not count towards the mental weather of the Netherlands right now.",
+    meldingMislukt: "Counting towards the mental weather of the Netherlands did not work just now. Your own weather is saved.",
+    meldingNietIngelogd: "You are not logged in. Your weather does not count towards the mental weather of the Netherlands right now.",
     leegTitel: "No check-in yet today",
     leegUitleg: "Do the check-in first, then your weather of the day will appear here.",
     evenInchecken: "Check in",
@@ -100,21 +89,20 @@ export default function CheckInUitkomst() {
     gelukt: t("meldingGelukt"),
     "al-bijgedragen": dagdeelNu() === 1 ? t("meldingAlBijgedragenOchtend") : t("meldingAlBijgedragenMiddag"),
     "niet-verbonden": t("meldingNietVerbonden"),
+    mislukt: t("meldingMislukt"),
     "niet-ingelogd": t("meldingNietIngelogd"),
   };
   const [geladen, zetGeladen] = useState(false);
   const [weerbeeld, zetWeerbeeld] = useState<WeatherCode | null>(null);
-  const [tijd, zetTijd] = useState("");
 
   // Bij elke focus opnieuw lezen: na "Opnieuw inchecken" kom je hier terug
-  // met een ander weerbeeld en een andere tijd.
+  // met een ander weerbeeld.
   useFocusEffect(
     useCallback(() => {
       let actief = true;
       leesWeerVanVandaag().then((data) => {
         if (!actief) return;
         zetWeerbeeld(data?.weerbeeld ?? null);
-        zetTijd(data?.tijd ?? "");
         zetGeladen(true);
       });
       return () => {
@@ -172,8 +160,7 @@ export default function CheckInUitkomst() {
           zwaar. Nu drie niveaus: het weer als enige grote kop met zijn icoon
           (hetzelfde als op Home en de weerkaart), de tip als het ene grotere
           statement, en de rest als gewone tekst. Elke sectie begint met
-          hetzelfde kleine opschrift. De tijd van inchecken staat onderaan bij
-          de melding: het is een voetnoot, geen deel van je weer. */}
+          hetzelfde kleine opschrift. */}
       {tekst && weerbeeld ? (
         <View style={{ gap: space[4] }}>
           <View style={{ gap: space[1] }}>
@@ -211,7 +198,6 @@ export default function CheckInUitkomst() {
                   key={a.slug}
                   titel={h?.titel ?? a.titel}
                   meta={a.onderwerp !== a.titel ? a.onderwerp : undefined}
-                  beeld={<VliegerOnderwerp onderwerp={a.onderwerp} slug={h?.slug ?? a.slug} hoogte={40} />}
                   onPress={() => {
                     if (h) router.push({ pathname: "/naslagwerk/houvast/[onderwerp]", params: { onderwerp: h.slug } });
                     else router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } });
@@ -222,10 +208,10 @@ export default function CheckInUitkomst() {
           </Lijst>
         </View>
       ) : null}
-      {tijd || (melding && MELDINGEN[melding]) ? (
-        <AppText rol="bodySmall" kleur="secondary">
-          {[tijd ? t("ingechecktOm").replace("{tijd}", toonTijd(tijd)) + "." : "", melding ? MELDINGEN[melding] ?? "" : ""].filter(Boolean).join(" ")}
-        </AppText>
+      {/* Of je meetelde, als voetnoot. De tijd van inchecken staat er niet
+          meer bij: die zegt niets (Stijn, 17 september 2026), net als op Home. */}
+      {melding && MELDINGEN[melding] ? (
+        <AppText rol="bodySmall" kleur="secondary">{MELDINGEN[melding]}</AppText>
       ) : null}
       {/* Eén primaire knop (productprincipe 5). Het mentale weer van Nederland
           staat op Home, direct onder jouw weer; een tweede knop ernaartoe was
