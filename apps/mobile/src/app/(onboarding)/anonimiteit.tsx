@@ -81,7 +81,7 @@ export default function Anonimiteit() {
             systeem niet uit de lucht komt vallen. */}
         {weerbericht === true ? (
           <AppText rol="bodySmall" kleur="secondary">
-            Bij Klaar vraagt je telefoon om je locatie. Die blijft op je telefoon; alleen je provincie telt mee.
+            Bij Klaar vraagt je telefoon om je locatie. Alleen je provincie telt mee.
           </AppText>
         ) : null}
       </View>
