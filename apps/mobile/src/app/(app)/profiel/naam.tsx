@@ -33,7 +33,7 @@ export default function ProfielNaam() {
 
   return (
     <KeuzePagina titel={t("titel")} uitleg={t("uitleg")}>
-      <Card tone="outline" style={{ paddingVertical: space[2] }}>
+      <Card tone="white" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={naam}
           onChangeText={zetNaam}

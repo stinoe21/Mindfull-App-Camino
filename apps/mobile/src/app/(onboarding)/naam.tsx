@@ -46,7 +46,7 @@ export default function Naam() {
 
   return (
     <OnboardingScherm stap={3} titel={t("titel")}>
-      <Card tone="outline" style={{ paddingVertical: space[2] }}>
+      <Card tone="white" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={naam}
           onChangeText={zetNaam}

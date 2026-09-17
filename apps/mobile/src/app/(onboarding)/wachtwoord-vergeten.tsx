@@ -73,7 +73,7 @@ export default function WachtwoordVergeten() {
 
   return (
     <OnboardingScherm titel={t("titel")} uitleg={t("uitleg")}>
-      <Card tone="outline" style={{ paddingVertical: space[2] }}>
+      <Card tone="white" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={email}
           onChangeText={zetEmail}

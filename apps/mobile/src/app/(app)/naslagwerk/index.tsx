@@ -208,7 +208,7 @@ export default function Houvast() {
         <AppText rol="subtitle">{t("ondertitel")}</AppText>
       </View>
 
-      <Card tone="outline" style={{ paddingVertical: space[2] }}>
+      <Card tone="white" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={invoer}
           onChangeText={zetInvoer}
