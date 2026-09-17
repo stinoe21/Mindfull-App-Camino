@@ -39,7 +39,7 @@ const nl = {
   leegUitleg: "Later vandaag staat hier meer.",
   logInTitel: "Hiervoor moet je ingelogd zijn",
   logInUitleg:
-    "Zo telt iedereen één keer per dag mee.",
+    "Zo telt iedereen hooguit één keer per ochtend en één keer per middag mee.",
   inloggen: "Inloggen",
   geenVerbindingTitel: "Geen verbinding",
   geenVerbindingUitleg:
@@ -61,7 +61,7 @@ const teksten: Woordenboek<typeof nl> = {
     leegUitleg: "There are too few check-ins today to show a national picture. Come back later.",
     logInTitel: "Log in first",
     logInUitleg:
-      "The national weather forecast is for logged-in users. That way everyone counts exactly once per day.",
+      "The national weather forecast is for logged-in users. That way everyone counts at most once each morning and once each afternoon.",
     inloggen: "Log in",
     geenVerbindingTitel: "No connection",
     geenVerbindingUitleg:

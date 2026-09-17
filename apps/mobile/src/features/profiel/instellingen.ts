@@ -102,3 +102,23 @@ export async function wisAlleLokaleData(): Promise<void> {
     // stil
   }
 }
+
+/**
+ * Uitloggen: alles wat van deze persoon is gaat van het toestel, zodat een
+ * volgend account op dezelfde telefoon niet de naam, de onderwerpen, de
+ * toestemming, de bewaarde tips of de challenge-voortgang van de vorige ziet.
+ * Alleen de taal blijft: die hoort bij het toestel, niet bij het account.
+ *
+ * Alles onder "mind." is van de app; de sessie van Supabase ruimt signOut zelf op.
+ */
+export async function wisBijUitloggen(): Promise<void> {
+  const { taal } = await leesInstellingen();
+  await wisVoortgang();
+  try {
+    const sleutels = (await AsyncStorage.getAllKeys()).filter((k) => k.startsWith("mind."));
+    await AsyncStorage.multiRemove(sleutels);
+    await AsyncStorage.setItem(SLEUTEL, JSON.stringify({ ...STANDAARD, taal }));
+  } catch {
+    // stil: niet kunnen wissen mag het uitloggen niet tegenhouden.
+  }
+}
