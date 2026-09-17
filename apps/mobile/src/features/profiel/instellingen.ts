@@ -25,9 +25,10 @@ export type Instellingen = {
   /** Consent 2: voorwaarden en disclaimer geaccepteerd (grondslag overeenkomst). */
   consentVoorwaarden: boolean;
   /**
-   * UI-taal (issue #47). "systeem" volgt de taal van het toestel. Bewust een
-   * losse literal-union en geen import uit features/i18n, zodat de opslag
-   * geen expo-localization meetrekt.
+   * UI-taal (issue #47). Nederlands is de standaard sinds 17 september 2026.
+   * "systeem" bestaat alleen nog voor wat eerder is bewaard en telt als
+   * Nederlands, zie features/i18n/taal.ts. Bewust een losse literal-union en
+   * geen import uit features/i18n.
    */
   taal: "systeem" | "nl" | "en";
   /**
@@ -51,7 +52,7 @@ export const STANDAARD: Instellingen = {
   voorkeuren: [],
   consentWeerbericht: false,
   consentVoorwaarden: false,
-  taal: "systeem",
+  taal: "nl",
   provincie: null,
   provincieViaLocatie: false,
 };

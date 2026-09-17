@@ -3,24 +3,25 @@
 // Schermen lezen de taal met useVertaling(); de keuze wordt bewaard in de
 // bestaande lokale instellingen-opslag en overleeft dus een herstart.
 //
-// "systeem" volgt de taal van het toestel via expo-localization. Alles wat
-// geen Nederlands is valt terug op Engels: dat zijn de enige twee talen.
-// Een derde taal toevoegen is elk woordenboek uitbreiden met die taalcode.
+// De app begint altijd in het Nederlands (Stijn, 17 september 2026), en niet
+// meer in de taal van het toestel: een telefoon die op Engels staat zegt niets
+// over de taal waarin iemand over zijn gevoel wil lezen. Wisselen kan op het
+// welkomscherm en onder Profiel. Een eerder bewaarde keuze "systeem" telt als
+// Nederlands. Een derde taal toevoegen is elk woordenboek uitbreiden met die
+// taalcode.
 //
 // BELANGRIJK: alleen interface-teksten gaan door deze laag. De MIND-content,
 // de consent-teksten (Paul), de hulplijn-verwijzing zelf en de check-in-
 // vraagteksten blijven Nederlands tot er canonieke Engelse teksten zijn.
 // Zie issue #47 en docs/scope.md.
 
-import { getLocales } from "expo-localization";
 import { useSyncExternalStore } from "react";
 
 import { bewaarInstellingen, leesInstellingen } from "@/features/profiel/instellingen";
 
 export type Taal = "nl" | "en";
-export type TaalKeuze = Taal | "systeem";
 
-export const TAAL_KEUZES: TaalKeuze[] = ["systeem", "nl", "en"];
+export const TAAL_KEUZES: Taal[] = ["nl", "en"];
 
 /**
  * Een woordenboek voor één scherm: het Nederlands is de bron en bepaalt de
@@ -31,20 +32,21 @@ export type Woordenboek<T extends Record<string, string>> = {
   en: Record<keyof T, string>;
 };
 
-let keuze: TaalKeuze = "systeem";
+let keuze: Taal = "nl";
 const luisteraars = new Set<() => void>();
 
 const meld = () => luisteraars.forEach((l) => l());
 
 // Eén keer lazy laden bij het eerste gebruik, zodat er geen init-aanroep in
-// de root layout nodig is. Mislukt het lezen, dan blijft "systeem" staan.
+// de root layout nodig is. Mislukt het lezen, dan blijft het Nederlands.
 let laden: Promise<void> | null = null;
 function laadEenmalig(): Promise<void> {
   if (!laden) {
     laden = leesInstellingen()
       .then((i) => {
-        if (i.taal !== keuze) {
-          keuze = i.taal;
+        const bewaard: Taal = i.taal === "en" ? "en" : "nl";
+        if (bewaard !== keuze) {
+          keuze = bewaard;
           meld();
         }
       })
@@ -53,15 +55,7 @@ function laadEenmalig(): Promise<void> {
   return laden;
 }
 
-export function systeemTaal(): Taal {
-  try {
-    return getLocales()[0]?.languageCode === "nl" ? "nl" : "en";
-  } catch {
-    return "nl";
-  }
-}
-
-export function kiesTaal(nieuw: TaalKeuze): void {
+export function kiesTaal(nieuw: Taal): void {
   keuze = nieuw;
   meld();
   // Bewust niet awaiten: de keuze werkt direct, en niet kunnen bewaren mag
@@ -69,9 +63,9 @@ export function kiesTaal(nieuw: TaalKeuze): void {
   void bewaarInstellingen({ taal: nieuw });
 }
 
-/** De actieve taal en de bewaarde keuze, plus de setter. Voor de taalknop. */
+/** De actieve taal plus de setter. Voor de taalknop. */
 export function useTaal() {
-  const huidigeKeuze = useSyncExternalStore(
+  const taal = useSyncExternalStore(
     (bijWijziging) => {
       luisteraars.add(bijWijziging);
       void laadEenmalig();
@@ -79,8 +73,7 @@ export function useTaal() {
     },
     () => keuze
   );
-  const taal: Taal = huidigeKeuze === "systeem" ? systeemTaal() : huidigeKeuze;
-  return { taal, keuze: huidigeKeuze, kiesTaal };
+  return { taal, kiesTaal };
 }
 
 /**

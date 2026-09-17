@@ -14,23 +14,27 @@
 // (grondslag overeenkomst, board 12:133) en staan sinds 13 september 2026
 // (Stijn, UX-ronde) hier, bij het aanmaken en het inloggen, en niet meer
 // drie schermen later. Zonder vinkje geen knop; geen Skip (productprincipes 6).
+//
+// Sinds 17 september 2026 (Stijn): het scherm opent op "Account aanmaken",
+// want wie de onboarding doorloopt is bijna altijd nieuw, en de knoppen van
+// Apple en Google staan er alleen als hun sleutel er is. Zonder sleutel deden
+// ze niets dan een melding tonen, en een knop die niet werkt hoort niet op het
+// scherm. Let op: met een sleutel tonen ze nu nog steeds alleen die melding;
+// het inloggen zelf via Apple en Google moet nog gebouwd worden.
 
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { TextInput, View } from "react-native";
+import { TextInput } from "react-native";
 
 import { colors, space, type } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
-import { MascotMain } from "@mind/ui/components/MascotMain";
-import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
-import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { getSupabase } from "@/features/backend/client";
-import { OnboardingVoortgang } from "@/features/onboarding/OnboardingVoortgang";
+import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 
 // De sleutels van Mind, zodra die er zijn. Zie docs/scope.md: aanzetten is dan
@@ -108,7 +112,7 @@ export default function Inloggen() {
   const [wachtwoord, zetWachtwoord] = useState("");
   const [bezig, zetBezig] = useState(false);
   const [melding, zetMelding] = useState<string | null>(null);
-  const [stand, zetStand] = useState<"inloggen" | "aanmaken">("inloggen");
+  const [stand, zetStand] = useState<"inloggen" | "aanmaken">("aanmaken");
   const [voorwaarden, zetVoorwaarden] = useState(false);
 
   const client = getSupabase();
@@ -180,25 +184,13 @@ export default function Inloggen() {
   };
 
   return (
-    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
-      <OnboardingVoortgang stap={2} />
-      <View style={{ gap: space[1] }}>
-        <AppText rol="h1">{aanmaken ? t("accountAanmaken") : t("titel")}</AppText>
-        <AppText rol="subtitle">{t("ondertitel")}</AppText>
-      </View>
-
-      <Button
-        label={t("verderMetApple")}
-        variant="secondary"
-        fullWidth
-        onPress={() => (APPLE_KLAAR ? socialNogNiet("Apple") : socialNogNiet("Apple"))}
-      />
-      <Button
-        label={t("verderMetGoogle")}
-        variant="secondary"
-        fullWidth
-        onPress={() => (GOOGLE_KLAAR ? socialNogNiet("Google") : socialNogNiet("Google"))}
-      />
+    <OnboardingScherm stap={2} titel={aanmaken ? t("accountAanmaken") : t("titel")} uitleg={t("ondertitel")}>
+      {APPLE_KLAAR ? (
+        <Button label={t("verderMetApple")} variant="secondary" fullWidth onPress={() => socialNogNiet("Apple")} />
+      ) : null}
+      {GOOGLE_KLAAR ? (
+        <Button label={t("verderMetGoogle")} variant="secondary" fullWidth onPress={() => socialNogNiet("Google")} />
+      ) : null}
 
       <Card tone="outline" style={{ paddingVertical: space[2] }}>
         <TextInput
@@ -255,7 +247,6 @@ export default function Inloggen() {
           zetStand(aanmaken ? "inloggen" : "aanmaken");
         }}
       />
-
-    </ScreenCanvas>
+    </OnboardingScherm>
   );
 }
