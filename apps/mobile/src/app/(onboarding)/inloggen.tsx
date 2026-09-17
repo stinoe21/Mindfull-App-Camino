@@ -24,6 +24,7 @@
 // werkt hoort niet op het scherm. Ze staan onder het vinkje van de
 // voorwaarden en werken pas als dat is gezet, net als de knop voor e-mail.
 
+import * as Linking from "expo-linking";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { TextInput } from "react-native";
@@ -35,6 +36,7 @@ import { Card } from "@mind/ui/components/Card";
 import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { lijktOpEmail, MIN_WACHTWOORD, PAD_MAIL_BEVESTIGD, stuurBevestigingOpnieuw } from "@/features/auth/accountHerstel";
 import { logInMet, type Aanbieder } from "@/features/auth/socialLogin";
 import { getSupabase } from "@/features/backend/client";
 import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
@@ -47,7 +49,6 @@ const GOOGLE_KLAAR = Boolean(process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID);
 
 const AANBIEDER_NAAM: Record<Aanbieder, string> = { apple: "Apple", google: "Google" };
 
-const MIN_WACHTWOORD = 6;
 
 // Alleen interface-teksten. {naam}, {n} en {email} worden op de plek ingevuld.
 const nl = {
@@ -55,7 +56,8 @@ const nl = {
   ondertitel: "Met een account telt je check-in anoniem mee: hooguit één keer per ochtend en één keer per middag.",
   socialMislukt: "Inloggen met {naam} is niet gelukt. Probeer het opnieuw, of gebruik je e-mailadres.",
   geenVerbinding: "Geen verbinding. Probeer het later opnieuw.",
-  vulEmail: "Vul een e-mailadres in.",
+  vulEmail: "Vul een geldig e-mailadres in.",
+  vulWachtwoordIn: "Vul je wachtwoord in.",
   vulWachtwoord: "Vul een wachtwoord in van minstens {n} tekens.",
   verkeerdeCombinatie:
     "E-mailadres en wachtwoord horen niet bij elkaar. Nog geen account? Maak er hieronder een aan.",
@@ -74,6 +76,11 @@ const nl = {
   wachtwoordLabel: "Wachtwoord",
   inloggen: "Inloggen",
   accountAanmaken: "Account aanmaken",
+  wachtwoordVergeten: "Wachtwoord vergeten?",
+  stuurOpnieuw: "Stuur de mail opnieuw",
+  opnieuwVerstuurd: "De mail is opnieuw verstuurd naar {email}. Kijk ook bij ongewenste mail.",
+  opnieuwTeVaak: "Er zijn net te veel mails aangevraagd. Probeer het over een uur opnieuw.",
+  opnieuwMislukt: "Het versturen is niet gelukt. Probeer het later opnieuw.",
   hebAlAccount: "Ik heb al een account",
   nogGeenAccount: "Nog geen account? Maak er een aan",
 } as const;
@@ -84,7 +91,8 @@ const teksten: Woordenboek<typeof nl> = {
     ondertitel: "With an account your check-in counts anonymously: at most once each morning and once each afternoon.",
     socialMislukt: "Logging in with {naam} failed. Try again, or use your email address.",
     geenVerbinding: "There's no connection to the server. Please try again later.",
-    vulEmail: "Enter an email address.",
+    vulEmail: "Enter a valid email address.",
+    vulWachtwoordIn: "Enter your password.",
     vulWachtwoord: "Enter a password of at least {n} characters.",
     verkeerdeCombinatie:
       "This email address and password don't match. No account yet? Choose create account below.",
@@ -103,6 +111,11 @@ const teksten: Woordenboek<typeof nl> = {
     wachtwoordLabel: "Password",
     inloggen: "Log in",
     accountAanmaken: "Create account",
+    wachtwoordVergeten: "Forgot password?",
+    stuurOpnieuw: "Send the email again",
+    opnieuwVerstuurd: "The email was sent again to {email}. Check your spam folder too.",
+    opnieuwTeVaak: "Too many emails were requested just now. Try again in an hour.",
+    opnieuwMislukt: "Sending didn't work. Please try again later.",
     hebAlAccount: "I already have an account",
     nogGeenAccount: "No account yet? Create one",
   },
@@ -119,6 +132,9 @@ export default function Inloggen() {
   const [stand, zetStand] = useState<"inloggen" | "aanmaken">(startStand === "inloggen" ? "inloggen" : "aanmaken");
   const [voorwaarden, zetVoorwaarden] = useState(false);
   const [socialBezig, zetSocialBezig] = useState<Aanbieder | null>(null);
+  // Wacht er een bevestigingsmail? Dan staat de knop "Stuur de mail opnieuw" erbij.
+  const [wachtOpMail, zetWachtOpMail] = useState(false);
+  const [opnieuwBezig, zetOpnieuwBezig] = useState(false);
 
   const client = getSupabase();
   const aanmaken = stand === "aanmaken";
@@ -141,16 +157,23 @@ export default function Inloggen() {
 
   const controleerInvoer = (): boolean => {
     zetMelding(null);
+    zetWachtOpMail(false);
     if (!client) {
       zetMelding(t("geenVerbinding"));
       return false;
     }
-    if (!email.includes("@")) {
+    if (!lijktOpEmail(email)) {
       zetMelding(t("vulEmail"));
       return false;
     }
-    if (wachtwoord.length < MIN_WACHTWOORD) {
+    // Het minimum geldt voor een nieuw wachtwoord. Wie inlogt met een ouder,
+    // korter wachtwoord moet er gewoon in kunnen.
+    if (aanmaken && wachtwoord.length < MIN_WACHTWOORD) {
       zetMelding(t("vulWachtwoord").replace("{n}", String(MIN_WACHTWOORD)));
+      return false;
+    }
+    if (!aanmaken && wachtwoord.length === 0) {
+      zetMelding(t("vulWachtwoordIn"));
       return false;
     }
     return true;
@@ -162,10 +185,11 @@ export default function Inloggen() {
     const { error } = await client.auth.signInWithPassword({ email: email.trim(), password: wachtwoord });
     zetBezig(false);
     if (error) {
-      if (error.message.toLowerCase().includes("invalid login credentials")) {
+      if (error.code === "invalid_credentials" || error.message.toLowerCase().includes("invalid login credentials")) {
         zetMelding(t("verkeerdeCombinatie"));
-      } else if (error.message.toLowerCase().includes("not confirmed")) {
+      } else if (error.code === "email_not_confirmed" || error.message.toLowerCase().includes("not confirmed")) {
         zetMelding(t("nietBevestigd"));
+        zetWachtOpMail(true);
       } else {
         zetMelding(t("inloggenMislukt"));
       }
@@ -178,10 +202,15 @@ export default function Inloggen() {
   const maakAccount = async () => {
     if (!controleerInvoer() || !client) return;
     zetBezig(true);
-    const { data, error } = await client.auth.signUp({ email: email.trim(), password: wachtwoord });
+    const { data, error } = await client.auth.signUp({
+      email: email.trim(),
+      password: wachtwoord,
+      // De link in de bevestigingsmail opent de app, zie mail-bevestigd.tsx.
+      options: { emailRedirectTo: Linking.createURL(PAD_MAIL_BEVESTIGD) },
+    });
     zetBezig(false);
     if (error) {
-      if (error.message.toLowerCase().includes("already registered")) {
+      if (error.code === "user_already_exists" || error.message.toLowerCase().includes("already registered")) {
         zetMelding(t("bestaatAl"));
         zetStand("inloggen");
       } else {
@@ -198,6 +227,17 @@ export default function Inloggen() {
     // Een bestaand, al bevestigd adres komt hier ook terecht (Supabase verbergt dat).
     zetStand("inloggen");
     zetMelding(t("bevestigingsmail").replace("{email}", email.trim()));
+    zetWachtOpMail(true);
+  };
+
+  const stuurOpnieuw = async () => {
+    zetOpnieuwBezig(true);
+    const uitkomst = await stuurBevestigingOpnieuw(email);
+    zetOpnieuwBezig(false);
+    if (uitkomst === "verstuurd") zetMelding(t("opnieuwVerstuurd").replace("{email}", email.trim()));
+    else if (uitkomst === "teVaak") zetMelding(t("opnieuwTeVaak"));
+    else if (uitkomst === "geenVerbinding") zetMelding(t("geenVerbinding"));
+    else zetMelding(t("opnieuwMislukt"));
   };
 
   return (
@@ -211,6 +251,7 @@ export default function Inloggen() {
           placeholderTextColor={colors.textSecondary}
           autoCapitalize="none"
           autoComplete="email"
+          textContentType={aanmaken ? "emailAddress" : "username"}
           keyboardType="email-address"
           style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
           accessibilityLabel={t("emailLabel")}
@@ -223,7 +264,8 @@ export default function Inloggen() {
           placeholder={aanmaken ? t("wachtwoordKiezen").replace("{n}", String(MIN_WACHTWOORD)) : t("wachtwoordPlaceholder")}
           placeholderTextColor={colors.textSecondary}
           autoCapitalize="none"
-          autoComplete="password"
+          autoComplete={aanmaken ? "new-password" : "current-password"}
+          textContentType={aanmaken ? "newPassword" : "password"}
           secureTextEntry
           style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
           accessibilityLabel={t("wachtwoordLabel")}
@@ -268,6 +310,18 @@ export default function Inloggen() {
           <AppText rol="bodySmall" kleur="secondary">{melding}</AppText>
         </Card>
       ) : null}
+      {wachtOpMail ? (
+        <Button label={t("stuurOpnieuw")} variant="secondary" fullWidth bezig={opnieuwBezig} onPress={stuurOpnieuw} />
+      ) : null}
+
+      {!aanmaken ? (
+        <Button
+          label={t("wachtwoordVergeten")}
+          variant="link"
+          fullWidth
+          onPress={() => router.push({ pathname: "/wachtwoord-vergeten", params: lijktOpEmail(email) ? { email: email.trim() } : {} })}
+        />
+      ) : null}
 
       <Button
         label={aanmaken ? t("hebAlAccount") : t("nogGeenAccount")}
@@ -275,6 +329,7 @@ export default function Inloggen() {
         fullWidth
         onPress={() => {
           zetMelding(null);
+          zetWachtOpMail(false);
           zetStand(aanmaken ? "inloggen" : "aanmaken");
         }}
       />
