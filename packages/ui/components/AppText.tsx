@@ -10,6 +10,8 @@ import { Text, type TextProps } from "react-native";
 
 import { colors, type } from "../tokens/tokens.ts";
 
+import { afbreken } from "./afbreken.ts";
+
 type Rol = keyof typeof type;
 
 type Kleur = "primary" | "secondary" | "onprimary" | "brand" | "cta";
@@ -28,7 +30,11 @@ export type AppTextProps = TextProps & {
   centreer?: boolean;
 };
 
-export function AppText({ rol = "body", kleur = "primary", centreer = false, style, ...rest }: AppTextProps) {
+// Koppen staan vaak op een smalle kaart en breken dan midden in een woord;
+// zie afbreken.ts. Lopende tekst heeft de ruimte en breekt op spaties.
+const KOPROLLEN: ReadonlySet<Rol> = new Set<Rol>(["h1", "h2", "h3"]);
+
+export function AppText({ rol = "body", kleur = "primary", centreer = false, style, children, ...rest }: AppTextProps) {
   return (
     <Text
       {...rest}
@@ -41,6 +47,8 @@ export function AppText({ rol = "body", kleur = "primary", centreer = false, sty
         },
         style,
       ]}
-    />
+    >
+      {typeof children === "string" && KOPROLLEN.has(rol) ? afbreken(children) : children}
+    </Text>
   );
 }

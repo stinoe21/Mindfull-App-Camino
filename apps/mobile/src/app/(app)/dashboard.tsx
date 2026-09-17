@@ -54,7 +54,7 @@ const nl = {
   hoeWeer: "Hoe is je weer vandaag?",
   jouwWeerOverline: "JOUW WEER VANDAAG",
   ingechecktOm: "Ingecheckt om {tijd}",
-  evenIncheckenKnop: "Doe je mentale weer check-in",
+  inchecken: "Inchecken",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien.",
   berichtRegel: "Vandaag vooral een {weer} in Nederland.",
@@ -83,7 +83,7 @@ const teksten: Woordenboek<typeof nl> = {
     hoeWeer: "How's your weather today?",
     jouwWeerOverline: "YOUR WEATHER TODAY",
     ingechecktOm: "Checked in at {tijd}",
-    evenIncheckenKnop: "Do your mental weather check-in",
+    inchecken: "Check in",
     weerVanNederland: "The mental weather of the Netherlands",
     weerVanNederlandSub: "Per province, the weather we see most today.",
     berichtRegel: "Mostly a {weer} in the Netherlands today.",
@@ -216,20 +216,13 @@ export default function Dashboard() {
           <AppText rol="body" kleur="brand">{"›"}</AppText>
         </Card>
       ) : (
-        // De vraag staat op de hero, de mascotte ook; de kaart herhaalt hem
-        // niet. Hier de vijf weerbeelden als strook en de knop, meer niet.
-        // Geen zin over anoniem meetellen: daar heeft de gebruiker al ja op
-        // gezegd bij de toestemming (Stijn, 13 september 2026). Ook geen
-        // "vier vragen, één minuut" meer: de knop zegt wat je gaat doen
-        // (Stijn, 15 september 2026).
-        <Card tone="sun" style={{ gap: space[4] }}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: space[2] }}>
-            {WEATHER_CODES.map((code) => (
-              <WeerIcoon key={code} staat={code} hoogte={36} />
-            ))}
-          </View>
-          <Button label={t("evenIncheckenKnop")} fullWidth onPress={() => router.push("/check-in/1")} />
-        </Card>
+        // De vraag staat op de hero; hier alleen de knop, los op het vel, met
+        // hetzelfde woord als de tab: "Inchecken". Tot 17 september 2026 stond
+        // hier een zandkaart met de vijf weericonen als strook en de knop "Doe
+        // je mentale weer check-in" (Stijn: "niet sterk", de icoontjes "zeggen
+        // niks", en de knop heette anders dan de tab). Vraag en antwoord zijn
+        // nu één gebaar, en de twee ingangen zijn zichtbaar hetzelfde.
+        <Button label={t("inchecken")} fullWidth onPress={() => router.push("/check-in/1")} />
       )}
 
       {/* Slot 2: Houvast, direct onder de check-in. MIND (feedbacksessie, verwerkt
