@@ -1,8 +1,11 @@
 // Voorkeuren
 //
-// Keuze-chips, meervoudige selectie (HERKOMST.md, System states). Overslaan
-// mag: dit is geen essentiele stap (productprincipes 6). De keuze blijft
-// alleen op het toestel, zie het funnel-voorstel in docs/datamodel.md.
+// Keuze-chips, meervoudige selectie (HERKOMST.md, System states). De keuze
+// blijft alleen op het toestel, zie het funnel-voorstel in docs/datamodel.md.
+//
+// Geen "Sla over" meer (Stijn, 17 september 2026): dat sprak "kies minstens
+// drie" tegen. De onderwerpen bepalen wat Houvast laat zien, dus zonder keuze
+// heeft iemand weinig aan de app. Aanpassen kan later in Profiel.
 //
 // Minstens drie (Stijn, 17 september 2026): met één onderwerp blijft Houvast
 // te smal om er iets aan te hebben. Verder werkt pas vanaf drie, en de knop
@@ -29,7 +32,6 @@ const nl = {
   verder: "Verder",
   nogEen: "Kies er nog 1",
   nogMeer: "Kies er nog {n}",
-  slaOver: "Sla over",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -39,7 +41,6 @@ const teksten: Woordenboek<typeof nl> = {
     verder: "Continue",
     nogEen: "Choose 1 more",
     nogMeer: "Choose {n} more",
-    slaOver: "Skip",
   },
 };
 
@@ -55,8 +56,8 @@ export default function Voorkeuren() {
   const tekort = Math.max(0, MIN_ONDERWERPEN - gekozen.length);
   const verderLabel = tekort === 0 ? t("verder") : tekort === 1 ? t("nogEen") : t("nogMeer").replace("{n}", String(tekort));
 
-  const verder = async (bewaren: boolean) => {
-    if (bewaren) await bewaarInstellingen({ voorkeuren: gekozen });
+  const verder = async () => {
+    await bewaarInstellingen({ voorkeuren: gekozen });
     router.push("/anonimiteit");
   };
 
@@ -69,8 +70,7 @@ export default function Voorkeuren() {
       </View>
 
       <View style={{ flex: 1 }} />
-      <Button label={verderLabel} fullWidth disabled={tekort > 0} onPress={() => verder(true)} />
-      <Button label={t("slaOver")} variant="link" fullWidth onPress={() => verder(false)} />
+      <Button label={verderLabel} fullWidth disabled={tekort > 0} onPress={verder} />
     </OnboardingScherm>
   );
 }
