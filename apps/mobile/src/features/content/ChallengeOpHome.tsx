@@ -29,7 +29,8 @@ import { aantalAfgerond, laadVoortgang, laatsteActiviteit, vandaagAlAfgerond } f
 
 const nl = {
   bezigOverline: "JOUW CHALLENGE",
-  voorstelOverline: "CHALLENGE VOOR JOU",
+  // Niet "voor jou": dat staat er vlak onder al bij Houvast (Stijn, 17 september 2026).
+  voorstelOverline: "BEGIN EEN CHALLENGE",
   dagTitel: "Dag {x}: {titel}",
   dagVan: "Dag {x} van {y}",
   morgen: "Dag {x} staat morgen klaar.",
@@ -39,7 +40,7 @@ const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     bezigOverline: "YOUR CHALLENGE",
-    voorstelOverline: "A CHALLENGE FOR YOU",
+    voorstelOverline: "START A CHALLENGE",
     dagTitel: "Day {x}: {titel}",
     dagVan: "Day {x} of {y}",
     morgen: "Day {x} will be ready tomorrow.",
