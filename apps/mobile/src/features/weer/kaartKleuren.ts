@@ -1,15 +1,22 @@
 // De weertint per weerbeeld, voor de provincies op de kaart van Nederland.
 // Genoemd naar het weer en nooit naar een waardering (kitchen sink,
 // Weertinten). Eén bron voor Home en de pagina van het mentale weer.
+//
+// Sinds 17 september 2026 dezelfde kleurfamilie als de was op de hero van de
+// check-in (HERO_WAS in packages/ui/components/achtergronden.ts): geel bij
+// zon, grijsblauw bij wolken, bleek bij mist, fris limoen bij wind, dieper
+// blauw bij regen. Wind was paars en regen zo donker dat het inkt-icoon
+// erop wegviel; nu herken je op de kaart het weer van je eigen check-in, en
+// is elke tint licht genoeg voor het icoon.
 
 import { palette } from "@mind/ui";
 
 import type { WeatherCode } from "@mind/types";
 
 export const KAARTKLEUR: Record<WeatherCode, string> = {
-  zonnig: palette.weatherSun,
-  wolken: palette.weatherCloud,
-  mist: palette.weatherMist,
-  wind: palette.purple200,
-  regen: palette.weatherRain,
+  zonnig: palette.yellow400,
+  wolken: palette.primary100,
+  mist: palette.neutral200,
+  wind: palette.lime200,
+  regen: palette.primary400,
 };

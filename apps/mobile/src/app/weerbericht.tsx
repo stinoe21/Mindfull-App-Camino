@@ -89,8 +89,12 @@ export default function Weerbericht() {
 
   const isWeerCode = (code: string): code is WeatherCode => (WEATHER_CODES as readonly string[]).includes(code);
   const kaartKleuren: Partial<Record<ProvincieCode, string>> = {};
+  const kaartWeer: Partial<Record<ProvincieCode, WeatherCode>> = {};
   for (const rij of provincies) {
-    if (isProvincie(rij.province) && isWeerCode(rij.weather)) kaartKleuren[rij.province] = KAARTKLEUR[rij.weather];
+    if (isProvincie(rij.province) && isWeerCode(rij.weather)) {
+      kaartKleuren[rij.province] = KAARTKLEUR[rij.weather];
+      kaartWeer[rij.province] = rij.weather;
+    }
   }
 
   useEffect(() => {
@@ -150,7 +154,7 @@ export default function Weerbericht() {
               <AppText rol="h3">{t("kaartTitel")}</AppText>
               <AppText rol="bodySmall">{t("kaartUitleg")}</AppText>
             </View>
-            <KaartNederland breedte={220} kleuren={kaartKleuren} />
+            <KaartNederland breedte={220} kleuren={kaartKleuren} icoon={(code, maat) => (kaartWeer[code] ? <WeerIcoon staat={kaartWeer[code]} hoogte={maat} /> : null)} />
             <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: space[3] }}>
               {WEATHER_CODES.map((code) => (
                 <View key={code} style={{ flexDirection: "row", alignItems: "center", gap: space[1] }}>

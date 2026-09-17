@@ -156,9 +156,18 @@ export default function KitchenSink() {
       </View>
 
       <Kop>KaartNederland</Kop>
-      <Text style={styles.note}>Per provincie een weertint; zonder kleur blijft een provincie neutraal.</Text>
+      <Text style={styles.note}>Een weerkaart: per provincie de was van haar weer met het weericoon erop; zonder gegevens blijft een provincie zand. Gelderland is gekozen.</Text>
       <View style={styles.rij}>
-        <KaartNederland breedte={200} kleuren={{ groningen: palette.weatherSun, utrecht: palette.weatherRain, zeeland: palette.weatherCloud, limburg: palette.weatherMist }} />
+        <KaartNederland
+          breedte={260}
+          kleuren={{ groningen: palette.yellow400, friesland: palette.lime200, utrecht: palette.primary400, gelderland: palette.primary100, zeeland: palette.primary100, limburg: palette.neutral200 }}
+          icoon={(code, maat) => {
+            const weer: Partial<Record<string, WeerIcoonStaat>> = { groningen: "zonnig", friesland: "wind", utrecht: "regen", gelderland: "wolken", zeeland: "wolken", limburg: "mist" };
+            const staat = weer[code];
+            return staat ? <WeerIcoon staat={staat} hoogte={maat} /> : null;
+          }}
+          gekozen="gelderland"
+        />
       </View>
 
       <Kop>Slider (interactief)</Kop>
