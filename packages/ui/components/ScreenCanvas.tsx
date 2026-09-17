@@ -98,10 +98,17 @@ export type ScreenCanvasProps = {
    * vel-variant schuift het vel mee omlaag zodat de knop erboven past.
    */
   terugKnop?: React.ReactNode;
+  /**
+   * Het vel staat vast: het veert niet mee als je eraan trekt, en het scrolt
+   * alleen nog als de inhoud niet op het scherm past. Voor een scherm met één
+   * handeling, zoals de check-in (Stijn, 17 september 2026: "ik kan het
+   * scherm naar beneden trekken, dat is niet fijn als je de slider gebruikt").
+   */
+  vast?: boolean;
   children?: React.ReactNode;
 };
 
-export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, heroInhoud, kopTitel, metNavRuimte = false, terugKnop, children }: ScreenCanvasProps) {
+export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, heroInhoud, kopTitel, metNavRuimte = false, terugKnop, vast = false, children }: ScreenCanvasProps) {
   const insets = useSafeAreaInsets();
   const scrollY = useRef(new Animated.Value(0)).current;
   // De gemeten hoogte van de hero-inhoud, zodat het vel omlaag schuift als
@@ -184,6 +191,9 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
         automaticallyAdjustKeyboardInsets
         scrollEventThrottle={16}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
+        bounces={!vast}
+        alwaysBounceVertical={!vast}
+        overScrollMode={vast ? "never" : "auto"}
         contentContainerStyle={{ flexGrow: 1, paddingTop: top }}
       >
         <View

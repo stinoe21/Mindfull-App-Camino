@@ -1,9 +1,10 @@
 // Anonimiteit en toestemming
 //
-// Legt woordelijk uit wat er met een check-in gebeurt, met de canonieke
-// zinnen uit het ontwerp: "Niemand kan zien wat jij hebt ingevuld." en
-// "Je kunt dit altijd wijzigen in Profiel." (Instellingen is sinds
-// 13 september 2026 opgegaan in Profiel.) Twee apart intrekbare
+// De kop zegt waar het over gaat, het mentale weer van Nederland, en één
+// zin wat dat is. Tot 17 september 2026 stond hier "Tel je mee?" met de
+// zinnen "Niemand kan zien wat jij hebt ingevuld." en "Je kunt dit altijd
+// wijzigen in Profiel."; Stijn vond dat vaag en dubbel met de uitleg van de
+// toestemming zelf, waar het intrekken al in staat. Twee apart intrekbare
 // toestemmingen (docs/privacy-besluiten.md). De toestemming voor het
 // weerbericht staat in ToestemmingKeuze (Paul, 27 augustus 2026; in gewone
 // taal sinds 17 september 2026), als expliciete keuze
@@ -69,8 +70,8 @@ export default function Anonimiteit() {
   return (
     <OnboardingScherm
       stap={5}
-      titel="Tel je mee?"
-      uitleg="Niemand kan zien wat jij hebt ingevuld. Je kunt dit altijd wijzigen in Profiel."
+      titel="Het mentale weer van Nederland"
+      uitleg="Een anoniem totaal van hoe Nederland zich voelt. Jij kiest of jouw weer meetelt."
     >
       {/* De uitleg over anonimiteit stond hier ook nog eens los boven de
           toestemming; die staat op het mentale weer zelf, met de infoknop
@@ -91,7 +92,7 @@ export default function Anonimiteit() {
         <Button label="Klaar" fullWidth disabled={!compleet} bezig={bezig} onPress={klaar} />
         {!compleet ? (
           <AppText rol="bodySmall" kleur="secondary" centreer>
-            Kies ja of nee. Nee is een prima keuze; de app werkt dan net zo goed.
+            Nee is ook prima. De app werkt dan net zo goed.
           </AppText>
         ) : null}
       </View>
