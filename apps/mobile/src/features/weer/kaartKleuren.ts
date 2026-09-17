@@ -20,3 +20,15 @@ export const KAARTKLEUR: Record<WeatherCode, string> = {
   wind: palette.lime200,
   regen: palette.primary400,
 };
+
+// De lichte variant van dezelfde tinten, voor een groot vlak met tekst erop:
+// de kaart "Jouw weer vandaag" op Home. Eén stap lichter in dezelfde
+// kleurfamilie, zodat de overline en het bijschrift leesbaar blijven, ook bij
+// regen (Stijn, 17 september 2026: de kaart van jouw weer moet de toon zetten).
+export const WEERTINT_LICHT: Record<WeatherCode, string> = {
+  zonnig: palette.yellow200,
+  wolken: palette.primary50,
+  mist: palette.neutral100,
+  wind: palette.lime100,
+  regen: palette.primary200,
+};
