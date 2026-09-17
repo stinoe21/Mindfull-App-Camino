@@ -6,6 +6,12 @@
 // zijn niet goed/slecht, alleen verschillend (productprincipes 3).
 //
 // Kaart 150 hoog, vulling 20/20/18, spoor 4 hoog, duim 20 met inktring 1,5.
+//
+// Schermlezer (sinds 17 september 2026): de schuif meldde zich als verstelbaar
+// maar reageerde niet op de veegbeweging van VoiceOver en TalkBack, dus wie
+// blind is kon niet inchecken. Omhoog en omlaag vegen verschuift nu in
+// stappen van tien. De waarde wordt in woorden gezegd en niet als getal: een
+// getal klinkt als een score, en dat is de schuif niet (productprincipes 3).
 
 import { useRef, useState } from "react";
 import { PanResponder, View } from "react-native";
@@ -15,6 +21,17 @@ import { colors, palette, radius, space } from "../tokens/tokens.ts";
 import { AppText } from "./AppText.tsx";
 
 const DUIM = 20;
+/** Eén veeg met de schermlezer. Tien stappen van kant tot kant. */
+const STAP = 10;
+
+/** Waar de schuif staat, in woorden, voor de schermlezer. */
+export function waardeInWoorden(value: number, links: string, rechts: string): string {
+  if (value <= 20) return "helemaal bij " + links;
+  if (value < 45) return "meer naar " + links;
+  if (value <= 55) return "in het midden";
+  if (value < 80) return "meer naar " + rechts;
+  return "helemaal bij " + rechts;
+}
 
 export type SliderProps = {
   /** 0 tot 100. */
@@ -77,8 +94,14 @@ export function Slider({ value, onChange, leftLabel, rightLabel, hint = "Schuif 
           }}
           accessible
           accessibilityRole="adjustable"
-          accessibilityLabel={leftLabel + " tot " + rightLabel}
-          accessibilityValue={{ min: 0, max: 100, now: value }}
+          accessibilityLabel={"Schuif van " + leftLabel + " tot " + rightLabel}
+          accessibilityHint="Veeg omhoog of omlaag om te schuiven."
+          accessibilityValue={{ text: waardeInWoorden(value, leftLabel, rightLabel) }}
+          accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}
+          onAccessibilityAction={(e) => {
+            const richting = e.nativeEvent.actionName === "increment" ? 1 : e.nativeEvent.actionName === "decrement" ? -1 : 0;
+            if (richting !== 0) onChangeRef.current(Math.min(100, Math.max(0, value + richting * STAP)));
+          }}
           // Extra hoogte als raakvlak; het getekende spoor blijft 4.
           style={{ height: 32, justifyContent: "center" }}
         >
@@ -97,7 +120,12 @@ export function Slider({ value, onChange, leftLabel, rightLabel, hint = "Schuif 
             }}
           />
         </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        {/* Voor de schermlezer zitten beide woorden al in het label van de schuif. */}
+        <View
+          accessibilityElementsHidden
+          importantForAccessibility="no-hide-descendants"
+          style={{ flexDirection: "row", justifyContent: "space-between" }}
+        >
           <AppText rol="labelCaption" kleur="secondary">{leftLabel}</AppText>
           <AppText rol="labelCaption" kleur="secondary">{rightLabel}</AppText>
         </View>
