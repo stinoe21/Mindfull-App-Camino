@@ -53,7 +53,7 @@ export default function Welkom() {
   const t = useVertaling(teksten);
   const { taal, kiesTaal } = useTaal();
   return (
-    <OnboardingScherm titel={t("titel")} zonderTerug>
+    <OnboardingScherm titel={t("titel")} uitdrukking="energiek" zonderTerug>
       <AppText rol="body">{t("watIsHet")}</AppText>
       <AppText rol="body">{t("watDoeJe")}</AppText>
       <View style={{ alignItems: "flex-start" }}>
