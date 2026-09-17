@@ -1,8 +1,15 @@
 // De uitdrukkelijke toestemming voor het Mentale Weerbericht (art. 9 AVG).
 //
-// Tekst van Paul Bex, privacy officer van Mind, per mail van 28 augustus 2026;
-// zie docs/privacy-besluiten.md. Woordelijk overnemen, niet parafraseren.
-// De eisen van de Autoriteit Persoonsgegevens: vrij, specifiek, ondubbelzinnig,
+// De eerste tekst kwam van Paul Bex, privacy officer van MIND (mail van
+// 27 augustus 2026, zie docs/privacy-besluiten.md). Hij schreef erbij: "Voel
+// je vrij om aanpassingen te maken als jullie dat beter lijkt." Sinds
+// 17 september 2026 (Stijn) staat hier daarom een versie in gewone taal:
+// zonder "geaggregeerde", "weerstatus" en "verwerken", met Profiel in plaats
+// van Instellingen (die pagina bestaat niet meer), en met de zin erbij dat
+// wat al is meegeteld in het totaal blijft staan. Paul moet deze versie nog
+// zien; wijzig hem daarna niet zonder hem.
+//
+// Wat niet mag veranderen zijn de eisen van de Autoriteit Persoonsgegevens: vrij, specifiek, ondubbelzinnig,
 // geïnformeerd en uitdrukkelijk. Daarom een expliciete keuze tussen ja en nee
 // zonder vooraf aangevinkte optie, en geen schakelaar die standaard aan staat.
 // Zolang er geen keuze is gemaakt, is er geen toestemming.
@@ -13,7 +20,7 @@
 // dat via de rol "radio".
 //
 // De uitleg van Paul staat achter "Lees de uitleg", direct onder de vraag en
-// dus vóór de keuze: één tik, en woordelijk. Tot 17 september 2026 stond hij
+// dus vóór de keuze: één tik. Tot 17 september 2026 stond hij
 // in de onboarding voluit op het scherm; Stijn, naast de onboarding van
 // Ommetje: "niet lappen tekst, die staan in de privacyverklaring". De vraag
 // zelf noemt al wie het verwerkt en waarvoor, en dat is de eerste laag van
@@ -27,17 +34,16 @@ import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 
-export const TOESTEMMING_VRAAG =
-  "Mag MIND jouw gekozen mentale “weerstatus” verwerken voor het anonieme, geaggregeerde Mentale Weerbericht?";
+export const TOESTEMMING_VRAAG = "Mag MIND jouw weer anoniem meetellen in het mentale weer van Nederland?";
 
 export const TOESTEMMING_UITLEG =
-  "Het Mentale Weerbericht is een anonieme, collectieve samenvatting van ieders weerstatus, zichtbaar in de " +
-  "app zodra genoeg mensen meedoen. We koppelen je ingevulde weerbericht niet aan je profiel en tonen nooit " +
-  "individuele antwoorden. Je toestemming is vrijwillig en je kunt deze op elk moment intrekken via de " +
-  "Instellingen van deze app. Wil je meer weten over hoe wij met je persoonlijke gegevens omgaan? Lees " +
-  "hiervoor onze privacyverklaring.";
+  "Het mentale weer van Nederland is een anoniem totaal van ieders weer. Je ziet het in de app zodra genoeg " +
+  "mensen meedoen. We koppelen jouw weer niet aan je account en laten nooit het antwoord van één persoon zien. " +
+  "Wat al is meegeteld blijft in het totaal staan, en daar staat niets in dat naar jou wijst. Je toestemming is " +
+  "vrijwillig en je kunt haar altijd intrekken via Profiel. Meer weten? Lees onze privacyverklaring.";
 
-export const TOESTEMMING_JA = "Ja, ik geef expliciete toestemming voor het gebruik van mijn gegevens voor het Mentale Weer.";
+// Uitdrukkelijk: het woord toestemming en het doel staan allebei in het ja.
+export const TOESTEMMING_JA = "Ja, ik geef toestemming om mijn weer anoniem mee te tellen in het mentale weer van Nederland.";
 export const TOESTEMMING_NEE = "Nee, ik geef geen toestemming.";
 
 type Props = {
