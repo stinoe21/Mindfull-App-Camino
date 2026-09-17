@@ -2,8 +2,11 @@
 //
 // Apple (verplicht naast Google, richtlijn 4.8), Google, of e-mail.
 // De Apple- en Google-knop zijn gebouwd "op een sleutel na" (docs/scope.md):
-// scherm, knop en foutafhandeling staan er, de configuratie komt uit
-// omgevingsvariabelen, en een ontbrekende waarde blokkeert de onboarding niet.
+// het inloggen zelf staat in features/auth/socialLogin.ts en loopt via
+// Supabase. De sleutels van Apple en Google staan alleen in het
+// Supabase-dashboard; de twee omgevingsvariabelen hieronder zijn niet meer
+// dan de schakelaar die de knop toont zodra de aanbieder daar is ingesteld.
+// Een ontbrekende waarde blokkeert de onboarding niet: dan is er e-mail.
 // E-mail loopt via e-mailadres en wachtwoord, met een expliciete keuze tussen
 // inloggen en een account aanmaken. Staat "Confirm email" aan in Supabase, dan
 // levert aanmaken nog geen sessie op en komt er eerst een bevestigingsmail.
@@ -17,10 +20,9 @@
 //
 // Sinds 17 september 2026 (Stijn): het scherm opent op "Account aanmaken",
 // want wie de onboarding doorloopt is bijna altijd nieuw, en de knoppen van
-// Apple en Google staan er alleen als hun sleutel er is. Zonder sleutel deden
-// ze niets dan een melding tonen, en een knop die niet werkt hoort niet op het
-// scherm. Let op: met een sleutel tonen ze nu nog steeds alleen die melding;
-// het inloggen zelf via Apple en Google moet nog gebouwd worden.
+// Apple en Google staan er alleen als hun sleutel er is: een knop die niet
+// werkt hoort niet op het scherm. Ze staan onder het vinkje van de
+// voorwaarden en werken pas als dat is gezet, net als de knop voor e-mail.
 
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
@@ -33,14 +35,17 @@ import { Card } from "@mind/ui/components/Card";
 import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { logInMet, type Aanbieder } from "@/features/auth/socialLogin";
 import { getSupabase } from "@/features/backend/client";
 import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 
-// De sleutels van Mind, zodra die er zijn. Zie docs/scope.md: aanzetten is dan
-// configuratie, geen verbouwing.
+// De schakelaars, zie de kop van dit bestand. Zie docs/scope.md: aanzetten
+// is configuratie, geen verbouwing.
 const APPLE_KLAAR = Boolean(process.env.EXPO_PUBLIC_APPLE_SERVICE_ID);
 const GOOGLE_KLAAR = Boolean(process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID);
+
+const AANBIEDER_NAAM: Record<Aanbieder, string> = { apple: "Apple", google: "Google" };
 
 const MIN_WACHTWOORD = 6;
 
@@ -48,8 +53,7 @@ const MIN_WACHTWOORD = 6;
 const nl = {
   titel: "Inloggen",
   ondertitel: "Met een account telt je check-in één keer per dag mee. Anoniem.",
-  socialNogNiet:
-    "Inloggen met {naam} werkt in deze testversie nog niet. Gebruik voorlopig je e-mailadres.",
+  socialMislukt: "Inloggen met {naam} is niet gelukt. Probeer het opnieuw, of gebruik je e-mailadres.",
   geenVerbinding: "Geen verbinding. Probeer het later opnieuw.",
   vulEmail: "Vul een e-mailadres in.",
   vulWachtwoord: "Vul een wachtwoord in van minstens {n} tekens.",
@@ -78,8 +82,7 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     titel: "Log in",
     ondertitel: "So your check-in counts once per day.",
-    socialNogNiet:
-      "Logging in with {naam} isn't available yet in this test version. It's switched on as soon as Mind's keys are in place.",
+    socialMislukt: "Logging in with {naam} failed. Try again, or use your email address.",
     geenVerbinding: "There's no connection to the server. Please try again later.",
     vulEmail: "Enter an email address.",
     vulWachtwoord: "Enter a password of at least {n} characters.",
@@ -115,12 +118,25 @@ export default function Inloggen() {
   const { stand: startStand } = useLocalSearchParams<{ stand?: string }>();
   const [stand, zetStand] = useState<"inloggen" | "aanmaken">(startStand === "inloggen" ? "inloggen" : "aanmaken");
   const [voorwaarden, zetVoorwaarden] = useState(false);
+  const [socialBezig, zetSocialBezig] = useState<Aanbieder | null>(null);
 
   const client = getSupabase();
   const aanmaken = stand === "aanmaken";
 
-  const socialNogNiet = (naam: string) => {
-    zetMelding(t("socialNogNiet").replace("{naam}", naam));
+  // Het venster sluiten zonder in te loggen is geen fout: dan geen melding.
+  const logInVia = async (aanbieder: Aanbieder) => {
+    zetMelding(null);
+    zetSocialBezig(aanbieder);
+    const uitkomst = await logInMet(aanbieder);
+    zetSocialBezig(null);
+    if (uitkomst === "ok") {
+      await bewaarInstellingen({ consentVoorwaarden: true });
+      router.push("/naam");
+    } else if (uitkomst === "geenVerbinding") {
+      zetMelding(t("geenVerbinding"));
+    } else if (uitkomst === "mislukt") {
+      zetMelding(t("socialMislukt").replace("{naam}", AANBIEDER_NAAM[aanbieder]));
+    }
   };
 
   const controleerInvoer = (): boolean => {
@@ -186,12 +202,6 @@ export default function Inloggen() {
 
   return (
     <OnboardingScherm stap={2} titel={aanmaken ? t("accountAanmaken") : t("titel")} uitleg={t("ondertitel")}>
-      {APPLE_KLAAR ? (
-        <Button label={t("verderMetApple")} variant="secondary" fullWidth onPress={() => socialNogNiet("Apple")} />
-      ) : null}
-      {GOOGLE_KLAAR ? (
-        <Button label={t("verderMetGoogle")} variant="secondary" fullWidth onPress={() => socialNogNiet("Google")} />
-      ) : null}
 
       <Card tone="outline" style={{ paddingVertical: space[2] }}>
         <TextInput
@@ -232,6 +242,26 @@ export default function Inloggen() {
         disabled={!voorwaarden}
         onPress={aanmaken ? maakAccount : logIn}
       />
+      {APPLE_KLAAR ? (
+        <Button
+          label={t("verderMetApple")}
+          variant="secondary"
+          fullWidth
+          bezig={socialBezig === "apple"}
+          disabled={!voorwaarden || socialBezig !== null}
+          onPress={() => logInVia("apple")}
+        />
+      ) : null}
+      {GOOGLE_KLAAR ? (
+        <Button
+          label={t("verderMetGoogle")}
+          variant="secondary"
+          fullWidth
+          bezig={socialBezig === "google"}
+          disabled={!voorwaarden || socialBezig !== null}
+          onPress={() => logInVia("google")}
+        />
+      ) : null}
 
       {melding ? (
         <Card tone="white">
