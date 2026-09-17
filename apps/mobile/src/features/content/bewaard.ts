@@ -6,17 +6,18 @@
 // verwijderen) en met het wissen van de app.
 //
 // Een bewaarde tip is een verwijzing (onderwerp plus positie in de pager),
-// geen kopie van de tekst: de tekst komt altijd uit data/houvast.ts.
+// geen kopie van de tekst: de tekst komt altijd uit data/houvast.ts, of bij
+// een losse gids uit data/gidsen.ts (houvastVoor zoekt in beide).
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { type Houvast, type HouvastTip } from "./data/houvast.ts";
-import { houvastVoor } from "./houvast.ts";
+import { type HouvastTip } from "./data/houvast.ts";
+import { houvastVoor, type Onderwerp } from "./houvast.ts";
 
 const SLEUTEL = "mind.bewaardetips";
 
 export type BewaardeTip = {
-  /** Slug van het onderwerp in Houvast. */
+  /** Slug van het onderwerp in Houvast, of van een losse gids. */
   onderwerp: string;
   /** Positie in de pager: de tips op volgorde, de oefening als laatste. */
   tip: number;
@@ -53,12 +54,12 @@ export async function wisselBewaard(onderwerp: string, tip: number): Promise<Bew
 }
 
 /** De tip in de pager op deze positie: een tip, of de oefening als laatste. */
-export function tipOpPositie(houvast: Houvast, positie: number): HouvastTip | undefined {
+export function tipOpPositie(houvast: Onderwerp, positie: number): HouvastTip | undefined {
   if (positie < houvast.tips.length) return houvast.tips[positie];
   return positie === houvast.tips.length ? houvast.oefening : undefined;
 }
 
-export type BewaardeTipMetInhoud = BewaardeTip & { houvast: Houvast; inhoud: HouvastTip; isOefening: boolean };
+export type BewaardeTipMetInhoud = BewaardeTip & { houvast: Onderwerp; inhoud: HouvastTip; isOefening: boolean };
 
 /** De bewaarde tips met hun onderwerp en tekst erbij; verwijzingen die niet meer bestaan vallen weg. */
 export function metInhoud(lijst: BewaardeTip[]): BewaardeTipMetInhoud[] {
