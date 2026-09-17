@@ -201,7 +201,7 @@ export default function Houvast() {
   const label = (soort: Doel["soort"]) => (soort === "onderwerp" ? t("onderwerp") : soort === "gids" ? t("gids") : t("challenge"));
 
   return (
-    <ScreenCanvas state="default" kopTitel={t("titel")} metNavRuimte>
+    <ScreenCanvas state="default" metNavRuimte>
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{t("titel")}</AppText>
         <AppText rol="subtitle">{t("ondertitel")}</AppText>
