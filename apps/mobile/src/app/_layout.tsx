@@ -16,6 +16,10 @@ import { colors } from "@mind/ui";
 
 import { fontAssets } from "@/theme/fonts";
 
+// Het vangnet: expo-router tekent dit scherm als er bij het tekenen van een
+// route iets misgaat, in plaats van een wit scherm. Zie het bestand zelf.
+export { Foutscherm as ErrorBoundary } from "@/features/systeem/Foutscherm";
+
 // Het splashscreen blijft staan tot de snitten geladen zijn.
 SplashScreen.preventAutoHideAsync();
 
