@@ -22,7 +22,7 @@
 // scherm. Let op: met een sleutel tonen ze nu nog steeds alleen die melding;
 // het inloggen zelf via Apple en Google moet nog gebouwd worden.
 
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { TextInput } from "react-native";
 
@@ -112,7 +112,8 @@ export default function Inloggen() {
   const [wachtwoord, zetWachtwoord] = useState("");
   const [bezig, zetBezig] = useState(false);
   const [melding, zetMelding] = useState<string | null>(null);
-  const [stand, zetStand] = useState<"inloggen" | "aanmaken">("aanmaken");
+  const { stand: startStand } = useLocalSearchParams<{ stand?: string }>();
+  const [stand, zetStand] = useState<"inloggen" | "aanmaken">(startStand === "inloggen" ? "inloggen" : "aanmaken");
   const [voorwaarden, zetVoorwaarden] = useState(false);
 
   const client = getSupabase();
