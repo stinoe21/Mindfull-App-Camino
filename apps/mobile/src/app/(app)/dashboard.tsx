@@ -3,8 +3,9 @@
 // De spil van de app, opgebouwd naar Dashboard v4 uit de Figma-styleguide
 // (162:1695) en ontwerpscherm 03, sinds 29 augustus 2026: de begroeting en de
 // mascotte staan op de hero, daaronder het vel met de check-in (of jouw weer
-// van vandaag), de tips, het mentale weer van Nederland, de quote van de dag
-// en de Hulplijn. Challenges hebben hun eigen tab en staan hier niet meer.
+// van vandaag), de challenge, de tips, het mentale weer van Nederland, de
+// quote van de dag en de Hulplijn. Challenges hebben hun eigen tab; op Home
+// staat sinds 17 september 2026 alleen de ene waar je mee bezig bent.
 // Sinds 10 september 2026 (feedbacksessie MIND) staan de tips direct onder
 // de check-in en is de quote klein: minder tekst, handelingsperspectief eerst.
 // Sinds 13 september 2026 (Stijn, UX-ronde) zegt Home niets twee keer: de
@@ -33,6 +34,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { ChallengeOpHome } from "@/features/content/ChallengeOpHome";
 import { houvastVoorVoorkeuren } from "@/features/content/houvast";
 import { QuoteKaart } from "@/features/content/QuoteKaart";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
@@ -229,7 +231,12 @@ export default function Dashboard() {
         <Button label={t("inchecken")} fullWidth onPress={() => router.push("/check-in/1")} />
       )}
 
-      {/* Slot 2: Houvast, direct onder de check-in. MIND (feedbacksessie, verwerkt
+      {/* Slot 2: de challenge waar je mee bezig bent, of één voorstel. Boven
+          Houvast en de quote (Stijn, 17 september 2026): het is de reden om
+          morgen terug te komen. */}
+      <ChallengeOpHome voorkeuren={voorkeuren} />
+
+      {/* Slot 3: Houvast, onder de check-in en de challenge. MIND (feedbacksessie, verwerkt
           10 september 2026): dit is inhoudelijk het relevantst voor de gebruiker,
           dus hoger dan het landelijke beeld en de quote. */}
       <ContentSection title={t("tipsTitel")} note={t("tipsNote")} action={t("allesBekijken")} onAction={() => router.push("/naslagwerk")}>
@@ -247,7 +254,7 @@ export default function Dashboard() {
         </ContentShelf>
       </ContentSection>
 
-      {/* Slot 3: het mentale weer van Nederland. Sinds 15 september 2026
+      {/* Slot 4: het mentale weer van Nederland. Sinds 15 september 2026
           (Stijn: de kaart kon qua design echt beter, en een knop naar een lege
           pagina hoeft niet) op het vel als gewone sectie. Sinds 17 september
           2026 een weerkaart zoals in een weerbericht (Stijn: de kaart viel
@@ -291,7 +298,7 @@ export default function Dashboard() {
       </ContentSection>
       ) : null}
 
-      {/* Slot 4: de quote van de dag, voor iedereen gelijk, klein onderaan */}
+      {/* Slot 5: de quote van de dag, voor iedereen gelijk, klein onderaan */}
       <QuoteKaart />
 
       <HulplijnKaart />
