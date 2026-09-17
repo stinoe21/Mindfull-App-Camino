@@ -11,8 +11,8 @@
 // De vlieger (Stijn, 17 september 2026): dezelfde zittende vlieger met een
 // gezicht als in Houvast en de check-in, op elke stap met een andere lichte
 // uitdrukking en kleur, in plaats van steeds dezelfde staande mascotte. Alleen
-// de uitdrukkingen die er al waren (VliegerOnderwerp): energiek, in balans,
-// standvastig en ontspannen. Het is decoratie, dus verborgen voor de
+// de uitdrukkingen die er al waren (VliegerOnderwerp): energiek, in balans
+// en ontspannen. Het is decoratie, dus verborgen voor de
 // schermlezer.
 //
 // De terugknop (17 september 2026): het welkomscherm is het eerste scherm en
@@ -36,12 +36,14 @@ import { OnboardingVoortgang } from "./OnboardingVoortgang";
 const VLIEGER_HOOGTE = 80;
 
 // Per stap een eigen gezicht: leeftijd, account, naam, onderwerpen, toestemming.
+// "standvastig" doet niet mee: diepblauw met strakke wenkbrauwen las op het
+// accountscherm als boos (Stijn, 17 september 2026).
 const PER_STAP: Record<number, Uitdrukking> = {
   1: "in-balans",
-  2: "standvastig",
-  3: "ontspannen",
-  4: "energiek",
-  5: "in-balans",
+  2: "ontspannen",
+  3: "energiek",
+  4: "in-balans",
+  5: "ontspannen",
 };
 
 type Props = {
