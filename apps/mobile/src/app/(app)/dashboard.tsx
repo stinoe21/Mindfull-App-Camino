@@ -18,8 +18,9 @@
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { ActivityIndicator, useWindowDimensions, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { colors, space } from "@mind/ui";
+import { colors, space, type } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
@@ -37,7 +38,7 @@ import { QuoteKaart } from "@/features/content/QuoteKaart";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 import { KAARTKLEUR, WEERTINT_LICHT } from "@/features/weer/kaartKleuren";
-import { leesWeerVanVandaag, toonTijd } from "@/features/weer/lokaalWeer";
+import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { isProvincie, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
 import { haalWeerbericht, haalWeerberichtProvincies, type WeerberichtStand } from "@/features/weer/weerbericht";
@@ -53,7 +54,6 @@ const nl = {
   avond: "Goedenavond",
   hoeWeer: "Hoe is je weer vandaag?",
   jouwWeerOverline: "JOUW WEER VANDAAG",
-  ingechecktOm: "Ingecheckt om {tijd}",
   inchecken: "Inchecken",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien.",
@@ -74,7 +74,6 @@ const teksten: Woordenboek<typeof nl> = {
     avond: "Good evening",
     hoeWeer: "How's your weather today?",
     jouwWeerOverline: "YOUR WEATHER TODAY",
-    ingechecktOm: "Checked in at {tijd}",
     inchecken: "Check in",
     weerVanNederland: "The mental weather of the Netherlands",
     weerVanNederlandSub: "Per province, the weather we see most today.",
@@ -94,6 +93,7 @@ const isWeerCode = (code: string): code is WeatherCode => (WEATHER_CODES as read
 export default function Dashboard() {
   const router = useRouter();
   const t = useVertaling(teksten);
+  const insets = useSafeAreaInsets();
 
   const begroeting = (): string => {
     const uur = new Date().getHours();
@@ -103,7 +103,6 @@ export default function Dashboard() {
     return t("avond");
   };
   const [weerbeeld, zetWeerbeeld] = useState<WeatherCode | null>(null);
-  const [tijd, zetTijd] = useState("");
   const [weerGeladen, zetWeerGeladen] = useState(false);
   const [bericht, zetBericht] = useState<WeerberichtStand | null>(null);
   const [provincies, zetProvincies] = useState<WeatherTodayProvince[]>([]);
@@ -120,7 +119,6 @@ export default function Dashboard() {
       leesWeerVanVandaag().then((data) => {
         if (!actief) return;
         zetWeerbeeld(data?.weerbeeld ?? null);
-        zetTijd(data?.tijd ?? "");
         zetWeerGeladen(true);
       });
       leesInstellingen().then((i) => {
@@ -187,8 +185,15 @@ export default function Dashboard() {
     </View>
   );
 
+  // Na de check-in staat er alleen tekst op de hero, dus het vel mag hoger
+  // beginnen: net onder de begroeting en de duiding, met dezelfde lucht als
+  // ScreenCanvas om hero-inhoud zet. Met de vaste band voor de mascotte was
+  // het bovenstuk te groot (Stijn, 17 september 2026). Neemt de begroeting
+  // twee regels, dan schuift ScreenCanvas het vel zelf verder omlaag.
+  const velTop = weerbeeld ? insets.top + space[3] + type.h1.lineHeight + space[1] + type.subtitle.lineHeight + space[6] : undefined;
+
   return (
-    <ScreenCanvas state={weerbeeld ?? "default"} heroInhoud={hero} kopTitel={t("appNaam")} metNavRuimte>
+    <ScreenCanvas state={weerbeeld ?? "default"} heroInhoud={hero} sheetTop={velTop} kopTitel={t("appNaam")} metNavRuimte>
       {/* Slot 1: de check-in, direct op het vel (ontwerp 03), of jouw weer van vandaag */}
       {!weerGeladen ? (
         <ActivityIndicator color={colors.brandDefault} />
@@ -200,7 +205,8 @@ export default function Dashboard() {
               een zandkaart met alleen het icoon, terwijl de vlieger los bovenin
               stond (Stijn: "niet echt heel denderend", "een huisstijlbreuk").
               De kaart zelf opent de uitkomst; opnieuw inchecken kan daar en via
-              de tab (Stijn, 15 september 2026). */}
+              de tab (Stijn, 15 september 2026). Het tijdstip van inchecken
+              staat er niet meer bij: dat hoeft niet (Stijn, 17 september 2026). */}
           <View style={{ flex: 1, gap: space[1] }}>
             <AppText rol="labelOverline" kleur="brand">{t("jouwWeerOverline")}</AppText>
             <View style={{ flexDirection: "row", alignItems: "center", gap: space[2] }}>
@@ -210,7 +216,6 @@ export default function Dashboard() {
               </View>
               <AppText rol="body" kleur="brand">{"›"}</AppText>
             </View>
-            {tijd ? <AppText rol="labelCaption" kleur="secondary">{t("ingechecktOm").replace("{tijd}", toonTijd(tijd))}</AppText> : null}
           </View>
           <MascotteVlieger state={weerbeeld} hoogte={88} />
         </Card>
