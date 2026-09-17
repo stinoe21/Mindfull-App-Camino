@@ -37,7 +37,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { palette, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
-import { TerugKnop } from "@mind/ui/components/TerugKnop";
+import { TerugKnop, TERUGKNOP_MAAT } from "@mind/ui/components/TerugKnop";
 import { VliegerOnderwerp, type Uitdrukking } from "@mind/ui/components/VliegerOnderwerp";
 
 import { OnboardingVoortgang } from "./OnboardingVoortgang";
@@ -84,12 +84,13 @@ export function OnboardingScherm({ stap, titel, uitleg, uitdrukking, zonderTerug
   const stand = PER_STAP[stap ?? 0] ?? PER_STAP[0];
   return (
     <ScreenCanvas state="default" vast sheetTop={insets.top + space[3]}>
-      {zonderTerug && !stap ? null : (
-        <View style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
-          {zonderTerug ? null : <TerugInOnboarding />}
-          {stap ? <OnboardingVoortgang stap={stap} /> : null}
-        </View>
-      )}
+      {/* De rij is er altijd, ook leeg op Welkom: zo staan vlieger en kop op
+          elk scherm op dezelfde hoogte en zit de vlieger niet tegen de ronde
+          bovenrand van het vel (Stijn, 17 september 2026). */}
+      <View style={{ flexDirection: "row", alignItems: "center", gap: space[4], minHeight: TERUGKNOP_MAAT }}>
+        {zonderTerug ? null : <TerugInOnboarding />}
+        {stap ? <OnboardingVoortgang stap={stap} /> : null}
+      </View>
       <View style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
         <View
           accessibilityElementsHidden
