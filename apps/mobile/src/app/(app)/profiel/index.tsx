@@ -27,6 +27,7 @@ import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { leesInstellingen, STANDAARD, type Instellingen } from "@/features/profiel/instellingen";
 import { InstellingenGroep, InstellingenRij } from "@/features/profiel/InstellingenRij";
+import { wisVoortgang } from "@/features/content/voortgang";
 import { wisLokaalWeer } from "@/features/weer/lokaalWeer";
 import { isProvincie, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 
@@ -138,6 +139,8 @@ export default function Profiel() {
     // Het weer van vandaag is van dit account: een volgend account op
     // hetzelfde toestel begint schoon (ook het dagdeel dat al telde).
     await wisLokaalWeer();
+    // Net als de challenge-voortgang: die hoort bij wie hem liep.
+    await wisVoortgang();
     zetEmail(null);
     // Zonder account kom je de app niet in: terug naar het begin.
     router.dismissAll();

@@ -8,6 +8,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { ONDERWERPEN } from "../content/data/artikelen.ts";
+import { wisVoortgang } from "../content/voortgang.ts";
 
 const SLEUTEL = "mind.instellingen";
 
@@ -92,6 +93,9 @@ export async function bewaarInstellingen(wijziging: Partial<Instellingen>): Prom
 }
 
 export async function wisAlleLokaleData(): Promise<void> {
+  // De challenge-voortgang staat ook in het geheugen; alleen de opslag legen
+  // zou hem tot de volgende herstart laten staan.
+  await wisVoortgang();
   try {
     await AsyncStorage.clear();
   } catch {

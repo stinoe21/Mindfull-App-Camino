@@ -26,7 +26,7 @@ import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
-import { aantalAfgerond, vandaagAlAfgerond } from "@/features/content/voortgang";
+import { aantalAfgerond, laadVoortgang, vandaagAlAfgerond } from "@/features/content/voortgang";
 
 const nl = {
   nietGevonden: "Challenge niet gevonden",
@@ -79,8 +79,17 @@ export default function ChallengeDetail() {
   useFocusEffect(
     useCallback(() => {
       if (!challenge) return;
-      zetKlaar(aantalAfgerond(challenge.slug));
-      zetWachtTotMorgen(vandaagAlAfgerond(challenge.slug));
+      let actief = true;
+      // Eerst de bewaarde voortgang, dan pas lezen: na een herstart staat het
+      // geheugen nog leeg.
+      laadVoortgang().then(() => {
+        if (!actief) return;
+        zetKlaar(aantalAfgerond(challenge.slug));
+        zetWachtTotMorgen(vandaagAlAfgerond(challenge.slug));
+      });
+      return () => {
+        actief = false;
+      };
     }, [challenge])
   );
 

@@ -18,7 +18,7 @@ import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnd
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
-import { aantalAfgerond } from "@/features/content/voortgang";
+import { aantalAfgerond, laadVoortgang } from "@/features/content/voortgang";
 
 const nl = {
   titel: "Challenges",
@@ -62,7 +62,13 @@ export default function Challenges() {
   const [voortgang, zetVoortgang] = useState<Record<string, number>>({});
   useFocusEffect(
     useCallback(() => {
-      zetVoortgang(Object.fromEntries(CHALLENGES.map((c) => [c.slug, aantalAfgerond(c.slug)])));
+      let actief = true;
+      laadVoortgang().then(() => {
+        if (actief) zetVoortgang(Object.fromEntries(CHALLENGES.map((c) => [c.slug, aantalAfgerond(c.slug)])));
+      });
+      return () => {
+        actief = false;
+      };
     }, [])
   );
 
