@@ -62,7 +62,7 @@ import type { HouvastTip } from "@/features/content/data/houvast";
 const nl = {
   nietGevonden: "Onderwerp niet gevonden",
   nietGevondenUitleg: "Dit onderwerp bestaat niet of is verplaatst.",
-  terugOverzicht: "Terug naar Houvast",
+  terugOverzicht: "Terug naar Tips",
   uitleg: "Uitleg",
   tips: "Tips",
   meerInfo: "Meer info",
@@ -89,7 +89,7 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     nietGevonden: "Topic not found",
     nietGevondenUitleg: "This topic doesn't exist or has been moved.",
-    terugOverzicht: "Back to Houvast",
+    terugOverzicht: "Back to Tips",
     uitleg: "About",
     tips: "Tips",
     meerInfo: "More info",

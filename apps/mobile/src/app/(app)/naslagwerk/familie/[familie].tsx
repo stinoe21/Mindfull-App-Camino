@@ -27,7 +27,7 @@ import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
 const nl = {
   nietGevonden: "Onderwerp niet gevonden",
   nietGevondenUitleg: "Dit onderwerp bestaat niet of is verplaatst.",
-  terugOverzicht: "Terug naar Houvast",
+  terugOverzicht: "Terug naar Tips",
   onderwerpen: "Onderwerpen",
   tips: "{n} tips",
   eenTip: "1 tip",
@@ -46,7 +46,7 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     nietGevonden: "Topic not found",
     nietGevondenUitleg: "This topic doesn't exist or has been moved.",
-    terugOverzicht: "Back to Houvast",
+    terugOverzicht: "Back to Tips",
     onderwerpen: "Topics",
     tips: "{n} tips",
     eenTip: "1 tip",

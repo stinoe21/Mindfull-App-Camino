@@ -36,7 +36,7 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 const nl = {
   nietGevonden: "Test niet gevonden",
   nietGevondenUitleg: "Deze test bestaat niet of is verplaatst.",
-  terugOverzicht: "Terug naar Houvast",
+  terugOverzicht: "Terug naar Tips",
   overline: "ZELFTEST",
   start: "Start de test",
   vraagVan: "VRAAG {x} van {y}",
@@ -47,7 +47,7 @@ const nl = {
   uitslagTitel: "Dit zeggen je antwoorden",
   geenUitslag: "Bij deze antwoorden hoort geen uitslag. Dat is een fout in de app, niet in jou.",
   opnieuw: "Doe de test opnieuw",
-  terug: "Terug naar Houvast",
+  terug: "Terug naar Tips",
   inHouvast: "Lees meer over {titel}",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -55,7 +55,7 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     nietGevonden: "Test not found",
     nietGevondenUitleg: "This test doesn't exist or has been moved.",
-    terugOverzicht: "Back to Houvast",
+    terugOverzicht: "Back to Tips",
     overline: "SELF-TEST",
     start: "Start the test",
     vraagVan: "QUESTION {x} of {y}",
@@ -66,7 +66,7 @@ const teksten: Woordenboek<typeof nl> = {
     uitslagTitel: "What your answers say",
     geenUitslag: "No result matches these answers. That's a bug in the app, not in you.",
     opnieuw: "Take the test again",
-    terug: "Back to Houvast",
+    terug: "Back to Tips",
     inHouvast: "Read more about {titel}",
   },
 };
