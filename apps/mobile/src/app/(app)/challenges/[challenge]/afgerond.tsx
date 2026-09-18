@@ -22,8 +22,9 @@ const nl = {
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
-    titel: "Well done",
-    uitleg: "You've completed this part. Small steps count.",
+    // Geen "Well done": dat is een beloning (productprincipes 4). Zelfde toon als het Nederlands.
+    titel: "That's it for today",
+    uitleg: "The next day will be ready tomorrow, if you like.",
     verder: "Continue with the challenge",
     terug: "Back to challenges",
   },
