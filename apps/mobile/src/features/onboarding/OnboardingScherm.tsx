@@ -8,6 +8,13 @@
 // er daardoor onder. Nu staat hij klein naast de kop en begint het vel
 // bovenaan, zodat elke stap op één scherm past.
 //
+// De vlieger (Stijn, 17 september 2026): dezelfde zittende vlieger met een
+// gezicht als in Houvast en de check-in, op elke stap met een andere lichte
+// uitdrukking en kleur, in plaats van steeds dezelfde staande mascotte. Alleen
+// de uitdrukkingen die er al waren (VliegerOnderwerp): energiek, in balans
+// en ontspannen. Het is decoratie, dus verborgen voor de
+// schermlezer.
+//
 // De terugknop (17 september 2026): het welkomscherm is het eerste scherm en
 // heeft er geen. Op de andere stappen gaat hij een stap terug, en ligt er
 // niets onder (een deeplink, zoals de link uit een mail), dan naar het
@@ -20,13 +27,24 @@ import { View } from "react-native";
 
 import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
-import { MascotMain } from "@mind/ui/components/MascotMain";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { TerugKnop } from "@mind/ui/components/TerugKnop";
+import { VliegerOnderwerp, type Uitdrukking } from "@mind/ui/components/VliegerOnderwerp";
 
 import { OnboardingVoortgang } from "./OnboardingVoortgang";
 
-const VLIEGER_HOOGTE = 96;
+const VLIEGER_HOOGTE = 80;
+
+// Per stap een eigen gezicht: leeftijd, account, naam, onderwerpen, toestemming.
+// "standvastig" doet niet mee: diepblauw met strakke wenkbrauwen las op het
+// accountscherm als boos (Stijn, 17 september 2026).
+const PER_STAP: Record<number, Uitdrukking> = {
+  1: "in-balans",
+  2: "ontspannen",
+  3: "energiek",
+  4: "in-balans",
+  5: "ontspannen",
+};
 
 type Props = {
   /** De stap voor de voortgang. Zonder stap (Welkom) geen voortgang. */
@@ -34,6 +52,8 @@ type Props = {
   titel: string;
   /** Eén of twee korte zinnen onder de kop. */
   uitleg?: string;
+  /** Het gezicht van de vlieger. Standaard dat van de stap, en zonder stap ontspannen. */
+  uitdrukking?: Uitdrukking;
   /** Het eerste scherm (Welkom): er is niets om naar terug te gaan. */
   zonderTerug?: boolean;
   children: ReactNode;
@@ -45,12 +65,15 @@ function TerugInOnboarding() {
   return <TerugKnop onPress={() => (navigation.canGoBack() ? navigation.goBack() : router.replace("/welkom"))} />;
 }
 
-export function OnboardingScherm({ stap, titel, uitleg, zonderTerug = false, children }: Props) {
+export function OnboardingScherm({ stap, titel, uitleg, uitdrukking, zonderTerug = false, children }: Props) {
+  const gezicht = uitdrukking ?? (stap ? PER_STAP[stap] : undefined) ?? "ontspannen";
   return (
     <ScreenCanvas state="default" terugKnop={zonderTerug ? undefined : <TerugInOnboarding />}>
       {stap ? <OnboardingVoortgang stap={stap} /> : null}
       <View style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
-        <MascotMain hoogte={VLIEGER_HOOGTE} />
+        <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+          <VliegerOnderwerp uitdrukking={gezicht} hoogte={VLIEGER_HOOGTE} />
+        </View>
         <View style={{ flex: 1 }}>
           <AppText rol="h2">{titel}</AppText>
         </View>
