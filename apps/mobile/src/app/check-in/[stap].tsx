@@ -5,14 +5,15 @@
 // "STAP 2 van 4" met kleine v. De sliderwaarden blijven op het toestel.
 // "Sla vandaag over" is de eerlijke uitweg (no-guilt, productprincipes 4 en 6).
 //
-// Eén check-in per dag: staat er al een weerbeeld van vandaag op het toestel,
-// dan komen de sliders niet en ga je direct door naar jouw weer. Dat geldt
-// voor elke ingang (tabbalk, dashboard, deeplink), omdat het hier in het
-// scherm zelf zit. Het tussenscherm "Je hebt vandaag al ingecheckt" met twee
-// knoppen was een doodlopende straat (Stijn, UX-ronde 13 september 2026).
+// Inchecken mag zo vaak je wilt (Stijn, 15 september 2026): de sliders zijn
+// altijd bereikbaar, ook als er al een weerbeeld van vandaag op het toestel
+// staat. Het persoonlijke scherm toont dan de laatste. Wat begrensd is, is de
+// bijdrage aan het landelijke beeld: maximaal een keer per dagdeel, en dat
+// bewaakt de server (docs/limieten-en-misbruik.md sectie 2). Weet het
+// toestel al dat dit dagdeel telde, dan wordt de server niet eens gevraagd.
 
-import { Redirect, useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useState } from "react";
 import { View } from "react-native";
 
 import { colors, radius, space } from "@mind/ui";
@@ -27,9 +28,8 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { bewaarInstellingen, leesInstellingen } from "@/features/profiel/instellingen";
 import { leesWaarden, resetWaarden, zetWaarde } from "@/features/weer/checkinSessie";
 import { bepaalProvincieViaLocatie } from "@/features/weer/locatie";
-import { bewaarWeerVanVandaag, leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
+import { bewaarWeerVanVandaag, dagdeelNu, leesWeerVanVandaag, type Dagdeel } from "@/features/weer/lokaalWeer";
 
-import type { WeatherCode } from "@mind/types";
 import { CHECKIN_STAPPEN, GERUSTSTELLING } from "@/features/weer/teksten";
 import { bepaalWeerbeeld } from "@/features/weer/weerbeeld";
 import { stuurWeerIn } from "@/features/weer/weerbericht";
@@ -65,21 +65,6 @@ export default function CheckInStap() {
 
   const [waarde, zetLokaleWaarde] = useState(leesWaarden()[stap.key]);
   const [bezig, zetBezig] = useState(false);
-  // undefined: nog aan het lezen; null: vandaag nog niet ingecheckt.
-  const [vandaag, zetVandaag] = useState<WeatherCode | null | undefined>(undefined);
-
-  useEffect(() => {
-    leesWeerVanVandaag().then((data) => zetVandaag(data?.weerbeeld ?? null));
-  }, []);
-
-  if (vandaag === undefined) {
-    // Even wachten op het toestel, zonder de sliders alvast te tonen.
-    return <View style={{ flex: 1, backgroundColor: colors.surfaceBackground }} />;
-  }
-
-  if (vandaag) {
-    return <Redirect href="/check-in/uitkomst" />;
-  }
 
   const verder = async () => {
     zetWaarde(stap.key, waarde);
@@ -92,8 +77,14 @@ export default function CheckInStap() {
     zetBezig(true);
     const weerbeeld = bepaalWeerbeeld(leesWaarden());
     const instellingen = await leesInstellingen();
+    const eerder = await leesWeerVanVandaag();
     let resultaat: string = "niet-gedeeld";
-    if (instellingen.consentWeerbericht) {
+    let dagdeel: Dagdeel = 0;
+    if (instellingen.consentWeerbericht && eerder && eerder.bijgedragen >= dagdeelNu()) {
+      // Dit dagdeel telde al mee: alleen het eigen weer bijwerken, de server
+      // niet vragen (die zou hetzelfde zeggen, of offline "geen verbinding").
+      resultaat = "al-bijgedragen";
+    } else if (instellingen.consentWeerbericht) {
       // Provincie via de locatie: op het moment zelf opnieuw bepalen, op het
       // toestel (features/weer/locatie.ts); lukt dat niet, dan de laatst
       // bekende. Alleen de provinciecode gaat mee, nooit de locatie.
@@ -105,10 +96,11 @@ export default function CheckInStap() {
           await bewaarInstellingen({ provincie });
         }
       }
-      resultaat = await stuurWeerIn(weerbeeld, provincie);
+      const ingestuurd = await stuurWeerIn(weerbeeld, provincie);
+      resultaat = ingestuurd.resultaat;
+      dagdeel = ingestuurd.dagdeel;
     }
-    const geteld = resultaat === "gelukt" || resultaat === "al-ingecheckt";
-    await bewaarWeerVanVandaag(weerbeeld, geteld);
+    await bewaarWeerVanVandaag(weerbeeld, dagdeel);
     resetWaarden();
     zetBezig(false);
     // Direct door naar de uitkomst, zonder tussenscherm: feedback van Mind

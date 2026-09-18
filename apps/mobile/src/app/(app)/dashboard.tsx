@@ -37,7 +37,7 @@ import { QuoteKaart } from "@/features/content/QuoteKaart";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 import { KAARTKLEUR } from "@/features/weer/kaartKleuren";
-import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
+import { leesWeerVanVandaag, toonTijd } from "@/features/weer/lokaalWeer";
 import { isProvincie, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
 import { haalWeerbericht, haalWeerberichtProvincies, type WeerberichtStand } from "@/features/weer/weerbericht";
@@ -53,6 +53,7 @@ const nl = {
   avond: "Goedenavond",
   hoeWeer: "Hoe is je weer vandaag?",
   jouwWeerOverline: "JOUW WEER VANDAAG",
+  ingechecktOm: "Ingecheckt om {tijd}",
   evenIncheckenKnop: "Doe je mentale weer check-in",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien.",
@@ -81,6 +82,7 @@ const teksten: Woordenboek<typeof nl> = {
     avond: "Good evening",
     hoeWeer: "How's your weather today?",
     jouwWeerOverline: "YOUR WEATHER TODAY",
+    ingechecktOm: "Checked in at {tijd}",
     evenIncheckenKnop: "Do your mental weather check-in",
     weerVanNederland: "The mental weather of the Netherlands",
     weerVanNederlandSub: "Per province, the weather we see most today.",
@@ -122,6 +124,7 @@ export default function Dashboard() {
     return t("avond");
   };
   const [weerbeeld, zetWeerbeeld] = useState<WeatherCode | null>(null);
+  const [tijd, zetTijd] = useState("");
   const [weerGeladen, zetWeerGeladen] = useState(false);
   const [bericht, zetBericht] = useState<WeerberichtStand | null>(null);
   const [provincies, zetProvincies] = useState<WeatherTodayProvince[]>([]);
@@ -138,6 +141,7 @@ export default function Dashboard() {
       leesWeerVanVandaag().then((data) => {
         if (!actief) return;
         zetWeerbeeld(data?.weerbeeld ?? null);
+        zetTijd(data?.tijd ?? "");
         zetWeerGeladen(true);
       });
       leesInstellingen().then((i) => {
@@ -204,6 +208,9 @@ export default function Dashboard() {
           <View style={{ flexShrink: 1, gap: 2 }}>
             <AppText rol="labelOverline" kleur="brand">{t("jouwWeerOverline")}</AppText>
             <AppText rol="h3">{WEER_NAMEN[weerbeeld]}</AppText>
+            {/* De laatste check-in; opnieuw inchecken kan op de uitkomstpagina
+                en via de tab (Stijn, 15 september 2026). */}
+            {tijd ? <AppText rol="labelCaption" kleur="secondary">{t("ingechecktOm").replace("{tijd}", toonTijd(tijd))}</AppText> : null}
           </View>
           <View style={{ flexGrow: 1 }} />
           <AppText rol="body" kleur="brand">{"›"}</AppText>
