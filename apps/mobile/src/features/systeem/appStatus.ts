@@ -1,7 +1,7 @@
 // De noodrem aan de kant van de app.
 //
 // De server kent een minimale versie en een optioneel onderhoudsbericht
-// (supabase/migrations/20260918160000_app_status.sql). De app leest die na het
+// (supabase/migrations/20260918170000_app_status.sql). De app leest die na het
 // inloggen, vergelijkt zelf met zijn eigen versie en stuurt niets over zichzelf
 // mee. Is de app te oud of is er onderhoud, dan stuurt de poort
 // (features/auth/Poort.tsx) naar /bijwerken.
