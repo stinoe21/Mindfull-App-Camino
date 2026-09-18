@@ -22,7 +22,7 @@ import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 const nl = {
   titel: "Kies een nieuw wachtwoord",
   uitleg: "Daarna ben je meteen ingelogd.",
-  placeholder: "Nieuw wachtwoord (minstens {n} tekens)",
+  placeholder: "Wachtwoord, minstens {n} tekens",
   label: "Nieuw wachtwoord",
   toon: "Toon",
   verberg: "Verberg",
@@ -43,7 +43,7 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     titel: "Choose a new password",
     uitleg: "You'll be logged in right after.",
-    placeholder: "New password (at least {n} characters)",
+    placeholder: "Password, at least {n} characters",
     label: "New password",
     toon: "Show",
     verberg: "Hide",
