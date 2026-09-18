@@ -113,7 +113,8 @@ export function CheckinVlieger({ vraag, waarde, woord, schuif, zichtbaar, hoogte
     <Animated.View style={{ opacity: zichtbaar, transform: [{ translateY: zichtbaar.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }] }}>
       <Animated.View style={houding}>
         <Animated.View style={{ transform: [{ scale: tik }] }}>
-          <VliegerMetGezicht gezicht={CHECKIN_GEZICHTEN[vraag][zone]} kleur={VLIEGER_KLEUR} hoogte={hoogte} label={"Vlieger, " + woord} />
+          {/* Zonder label: de schuif leest het weerwoord al voor (waardeTekst). */}
+          <VliegerMetGezicht gezicht={CHECKIN_GEZICHTEN[vraag][zone]} kleur={VLIEGER_KLEUR} hoogte={hoogte} />
         </Animated.View>
       </Animated.View>
     </Animated.View>

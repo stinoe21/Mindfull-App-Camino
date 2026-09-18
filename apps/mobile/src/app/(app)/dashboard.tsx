@@ -287,6 +287,8 @@ export default function Dashboard() {
               icoon={(code, maat) => (kaartWeer[code] ? <WeerIcoon staat={kaartWeer[code]} hoogte={maat} /> : null)}
               gekozen={gekozenProvincie}
               onPress={(code) => zetGekozenProvincie(code === gekozenProvincie ? null : code)}
+              // Voor wie niet kijkt zeggen kleur en icoon niets: de provincie wordt voorgelezen met haar weer.
+              labelVoor={(code, naam) => (kaartWeer[code] ? naam + ", " + WEER_NAMEN[kaartWeer[code]].toLowerCase() : naam)}
             />
             {gekozenProvincie ? (
               <Card tone="white" style={{ alignSelf: "stretch", flexDirection: "row", alignItems: "center", gap: space[3] }}>

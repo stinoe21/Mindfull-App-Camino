@@ -28,6 +28,7 @@ import { Poort } from "@/features/auth/Poort";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { KAARTKLEUR } from "@/features/weer/kaartKleuren";
 import { isProvincie } from "@/features/weer/provincies";
+import { WEER_NAMEN } from "@/features/weer/teksten";
 import { haalWeerbericht, haalWeerberichtProvincies, type WeerberichtStand } from "@/features/weer/weerbericht";
 
 import { WEATHER_CODES, type WeatherCode, type WeatherTodayProvince } from "@mind/types";
@@ -164,12 +165,19 @@ function WeerberichtInhoud() {
               <AppText rol="h3">{t("kaartTitel")}</AppText>
               <AppText rol="bodySmall">{t("kaartUitleg")}</AppText>
             </View>
-            <KaartNederland breedte={220} kleuren={kaartKleuren} icoon={(code, maat) => (kaartWeer[code] ? <WeerIcoon staat={kaartWeer[code]} hoogte={maat} /> : null)} />
+            <KaartNederland
+              breedte={220}
+              kleuren={kaartKleuren}
+              icoon={(code, maat) => (kaartWeer[code] ? <WeerIcoon staat={kaartWeer[code]} hoogte={maat} /> : null)}
+              labelVoor={(code, naam) => (kaartWeer[code] ? naam + ", " + WEER_NAMEN[kaartWeer[code]].toLowerCase() : naam)}
+            />
             <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: space[3] }}>
               {WEATHER_CODES.map((code) => (
                 <View key={code} style={{ flexDirection: "row", alignItems: "center", gap: space[1] }}>
                   <View style={{ width: space[3], height: space[3], borderRadius: radius.pill, backgroundColor: KAARTKLEUR[code] }} />
                   <WeerIcoon staat={code} hoogte={20} />
+                  {/* Weer nooit alleen als kleur of icoon: de naam staat erbij (18 september 2026). */}
+                  <AppText rol="labelCaption" kleur="secondary">{WEER_NAMEN[code]}</AppText>
                 </View>
               ))}
             </View>

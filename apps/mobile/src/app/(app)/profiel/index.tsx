@@ -172,13 +172,13 @@ export default function Profiel() {
       </Card>
 
       <InstellingenGroep titel={t("groepJij")}>
-        <InstellingenRij label={t("naam")} onPress={() => router.push("/profiel/naam")} rechts={<Waarde tekst={inst.naam || t("geenNaam")} />} />
-        <InstellingenRij label={t("onderwerpen")} onPress={() => router.push("/profiel/onderwerpen")} rechts={<Waarde tekst={onderwerpenWaarde} />} laatste />
+        <InstellingenRij label={t("naam")} onPress={() => router.push("/profiel/naam")} rechts={<Waarde tekst={inst.naam || t("geenNaam")} />} waarde={inst.naam || t("geenNaam")} />
+        <InstellingenRij label={t("onderwerpen")} onPress={() => router.push("/profiel/onderwerpen")} rechts={<Waarde tekst={onderwerpenWaarde} />} waarde={onderwerpenWaarde} laatste />
       </InstellingenGroep>
 
       <InstellingenGroep titel={t("groepApp")}>
         {/* Alleen zolang er iets te kiezen valt, zie ENGELS_BESCHIKBAAR. */}
-        {ENGELS_BESCHIKBAAR ? <InstellingenRij label={t("taal")} onPress={() => router.push("/profiel/taal")} rechts={<Waarde tekst={taalWaarde} />} /> : null}
+        {ENGELS_BESCHIKBAAR ? <InstellingenRij label={t("taal")} onPress={() => router.push("/profiel/taal")} rechts={<Waarde tekst={taalWaarde} />} waarde={taalWaarde} /> : null}
         <InstellingenRij label={t("over")} onPress={() => router.push("/profiel/over")} laatste />
       </InstellingenGroep>
 
@@ -187,12 +187,12 @@ export default function Profiel() {
           hem oplevert (docs/privacy-besluiten.md); een dode rij "binnenkort"
           stond er tot 13 september 2026 en is weg. */}
       <InstellingenGroep titel={t("groepPrivacy")}>
-        <InstellingenRij label={t("toestemmingen")} onPress={() => router.push("/profiel/toestemmingen")} rechts={<Waarde tekst={toestemmingWaarde} />} laatste />
+        <InstellingenRij label={t("toestemmingen")} onPress={() => router.push("/profiel/toestemmingen")} rechts={<Waarde tekst={toestemmingWaarde} />} waarde={toestemmingWaarde} laatste />
       </InstellingenGroep>
 
       <InstellingenGroep titel={t("groepAccount")}>
         {/* E-mailadres en wachtwoord wijzigen kan alleen met een sessie (18 september 2026). */}
-        {email ? <InstellingenRij label={t("email")} onPress={() => router.push("/profiel/email")} rechts={<Waarde tekst={email} />} /> : null}
+        {email ? <InstellingenRij label={t("email")} onPress={() => router.push("/profiel/email")} rechts={<Waarde tekst={email} />} waarde={email} /> : null}
         {email ? <InstellingenRij label={t("wachtwoord")} onPress={() => router.push("/profiel/wachtwoord")} /> : null}
         {email ? <InstellingenRij label={t("uitloggen")} onPress={() => router.push("/profiel/uitloggen")} /> : null}
         <InstellingenRij label={t("accountVerwijderen")} onPress={() => router.push("/profiel/account-verwijderen")} laatste />
