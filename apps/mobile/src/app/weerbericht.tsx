@@ -24,6 +24,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
+import { Poort } from "@/features/auth/Poort";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { KAARTKLEUR } from "@/features/weer/kaartKleuren";
 import { isProvincie } from "@/features/weer/provincies";
@@ -75,7 +76,16 @@ const teksten: Woordenboek<typeof nl> = {
   },
 };
 
+// Achter de onboarding, net als de tabs: zie features/auth/Poort.tsx.
 export default function Weerbericht() {
+  return (
+    <Poort>
+      <WeerberichtInhoud />
+    </Poort>
+  );
+}
+
+function WeerberichtInhoud() {
   const router = useRouter();
   const t = useVertaling(teksten);
   const [stand, zetStand] = useState<WeerberichtStand | null>(null);

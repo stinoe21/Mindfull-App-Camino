@@ -40,7 +40,7 @@ import { lijktOpEmail, MIN_WACHTWOORD, PAD_MAIL_BEVESTIGD, stuurBevestigingOpnie
 import { logInMet, type Aanbieder } from "@/features/auth/socialLogin";
 import { getSupabase } from "@/features/backend/client";
 import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
-import { bewaarInstellingen } from "@/features/profiel/instellingen";
+import { bewaarInstellingen, instellingenAlsBekend } from "@/features/profiel/instellingen";
 
 // De schakelaars, zie de kop van dit bestand. Zie docs/scope.md: aanzetten
 // is configuratie, geen verbouwing.
@@ -130,7 +130,9 @@ export default function Inloggen() {
   const [melding, zetMelding] = useState<string | null>(null);
   const { stand: startStand } = useLocalSearchParams<{ stand?: string }>();
   const [stand, zetStand] = useState<"inloggen" | "aanmaken">(startStand === "inloggen" ? "inloggen" : "aanmaken");
-  const [voorwaarden, zetVoorwaarden] = useState(false);
+  // Wie de voorwaarden op dit toestel al accepteerde (de sessie verliep, de
+  // onboarding was af) hoeft het vinkje niet opnieuw te zetten.
+  const [voorwaarden, zetVoorwaarden] = useState(() => instellingenAlsBekend()?.consentVoorwaarden === true);
   const [socialBezig, zetSocialBezig] = useState<Aanbieder | null>(null);
   // Wacht er een bevestigingsmail? Dan staat de knop "Stuur de mail opnieuw" erbij.
   const [wachtOpMail, zetWachtOpMail] = useState(false);
@@ -139,6 +141,15 @@ export default function Inloggen() {
   const client = getSupabase();
   const aanmaken = stand === "aanmaken";
 
+  // Wie de onboarding op dit toestel al had afgerond en alleen de sessie kwijt
+  // was, gaat terug naar Home: naam, onderwerpen en toestemming staan er nog.
+  // Iedereen anders gaat door met de onboarding (18 september 2026).
+  const verderNaInloggen = async () => {
+    const instellingen = await bewaarInstellingen({ consentVoorwaarden: true });
+    if (instellingen.onboardingAfgerond) router.replace("/dashboard");
+    else router.push("/naam");
+  };
+
   // Het venster sluiten zonder in te loggen is geen fout: dan geen melding.
   const logInVia = async (aanbieder: Aanbieder) => {
     zetMelding(null);
@@ -146,8 +157,7 @@ export default function Inloggen() {
     const uitkomst = await logInMet(aanbieder);
     zetSocialBezig(null);
     if (uitkomst === "ok") {
-      await bewaarInstellingen({ consentVoorwaarden: true });
-      router.push("/naam");
+      await verderNaInloggen();
     } else if (uitkomst === "geenVerbinding") {
       zetMelding(t("geenVerbinding"));
     } else if (uitkomst === "mislukt") {
@@ -195,8 +205,7 @@ export default function Inloggen() {
       }
       return;
     }
-    await bewaarInstellingen({ consentVoorwaarden: true });
-    router.push("/naam");
+    await verderNaInloggen();
   };
 
   const maakAccount = async () => {
@@ -219,8 +228,7 @@ export default function Inloggen() {
       return;
     }
     if (data.session) {
-      await bewaarInstellingen({ consentVoorwaarden: true });
-      router.push("/naam");
+      await verderNaInloggen();
       return;
     }
     // Zonder sessie is het account wel aangemaakt maar nog niet bevestigd.

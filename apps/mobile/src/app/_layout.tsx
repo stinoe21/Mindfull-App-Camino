@@ -4,6 +4,10 @@
 // Hier gebeurt precies één ding dat overal doorwerkt: de lettertypes laden en
 // niets tekenen voordat ze er zijn. Zonder dat zie je één tel het systeemfont,
 // en dat is precies het detail waar deze app op beoordeeld wordt.
+//
+// Sinds 18 september 2026 staat hier ook de SessieProvider omheen: één plek
+// die de sessie volgt en het token ververst zolang de app open staat. Zie
+// features/auth/sessie.tsx.
 
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -14,6 +18,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { colors } from "@mind/ui";
 
+import { SessieProvider } from "@/features/auth/sessie";
 import { fontAssets } from "@/theme/fonts";
 
 // Het vangnet: expo-router tekent dit scherm als er bij het tekenen van een
@@ -48,6 +53,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <StatusBar style="dark" />
+      <SessieProvider>
       <Stack
         screenOptions={{
           // Elk scherm tekent zijn eigen hero-gradient als paginaachtergrond,
@@ -57,6 +63,7 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: colors.surfaceBackground },
         }}
       />
+      </SessieProvider>
     </SafeAreaProvider>
   );
 }

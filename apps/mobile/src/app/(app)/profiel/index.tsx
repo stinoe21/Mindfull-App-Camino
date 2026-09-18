@@ -27,7 +27,7 @@ import { Card } from "@mind/ui/components/Card";
 import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
-import { getSupabase } from "@/features/backend/client";
+import { useSessie } from "@/features/auth/sessie";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { leesInstellingen, STANDAARD, type Instellingen } from "@/features/profiel/instellingen";
@@ -106,8 +106,13 @@ export default function Profiel() {
   const t = useVertaling(teksten);
   const { taal } = useTaal();
   const [inst, zetInst] = useState<Instellingen>(STANDAARD);
-  const [email, zetEmail] = useState<string | null>(null);
-  const [geladen, zetGeladen] = useState(false);
+  // De sessie komt van de ene plek die hem volgt (features/auth/sessie.tsx),
+  // zodat uitloggen elders of een verlopen sessie hier meteen zichtbaar is.
+  // "onbekend" is geen netwerk: dan staat er geen "Niet ingelogd" en geen
+  // knop, want de sessie staat nog gewoon op het toestel.
+  const { stand, email } = useSessie();
+  const geladen = stand !== "laden";
+  const uitgelogd = stand === "uitgelogd";
 
   // Bij elke focus opnieuw lezen: je komt hier terug van elke keuzepagina.
   useFocusEffect(
@@ -115,16 +120,6 @@ export default function Profiel() {
       let actief = true;
       leesInstellingen().then((i) => {
         if (actief) zetInst(i);
-      });
-      const client = getSupabase();
-      if (!client) {
-        zetGeladen(true);
-        return;
-      }
-      client.auth.getSession().then(({ data }) => {
-        if (!actief) return;
-        zetEmail(data.session?.user.email ?? null);
-        zetGeladen(true);
       });
       return () => {
         actief = false;
@@ -158,11 +153,13 @@ export default function Profiel() {
             <AppText rol="bodySmall" kleur="secondary">{t("evenKijken")}</AppText>
           ) : (
             <>
-              <AppText rol="h3">{inst.naam || email || t("nietIngelogd")}</AppText>
-              <AppText rol="labelCaption" kleur="secondary">{email ? (inst.naam ? email : t("ingelogd")) : t("logInUitleg")}</AppText>
-              {!email ? (
+              <AppText rol="h3">{inst.naam || email || (uitgelogd ? t("nietIngelogd") : t("ingelogd"))}</AppText>
+              {email || uitgelogd ? (
+                <AppText rol="labelCaption" kleur="secondary">{email ? (inst.naam ? email : t("ingelogd")) : t("logInUitleg")}</AppText>
+              ) : null}
+              {uitgelogd ? (
                 <View style={{ marginTop: space[2] }}>
-                  <Button label={t("inloggen")} variant="secondary" onPress={() => router.push("/inloggen")} />
+                  <Button label={t("inloggen")} variant="secondary" onPress={() => router.push({ pathname: "/inloggen", params: { stand: "inloggen" } })} />
                 </View>
               ) : null}
             </>

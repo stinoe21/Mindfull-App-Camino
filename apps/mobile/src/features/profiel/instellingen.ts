@@ -77,11 +77,20 @@ export function schoonNaam(invoer: string): string {
   return invoer.replace(/\s+/g, " ").trim().slice(0, NAAM_MAX);
 }
 
+// Wat het laatst gelezen of bewaard is, in het geheugen. Alleen zodat de poort
+// (features/auth/Poort.tsx) niet bij elk openen een tel leeg hoeft te tekenen
+// terwijl app/index.tsx hetzelfde net heeft gelezen. De opslag blijft de bron.
+let bekend: Instellingen | null = null;
+
+export function instellingenAlsBekend(): Instellingen | null {
+  return bekend;
+}
+
 export async function leesInstellingen(): Promise<Instellingen> {
   try {
     const raw = await AsyncStorage.getItem(SLEUTEL);
-    if (!raw) return STANDAARD;
-    return { ...STANDAARD, ...(JSON.parse(raw) as Partial<Instellingen>) };
+    bekend = raw ? { ...STANDAARD, ...(JSON.parse(raw) as Partial<Instellingen>) } : STANDAARD;
+    return bekend;
   } catch {
     return STANDAARD;
   }
@@ -95,6 +104,7 @@ export async function bewaarInstellingen(wijziging: Partial<Instellingen>): Prom
   } catch {
     // Niet kunnen bewaren mag de flow niet blokkeren.
   }
+  bekend = nieuw;
   return nieuw;
 }
 
@@ -102,6 +112,7 @@ export async function wisAlleLokaleData(): Promise<void> {
   // De challenge-voortgang staat ook in het geheugen; alleen de opslag legen
   // zou hem tot de volgende herstart laten staan.
   await wisVoortgang();
+  bekend = null;
   try {
     await AsyncStorage.clear();
   } catch {
@@ -120,6 +131,7 @@ export async function wisAlleLokaleData(): Promise<void> {
 export async function wisBijUitloggen(): Promise<void> {
   const { taal } = await leesInstellingen();
   await wisVoortgang();
+  bekend = null;
   try {
     const sleutels = (await AsyncStorage.getAllKeys()).filter((k) => k.startsWith("mind."));
     await AsyncStorage.multiRemove(sleutels);
