@@ -142,11 +142,14 @@ Deze vijftien staan als specificatie klaar in `reference/components`, met exacte
 | `ContentSection` | Sectiekop met serif-titel, optionele regel en actie rechts. |
 | `ContentShelf` + `ShelfCard` | Horizontale rij voor een open verzameling, met de volgende kaart net zichtbaar. |
 | `ContentGrid` + `ContentCard` | Twee gelijke kolommen voor een eindige set. |
+| `Lijst` + `LijstRij` | Rijen op het vel met een dunne lijn ertussen: titel, regel eronder, beeld links, "›" rechts. Sinds 14 september 2026. |
+| `Segmenten` | Twee tot vier panelen in één pil, één actief. Voor een pagina die anders één lange scroll zou zijn. Sinds 14 september 2026. |
+| `Pager` | Kaarten die je horizontaal swipet, één per scherm, de volgende piept aan de rand, stippen eronder. Sinds 14 september 2026. |
 | `MascotteVlieger` | De vlieger in zeven stemmings- en weerstaten. |
 | `MascotteInput` | Eén pose per check-invraag. **Andere familie dan hierboven, niet door elkaar halen.** |
 | `NavigationBar` | Zwevende tabbalk met vijf bestemmingen. |
-| `BackgroundHeroBand` | De hero van 200 hoog voor gewone schermen, zes weerstaten. |
-| `BackgroundHeroGradient` | De hero van 480 hoog voor uitkomstschermen, zes weerstaten. |
+| `BackgroundHeroBand` | De hero van 200 hoog voor gewone schermen. Eén tekening, per weerstaat een kleurwas uit het palet (`achtergronden.ts`). |
+| `BackgroundHeroGradient` | De hero van 480 hoog die in het crème vervaagt. Dezelfde tekening en kleurwas als de band. |
 
 Daarnaast staat er in `reference/components/library` een set geleende generieke besturingselementen: invoervelden, iconen, "Ga verder met Apple", "Ga verder met Google", een contactformulier. Die worden echt gebruikt door de onboarding- en formulierschermen. Grijp daarnaar voor auth en generieke formulieren in plaats van iets nieuws te tekenen.
 
@@ -155,7 +158,7 @@ Daarnaast staat er in `reference/components/library` een set geleende generieke 
 Drie eisen uit `scope.md` en `datamodel.md` hebben geen component in de export. Dat zijn geen designkeuzes maar productvereisten, en ze blijven staan:
 
 - **Collectief weerbericht met een verplichte lege staat.** Het landelijke weerbericht mag pas getoond worden **boven een minimum aantal deelnemers**, anders is een uitkomst herleidbaar naar personen. Zie het board, connector `12:308`, en `datamodel.md`. Die staat is dus geen randgeval maar een privacymaatregel, en hij moet in de kitchen sink staan.
-- **De MIND Hulplijn is een route die overal bereikbaar is.** `HERKOMST.md` noemt dit een systeembreed punt, met de nuance dat het niet op letterlijk elk scherm hoeft. Waar hij wel en niet staat is een besluit dat nog niet genomen is, zie de open punten. Landt hij in de root layout van expo-router, dan is dat een gedeeld bestand en dus een eigen taak van de eigenaar.
+- **De MIND Hulplijn is een route die overal bereikbaar is.** `HERKOMST.md` noemt dit een systeembreed punt, met de nuance dat het niet op letterlijk elk scherm hoeft. Nu: de Hulplijn-kaart onderaan Home en Profiel. Een chipje rechtsboven op elk scherm vanuit de root layout is op 13 september 2026 geprobeerd en afgewezen (Stijn: niet mooi). Waar hij verder nog komt is open, zie de open punten. Sinds 14 september 2026 ook onder het paneel Verder van elk Houvast-onderwerp en onder elke zelftestuitslag. Regel van Stijn: contact met een mens staat los van inhoud, dus de Hulplijn is altijd deze kaart en nooit een gewone tekstlink.
 - **Een zoekresultaat toont altijd de bronpagina.** Geen chat, geen gegenereerd antwoord. Zie `productprincipes.md` principe 10. Bouw hier nooit een variant zonder bronvermelding.
 
 ### Systeemstaten die nog ontworpen moeten worden
@@ -183,7 +186,7 @@ Wat er is, in `packages/ui/assets`:
 
 | Map | Wat |
 |---|---|
-| `backgrounds/` | Zes hero-achtergronden: `default`, `zonnig`, `wolken`, `mist`, `wind`, `regen`. |
+| `backgrounds/` | De hero-tekening `hero-default`. De vijf weerplaatjes (`hero-zonnig` en verder) staan er nog maar worden sinds 14 september 2026 niet meer geladen: het weer is een kleurwas uit het palet over de ene tekening, omdat de vijf plaatjes elk een eigen palet hadden en "zonnig" een paars was dat nergens anders voorkomt. |
 | `mascot/` | `mascot-main.svg` plus drie check-in-poses. |
 | `nav/` | Het home-icoon van de tabbalk. |
 
@@ -274,5 +277,5 @@ Dit zijn beslissingen van ons drieën, geen vergeten werk. De technische variant
 | **De mascotte-poses op 3x** | Nu 354 bij 136 pixels voor een weergave van 128 hoog. Op een retina-scherm wordt dat zacht. |
 | **Een link naar het bronbestand in Figma** | Zonder die link kunnen Max en Caesar niet bij het ontwerp, alleen bij wat is overgenomen. |
 | **Donkere modus: wel of niet** | Het overgenomen systeem heeft er geen. De oude styleguide had wel een licht- en donkervariant. Nu beslissen is goedkoop, later betekent het elke kleur opnieuw langslopen. |
-| **Waar de Hulplijn zichtbaar is** | Systeembreed, maar niet per se op elk scherm. Zolang dat niet vastligt bouwt iedereen het net anders in. |
+| **Waar de Hulplijn verder zichtbaar is** | Beantwoord voor Houvast op 14 september 2026 (Stijn, PR #126): de kaart staat onder het paneel Verder van elk onderwerp en onder elke testuitslag, met de overline "Praten met iemand van MIND"; nooit als tekstlink naast leeslinks. Een chipje in de titelbalk is afgewezen (13 september 2026). Op Challenges en tijdens de check-in staat hij nog niet; of dat moet, blijft open. |
 | **Contrastcontrole** | De oude styleguide had ratio's per tekstgrootte, het nieuwe systeem niet. Voor App Review en voor de doelgroep is dit geen detail. |
