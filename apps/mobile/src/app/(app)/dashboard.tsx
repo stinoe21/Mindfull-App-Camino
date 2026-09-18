@@ -63,11 +63,6 @@ const nl = {
   nietIngelogd: "Log in om het mentale weer te zien.",
   teWeinig: "Nog te weinig check-ins voor een beeld. Later vandaag staat hier meer.",
   berichtFout: "Het mentale weer kon niet worden opgehaald. Zonder verbinding werkt de rest van de app gewoon.",
-  legZonnig: "Zon",
-  legWolken: "Wolken",
-  legMist: "Mist",
-  legWind: "Wind",
-  legRegen: "Regen",
   allesBekijken: "Alles bekijken",
   tipsTitel: "Houvast voor jou",
   tipsNote: "Kort uitgelegd en wat kan helpen. Jouw onderwerpen eerst.",
@@ -92,11 +87,6 @@ const teksten: Woordenboek<typeof nl> = {
     nietIngelogd: "Log in to see the mental weather.",
     teWeinig: "Not enough check-ins yet for a picture. Later today there will be more here.",
     berichtFout: "The mental weather couldn't be loaded. Without a connection the rest of the app still works.",
-    legZonnig: "Sun",
-    legWolken: "Clouds",
-    legMist: "Mist",
-    legWind: "Wind",
-    legRegen: "Rain",
     allesBekijken: "See all",
     tipsTitel: "Houvast for you",
     tipsNote: "Explained briefly and what can help. Your topics first.",
@@ -104,14 +94,6 @@ const teksten: Woordenboek<typeof nl> = {
 };
 
 const isWeerCode = (code: string): code is WeatherCode => (WEATHER_CODES as readonly string[]).includes(code);
-const LEGENDA: Record<WeatherCode, "legZonnig" | "legWolken" | "legMist" | "legWind" | "legRegen"> = {
-  zonnig: "legZonnig",
-  wolken: "legWolken",
-  mist: "legMist",
-  wind: "legWind",
-  regen: "legRegen",
-};
-
 export default function Dashboard() {
   const router = useRouter();
   const t = useVertaling(teksten);
@@ -175,8 +157,12 @@ export default function Dashboard() {
   const topBericht = bericht?.staat === "geladen" ? [...bericht.rijen].sort((a, b) => b.share - a.share)[0] : null;
   const topCode = topBericht && isWeerCode(topBericht.weather) ? topBericht.weather : null;
   const kaartKleuren: Partial<Record<ProvincieCode, string>> = {};
+  const kaartWeer: Partial<Record<ProvincieCode, WeatherCode>> = {};
   for (const rij of provincies) {
-    if (isProvincie(rij.province) && isWeerCode(rij.weather)) kaartKleuren[rij.province] = KAARTKLEUR[rij.weather];
+    if (isProvincie(rij.province) && isWeerCode(rij.weather)) {
+      kaartKleuren[rij.province] = KAARTKLEUR[rij.weather];
+      kaartWeer[rij.province] = rij.weather;
+    }
   }
   const gekozenRij = gekozenProvincie ? provincies.find((r) => r.province === gekozenProvincie) : undefined;
 
@@ -245,10 +231,13 @@ export default function Dashboard() {
 
       {/* Slot 3: het mentale weer van Nederland. Sinds 15 september 2026
           (Stijn: de kaart kon qua design echt beter, en een knop naar een lege
-          pagina hoeft niet) op het vel als gewone sectie: de kaart is het
-          beeld, de provincies in hun weerkleur, een legenda van de vijf
-          weerbeelden en één regel eronder. Tik op een provincie voor haar
-          naam en weerbeeld. Geen aantallen check-ins: die zeggen de gebruiker
+          pagina hoeft niet) op het vel als gewone sectie. Sinds 17 september
+          2026 een weerkaart zoals in een weerbericht (Stijn: de kaart viel
+          "uit de huisstijl" en hoorde zichtbaar niet bij de check-in): op
+          elke provincie het weericoon dat je ook als uitkomst krijgt, in de
+          was van dat weer. De losse legenda is daarmee weg; het icoon op de
+          kaart is de legenda. Tik op een provincie voor haar naam en
+          weerbeeld. Geen aantallen check-ins: die zeggen de gebruiker
           niets, en dicht bij de drempel per provincie is een exact getal juist
           wat je niet wilt tonen (Stijn, 15 september 2026). Nooit een
           waardering: de kleur is het weer zelf (productprincipe 3). */}
@@ -257,7 +246,13 @@ export default function Dashboard() {
           {bericht === null ? (
             <ActivityIndicator color={colors.brandDefault} />
           ) : (
-            <KaartNederland breedte={kaartBreedte} kleuren={kaartKleuren} onPress={(code) => zetGekozenProvincie(code === gekozenProvincie ? null : code)} />
+            <KaartNederland
+              breedte={kaartBreedte}
+              kleuren={kaartKleuren}
+              icoon={(code, maat) => (kaartWeer[code] ? <WeerIcoon staat={kaartWeer[code]} hoogte={maat} /> : null)}
+              gekozen={gekozenProvincie}
+              onPress={(code) => zetGekozenProvincie(code === gekozenProvincie ? null : code)}
+            />
           )}
           {gekozenProvincie ? (
             <Card tone="white" style={{ alignSelf: "stretch", flexDirection: "row", alignItems: "center", gap: space[3] }}>
@@ -272,15 +267,6 @@ export default function Dashboard() {
               </View>
             </Card>
           ) : null}
-          {/* De legenda: dezelfde vijf iconen als in de check-in-kaart. */}
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignSelf: "stretch", paddingHorizontal: space[2] }}>
-            {WEATHER_CODES.map((code) => (
-              <View key={code} style={{ alignItems: "center", gap: space[1] }}>
-                <WeerIcoon staat={code} hoogte={24} />
-                <AppText rol="labelCaption" kleur="secondary">{t(LEGENDA[code])}</AppText>
-              </View>
-            ))}
-          </View>
           {bericht === null ? null : (
             <AppText rol="bodySmall" kleur="secondary" centreer>
               {bericht.staat === "geladen" && topBericht

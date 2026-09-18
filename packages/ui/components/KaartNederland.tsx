@@ -4,17 +4,28 @@
 // mentale weer per provincie, als kaartje op Home. De omtrekken komen uit de
 // gegeneraliseerde provinciegrenzen van het CBS (via cartomap.github.io/nl,
 // CC BY 4.0, bron CBS/Kadaster), vereenvoudigd tot een handvol punten per
-// provincie en geprojecteerd op een vlak van 100 bij 118.5. Het is een
-// gegevensbestand en geen illustratie: de tekening zelf is de dunne inktlijn
-// van het design system, de vulling komt van de weertint per provincie.
+// provincie en geprojecteerd op een vlak van 100 bij 118.5.
 //
-// Alleen tekenen; wat een provincie voor kleur krijgt en of hij tikbaar is,
-// bepaalt de aanroeper.
+// Sinds 17 september 2026 (Stijn: de kaart viel "uit de huisstijl", en het
+// was "niet duidelijk dat dat bij elkaar hoort", de kaart en de check-in) is
+// het een weerkaart zoals in een weerbericht, in de tekentaal van de app:
+//
+//   - één inktlijn om het land, zoals om de vlieger; de grenzen tussen de
+//     provincies zijn naden in de kleur van het vel, geen zwarte lijnen
+//   - de provincie in de was van haar weer (dezelfde kleuren als de hero van
+//     de check-in), zonder gegevens in zand in plaats van koel grijs
+//   - op elke provincie het weericoon dat iemand ook als uitkomst van de
+//     check-in krijgt, zodat kaart en check-in zichtbaar hetzelfde zijn
+//   - de gekozen provincie krijgt haar eigen inktlijn
+//
+// Alleen tekenen; wat een provincie voor kleur en icoon krijgt en of hij
+// tikbaar is, bepaalt de aanroeper.
 
+import type { ReactNode } from "react";
 import { View } from "react-native";
 import Svg, { G, Path } from "react-native-svg";
 
-import { palette } from "../tokens/tokens.ts";
+import { colors, palette } from "../tokens/tokens.ts";
 
 export type ProvincieCode =
   | "groningen"
@@ -38,7 +49,7 @@ export const PROVINCIES: { code: ProvincieCode; naam: string; d: string; cx: num
   { code: "flevoland", naam: "Flevoland", d: "M63.1 31.6 L61.3 30.0 L59.6 30.7 L58.0 33.4 L57.9 37.7 L59.4 39.6 L57.0 40.7 L54.1 43.1 L53.6 43.0 L54.7 41.6 L52.9 38.3 L51.7 37.0 L50.0 36.5 L52.9 38.3 L54.6 41.5 L53.6 43.0 L53.8 44.1 L45.9 49.5 L46.1 52.0 L48.3 51.6 L50.8 52.8 L53.0 55.0 L54.7 54.6 L56.2 54.1 L56.9 52.1 L56.5 50.9 L57.2 50.1 L58.4 50.4 L59.7 48.9 L63.2 47.1 L64.5 44.9 L64.8 42.6 L63.6 41.3 L59.5 40.5 L59.7 39.8 L64.1 39.8 L67.5 38.7 L68.0 37.9 L66.7 37.1 L67.5 36.4 L66.4 34.0 L63.1 31.6Z", cx: 57.0, cy: 42.7 },
   { code: "gelderland", naam: "Gelderland", d: "M88.2 60.7 L85.6 60.2 L85.8 58.7 L85.2 58.3 L84.3 58.8 L83.7 58.0 L80.9 58.0 L79.2 55.5 L78.3 55.3 L77.2 56.1 L72.3 56.1 L70.3 52.1 L70.6 50.0 L71.7 49.6 L71.8 48.8 L71.1 46.0 L69.2 44.1 L67.5 45.6 L66.5 45.7 L65.0 43.8 L63.5 47.3 L60.7 49.6 L58.5 50.4 L56.2 54.5 L53.0 55.3 L52.7 56.4 L53.9 57.2 L53.9 58.5 L55.5 59.5 L55.1 61.7 L54.4 62.3 L56.1 62.4 L56.9 61.5 L57.0 63.6 L58.8 67.7 L58.2 68.1 L54.0 66.3 L51.2 67.5 L48.9 66.7 L47.9 67.4 L47.2 67.1 L45.5 70.4 L44.0 71.1 L44.1 71.7 L42.7 71.7 L43.3 72.4 L43.2 73.4 L42.5 73.3 L44.3 75.0 L45.0 74.7 L46.1 75.3 L46.1 76.2 L49.1 76.9 L51.9 75.8 L53.0 73.3 L53.9 73.7 L55.1 72.9 L56.6 73.5 L57.8 72.9 L59.0 73.3 L62.7 76.2 L64.9 75.9 L65.0 75.2 L65.7 75.1 L66.2 76.1 L67.2 76.4 L68.2 75.6 L67.0 73.1 L69.4 72.3 L70.1 71.4 L72.8 72.4 L72.8 71.5 L71.3 70.1 L72.5 69.7 L74.0 71.3 L75.7 71.0 L76.4 72.1 L77.4 72.0 L79.0 73.0 L78.6 71.1 L80.5 71.8 L85.9 69.3 L87.2 70.1 L88.4 69.3 L89.1 67.4 L89.9 67.2 L89.9 66.0 L86.3 64.0 L86.5 62.7 L87.9 62.1 L88.2 60.7Z", cx: 65.4, cy: 64.4 },
   { code: "utrecht", naam: "Utrecht", d: "M44.2 53.7 L43.7 53.8 L43.1 52.9 L40.6 53.9 L40.2 55.0 L37.2 56.1 L38.5 58.1 L39.7 58.9 L39.3 59.8 L38.2 59.6 L37.2 60.5 L38.0 61.2 L38.0 62.5 L39.1 63.0 L38.1 63.6 L37.4 65.1 L38.6 64.9 L38.8 65.4 L37.8 65.7 L39.4 68.3 L40.8 67.9 L42.5 70.6 L43.2 70.7 L43.2 71.7 L44.1 71.7 L44.0 71.1 L45.5 70.4 L47.2 67.1 L47.9 67.4 L48.5 66.7 L51.2 67.5 L55.1 66.4 L58.2 68.1 L58.8 67.7 L57.0 63.6 L56.9 61.5 L56.1 62.4 L54.4 62.3 L55.1 61.7 L55.5 59.5 L53.9 58.5 L53.9 57.2 L52.7 56.4 L53.0 55.3 L51.8 54.3 L49.4 53.8 L47.5 58.2 L43.7 58.7 L43.4 56.7 L44.0 55.7 L43.2 54.5 L44.2 53.7Z", cx: 46.4, cy: 61.7 },
-  { code: "noord-holland", naam: "Noord-Holland", d: "M50.0 36.5 L49.9 34.4 L49.2 33.9 L46.3 34.3 L45.2 33.0 L45.5 29.9 L43.5 26.3 L46.8 23.4 L43.9 25.9 L41.7 26.4 L40.9 27.5 L39.3 28.2 L37.6 27.2 L37.4 25.4 L35.6 25.0 L33.1 34.9 L31.5 45.5 L32.3 46.0 L31.0 46.2 L31.0 47.8 L29.4 51.8 L31.2 52.6 L32.5 52.4 L31.3 54.3 L31.1 56.4 L33.0 56.6 L34.9 55.8 L35.4 56.7 L37.7 56.1 L43.1 52.9 L44.2 53.8 L43.2 54.5 L44.0 55.7 L43.4 56.7 L43.7 58.7 L47.5 58.2 L49.4 53.8 L50.5 53.9 L50.7 52.9 L47.0 52.8 L44.5 51.3 L43.5 51.6 L41.9 50.0 L46.0 46.3 L45.2 46.0 L44.9 47.1 L43.8 47.1 L44.1 45.2 L44.8 44.4 L43.3 41.7 L43.0 39.1 L44.8 38.5 L45.9 39.5 L46.7 39.4 L48.7 37.9 L48.9 36.7 L50.0 36.5Z M39.4 16.8 L38.4 15.7 L36.3 18.9 L35.4 20.5 L35.1 23.5 L35.7 23.9 L37.0 23.3 L39.2 21.1 L40.2 17.7 L39.4 16.8Z", cx: 42.0, cy: 44.9 },
+  { code: "noord-holland", naam: "Noord-Holland", d: "M50.0 36.5 L49.9 34.4 L49.2 33.9 L46.3 34.3 L45.2 33.0 L45.5 29.9 L43.5 26.3 L46.8 23.4 L43.9 25.9 L41.7 26.4 L40.9 27.5 L39.3 28.2 L37.6 27.2 L37.4 25.4 L35.6 25.0 L33.1 34.9 L31.5 45.5 L32.3 46.0 L31.0 46.2 L31.0 47.8 L29.4 51.8 L31.2 52.6 L32.5 52.4 L31.3 54.3 L31.1 56.4 L33.0 56.6 L34.9 55.8 L35.4 56.7 L37.7 56.1 L43.1 52.9 L44.2 53.8 L43.2 54.5 L44.0 55.7 L43.4 56.7 L43.7 58.7 L47.5 58.2 L49.4 53.8 L50.5 53.9 L50.7 52.9 L47.0 52.8 L44.5 51.3 L43.5 51.6 L41.9 50.0 L46.0 46.3 L45.2 46.0 L44.9 47.1 L43.8 47.1 L44.1 45.2 L44.8 44.4 L43.3 41.7 L43.0 39.1 L44.8 38.5 L45.9 39.5 L46.7 39.4 L48.7 37.9 L48.9 36.7 L50.0 36.5Z M39.4 16.8 L38.4 15.7 L36.3 18.9 L35.4 20.5 L35.1 23.5 L35.7 23.9 L37.0 23.3 L39.2 21.1 L40.2 17.7 L39.4 16.8Z", cx: 38.5, cy: 42.0 },
   { code: "zuid-holland", naam: "Zuid-Holland", d: "M24.7 76.4 L23.4 76.4 L24.7 77.2 L25.8 76.8 L24.7 76.4Z M37.2 56.1 L35.4 56.7 L34.9 55.8 L33.0 56.6 L31.1 56.4 L31.3 54.3 L32.5 52.4 L31.2 52.6 L29.4 51.8 L26.3 57.8 L20.2 65.3 L19.0 66.3 L16.7 66.2 L15.7 67.1 L16.2 69.2 L18.0 69.2 L17.4 70.5 L18.4 72.1 L17.6 73.1 L16.6 72.1 L13.0 73.6 L13.1 74.9 L12.5 75.9 L14.0 74.4 L16.3 74.1 L18.2 77.9 L23.9 80.3 L25.9 79.6 L27.1 78.4 L27.2 77.5 L30.4 78.3 L33.1 77.7 L35.7 76.0 L37.3 74.2 L38.5 74.2 L40.9 73.0 L43.2 73.4 L43.3 72.4 L42.5 72.1 L43.2 71.7 L43.2 70.7 L42.5 70.6 L40.8 67.9 L39.4 68.3 L37.8 65.7 L38.8 65.4 L38.6 64.9 L37.4 65.1 L38.1 63.6 L39.1 63.0 L38.0 62.5 L38.0 61.2 L37.2 60.5 L38.2 59.6 L39.3 59.8 L39.7 58.9 L38.5 58.1 L37.2 56.1Z", cx: 28.3, cy: 68.9 },
   { code: "zeeland", naam: "Zeeland", d: "M4.2 90.8 L0.3 92.3 L0.7 93.9 L0.0 94.7 L1.3 97.1 L2.4 97.8 L4.4 97.6 L4.1 95.8 L5.6 95.8 L6.0 95.1 L11.3 97.2 L11.2 98.9 L13.8 98.6 L13.7 99.5 L16.8 97.8 L18.1 97.7 L20.9 95.6 L22.7 93.3 L22.0 92.2 L20.2 92.7 L18.0 92.5 L17.1 91.0 L16.0 90.8 L15.5 92.5 L13.2 93.8 L11.6 93.7 L4.2 90.8Z M12.5 76.0 L8.6 77.5 L8.6 79.3 L9.4 80.0 L8.4 82.6 L5.0 83.0 L1.9 85.7 L5.6 89.4 L7.8 88.7 L11.8 91.7 L14.1 91.3 L14.6 89.2 L16.0 88.4 L18.2 90.5 L20.7 91.3 L21.7 90.8 L22.9 92.1 L23.8 92.1 L23.8 90.0 L22.3 86.6 L22.5 84.1 L21.6 82.9 L22.8 81.2 L21.0 80.3 L20.6 79.1 L19.0 79.8 L17.0 78.9 L15.9 77.0 L12.1 76.7 L12.5 76.0Z", cx: 14.3, cy: 84.3 },
   { code: "noord-brabant", naam: "Noord-Brabant", d: "M64.9 75.9 L61.8 75.9 L57.8 72.9 L56.6 73.5 L55.1 72.9 L53.9 73.7 L53.0 73.3 L51.9 75.8 L49.1 76.9 L46.1 76.2 L46.1 75.3 L45.0 74.7 L44.3 75.0 L42.5 73.3 L40.9 73.0 L38.5 74.2 L37.3 74.2 L32.2 78.5 L29.3 79.1 L27.1 78.4 L25.7 80.6 L22.2 81.4 L21.6 82.9 L22.7 85.0 L22.3 86.6 L23.8 90.0 L23.6 91.7 L25.3 92.0 L25.5 92.8 L26.6 93.0 L27.8 92.1 L26.8 90.7 L26.6 89.0 L30.6 87.6 L30.5 90.1 L34.0 90.0 L33.9 89.2 L36.1 86.8 L38.4 87.7 L38.1 90.1 L36.5 89.8 L36.6 90.4 L39.6 90.4 L40.7 91.2 L42.6 89.2 L43.1 87.6 L44.6 88.1 L45.3 89.8 L44.4 91.4 L46.0 93.3 L46.0 94.6 L47.7 94.3 L48.8 95.1 L48.7 96.9 L51.2 96.9 L51.5 96.3 L53.3 96.9 L55.1 95.3 L57.0 96.9 L57.2 98.6 L58.6 98.3 L58.8 96.4 L59.9 94.7 L65.2 93.1 L66.7 91.7 L65.1 89.0 L64.2 84.1 L66.0 84.6 L68.5 83.9 L69.3 84.6 L69.5 83.4 L69.0 81.7 L67.5 80.2 L67.3 78.0 L65.5 77.2 L64.9 75.9Z", cx: 45.1, cy: 84.5 },
@@ -48,31 +59,69 @@ export const PROVINCIES: { code: ProvincieCode; naam: string; d: string; cx: num
 const W = 100;
 const H = 118.5;
 
+// Lijndiktes in eenheden van het tekenvlak (100 breed). De inktlijn ligt
+// onder de vlakken en steekt er aan de buitenkant half onderuit; de naad ligt
+// erbovenop. Zo is er zonder aparte landsgrens toch één omtrek.
+const INKT = 2.6;
+const NAAD = 0.9;
+/** De lijn om de gekozen provincie: dunner dan de landsgrens, zodat die de hoofdlijn blijft. */
+const GEKOZEN = 0.8;
+/** Het icoon op een provincie, als deel van de kaartbreedte. */
+const ICOON_DEEL = 0.095;
+
 export type KaartNederlandProps = {
-  /** Vulling per provincie; ontbreekt een code, dan blijft de provincie leeg (neutraal). */
+  /** Vulling per provincie; ontbreekt een code, dan blijft de provincie zand (nog geen beeld). */
   kleuren?: Partial<Record<ProvincieCode, string>>;
+  /** Het icoon op een provincie, in de gegeven maat; niets teruggeven laat de provincie leeg. */
+  icoon?: (code: ProvincieCode, maat: number) => ReactNode;
+  /** De provincie die gekozen is: zij krijgt haar eigen inktlijn. */
+  gekozen?: ProvincieCode | null;
   onPress?: (code: ProvincieCode) => void;
   /** Breedte in punten; de hoogte volgt de verhouding van de kaart. */
   breedte?: number;
 };
 
-export function KaartNederland({ kleuren = {}, onPress, breedte = 240 }: KaartNederlandProps) {
+export function KaartNederland({ kleuren = {}, icoon, gekozen, onPress, breedte = 240 }: KaartNederlandProps) {
   const hoogte = (breedte * H) / W;
+  const maat = Math.round(breedte * ICOON_DEEL);
+  const gekozenProvincie = gekozen ? PROVINCIES.find((p) => p.code === gekozen) : undefined;
   return (
     <View style={{ width: breedte, height: hoogte }} accessibilityLabel="Kaart van Nederland">
-      <Svg width={breedte} height={hoogte} viewBox={`0 0 ${W} ${H}`}>
-        <G stroke={palette.baseInk} strokeWidth={0.7} strokeLinejoin="round">
+      <Svg width={breedte} height={hoogte} viewBox={`${-INKT} ${-INKT} ${W + INKT * 2} ${H + INKT * 2}`}>
+        {/* De inktlijn om het land. */}
+        <G stroke={palette.baseInk} strokeWidth={INKT} strokeLinejoin="round" fill={palette.baseInk}>
+          {PROVINCIES.map((p) => (
+            <Path key={p.code} d={p.d} />
+          ))}
+        </G>
+        {/* De provincies in hun was, met naden in de kleur van het vel. */}
+        <G stroke={colors.surfaceBackground} strokeWidth={NAAD} strokeLinejoin="round">
           {PROVINCIES.map((p) => (
             <Path
               key={p.code}
               d={p.d}
-              fill={kleuren[p.code] ?? palette.neutral100}
+              fill={kleuren[p.code] ?? palette.yellow100}
               onPress={onPress ? () => onPress(p.code) : undefined}
               accessibilityLabel={p.naam}
             />
           ))}
         </G>
+        {gekozenProvincie ? <Path d={gekozenProvincie.d} fill="none" stroke={palette.baseInk} strokeWidth={GEKOZEN} strokeLinejoin="round" /> : null}
       </Svg>
+      {/* De weericonen liggen los over de kaart en vangen geen aanraking af. */}
+      {icoon
+        ? PROVINCIES.map((p) => {
+            const beeld = icoon(p.code, maat);
+            if (!beeld) return null;
+            const x = ((p.cx + INKT) / (W + INKT * 2)) * breedte;
+            const y = ((p.cy + INKT) / (H + INKT * 2)) * hoogte;
+            return (
+              <View key={p.code} pointerEvents="none" style={{ position: "absolute", left: x - maat / 2, top: y - maat / 2 }}>
+                {beeld}
+              </View>
+            );
+          })
+        : null}
     </View>
   );
 }
