@@ -26,6 +26,7 @@ Dit is de volledige API van de backend. Alles wat hier niet staat, is voor de ap
 | Noodrem lezen | `rpc('get_app_status')` | De minimale versie van de app en het onderhoudsbericht, of null. Alleen ingelogd, zonder argumenten: de app stuurt niets over zichzelf mee en vergelijkt zelf. Faalt open, zie `apps/mobile/src/features/systeem/appStatus.ts`. |
 | Account verwijderen | `rpc('delete_own_account')` | Verwijdert de eigen rij in `auth.users`; profiel en sessies gaan mee via de cascade. Scherm 19. |
 | Gebruikstotalen insturen | `rpc('log_usage', { p_events: [{ d: '2026-09-17', e: 'topic_opened', i: 'piekeren', n: 3 }] })` | Eén batch per account per dag, alleen van afgesloten dagen (hooguit zeven terug). Zet eerst het slot `last_usage_on` en werkt `last_active_at` bij, telt dan op bij `usage_daily`. Wat niet in `usage_event` past wordt overgeslagen. Tweede batch op dezelfde dag: "vandaag al ingestuurd". Alleen `features/meten` roept dit aan. |
+| De eigen rol in het beheer | `rpc('admin_role')` | Geeft `analist`, `redacteur`, `beheerder` of `null`. Alleen `apps/admin` roept dit aan, na het inloggen. Voor een medewerker werkt het ook `last_active_at` bij. |
 
 **De noodrem bedienen** is data en geen schema, en doet de eigenaar. Met de CLI, ingelogd met het eigen account:
 
@@ -36,7 +37,16 @@ supabase db query --linked -f /tmp/noodrem.sql
 
 Onderhoud aan: `set maintenance_nl = 'Weertje is even in onderhoud. Probeer het over een uur opnieuw.'`. Onderhoud uit: `set maintenance_nl = null`. De app vraagt de stand hooguit eens per uur op, en direct bij "Probeer opnieuw".
 
-Daarnaast zijn er twee functies die de app **niet** mag aanroepen: `usage_scrub()`, die de recente gebruikstotalen herschrijft (zie `datamodel.md`, "Wat de dagtotalen niet oplossen"), en `purge_inactive_accounts(p_days)`, de bewaartermijn van twee jaar. Alleen een beheerder of een geplande taak, en die planning is een open besluit.
+**Iemand toegang geven tot het beheer** is data en geen schema, en doet de eigenaar. De medewerker maakt eerst zelf een account aan; daarna, met de CLI:
+
+```bash
+echo "insert into public.admin_users (user_id, role) select id, 'analist' from auth.users where email = 'naam@wijzijnmind.nl';" > /tmp/rol.sql
+supabase db query --linked -f /tmp/rol.sql
+```
+
+De rollen zijn `analist`, `redacteur` en `beheerder`. Toegang intrekken is de rij weghalen. Er is bewust geen scherm voor.
+
+Daarnaast zijn er functies die geen app mag aanroepen: `has_admin_role()`, de rolcontrole waarmee elke beheerfunctie begint, en verder twee functies die de app **niet** mag aanroepen: `usage_scrub()`, die de recente gebruikstotalen herschrijft (zie `datamodel.md`, "Wat de dagtotalen niet oplossen"), en `purge_inactive_accounts(p_days)`, de bewaartermijn van twee jaar. Alleen een beheerder of een geplande taak, en die planning is een open besluit.
 
 Schrijven op `profiles` kan niet vanuit de app, ook niet op je eigen rij: anders zet iemand zijn eigen slot terug. En `weather_hourly` is helemaal onzichtbaar: RLS staat aan en er is bewust geen enkele policy.
 

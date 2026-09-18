@@ -135,7 +135,7 @@ Welke schermen lezen dit? <lijst>
 
 ## Tabellen
 
-Zes tabellen, en wat er niet in staat, staat er bewust niet in. De rest van de dataflow, dus content, challenges en de twee consents, is nog niet ingevuld en staat onderaan bij de openstaande punten.
+Zeven tabellen, en wat er niet in staat, staat er bewust niet in. De rest van de dataflow, dus content, challenges en de twee consents, is nog niet ingevuld en staat onderaan bij de openstaande punten.
 
 ### weather_type
 
@@ -286,6 +286,35 @@ Welke schermen lezen dit? Geen. De app leest deze rij niet; het slot werkt in su
 Sinds 18 september 2026 werkt ook `log_usage()` `last_active_at` bij. Tot dan deed alleen een check-in dat, en wie geen toestemming gaf voor het weerbericht leek daardoor altijd inactief: zo iemand zou na twee jaar door de opruiming verdwijnen terwijl hij de app gewoon gebruikte. Wie het meten uitzet en ook niet bijdraagt aan het weerbericht, heeft dat probleem nog steeds; dat hoort opgelost te zijn voordat de opruiming wordt ingepland.
 
 Komen er later velden bij die de gebruiker zelf mag wijzigen, dan geef je daar een grant **per kolom** op. Niet een update-policy op de hele tabel, want dan komen `last_checkin_on` en `last_checkin_part` er ongemerkt bij.
+
+### admin_users
+
+```
+Tabel:            admin_users
+Waarvoor:         Welk account in het beheer van MIND mag (apps/admin), en met welke rol.
+RLS:              Aan, en zonder één policy. Niemand leest of schrijft rechtstreeks, ook het beheer
+                  niet. Alleen de eigenaar vult deze tabel, via SQL. Lezen loopt via admin_role()
+                  (de eigen rol, of null) en has_admin_role() (alleen voor andere functies).
+
+Kolommen:
+  user_id   uuid  verplicht  Verwijst naar auth.users, verdwijnt mee bij verwijderen
+  role      text  verplicht  analist (cijfers bekijken), redacteur (ook content schrijven en
+                             publiceren) of beheerder (alles, plus de noodrem). De rollen lopen op
+  added_on  date  verplicht  De dag waarop de rol is toegekend. Alleen een datum
+
+Bevat gevoelige data?     Persoonsgegevens ja (een account en zijn rol), van medewerkers van MIND en
+                          niet van gebruikers. Geen naam en geen e-mailadres: die staan in auth.users.
+Bewaartermijn:            Tot de eigenaar de rij weghaalt, of tot het account verdwijnt. Een
+                          beheeraccount dat twee jaar niet is gebruikt gaat mee in de opruiming van
+                          inactieve accounts, met zijn rechten: admin_role() werkt last_active_at bij,
+                          dus wie het beheer gebruikt blijft bestaan.
+Verwijderbaar door user?  Ja, door het eigen account te verwijderen. De rol alleen weghalen doet de eigenaar.
+Welke schermen lezen dit? Geen scherm in de app. Het beheer vraagt na het inloggen admin_role() op.
+```
+
+**Besloten door Stijn op 18 september 2026:** het beheer wordt een eigen webapp in `apps/admin`, een statische site zonder server. Het logt in met een gewoon account bij dezelfde Supabase; wat een medewerker meer mag staat hier in de database. Daardoor bestaat er **nergens een service role key**, ook niet in de omgeving van het beheer. Een rol toekennen is één regel SQL door de eigenaar (zie `backend-draaiboek.md`); er is geen scherm en geen functie waarmee iemand zichzelf of een ander rechten geeft, en `anonimisering.sql` controleert dat geen functie in `admin_users` schrijft.
+
+**Wat het beheer mag zien:** alleen totalen, nooit een totaal onder de 10, voor medewerkers met een rol. De leesfuncties daarvoor komen in een eigen migratie. Een tweede factor bij het inloggen is voor deze accounts sterk aan te raden en nog niet gebouwd.
 
 ### app_status
 
