@@ -46,7 +46,6 @@ const nl = {
   jouwWeer: "JOUW MENTALE WEERBERICHT",
   voorVandaag: "VOOR VANDAAG",
   lezenAlsJeWilt: "LEZEN, ALS JE WILT",
-  bron: "Bron: MIND",
   bekijkWeerbericht: "Bekijk het weer van Nederland",
   deelJeWeer: "Deel je weer",
 } as const;
@@ -66,7 +65,6 @@ const teksten: Woordenboek<typeof nl> = {
     jouwWeer: "YOUR MENTAL WEATHER",
     voorVandaag: "FOR TODAY",
     lezenAlsJeWilt: "READ, IF YOU LIKE",
-    bron: "Source: MIND",
     bekijkWeerbericht: "See the weather of the Netherlands",
     deelJeWeer: "Share your weather",
   },
@@ -116,7 +114,7 @@ export default function CheckInUitkomst() {
       message:
         (weerbeeld ? WEER_NAMEN[weerbeeld] + ". " : "") +
         tekst.kop +
-        " Dit is ongeveer mijn weer vandaag, via het Mentale Weerbericht van MIND.",
+        " Dit is ongeveer mijn weer vandaag, via Weer MIND.",
     });
   };
 
@@ -151,7 +149,7 @@ export default function CheckInUitkomst() {
           {tipsBijWeer(weerbeeld).map((a) => (
             <Card
               key={a.slug}
-              tone="outline"
+              tone="white"
               // Op het onderwerp uit Houvast als het artikel er een heeft (uitleg
               // plus wat kan helpen), anders op het artikel zelf.
               onPress={() => {
@@ -163,7 +161,7 @@ export default function CheckInUitkomst() {
             >
               <View style={{ flexShrink: 1 }}>
                 <AppText rol="bodyEmphasis">{a.titel}</AppText>
-                <AppText rol="labelCaption" kleur="secondary">{a.onderwerp === a.titel ? t("bron") : a.onderwerp + " · " + t("bron")}</AppText>
+                {a.onderwerp !== a.titel ? <AppText rol="labelCaption" kleur="secondary">{a.onderwerp}</AppText> : null}
               </View>
               <AppText rol="body" kleur="secondary">{"›"}</AppText>
             </Card>

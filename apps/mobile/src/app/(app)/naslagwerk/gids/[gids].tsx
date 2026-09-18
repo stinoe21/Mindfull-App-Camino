@@ -30,14 +30,13 @@ const nl = {
   nietGevonden: "Gids niet gevonden",
   nietGevondenUitleg: "Deze gids bestaat niet of is verplaatst.",
   terugNaslagwerk: "Terug naar het naslagwerk",
-  overline: "ONLINE GIDS VAN MIND",
+  overline: "ONLINE GIDS",
   alleenLink: "Deze gids staat op wijzijnmind.nl, met praktische tips en technieken.",
   bekijkGids: "Bekijk de online gids",
   leesAlles: "Lees alle tips",
-  bron: "BRON: MIND",
   mailTitel: "Liever per e-mail?",
-  mailUitleg: "Je kunt deze gids ook van MIND in je mailbox krijgen.",
-  aanmelden: "Aanmelden bij MIND",
+  mailUitleg: "Je kunt deze gids ook in je mailbox krijgen.",
+  aanmelden: "Gids per e-mail",
   meerTitel: "Meer over dit onderwerp",
   gids: "GIDS",
 } as const;
@@ -47,14 +46,13 @@ const teksten: Woordenboek<typeof nl> = {
     nietGevonden: "Guide not found",
     nietGevondenUitleg: "This guide doesn't exist or has been moved.",
     terugNaslagwerk: "Back to the reference library",
-    overline: "ONLINE GUIDE BY MIND",
+    overline: "ONLINE GUIDE",
     alleenLink: "This guide is on wijzijnmind.nl, with practical tips and techniques.",
     bekijkGids: "Open the online guide",
     leesAlles: "Read all tips",
-    bron: "SOURCE: MIND",
     mailTitel: "Rather by e-mail?",
-    mailUitleg: "You can also get this guide from MIND in your inbox.",
-    aanmelden: "Sign up with MIND",
+    mailUitleg: "You can also get this guide in your inbox.",
+    aanmelden: "Guide by email",
     meerTitel: "More on this topic",
     gids: "GUIDE",
   },
@@ -108,7 +106,6 @@ export default function GidsScherm() {
         </View>
       ) : null}
 
-      <AppText rol="labelCaption" kleur="secondary">{t("bron")}</AppText>
 
       {gids.aanmeld ? (
         <Card tone="primary">

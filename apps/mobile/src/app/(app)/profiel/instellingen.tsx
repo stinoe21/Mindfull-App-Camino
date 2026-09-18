@@ -58,7 +58,7 @@ const nl = {
   taalSysteem: "Systeem",
   taalNederlands: "Nederlands",
   taalEngels: "English",
-  taalContentBlijftNederlands: "Teksten van MIND blijven Nederlands.",
+  taalContentBlijftNederlands: "Onderwerpen, gidsen en challenges blijven Nederlands.",
   groepToestemmingen: "Toestemmingen",
   voorwaarden: "Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is",
   groepAccount: "Account",
@@ -84,7 +84,7 @@ const teksten: Woordenboek<typeof nl> = {
     taalSysteem: "System",
     taalNederlands: "Nederlands",
     taalEngels: "English",
-    taalContentBlijftNederlands: "Texts from MIND remain in Dutch.",
+    taalContentBlijftNederlands: "Topics, guides and challenges remain in Dutch.",
     groepToestemmingen: "Consents",
     voorwaarden: "I accept the terms and understand that this app is not a care service",
     groepAccount: "Account",
@@ -141,7 +141,7 @@ export default function Instellingen() {
       <AppText rol="h1">{t("titel")}</AppText>
 
       {!geladen ? (
-        <Card tone="outline">
+        <Card tone="white">
           <AppText rol="bodySmall" kleur="secondary">{t("laden")}</AppText>
         </Card>
       ) : (

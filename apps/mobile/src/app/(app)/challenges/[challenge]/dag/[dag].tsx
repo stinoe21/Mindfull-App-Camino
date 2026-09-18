@@ -30,7 +30,6 @@ const nl = {
   onderdeelVan: "DAG {x} van {y}",
   onderdeelAfronden: "Klaar voor vandaag",
   afgerond: "Deze dag heb je afgerond.",
-  bron: "BRON: MIND",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -41,7 +40,6 @@ const teksten: Woordenboek<typeof nl> = {
     onderdeelVan: "DAY {x} of {y}",
     onderdeelAfronden: "Done for today",
     afgerond: "You've completed this day.",
-    bron: "SOURCE: MIND",
   },
 };
 
@@ -99,7 +97,6 @@ export default function ChallengeDag() {
 
       <InhoudBlokken blokken={dag.blokken} />
 
-      <AppText rol="labelCaption" kleur="secondary">{t("bron")}</AppText>
 
       {isVandaag ? (
         <Button label={t("onderdeelAfronden")} fullWidth onPress={rondAf} />

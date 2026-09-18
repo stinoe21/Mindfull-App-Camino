@@ -24,7 +24,7 @@ import type { ReactNode } from "react";
 import { Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { colors, radius, space } from "../tokens/tokens.ts";
+import { colors, palette, radius, space } from "../tokens/tokens.ts";
 
 import { AppText } from "./AppText.tsx";
 
@@ -103,8 +103,10 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
                 gap: space[1],
                 borderRadius: radius.pill,
                 // De actieve tab krijgt een zachte pil achter icoon en label;
-                // alleen een vet label was te weinig verschil.
-                backgroundColor: item.actief ? colors.brandSubtle : "transparent",
+                // alleen een vet label was te weinig verschil. Sinds
+                // 10 september 2026 (Stijn) in warm zand, dezelfde tint als de
+                // basiskaart op het vel: het lichtblauw stond los van de rest.
+                backgroundColor: item.actief ? palette.yellow100 : "transparent",
                 opacity: pressed ? 0.7 : 1,
               })}
             >
