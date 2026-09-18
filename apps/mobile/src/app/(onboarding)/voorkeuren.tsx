@@ -28,8 +28,8 @@ const nl = {
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
-    titel: "What would you like to work on?",
-    ondertitel: "Choose what fits. This stays on your phone, and you can always change it in Settings.",
+    titel: "Which topics appeal to you?",
+    ondertitel: "Choose what fits. You can always change it in Settings.",
     verder: "Continue",
     slaOver: "Skip",
   },
@@ -46,7 +46,7 @@ export default function Voorkeuren() {
 
   const verder = async (bewaren: boolean) => {
     if (bewaren) await bewaarInstellingen({ voorkeuren: gekozen });
-    router.push("/anonimiteit");
+    router.push("/provincie");
   };
 
   return (

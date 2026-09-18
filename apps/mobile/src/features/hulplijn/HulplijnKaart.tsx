@@ -1,7 +1,7 @@
 // De vaste kaart naar de MIND Hulplijn. De route naar echte hulp is
-// systeembreed bereikbaar (productprincipes 9). De tekst komt uit het
-// design system (prototype, Hulplijn-kaart); er wordt hier niets aan
-// hulpteksten of nummers verzonnen.
+// systeembreed bereikbaar (productprincipes 9). De tekst is woordelijk van
+// mindhulplijn.nl (10 september 2026): de Hulplijn is voor advies en hulp,
+// zie hulplijn.tsx. Er wordt hier niets aan hulpteksten of nummers verzonnen.
 
 import { useRouter } from "expo-router";
 
@@ -15,11 +15,11 @@ export function HulplijnKaart() {
     <Card tone="sun">
       <AppText rol="h3">MIND Hulplijn</AppText>
       <AppText rol="bodySmall" kleur="secondary">
-        Kom gratis met onze professionals in contact. Ook via WhatsApp.
+        Deskundig, anoniem en gratis advies. Loop je even vast of maak je je zorgen om iemand? Wij denken graag met je mee.
       </AppText>
       {/* Primair, net als op de Hulplijn-pagina zelf: dit is het contactmoment
           dat er op een zware dag toe doet (designaudit 29 augustus 2026). */}
-      <Button label="Kom in contact" onPress={() => router.push("/hulplijn")} />
+      <Button label="Bel, app of chat" onPress={() => router.push("/hulplijn")} />
     </Card>
   );
 }

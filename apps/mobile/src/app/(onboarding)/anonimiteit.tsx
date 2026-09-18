@@ -5,17 +5,19 @@
 // "Je kunt dit altijd wijzigen in Instellingen." Twee apart intrekbare
 // toestemmingen (docs/privacy-besluiten.md). De toestemming voor het
 // weerbericht is de tekst van Paul (28 augustus 2026), als expliciete keuze
-// ja of nee zonder standaardwaarde; de voorwaarden zijn een schakelaar.
+// ja of nee zonder standaardwaarde. Sinds 10 september 2026 (Stijn) zijn de
+// twee toestemmingen één formulier met dezelfde aanvinkvakjes (KeuzeVak);
+// daarvoor was het een omrande keuzerij naast een systeemschakelaar.
 // De voorwaarden-stap heeft geen Skip (productprincipes 6).
 
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Switch, View } from "react-native";
+import { View } from "react-native";
 
-import { colors, palette, space } from "@mind/ui";
+import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
-import { Card } from "@mind/ui/components/Card";
+import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 import { MascotMain } from "@mind/ui/components/MascotMain";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
@@ -56,23 +58,18 @@ export default function Anonimiteit() {
 
       <View style={{ gap: space[2] }}>
         <AppText rol="labelOverline" kleur="brand">2 VAN 2</AppText>
-        <Card tone="white" style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }}>
-          <AppText rol="body" style={{ flexShrink: 1 }}>
-            Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is
-          </AppText>
-          <Switch
-            value={voorwaarden}
-            onValueChange={zetVoorwaarden}
-            trackColor={{ true: colors.brandDefault, false: palette.neutral200 }}
-          />
-        </Card>
+        <KeuzeVak
+          label="Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is"
+          gekozen={voorwaarden}
+          onPress={() => zetVoorwaarden(!voorwaarden)}
+        />
       </View>
 
       <View style={{ gap: space[3] }}>
         <Button label="Klaar" fullWidth disabled={!compleet} onPress={klaar} />
         {!compleet ? (
           <AppText rol="bodySmall" kleur="secondary" centreer>
-            Kies ja of nee en zet de voorwaarden aan. Nee is een prima keuze; de app werkt dan net zo goed.
+            Kies ja of nee en vink de voorwaarden aan. Nee is een prima keuze; de app werkt dan net zo goed.
           </AppText>
         ) : null}
       </View>

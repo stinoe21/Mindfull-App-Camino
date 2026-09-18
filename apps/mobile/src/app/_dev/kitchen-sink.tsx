@@ -19,6 +19,8 @@ import { Card, type CardTone } from "@mind/ui/components/Card";
 import { Chip } from "@mind/ui/components/Chip";
 import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
+import { KaartNederland } from "@mind/ui/components/KaartNederland";
+import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 import { MascotteInput, type InputStaat } from "@mind/ui/components/MascotteInput";
 import { MascotteVlieger, type VliegerStaat } from "@mind/ui/components/MascotteVlieger";
 import { VliegerOnderwerp, type Uitdrukking } from "@mind/ui/components/VliegerOnderwerp";
@@ -28,6 +30,7 @@ import { NavIcoonHome } from "@mind/ui/components/NavIcoonHome";
 import { NavIcoonChallenges, NavIcoonCheckIn, NavIcoonProfiel, NavIcoonTips } from "@mind/ui/components/navIconen";
 import { Slider } from "@mind/ui/components/Slider";
 import { TerugKnop } from "@mind/ui/components/TerugKnop";
+import { WeerIcoon, type WeerIcoonStaat } from "@mind/ui/components/WeerIcoon";
 import type { WeerStaat } from "@mind/ui/components/achtergronden";
 
 const ROUTES = [
@@ -59,6 +62,8 @@ const HERO_STATEN: WeerStaat[] = ["default", "zonnig", "wolken", "mist", "wind",
 export default function KitchenSink() {
   const insets = useSafeAreaInsets();
   const [schuif, zetSchuif] = useState(45);
+  const [vinkje, zetVinkje] = useState(false);
+  const [keuze, zetKeuze] = useState<"ja" | "nee" | null>(null);
 
   return (
     <ScrollView
@@ -121,6 +126,30 @@ export default function KitchenSink() {
         <Chip label="Rust" />
         <Chip label="Actief" active />
         <Chip label="Klikbaar" onPress={() => undefined} />
+      </View>
+
+      <Kop>KeuzeVak</Kop>
+      <Text style={styles.note}>Eén vorm voor alles wat je aanvinkt; als radio sluiten de rijen elkaar uit.</Text>
+      <View style={styles.blok}>
+        <KeuzeVak label="Los vinkje, uit of aan" gekozen={vinkje} onPress={() => zetVinkje(!vinkje)} />
+        <KeuzeVak rol="radio" label="Ja, een keuze uit twee" gekozen={keuze === "ja"} onPress={() => zetKeuze("ja")} />
+        <KeuzeVak rol="radio" label="Nee, de andere" gekozen={keuze === "nee"} onPress={() => zetKeuze("nee")} />
+      </View>
+
+      <Kop>WeerIcoon, de vijf weerbeelden</Kop>
+      <View style={styles.rij}>
+        {(["zonnig", "wolken", "mist", "wind", "regen"] as WeerIcoonStaat[]).map((staat) => (
+          <View key={staat} style={styles.mascotteVak}>
+            <WeerIcoon staat={staat} hoogte={48} />
+            <Text style={styles.staalnaam}>{staat}</Text>
+          </View>
+        ))}
+      </View>
+
+      <Kop>KaartNederland</Kop>
+      <Text style={styles.note}>Per provincie een weertint; zonder kleur blijft een provincie neutraal.</Text>
+      <View style={styles.rij}>
+        <KaartNederland breedte={200} kleuren={{ groningen: palette.weatherSun, utrecht: palette.weatherRain, zeeland: palette.weatherCloud, limburg: palette.weatherMist }} />
       </View>
 
       <Kop>Slider (interactief)</Kop>

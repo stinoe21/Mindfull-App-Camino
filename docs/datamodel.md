@@ -165,20 +165,26 @@ Kolommen:
   day      date      verplicht   De dag, gezet door de database in Europe/Amsterdam
   hour     smallint  verplicht   Uurblok 0 t/m 23, gezet door de database, met een check erop
   weather  text      verplicht   Verwijst naar weather_type.code
+  province text      verplicht   Zelf gekozen provincie of 'onbekend', sinds 10 september 2026; whitelist van twaalf
   total    integer   verplicht   Hoeveel inzendingen dit totaal telt, minimaal 1
 
 Bevat gevoelige data?     Nee, en dat is een eigenschap van de structuur en niet van de discipline
                           van wie er een query op schrijft. Er is geen kolom die een persoon kán
                           aanduiden, geen tijd fijner dan een uur, en geen rij die één inzending
-                          vertegenwoordigt. De primary key (day, hour, weather) wijst een totaal
-                          aan en geen inzending; hij bestaat omdat het optellen een upsert is.
+                          vertegenwoordigt. De primary key (day, hour, weather, province) wijst
+                          een totaal aan en geen inzending; hij bestaat omdat het optellen een
+                          upsert is. De provincie (sinds 10 september 2026, op verzoek van MIND
+                          voor de weerkaart) is een zelf gekozen instelling en geen
+                          locatiebepaling; per provincie geldt dezelfde drempel van 10 voordat
+                          weather_today_by_province() hem teruggeeft, want drie inzendingen in
+                          Zeeland zijn weer herleidbaar.
                           Een totaal kent geen volgorde en geen geschiedenis, dus er valt achteraf
                           niets uit te lijnen. Zie "Wat het uurblok niet oplost" hierboven.
 Bewaartermijn:            Geen: de totalen blijven staan, want ze zijn niet herleidbaar. Wil Mind
                           een termijn, dan is dat een kleine migratie; de vraag ligt bij Paul.
 Verwijderbaar door user?  Nee, en dat kan ook niet: een totaal bevat geen losse inzendingen.
                           Dit moet in de consent-tekst en de privacyverklaring staan.
-Welke schermen lezen dit? Dashboard (het landelijke weerbericht), analyticspagina voor het IT-departement.
+Welke schermen lezen dit? Dashboard (het landelijke weerbericht en de kaart per provincie), analyticspagina voor het IT-departement.
 ```
 
 Twee platforminstellingen horen bij deze tabel en zijn net zo belangrijk als het schema: **PITR uit** en **realtime uit**. Ze wegen hier onverminderd zwaar: realtime zou elke ophoging live uitzenden met het moment erbij, en PITR zou elke ophoging in de WAL bewaren. In beide gevallen heeft een totaal dan alsnog een geschiedenis.
@@ -264,6 +270,7 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
   De codes zijn stabiel en komen nooit in beeld. De labels komen uit de koppen op het board; wijzigt Mind een tekst, dan is dat een migratie en geen dashboard-edit. Dit deblokkeert de weer-iconenset uit `design-system.md` en de tokens `gradient/weather/*`. **Let op: er is geen onweer.** Wie een set met onweer heeft nagebouwd, zit fout.
 - [ ] **Hoe luiden de vier sliders precies?** De assen liggen vast in de mail aan Paul: temperatuur, wind, zicht en wisselvalligheid. De vraagteksten en de schaal nog niet, en ook niet welke combinatie tot welk van de vijf weerbeelden leidt. Die afbeelding gebeurt lokaal op het toestel, dus het raakt het schema niet, maar zonder dit kan de check-in niet af.
 - [ ] **Hoe werkt de funnel van weerbeeld naar challenges en content, en wat doen interesses daarin?** Er ligt sinds 20 augustus 2026 een voorstel, zie de sectie "Voorstel: de funnel van weerbeeld naar challenges en content" hierboven. Kern: personalisatie op het toestel, server blijft weerblind, voortgang en interesses alleen lokaal. Te besluiten door de drie; de lokale opslag hoort daarna in het antwoord aan Paul over de lokale bewaartermijn.
+- [ ] **Wat is het minimumaantal inzendingen per provincie voordat die op de kaart kleurt?** Sinds 10 september 2026 staat de kaart per provincie op Home, met dezelfde drempel van 10 als landelijk, in `weather_today_by_province()`. MIND bevestigt het getal nog (feedbacksessie) en het moet zichtbaar zijn in het dashboard van MIND. Wijzigen is een migratie.
 - [ ] **Wat is het minimumaantal deelnemers waarboven het landelijke weerbericht getoond mag worden?** Op het board staat bij connector `12:308` letterlijk "pas tonen boven een minimum aantal deelnemers", zonder getal. Gecontroleerd op 30 juli 2026. Dit is een privacymaatregel en geen designkeuze, dus het getal hoort hier te staan en niet in de code te worden bedacht. **Voorstel: 10.** Onder de drempel geeft `weather_today()` nul rijen terug en toont het dashboard de empty state. Bevestig het getal, dan staat het in de functie.
 - [ ] **Wat is de uitdrukkelijke toestemming onder art. 9 AVG precies?** Paul kondigde op 10 augustus aan hier nog op te finetunen. Dit valt samen met het punt hieronder over de twee consents, en is daarmee blokkerend geworden in plaats van een losse vraag.
 - [ ] **Welke twee consents zijn het, en wat staat er precies in?** Het board heeft twee losse, apart intrekbare consents (`12:136` en `12:139`) en `design-system.md` rekent op een Consent row met twee varianten. Waar ze over gaan en wat de tekst is, staat nergens. Dit blokkeert onderdeel 1 uit `taakverdeling.md`.
@@ -281,7 +288,7 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 
 Deze lijst is net zo belangrijk als de tabellen zelf. Vul aan naarmate we beslissingen nemen.
 
-- Locatiegegevens
+- Locatiegegevens. De provincie in `weather_hourly` (sinds 10 september 2026) is geen locatiegegeven: de gebruiker kiest hem zelf, vrijwillig, in de onboarding of in Instellingen, de app vraagt nooit de locatie van het toestel, en de keuze staat alleen lokaal en als onderdeel van een totaal.
 - Contactgegevens van derden
 - **Het exacte tijdstip van een bijdrage aan het landelijke weerbericht.** Alleen het uurblok. Zie de sectie hierboven: een tijdstip is de sleutel, in een ander alfabet.
 - **Een sleutel die een inzending aanwijst.** De collectieve tabel heeft alleen de sleutel (dag, uurblok, weerbeeld), en die wijst een totaal aan. Geen rij-id, geen `uuid v7`, geen unique index daarbuiten: een geordende sleutel zou bovendien de volgorde verraden.
