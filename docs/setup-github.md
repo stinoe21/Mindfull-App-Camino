@@ -2,6 +2,14 @@
 
 Eenmalig, door de repo-eigenaar. Dit is wat de werkwijze uit `.claude/skills/werkwijze/SKILL.md` technisch afdwingt. Zonder deze instellingen is het een afspraak. Met deze instellingen is het onmogelijk om het verkeerd te doen.
 
+> **Sinds 18 september 2026: Stijn werkt alleen, niemand hoeft meer goed te keuren.** Max en Caesar doen niet meer mee zoals hieronder beschreven (besluit Stijn, 10 en 18 september 2026). Wat dat verandert: de verplichte review op `main` gaat van 1 naar 0 (`docs/ruleset.json` staat al zo), Max staat niet meer in `.github/CODEOWNERS` (sinds 18 september, want elke PR op het design system vroeg hem om review en mailde hem bij de merge), en de PR-route met squash blijft, alleen zonder wachten op iemand. De ruleset zelf pas je als eigenaar toe, een agent kan dat niet:
+>
+> ```bash
+> gh api -X PUT repos/stinoe21/Mindfull-App-Camino/rulesets/20028996 --input docs/ruleset.json
+> ```
+>
+> Daarna werkt `gh pr merge <nummer> --squash` zonder `--admin`. De secties hieronder beschrijven de opzet met z'n drieën en blijven staan als geschiedenis en voor de overdracht aan Mind.
+
 ---
 
 ## 1. Collaborators toevoegen
@@ -157,6 +165,6 @@ git reset --hard origin/main
 | Squash-only merge, branches auto-verwijderen | Gedaan |
 | Labels | Gedaan |
 | Branch protection | **Actief** sinds 30 juli 2026. Ruleset `protect-main` (id `20028996`) via GitHub Pro. |
-| Verplichte review | **Blijft op 1**, besloten 30 juli 2026. Alle drie kunnen mergen zodra iemand anders approvet. `docs/ruleset.json` en de live ruleset zijn gelijk. |
+| Verplichte review | Was 1 (30 juli 2026). **Naar 0 sinds 18 september 2026**, besluit Stijn: hij werkt alleen. `docs/ruleset.json` staat op 0; de live ruleset zet Stijn zelf met het commando bovenaan dit bestand. |
 | Issue board | Nog doen, sectie 5 |
-| CODEOWNERS-verdeling bevestigen | Gedaan, 30 juli 2026. Caesar op structuur en productlogica, Max op het design system. |
+| CODEOWNERS-verdeling bevestigen | Gedaan, 30 juli 2026. Caesar op structuur en productlogica, Max op het design system. **Sinds 18 september 2026 alleen Stijn**, zie sectie 6. |
