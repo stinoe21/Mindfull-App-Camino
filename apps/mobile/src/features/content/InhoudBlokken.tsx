@@ -4,12 +4,12 @@
 // overal hetzelfde uitziet. Geen kaart eromheen: de tekst staat direct op het
 // vel (Stijn, 10 september 2026).
 
-import * as Linking from "expo-linking";
 import { View } from "react-native";
 
 import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
+import { useOpenLink } from "@/features/systeem/openLink";
 
 export type InhoudBlok = {
   kop?: string;
@@ -22,6 +22,7 @@ export type InhoudBlok = {
 };
 
 export function InhoudBlokken({ blokken }: { blokken: InhoudBlok[] }) {
+  const openLink = useOpenLink();
   return (
     <>
       {blokken.map((blok, i) => {
@@ -45,7 +46,7 @@ export function InhoudBlokken({ blokken }: { blokken: InhoudBlok[] }) {
           const url = blok.linkUrl;
           return (
             <View key={i} style={{ alignItems: "flex-start" }}>
-              <Button label={blok.linkLabel} variant="secondary" onPress={() => Linking.openURL(url)} />
+              <Button label={blok.linkLabel} variant="secondary" onPress={() => openLink(url)} />
             </View>
           );
         }

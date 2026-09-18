@@ -13,7 +13,6 @@
 // Houvast als dat er is, en de MIND Hulplijn opent de hulplijnpagina. Onder
 // elke uitslag staat de Hulplijn-kaart, dezelfde als op Home.
 
-import * as Linking from "expo-linking";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
@@ -32,6 +31,7 @@ import { houvastVoorArtikel } from "@/features/content/houvast";
 import { scoreVan, uitslagVoor, zelftestVoor } from "@/features/content/zelftests";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { useOpenLink } from "@/features/systeem/openLink";
 
 const nl = {
   nietGevonden: "Test niet gevonden",
@@ -76,6 +76,7 @@ type Fase = "intro" | "vragen" | "uitslag";
 export default function ZelftestScherm() {
   const router = useRouter();
   const t = useVertaling(teksten);
+  const openLink = useOpenLink();
   const { test: slug } = useLocalSearchParams<{ test: string }>();
   const test = zelftestVoor(slug);
   const [fase, zetFase] = useState<Fase>("intro");
@@ -199,7 +200,7 @@ export default function ZelftestScherm() {
             />
           ) : null}
           {extern.map((l) => (
-            <Button key={l.linkUrl} label={l.linkLabel} variant="secondary" onPress={() => Linking.openURL(l.linkUrl)} />
+            <Button key={l.linkUrl} label={l.linkLabel} variant="secondary" onPress={() => openLink(l.linkUrl)} />
           ))}
         </View>
       ) : null}

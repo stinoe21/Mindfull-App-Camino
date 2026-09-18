@@ -19,6 +19,18 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { ANDERE, KANALEN, openKanaal, type Kanaal } from "@/features/hulplijn/kanalen";
 
+// Het toestel kan het kanaal niet openen: dan staat het nummer of adres er
+// los onder, selecteerbaar, zodat je het kunt kopiëren of overtikken op een
+// ander toestel (18 september 2026). Geen klembord-dependency nodig.
+function LukteNiet({ kanaal }: { kanaal: Kanaal }) {
+  return (
+    <View style={{ gap: space[1] }}>
+      <AppText rol="bodySmall">Dat lukt niet op dit toestel. Je kunt dit overnemen op een telefoon:</AppText>
+      <AppText rol="bodyEmphasis" selectable>{kanaal.overnemen}</AppText>
+    </View>
+  );
+}
+
 // Terug gaat via de terugknop op de hero (TerugNaarVorige); een tweede
 // "Terug" onderaan was dubbelop (Stijn, 10 september 2026).
 export default function Hulplijn() {
@@ -61,9 +73,7 @@ export default function Hulplijn() {
             <Button key={k.url} label={k.label} variant={i === 0 ? "primary" : "secondary"} onPress={() => open(k)} />
           ))}
         </View>
-        {lukteNiet && KANALEN.includes(lukteNiet) ? (
-          <AppText rol="bodySmall">{"Dat lukt niet op dit toestel. Gebruik een telefoon voor: " + lukteNiet.label + "."}</AppText>
-        ) : null}
+        {lukteNiet && KANALEN.includes(lukteNiet) ? <LukteNiet kanaal={lukteNiet} /> : null}
       </Card>
 
       <Card tone="white">
@@ -73,9 +83,7 @@ export default function Hulplijn() {
             <Button key={a.url} label={a.label} variant="secondary" onPress={() => open(a)} />
           ))}
         </View>
-        {lukteNiet && ANDERE.includes(lukteNiet) ? (
-          <AppText rol="bodySmall">{"Dat lukt niet op dit toestel. Gebruik een telefoon voor: " + lukteNiet.label + "."}</AppText>
-        ) : null}
+        {lukteNiet && ANDERE.includes(lukteNiet) ? <LukteNiet kanaal={lukteNiet} /> : null}
         <AppText rol="bodySmall" kleur="secondary">
           In geval van nood: de huisartsenpost of de crisisdienst in jouw woonplaats.
         </AppText>

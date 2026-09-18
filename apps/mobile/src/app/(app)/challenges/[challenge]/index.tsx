@@ -8,7 +8,6 @@
 // op het dagscherm (dag/[dag].tsx), met de volledige inhoud van MIND; de
 // mailreeks van MIND blijft als alternatief bereikbaar via de aanmeldknop.
 
-import * as Linking from "expo-linking";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { Alert, View } from "react-native";
@@ -27,6 +26,7 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
 import { aantalAfgerond, laadVoortgang, vandaagAlAfgerond, wisChallenge } from "@/features/content/voortgang";
+import { useOpenLink } from "@/features/systeem/openLink";
 
 const nl = {
   nietGevonden: "Challenge niet gevonden",
@@ -83,6 +83,7 @@ const teksten: Woordenboek<typeof nl> = {
 export default function ChallengeDetail() {
   const router = useRouter();
   const t = useVertaling(teksten);
+  const openLink = useOpenLink();
   const { challenge: slug } = useLocalSearchParams<{ challenge: string }>();
   const challenge = CHALLENGES.find((c) => c.slug === slug);
   const [klaar, zetKlaar] = useState(0);
@@ -255,7 +256,7 @@ export default function ChallengeDetail() {
           </AppText>
           <Button
             label={t("aanmelden")}
-            onPress={() => challenge.aanmeld && Linking.openURL(challenge.aanmeld)}
+            onPress={() => openLink(challenge.aanmeld)}
           />
         </Card>
       ) : null}
