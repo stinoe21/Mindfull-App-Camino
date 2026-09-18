@@ -12,6 +12,7 @@ import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Chip } from "@mind/ui/components/Chip";
+import { chipKleurGekozenVoor, kaartKleurVoor } from "@mind/ui/components/VliegerOnderwerp";
 import { MascotMain } from "@mind/ui/components/MascotMain";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
@@ -60,7 +61,7 @@ export default function Voorkeuren() {
 
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
         {VOORKEUR_OPTIES.map((o) => (
-          <Chip key={o} label={o} active={gekozen.includes(o)} onPress={() => wissel(o)} />
+          <Chip key={o} label={o} active={gekozen.includes(o)} kleur={kaartKleurVoor(o)} gekozenKleur={chipKleurGekozenVoor(o)} onPress={() => wissel(o)} />
         ))}
       </View>
 

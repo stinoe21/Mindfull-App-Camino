@@ -21,7 +21,6 @@ import { MascotteInput } from "@mind/ui/components/MascotteInput";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { Slider } from "@mind/ui/components/Slider";
-import type { WeerStaat } from "@mind/ui/components/achtergronden";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
@@ -54,13 +53,6 @@ const teksten: Woordenboek<typeof nl> = {
 
 // De hero-staat per vraag (ontwerp 05: warm voor wind, 06: blauw voor zicht).
 // Alleen bestaande achtergronden; geen nieuwe assets.
-const HERO_PER_STAP: Record<(typeof CHECKIN_STAPPEN)[number]["key"], WeerStaat> = {
-  temperatuur: "zonnig",
-  wind: "wind",
-  zicht: "mist",
-  wisselvallig: "wolken",
-};
-
 export default function CheckInStap() {
   const router = useRouter();
   const t = useVertaling(teksten);
@@ -128,28 +120,37 @@ export default function CheckInStap() {
     router.replace("/dashboard");
   };
 
-  // Ontwerpschermen 05 en 06: per vraag een eigen gradient met de mascotte
-  // erop, daaronder het vel met overline, vraag, geruststelling, de slider
-  // los op het vel (de witte kaart is vervallen, zie Slider.tsx), de knop
-  // en vier stippen.
+  // Ontwerpschermen 05 en 06: de mascotte per vraag op de hero (de gradient
+  // per vraag is sinds 13 september 2026 vervallen: overal dezelfde
+  // standaardhero, zodat de check-in bij de rest van de app hoort), daaronder
+  // het vel met de voortgang, de vraag, de geruststelling, de slider los op
+  // het vel (de witte kaart is vervallen, zie Slider.tsx) en de knop. De
+  // stippen staan bovenaan naast de stap, waar voortgang hoort, in plaats
+  // van los onder de knoppen.
+  const stapLabel = t("stapVan").replace("{x}", String(index + 1)).replace("{y}", String(CHECKIN_STAPPEN.length));
   return (
-    <ScreenCanvas state={HERO_PER_STAP[stap.key]} terugKnop={<TerugNaarVorige />} heroInhoud={<MascotteInput state={stap.key} hoogte={112} />}>
+    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotteInput state={stap.key} hoogte={112} />}>
       <View style={{ gap: space[2] }}>
-        <AppText rol="labelOverline" kleur="brand">
-          {t("stapVan").replace("{x}", String(index + 1)).replace("{y}", String(CHECKIN_STAPPEN.length))}
-        </AppText>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space[3] }} accessibilityLabel={stapLabel}>
+          <AppText rol="labelOverline" kleur="brand">{stapLabel}</AppText>
+          <View style={{ flexDirection: "row", gap: space[2] }}>
+            {CHECKIN_STAPPEN.map((s, i) => (
+              <View key={s.key} style={{ width: i === index ? space[5] : space[2], height: space[2], borderRadius: radius.pill, backgroundColor: i === index ? colors.brandDefault : colors.borderDefault }} />
+            ))}
+          </View>
+        </View>
         <AppText rol="h2">{stap.vraag}</AppText>
         <AppText rol="body">{GERUSTSTELLING}</AppText>
       </View>
-      <Slider value={waarde} onChange={zetLokaleWaarde} leftLabel={stap.links} rightLabel={stap.rechts} />
+      {/* Lucht rond de slider: het is de enige handeling op dit scherm. */}
+      <View style={{ paddingVertical: space[6] }}>
+        <Slider value={waarde} onChange={zetLokaleWaarde} leftLabel={stap.links} rightLabel={stap.rechts} />
+      </View>
+      {/* Duwt de knoppen naar de onderkant van het scherm, zoals in de onboarding. */}
+      <View style={{ flex: 1 }} />
       <View style={{ gap: space[3] }}>
         <Button label={laatste ? t("bekijkJeWeer") : t("verder")} fullWidth bezig={bezig} onPress={verder} />
         <Button label={t("slaOver")} variant="link" fullWidth onPress={slaOver} />
-      </View>
-      <View style={{ flexDirection: "row", justifyContent: "center", gap: space[2] }} accessibilityLabel={t("stapVan").replace("{x}", String(index + 1)).replace("{y}", String(CHECKIN_STAPPEN.length))}>
-        {CHECKIN_STAPPEN.map((s, i) => (
-          <View key={s.key} style={{ width: i === index ? space[5] : space[2], height: space[2], borderRadius: radius.pill, backgroundColor: i === index ? colors.brandDefault : colors.borderDefault }} />
-        ))}
       </View>
     </ScreenCanvas>
   );
