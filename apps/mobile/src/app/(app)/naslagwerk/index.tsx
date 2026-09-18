@@ -60,7 +60,6 @@ const nl = {
   gids: "GIDS",
   zoekLabel: "Zoek in Tips",
   onderwerpen: "Onderwerpen",
-  onderwerpenNote: "Jouw onderwerpen eerst.",
   vandaagTitel: "Bij jouw weer vandaag",
   vandaagNote: "Wat kan helpen bij het weer van vandaag.",
   tips: "TIPS",
@@ -93,7 +92,6 @@ const teksten: Woordenboek<typeof nl> = {
     gids: "GUIDE",
     zoekLabel: "Search Tips",
     onderwerpen: "Topics",
-    onderwerpenNote: "Your topics first.",
     vandaagTitel: "For your weather today",
     vandaagNote: "What can help with today's weather.",
     tips: "TIPS",
@@ -283,7 +281,7 @@ export default function Houvast() {
       ) : null}
 
       {!zoekterm ? (
-        <ContentSection title={t("onderwerpen")} note={t("onderwerpenNote")}>
+        <ContentSection title={t("onderwerpen")}>
           <ContentGrid>
             {/* De eerste familie breed, de rest half; elke kaart in de kleur van
                 haar familie, met de vlieger rechtsonder, altijd op dezelfde plek.
@@ -295,14 +293,13 @@ export default function Houvast() {
                 kleur={kaartKleurVoor(f.naam)}
                 title={f.naam}
                 onPress={() => openFamilie(f)}
+                beeld={<VliegerOnderwerp onderwerp={f.naam} hoogte={i === 0 ? 72 : 52} />}
               >
-                <AppText rol="bodySmall" kleur="secondary">
-                  {f.onderwerpen.length === 1 ? f.regel[taal] : t("aantal").replace("{n}", String(f.onderwerpen.length))}
+                {/* Wat erin zit, niet hoeveel: "4 onderwerpen" zei niets
+                    (Stijn, 17 september 2026). Eén onderwerp: zijn eigen regel. */}
+                <AppText rol="bodySmall" kleur="secondary" numberOfLines={3}>
+                  {f.onderwerpen.length === 1 ? f.regel[taal] : f.onderwerpen.map((o) => o.titel).join(", ")}
                 </AppText>
-                <View style={{ height: i === 0 ? 56 : 44 }} />
-                <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
-                  <VliegerOnderwerp onderwerp={f.naam} hoogte={i === 0 ? 72 : 52} />
-                </View>
               </ContentCard>
             ))}
           </ContentGrid>

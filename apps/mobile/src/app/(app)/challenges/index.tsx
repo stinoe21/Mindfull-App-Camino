@@ -130,7 +130,7 @@ export default function Challenges() {
               const klaar = voortgang[c.slug] ?? 0;
               const actief = i === 0;
               return (
-                <ContentCard key={c.slug} full={actief || (i === challenges.length - 1 && (challenges.length - 1) % 2 === 1)} tone="sun" kleur={actief ? undefined : kaartKleurVoor(ONDERWERP_PER_CHALLENGE[c.slug])} title={c.naam} onPress={() => open(c.slug)}>
+                <ContentCard key={c.slug} full={actief || (i === challenges.length - 1 && (challenges.length - 1) % 2 === 1)} tone="sun" kleur={actief ? undefined : kaartKleurVoor(ONDERWERP_PER_CHALLENGE[c.slug])} title={c.naam} onPress={() => open(c.slug)} beeld={<VliegerOnderwerp onderwerp={ONDERWERP_PER_CHALLENGE[c.slug]} hoogte={actief ? 64 : 48} />}>
                   <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(c.dagen.length))}</AppText>
                   <AppText rol="bodySmall">{regel(c)}</AppText>
                   {klaar > 0 ? (
@@ -141,12 +141,6 @@ export default function Challenges() {
                       <AppText rol="labelCaption" kleur="brand">{t("dagVan").replace("{x}", String(Math.min(klaar, c.dagen.length))).replace("{y}", String(c.dagen.length))}</AppText>
                     </View>
                   ) : null}
-                  {/* De vlieger van het onderwerp rechtsonder, zoals in het
-                      naslagwerk; de lege View houdt er ruimte voor vrij. */}
-                  <View style={{ height: actief ? 56 : 44 }} />
-                  <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
-                    <VliegerOnderwerp onderwerp={ONDERWERP_PER_CHALLENGE[c.slug]} hoogte={actief ? 64 : 48} />
-                  </View>
                 </ContentCard>
               );
             })}
@@ -158,13 +152,9 @@ export default function Challenges() {
         <ContentSection title={t("specialsTitel")} note={t("specialsNote")}>
           <ContentGrid>
             {specials.map((c, i) => (
-              <ContentCard key={c.slug} full={i === 0 || (i === specials.length - 1 && (specials.length - 1) % 2 === 1)} kleur={kaartKleurVoor(ONDERWERP_PER_CHALLENGE[c.slug])} title={c.naam} onPress={() => open(c.slug)}>
+              <ContentCard key={c.slug} full={i === 0 || (i === specials.length - 1 && (specials.length - 1) % 2 === 1)} kleur={kaartKleurVoor(ONDERWERP_PER_CHALLENGE[c.slug])} title={c.naam} onPress={() => open(c.slug)} beeld={<VliegerOnderwerp onderwerp={ONDERWERP_PER_CHALLENGE[c.slug]} hoogte={i === 0 ? 64 : 48} />}>
                 <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(c.dagen.length))}</AppText>
                   <AppText rol="bodySmall">{regel(c)}</AppText>
-                <View style={{ height: i === 0 ? 56 : 44 }} />
-                <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
-                  <VliegerOnderwerp onderwerp={ONDERWERP_PER_CHALLENGE[c.slug]} hoogte={i === 0 ? 64 : 48} />
-                </View>
               </ContentCard>
             ))}
           </ContentGrid>

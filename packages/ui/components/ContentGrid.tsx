@@ -23,15 +23,39 @@ export type ContentCardProps = {
   /** Een eigen achtergrondkleur uit het palet, bijvoorbeeld de kleur van het onderwerp (kaartKleurVoor); gaat voor tone. */
   kleur?: string;
   onPress?: () => void;
+  /**
+   * Een beeld bij de kaart, bijvoorbeeld de vlieger van het onderwerp. Op een
+   * brede kaart staat het rechts naast de tekst, op een halve kaart rechtsonder.
+   * Tot 17 september 2026 zette elk scherm de vlieger zelf absoluut neer met
+   * een lege View als ruimte, en daardoor was de brede kaart voor de helft leeg
+   * (Stijn: de overzichten "kunnen nog veel werk gebruiken").
+   */
+  beeld?: React.ReactNode;
   children?: React.ReactNode;
 };
 
-export function ContentCard({ full = false, tone = "white", label, title, kleur, onPress, children }: ContentCardProps) {
-  const inhoud = (
+// De interne gap van een kaart: 6, een bewuste maat uit HERKOMST.md schermregel 4.
+const KAART_GAP = 6;
+
+export function ContentCard({ full = false, tone = "white", label, title, kleur, onPress, beeld, children }: ContentCardProps) {
+  const tekst = (
     <>
       {label ? <AppText rol="labelOverline" kleur="brand">{label}</AppText> : null}
       {title ? <AppText rol="h3">{title}</AppText> : null}
       {children}
+    </>
+  );
+  const inhoud = !beeld ? (
+    tekst
+  ) : full ? (
+    <View style={{ flexDirection: "row", alignItems: "flex-end", gap: space[3] }}>
+      <View style={{ flex: 1, gap: KAART_GAP }}>{tekst}</View>
+      {beeld}
+    </View>
+  ) : (
+    <>
+      <View style={{ gap: KAART_GAP }}>{tekst}</View>
+      <View style={{ alignSelf: "flex-end", marginTop: "auto" }}>{beeld}</View>
     </>
   );
   // 18 en 6 zijn bewuste maten: kaartvulling 18/20 met interne gap 6, HERKOMST.md schermregel 4.
