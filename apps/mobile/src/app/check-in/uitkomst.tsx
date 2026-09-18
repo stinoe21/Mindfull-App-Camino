@@ -31,6 +31,7 @@ import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { houvastVoorArtikel } from "@/features/content/houvast";
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
+import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { dagdeelNu, leesWeerVanVandaag, toonTijd } from "@/features/weer/lokaalWeer";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
 
@@ -219,6 +220,10 @@ export default function CheckInUitkomst() {
         <Button label={t("opnieuw")} variant="secondary" fullWidth onPress={() => router.replace("/check-in/1")} />
         <Button label={t("deelJeWeer")} variant="link" fullWidth onPress={deel} />
       </View>
+      {/* Altijd, bij elk weer: de app beoordeelt niet wie hem nodig heeft
+          (productprincipes 2, 3 en 9). Onder de knoppen, zodat er één primaire
+          actie blijft. */}
+      <HulplijnKaart />
     </ScreenCanvas>
   );
 }
