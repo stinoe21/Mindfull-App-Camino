@@ -31,6 +31,7 @@ import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnd
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 
+import { OpnieuwInloggen } from "@/features/auth/OpnieuwInloggen";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ChallengeOpHome } from "@/features/content/ChallengeOpHome";
 import { houvastVoorHome } from "@/features/content/houvast";
@@ -238,6 +239,9 @@ export default function Dashboard() {
           </View>
         </Card>
       )}
+
+      {/* Alleen voor wie de sessie kwijt is: één rustige regel met Inloggen. */}
+      <OpnieuwInloggen />
 
       {/* Slot 2: de challenge waar je mee bezig bent, of één voorstel. Boven
           Houvast en de quote (Stijn, 17 september 2026): het is de reden om

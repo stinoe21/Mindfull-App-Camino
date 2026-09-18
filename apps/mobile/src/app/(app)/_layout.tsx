@@ -9,13 +9,18 @@
 import { Tabs, useRouter } from "expo-router";
 
 import { colors } from "@mind/ui";
+
+import { Poort } from "@/features/auth/Poort";
 import { NavigationBar } from "@mind/ui/components/NavigationBar";
 import { NavIcoonHome } from "@mind/ui/components/NavIcoonHome";
 import { NavIcoonChallenges, NavIcoonCheckIn, NavIcoonProfiel, NavIcoonTips } from "@mind/ui/components/navIconen";
 
 export default function AppLayout() {
   const router = useRouter();
+  // De poort: zonder afgeronde onboarding kom je hier niet, ook niet via een
+  // link die app/index.tsx overslaat. Zie features/auth/Poort.tsx.
   return (
+    <Poort>
     <Tabs
       screenOptions={{
         headerShown: false,
@@ -49,5 +54,6 @@ export default function AppLayout() {
       <Tabs.Screen name="challenges" />
       <Tabs.Screen name="profiel" />
     </Tabs>
+    </Poort>
   );
 }

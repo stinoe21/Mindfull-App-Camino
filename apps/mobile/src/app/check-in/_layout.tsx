@@ -12,17 +12,22 @@ import { Stack } from "expo-router";
 
 import { colors } from "@mind/ui";
 
+import { Poort } from "@/features/auth/Poort";
+
 export default function Layout() {
   return (
     <>
       <Stack.Screen options={{ gestureEnabled: false }} />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          gestureEnabled: false,
-          contentStyle: { backgroundColor: colors.surfaceBackground },
-        }}
-      />
+      {/* Ook de check-in ligt achter de onboarding, zie features/auth/Poort.tsx. */}
+      <Poort>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            gestureEnabled: false,
+            contentStyle: { backgroundColor: colors.surfaceBackground },
+          }}
+        />
+      </Poort>
     </>
   );
 }
