@@ -85,12 +85,16 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
           height: NAV_PIL_HOOGTE,
         }}
       >
-        <View style={{ flex: 1, flexDirection: "row", alignItems: "stretch", paddingHorizontal: space[2], paddingVertical: space[1] }}>
+        <View accessibilityRole="tablist" style={{ flex: 1, flexDirection: "row", alignItems: "stretch", paddingHorizontal: space[2], paddingVertical: space[1] }}>
           {items.map((item) => (
             <Pressable
               key={item.key}
-              accessibilityRole="button"
-              accessibilityState={{ selected: item.actief }}
+              // Een bestemming met een actieve stand is een tab, net als in
+              // Segmenten. "Inchecken" heeft die niet: dat is een knop die
+              // een scherm opent, en zo wordt hij ook voorgelezen.
+              accessibilityRole={item.actief === undefined ? "button" : "tab"}
+              accessibilityLabel={item.label}
+              accessibilityState={item.actief === undefined ? undefined : { selected: item.actief }}
               onPress={item.onPress}
               style={({ pressed }) => ({
                 flex: 1,

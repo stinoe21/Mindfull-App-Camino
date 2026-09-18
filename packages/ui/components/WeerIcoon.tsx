@@ -12,6 +12,8 @@ import Svg, { Circle, Path } from "react-native-svg";
 
 import { palette } from "../tokens/tokens.ts";
 
+import { beeldVoorSchermlezer } from "./toegankelijk.ts";
+
 export type WeerIcoonStaat = "zonnig" | "wolken" | "mist" | "wind" | "regen";
 
 const LIJN = { stroke: palette.baseInk, strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -62,11 +64,20 @@ const ICONEN: Record<WeerIcoonStaat, React.ReactElement> = {
   ),
 };
 
-export type WeerIcoonProps = { staat: WeerIcoonStaat; hoogte?: number };
+export type WeerIcoonProps = {
+  staat: WeerIcoonStaat;
+  hoogte?: number;
+  /**
+   * Wat een schermlezer voorleest, bijvoorbeeld de weernaam. Zonder label is
+   * het icoon versiering en wordt het overgeslagen: bijna overal staat de
+   * weernaam er al als tekst naast. Zie toegankelijk.ts.
+   */
+  label?: string;
+};
 
-export function WeerIcoon({ staat, hoogte = 40 }: WeerIcoonProps) {
+export function WeerIcoon({ staat, hoogte = 40, label }: WeerIcoonProps) {
   return (
-    <View style={{ width: hoogte, height: hoogte }} accessibilityLabel={"Weer, " + staat}>
+    <View style={{ width: hoogte, height: hoogte }} {...beeldVoorSchermlezer(label)}>
       <Svg width={hoogte} height={hoogte} viewBox="0 0 40 40">
         {ICONEN[staat]}
       </Svg>
