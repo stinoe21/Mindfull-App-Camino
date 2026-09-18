@@ -23,6 +23,7 @@ import { colors, radius, space } from "../tokens/tokens.ts";
 
 import { AppText } from "./AppText.tsx";
 import { BackgroundHeroGradient } from "./BackgroundHeroGradient.tsx";
+import { useMinderBeweging } from "./minderBeweging.ts";
 import { NAV_PIL_HOOGTE, navOnderMarge } from "./NavigationBar.tsx";
 import { TERUGKNOP_MAAT } from "./TerugKnop.tsx";
 import { Verschijn } from "./Verschijn.tsx";
@@ -117,6 +118,7 @@ export type ScreenCanvasProps = {
 
 export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, heroInhoud, heroLaag, kopTitel, metNavRuimte = false, terugKnop, vast = false, scrollUit = false, children }: ScreenCanvasProps) {
   const insets = useSafeAreaInsets();
+  const minderBeweging = useMinderBeweging();
   const scrollY = useRef(new Animated.Value(0)).current;
   // De gemeten hoogte van de hero-inhoud, zodat het vel omlaag schuift als
   // de begroeting en de ondertitel samen meer regels nemen dan de band hoog
@@ -167,7 +169,9 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
   );
   // Parallax: de hero schuift 0,4 keer mee omhoog bij scrollen en vervaagt,
   // zodat de gradient een laag achter het vel wordt in plaats van een plaat.
-  const heroSchuif = scrollY.interpolate({ inputRange: [0, top], outputRange: [0, -top * 0.4], extrapolate: "clamp" });
+  // Wie minder beweging wil, krijgt een hero die stil blijft staan: het vel
+  // schuift er dan gewoon overheen. Het vervagen blijft, dat is geen beweging.
+  const heroSchuif = scrollY.interpolate({ inputRange: [0, top], outputRange: [0, minderBeweging ? 0 : -top * 0.4], extrapolate: "clamp" });
   const heroVervaag = scrollY.interpolate({ inputRange: [0, top * 0.7], outputRange: [1, 0], extrapolate: "clamp" });
   // De titelbalk verschijnt in de laatste 60 punten voordat het vel de bovenkant raakt.
   const kopZichtbaar = scrollY.interpolate({ inputRange: [Math.max(0, top - insets.top - 60), Math.max(1, top - insets.top)], outputRange: [0, 1], extrapolate: "clamp" });

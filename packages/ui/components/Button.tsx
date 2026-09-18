@@ -45,6 +45,9 @@ export function Button({
       accessibilityState={{ disabled: uit, busy: bezig }}
       disabled={uit}
       onPress={onPress}
+      // Een tekstlink is 36 hoog; met 4 erboven en eronder is het raakvlak 44,
+      // de ondergrens van Apple, zonder dat de opmaak verschuift.
+      hitSlop={isLink ? { top: space[1], bottom: space[1] } : undefined}
       style={({ pressed }) => [
         {
           borderRadius: radius.pill,
@@ -52,7 +55,9 @@ export function Button({
           justifyContent: "center",
           alignItems: "center",
           gap: space[2],
-          height: isLink ? 36 : 48,
+          // Een minimum en geen vaste hoogte: bij een grote systeemletter
+          // groeit de knop mee in plaats van de tekst af te knippen.
+          minHeight: isLink ? 36 : 48,
           paddingVertical: isLink ? space[2] : 14,
           paddingHorizontal: isLink ? space[2] : space[6],
           alignSelf: fullWidth ? "stretch" : "flex-start",
@@ -68,7 +73,7 @@ export function Button({
       {bezig ? (
         <ActivityIndicator size="small" color={variant === "primary" ? colors.ctaText : colors.brandDefault} />
       ) : null}
-      <AppText rol="labelButton" kleur={variant === "link" ? "brand" : "cta"} style={variant === "secondary" && { color: colors.brandDefault }}>
+      <AppText rol="labelButton" kleur={variant === "link" ? "brand" : "cta"} centreer style={[{ flexShrink: 1 }, variant === "secondary" && { color: colors.brandDefault }]}>
         {label}
       </AppText>
     </Pressable>

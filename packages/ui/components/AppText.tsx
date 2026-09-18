@@ -34,6 +34,29 @@ export type AppTextProps = TextProps & {
 // zie afbreken.ts. Lopende tekst heeft de ruimte en breekt op spaties.
 const KOPROLLEN: ReadonlySet<Rol> = new Set<Rol>(["h1", "h2", "h3"]);
 
+// Hoe ver een rol meegroeit met de systeemletter. iOS gaat tot ruim drie keer
+// zo groot. Lopende tekst mag verdubbelen: dat is waar iemand de grote letter
+// voor aanzet. Een kop is al groot; drie keer zo groot vult hij het hele
+// scherm en breekt hij midden in een woord (gezien op 18 september 2026 met
+// de grootste letter: "Goedemiddag" nam drie regels en het vel was weg).
+// Koppen groeien daarom tot ongeveer 40 punten en niet verder. Een scherm dat
+// het anders wil, geeft zelf maxFontSizeMultiplier mee.
+const PLAFOND: Record<Rol, number> = {
+  display: 1.1,
+  h1: 1.3,
+  h2: 1.5,
+  h3: 1.6,
+  accentH2Italic: 1.5,
+  quote: 1.6,
+  subtitle: 1.6,
+  bodyEmphasis: 2,
+  body: 2,
+  bodySmall: 2,
+  labelButton: 2,
+  labelCaption: 2,
+  labelOverline: 2,
+};
+
 export function AppText({ rol = "body", kleur = "primary", centreer = false, style, children, ...rest }: AppTextProps) {
   return (
     <Text
@@ -41,6 +64,7 @@ export function AppText({ rol = "body", kleur = "primary", centreer = false, sty
       // en de navigatie van TalkBack spring je dan van kop naar kop. Een scherm
       // dat iets anders wil, geeft zelf een accessibilityRole mee.
       accessibilityRole={KOPROLLEN.has(rol) ? "header" : undefined}
+      maxFontSizeMultiplier={PLAFOND[rol]}
       {...rest}
       style={[
         type[rol],

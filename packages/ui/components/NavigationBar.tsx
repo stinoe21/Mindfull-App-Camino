@@ -113,7 +113,11 @@ export function NavigationBar({ items }: { items: NavItem[] }) {
               <View style={{ height: 28, justifyContent: "center", alignItems: "center", opacity: item.actief ? 1 : INACTIEF_DEKKING }}>
                 {item.icoon(item.actief ? colors.brandDefault : colors.textSecondary)}
               </View>
-              <AppText rol="labelCaption" kleur={item.actief ? "brand" : "secondary"}>
+              {/* De balk heeft een vaste hoogte en vijf labels naast elkaar:
+                  "Inchecken" en "Challenges" passen er precies. De labels
+                  groeien daarom niet mee met de systeemletter, net als in de
+                  tabbalk van iOS zelf. Al bij 1,3 keer werd het "Incheck...". */}
+              <AppText rol="labelCaption" kleur={item.actief ? "brand" : "secondary"} allowFontScaling={false} numberOfLines={1}>
                 {item.label}
               </AppText>
             </Pressable>
