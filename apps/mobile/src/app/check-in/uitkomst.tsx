@@ -26,6 +26,7 @@ import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { Verschijn } from "@mind/ui/components/Verschijn";
 import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
+import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
@@ -61,8 +62,8 @@ const nl = {
   evenInchecken: "Inchecken",
   terugDashboard: "Terug naar Home",
   jouwWeer: "JOUW WEER VANDAAG",
-  voorVandaag: "Voor vandaag",
-  lezenAlsJeWilt: "Lezen, als je wilt",
+  voorVandaag: "VOOR VANDAAG",
+  lezenAlsJeWilt: "LEZEN, ALS JE WILT",
   deelJeWeer: "Deel je weer",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -85,8 +86,8 @@ const teksten: Woordenboek<typeof nl> = {
     evenInchecken: "Check in",
     terugDashboard: "Back to Home",
     jouwWeer: "YOUR WEATHER TODAY",
-    voorVandaag: "For today",
-    lezenAlsJeWilt: "Read, if you like",
+    voorVandaag: "FOR TODAY",
+    lezenAlsJeWilt: "READ, IF YOU LIKE",
     deelJeWeer: "Share your weather",
   },
 };
@@ -165,27 +166,41 @@ export default function CheckInUitkomst() {
         ) : undefined
       }
     >
-      {/* Eerst het weer zelf, zoals in scherm 07 van het ontwerp: overline,
-          de naam van het weerbeeld groot, dan de duiding. */}
+      {/* De hiërarchie (Stijn, 17 september 2026: "kan qua hiërarchie nog wat
+          werk gebruiken"). Er stonden vijf tekststijlen op een rij bovenaan,
+          en de tip, de sectiekoppen en de lijsttitels waren alle drie even
+          zwaar. Nu drie niveaus: het weer als enige grote kop met zijn icoon
+          (hetzelfde als op Home en de weerkaart), de tip als het ene grotere
+          statement, en de rest als gewone tekst. Elke sectie begint met
+          hetzelfde kleine opschrift. De tijd van inchecken staat onderaan bij
+          de melding: het is een voetnoot, geen deel van je weer. */}
       {tekst && weerbeeld ? (
-        <View style={{ gap: space[2] }}>
-          <AppText rol="labelOverline" kleur="brand">{t("jouwWeer")}</AppText>
-          <AppText rol="h1">{WEER_NAMEN[weerbeeld]}</AppText>
-          {tijd ? <AppText rol="labelCaption" kleur="secondary">{t("ingechecktOm").replace("{tijd}", toonTijd(tijd))}</AppText> : null}
-          <AppText rol="subtitle">{tekst.kop}</AppText>
-          <AppText rol="body">{tekst.duiding}</AppText>
+        <View style={{ gap: space[4] }}>
+          <View style={{ gap: space[1] }}>
+            <AppText rol="labelOverline" kleur="brand">{t("jouwWeer")}</AppText>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: space[3] }}>
+              <WeerIcoon staat={weerbeeld} hoogte={40} />
+              <View style={{ flexShrink: 1 }}>
+                <AppText rol="h1">{WEER_NAMEN[weerbeeld]}</AppText>
+              </View>
+            </View>
+          </View>
+          <View style={{ gap: space[1] }}>
+            <AppText rol="subtitle">{tekst.kop}</AppText>
+            <AppText rol="body" kleur="secondary">{tekst.duiding}</AppText>
+          </View>
         </View>
       ) : null}
       {/* De tip op het vel, zonder kaart (Stijn: inhoud op het vel). */}
       {tekst ? (
         <View style={{ gap: space[2] }}>
-          <AppText rol="h3">{t("voorVandaag")}</AppText>
-          <AppText rol="bodyEmphasis">{tekst.tip}</AppText>
+          <AppText rol="labelOverline" kleur="brand">{t("voorVandaag")}</AppText>
+          <AppText rol="h3">{tekst.tip}</AppText>
         </View>
       ) : null}
       {weerbeeld ? (
-        <View style={{ gap: space[2] }}>
-          <AppText rol="h3">{t("lezenAlsJeWilt")}</AppText>
+        <View style={{ gap: space[1] }}>
+          <AppText rol="labelOverline" kleur="brand">{t("lezenAlsJeWilt")}</AppText>
           <Lijst>
             {tipsBijWeer(weerbeeld).map((a) => {
               // Op het onderwerp uit Houvast als het artikel er een heeft (uitleg
@@ -207,8 +222,10 @@ export default function CheckInUitkomst() {
           </Lijst>
         </View>
       ) : null}
-      {melding && MELDINGEN[melding] ? (
-        <AppText rol="bodySmall" kleur="secondary">{MELDINGEN[melding]}</AppText>
+      {tijd || (melding && MELDINGEN[melding]) ? (
+        <AppText rol="bodySmall" kleur="secondary">
+          {[tijd ? t("ingechecktOm").replace("{tijd}", toonTijd(tijd)) + "." : "", melding ? MELDINGEN[melding] ?? "" : ""].filter(Boolean).join(" ")}
+        </AppText>
       ) : null}
       {/* Eén primaire knop (productprincipe 5). Het mentale weer van Nederland
           staat op Home, direct onder jouw weer; een tweede knop ernaartoe was
