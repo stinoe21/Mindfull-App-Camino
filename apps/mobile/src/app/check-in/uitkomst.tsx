@@ -16,7 +16,7 @@
 
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
-import { Share, View } from "react-native";
+import { View } from "react-native";
 
 import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
@@ -127,16 +127,10 @@ export default function CheckInUitkomst() {
 
   const tekst = weerbeeld ? UITKOMSTEN[weerbeeld] : null;
 
-  const deel = () => {
-    if (!tekst) return;
-    // Delen is een keuze van de gebruiker zelf; er gaat niets automatisch weg.
-    Share.share({
-      message:
-        (weerbeeld ? WEER_NAMEN[weerbeeld] + ". " : "") +
-        tekst.kop +
-        " Dit is ongeveer mijn weer vandaag, via Weertje.",
-    });
-  };
+  // Delen is een keuze van de gebruiker zelf; er gaat niets automatisch weg.
+  // Sinds 18 september 2026 eerst het deelscherm: daar zie je het beeld dat je
+  // deelt en staat dat het aan jou is. Pas dan opent het deelvenster.
+  const deel = () => router.push({ pathname: "/delen", params: { soort: "weer" } });
 
   return (
     <ScreenCanvas

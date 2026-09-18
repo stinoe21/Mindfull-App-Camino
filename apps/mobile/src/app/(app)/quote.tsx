@@ -7,7 +7,8 @@
 // verzint niets. Het staat in de tabs zodat de navigatiepil blijft, maar is
 // geen tab: de balk toont alleen de vijf vaste bestemmingen.
 
-import { Share, View } from "react-native";
+import { useRouter } from "expo-router";
+import { View } from "react-native";
 
 import { palette, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
@@ -23,7 +24,6 @@ const nl = {
   betekenis: "Wat het kan betekenen",
   over: "Wie het zei",
   deel: "Deel deze quote",
-  deelNaschrift: "Quote van de dag uit Weer MIND.",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -32,17 +32,16 @@ const teksten: Woordenboek<typeof nl> = {
     betekenis: "What it can mean",
     over: "Who said it",
     deel: "Share this quote",
-    deelNaschrift: "Quote of the day from Weer MIND.",
   },
 };
 
 export default function QuotePagina() {
+  const router = useRouter();
   const t = useVertaling(teksten);
   const quote = quoteVanVandaag();
 
-  const deel = () => {
-    Share.share({ message: "“" + quote.tekst + "”\n" + quote.auteur + "\n\n" + t("deelNaschrift") });
-  };
+  // Eerst het deelscherm, dan pas het deelvenster: zie app/delen.tsx.
+  const deel = () => router.push({ pathname: "/delen", params: { soort: "quote" } });
 
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} metNavRuimte>
