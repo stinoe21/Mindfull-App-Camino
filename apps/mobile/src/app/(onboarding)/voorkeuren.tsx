@@ -1,8 +1,15 @@
 // Voorkeuren
 //
-// Keuze-chips, meervoudige selectie (HERKOMST.md, System states). Overslaan
-// mag: dit is geen essentiele stap (productprincipes 6). De keuze blijft
-// alleen op het toestel, zie het funnel-voorstel in docs/datamodel.md.
+// Keuze-chips, meervoudige selectie (HERKOMST.md, System states). De keuze
+// blijft alleen op het toestel, zie het funnel-voorstel in docs/datamodel.md.
+//
+// Geen "Sla over" meer (Stijn, 17 september 2026): dat sprak "kies minstens
+// drie" tegen. De onderwerpen bepalen wat Houvast laat zien, dus zonder keuze
+// heeft iemand weinig aan de app. Aanpassen kan later in Profiel.
+//
+// Minstens drie (Stijn, 17 september 2026): met één onderwerp blijft Houvast
+// te smal om er iets aan te hebben. Verder werkt pas vanaf drie, en de knop
+// telt zelf af, zodat er geen losse regel uitleg bij hoeft.
 
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -17,19 +24,23 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 import { bewaarInstellingen, VOORKEUR_OPTIES } from "@/features/profiel/instellingen";
 
+const MIN_ONDERWERPEN = 3;
+
 const nl = {
-  titel: "Welke onderwerpen spreken je aan?",
-  ondertitel: "Kies wat past. Aanpassen kan altijd onder Profiel.",
+  titel: "Waar wil je meer over weten?",
+  ondertitel: "MIND heeft jarenlange kennis over mentale gezondheid. Kies minstens drie onderwerpen.",
   verder: "Verder",
-  slaOver: "Sla over",
+  nogEen: "Kies er nog 1",
+  nogMeer: "Kies er nog {n}",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
-    titel: "Which topics appeal to you?",
-    ondertitel: "Choose what fits. You can always change it under Profile.",
+    titel: "What would you like to know more about?",
+    ondertitel: "MIND has years of knowledge about mental health. Choose at least three topics.",
     verder: "Continue",
-    slaOver: "Skip",
+    nogEen: "Choose 1 more",
+    nogMeer: "Choose {n} more",
   },
 };
 
@@ -42,8 +53,11 @@ export default function Voorkeuren() {
     zetGekozen((huidig) => (huidig.includes(optie) ? huidig.filter((o) => o !== optie) : [...huidig, optie]));
   };
 
-  const verder = async (bewaren: boolean) => {
-    if (bewaren) await bewaarInstellingen({ voorkeuren: gekozen });
+  const tekort = Math.max(0, MIN_ONDERWERPEN - gekozen.length);
+  const verderLabel = tekort === 0 ? t("verder") : tekort === 1 ? t("nogEen") : t("nogMeer").replace("{n}", String(tekort));
+
+  const verder = async () => {
+    await bewaarInstellingen({ voorkeuren: gekozen });
     router.push("/anonimiteit");
   };
 
@@ -56,8 +70,7 @@ export default function Voorkeuren() {
       </View>
 
       <View style={{ flex: 1 }} />
-      <Button label={t("verder")} fullWidth onPress={() => verder(true)} />
-      <Button label={t("slaOver")} variant="link" fullWidth onPress={() => verder(false)} />
+      <Button label={verderLabel} fullWidth disabled={tekort > 0} onPress={verder} />
     </OnboardingScherm>
   );
 }

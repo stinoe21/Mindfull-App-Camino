@@ -27,7 +27,7 @@
 import * as Linking from "expo-linking";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { TextInput } from "react-native";
+import { TextInput, View } from "react-native";
 
 import { colors, space, type } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
@@ -53,7 +53,7 @@ const AANBIEDER_NAAM: Record<Aanbieder, string> = { apple: "Apple", google: "Goo
 // Alleen interface-teksten. {naam}, {n} en {email} worden op de plek ingevuld.
 const nl = {
   titel: "Inloggen",
-  ondertitel: "Met een account telt je check-in anoniem mee: hooguit één keer per ochtend en één keer per middag.",
+  ondertitel: "Met een account tel je mee in het mentale weer van Nederland.",
   socialMislukt: "Inloggen met {naam} is niet gelukt. Probeer het opnieuw, of gebruik je e-mailadres.",
   geenVerbinding: "Geen verbinding. Probeer het later opnieuw.",
   vulEmail: "Vul een geldig e-mailadres in.",
@@ -88,7 +88,7 @@ const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "Log in",
-    ondertitel: "With an account your check-in counts anonymously: at most once each morning and once each afternoon.",
+    ondertitel: "With an account you count towards the mental weather of the Netherlands.",
     socialMislukt: "Logging in with {naam} failed. Try again, or use your email address.",
     geenVerbinding: "There's no connection to the server. Please try again later.",
     vulEmail: "Enter a valid email address.",
@@ -277,6 +277,10 @@ export default function Inloggen() {
         gekozen={voorwaarden}
         onPress={() => zetVoorwaarden(!voorwaarden)}
       />
+      {/* Wat je accepteert moet je kunnen lezen (Stijn, 17 september 2026). */}
+      <View style={{ alignItems: "flex-start" }}>
+        <Button label="Lees de voorwaarden" variant="link" onPress={() => router.push("/voorwaarden")} />
+      </View>
       <Button
         label={aanmaken ? t("accountAanmaken") : t("inloggen")}
         fullWidth

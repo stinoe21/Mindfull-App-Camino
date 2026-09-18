@@ -21,8 +21,7 @@ const nl = {
     "Deze app is voor iedereen van 16 jaar en ouder. Jonger? Dan kun je de app nu nog niet gebruiken.",
   terug: "Terug",
   vraag: "Ben je 16 jaar of ouder?",
-  uitleg:
-    "Deze app is voor iedereen van 16 jaar en ouder. We vragen dit maar één keer.",
+  uitleg: "Weertje is voor iedereen van 16 jaar en ouder.",
   ja: "Ja, ik ben 16 of ouder",
   nee: "Nee, ik ben jonger",
 } as const;
@@ -34,7 +33,7 @@ const teksten: Woordenboek<typeof nl> = {
       "This app is for everyone aged 16 and older. Younger? Then you can't use the app just yet.",
     terug: "Back",
     vraag: "Are you 16 or older?",
-    uitleg: "This app is for everyone aged 16 and older. We ask this once, before you create an account.",
+    uitleg: "Weertje is for everyone aged 16 and older.",
     ja: "Yes, I'm 16 or older",
     nee: "No, I'm younger",
   },

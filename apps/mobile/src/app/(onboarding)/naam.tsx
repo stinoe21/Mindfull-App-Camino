@@ -19,8 +19,7 @@ import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 import { bewaarInstellingen, NAAM_MAX, schoonNaam } from "@/features/profiel/instellingen";
 
 const nl = {
-  titel: "Hoe mogen we je noemen?",
-  ondertitel: "Alleen voor de begroeting. Je naam blijft op je telefoon.",
+  titel: "Wat is je naam?",
   placeholder: "Je voornaam",
   verder: "Verder",
   slaOver: "Sla over",
@@ -28,8 +27,7 @@ const nl = {
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
-    titel: "What should we call you?",
-    ondertitel: "Only for the greeting. Your name stays on your phone and never goes to the server.",
+    titel: "What is your name?",
     placeholder: "Your first name",
     verder: "Continue",
     slaOver: "Skip",
@@ -47,7 +45,7 @@ export default function Naam() {
   };
 
   return (
-    <OnboardingScherm stap={3} titel={t("titel")} uitleg={t("ondertitel")}>
+    <OnboardingScherm stap={3} titel={t("titel")}>
       <Card tone="outline" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={naam}
