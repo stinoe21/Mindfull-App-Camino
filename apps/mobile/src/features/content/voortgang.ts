@@ -68,6 +68,11 @@ export function aantalAfgerond(challenge: string): number {
   return voortgang.get(challenge)?.dagen.size ?? 0;
 }
 
+/** De dag (jjjj-mm-dd) waarop iemand voor het laatst een dag afrondde; null als er nog niets is. */
+export function laatsteActiviteit(challenge: string): string | null {
+  return voortgang.get(challenge)?.laatste || null;
+}
+
 /** Is er vandaag al een dag van deze challenge afgerond? Dan wacht de volgende tot morgen. */
 export function vandaagAlAfgerond(challenge: string): boolean {
   return voortgang.get(challenge)?.laatste === vandaag();
