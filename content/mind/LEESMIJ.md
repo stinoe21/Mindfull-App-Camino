@@ -57,10 +57,14 @@ niet in de navigatie. De challenge is een mailreeks: je meldt je aan en krijgt
 om de dag een onderdeel. Dat ontwerp is de reden dat die pagina's onvindbaar zijn.
 
 **Content uit deze map één op één in de app tonen haalt dat mechanisme weg.**
-Dat is een besluit voor MIND, niet voor ons. Het staat nog niet in `docs/scope.md`,
-en `scope.md` heeft ook nog openstaan of we de naam en het logo van MIND mogen
-gebruiken en wie daarvoor tekent. Zolang dat niet rond is, is deze map naslag
-en niets meer.
+Dat was een besluit voor MIND, niet voor ons. **Op 10 september 2026 heeft MIND,
+via Stijn, akkoord gegeven op de volledige inhoud van de challenges en
+themaspecials in de app**, zie `docs/scope.md`. Sindsdien genereert
+`scripts/gen-challenges.mjs` de dagpagina's woordelijk naar de app; de
+aanmeldpagina blijft in de app staan als alternatief per mail. Voor de rest van
+deze map (psychipedia, zelftests, ervaringsverhalen) geldt nog steeds: naslag,
+geen goedgekeurde contentbron. Ook staat in `scope.md` nog open of we de naam en
+het logo van MIND mogen gebruiken en wie daarvoor tekent.
 
 ## Hoe je erin zoekt
 

@@ -38,7 +38,7 @@ Van het whiteboard van 20 augustus 2026, zelfde status: concept.
 | Wat | Aantekening |
 |---|---|
 | Mentale weerbericht | Check-in plus landelijk beeld; backend staat al in main |
-| Challenges | De USP; content komt uit de bibliotheek van MIND |
+| Challenges | De USP; content komt uit de bibliotheek van MIND. **Besloten op 10 september 2026:** MIND heeft via Stijn akkoord gegeven op de volledige daginhoud van de challenges en themaspecials in de app, met de mailreeks van MIND als alternatief; daarvoor stond per dag alleen de intro |
 | Mind-content, waaronder de psychipedia | Uit de contentbibliotheek in `content/` |
 | Hulplijn-integratie | De bestaande afspraak: doorverwijzing naar de MIND Hulplijn via WhatsApp, zonder identiteit vanuit de app, zie `privacy-besluiten.md` |
 | Quote-scheurkalender | Dagelijkse quote op het dashboard staat al op het board (`12:179`) en valt daarmee onder het dashboard-scherm uit de schermenlijst hieronder; of er daarnaast een eigen pagina komt, is nog een open keuze, en die pagina staat dus bewust niet in de twintig schermen |
