@@ -92,12 +92,6 @@ export function houvastBijOnderwerp(onderwerp: string): Houvast[] {
   return HOUVAST.filter((h) => h.onderwerp === onderwerp);
 }
 
-/** Alle onderwerpen, de gekozen voorkeuren voorop; de volgorde daarbinnen blijft die van de lijst. */
-export function houvastVoorVoorkeuren(voorkeuren: string[]): Houvast[] {
-  const gekozen = (h: Houvast) => Number(voorkeuren.includes(h.onderwerp));
-  return [...HOUVAST].sort((a, b) => gekozen(b) - gekozen(a));
-}
-
 /** Het onderwerp waar een online gids bij hoort, zodat een gids in de app op zijn onderwerp opent. */
 export function houvastVoorGids(gidsSlug: string): Houvast | undefined {
   return HOUVAST.find((h) => h.gids?.slug === gidsSlug);

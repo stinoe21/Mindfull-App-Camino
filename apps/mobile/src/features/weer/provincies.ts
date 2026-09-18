@@ -26,7 +26,5 @@ export const PROVINCIE_NAMEN: Record<ProvincieCode, string> = {
   limburg: "Limburg",
 };
 
-export const PROVINCIE_CODES = Object.keys(PROVINCIE_NAMEN) as ProvincieCode[];
-
 export const isProvincie = (code: string | null | undefined): code is ProvincieCode =>
   !!code && code in PROVINCIE_NAMEN;
