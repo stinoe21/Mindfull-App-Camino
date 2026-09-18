@@ -1,0 +1,363 @@
+{
+  "slug": "piekertest",
+  "titel": "Piekertest",
+  "url": "https://formulier.wijzijnmind.nl/piekertest",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/VqBKBraf55uM2z2UGMiW.json",
+  "opgehaald": "2026-09-14",
+  "intro": "De piekertest helpt je in te schatten hoeveel je piekert. De test noemt 11 stellingen. Geef bij elke stelling aan in hoeverre dit de afgelopen week bij jou paste. Het invullen van deze test duurt een paar minuten.",
+  "noot": "Piekeren is geen diagnose. Uit deze test volgt dus ook geen diagnose.",
+  "instrument": "Dit is de Nederlandse vertaling van de PSWQ, Meyer, Miller, Metzger en Borkovec, 1990 en Van Rijsoort, Vervaeke en Emmelkamp, 1997.",
+  "scoring": "som",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Mijn zorgen overweldigen mij",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Veel situaties zijn voor mij een aanleiding om te gaan piekeren",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Ik weet dat ik mij niet zo'n zorgen zou moeten maken over dingen, maar ik kan er gewoon niets aan doen...",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Als ik onder druk sta, pieker ik te veel",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Ik ben altijd wel ergens over aan het piekeren",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Zodra ik iets afheb, begin ik mij zorgen te maken over al het andere dat ik nog moet doen",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Ik ben mijn hele leven al een piekeraar geweest",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Ik merk dat ik mij zorgen maak over dingen",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "Als ik eenmaal begin te piekeren, kan ik er ook niet meer mee ophouden",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_10",
+      "tekst": "Ik maak mij voortdurend zorgen",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "sleutel": "question_11",
+      "tekst": "Ik maak mij zorgen over de dingen die ik nog moet doen, totdat ze af zijn",
+      "opties": [
+        {
+          "label": "Past helemaal niet bij mij",
+          "score": 1
+        },
+        {
+          "label": "Past niet bij mij",
+          "score": 2
+        },
+        {
+          "label": "Past een beetje bij mij",
+          "score": 3
+        },
+        {
+          "label": "Past bij mij",
+          "score": 4
+        },
+        {
+          "label": "Past helemaal bij mij",
+          "score": 5
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell1",
+      "regels": [
+        {
+          "op": "<=",
+          "waarde": 17
+        }
+      ],
+      "html": "Met jouw antwoorden op deze test geef je aan in de afgelopen week <b>niet of nauwelijks</b> te piekeren.\n"
+    },
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 18
+        },
+        {
+          "op": "<=",
+          "waarde": 23
+        }
+      ],
+      "html": "Met jouw antwoorden op deze test geef je aan in de afgelopen week <b>nauwelijks</b> te piekeren."
+    },
+    {
+      "sleutel": "resultWell4",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 24
+        },
+        {
+          "op": "<=",
+          "waarde": 31
+        }
+      ],
+      "html": "Met jouw antwoorden op deze test geef je aan in de afgelopen week <b>af en toe</b> te piekeren. Op onze webpagina lees je meer over <a href=\"https://wijzijnmind.nl/psychische-klachten/psychipedia/piekeren\" target=\"_blank\" style=\"color:#f68100\">piekeren</a>."
+    },
+    {
+      "sleutel": "resultWell5",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 32
+        },
+        {
+          "op": "<=",
+          "waarde": 39
+        }
+      ],
+      "html": "Met jouw antwoorden op deze test geef je aan in de afgelopen week <b>veel</b> te piekeren. Op onze webpagina lees je meer over <a href=\"https://wijzijnmind.nl/psychische-klachten/psychipedia/piekeren\" target=\"_blank\" style=\"color:#f68100\">piekeren</a>.\n<br><br>\nAls je ergens last van hebt, is het meestal fijn om dit met iemand te delen. Praten lucht vaak op en het helpt je om je gedachten op een rij te zetten. Je hoeft het niet alleen te doen. Bovendien kan iemand die dicht bij je staat met je meedenken over hoeveel invloed het piekeren op jouw leven heeft.  Soms is dat lastig om zelf in te schatten en door te hebben wat je nodig hebt. Ook kan het zijn dat je je ervoor schaamt. Dat laatste is absoluut niet nodig, er zijn heel veel mensen die hier last van hebben. \n<br><br>\nZou je graag eens over jouw persoonlijke situatie praten met een professional? Neem contact op met de <a href=\"https://mindhulplijn.nl/\" target=\"_blank\" style=\"color:#f68100\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat.\n<br><br>\n<b>Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.</b>"
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 40
+        }
+      ],
+      "html": "Met jouw antwoorden op deze test geef je aan in de afgelopen week <b>erg veel</b> te piekeren. Op onze webpagina lees je meer over <a href=\"https://wijzijnmind.nl/psychische-klachten/psychipedia/piekeren\" target=\"_blank\" style=\"color:#f68100\">piekeren</a>.\n<br><br>\nAls je ergens last van hebt, is het meestal fijn om dit met iemand te delen. Praten lucht vaak op en het helpt je om je gedachten op een rij te zetten. Je hoeft het niet alleen te doen. Bovendien kan iemand die dicht bij je staat met je meedenken over hoeveel invloed het piekeren op jouw leven heeft.  Soms is dat lastig om zelf in te schatten en door te hebben wat je nodig hebt. Ook kan het zijn dat je je ervoor schaamt. Dat laatste is absoluut niet nodig, er zijn heel veel mensen die hier last van hebben. \n<br><br>\nDaarnaast raden we je aan contact op te nemen met je huisarts om je klachten te bespreken. De huisarts kan samen met jou bekijken wat er aan de hand is. Als dat nodig is kan de huisarts je ondersteunen of je doorverwijzen voor hulp. \n<br><br>\nZou je graag eens over jouw persoonlijke situatie praten met een professional? Neem contact op met de <a href=\"https://mindhulplijn.nl/\" target=\"_blank\" style=\"color:#f68100\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat.\n<br><br>\n<b>Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.</b>"
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "slug": "angsttest",
+  "titel": "Angsttest",
+  "url": "https://formulier.wijzijnmind.nl/angsttest",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/kEb6rUaapGTAFXQTdx4Z.json",
+  "opgehaald": "2026-09-14",
+  "intro": "De angsttest helpt je bij het inschatten hoeveel last je hebt van angstklachten. Lees elke stelling goed door en geef aan hoe vaak je er in de afgelopen twee weken last van hebt gehad.Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+  "noot": "",
+  "instrument": "Dit is de Nederlandse vertaling van de GAD-7. Ontwikkeld door drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke en collega’s.",
+  "scoring": "som",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Je nerveus, angstig of gespannen voelen",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Niet kunnen stoppen met je zorgen maken",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Je te veel zorgen maken om verschillende dingen",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Moeite hebben je te ontspannen",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Zo rusteloos zijn dat het moeilijk is om stil te zitten",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Snel geërgerd of geïrriteerd zijn",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Bang zijn dat er iets vreselijks zou kunnen gebeuren",
+      "opties": [
+        {
+          "label": "Helemaal niet",
+          "score": 0
+        },
+        {
+          "label": "Een aantal dagen",
+          "score": 1
+        },
+        {
+          "label": "Meer dan de helft van de dagen",
+          "score": 2
+        },
+        {
+          "label": "Bijna elke dag",
+          "score": 3
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell1",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 0
+        },
+        {
+          "op": "<=",
+          "waarde": 4
+        }
+      ],
+      "html": "<h2>Minimale angst</h2>\n<p>Met jouw antwoorden op de vragen geef je aan niet tot nauwelijks last te hebben van angstklachten.</p>\n"
+    },
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 5
+        },
+        {
+          "op": "<=",
+          "waarde": 9
+        }
+      ],
+      "html": "<h2>Milde angst</h2>\n<p>Met jouw antwoorden op de vragen geef je aan milde angstklachten te ervaren.</p> \n<p>Op onze webpagina lees je meer over <a href=\"https://wijzijnmind.nl/psychische-klachten/psychipedia/angst\">angst</a>. Als je ergens last van hebt, is het meestal fijn om dit met iemand te delen. Praten lucht vaak op en het helpt je om je gedachten op een rij te zetten. Je hoeft het niet alleen te doen. Bovendien kan iemand die dicht bij je staat met je meedenken over hoeveel invloed de angst op jouw leven heeft. Denk aan dingen vermijden of anders doen vanwege de angst. Soms is dat lastig om zelf in te schatten en door te hebben wat je nodig hebt. Bijvoorbeeld omdat je weet dat de angst niet realistisch is (al voelt dat wel zo) of dat je je ervoor schaamt. Dat laatste is absoluut niet nodig, er zijn heel veel mensen die hier last van hebben.</p>\n<p>Zou je graag eens over jouw persoonlijke situatie praten met een professional? Neem contact op met <a href=\" https://mindhulplijn.nl/\">de MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat.</p>\n<b>Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.</b>"
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 10
+        },
+        {
+          "op": "<=",
+          "waarde": 14
+        }
+      ],
+      "html": "<h2>Matige angst</h2>\n<p>Met jouw antwoorden op de vragen geef je aan matige angstklachten te ervaren. Komt deze uitslag overeen met hoe jij je voelt?</p>\n<p>Als je ergens last van hebt, is het meestal fijn om dit met iemand te delen. Praten lucht vaak op en het helpt je om je gedachten op een rij te zetten. Neem iemand in vertrouwen. Je hoeft het niet alleen te doen. Bovendien kan iemand die dicht bij je staat met je meedenken over hoeveel invloed de angst op jouw leven heeft. Denk aan dingen vermijden of je leven aanpassen vanwege de angst. Soms is dat lastig om zelf in te schatten en door te hebben wat je nodig hebt. Bijvoorbeeld omdat je weet dat de angst niet realistisch is (al voelt dat wel zo) of dat je je ervoor schaamt. Dat laatste is absoluut niet nodig, er zijn heel veel mensen die hier last van hebben. </p>\n<p>Daarnaast raden we je aan contact op te nemen met je huisarts om je klachten te bespreken. De huisarts kan samen met jou bekijken wat er aan de hand is. Als dat nodig is kan de huisarts je ondersteunen of je doorverwijzen voor hulp.</p>\n<p>Zou je graag eens over jouw persoonlijke situatie praten met een professional? Neem contact op met <a href=\" https://mindhulplijn.nl/\">de MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat.</p>\n<b>Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.</b>"
+    },
+    {
+      "sleutel": "resultwell4",
+      "regels": [
+        {
+          "op": ">=",
+          "waarde": 15
+        },
+        {
+          "op": "<=",
+          "waarde": 21
+        }
+      ],
+      "html": "<h2>Ernstige angst</h2>\n<p>Met jouw antwoorden op de vragen geef je aan ernstige angstklachten te ervaren. Komt deze uitslag overeen met hoe jij je voelt?</p>\n<p>We raden je aan contact op te nemen met je huisarts om je klachten te bespreken. De huisarts kan samen met jou bekijken wat er aan de hand is. Als dat nodig is kan de huisarts je ondersteunen of je doorverwijzen voor hulp.</p>\n<p>Neem daarnaast iemand in vertrouwen. Als je ergens last van hebt, is het meestal fijn om dit met iemand te delen. Praten lucht vaak op en het helpt je om je gedachten op een rij te zetten. Je hoeft het niet alleen te doen. Bovendien kan iemand die dicht bij je staat met je meedenken over hoeveel invloed de angst op jouw leven heeft. Denk aan dingen vermijden of je leven aanpassen vanwege de angst. Soms is dat lastig om zelf in te schatten en door te hebben wat je nodig hebt. Bijvoorbeeld omdat je weet dat de angst niet realistisch is (al voelt dat wel zo) of dat je je ervoor schaamt. Dat laatste is absoluut niet nodig, er zijn heel veel mensen die hier last van hebben. Ook kan het fijn zijn om diegene die je in vertrouwen hebt genomen mee te vragen naar de afspraak met de huisarts.</p>\n<p>Zou je graag eens over jouw persoonlijke situatie praten met een professional? Neem contact op met <a href=\" https://mindhulplijn.nl/\">de MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat.</p>\n<b>Dit is geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.</b>"
+    }
+  ]
+}

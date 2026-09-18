@@ -50,6 +50,7 @@ const ROUTES = [
   ["Houvast", "/naslagwerk"],
   ["Houvast: familie Stress", "/naslagwerk/familie/stress"],
   ["Houvast: onderwerp Piekeren", "/naslagwerk/houvast/piekeren"],
+  ["Houvast: zelftest Piekertest", "/naslagwerk/zelftest/piekertest"],
   ["Houvast: gidsen voor naasten", "/naslagwerk/gidsen/naasten"],
   ["Challenges", "/challenges"],
   ["Profiel", "/profiel"],

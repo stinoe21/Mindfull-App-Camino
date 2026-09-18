@@ -1,0 +1,189 @@
+{
+  "slug": "stresstest-ontspanning-en-herstel",
+  "titel": "Stresstest: Ontspanning en herstel",
+  "url": "https://formulier.wijzijnmind.nl/stresstest-ontspanning-en-herstel",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/A0ZDbSNoS6NH0NQW2eP7.json",
+  "opgehaald": "2026-09-14",
+  "intro": "Doe de Ontspanning en Herstel testVoor de één is ontspanning uitgaan met vrienden. Voor de ander is het met een goed boek op de bank zitten. Weer een ander gaat sporten. Ontspanning kan je mentaal of lichamelijk zoeken. Op een actieve of op een passieve manier. Het gaat erom die dingen te doen, die jouw hoofd leeg maken en je lichaam ontspannen, zodat je kan herstellen van (mentale) inspanning en stress. Neem jij voldoende tijd om te ontspannen?De test bestaat uit 10 vragen. Lees de vragen goed door. Als je jezelf in een vraag herkent kies je voor \"Ja\", anders kies je voor \"Nee\".",
+  "noot": "",
+  "instrument": "",
+  "scoring": "som",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Neem je ’s ochtends rustig de tijd om op te staan?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Zie je vaak tegen de (werk)dag op?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Ben je regelmatig uitgeput aan het eind van de dag?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Kan je thuis makkelijk ontspannen?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Kom je toe aan je hobby’s?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Kom je regelmatig moeilijk in slaap, bijvoorbeeld doordat je ligt te piekeren?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Heb je na je werk of na andere inspannende activiteiten energie over om andere dingen te doen?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Kan je genieten van even niets doen?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "Heb je regelmatig lichamelijke klachten zoals hoofdpijn, spierpijn, duizeligheid?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_10",
+      "tekst": "Word je regelmatig moe wakker?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell1",
+      "regels": [
+        {
+          "op": "<",
+          "waarde": 4
+        }
+      ],
+      "html": "<H2> Nauwelijks tijd voor ontspanning en herstel</H2>\nMet je antwoorden geef je aan niet of nauwelijks tijd voor ontspanning of herstel te nemen. Je vraagt te veel van jezelf. Dit maakt je gevoelig voor de negatieve gevolgen van stress. Je ervaart mogelijk al klachten zoals vermoeidheid of piekeren. \n<p></p>\nMaak je je zorgen over klachten die je ervaart, praat daarover met iemand in je omgeving die je vertrouwt. \nOok kan je contact opnemen met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. "
+    },
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 3
+        },
+        {
+          "op": "<",
+          "waarde": 7
+        }
+      ],
+      "html": "<h2>Wel momenten van ontspanning, maar te weinig</h2>\nMet je antwoorden geef je aan dat je wel momenten van rust en ontspanning inlast, maar dat je geneigd bent om dit te weinig te doen. Voldoende rust nemen, tijd maken voor hobby’s en ontspanning zorgen ervoor dat je meer aankan.\n<p></p>\nMaak je je zorgen over klachten die je ervaart, praat daar dan over met iemand in je omgeving die je vertrouwt. \nOok kan je contact opnemen met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. "
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 6
+        }
+      ],
+      "html": "<h2> Genoeg tijd voor ontspanning en herstel</h2>\nMet je antwoorden geef je aan dat je genoeg tijd neemt voor ontspanning en herstel na (mentale) inspanning. Dat is positief. Dit draagt bij aan een goede balans tussen je lichaam en geest. Hierdoor ben je beter opgewassen tegen stress."
+    }
+  ]
+}

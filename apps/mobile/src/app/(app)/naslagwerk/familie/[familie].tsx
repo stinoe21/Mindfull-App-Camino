@@ -21,6 +21,7 @@ import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { challengeBijFamilie, familieVoor, losseGidsenBijFamilie } from "@/features/content/families";
 import type { Houvast } from "@/features/content/data/houvast";
+import { zelftestsBijOnderwerp } from "@/features/content/zelftests";
 import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
 
 const nl = {
@@ -34,6 +35,8 @@ const nl = {
   alleenUitleg: "Kort uitgelegd",
   gids: "GIDS",
   gidsMeta: "Praktische tips van MIND",
+  zelftest: "ZELFTEST",
+  testMeta: "{n} vragen, geen diagnose",
   challenge: "CHALLENGE",
   dagen: "{n} dagen, een stap per dag",
   bekijkChallenge: "Bekijk de challenge",
@@ -51,6 +54,8 @@ const teksten: Woordenboek<typeof nl> = {
     alleenUitleg: "Explained briefly",
     gids: "GUIDE",
     gidsMeta: "Practical tips from MIND",
+    zelftest: "SELF-TEST",
+    testMeta: "{n} questions, no diagnosis",
     challenge: "CHALLENGE",
     dagen: "{n} days, one step a day",
     bekijkChallenge: "See the challenge",
@@ -83,6 +88,7 @@ export default function FamilieScherm() {
 
   const gidsen = losseGidsenBijFamilie(familie.naam);
   const challenge = challengeBijFamilie(familie.naam);
+  const tests = zelftestsBijOnderwerp(familie.naam);
 
   return (
     <ScreenCanvas
@@ -115,6 +121,15 @@ export default function FamilieScherm() {
               titel={g.titel.charAt(0).toUpperCase() + g.titel.slice(1)}
               meta={t("gidsMeta")}
               onPress={() => router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: g.slug } })}
+            />
+          ))}
+          {tests.map((z) => (
+            <LijstRij
+              key={z.slug}
+              label={t("zelftest")}
+              titel={z.titel}
+              meta={t("testMeta").replace("{n}", String(z.vragen.length))}
+              onPress={() => router.push({ pathname: "/naslagwerk/zelftest/[test]", params: { test: z.slug } })}
             />
           ))}
         </Lijst>

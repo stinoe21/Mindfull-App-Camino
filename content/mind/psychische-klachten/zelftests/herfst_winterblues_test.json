@@ -1,0 +1,189 @@
+{
+  "slug": "herfst_winterblues_test",
+  "titel": "Test: Gevoelig voor herfstdip of winterblues?",
+  "url": "https://formulier.wijzijnmind.nl/herfst_winterblues_test",
+  "formulier": "https://cdn.novti.io/tenants/mind/forms/ywAJe5soJ4eKP0LmSs1q.json",
+  "opgehaald": "2026-09-14",
+  "intro": "Deze test helpt je bij het inschatten of je klachten van een herfstdip of winterblues ervaart. De test noemt 10 stellingen, die je met ja of nee kan beantwoorden. We gaan er vanuit dat je de test in de herfst of winter beantwoordt. Het invullen van deze test duurt een paar minuten.Het is geen wetenschappelijke test en uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
+  "noot": "",
+  "instrument": "",
+  "scoring": "som",
+  "vragen": [
+    {
+      "sleutel": "question_1",
+      "tekst": "Had je als tiener al een hekel aan de herfst of winter?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_2",
+      "tekst": "Voel je je momenteel rot of terneergeslagen?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_3",
+      "tekst": "Geniet je in de herfst en winter evenveel van de goede dingen van het leven als tijdens de lente en zomer?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_4",
+      "tekst": "Lijkt het je aantrekkelijk om de herfst en winter over te slaan en die slapend door te brengen, zoals een beer?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_5",
+      "tekst": "Heb je duidelijk meer energie tijdens de lente en de zomer?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_6",
+      "tekst": "Heb je vorig jaar in de herfst en winter een duidelijke terugval in je stemming gehad?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_7",
+      "tekst": "Gebeuren er de komende tijd dingen waar je met plezier naar uitkijkt?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 0
+        },
+        {
+          "label": "Nee",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sleutel": "question_8",
+      "tekst": "Heb je in de herfst en winter duidelijk meer slaap nodig en last van slaperigheid overdag?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_9",
+      "tekst": "Heb je momenteel minder controle over hoeveel je eet en heb je extra zin om te snacken?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "sleutel": "question_10",
+      "tekst": "Heb je deze dagen het gevoel dat je minder ideeën hebt en dat er weinig uit je handen komt?",
+      "opties": [
+        {
+          "label": "Ja",
+          "score": 1
+        },
+        {
+          "label": "Nee",
+          "score": 0
+        }
+      ]
+    }
+  ],
+  "uitslagen": [
+    {
+      "sleutel": "resultWell1",
+      "regels": [
+        {
+          "op": "<",
+          "waarde": 5
+        }
+      ],
+      "html": "<h2> Geen last</h2>\nDe herfst en winter zijn misschien niet je favoriete seizoenen. Maar je lijkt geen last te hebben van een herfstdip of winterblues."
+    },
+    {
+      "sleutel": "resultWell2",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 4
+        },
+        {
+          "op": "<",
+          "waarde": 7
+        }
+      ],
+      "html": "<h2>Aantal klachten</h2>\nJe geeft aan een aantal klachten te ervaren die kunnen horen bij een herfstdip of winterblues. Maar je herkent je niet in alles. Wij raden je aan meer over een <a href=\" https://wijzijnmind.nl/psychische-klachten/psychipedia/seizoensgebonden-depressie \">seizoensgebonden depressie</a>  of haar mildere varianten te lezen. En als je toch veel last krijgt van je klachten dit met je huisarts te bespreken. De huisarts kan beoordelen wat er aan de hand is en je ondersteuning bieden, of je zo nodig doorverwijzen.\nOok kan je contact opnemen met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. \n\n<p></p>De uitkomst van deze test biedt géén diagnose, maar laat je wel zien of het belangrijk is je verder in dit onderwerp te verdiepen en/of hulp te zoeken.\n\n"
+    },
+    {
+      "sleutel": "resultWell3",
+      "regels": [
+        {
+          "op": ">",
+          "waarde": 6
+        }
+      ],
+      "html": "<h2>Meerdere klachten</h2>\nJij geeft aan meerdere klachten te ervaren die kunnen horen bij een herfstdip of winterblues. Als je veel last hebt van je klachten, dan kan er sprake zijn van een <a href=\" https://wijzijnmind.nl/psychische-klachten/psychipedia/seizoensgebonden-depressie \">seizoensgebonden depressie</a>. We raden je dan aan je klachten met je huisarts te bespreken. De huisarts kan beoordelen wat er aan de hand is en je ondersteuning bieden, of je zo nodig doorverwijzen.\n\n\nOok kan je contact opnemen met de <a href=\"https://www.mindhulplijn.nl\">MIND Hulplijn</a> voor een deskundig, anoniem en gratis advies op maat. \n\n<p></p>De uitkomst van deze test biedt géén diagnose, maar laat je wel zien of het belangrijk is je verder in dit onderwerp te verdiepen en/of hulp te zoeken."
+    }
+  ]
+}
