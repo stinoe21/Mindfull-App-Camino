@@ -21,6 +21,7 @@ import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
 import { KaartNederland } from "@mind/ui/components/KaartNederland";
 import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
+import { Lijst, LijstRij } from "@mind/ui/components/LijstRij";
 import { MascotteInput, type InputStaat } from "@mind/ui/components/MascotteInput";
 import { MascotteVlieger, type VliegerStaat } from "@mind/ui/components/MascotteVlieger";
 import { VliegerOnderwerp, type Uitdrukking } from "@mind/ui/components/VliegerOnderwerp";
@@ -44,7 +45,9 @@ const ROUTES = [
   ["Check-in bevestigd", "/check-in/bevestigd"],
   ["Check-in uitkomst", "/check-in/uitkomst"],
   ["Weerbericht van Nederland", "/weerbericht"],
-  ["Naslagwerk", "/naslagwerk"],
+  ["Houvast", "/naslagwerk"],
+  ["Houvast: familie Stress", "/naslagwerk/familie/stress"],
+  ["Houvast: gidsen voor naasten", "/naslagwerk/gidsen/naasten"],
   ["Challenges", "/challenges"],
   ["Profiel", "/profiel"],
   ["Instellingen", "/profiel/instellingen"],
@@ -163,6 +166,14 @@ export default function KitchenSink() {
           <ShelfCard tone="coral" label="CHALLENGE" title="Even naar buiten" meta="10 min" />
         </ContentShelf>
       </ContentSection>
+
+      <Kop>Lijst met LijstRij</Kop>
+      <Lijst>
+        <LijstRij titel="Alleen een titel" />
+        <LijstRij titel="Met een regel eronder" meta="5 tips, met een oefening" onPress={() => undefined} />
+        <LijstRij titel="Met beeld" meta="Kort uitgelegd" beeld={<VliegerOnderwerp uitdrukking="gestrest" hoogte={40} />} onPress={() => undefined} />
+        <LijstRij label="GIDS" titel="Met een overline" meta="Praktische tips van MIND" onPress={() => undefined} />
+      </Lijst>
 
       <Kop>ContentGrid</Kop>
       <ContentGrid>
