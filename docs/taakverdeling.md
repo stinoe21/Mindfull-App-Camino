@@ -1,5 +1,7 @@
 # Taakverdeling
 
+> **Sinds 10 september 2026 ontwikkelt Stijn alleen verder**, en sinds 18 september 2026 is dat ook technisch zo ingericht: geen verplichte review meer op `main`, Max niet meer in `.github/CODEOWNERS`, en niemand hoeft een PR goed te keuren of een `db push` af te stemmen. Max en Caesar krijgen daardoor geen reviewverzoeken of merge-mails meer. De rest van dit document beschrijft de opzet met z'n drieën en blijft staan als geschiedenis; de taakregels (één bestaand bestand per taak, feature-code in `features/`) gelden nog steeds, want ze houden main leesbaar. Zie `docs/setup-github.md`.
+
 Het belangrijkste feit voor dit document: **wij lopen samen terwijl we bouwen.** We kunnen elk moment overleggen, zonder ticket en zonder te wachten. Alles hieronder is er dus om te voorkomen dat we op elkaar wachten, niet om af te bakenen wie waar mag komen.
 
 > **Iedereen heeft toegang tot alles.** Niets in dit document, en niets in `.github/CODEOWNERS`, blokkeert een wijziging omdat die "niet bij iemand hoort". Zie je iets dat beter kan, dan pak je het en je zegt het. We lopen naast elkaar, dus dat is één zin en geen procedure.
