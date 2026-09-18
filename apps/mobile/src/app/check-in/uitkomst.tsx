@@ -35,6 +35,7 @@ import { tipsBijWeer } from "@/features/content/weerNaarTips";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { dagdeelNu, leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
+import { WeerVlieger } from "@/features/weer/WeerVlieger";
 
 import type { WeatherCode } from "@mind/types";
 
@@ -146,7 +147,7 @@ export default function CheckInUitkomst() {
         weerbeeld ? (
           // De vlieger landt: schaal 0,9 naar 1 met een spring. Erkennen, niet vieren.
           <Verschijn landing>
-            <MascotteVlieger state={weerbeeld} hoogte={112} />
+            <WeerVlieger weerbeeld={weerbeeld} hoogte={112} />
           </Verschijn>
         ) : undefined
       }

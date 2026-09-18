@@ -66,7 +66,7 @@ Wat we er wel tegen hebben:
 Verwacht er niet te veel van. Je ziet een piek, geen handtekening:
 
 - Een uurblok is grof. Vierhonderd inzendingen binnen drie minuten en vierhonderd verspreid over het uur zien er identiek uit, en dat is de bedoeling, want fijner dan een uur maakt het totaal herleidbaar.
-- Wie het rustig aan doet, verdwijnt in de ruis. Tien accounts die netjes één keer per dag insturen, zijn niet te onderscheiden van tien mensen.
+- Wie het rustig aan doet, verdwijnt in de ruis. Tien accounts die netjes één keer per dagdeel insturen, zijn niet te onderscheiden van tien mensen.
 - Er is geen alarm dat afgaat. Dit is iets wat je ziet als je kijkt, en niemand heeft nu de taak om te kijken.
 
 Wat we er bewust **niet** tegen doen: een vingerafdruk van het toestel opslaan, of een hash die bijdragen aan elkaar knoopt. Dat zou werken, en het is precies de sleutel die we niet willen. Voor een app waarin het weerbericht een gespreksopener is en geen statistiek, is dit een acceptabele grens. Het hoort wel gemeld te worden als iemand het weerbericht ooit als onderzoeksdata wil gebruiken, want daarvoor is het niet geschikt.
@@ -92,7 +92,7 @@ Een security-engineer van buiten heeft de opzet doorgelicht. Hieronder elk punt,
 | **A. Via de platformlogs** | Bekend en het overgebleven venster, zie `datamodel.md` "Wat het uurblok niet oplost". Begrensd door de logbewaartermijn en door wie er in het dashboard kan. De app logt zelf niets inhoudelijks, en dat is een harde regel uit `CLAUDE.md` sectie 8. |
 | **B. Een bucket met te weinig inzendingen** | `weather_today()` geeft nul rijen onder de drempel van 10, en de app krijgt alleen dagpercentages, nooit de uurblokken. |
 | **C. Een huisgenoot die meekijkt op het dashboard** | **Was open, sinds 26 augustus dicht.** `weather_today()` telt alleen afgesloten uurblokken; het lopende blok is onzichtbaar. Zie `datamodel.md`. |
-| **D. Het dagslot als record** | Bewust: `profiles.last_checkin_on` is één datum, zegt dát iemand heeft ingecheckt en niet wát. Alleen de eigenaar leest zijn eigen rij, niemand mag schrijven. |
+| **D. Het slot als record** | Bewust: `profiles.last_checkin_on` en `last_checkin_part` zijn één datum en één dagdeel (1 of 2), zeggen dát iemand heeft bijgedragen en niet wát. Alleen de eigenaar leest zijn eigen rij, niemand mag schrijven. |
 
 ### Supabase
 
