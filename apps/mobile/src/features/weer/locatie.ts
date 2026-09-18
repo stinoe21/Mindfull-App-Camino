@@ -8,7 +8,7 @@
 //   "bij benadering" genoeg) en alleen op het moment dat we hem nodig hebben.
 // - De coördinaten gaan nergens heen: geen server, geen geocoder van Apple
 //   of Google. De provincie wordt hier berekend met de CBS-grenzen in
-//   data/provincieGrenzen.ts (punt-in-veelhoek).
+//   data/provincieGrenzen.ts (punt-in-veelhoek, zie provincieBijCoordinaat.ts).
 // - We bewaren alleen de provinciecode in de lokale instellingen, nooit de
 //   coördinaten, en de provincie gaat mee bij het optellen van een check-in
 //   zoals een zelf gekozen provincie dat ook deed (docs/datamodel.md).
@@ -16,30 +16,11 @@
 
 import * as Location from "expo-location";
 
-import { PROVINCIE_GRENZEN } from "./data/provincieGrenzen.ts";
+import { provincieBijCoordinaat } from "./provincieBijCoordinaat.ts";
 import type { ProvincieCode } from "./provincies.ts";
 
-// Even-oneven regel: het aantal keren dat een straal naar rechts een rand kruist.
-function inRing(lon: number, lat: number, ring: [number, number][]): boolean {
-  let binnen = false;
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const [xi, yi] = ring[i];
-    const [xj, yj] = ring[j];
-    const kruist = yi > lat !== yj > lat && lon < ((xj - xi) * (lat - yi)) / (yj - yi) + xi;
-    if (kruist) binnen = !binnen;
-  }
-  return binnen;
-}
-
-/** De provincie waar een coördinaat in valt, of null buiten Nederland. */
-export function provincieBijCoordinaat(lat: number, lon: number): ProvincieCode | null {
-  for (const p of PROVINCIE_GRENZEN) {
-    const [minLon, minLat, maxLon, maxLat] = p.vak;
-    if (lon < minLon || lon > maxLon || lat < minLat || lat > maxLat) continue;
-    if (p.ringen.some((ring) => inRing(lon, lat, ring))) return p.code;
-  }
-  return null;
-}
+// De rekenregel staat in een eigen, puur bestand zodat hij te testen is.
+export { provincieBijCoordinaat };
 
 export type LocatieUitkomst =
   | { status: "ok"; provincie: ProvincieCode }

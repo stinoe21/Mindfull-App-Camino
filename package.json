@@ -14,9 +14,9 @@
     "start": "npm run start --workspace @mind/mobile",
     "ios": "npm run ios --workspace @mind/mobile",
     "android": "npm run android --workspace @mind/mobile",
-    "typecheck": "tsc --noEmit --project apps/mobile/tsconfig.json && tsc --noEmit --project packages/ui/tsconfig.json",
+    "typecheck": "tsc --noEmit --project apps/mobile/tsconfig.json && tsc --noEmit --project apps/mobile/tsconfig.test.json && tsc --noEmit --project packages/ui/tsconfig.json",
     "lint": "eslint .",
-    "test": "node --test packages/ui/tokens/tokens.test.ts",
+    "test": "node --test \"packages/**/*.test.ts\" \"apps/mobile/src/**/*.test.ts\"",
     "tokens": "node packages/ui/tokens/generate.mjs"
   },
   "devDependencies": {

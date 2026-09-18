@@ -17,6 +17,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import type { WeatherCode } from "@mind/types";
 
+import { datumISO, dagdeelVan, tijdVan } from "./dagdeel.ts";
+
 const SLEUTEL = "mind.lokaalweer";
 
 export type Dagdeel = 0 | 1 | 2;
@@ -31,22 +33,12 @@ export type Opgeslagen = {
 };
 
 export function vandaagISO(): string {
-  const nu = new Date();
-  return [
-    nu.getFullYear(),
-    String(nu.getMonth() + 1).padStart(2, "0"),
-    String(nu.getDate()).padStart(2, "0"),
-  ].join("-");
+  return datumISO(new Date());
 }
 
 /** Het dagdeel op de klok van het toestel: 1 voor 12.00, anders 2. */
 export function dagdeelNu(): 1 | 2 {
-  return new Date().getHours() < 12 ? 1 : 2;
-}
-
-function tijdNu(): string {
-  const nu = new Date();
-  return String(nu.getHours()).padStart(2, "0") + ":" + String(nu.getMinutes()).padStart(2, "0");
+  return dagdeelVan(new Date());
 }
 
 export async function leesWeerVanVandaag(): Promise<Opgeslagen | null> {
@@ -75,7 +67,7 @@ export async function bewaarWeerVanVandaag(weerbeeld: WeatherCode, bijgedragen: 
   try {
     const vorige = await leesWeerVanVandaag();
     const hoogste = Math.max(bijgedragen, vorige?.bijgedragen ?? 0) as Dagdeel;
-    const data: Opgeslagen = { datum: vandaagISO(), weerbeeld, tijd: tijdNu(), bijgedragen: hoogste };
+    const data: Opgeslagen = { datum: vandaagISO(), weerbeeld, tijd: tijdVan(new Date()), bijgedragen: hoogste };
     await AsyncStorage.setItem(SLEUTEL, JSON.stringify(data));
   } catch {
     // Niet kunnen bewaren is geen reden om de flow te blokkeren.
