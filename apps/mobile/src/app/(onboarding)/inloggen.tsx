@@ -243,7 +243,7 @@ export default function Inloggen() {
   return (
     <OnboardingScherm stap={2} titel={aanmaken ? t("accountAanmaken") : t("titel")} uitleg={t("ondertitel")}>
 
-      <Card tone="outline" style={{ paddingVertical: space[2] }}>
+      <Card tone="white" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={email}
           onChangeText={zetEmail}
@@ -257,7 +257,7 @@ export default function Inloggen() {
           accessibilityLabel={t("emailLabel")}
         />
       </Card>
-      <Card tone="outline" style={{ paddingVertical: space[2] }}>
+      <Card tone="white" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={wachtwoord}
           onChangeText={zetWachtwoord}
