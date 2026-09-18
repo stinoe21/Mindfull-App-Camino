@@ -57,7 +57,7 @@ const nl = {
   jouwWeerOverline: "JOUW WEER VANDAAG",
   inchecken: "Inchecken",
   // Wat het is en wat het oplevert, in één regel (gatenlijst P: "steeds zeggen waarom"). Voorstel; de check-in-copy is van Stijn.
-  waaromInchecken: "Vier korte vragen. Zo zie je hoe je er vandaag voor staat.",
+  waaromInchecken: "Vier korte vragen. Zo zie je hoe je ervoor staat.",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien.",
   berichtRegel: "Vandaag vooral een {weer} in Nederland.",
@@ -65,7 +65,6 @@ const nl = {
   provincieLeeg: "Nog te weinig check-ins voor een beeld.",
   allesBekijken: "Alles bekijken",
   tipsTitel: "Tips voor jou",
-  tipsNote: "Kort uitgelegd en wat kan helpen. Jouw onderwerpen eerst.",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
@@ -86,7 +85,6 @@ const teksten: Woordenboek<typeof nl> = {
     provincieLeeg: "Not enough check-ins yet for a picture.",
     allesBekijken: "See all",
     tipsTitel: "Tips for you",
-    tipsNote: "Explained briefly and what can help. Your topics first.",
   },
 };
 
@@ -229,10 +227,10 @@ export default function Dashboard() {
         // heet "Inchecken", net als de tab (Stijn, 17 september 2026).
         <Card tone="white" style={{ flexDirection: "row", alignItems: "center", gap: space[3] }}>
           <View style={{ flex: 1, gap: space[3], alignItems: "flex-start" }}>
-            <View style={{ gap: space[1] }}>
-              <AppText rol="labelOverline" kleur="brand">{t("jouwWeerOverline")}</AppText>
-              <AppText rol="bodySmall" kleur="secondary">{t("waaromInchecken")}</AppText>
-            </View>
+            {/* Geen opschrift "Jouw weer vandaag": vóór de check-in is er nog
+                geen weer, en met de vraag op de hero zei de kaart drie keer
+                hetzelfde (Stijn, 17 september 2026). */}
+            <AppText rol="body" kleur="secondary">{t("waaromInchecken")}</AppText>
             <Button label={t("inchecken")} onPress={() => router.push("/check-in/1")} />
           </View>
           <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
@@ -249,7 +247,7 @@ export default function Dashboard() {
       {/* Slot 3: Houvast, onder de check-in en de challenge. MIND (feedbacksessie, verwerkt
           10 september 2026): dit is inhoudelijk het relevantst voor de gebruiker,
           dus hoger dan het landelijke beeld en de quote. */}
-      <ContentSection title={t("tipsTitel")} note={t("tipsNote")} action={t("allesBekijken")} onAction={() => router.push("/naslagwerk")}>
+      <ContentSection title={t("tipsTitel")} action={t("allesBekijken")} onAction={() => router.push("/naslagwerk")}>
         {/* Kleine tegels zoals in Figma (162:1708); de vlieger staat erin tot MIND beelden levert. */}
         <ContentShelf>
           {tips.map((tip) => (
