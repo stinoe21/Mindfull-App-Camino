@@ -13,11 +13,11 @@
 //
 // Draaien: node scripts/gen-gidsen.mjs
 
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { parsePagina } from "./mind-markdown.mjs";
+import { parseGidsenLijst, parsePagina } from "./mind-markdown.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BRON = join(ROOT, "content/mind/psychische-klachten/flyers-en-informatie");
@@ -51,22 +51,7 @@ const ONDERWERP_PER_GIDS = {
 // Fondsenwerving, geen gids voor gebruikers.
 const OVERSLAAN = new Set(["nalaten-aan-mind"]);
 
-function parseLijst() {
-  const md = readFileSync(join(BRON, "GIDSEN.md"), "utf8");
-  const gidsen = [];
-  for (const regel of md.split("\n")) {
-    const rij = regel.match(/^\| (.+?) \| (https:\/\/\S+) \| (.*?) \| (\S*) \|$/);
-    if (!rij) continue;
-    const [, titel, url, bestand, aanmeld] = rij;
-    const slug = url.replace(/\/$/, "").split("/").pop();
-    if (OVERSLAAN.has(slug)) continue;
-    const md = bestand.match(/\]\(([^)]+)\)/);
-    gidsen.push({ titel: titel.trim(), url, slug, bestand: md ? join(BRON, md[1]) : null, aanmeld: aanmeld || undefined });
-  }
-  return gidsen;
-}
-
-const gidsen = parseLijst().map((g) => {
+const gidsen = parseGidsenLijst(BRON, OVERSLAAN).map((g) => {
   const { intro, blokken } = g.bestand && existsSync(g.bestand) ? parsePagina(g.bestand) : { intro: "", blokken: [] };
   return {
     slug: g.slug,

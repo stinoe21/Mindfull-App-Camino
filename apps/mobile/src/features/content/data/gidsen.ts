@@ -226,7 +226,7 @@ export const GIDSEN: Gids[] = [
         "kop": "Slaap goed"
       },
       {
-        "tekst": "Slaap is heel belangrijk om lichamelijk en mentaal te herstellen. Goede slaap draagt bij aan een uitgerust gevoel waardoor je meer aankan. Maar niet voor iedereen is een goede nachtrust vanzelfsprekend. Gelukkig kan je veel dingen doen om beter te slapen. Bijvoorbeeld door je kamer voldoende te ventileren en te zorgen voor regelmaat en een slaapritueel. Kan jij wel wat handvatten gebruiken? Meld je dan aan voor onze Beter Slapen Challenge ."
+        "tekst": "Slaap is heel belangrijk om lichamelijk en mentaal te herstellen. Goede slaap draagt bij aan een uitgerust gevoel waardoor je meer aankan. Maar niet voor iedereen is een goede nachtrust vanzelfsprekend. Gelukkig kan je veel dingen doen om beter te slapen. Bijvoorbeeld door je kamer voldoende te ventileren en te zorgen voor regelmaat en een slaapritueel. Kan jij wel wat handvatten gebruiken? Meld je dan aan voor onze Beter Slapen Challenge_."
       },
       {
         "kop": "Beweeg"
@@ -657,7 +657,7 @@ export const GIDSEN: Gids[] = [
         "kop": "Heb aandacht voor herstel"
       },
       {
-        "tekst": "Zet jij stappen om weer grip op je leven te krijgen of zou je meer willen weten over herstel? Wij ontwikkelden een themaspecial Aandacht voor herstel . Meld je aan en leer meer over wat herstel is, je waarden en grenzen, eigen regie pakken, hulpmiddelen voor meer grip en de kracht van je omgeving."
+        "tekst": "Zet jij stappen om weer grip op je leven te krijgen of zou je meer willen weten over herstel? Wij ontwikkelden een themaspecial Aandacht voor herstel_. Meld je aan en leer meer over wat herstel is, je waarden en grenzen, eigen regie pakken, hulpmiddelen voor meer grip en de kracht van je omgeving."
       }
     ]
   },
@@ -904,7 +904,7 @@ export const GIDSEN: Gids[] = [
         "kop": "Neem je sombere gevoelens serieus"
       },
       {
-        "tekst": "Het is belangrijk om in te zien dat je sombere gevoelens hebt. Denk niet: “Er is niks aan de hand.” Als je klachten langer dan twee weken duren is het goed om professionele hulp te zoeken. Een afspraak bij de huisarts is de eerste stap. De huisarts bespreekt met je hoe je je depressieve klachten kan aanpakken en kan je doorverwijzen als dat nodig is. Over de behandeling van depressie hebben hulpverleners met elkaar afspraken gemaakt. Deze staan in de zogenoemde multidisciplinaire richtlijn ."
+        "tekst": "Het is belangrijk om in te zien dat je sombere gevoelens hebt. Denk niet: “Er is niks aan de hand.” Als je klachten langer dan twee weken duren is het goed om professionele hulp te zoeken. Een afspraak bij de huisarts is de eerste stap. De huisarts bespreekt met je hoe je je depressieve klachten kan aanpakken en kan je doorverwijzen als dat nodig is. Over de behandeling van depressie hebben hulpverleners met elkaar afspraken gemaakt. Deze staan in de zogenoemde multidisciplinaire richtlijn_."
       },
       {
         "kop": "Krijg inzicht in depressie"
@@ -1142,7 +1142,7 @@ export const GIDSEN: Gids[] = [
         "kop": "Jij bent aan zet"
       },
       {
-        "tekst": "Nu je inzicht hebt in wat oorzaken kunnen zijn, is het goed om stil te staan bij de vraag: Wat zou ik kunnen doen om verandering te brengen in mijn leven ? Het is natuurlijk zo dat niet alles kan, maar het helpt om te kijken wat er wel past binnen je mogelijkheden. Sta dus open om jezelf hierin te ontwikkelen. Onderstaande tips helpen je hierbij op weg."
+        "tekst": "Nu je inzicht hebt in wat oorzaken kunnen zijn, is het goed om stil te staan bij de vraag: Wat zou ik kunnen doen om verandering te brengen in mijn leven_? Het is natuurlijk zo dat niet alles kan, maar het helpt om te kijken wat er wel past binnen je mogelijkheden. Sta dus open om jezelf hierin te ontwikkelen. Onderstaande tips helpen je hierbij op weg."
       },
       {
         "kop": "Bouw een sociaal netwerk op"
@@ -1166,7 +1166,7 @@ export const GIDSEN: Gids[] = [
         "tekst": "Als jij je eenzaam voelt, kan het geen kwaad om eens naar je verwachtingen te kijken die je hebt. Verwacht je bijvoorbeeld dat mensen naar jou toe komen, terwijl je zelf niet vaak van je laat horen, dan is dat niet erg realistisch. Of dat een diepgaande relatie binnen een paar weken ontstaat. Het bijstellen van je verwachtingen, voorkomt teleurstelling en helpt hiermee gevoelens van eenzaamheid tegen te gaan."
       },
       {
-        "tekst": "Naast het bijstellen van je verwachtingen kan het helpen om je eigen gedachten eens onder de loep te nemen. Grote kans dat je gedachten je niet helpen om je minder eenzaam te voelen. Een voorbeeld van een niet-helpende gedachte is: \"Ik zal altijd eenzaam blijven\" of \"Ik ga niet naar die verjaardag, de andere gasten zullen mij toch niet aardig vinden\" . Deze gedachten zorgen voor gevoelens die niet fijn zijn en ze brengen je niet verder. Helpende gedachten kunnen zijn: \"Er zijn veel dingen die ik kan doen om mij minder eenzaam te voelen\" en: \"Er zal altijd wel iemand zijn die mij aardig vindt, al is het er maar één\" . Waarschijnlijk voel jij je veel beter als je dit soort gedachten hebt. We noemen dit dan ook helpende gedachten. Wil jij aan de slag met het maken van helpende gedachten? Wij schreven twee oefeningen."
+        "tekst": "Naast het bijstellen van je verwachtingen kan het helpen om je eigen gedachten eens onder de loep te nemen. Grote kans dat je gedachten je niet helpen om je minder eenzaam te voelen. Een voorbeeld van een niet-helpende gedachte is: \"Ik zal altijd eenzaam blijven\" of \"Ik ga niet naar die verjaardag, de andere gasten zullen mij toch niet aardig vinden\" . Deze gedachten zorgen voor gevoelens die niet fijn zijn en ze brengen je niet verder. Helpende gedachten kunnen zijn: \"Er zijn veel dingen die ik kan doen om mij minder eenzaam te voelen\" en: \"Er zal altijd wel iemand zijn die mij aardig vindt, al is het er maar één\"_. Waarschijnlijk voel jij je veel beter als je dit soort gedachten hebt. We noemen dit dan ook helpende gedachten. Wil jij aan de slag met het maken van helpende gedachten? Wij schreven twee oefeningen."
       },
       {
         "kop": "Werk aan een positief zelfbeeld en sociale vaardigheden"
@@ -1283,7 +1283,7 @@ export const GIDSEN: Gids[] = [
         "kop": "Slaap!"
       },
       {
-        "tekst": "Slaap is heel belangrijk om je lichaam en geest te herstellen. Goede slaap draagt bij aan een uitgerust en fit gevoel. En als je uitgerust bent, kan je meer aan. Gelukkig kan je veel doen om goed te slapen. Van het afbouwen van je activiteitenniveau tot je slaapkamer goed ventileren voordat je gaat slapen. Wil je aan de slag om beter te leren slapen? Meld je dan aan voor onze Beter Slapen Challenge ."
+        "tekst": "Slaap is heel belangrijk om je lichaam en geest te herstellen. Goede slaap draagt bij aan een uitgerust en fit gevoel. En als je uitgerust bent, kan je meer aan. Gelukkig kan je veel doen om goed te slapen. Van het afbouwen van je activiteitenniveau tot je slaapkamer goed ventileren voordat je gaat slapen. Wil je aan de slag om beter te leren slapen? Meld je dan aan voor onze Beter Slapen Challenge_."
       },
       {
         "kop": "Zorg voor ritme"
@@ -1392,7 +1392,7 @@ export const GIDSEN: Gids[] = [
         "kop": "Denk helpende gedachten"
       },
       {
-        "tekst": "Door de spanning denk je misschien: “Ik kan dit niet!” of “Laat dat hele examen maar zitten!” . Herken deze gedachten bij jezelf en zet er andere gedachten tegenover, gedachten die je helpen in plaats van je in de weg zitten. Bijvoorbeeld:"
+        "tekst": "Door de spanning denk je misschien: “Ik kan dit niet!” of “Laat dat hele examen maar zitten!”_. Herken deze gedachten bij jezelf en zet er andere gedachten tegenover, gedachten die je helpen in plaats van je in de weg zitten. Bijvoorbeeld:"
       },
       {
         "lijst": [
@@ -1924,18 +1924,14 @@ export const GIDSEN: Gids[] = [
         "tekst": "Bij oefening 1 heb je jouw niet-helpende gedachten in kaart gebracht. Bij deze oefening ga je deze gedachten ‘uitdagen’ om ze daarna te vervangen door helpende gedachten."
       },
       {
-        "tekst": "1. Daag je niet-helpende gedachten uit door het stellen van vragen, zoals:"
-      },
-      {
         "lijst": [
+          "Daag je niet-helpende gedachten uit door het stellen van vragen, zoals:",
           "Hoe weet ik dat dit zo is? Welke bewijzen of aanwijzingen heb ik hiervoor? Welke redenen heb ik om dit te geloven?",
           "Zijn er ook bewijzen tegen deze gedachten? Hoe zou een ander tegen deze situatie aankijken? Wat zou ik tegen een vriend zeggen die dit aan mij vertelde? Is de manier waarop ik er nu over denk de enige mogelijke manier?",
           "Stel dat wat ik denk inderdaad zou gebeuren of klopt, wat betekent dit dan voor mij? Waarom is het erg als dit zo zou zijn? Welke mogelijkheden zou ik dan hebben om met deze situatie om te gaan? Zou ik dit (uiteindelijk) kunnen verdragen?",
-          "Helpen deze gedachten mij om mij te voelen en gedragen op een manier waarop ik dat wil?"
+          "Helpen deze gedachten mij om mij te voelen en gedragen op een manier waarop ik dat wil?",
+          "Vervang nu de niet-helpende gedachten door helpende gedachten."
         ]
-      },
-      {
-        "tekst": "2. Vervang nu de niet-helpende gedachten door helpende gedachten."
       },
       {
         "tekst": "Door antwoord te geven op bovenstaande vragen, kan je op hele andere gedachten komen. Een helpende gedachte klopt met de werkelijkheid en legt dezelfde gebeurtenis uit als de niet-helpende gedachte."
@@ -2103,9 +2099,6 @@ export const GIDSEN: Gids[] = [
       },
       {
         "tekst": "Mindfulness kan je op veel momenten in je dagelijks leven gebruiken. Juist als je druk bent, is het belangrijk af en toe terug te schakelen, te beseffen waar je bent en bewust aandacht te hebben. Hieronder vind je vier korte oefeningen waarbij je afwisselend één minuut aandacht hebt voor je ademhaling, gedachten en gevoelens, zintuigen en lichaam. Je kan de losse oefeningen ook achter elkaar doorlopen en ze samenpakken als één oefening. Hoewel je de oefeningen zelfs tijdens het tandenpoetsen kan doen, raden we je aan hiervoor even met aandacht te gaan zitten of liggen. Als je dat fijn vindt, kan je jouw ogen dicht doen."
-      },
-      {
-        "tekst": "Er zijn geen resultaten gevonden. Controleer de spelling of probeer een andere zoekterm."
       },
       {
         "tekst": "Richt je aandacht op je ademhaling. Verander je ademhaling niet. Neem simpelweg waar hoe je ademhaling in- en uitstroomt. Als je aandacht afdrijft, is dat niet erg. Zo werkt de menselijke geest. Maar breng daarna de aandacht terug bij de ademhaling."
@@ -2379,7 +2372,7 @@ export const GIDSEN: Gids[] = [
         "kop": "Ontspan na overprikkeling"
       },
       {
-        "tekst": "Bedenk dat je na overprikkeling ontspanning nodig hebt om lichamelijk en mentaal bij te komen en de prikkels te verwerken. Plan na een inspannende activiteit daarom bewust ontspanning in. Pas dit aan op hoeveel energie een activiteit kost en hoeveel tijd je nodig hebt om tot rust te komen. Wat ontspant jou? Voor de een is bewegen heel ontspannend: een rondje (hard) lopen, fietsen of een uurtje zwemmen. Een ander ontspant juist door het lezen van een boek of tijdschrift, het kijken van een film of het nemen van een warm bad. Sommige mensen hebben veel aan ontspanningsoefeningen. Probeer ook voldoende te slapen, zodat je goed uitrust en meer aankan. Heb jij problemen met slapen? Meld je aan voor de Beter Slapen Challenge ."
+        "tekst": "Bedenk dat je na overprikkeling ontspanning nodig hebt om lichamelijk en mentaal bij te komen en de prikkels te verwerken. Plan na een inspannende activiteit daarom bewust ontspanning in. Pas dit aan op hoeveel energie een activiteit kost en hoeveel tijd je nodig hebt om tot rust te komen. Wat ontspant jou? Voor de een is bewegen heel ontspannend: een rondje (hard) lopen, fietsen of een uurtje zwemmen. Een ander ontspant juist door het lezen van een boek of tijdschrift, het kijken van een film of het nemen van een warm bad. Sommige mensen hebben veel aan ontspanningsoefeningen. Probeer ook voldoende te slapen, zodat je goed uitrust en meer aankan. Heb jij problemen met slapen? Meld je aan voor de Beter Slapen Challenge_."
       },
       {
         "kop": "Praat erover!"
@@ -3173,19 +3166,13 @@ export const GIDSEN: Gids[] = [
         "tekst": "Sta de komende tijd stil bij situaties waarin je merkt dat je je angstig of gespannen voelt en noteer het volgende (wij vulden een voorbeeld in):"
       },
       {
-        "tekst": "1. Wat was de situatie, wat gebeurde er? (gebeurtenis): Feestje van een vriend"
-      },
-      {
-        "tekst": "2. Wat dacht je? (gedachte): Ze zullen me wel saai vinden"
-      },
-      {
-        "tekst": "3. Wat voelde je? (gevoel): Gespannen en ongemakkelijk"
-      },
-      {
-        "tekst": "4. Wat deed je? (gedrag): Ik trok me terug en sprak bijna niemand."
-      },
-      {
-        "tekst": "5. Gevolg: De spanning werd minder, maar ik had geen leuk feestje."
+        "lijst": [
+          "Wat was de situatie, wat gebeurde er? (gebeurtenis): Feestje van een vriend",
+          "Wat dacht je? (gedachte): Ze zullen me wel saai vinden",
+          "Wat voelde je? (gevoel): Gespannen en ongemakkelijk",
+          "Wat deed je? (gedrag): Ik trok me terug en sprak bijna niemand.",
+          "Gevolg: De spanning werd minder, maar ik had geen leuk feestje."
+        ]
       },
       {
         "kop": "Zet niet-helpende gedachten om naar helpende gedachten"
@@ -3532,14 +3519,7 @@ export const GIDSEN: Gids[] = [
       },
       {
         "lijst": [
-          "Stel het zoeken van professionele hulp nooit uit. Chatten met AI kan je het gevoel geven dat je al in gesprek bent met iemand. Maar een chatbot kan nooit hulpverlening vervangen."
-        ]
-      },
-      {
-        "tekst": "Bespreek je klachten altijd met de mensen om je heen die je vertrouwt. Iemand die dichtbij je staat kan met je meedenken over hoeveel invloed de klachten op jouw leven hebben. Heb je langer dan twee weken last van je klachten en hebben ze grote invloed op jouw dagelijkse leven? Neem dan contact op met je huisarts. De huisarts kan samen met jou bekijken wat er aan de hand is. Als dat nodig is kan de huisarts je ondersteunen of je doorverwijzen voor hulp."
-      },
-      {
-        "lijst": [
+          "Stel het zoeken van professionele hulp nooit uit. Chatten met AI kan je het gevoel geven dat je al in gesprek bent met iemand. Maar een chatbot kan nooit hulpverlening vervangen. Bespreek je klachten altijd met de mensen om je heen die je vertrouwt. Iemand die dichtbij je staat kan met je meedenken over hoeveel invloed de klachten op jouw leven hebben. Heb je langer dan twee weken last van je klachten en hebben ze grote invloed op jouw dagelijkse leven? Neem dan contact op met je huisarts. De huisarts kan samen met jou bekijken wat er aan de hand is. Als dat nodig is kan de huisarts je ondersteunen of je doorverwijzen voor hulp.",
           "Ook kan je altijd contact opnemen met onze MIND Hulplijn voor anoniem, gratis en deskundig advies. Onze hulpverleners denken graag met je mee en kunnen je ook helpen het gesprek met de huisarts of andere mensen in jouw omgeving voor te bereiden."
         ]
       },

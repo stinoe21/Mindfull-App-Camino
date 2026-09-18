@@ -21,6 +21,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { Verschijn } from "@mind/ui/components/Verschijn";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { houvastVoorArtikel } from "@/features/content/houvast";
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
@@ -151,7 +152,13 @@ export default function CheckInUitkomst() {
             <Card
               key={a.slug}
               tone="outline"
-              onPress={() => router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } })}
+              // Op het onderwerp uit Houvast als het artikel er een heeft (uitleg
+              // plus wat kan helpen), anders op het artikel zelf.
+              onPress={() => {
+                const h = houvastVoorArtikel(a.slug);
+                if (h) router.push({ pathname: "/naslagwerk/houvast/[onderwerp]", params: { onderwerp: h.slug } });
+                else router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } });
+              }}
               style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
             >
               <View style={{ flexShrink: 1 }}>
