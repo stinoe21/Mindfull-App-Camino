@@ -207,27 +207,30 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
           de titel over, zodat je altijd weet waar je bent. Met een terugknop
           komt de balk er ook zonder titel, zodat de knop niet los over de
           tekst van het vel zweeft. */}
-      {kopTitel || terugKnop ? (
-        <Animated.View
-          pointerEvents="none"
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top: 0,
-            paddingTop: insets.top,
-            height: insets.top + KOP_HOOGTE,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: colors.surfaceBackground,
-            borderBottomWidth: 1,
-            borderBottomColor: colors.borderDefault,
-            opacity: kopZichtbaar,
-          }}
-        >
-          {kopTitel ? <AppText rol="bodyEmphasis">{kopTitel}</AppText> : null}
-        </Animated.View>
-      ) : null}
+      {/* Een tabscherm (Houvast, Challenges, Profiel) geeft geen titel mee: de
+          tabbalk onderin zegt al waar je bent, en dezelfde naam bovenin was
+          dubbel (Stijn, 17 september 2026). Dan blijft alleen een strook ter
+          hoogte van de statusbalk over, zodat de inhoud niet onder de klok
+          door scrolt. */}
+      <Animated.View
+        pointerEvents="none"
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: 0,
+          paddingTop: insets.top,
+          height: insets.top + (kopTitel || terugKnop ? KOP_HOOGTE : 0),
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: colors.surfaceBackground,
+          borderBottomWidth: 1,
+          borderBottomColor: colors.borderDefault,
+          opacity: kopZichtbaar,
+        }}
+      >
+        {kopTitel ? <AppText rol="bodyEmphasis">{kopTitel}</AppText> : null}
+      </Animated.View>
       {terugKnopOverlay}
     </View>
   );

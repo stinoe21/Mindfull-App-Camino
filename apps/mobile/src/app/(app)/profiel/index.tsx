@@ -159,7 +159,7 @@ export default function Profiel() {
     inst.consentWeerbericht === true ? t("weerberichtJa") : inst.consentWeerbericht === false ? t("weerberichtNee") : t("weerberichtGeen");
 
   return (
-    <ScreenCanvas state="default" kopTitel={t("titel")} metNavRuimte>
+    <ScreenCanvas state="default" metNavRuimte>
       <AppText rol="h1">{t("titel")}</AppText>
 
       {/* Wie je bent: de vlieger, je naam en je account. */}
