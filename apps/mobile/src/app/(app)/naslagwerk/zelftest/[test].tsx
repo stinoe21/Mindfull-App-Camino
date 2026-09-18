@@ -12,6 +12,11 @@
 // link in de uitslag naar een psychipedia-pagina opent het onderwerp in
 // Houvast als dat er is, en de MIND Hulplijn opent de hulplijnpagina. Onder
 // elke uitslag staat de Hulplijn-kaart, dezelfde als op Home.
+//
+// De hulproute (18 september 2026): bij de vraag over gedachten aan de dood
+// verschijnt bij elk ander antwoord dan "Helemaal niet" direct de kaart naar
+// 113, met de Hulplijn eronder, en dezelfde kaart staat dan bovenaan de
+// uitslag, los van de score. Zie features/content/zelftests.ts.
 
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
@@ -28,7 +33,8 @@ import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { InhoudBlokken, type InhoudBlok } from "@/features/content/InhoudBlokken";
 import { houvastVoorArtikel } from "@/features/content/houvast";
-import { scoreVan, uitslagVoor, zelftestVoor } from "@/features/content/zelftests";
+import { isHulpantwoord, scoreVan, uitslagVoor, vraagtOmHulproute, zelftestVoor } from "@/features/content/zelftests";
+import { HulpBij113 } from "@/features/hulplijn/HulpBij113";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { useOpenLink } from "@/features/systeem/openLink";
@@ -39,6 +45,7 @@ const nl = {
   terugOverzicht: "Terug naar Tips",
   overline: "ZELFTEST",
   start: "Start de test",
+  blijftBijJou: "Je antwoorden blijven op je toestel. Niemand leest mee en er wordt niets bewaard.",
   vraagVan: "VRAAG {x} van {y}",
   vorige: "Vorige",
   volgende: "Volgende",
@@ -58,6 +65,7 @@ const teksten: Woordenboek<typeof nl> = {
     terugOverzicht: "Back to Tips",
     overline: "SELF-TEST",
     start: "Start the test",
+    blijftBijJou: "Your answers stay on your device. Nobody reads along and nothing is saved.",
     vraagVan: "QUESTION {x} of {y}",
     vorige: "Previous",
     volgende: "Next",
@@ -120,6 +128,9 @@ export default function ZelftestScherm() {
             het een paar minuten duurt; geen eigen regel eronder die dat herhaalt. */}
         <AppText rol="bodyEmphasis">{test.intro}</AppText>
         {test.noot ? <AppText rol="body">{test.noot}</AppText> : null}
+        {/* Vooraf, zodat iemand het weet voordat de vragen persoonlijk worden.
+            Het is waar voor elke test: zie docs/datamodel.md, "Zelftests". */}
+        <AppText rol="bodySmall" kleur="secondary">{t("blijftBijJou")}</AppText>
         <Button label={t("start")} fullWidth onPress={() => zetFase("vragen")} />
         {test.instrument ? <AppText rol="labelCaption" kleur="secondary">{test.instrument}</AppText> : null}
       </ScreenCanvas>
@@ -152,6 +163,8 @@ export default function ZelftestScherm() {
           ))}
         </View>
 
+        {isHulpantwoord(test, index, gekozen) ? <HulpBij113 /> : null}
+
         <View style={{ gap: space[3] }}>
           <Button
             label={laatste ? t("uitslag") : t("volgende")}
@@ -161,6 +174,8 @@ export default function ZelftestScherm() {
           />
           <Button label={t("vorige")} variant="link" onPress={() => (index === 0 ? zetFase("intro") : zetIndex(index - 1))} />
         </View>
+
+        {isHulpantwoord(test, index, gekozen) ? <HulplijnKaart /> : null}
       </ScreenCanvas>
     );
   }
@@ -179,6 +194,8 @@ export default function ZelftestScherm() {
         <AppText rol="labelOverline" kleur="brand">{t("jouwUitslag")}</AppText>
         <AppText rol="h1">{uitslag?.kop ?? t("uitslagTitel")}</AppText>
       </View>
+
+      {vraagtOmHulproute(test, antwoorden) ? <HulpBij113 /> : null}
 
       {uitslag ? (
         <Card tone="white" style={{ gap: space[3] }}>
