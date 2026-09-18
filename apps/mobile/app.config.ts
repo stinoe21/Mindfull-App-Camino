@@ -33,6 +33,9 @@ const config: ExpoConfig = {
     "expo-status-bar",
     "expo-image",
     "expo-font",
+    // Een deelbeeld delen via het deelvenster van de telefoon (Stijn, 18
+    // september 2026). Er gaat niets naar een server: zie features/delen.
+    "expo-sharing",
     [
       // Locatie, alleen om de provincie te bepalen voor het mentale weer per
       // provincie (Stijn, 13 september 2026). Grof, op het moment zelf, en de
