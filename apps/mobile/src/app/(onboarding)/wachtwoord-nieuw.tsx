@@ -8,12 +8,12 @@
 
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, TextInput, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 
-import { colors, space, type } from "@mind/ui";
+import { colors, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
-import { Card } from "@mind/ui/components/Card";
+import { TextField } from "@mind/ui/components/TextField";
 
 import { MIN_WACHTWOORD, wisselCodeIn, zetNieuwWachtwoord, type WachtwoordUitkomst } from "@/features/auth/accountHerstel";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
@@ -24,8 +24,8 @@ const nl = {
   uitleg: "Daarna ben je meteen ingelogd.",
   placeholder: "Nieuw wachtwoord (minstens {n} tekens)",
   label: "Nieuw wachtwoord",
-  toon: "Toon wachtwoord",
-  verberg: "Verberg wachtwoord",
+  toon: "Toon",
+  verberg: "Verberg",
   knop: "Bewaar en ga verder",
   teKort: "Kies een wachtwoord van minstens {n} tekens.",
   zelfde: "Dit is je oude wachtwoord. Kies een ander.",
@@ -45,8 +45,8 @@ const teksten: Woordenboek<typeof nl> = {
     uitleg: "You'll be logged in right after.",
     placeholder: "New password (at least {n} characters)",
     label: "New password",
-    toon: "Show password",
-    verberg: "Hide password",
+    toon: "Show",
+    verberg: "Hide",
     knop: "Save and continue",
     teKort: "Choose a password of at least {n} characters.",
     zelfde: "This is your old password. Choose a different one.",
@@ -67,7 +67,6 @@ export default function WachtwoordNieuw() {
   const { code } = useLocalSearchParams<{ code?: string }>();
   const [stand, zetStand] = useState<"bezig" | "kies" | "ongeldig" | "geenVerbinding">("bezig");
   const [wachtwoord, zetWachtwoord] = useState("");
-  const [zichtbaar, zetZichtbaar] = useState(false);
   const [bewaren, zetBewaren] = useState(false);
   const [melding, zetMelding] = useState<Exclude<WachtwoordUitkomst, "ok"> | "teKort" | null>(null);
 
@@ -118,21 +117,18 @@ export default function WachtwoordNieuw() {
 
   return (
     <OnboardingScherm titel={t("titel")} uitleg={t("uitleg")}>
-      <Card tone="white" style={{ paddingVertical: space[2] }}>
-        <TextInput
-          value={wachtwoord}
-          onChangeText={zetWachtwoord}
-          placeholder={t("placeholder").replace("{n}", String(MIN_WACHTWOORD))}
-          placeholderTextColor={colors.textSecondary}
-          autoCapitalize="none"
-          autoComplete="new-password"
-          textContentType="newPassword"
-          secureTextEntry={!zichtbaar}
-          style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-          accessibilityLabel={t("label")}
-        />
-      </Card>
-      <Button label={zichtbaar ? t("verberg") : t("toon")} variant="link" onPress={() => zetZichtbaar(!zichtbaar)} />
+      <TextField
+        value={wachtwoord}
+        onChangeText={zetWachtwoord}
+        placeholder={t("placeholder").replace("{n}", String(MIN_WACHTWOORD))}
+        autoCapitalize="none"
+        autoComplete="new-password"
+        textContentType="newPassword"
+        wachtwoord
+        toonLabel={t("toon")}
+        verbergLabel={t("verberg")}
+        accessibilityLabel={t("label")}
+      />
 
       <Button label={t("knop")} fullWidth bezig={bewaren} onPress={bewaar} />
 

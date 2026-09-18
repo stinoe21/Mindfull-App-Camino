@@ -24,9 +24,9 @@
 
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { TextInput, View } from "react-native";
+import { View } from "react-native";
 
-import { colors, space, type } from "@mind/ui";
+import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
@@ -34,6 +34,7 @@ import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
 import { Lijst, LijstRij } from "@mind/ui/components/LijstRij";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
+import { TextField } from "@mind/ui/components/TextField";
 import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
@@ -210,16 +211,12 @@ export default function Houvast() {
         <AppText rol="subtitle">{t("ondertitel")}</AppText>
       </View>
 
-      <Card tone="white" style={{ paddingVertical: space[2] }}>
-        <TextInput
-          value={invoer}
-          onChangeText={zetInvoer}
-          placeholder={t("zoekPlaceholder")}
-          placeholderTextColor={colors.textSecondary}
-          style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-          accessibilityLabel={t("zoekLabel")}
-        />
-      </Card>
+      <TextField
+        value={invoer}
+        onChangeText={zetInvoer}
+        placeholder={t("zoekPlaceholder")}
+        accessibilityLabel={t("zoekLabel")}
+      />
 
       {/* Wijst de zoekvraag op nood, dan staat de weg naar hulp boven elk
           resultaat, ook als er niets gevonden is (features/content/

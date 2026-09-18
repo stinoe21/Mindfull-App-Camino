@@ -6,12 +6,10 @@
 
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { TextInput } from "react-native";
 
-import { colors, space, type } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
-import { Card } from "@mind/ui/components/Card";
+import { TextField } from "@mind/ui/components/TextField";
 
 import { lijktOpEmail, vraagHerstelmailAan, type MailUitkomst } from "@/features/auth/accountHerstel";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
@@ -73,20 +71,16 @@ export default function WachtwoordVergeten() {
 
   return (
     <OnboardingScherm titel={t("titel")} uitleg={t("uitleg")}>
-      <Card tone="white" style={{ paddingVertical: space[2] }}>
-        <TextInput
-          value={email}
-          onChangeText={zetEmail}
-          placeholder={t("emailPlaceholder")}
-          placeholderTextColor={colors.textSecondary}
-          autoCapitalize="none"
-          autoComplete="email"
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-          accessibilityLabel={t("emailLabel")}
-        />
-      </Card>
+      <TextField
+        value={email}
+        onChangeText={zetEmail}
+        placeholder={t("emailPlaceholder")}
+        autoCapitalize="none"
+        autoComplete="email"
+        textContentType="emailAddress"
+        keyboardType="email-address"
+        accessibilityLabel={t("emailLabel")}
+      />
 
       <Button label={verstuurd ? t("opnieuw") : t("knop")} variant={verstuurd ? "secondary" : "primary"} fullWidth bezig={bezig} onPress={verstuur} />
 

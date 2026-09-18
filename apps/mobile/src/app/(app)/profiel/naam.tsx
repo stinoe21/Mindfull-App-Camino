@@ -4,10 +4,8 @@
 // naamveld in het datamodel.
 
 import { useEffect, useState } from "react";
-import { TextInput } from "react-native";
 
-import { colors, space, type } from "@mind/ui";
-import { Card } from "@mind/ui/components/Card";
+import { TextField } from "@mind/ui/components/TextField";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { bewaarInstellingen, leesInstellingen, NAAM_MAX, schoonNaam } from "@/features/profiel/instellingen";
@@ -33,22 +31,18 @@ export default function ProfielNaam() {
 
   return (
     <KeuzePagina titel={t("titel")} uitleg={t("uitleg")}>
-      <Card tone="white" style={{ paddingVertical: space[2] }}>
-        <TextInput
-          value={naam}
-          onChangeText={zetNaam}
-          onEndEditing={() => bewaarInstellingen({ naam: schoonNaam(naam) })}
-          placeholder={t("placeholder")}
-          placeholderTextColor={colors.textSecondary}
-          maxLength={NAAM_MAX}
-          autoCapitalize="words"
-          autoCorrect={false}
-          autoFocus
-          returnKeyType="done"
-          style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-          accessibilityLabel={t("titel")}
-        />
-      </Card>
+      <TextField
+        value={naam}
+        onChangeText={zetNaam}
+        onEndEditing={() => bewaarInstellingen({ naam: schoonNaam(naam) })}
+        placeholder={t("placeholder")}
+        maxLength={NAAM_MAX}
+        autoCapitalize="words"
+        autoCorrect={false}
+        autoFocus
+        returnKeyType="done"
+        accessibilityLabel={t("titel")}
+      />
     </KeuzePagina>
   );
 }
