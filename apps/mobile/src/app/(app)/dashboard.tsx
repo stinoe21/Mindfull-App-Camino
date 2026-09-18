@@ -47,7 +47,7 @@ import { WEATHER_CODES, type WeatherCode, type WeatherTodayProvince } from "@min
 
 // Alleen interface-teksten. {share}, {total} en {n} worden op de plek ingevuld.
 const nl = {
-  appNaam: "Weer MIND",
+  appNaam: "Weertje",
   nacht: "Hallo",
   morgen: "Goedemorgen",
   middag: "Goedemiddag",
@@ -67,7 +67,7 @@ const nl = {
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
-    appNaam: "Weer MIND",
+    appNaam: "Weertje",
     nacht: "Hello",
     morgen: "Good morning",
     middag: "Good afternoon",

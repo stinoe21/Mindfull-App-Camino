@@ -147,7 +147,7 @@ export default function CheckInUitkomst() {
       message:
         (weerbeeld ? WEER_NAMEN[weerbeeld] + ". " : "") +
         tekst.kop +
-        " Dit is ongeveer mijn weer vandaag, via Weer MIND.",
+        " Dit is ongeveer mijn weer vandaag, via Weertje.",
     });
   };
 

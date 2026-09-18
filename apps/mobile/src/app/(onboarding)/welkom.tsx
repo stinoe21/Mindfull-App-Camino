@@ -27,7 +27,7 @@ import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 // twee, drie zinnen: gevraagd door MIND in de feedbacksessie (verwerkt 10
 // september 2026). Het is interface-copy; MIND doet later een eigen slag.
 const nl = {
-  titel: "Welkom bij Weer MIND",
+  titel: "Welkom bij Weertje",
   watIsHet:
     "In deze app is het weer een vergelijking voor hoe je je voelt. Zonnig, bewolkt of regen: het zegt niets over wie je bent, alleen hoe vandaag voelt.",
   watDoeJe: "Elke dag vier korte vragen, en je telt anoniem mee in het mentale weer van Nederland. Doe je mee?",
@@ -38,7 +38,7 @@ const nl = {
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
-    titel: "Welcome to Weer MIND",
+    titel: "Welcome to Weertje",
     watIsHet:
       "In this app the weather is a way of describing how you feel. Sunny, cloudy or rain: it says nothing about who you are, only how today feels.",
     watDoeJe: "Four short questions a day, and you count anonymously towards the mental weather of the Netherlands. Will you join?",

@@ -24,7 +24,7 @@ export function QuoteKaart() {
 
   const deel = () => {
     Share.share({
-      message: "“" + quote.tekst + "”\n" + quote.auteur + "\n\nQuote van de dag uit Weer MIND.",
+      message: "“" + quote.tekst + "”\n" + quote.auteur + "\n\nQuote van de dag uit Weertje.",
     });
   };
 

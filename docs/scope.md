@@ -1,6 +1,6 @@
 # Scope v1: Mentale Weerbericht
 
-> **Naam van de app: "Weer MIND"**, gekozen door Stijn op 1 september 2026 als werktitel. "Weer" is het weer én "opnieuw"; "weer even mindful" is de ondertitel op het welkomscherm. Onder voorbehoud van MIND, want hun merknaam staat erin: dat moet langs hun communicatie-afdeling voordat het de stores in gaat. Tot die tijd blijft "Mentale Weerbericht" de naam in de documenten en in `app.config.ts`.
+> **Naam van de app: "Weertje"**, gekozen door Stijn op 17 september 2026 als werktitel voor nu. Eén woord, een verkleinwoord dat bij de toon past, en zonder de merknaam van MIND erin. Het vervangt "Weer MIND" (1 september 2026), dat Stijn bij nader inzien slecht vond. Nog steeds een werktitel: de definitieve naam ligt bij MIND en moet vastliggen voor de eerste inzending, want naam en bundelnummer zijn daarna niet meer te wijzigen. Nog na te gaan: of de naam vrij is in de App Store en op Google Play. Tot die tijd blijft "Mentale Weerbericht" de naam in de documenten en in `app.config.ts`; alleen de locatietekst daar noemt de app bij de naam die de gebruiker ziet.
 
 > **Status: grotendeels ingevuld, nog te bevestigen met z'n drieën.** Alles hieronder met `TODO` moet vastliggen voordat we vertrekken. Zolang dat niet zo is, mogen agents daar geen productbeslissingen over nemen. Ontbreekt er informatie, vraag het dan in plaats van iets aan te nemen.
 
