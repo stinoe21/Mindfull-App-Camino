@@ -141,7 +141,7 @@ select relname as tabel, relrowsecurity as rls_aan,
        (select count(*) from pg_policy where polrelid = c.oid) as aantal_policies
   from pg_class c
  where relnamespace = 'public'::regnamespace
-   and relname in ('weather_hourly', 'weather_type', 'profiles')
+   and relname in ('weather_hourly', 'weather_type', 'profiles', 'usage_daily', 'usage_event')
  order by relname;
 
 do $$
@@ -163,10 +163,10 @@ begin
     into v_pol
     from pg_class c
    where c.relnamespace = 'public'::regnamespace
-     and c.relname = 'weather_hourly'
+     and c.relname in ('weather_hourly', 'usage_daily', 'usage_event')
      and exists (select 1 from pg_policy where polrelid = c.oid);
   assert v_pol is null,
-    format('De collectieve tabel heeft policies: %s. Er hoort er geen een te zijn, alle toegang loopt via de functies.', v_pol);
+    format('Een collectieve tabel heeft policies: %s. Er hoort er geen een te zijn, alle toegang loopt via de functies.', v_pol);
 end $$;
 
 \echo ''
@@ -186,10 +186,10 @@ begin
   select string_agg(grantee || ' heeft ' || privilege_type || ' op ' || table_name, ', ') into v_grants
     from information_schema.role_table_grants
    where table_schema = 'public'
-     and table_name = 'weather_hourly'
+     and table_name in ('weather_hourly', 'usage_daily', 'usage_event')
      and grantee in ('anon', 'authenticated');
   assert v_grants is null,
-    format('anon of authenticated heeft rechten op de collectieve tabel: %s. Die hoort onzichtbaar te zijn.', v_grants);
+    format('anon of authenticated heeft rechten op een collectieve tabel: %s. Die hoort onzichtbaar te zijn.', v_grants);
 
   -- profiles mag gelezen worden, maar nooit geschreven: anders zet iemand zijn
   -- eigen last_checkin_on of last_checkin_part terug en omzeilt hij het slot.
@@ -218,18 +218,20 @@ declare
   v_check    boolean;
 begin
   -- Het slot per dagdeel (sinds 15 september 2026) is een datum en een
-  -- dagdeel, meer niet. Elke kolom die het slot koppelt aan WAT iemand
-  -- invulde, breekt de scheiding tussen de twee stromen.
+  -- dagdeel, meer niet. Het slot van de gebruikstotalen (sinds 18 september
+  -- 2026) is alleen een datum. Elke kolom die een slot koppelt aan WAT iemand
+  -- invulde of deed, breekt de scheiding tussen de stromen.
   select string_agg(column_name, ', ' order by ordinal_position) into v_kolommen
     from information_schema.columns
    where table_schema = 'public' and table_name = 'profiles';
-  assert v_kolommen = 'id, last_active_at, last_checkin_on, last_checkin_part',
-    format('profiles hoort precies id, last_active_at, last_checkin_on en last_checkin_part te hebben, gevonden: %s', v_kolommen);
+  assert v_kolommen = 'id, last_active_at, last_checkin_on, last_checkin_part, last_usage_on',
+    format('profiles hoort precies id, last_active_at, last_checkin_on, last_checkin_part en last_usage_on te hebben, gevonden: %s', v_kolommen);
 
   select string_agg(column_name, ', ') into v_weer
     from information_schema.columns
    where table_schema = 'public' and table_name = 'profiles'
-     and (column_name ilike '%weather%' or column_name ilike '%weer%' or column_name ilike '%mood%');
+     and (column_name ilike '%weather%' or column_name ilike '%weer%' or column_name ilike '%mood%'
+          or column_name ilike '%event%' or column_name ilike '%item%');
   assert v_weer is null,
     format('profiles heeft een kolom die naar een weerbeeld wijst: %s', v_weer);
 
@@ -244,7 +246,7 @@ begin
     'Er staat geen check op profiles.last_checkin_part die hem tot 1 of 2 begrenst.';
 end $$;
 
-\echo 'profiles kent alleen een datum en een dagdeel van de laatste bijdrage, geen weerbeeld'
+\echo 'profiles kent alleen een datum en een dagdeel van de laatste bijdrage en de datum van de laatste batch, geen weerbeeld en geen gebeurtenis'
 
 \echo ''
 \echo '=== 6. Staat realtime uit op de collectieve tabel? ==='
@@ -257,12 +259,12 @@ begin
     from pg_publication_tables
    where pubname = 'supabase_realtime'
      and schemaname = 'public'
-     and tablename = 'weather_hourly';
+     and tablename in ('weather_hourly', 'usage_daily');
   assert v_aan is null,
     format('Deze tabel staat in de publicatie supabase_realtime: %s. Realtime zendt elke ophoging live uit met het moment erbij, en elke ophoging is een inzending.', v_aan);
 end $$;
 
-\echo 'realtime staat uit op weather_hourly'
+\echo 'realtime staat uit op weather_hourly en usage_daily'
 
 \echo ''
 \echo '=== 7. Hebben de security definer-functies een vast search_path? ==='
@@ -339,7 +341,7 @@ begin
   select string_agg(routine_name, ', ') into v_fout
     from information_schema.routine_privileges
    where routine_schema = 'public' and grantee = 'authenticated'
-     and routine_name in ('purge_inactive_accounts', 'handle_new_user');
+     and routine_name in ('purge_inactive_accounts', 'handle_new_user', 'usage_scrub');
   assert v_fout is null,
     format('authenticated mag beheerfuncties aanroepen: %s', v_fout);
 
@@ -392,6 +394,71 @@ end $$;
 \echo 'de noodrem kent alleen een versie en een bericht, en vraagt niets van de app'
 
 \echo ''
+\echo '=== 11. Kunnen de gebruikstotalen naar een persoon of een moment wijzen? ==='
+
+select column_name, data_type, is_nullable
+  from information_schema.columns
+ where table_schema = 'public' and table_name = 'usage_daily'
+ order by ordinal_position;
+
+do $$
+declare
+  v_kolommen text;
+  v_tijd     text;
+  v_pk       text;
+  v_fk       text;
+  v_def      text;
+begin
+  -- Sinds 18 september 2026: totalen per (dag, event, item). Een kolom erbij
+  -- is een tweede dimensie, en een tweede dimensie maakt de cellen kleiner en
+  -- kan alsnog iets over een persoon of over het weer zeggen.
+  select string_agg(column_name, ', ' order by ordinal_position) into v_kolommen
+    from information_schema.columns
+   where table_schema = 'public' and table_name = 'usage_daily';
+  assert v_kolommen = 'day, event, item, total',
+    format('usage_daily hoort precies day, event, item en total te hebben, gevonden: %s', v_kolommen);
+
+  -- Geen tijd fijner dan een dag, en geen uuid die naar iemand kan wijzen.
+  select string_agg(column_name || ' (' || data_type || ')', ', ') into v_tijd
+    from information_schema.columns
+   where table_schema = 'public' and table_name = 'usage_daily'
+     and data_type not in ('date', 'text', 'integer');
+  assert v_tijd is null,
+    format('usage_daily heeft een kolom die fijner is dan een dag of naar iemand kan wijzen: %s', v_tijd);
+
+  select pg_get_constraintdef(oid) into v_pk
+    from pg_constraint
+   where conrelid = 'public.usage_daily'::regclass and contype = 'p';
+  assert v_pk = 'PRIMARY KEY (day, event, item)',
+    format('usage_daily hoort als enige sleutel PRIMARY KEY (day, event, item) te hebben, gevonden: %s', coalesce(v_pk, 'geen primary key'));
+
+  -- De enige verwijzing is die naar de vaste lijst events.
+  select string_agg(pg_get_constraintdef(oid), '; ') into v_fk
+    from pg_constraint
+   where conrelid = 'public.usage_daily'::regclass and contype = 'f'
+     and confrelid <> 'public.usage_event'::regclass;
+  assert v_fk is null,
+    format('usage_daily verwijst naar iets anders dan usage_event: %s', v_fk);
+
+  -- Het weerbeeld mag nooit een event of een toegestaan item zijn: dan telt
+  -- het weer mee van wie daar geen toestemming voor gaf.
+  select string_agg(code, ', ') into v_def
+    from public.usage_event
+   where items && array['zonnig', 'wolken', 'mist', 'wind', 'regen'];
+  assert v_def is null,
+    format('Een event laat een weerbeeld als item toe: %s', v_def);
+
+  -- log_usage() hoort eerst het slot te zetten en alleen afgesloten dagen toe te laten.
+  select pg_get_functiondef('public.log_usage(jsonb)'::regprocedure) into v_def;
+  assert position('last_usage_on' in v_def) > 0 and position('last_usage_on' in v_def) < position('insert into public.usage_daily' in v_def),
+    'log_usage() zet het slot niet voor het optellen.';
+  assert v_def ilike '%generate_series(1, 7)%',
+    'log_usage() laat meer toe dan de zeven afgesloten dagen voor vandaag.';
+end $$;
+
+\echo 'usage_daily kent alleen dag, event, item en totaal; het weerbeeld kan er niet in'
+
+\echo ''
 \echo '======================================================================'
 \echo ' GESLAAGD. De collectieve tabel heeft geen kolom die naar een persoon'
 \echo ' kan wijzen, geen rij per inzending, geen tijd fijner dan een uur, en'
@@ -399,6 +466,9 @@ end $$;
 \echo ' is voor de app onzichtbaar, staat niet op realtime, en alle toegang'
 \echo ' loopt via functies met een vast search_path. Het profiel kent alleen'
 \echo ' de datum en het dagdeel van de laatste bijdrage, geen weerbeeld.'
+\echo ' De gebruikstotalen kennen alleen dag, event, item en totaal: geen'
+\echo ' gebruiker, geen tijd fijner dan een dag, en het weerbeeld kan er'
+\echo ' niet in. Het profiel kent daarvan alleen de datum van de laatste batch.'
 \echo ''
 \echo ' De app ziet alleen afgesloten uurblokken, dus een inzending is via'
 \echo ' het weerbericht niet live te zien binnenkomen.'
