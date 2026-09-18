@@ -25,6 +25,7 @@ import { Lijst, LijstRij } from "@mind/ui/components/LijstRij";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { Verschijn } from "@mind/ui/components/Verschijn";
+import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
@@ -48,8 +49,6 @@ const nl = {
   meldingAlBijgedragenOchtend: "Je weer is bijgewerkt. In het mentale weer van Nederland telde je vanochtend al mee.",
   meldingAlBijgedragenMiddag: "Je weer is bijgewerkt. In het mentale weer van Nederland telde je vanmiddag al mee.",
   opnieuw: "Opnieuw inchecken",
-  meldingNietVerbonden: "Geen verbinding. Je weer telt nu niet mee in het mentale weer van Nederland.",
-  meldingMislukt: "Meetellen in het mentale weer van Nederland lukte nu niet. Je eigen weer is wel bewaard.",
   meldingNietIngelogd: "Je bent niet ingelogd. Je weer telt nu niet mee in het mentale weer van Nederland.",
   leegTitel: "Nog geen check-in vandaag",
   leegUitleg: "Na je check-in staat hier jouw weer van vandaag.",
@@ -67,8 +66,6 @@ const teksten: Woordenboek<typeof nl> = {
     meldingAlBijgedragenOchtend: "Your weather is updated. You already counted towards the mental weather of the Netherlands this morning.",
     meldingAlBijgedragenMiddag: "Your weather is updated. You already counted towards the mental weather of the Netherlands this afternoon.",
     opnieuw: "Check in again",
-    meldingNietVerbonden: "No connection. Your weather does not count towards the mental weather of the Netherlands right now.",
-    meldingMislukt: "Counting towards the mental weather of the Netherlands did not work just now. Your own weather is saved.",
     meldingNietIngelogd: "You are not logged in. Your weather does not count towards the mental weather of the Netherlands right now.",
     leegTitel: "No check-in yet today",
     leegUitleg: "Do the check-in first, then your weather of the day will appear here.",
@@ -88,8 +85,8 @@ export default function CheckInUitkomst() {
   const MELDINGEN: Record<string, string> = {
     gelukt: t("meldingGelukt"),
     "al-bijgedragen": dagdeelNu() === 1 ? t("meldingAlBijgedragenOchtend") : t("meldingAlBijgedragenMiddag"),
-    "niet-verbonden": t("meldingNietVerbonden"),
-    mislukt: t("meldingMislukt"),
+    // Lukte het meetellen niet, dan zeggen we daar niets over: het scherm gaat
+    // over jouw weer, en met die zin kon je toch niets (Stijn, 17 september 2026).
     "niet-ingelogd": t("meldingNietIngelogd"),
   };
   const [geladen, zetGeladen] = useState(false);
@@ -197,7 +194,10 @@ export default function CheckInUitkomst() {
                 <LijstRij
                   key={a.slug}
                   titel={h?.titel ?? a.titel}
-                  meta={a.onderwerp !== a.titel ? a.onderwerp : undefined}
+                  // De vlieger van het onderwerp hoort erbij: hij trekt je naar de
+                  // lijst toe. De regel met het onderwerp eronder ("Grenzen") kon
+                  // weg (Stijn, 17 september 2026).
+                  beeld={<VliegerOnderwerp onderwerp={a.onderwerp} slug={h?.slug ?? a.slug} hoogte={40} />}
                   onPress={() => {
                     if (h) router.push({ pathname: "/naslagwerk/houvast/[onderwerp]", params: { onderwerp: h.slug } });
                     else router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } });
