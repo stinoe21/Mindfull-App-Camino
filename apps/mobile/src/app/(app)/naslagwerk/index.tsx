@@ -50,7 +50,8 @@ import { leesInstellingen } from "@/features/profiel/instellingen";
 const nl = {
   titel: "Houvast",
   ondertitel: "Kort uitgelegd, en wat kan helpen.",
-  zoekPlaceholder: "Waar loop je tegenaan? Bijvoorbeeld: ik slaap slecht",
+  // Kort genoeg voor het veld: de lange variant met een voorbeeld viel weg (Stijn, 14 september 2026).
+  zoekPlaceholder: "Waar loop je tegenaan?",
   gevonden: "Gevonden voor jou",
   gevondenNote: "Onderwerpen, gidsen en challenges die hierbij passen.",
   challenge: "CHALLENGE",
@@ -83,7 +84,7 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     titel: "Houvast",
     ondertitel: "Explained briefly, and what can help.",
-    zoekPlaceholder: "What are you running into? For example: I sleep badly",
+    zoekPlaceholder: "What are you running into?",
     gevonden: "Found for you",
     gevondenNote: "Topics, guides and challenges that fit.",
     challenge: "CHALLENGE",

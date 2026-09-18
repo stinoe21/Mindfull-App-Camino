@@ -15,7 +15,8 @@
 //                     met "TIP 2 van 5"; de oefening als laatste kaart in
 //                     paars. "Wat kan helpen" paste niet in een segment.
 //   Verder            de links naar wijzijnmind.nl, de gids per mail, de
-//                     challenge over dit onderwerp en de verwante onderwerpen
+//                     challenge over dit onderwerp, dan los de Hulplijn-kaart,
+//                     en de verwante onderwerpen
 //
 // De teksten zijn woordelijk van MIND (data/houvast.ts, gegenereerd). Er
 // wordt alleen op zinsgrenzen geknipt. Een klacht (piekeren), een
@@ -39,6 +40,7 @@ import { Segmenten } from "@mind/ui/components/Segmenten";
 import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
+import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { InhoudBlokken } from "@/features/content/InhoudBlokken";
 import { isBewaard, leesBewaard, wisselBewaard, type BewaardeTip } from "@/features/content/bewaard";
@@ -260,6 +262,10 @@ export default function HouvastOnderwerp() {
           ) : null}
         </Lijst>
       ) : null}
+
+      {/* Onder de leeslinks, los ervan, de Hulplijn: contact met een mens is
+          iets anders dan verder lezen (Stijn, 14 september 2026). */}
+      {paneel === "verder" ? <HulplijnKaart /> : null}
 
       {paneel === "verder" && verwant.length ? (
         <ContentSection title={t("meerOnderwerp").replace("{onderwerp}", houvast.onderwerp.toLowerCase())}>
