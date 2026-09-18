@@ -45,6 +45,8 @@ export function Chip({ label, active = false, kleur, gekozenKleur, onPress }: Ch
         accessibilityRole="button"
         accessibilityState={{ selected: active }}
         onPress={onPress}
+        // De chip is ongeveer 36 hoog; met 4 erboven en eronder is het raakvlak 44.
+        hitSlop={{ top: space[1], bottom: space[1] }}
         style={({ pressed }) => [basis, { opacity: pressed ? 0.7 : 1 }]}
       >
         {inhoud}

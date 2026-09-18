@@ -42,6 +42,9 @@ export function TextField({ wachtwoord = false, toonLabel, verbergLabel, ...rest
       <TextInput
         {...rest}
         secureTextEntry={wachtwoord && !zichtbaar}
+        // Hetzelfde plafond als lopende tekst in AppText: de invoer mag
+        // verdubbelen met de systeemletter, niet verdrievoudigen.
+        maxFontSizeMultiplier={2}
         placeholderTextColor={colors.textSecondary}
         style={{ ...type.body, flex: 1, color: colors.textPrimary, includeFontPadding: false }}
       />

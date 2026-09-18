@@ -61,7 +61,11 @@ export function InstellingenRij({ label, omschrijving, onPress, rechts, laatste 
         opacity: uit ? 0.5 : 1,
       }}
     >
-      <View style={{ flexShrink: 1, gap: space[1] }}>
+      {/* Met een waarde rechts krimpt het label niet: bij een grote systeemletter
+          brak "Voornaam" anders midden in het woord, terwijl de waarde ernaast
+          gewoon korter kan ("Nog geen n..."). Zonder waarde mag het label de
+          hele rij gebruiken en over regels lopen. */}
+      <View style={rechts ? { flexShrink: 0, maxWidth: "70%", gap: space[1] } : { flexShrink: 1, gap: space[1] }}>
         <AppText rol="body">{label}</AppText>
         {omschrijving ? <AppText rol="labelCaption" kleur="secondary">{omschrijving}</AppText> : null}
       </View>
