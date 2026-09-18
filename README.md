@@ -1,10 +1,10 @@
 # Mentale Weerbericht
 
-Een mobiele app voor Stichting Mind, gebouwd door drie mensen tijdens het lopen van de Camino, zomer 2026.
+Een mobiele app voor Stichting Mind, in de interface "Weertje". Begonnen door drie mensen tijdens het lopen van de Camino, zomer 2026; sinds 10 september 2026 bouwt Stijn alleen verder.
 
 **Stack:** React Native met Expo en expo-router, Supabase voor backend en auth, iOS en Android.
 
-**Team:** [@stinoe21](https://github.com/stinoe21) (architectuur, backend, releases), [@Cschoorl](https://github.com/Cschoorl) (structuur, pagina's, productlogica), [@maxhelmantel-gif](https://github.com/maxhelmantel-gif) (design system, visuele consistentie)
+**Bouwer:** [@stinoe21](https://github.com/stinoe21). Tot 10 september 2026 met [@Cschoorl](https://github.com/Cschoorl) (structuur, pagina's, productlogica) en [@maxhelmantel-gif](https://github.com/maxhelmantel-gif) (design system, visuele consistentie).
 
 **Userflow:** [Figma board](https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---User-Flow)
 
@@ -69,26 +69,16 @@ git push --force-with-lease           # draft PR openen
 
 ## Status
 
-Het samenwerkingsraamwerk staat, en de backend ook: sinds 13 augustus 2026 staat het Supabase-schema met de anonieme collectieve store in `supabase/`, inclusief het controlescript `supabase/tests/anonimisering.sql`. Verder bevat deze repo documentatie, configuratie, en sinds 20 augustus 2026 de contentbibliotheek van Mind in `content/mind/`: 339 pagina's als Markdown, zodat we er onderweg in kunnen zoeken zonder bereik. Let op: die is naslag en nog geen goedgekeurde contentbron voor de app, zie [content/mind/LEESMIJ.md](content/mind/LEESMIJ.md).
+**Stand 18 september 2026: de app is gebouwd en staat op `main`.**
 
-Sinds diezelfde dag staat ook het **design system** in `packages/ui`: tokens, assets, de vijf lettertypes en de volledige specificatie van 41 uitgewerkte schermen, overgenomen uit Claude Design. Er hoeft dus geen kleur of maat meer afgeleid of verzonnen te worden.
+- **De backend**: het Supabase-schema met de anonieme collectieve store in `supabase/`, zeven migraties, en het controlescript `supabase/tests/anonimisering.sql`.
+- **Het design system** in `packages/ui`: tokens, assets, de vijf lettertypes, de specificatie van 41 uitgewerkte schermen, en de componenten.
+- **De app** in `apps/mobile`: Expo SDK 57 met expo-router. Alle schermen uit `docs/scope.md`, plus wat er sindsdien bij kwam: Tips met gidsen en zelftests, challenges als pad, het mentale weer per provincie, accountherstel, hulp en uitleg, en een noodrem. `npm install` en `npm start`, en hij loopt op Expo Go en op de Simulator.
+- **De controles**: `npm run typecheck`, `npm run lint` en `npm test`, lokaal en in de CI.
 
-En sinds 20 augustus 2026 draait de **app** ook: `apps/mobile`, Expo SDK 57 met expo-router, als npm workspace naast `packages/ui` en `packages/types`. `npm install` en `npm start`, en hij loopt op Expo Go en op de Simulator. De twintig routebestanden van de userflow staan er leeg, met per stuk een omschrijving en een verwijzing naar hun specificatie. Wat er nog moet gebeuren staat als afvinklijst in [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md), en hoe je je laptop klaarzet in [ONBOARDING.md](ONBOARDING.md).
+Wat er nog moet voor de stores staat niet in deze README maar in `docs/scope.md` en `docs/privacy-besluiten.md`. In het kort:
 
-**Deze twee blokkeren al het andere werk, in deze volgorde:**
-
-- [ ] **Scope v1 bevestigen in `docs/scope.md`.** Sinds 20 augustus 2026 grotendeels ingevuld vanuit het design system en het whiteboard. Wat rest is een korte sessie met z'n drieën: het concept bevestigen en de resterende TODO's beslissen. Op die open punten neemt geen agent een productbeslissing.
-- [x] ~~**Expo-app scaffolden**~~ **Gedaan op 20 augustus 2026.** Expo SDK 57, expo-router, npm workspaces, Metro ingesteld op de monorepo, de lettertypes geladen in de root layout, en de lint-regel tegen hardcoded designwaarden. CI groen op alle drie de laptops moet nog, dat kan pas als Max en Caesar de repo hebben.
-
-Daarna pas:
-
-- [ ] Mind vragen het Apple Developer-account vroeg aan te vragen (langste doorlooptijd; hun actie, niet de onze)
-- [x] ~~Monorepo of één platte app~~ **Monorepo**, besloten 30 juli 2026: `apps/mobile`, `apps/admin`, `packages/ui` en `packages/types`. De admin is een CMS-webapp waar Mind content in zet, en de app geeft die weer. Ze delen de database en de gegenereerde types, niet het beeld.
-- [ ] Kiezen welk framework `apps/admin` krijgt en waar die gedeployed wordt. Pas nodig als de mobiele app staat: die is de prioriteit.
-- [x] ~~Kiezen: welke UI-kit is de basis, of bouwen we eigen componenten?~~ **Eigen componenten**, beantwoord door de overname van het design system op 20 augustus 2026. Een geleende set generieke besturingselementen blijft voor auth en formulieren, zie `packages/ui/reference/components/library`.
-- [ ] Verdelen wie welk van de acht onderdelen doet, zie `docs/taakverdeling.md`
-- [x] ~~Design tokens~~ **Staan in `packages/ui/tokens`** sinds 20 augustus 2026, als CSS en als TypeScript.
-- [ ] De basiscomponenten naar React Native, in alle states. De specificatie ligt klaar in `packages/ui/reference`.
-- [x] ~~De vier pakketten toevoegen die het ontwerp nodig heeft~~ **Gedaan op 20 augustus 2026.** `expo-image`, `expo-font`, `react-native-svg` en `expo-linear-gradient` staan in `apps/mobile`, alle vier in Expo Go, dus geen development build nodig. Zie [docs/van-ontwerp-naar-app.md](docs/van-ontwerp-naar-app.md).
-- [x] ~~Elk scherm uit de userflow als leeg routebestand aanmaken~~ **Gedaan op 20 augustus 2026**: twintig routebestanden in `apps/mobile/src/app`, elk met een omschrijving en een verwijzing naar hun specificatie.
-- [ ] Userflow vertalen naar 15 tot 20 taken op het board
+- [ ] **Bij MIND en Paul:** de ontwikkelaarsaccounts, de DPIA, de privacyverklaring, de voorwaarden, de naam en het bundelnummer, het akkoord op de content en de positionering van de zelftests.
+- [ ] **Storeklaar:** een app-icoon, de bouwstraat naar de stores (EAS), het privacymanifest, de Android-ronde, een eigen mailserver, het productieproject bij MIND en het inplannen van het opruimen van inactieve accounts.
+- [ ] **Testen** met echte mensen via TestFlight en de interne test van Google.
+- [ ] Kiezen welk framework `apps/admin` krijgt en waar die gedeployed wordt.
