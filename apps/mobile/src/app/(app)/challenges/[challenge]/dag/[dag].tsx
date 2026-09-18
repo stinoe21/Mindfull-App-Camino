@@ -21,7 +21,7 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
 import { InhoudBlokken } from "@/features/content/InhoudBlokken";
-import { aantalAfgerond, markeerAfgerond, vandaagAlAfgerond } from "@/features/content/voortgang";
+import { aantalAfgerond, laadVoortgang, markeerAfgerond, vandaagAlAfgerond } from "@/features/content/voortgang";
 
 const nl = {
   nietGevonden: "Dag niet gevonden",
@@ -56,7 +56,14 @@ export default function ChallengeDag() {
   const [klaar, zetKlaar] = useState(0);
   useFocusEffect(
     useCallback(() => {
-      if (challenge) zetKlaar(aantalAfgerond(challenge.slug));
+      if (!challenge) return;
+      let actief = true;
+      laadVoortgang().then(() => {
+        if (actief) zetKlaar(aantalAfgerond(challenge.slug));
+      });
+      return () => {
+        actief = false;
+      };
     }, [challenge])
   );
 
