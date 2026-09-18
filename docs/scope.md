@@ -181,7 +181,7 @@ Dit is de belangrijkste lijst van dit document. Zonder harde non-goals groeit de
 | **Delen met derden of hulpverleners** | Er is geen scherm voor, en het staat haaks op de belofte "Niemand kan zien wat jij hebt ingevuld". |
 | **Data-export** | Verwijderen moet, exporteren niet. Geen scherm in het ontwerp. |
 | **Een webversie van de app zelf** | De app is voor de telefoon ontworpen, 402 punten breed. `apps/admin` is iets anders: dat is een CMS voor Mind, zie hieronder. |
-| **Accountherstel via e-mail** | Hangt aan de inlogkeuze, en die is Apple, Google of e-mail. **TODO:** dit is de enige uit deze lijst die echt een besluit is en geen afleiding, want zonder herstel is een vergeten e-mailinlog een doodlopende weg. |
+| ~~**Accountherstel via e-mail**~~ | **Wel in v1, besluit Stijn 17 september 2026.** Zonder herstel was een vergeten wachtwoord een doodlopende weg, en App Review test dat. "Wachtwoord vergeten?" op het inlogscherm mailt een link; die opent de app, waar je een nieuw wachtwoord kiest. De bevestigingsmail is opnieuw te versturen en de link daarin opent de app ook. Zie `apps/mobile/src/features/auth/accountHerstel.ts`. |
 | **Zelftests en ervaringsverhalen** | Nice-to-have, van het whiteboard van 20 augustus 2026. Ze zitten al wél in de contentbibliotheek, dus later toevoegen is contentwerk en geen verbouwing. |
 | **Windrichtingen** | Geparkeerd door Stijn op 20 augustus 2026. Raakt de kern niet. |
 | **Een iPad-layout** | `supportsTablet` staat op `false`. Universal declareren zonder een echte iPad-layout is een afwijzingsreden, zie hieronder. |
