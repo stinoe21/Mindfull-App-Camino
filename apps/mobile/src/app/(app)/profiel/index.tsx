@@ -56,6 +56,7 @@ const nl = {
   weerberichtGeen: "Nog niet gekozen",
   groepAccount: "Account",
   uitloggen: "Uitloggen",
+  over: "Over deze app",
   accountVerwijderen: "Account verwijderen",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -87,6 +88,7 @@ const teksten: Woordenboek<typeof nl> = {
     weerberichtGeen: "Not chosen yet",
     groepAccount: "Account",
     uitloggen: "Log out",
+    over: "About this app",
     accountVerwijderen: "Delete account",
   },
 };
@@ -173,7 +175,8 @@ export default function Profiel() {
       </InstellingenGroep>
 
       <InstellingenGroep titel={t("groepApp")}>
-        <InstellingenRij label={t("taal")} onPress={() => router.push("/profiel/taal")} rechts={<Waarde tekst={taalWaarde} />} laatste />
+        <InstellingenRij label={t("taal")} onPress={() => router.push("/profiel/taal")} rechts={<Waarde tekst={taalWaarde} />} />
+        <InstellingenRij label={t("over")} onPress={() => router.push("/profiel/over")} laatste />
       </InstellingenGroep>
 
       {/* De toestemmingen zijn de privacy-keuzes; de uitleg staat daar achter
