@@ -213,7 +213,7 @@ export default function KitchenSink() {
       <View style={{ gap: space[3] }}>
         <TextField value={veld} onChangeText={zetVeld} placeholder="Leeg, met een placeholder" accessibilityLabel="Voorbeeldveld" />
         <TextField value="Ingevuld" onChangeText={() => undefined} accessibilityLabel="Ingevuld veld" />
-        <TextField value={geheim} onChangeText={zetGeheim} wachtwoord toonLabel="Toon" verbergLabel="Verberg" accessibilityLabel="Wachtwoord" />
+        <TextField value={geheim} onChangeText={zetGeheim} wachtwoord toonLabel="Toon wachtwoord" verbergLabel="Verberg wachtwoord" accessibilityLabel="Wachtwoord" />
         <TextField value="Niet te wijzigen" editable={false} accessibilityLabel="Uitgeschakeld veld" />
       </View>
 
