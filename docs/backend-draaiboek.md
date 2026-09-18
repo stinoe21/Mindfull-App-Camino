@@ -20,6 +20,7 @@ Dit is de volledige API van de backend. Alles wat hier niet staat, is voor de ap
 |---|---|---|
 | Insturen | `rpc('submit_weather', { p_weather: 'zonnig', p_province: 'utrecht' })` | Zet eerst het slot per dagdeel op het profiel, telt dan anoniem op bij het uurtotaal. Eén transactie. Geeft het dagdeel terug (1 of 2). Tweede keer in hetzelfde dagdeel: foutmelding "dit dagdeel al bijgedragen"; de app werkt dan alleen het lokale weer bij. |
 | Weerbericht lezen | `rpc('weather_today')` | De percentages van vandaag, over de **afgesloten uurblokken**. Het lopende blok telt niet mee, zodat niemand een inzending live ziet binnenkomen. Geeft **nul rijen** onder de toondrempel; dat is meteen de empty state, ook voor 01:00. |
+| Weerbericht per provincie lezen | `rpc('weather_today_by_province')` | Per provincie het weerbeeld dat vandaag het vaakst voorkomt, met zijn aandeel, over de afgesloten uurblokken. Alleen provincies die de drempel halen; 'onbekend' doet niet mee op de kaart. Voedt de kaart op Home en op het weerbericht. |
 | Weertypen lezen | `select` op `weather_type` | De vijf weerbeelden met hun labels. Alleen ingelogd; voor het inloggen heeft de app ze niet nodig. |
 | Eigen profiel lezen | `select` op de eigen rij in `profiles` | Mag, maar de app doet het niet: inchecken kan altijd, en of een bijdrage nog telt onthoudt de app lokaal uit het antwoord van `submit_weather`. |
 | Noodrem lezen | `rpc('get_app_status')` | De minimale versie van de app en het onderhoudsbericht, of null. Alleen ingelogd, zonder argumenten: de app stuurt niets over zichzelf mee en vergelijkt zelf. Faalt open, zie `apps/mobile/src/features/systeem/appStatus.ts`. |
@@ -59,7 +60,7 @@ Waarom er geen rij per inzending is en geen tijdstip, staat uitgelegd in `datamo
 - **Realtime staat op geen enkele tabel.** Uitzenden van inserts met een moment erbij is precies het lek dat het uurblok dichthoudt.
 - **Geen GitHub-integratie op het Supabase-project.** Die blokkeert de overdracht aan Mind, zie `privacy-besluiten.md`.
 - **Wie er in het dashboard kan is een privacymaatregel**, geen gemak. Na de overdracht is dat aan Mind.
-- **De auth-instellingen in het dashboard** staan als checklist in `limieten-en-misbruik.md` sectie 5: e-mailbevestiging aan, lekwachtwoordbescherming aan, OTP-lengte en -geldigheid, en geen wachtwoordlogin als de app die niet aanbiedt. Ze komen niet mee in migraties, dus vink ze na elke nieuwe omgeving opnieuw af.
+- **De auth-instellingen in het dashboard** staan als checklist in `limieten-en-misbruik.md` sectie 5: e-mailbevestiging aan, lekwachtwoordbescherming aan, de minimale wachtwoordlengte, en e-mailcode en magic link uit. De app logt sinds 28 augustus 2026 in met e-mailadres en wachtwoord; herstel, de bevestigingsmail en het wijzigen van e-mailadres en wachtwoord lopen via `features/auth/accountHerstel.ts` en `accountWijzigen.ts`. Ze komen niet mee in migraties, dus vink ze na elke nieuwe omgeving opnieuw af.
 
 ### Wat er bewust nog niet is
 

@@ -1,8 +1,9 @@
 // Gegroepeerde instellingenlijst, zoals iOS-instellingen: een kopje in
 // kapitalen, daaronder één kaart met rijen, gescheiden door een lijn. Elke rij
 // heeft een label, optioneel een regel uitleg eronder, en rechts een "›" of
-// een eigen element (schakelaar, waarde). Gebruikt op Profiel, en straks op
-// Instellingen zelf zodra die pagina vrij is (PR #62 raakt hem nu).
+// een eigen element (schakelaar, waarde). Gebruikt op Profiel en op de
+// hulppagina. Een aparte pagina Instellingen is er niet meer: die route
+// stuurt sinds 10 september 2026 door naar Profiel.
 //
 // Geen iconen per rij: de assetbibliotheek heeft ze niet, en we voegen er
 // zelf geen toe. Komt er een set, dan krijgt de rij een "icoon"-prop.
