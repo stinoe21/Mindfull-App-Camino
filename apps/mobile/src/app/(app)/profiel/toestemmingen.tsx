@@ -2,9 +2,9 @@
 //
 // De twee apart intrekbare toestemmingen op een eigen pagina (Stijn,
 // 13 september 2026), zodat Profiel zelf kort blijft en de tekst hier de
-// ruimte krijgt. De consent-teksten liggen bij Paul
-// (docs/privacy-besluiten.md): woordelijk, en bewust buiten de vertaallaag
-// en dus Nederlands (issue #47, scope.md). Elke keuze wordt direct bewaard.
+// ruimte krijgt. De consent-tekst staat in ToestemmingKeuze en is afgestemd
+// met Paul (docs/privacy-besluiten.md); hij staat bewust buiten de vertaallaag
+// en is dus Nederlands (issue #47, scope.md). Elke keuze wordt direct bewaard.
 
 import { useEffect, useState } from "react";
 import { View } from "react-native";

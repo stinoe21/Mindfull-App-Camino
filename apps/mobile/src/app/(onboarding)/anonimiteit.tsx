@@ -2,9 +2,11 @@
 //
 // Legt woordelijk uit wat er met een check-in gebeurt, met de canonieke
 // zinnen uit het ontwerp: "Niemand kan zien wat jij hebt ingevuld." en
-// "Je kunt dit altijd wijzigen in Instellingen." Twee apart intrekbare
+// "Je kunt dit altijd wijzigen in Profiel." (Instellingen is sinds
+// 13 september 2026 opgegaan in Profiel.) Twee apart intrekbare
 // toestemmingen (docs/privacy-besluiten.md). De toestemming voor het
-// weerbericht is de tekst van Paul (28 augustus 2026), als expliciete keuze
+// weerbericht staat in ToestemmingKeuze (Paul, 27 augustus 2026; in gewone
+// taal sinds 17 september 2026), als expliciete keuze
 // ja of nee zonder standaardwaarde. Sinds 10 september 2026 (Stijn) zijn de
 // twee toestemmingen één formulier met dezelfde aanvinkvakjes (KeuzeVak);
 // daarvoor was het een omrande keuzerij naast een systeemschakelaar.
@@ -67,8 +69,8 @@ export default function Anonimiteit() {
   return (
     <OnboardingScherm
       stap={5}
-      titel="Draag anoniem bij"
-      uitleg="Niemand kan zien wat jij hebt ingevuld. Je kunt dit altijd wijzigen in Instellingen."
+      titel="Tel je mee?"
+      uitleg="Niemand kan zien wat jij hebt ingevuld. Je kunt dit altijd wijzigen in Profiel."
     >
       {/* De uitleg over anonimiteit stond hier ook nog eens los boven de
           toestemming; die staat op het mentale weer zelf, met de infoknop
@@ -79,7 +81,7 @@ export default function Anonimiteit() {
             systeem niet uit de lucht komt vallen. */}
         {weerbericht === true ? (
           <AppText rol="bodySmall" kleur="secondary">
-            Bij Klaar vraagt je telefoon om je locatie. Die blijft op je telefoon; alleen je provincie telt mee.
+            Bij Klaar vraagt je telefoon om je locatie. Alleen je provincie telt mee.
           </AppText>
         ) : null}
       </View>
