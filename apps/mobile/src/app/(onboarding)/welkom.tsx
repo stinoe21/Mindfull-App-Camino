@@ -20,7 +20,7 @@ import { View } from "react-native";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 
-import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { ENGELS_BESCHIKBAAR, useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 
 // De uitleg van de weermetafoor, eenmalig en voor de eerste check-in, in
@@ -56,9 +56,12 @@ export default function Welkom() {
     <OnboardingScherm titel={t("titel")} zonderTerug>
       <AppText rol="body">{t("watIsHet")}</AppText>
       <AppText rol="body">{t("watDoeJe")}</AppText>
-      <View style={{ alignItems: "flex-start" }}>
-        <Button label={t("andereTaal")} variant="link" onPress={() => kiesTaal(taal === "nl" ? "en" : "nl")} />
-      </View>
+      {/* Alleen zolang er iets te kiezen valt, zie ENGELS_BESCHIKBAAR. */}
+      {ENGELS_BESCHIKBAAR ? (
+        <View style={{ alignItems: "flex-start" }}>
+          <Button label={t("andereTaal")} variant="link" onPress={() => kiesTaal(taal === "nl" ? "en" : "nl")} />
+        </View>
+      ) : null}
 
       <View style={{ flex: 1 }} />
       <Button label={t("start")} fullWidth onPress={() => router.push("/leeftijd")} />
