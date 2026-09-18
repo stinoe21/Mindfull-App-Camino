@@ -36,17 +36,16 @@ const nl = {
   meldingGelukt:
     "Dankjewel voor je check-in. Jouw weer telt anoniem mee in het mentale weer van Nederland.",
   meldingNietVerbonden:
-    "Geen verbinding: deze check-in telt niet mee in het weer van Nederland. Jouw weer staat hier.",
+    "Geen verbinding: deze check-in telt niet mee in het mentale weer van Nederland. Jouw weer staat hier.",
   meldingNietIngelogd:
-    "Je was niet ingelogd: deze check-in telt niet mee in het weer van Nederland. Jouw weer staat hier.",
+    "Je was niet ingelogd: deze check-in telt niet mee in het mentale weer van Nederland. Jouw weer staat hier.",
   leegTitel: "Nog geen check-in vandaag",
   leegUitleg: "Na je check-in staat hier jouw weer van vandaag.",
-  evenInchecken: "Even inchecken",
+  evenInchecken: "Inchecken",
   terugDashboard: "Terug naar Home",
-  jouwWeer: "JOUW MENTALE WEERBERICHT",
+  jouwWeer: "JOUW WEER VANDAAG",
   voorVandaag: "VOOR VANDAAG",
   lezenAlsJeWilt: "LEZEN, ALS JE WILT",
-  bekijkWeerbericht: "Bekijk het weer van Nederland",
   deelJeWeer: "Deel je weer",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -62,10 +61,9 @@ const teksten: Woordenboek<typeof nl> = {
     leegUitleg: "Do the check-in first, then your weather of the day will appear here.",
     evenInchecken: "Check in",
     terugDashboard: "Back to Home",
-    jouwWeer: "YOUR MENTAL WEATHER",
+    jouwWeer: "YOUR WEATHER TODAY",
     voorVandaag: "FOR TODAY",
     lezenAlsJeWilt: "READ, IF YOU LIKE",
-    bekijkWeerbericht: "See the weather of the Netherlands",
     deelJeWeer: "Share your weather",
   },
 };
@@ -171,13 +169,9 @@ export default function CheckInUitkomst() {
       {melding && MELDINGEN[melding] ? (
         <AppText rol="bodySmall" kleur="secondary" centreer>{MELDINGEN[melding]}</AppText>
       ) : null}
-      {/* De privacy-uitleg staat op het weerbericht zelf; hier niet nog een keer. */}
-      <Button
-        label={t("bekijkWeerbericht")}
-        variant="secondary"
-        fullWidth
-        onPress={() => router.push("/weerbericht")}
-      />
+      {/* Eén primaire knop (productprincipe 5). Het mentale weer van Nederland
+          staat op Home, direct onder jouw weer; een tweede knop ernaartoe was
+          dubbelop (Stijn, UX-ronde 13 september 2026). */}
       <Button label={t("terugDashboard")} fullWidth onPress={() => router.replace("/dashboard")} />
       <Button label={t("deelJeWeer")} variant="link" onPress={deel} />
     </ScreenCanvas>

@@ -222,7 +222,7 @@ export default function KitchenSink() {
           items={[
             { key: "home", label: "Home", actief: true, onPress: () => undefined, icoon: () => <NavIcoonHome hoogte={26} /> },
             { key: "tips", label: "Tips", onPress: () => undefined, icoon: (kleur) => <NavIcoonTips kleur={kleur} /> },
-            { key: "checkin", label: "Check in", onPress: () => undefined, icoon: (kleur) => <NavIcoonCheckIn kleur={kleur} /> },
+            { key: "checkin", label: "Inchecken", onPress: () => undefined, icoon: (kleur) => <NavIcoonCheckIn kleur={kleur} /> },
             { key: "challenges", label: "Challenges", onPress: () => undefined, icoon: (kleur) => <NavIcoonChallenges kleur={kleur} /> },
             { key: "profiel", label: "Profiel", onPress: () => undefined, icoon: (kleur) => <NavIcoonProfiel kleur={kleur} /> },
           ]}
