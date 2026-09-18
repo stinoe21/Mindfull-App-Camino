@@ -7,6 +7,12 @@
 // Sinds de feedback van Mind van 27 augustus 2026 kom je hier direct na de
 // check-in (zonder tussenscherm) en staat de bevestiging of melding over het
 // meetellen hier, via de melding-parameter.
+//
+// Sinds 14 september 2026 (Stijn: de check-in was "een huisstijlbreuk") is
+// dit hetzelfde vel als elk ander scherm: de vlieger op de hero, in de kleur
+// van het weer, en daaronder links uitgelijnd de naam van het weer, de
+// duiding, de tip op het vel en de leestips als lijst. De volle gradient
+// zonder vel met alles gecentreerd (variant "overlay") is hier weg.
 
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -15,11 +21,13 @@ import { Share, View } from "react-native";
 import { space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
-import { Card } from "@mind/ui/components/Card";
+import { Lijst, LijstRij } from "@mind/ui/components/LijstRij";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { Verschijn } from "@mind/ui/components/Verschijn";
+import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
+import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { houvastVoorArtikel } from "@/features/content/houvast";
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
@@ -44,8 +52,8 @@ const nl = {
   evenInchecken: "Inchecken",
   terugDashboard: "Terug naar Home",
   jouwWeer: "JOUW WEER VANDAAG",
-  voorVandaag: "VOOR VANDAAG",
-  lezenAlsJeWilt: "LEZEN, ALS JE WILT",
+  voorVandaag: "Voor vandaag",
+  lezenAlsJeWilt: "Lezen, als je wilt",
   deelJeWeer: "Deel je weer",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -62,8 +70,8 @@ const teksten: Woordenboek<typeof nl> = {
     evenInchecken: "Check in",
     terugDashboard: "Back to Home",
     jouwWeer: "YOUR WEATHER TODAY",
-    voorVandaag: "FOR TODAY",
-    lezenAlsJeWilt: "READ, IF YOU LIKE",
+    voorVandaag: "For today",
+    lezenAlsJeWilt: "Read, if you like",
     deelJeWeer: "Share your weather",
   },
 };
@@ -91,14 +99,15 @@ export default function CheckInUitkomst() {
   if (geladen && !weerbeeld) {
     // Empty state: nog geen check-in vandaag.
     return (
-      <ScreenCanvas variant="overlay" state="default" sheetTop={200}>
-        <MascotteVlieger state="wolken" hoogte={90} />
-        <AppText rol="h2" centreer>{t("leegTitel")}</AppText>
-        <AppText rol="body" kleur="secondary" centreer>
-          {t("leegUitleg")}
-        </AppText>
-        <Button label={t("evenInchecken")} fullWidth onPress={() => router.replace("/check-in/1")} />
-        <Button label={t("terugDashboard")} variant="link" onPress={() => router.replace("/dashboard")} />
+      <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotteVlieger state="wolken" hoogte={112} />}>
+        <View style={{ gap: space[1] }}>
+          <AppText rol="h1">{t("leegTitel")}</AppText>
+          <AppText rol="subtitle">{t("leegUitleg")}</AppText>
+        </View>
+        <View style={{ gap: space[3] }}>
+          <Button label={t("evenInchecken")} fullWidth onPress={() => router.replace("/check-in/1")} />
+          <Button label={t("terugDashboard")} variant="link" fullWidth onPress={() => router.replace("/dashboard")} />
+        </View>
       </ScreenCanvas>
     );
   }
@@ -117,63 +126,70 @@ export default function CheckInUitkomst() {
   };
 
   return (
-    <ScreenCanvas variant="overlay" state={weerbeeld ?? "default"} sheetTop={130}>
-      {/* De vlieger landt: schaal 0.9 naar 1 met een spring. Erkennen, niet vieren. */}
-      {weerbeeld ? (
-        <Verschijn landing>
-          <MascotteVlieger state={weerbeeld} hoogte={90} />
-        </Verschijn>
-      ) : null}
+    <ScreenCanvas
+      state={weerbeeld ?? "default"}
+      terugKnop={<TerugNaarVorige />}
+      kopTitel={weerbeeld ? WEER_NAMEN[weerbeeld] : undefined}
+      heroInhoud={
+        weerbeeld ? (
+          // De vlieger landt: schaal 0,9 naar 1 met een spring. Erkennen, niet vieren.
+          <Verschijn landing>
+            <MascotteVlieger state={weerbeeld} hoogte={112} />
+          </Verschijn>
+        ) : undefined
+      }
+    >
       {/* Eerst het weer zelf, zoals in scherm 07 van het ontwerp: overline,
-          de naam van het weerbeeld groot, dan de duiding. Zonder de naam las
-          het scherm als een tip zonder weerbericht. */}
+          de naam van het weerbeeld groot, dan de duiding. */}
       {tekst && weerbeeld ? (
-        <View style={{ gap: space[2], alignSelf: "stretch", alignItems: "center" }}>
-          <AppText rol="labelOverline" kleur="secondary" centreer>{t("jouwWeer")}</AppText>
-          <AppText rol="h1" centreer>{WEER_NAMEN[weerbeeld]}</AppText>
-          <AppText rol="subtitle" centreer>{tekst.kop}</AppText>
-          <AppText rol="bodySmall" kleur="secondary" centreer>{tekst.duiding}</AppText>
+        <View style={{ gap: space[2] }}>
+          <AppText rol="labelOverline" kleur="brand">{t("jouwWeer")}</AppText>
+          <AppText rol="h1">{WEER_NAMEN[weerbeeld]}</AppText>
+          <AppText rol="subtitle">{tekst.kop}</AppText>
+          <AppText rol="body">{tekst.duiding}</AppText>
         </View>
       ) : null}
+      {/* De tip op het vel, zonder kaart (Stijn: inhoud op het vel). */}
       {tekst ? (
-        <Card tone="white" style={{ alignSelf: "stretch" }}>
-          <AppText rol="labelOverline" kleur="secondary">{t("voorVandaag")}</AppText>
-          <AppText rol="h3">{tekst.tip}</AppText>
-        </Card>
+        <View style={{ gap: space[2] }}>
+          <AppText rol="h3">{t("voorVandaag")}</AppText>
+          <AppText rol="bodyEmphasis">{tekst.tip}</AppText>
+        </View>
       ) : null}
       {weerbeeld ? (
-        <View style={{ gap: space[2], alignSelf: "stretch" }}>
-          <AppText rol="labelOverline" kleur="secondary">{t("lezenAlsJeWilt")}</AppText>
-          {tipsBijWeer(weerbeeld).map((a) => (
-            <Card
-              key={a.slug}
-              tone="white"
+        <View style={{ gap: space[2] }}>
+          <AppText rol="h3">{t("lezenAlsJeWilt")}</AppText>
+          <Lijst>
+            {tipsBijWeer(weerbeeld).map((a) => {
               // Op het onderwerp uit Houvast als het artikel er een heeft (uitleg
               // plus wat kan helpen), anders op het artikel zelf.
-              onPress={() => {
-                const h = houvastVoorArtikel(a.slug);
-                if (h) router.push({ pathname: "/naslagwerk/houvast/[onderwerp]", params: { onderwerp: h.slug } });
-                else router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } });
-              }}
-              style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
-            >
-              <View style={{ flexShrink: 1 }}>
-                <AppText rol="bodyEmphasis">{a.titel}</AppText>
-                {a.onderwerp !== a.titel ? <AppText rol="labelCaption" kleur="secondary">{a.onderwerp}</AppText> : null}
-              </View>
-              <AppText rol="body" kleur="secondary">{"›"}</AppText>
-            </Card>
-          ))}
+              const h = houvastVoorArtikel(a.slug);
+              return (
+                <LijstRij
+                  key={a.slug}
+                  titel={h?.titel ?? a.titel}
+                  meta={a.onderwerp !== a.titel ? a.onderwerp : undefined}
+                  beeld={<VliegerOnderwerp onderwerp={a.onderwerp} slug={h?.slug ?? a.slug} hoogte={40} />}
+                  onPress={() => {
+                    if (h) router.push({ pathname: "/naslagwerk/houvast/[onderwerp]", params: { onderwerp: h.slug } });
+                    else router.push({ pathname: "/naslagwerk/[artikel]", params: { artikel: a.slug } });
+                  }}
+                />
+              );
+            })}
+          </Lijst>
         </View>
       ) : null}
       {melding && MELDINGEN[melding] ? (
-        <AppText rol="bodySmall" kleur="secondary" centreer>{MELDINGEN[melding]}</AppText>
+        <AppText rol="bodySmall" kleur="secondary">{MELDINGEN[melding]}</AppText>
       ) : null}
       {/* Eén primaire knop (productprincipe 5). Het mentale weer van Nederland
           staat op Home, direct onder jouw weer; een tweede knop ernaartoe was
           dubbelop (Stijn, UX-ronde 13 september 2026). */}
-      <Button label={t("terugDashboard")} fullWidth onPress={() => router.replace("/dashboard")} />
-      <Button label={t("deelJeWeer")} variant="link" onPress={deel} />
+      <View style={{ gap: space[3] }}>
+        <Button label={t("terugDashboard")} fullWidth onPress={() => router.replace("/dashboard")} />
+        <Button label={t("deelJeWeer")} variant="link" fullWidth onPress={deel} />
+      </View>
     </ScreenCanvas>
   );
 }
