@@ -56,7 +56,8 @@ const gidsen = parseGidsenLijst(BRON, OVERSLAAN).map((g) => {
   const { intro, blokken } = g.bestand && existsSync(g.bestand) ? parsePagina(g.bestand) : { intro: "", blokken: [] };
   return {
     slug: g.slug,
-    titel: g.titel,
+    // De lijst van MIND begint een titel soms met een kleine letter ("examenstress (jongeren)").
+    titel: g.titel.charAt(0).toUpperCase() + g.titel.slice(1),
     onderwerp: ONDERWERP_PER_GIDS[g.slug],
     url: g.url,
     aanmeld: g.aanmeld,

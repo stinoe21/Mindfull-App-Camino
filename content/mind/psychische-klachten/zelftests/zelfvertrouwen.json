@@ -4,9 +4,9 @@
   "url": "https://formulier.wijzijnmind.nl/zelfvertrouwen",
   "formulier": "https://cdn.novti.io/tenants/mind/forms/g8b2VGuBW1VYl8MHZSru.json",
   "opgehaald": "2026-09-14",
-  "intro": "Doe de zelfvertrouwentestDoor het maken van deze test kan je een beeld krijgen van hoeveel zelfvertrouwen je hebt. De test bestaat uit 10 beschrijvingen die elk een gevoel over jezelf weergeven. Lees iedere beschrijving goed door en geef daarna aan of je het er: helemaal mee eens; mee eens; niet mee eens of helemaal niet mee eens bent. Dit is de Nederlandse vertaling van de Rosenberg Self-Esteem Scale © 1965 M. Rosenberg.",
+  "intro": "Door het maken van deze test kan je een beeld krijgen van hoeveel zelfvertrouwen je hebt. De test bestaat uit 10 beschrijvingen die elk een gevoel over jezelf weergeven. Lees iedere beschrijving goed door en geef daarna aan of je het er: helemaal mee eens; mee eens; niet mee eens of helemaal niet mee eens bent.",
   "noot": "Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
-  "instrument": "",
+  "instrument": "Dit is de Nederlandse vertaling van de Rosenberg Self-Esteem Scale © 1965 M. Rosenberg.",
   "scoring": "som",
   "vragen": [
     {

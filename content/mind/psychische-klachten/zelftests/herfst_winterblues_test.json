@@ -1,11 +1,11 @@
 {
   "slug": "herfst_winterblues_test",
-  "titel": "Test: Gevoelig voor herfstdip of winterblues?",
+  "titel": "Herfstdip of winterblues zelftest",
   "url": "https://formulier.wijzijnmind.nl/herfst_winterblues_test",
   "formulier": "https://cdn.novti.io/tenants/mind/forms/ywAJe5soJ4eKP0LmSs1q.json",
   "opgehaald": "2026-09-14",
-  "intro": "Deze test helpt je bij het inschatten of je klachten van een herfstdip of winterblues ervaart. De test noemt 10 stellingen, die je met ja of nee kan beantwoorden. We gaan er vanuit dat je de test in de herfst of winter beantwoordt. Het invullen van deze test duurt een paar minuten.Het is geen wetenschappelijke test en uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
-  "noot": "",
+  "intro": "Deze test helpt je bij het inschatten of je klachten van een herfstdip of winterblues ervaart. De test noemt 10 stellingen, die je met ja of nee kan beantwoorden. We gaan er vanuit dat je de test in de herfst of winter beantwoordt. Het invullen van deze test duurt een paar minuten.",
+  "noot": "Het is geen wetenschappelijke test en uit deze test volgt geen diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
   "instrument": "",
   "scoring": "som",
   "vragen": [

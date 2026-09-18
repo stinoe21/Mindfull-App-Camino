@@ -4,9 +4,9 @@
   "url": "https://formulier.wijzijnmind.nl/stresstest",
   "formulier": "https://cdn.novti.io/tenants/mind/forms/r8EdjQQwDo9KP3OiIa1n.json",
   "opgehaald": "2026-09-14",
-  "intro": "Doe de Stress-testDoor het maken van deze test breng je in kaart hoeveel stress jij ervaart. Het invullen van de test duurt een paar minuten. De stress-test is gebaseerd op de Nederlandse versie van de Perceived Stress Scale (PSS) uit 1983. S. Cohen, T. Kamarck, R. Mermelstein - A global measure of perceived stress.",
+  "intro": "Door het maken van deze test breng je in kaart hoeveel stress jij ervaart. Het invullen van de test duurt een paar minuten.",
   "noot": "Uit deze vragenlijst volgt géén diagnose. Alleen een psycholoog of psychiater kan een diagnose bij je vaststellen.",
-  "instrument": "",
+  "instrument": "De stress-test is gebaseerd op de Nederlandse versie van de Perceived Stress Scale (PSS) uit 1983. S. Cohen, T. Kamarck, R. Mermelstein - A global measure of perceived stress.",
   "scoring": "som",
   "vragen": [
     {
