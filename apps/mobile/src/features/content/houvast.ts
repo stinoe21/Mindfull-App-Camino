@@ -114,3 +114,27 @@ export function houvastVoorArtikel(artikelSlug: string): Houvast | undefined {
   const slug = ONDERWERP_PER_ARTIKEL[artikelSlug] ?? artikelSlug;
   return HOUVAST.find((h) => h.slug === slug);
 }
+
+/** Om en om per onderwerp, zodat twee buren in een rij nooit hetzelfde onderwerp hebben zolang er keus is. */
+function omEnOm(lijst: Houvast[]): Houvast[] {
+  const perOnderwerp = new Map<string, Houvast[]>();
+  for (const h of lijst) perOnderwerp.set(h.onderwerp, [...(perOnderwerp.get(h.onderwerp) ?? []), h]);
+  const groepen = [...perOnderwerp.values()];
+  const uit: Houvast[] = [];
+  for (let ronde = 0; uit.length < lijst.length; ronde++) {
+    for (const groep of groepen) if (groep[ronde]) uit.push(groep[ronde]);
+  }
+  return uit;
+}
+
+/**
+ * De rij op Home: de gekozen onderwerpen voorop, en binnen beide delen om en
+ * om per onderwerp. Met alleen "voorkeuren voorop" stonden Stress, Burn-out en
+ * Werkstress naast elkaar, drie keer bijna dezelfde koraalrode vlieger
+ * (Stijn, 17 september 2026).
+ */
+export function houvastVoorHome(voorkeuren: string[]): Houvast[] {
+  const gekozen = HOUVAST.filter((h) => voorkeuren.includes(h.onderwerp));
+  const rest = HOUVAST.filter((h) => !voorkeuren.includes(h.onderwerp));
+  return [...omEnOm(gekozen), ...omEnOm(rest)];
+}

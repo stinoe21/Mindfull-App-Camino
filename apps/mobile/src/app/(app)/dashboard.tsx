@@ -21,13 +21,12 @@ import { useCallback, useState } from "react";
 import { ActivityIndicator, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { colors, space, type } from "@mind/ui";
+import { colors, palette, space, type } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ContentSection, ContentShelf, ShelfTegel } from "@mind/ui/components/ContentSection";
 import { KaartNederland, type ProvincieCode } from "@mind/ui/components/KaartNederland";
-import { MascotMain } from "@mind/ui/components/MascotMain";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
@@ -35,7 +34,7 @@ import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ChallengeOpHome } from "@/features/content/ChallengeOpHome";
-import { houvastVoorVoorkeuren } from "@/features/content/houvast";
+import { houvastVoorHome } from "@/features/content/houvast";
 import { QuoteKaart } from "@/features/content/QuoteKaart";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { leesInstellingen } from "@/features/profiel/instellingen";
@@ -141,9 +140,9 @@ export default function Dashboard() {
   );
 
   // Tips: de onderwerpen uit Houvast (uitleg plus de tips uit de gids van
-  // MIND, sinds 10 september 2026), de gekozen onderwerpen voorop. Zonder
-  // voorkeuren gewoon de volgorde van de lijst.
-  const tips = houvastVoorVoorkeuren(voorkeuren)
+  // MIND, sinds 10 september 2026), de gekozen onderwerpen voorop en om en
+  // om per onderwerp, zodat de rij niet drie keer dezelfde vlieger toont.
+  const tips = houvastVoorHome(voorkeuren)
     .slice(0, 6)
     .map((h) => ({
       slug: h.slug,
@@ -170,11 +169,11 @@ export default function Dashboard() {
   // Home werkt gewoon.
   const toonKaart = bericht?.staat === "geladen" && Object.keys(kaartWeer).length >= MIN_PROVINCIES_MET_BEELD;
 
-  // Op de hero: de begroeting, en vóór de check-in de hoofdmascotte ernaast.
-  // Na de check-in staat de vlieger niet meer hier maar in de kaart "Jouw weer
-  // vandaag": daar hoort hij bij het weer dat hij uitbeeldt, en zet hij de
-  // toon van het vel (Stijn, 17 september 2026). De hero houdt de was van dat
-  // weer en de duiding.
+  // Op de hero alleen de begroeting met de vraag, en na de check-in de
+  // duiding. De vlieger staat voor en na de check-in op dezelfde plek: in de
+  // eerste kaart van het vel. Tot 17 september 2026 stond vóór de check-in de
+  // staande mascotte hier op de hero en was het bovenstuk veel hoger; Stijn:
+  // "de homepage is voor en na de check-in heel anders".
   const hero = (
     <View style={{ flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", alignSelf: "stretch", paddingHorizontal: space[5], gap: space[3] }}>
       <View style={{ flexShrink: 1, gap: space[1] }}>
@@ -183,16 +182,14 @@ export default function Dashboard() {
             vraag naast de kaart met je weer was dubbelop (Stijn, 14 september 2026). */}
         <AppText rol="subtitle">{weerbeeld ? UITKOMSTEN[weerbeeld].kop : t("hoeWeer")}</AppText>
       </View>
-      {weerbeeld ? null : <MascotMain hoogte={96} />}
     </View>
   );
 
-  // Na de check-in staat er alleen tekst op de hero, dus het vel mag hoger
-  // beginnen: net onder de begroeting en de duiding, met dezelfde lucht als
-  // ScreenCanvas om hero-inhoud zet. Met de vaste band voor de mascotte was
-  // het bovenstuk te groot (Stijn, 17 september 2026). Neemt de begroeting
-  // twee regels, dan schuift ScreenCanvas het vel zelf verder omlaag.
-  const velTop = weerbeeld ? insets.top + space[3] + type.h1.lineHeight + space[1] + type.subtitle.lineHeight + space[6] : undefined;
+  // Er staat alleen tekst op de hero, dus het vel begint net onder de
+  // begroeting en de regel eronder, met dezelfde lucht als ScreenCanvas om
+  // hero-inhoud zet. Voor en na de check-in gelijk. Neemt de begroeting twee
+  // regels, dan schuift ScreenCanvas het vel zelf verder omlaag.
+  const velTop = insets.top + space[3] + type.h1.lineHeight + space[1] + type.subtitle.lineHeight + space[6];
 
   return (
     <ScreenCanvas state={weerbeeld ?? "default"} heroInhoud={hero} sheetTop={velTop} kopTitel={t("appNaam")} metNavRuimte>
@@ -222,13 +219,20 @@ export default function Dashboard() {
           <MascotteVlieger state={weerbeeld} hoogte={88} />
         </Card>
       ) : (
-        // De vraag staat op de hero; hier alleen de knop, los op het vel, met
-        // hetzelfde woord als de tab: "Inchecken". Tot 17 september 2026 stond
-        // hier een zandkaart met de vijf weericonen als strook en de knop "Doe
-        // je mentale weer check-in" (Stijn: "niet sterk", de icoontjes "zeggen
-        // niks", en de knop heette anders dan de tab). Vraag en antwoord zijn
-        // nu één gebaar, en de twee ingangen zijn zichtbaar hetzelfde.
-        <Button label={t("inchecken")} fullWidth onPress={() => router.push("/check-in/1")} />
+        // Dezelfde kaart als na de check-in, nog zonder weer: links de knop,
+        // rechts de vlieger in het rustige blauw van de onboarding. Na de
+        // check-in neemt de kaart de tint van je weer aan en de vlieger dat
+        // weer. De vraag staat op de hero, dus hier geen tweede keer; de knop
+        // heet "Inchecken", net als de tab (Stijn, 17 september 2026).
+        <Card tone="white" style={{ flexDirection: "row", alignItems: "center", gap: space[3] }}>
+          <View style={{ flex: 1, gap: space[3], alignItems: "flex-start" }}>
+            <AppText rol="labelOverline" kleur="brand">{t("jouwWeerOverline")}</AppText>
+            <Button label={t("inchecken")} onPress={() => router.push("/check-in/1")} />
+          </View>
+          <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+            <VliegerOnderwerp uitdrukking="in-balans" hoogte={88} kleur={{ lijf: palette.primary200, schaduw: palette.primary400 }} />
+          </View>
+        </Card>
       )}
 
       {/* Slot 2: de challenge waar je mee bezig bent, of één voorstel. Boven
