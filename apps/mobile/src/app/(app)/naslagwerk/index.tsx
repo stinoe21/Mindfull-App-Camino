@@ -37,6 +37,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { HulpBij113 } from "@/features/hulplijn/HulpBij113";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { familiesVoorVoorkeuren, type Familie } from "@/features/content/families";
 import { houvastVoorArtikel, houvastVoorGids } from "@/features/content/houvast";
@@ -45,6 +46,7 @@ import { tipsBijWeer } from "@/features/content/weerNaarTips";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import type { Houvast as HouvastOnderwerp } from "@/features/content/data/houvast";
 import { ZELFTESTS } from "@/features/content/data/zelftests";
+import { isCrisisZoekopdracht } from "@/features/content/crisiswoorden";
 import { zoek, type ZoekResultaat } from "@/features/content/zoeken";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 
@@ -195,6 +197,8 @@ export default function Houvast() {
     }
   }
 
+  const nood = zoekterm ? isCrisisZoekopdracht(zoekterm) : false;
+
   const families = familiesVoorVoorkeuren(voorkeuren);
 
   const label = (soort: Doel["soort"]) => (soort === "onderwerp" ? t("onderwerp") : soort === "gids" ? t("gids") : t("challenge"));
@@ -216,6 +220,12 @@ export default function Houvast() {
           accessibilityLabel={t("zoekLabel")}
         />
       </Card>
+
+      {/* Wijst de zoekvraag op nood, dan staat de weg naar hulp boven elk
+          resultaat, ook als er niets gevonden is (features/content/
+          crisiswoorden.ts). De vaste Hulplijnkaart onderaan vervalt dan. */}
+      {nood ? <HulpBij113 /> : null}
+      {nood ? <HulplijnKaart /> : null}
 
       {zoekterm ? (
         <ContentSection title={t("gevonden")} note={t("gevondenNote")}>
@@ -340,7 +350,7 @@ export default function Houvast() {
 
       {/* Onderaan elke tab, ook onder zoekresultaten: wie hier zoekt naar iets
           zwaars, heeft de route naar een mens direct bij de hand. */}
-      <HulplijnKaart />
+      {nood ? null : <HulplijnKaart />}
     </ScreenCanvas>
   );
 }
