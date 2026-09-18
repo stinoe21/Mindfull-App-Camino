@@ -16,6 +16,10 @@
 // iets dat je vastpakt. Spoor 8, duim 32 met dezelfde inktring, de duim veert
 // op zolang je hem vasthoudt, en het label van de kant waar je naartoe
 // schuift wordt sterker terwijl het andere terugwijkt.
+//
+// Schermlezer (17 september 2026): VoiceOver en TalkBack verschuiven met een
+// veeg omhoog of omlaag in stappen van tien, en horen de stand in woorden als
+// het scherm die meegeeft (waardeTekst), niet als getal.
 
 import { useEffect, useRef, useState } from "react";
 import { Animated, PanResponder, View } from "react-native";
@@ -44,9 +48,16 @@ export type SliderProps = {
    * niet naar de PanResponder en schoof anders mee onder je vinger.
    */
   onGreep?: (vast: boolean) => void;
+  /**
+   * Wat een schermlezer als waarde zegt, in woorden in plaats van een getal:
+   * een getal klinkt als een score, en dat is de schuif niet (productprincipes
+   * 3). De check-in geeft hier het weerwoord door. Zonder tekst blijft het
+   * de stand van 0 tot 100.
+   */
+  waardeTekst?: string;
 };
 
-export function Slider({ value, onChange, leftLabel, rightLabel, onGreep }: SliderProps) {
+export function Slider({ value, onChange, leftLabel, rightLabel, onGreep, waardeTekst }: SliderProps) {
   const [breedte, zetBreedte] = useState(0);
   const breedteRef = useRef(0);
   const onChangeRef = useRef(onChange);
@@ -105,8 +116,9 @@ export function Slider({ value, onChange, leftLabel, rightLabel, onGreep }: Slid
         }}
         accessible
         accessibilityRole="adjustable"
-        accessibilityLabel={leftLabel + " tot " + rightLabel}
-        accessibilityValue={{ min: 0, max: 100, now: value }}
+        accessibilityLabel={"Schuif van " + leftLabel + " tot " + rightLabel}
+        accessibilityHint="Veeg omhoog of omlaag om te schuiven."
+        accessibilityValue={waardeTekst ? { text: waardeTekst } : { min: 0, max: 100, now: value }}
         accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}
         onAccessibilityAction={(e) => {
           const stap = e.nativeEvent.actionName === "increment" ? 10 : -10;
@@ -132,7 +144,8 @@ export function Slider({ value, onChange, leftLabel, rightLabel, onGreep }: Slid
           }}
         />
       </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      {/* Voor de schermlezer zitten beide woorden al in het label van de schuif. */}
+      <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Animated.View style={{ opacity: positie.interpolate({ inputRange: [0, 1], outputRange: [1, LABEL_ZWAK] }) }}>
           <AppText rol="labelCaption" kleur="secondary">{leftLabel}</AppText>
         </Animated.View>
