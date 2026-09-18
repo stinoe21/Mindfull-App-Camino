@@ -18,7 +18,7 @@ import { Card } from "@mind/ui/components/Card";
 import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
 import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
-import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
+import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
@@ -123,7 +123,7 @@ export default function GidsScherm() {
             {meer.map((g) => (
               <ShelfCard
                 key={g.slug}
-                tone="coral"
+                kleur={kaartKleurVoor(g.onderwerp)}
                 label={t("gids")}
                 title={g.titel}
                 onPress={() => router.push({ pathname: "/naslagwerk/gids/[gids]", params: { gids: g.slug } })}

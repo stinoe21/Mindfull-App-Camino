@@ -25,7 +25,7 @@ import { Chip } from "@mind/ui/components/Chip";
 import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection, ContentShelf, ShelfCard } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
-import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
+import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { ONDERWERPEN } from "@/features/content/data/artikelen";
@@ -191,7 +191,8 @@ export default function Houvast() {
                 <ContentCard
                   key={d.sleutel}
                   full={i === 0 || (i === gevonden.length - 1 && (gevonden.length - 1) % 2 === 1)}
-                  tone={d.soort === "challenge" ? "purple" : d.soort === "gids" ? "white" : "coral"}
+                  tone={d.soort === "challenge" ? "purple" : "white"}
+                  kleur={d.soort === "challenge" ? undefined : kaartKleurVoor(d.onderwerp, d.slug)}
                   label={label(d.soort)}
                   title={d.titel}
                   onPress={() => openDoel(d)}
@@ -213,13 +214,13 @@ export default function Houvast() {
             </Card>
           ) : (
             <ContentGrid>
-              {/* Het eerste onderwerp breed en in kleur, de rest half en zand;
-                  de vlieger van het onderwerp rechtsonder, altijd op dezelfde plek. */}
+              {/* Het eerste onderwerp breed, de rest half; elke kaart in de kleur
+                  van zijn onderwerp, met de vlieger rechtsonder, altijd op dezelfde plek. */}
               {onderwerpen.map((h, i) => (
                 <ContentCard
                   key={h.slug}
                   full={i === 0 || (i === onderwerpen.length - 1 && (onderwerpen.length - 1) % 2 === 1)}
-                  tone={i === 0 ? "coral" : "white"}
+                  kleur={kaartKleurVoor(h.onderwerp, h.slug)}
                   title={h.titel}
                   onPress={() => openOnderwerp(h.slug)}
                 >

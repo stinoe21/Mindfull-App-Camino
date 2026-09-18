@@ -52,6 +52,32 @@ export const UITDRUKKING_PER_SLUG: Record<string, Uitdrukking> = {
   "burn-out": "overspannen",
 };
 
+// De kaartkleur die bij een onderwerp hoort: dezelfde kleurfamilie als de
+// vlieger, een stap lichter dan het lijf, zodat de vlieger op zijn eigen
+// kaart staat en het rooster per onderwerp een eigen tint krijgt. Sinds
+// 13 september 2026 (Stijn: "flets"): de kaarten stonden allemaal in zand
+// of coral-50 en waren op het creme vel nauwelijks van elkaar te
+// onderscheiden. Waar lijf en familie te dicht bij elkaar liggen (piekeren,
+// balans, ontspanning) staat de vlieger op een koele of warme buurtint.
+const KAARTKLEUR: Record<Uitdrukking, string> = {
+  slaperig: palette.purple100,
+  gestrest: palette.coral100,
+  overspannen: palette.yellow200,
+  somber: palette.primary100,
+  bang: palette.violet100,
+  piekerend: palette.primary50,
+  energiek: palette.yellow200,
+  "in-balans": palette.lime100,
+  ontspannen: palette.violet50,
+  standvastig: palette.primary100,
+};
+
+/** De kaartkleur bij een onderwerp of slug; zonder onderwerp de zandkaart. */
+export function kaartKleurVoor(onderwerp?: string, slug?: string): string {
+  const gekozen = uitdrukkingVoor(onderwerp, slug);
+  return gekozen ? KAARTKLEUR[gekozen] : palette.yellow100;
+}
+
 type Lijn = { d: string; dik?: number; vul?: boolean };
 
 // Per uitdrukking een eigen tint uit het palet (lijf en schaduw), zodat het

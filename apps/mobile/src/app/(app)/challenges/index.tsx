@@ -13,7 +13,7 @@ import { Card } from "@mind/ui/components/Card";
 import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection } from "@mind/ui/components/ContentSection";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
-import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
+import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
@@ -88,7 +88,8 @@ export default function Challenges() {
 
       {/* Ritme in plaats van een raster (designaudit 29 augustus 2026): de
           eerste, of de challenge waar je mee bezig bent, staat breed in de
-          zonkleur met voortgang; de rest half en wit. */}
+          zonkleur met voortgang; de rest half, in de kleur van hun onderwerp
+          (13 september 2026). */}
       {/* Geen sectiekop: de h1 zegt al "Challenges" (ontdubbeling, 1 september 2026). */}
       {challenges.length ? (
         <View>
@@ -97,7 +98,7 @@ export default function Challenges() {
               const klaar = voortgang[c.slug] ?? 0;
               const actief = i === 0;
               return (
-                <ContentCard key={c.slug} full={actief || (i === challenges.length - 1 && (challenges.length - 1) % 2 === 1)} tone={actief ? "sun" : "white"} title={c.naam} onPress={() => open(c.slug)}>
+                <ContentCard key={c.slug} full={actief || (i === challenges.length - 1 && (challenges.length - 1) % 2 === 1)} tone="sun" kleur={actief ? undefined : kaartKleurVoor(ONDERWERP_PER_CHALLENGE[c.slug])} title={c.naam} onPress={() => open(c.slug)}>
                   <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(c.dagen.length))}</AppText>
                   {klaar > 0 ? (
                     <View style={{ gap: space[1], marginTop: space[1] }}>
@@ -124,7 +125,7 @@ export default function Challenges() {
         <ContentSection title={t("specialsTitel")} note={t("specialsNote")}>
           <ContentGrid>
             {specials.map((c, i) => (
-              <ContentCard key={c.slug} full={i === 0 || (i === specials.length - 1 && (specials.length - 1) % 2 === 1)} tone={i === 0 ? "coral" : "white"} title={c.naam} onPress={() => open(c.slug)}>
+              <ContentCard key={c.slug} full={i === 0 || (i === specials.length - 1 && (specials.length - 1) % 2 === 1)} kleur={kaartKleurVoor(ONDERWERP_PER_CHALLENGE[c.slug])} title={c.naam} onPress={() => open(c.slug)}>
                 <AppText rol="bodySmall" kleur="secondary">{t("onderdelenMeta").replace("{n}", String(c.dagen.length))}</AppText>
                 <View style={{ height: i === 0 ? 56 : 44 }} />
                 <View style={{ position: "absolute", right: space[4], bottom: space[3] }}>
