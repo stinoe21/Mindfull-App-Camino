@@ -9,6 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { ONDERWERPEN } from "../content/data/artikelen.ts";
 import { wisVoortgang } from "../content/voortgang.ts";
+import { wisTellers } from "../meten/opslag.ts";
 
 const SLEUTEL = "mind.instellingen";
 
@@ -50,6 +51,13 @@ export type Instellingen = {
    * telefoon, geen eigen instelling, en er is geen scherm voor in de app.
    */
   provincieViaLocatie: boolean;
+  /**
+   * De app telt wat er gebeurt, als totalen per dag zonder gebruiker (sinds
+   * 18 september 2026, zie docs/datamodel.md, "Gebruikstotalen"). Staat aan
+   * en kan uit onder Profiel; staat het uit, dan wordt er ook lokaal niets
+   * geteld. Of "aan met een uitknop" mag, ligt nog bij Paul.
+   */
+  metenAan: boolean;
 };
 
 export const STANDAARD: Instellingen = {
@@ -62,6 +70,7 @@ export const STANDAARD: Instellingen = {
   taal: "nl",
   provincie: null,
   provincieViaLocatie: false,
+  metenAan: true,
 };
 
 // Dezelfde onderwerpen als het Naslagwerk, zodat een keuze hier direct
@@ -112,6 +121,7 @@ export async function wisAlleLokaleData(): Promise<void> {
   // De challenge-voortgang staat ook in het geheugen; alleen de opslag legen
   // zou hem tot de volgende herstart laten staan.
   await wisVoortgang();
+  await wisTellers();
   bekend = null;
   try {
     await AsyncStorage.clear();
@@ -131,6 +141,7 @@ export async function wisAlleLokaleData(): Promise<void> {
 export async function wisBijUitloggen(): Promise<void> {
   const { taal } = await leesInstellingen();
   await wisVoortgang();
+  await wisTellers();
   bekend = null;
   try {
     const sleutels = (await AsyncStorage.getAllKeys()).filter((k) => k.startsWith("mind."));

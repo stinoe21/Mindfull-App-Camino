@@ -8,6 +8,10 @@
 // Sinds 18 september 2026 staat hier ook de SessieProvider omheen: één plek
 // die de sessie volgt en het token ververst zolang de app open staat. Zie
 // features/auth/sessie.tsx.
+//
+// Ook sinds 18 september 2026: <Meten /> telt schermweergaven en verstuurt de
+// gebruikstotalen van afgesloten dagen. Het tekent niets. Zie
+// features/meten/Meten.tsx en docs/datamodel.md, "Gebruikstotalen".
 
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -19,6 +23,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { colors } from "@mind/ui";
 
 import { SessieProvider } from "@/features/auth/sessie";
+import { Meten } from "@/features/meten/Meten";
 import { fontAssets } from "@/theme/fonts";
 
 // Het vangnet: expo-router tekent dit scherm als er bij het tekenen van een
@@ -54,6 +59,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <StatusBar style="dark" />
       <SessieProvider>
+      <Meten />
       <Stack
         screenOptions={{
           // Elk scherm tekent zijn eigen hero-gradient als paginaachtergrond,
