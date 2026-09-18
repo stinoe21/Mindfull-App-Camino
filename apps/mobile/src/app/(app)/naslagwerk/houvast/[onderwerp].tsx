@@ -110,7 +110,8 @@ type Paneel = "uitleg" | "helpen" | "verder";
 const isPaneel = (p: string | undefined): p is Paneel => p === "uitleg" || p === "helpen" || p === "verder";
 
 // Eén tip als kaart in de pager: overline met de telling, de kop, de
-// volledige tekst en onderaan "Bewaar deze tip". De kaart vult de hoogte van
+// volledige tekst en onderaan de knop "Bewaar deze tip" (een echte knop, geen
+// tekstlink: Stijn, 14 september 2026). De kaart vult de hoogte van
 // de hoogste kaart in de rij, met de bewaarknop altijd onderaan.
 type TipKaartProps = { tip: HouvastTip; overline: string; tone: "white" | "purple"; bewaard: boolean; onBewaar: () => void; labels: { bewaar: string; bewaard: string } };
 function TipKaart({ tip, overline, tone, bewaard, onBewaar, labels }: TipKaartProps) {
@@ -124,7 +125,7 @@ function TipKaart({ tip, overline, tone, bewaard, onBewaar, labels }: TipKaartPr
         <InhoudBlokken blokken={tip.blokken} />
       </View>
       <View style={{ alignItems: "flex-start" }}>
-        <Button label={bewaard ? "✓ " + labels.bewaard : labels.bewaar} variant="link" onPress={onBewaar} />
+        <Button label={bewaard ? "✓ " + labels.bewaard : labels.bewaar} variant="secondary" onPress={onBewaar} />
       </View>
     </Card>
   );
@@ -214,7 +215,7 @@ export default function HouvastOnderwerp() {
           <InhoudBlokken blokken={alles ? houvast.meer : eersteDeel} />
           {restDeel.length ? (
             <View style={{ alignItems: "flex-start" }}>
-              <Button label={alles ? t("minder") : t("leesVerder")} variant="link" onPress={() => zetAlles(!alles)} />
+              <Button label={alles ? t("minder") : t("leesVerder")} variant="secondary" onPress={() => zetAlles(!alles)} />
             </View>
           ) : null}
         </View>
