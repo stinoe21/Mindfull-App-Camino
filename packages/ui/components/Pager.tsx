@@ -24,12 +24,15 @@ export type PagerProps = {
   bleed?: number;
   /** Wordt aangeroepen zodra een andere pagina in beeld staat. */
   onPagina?: (index: number) => void;
+  /** De pagina waarmee de pager opent, standaard de eerste. */
+  start?: number;
 };
 
-export function Pager({ children, piep = space[6], bleed = space[5], onPagina }: PagerProps) {
+export function Pager({ children, piep = space[6], bleed = space[5], onPagina, start = 0 }: PagerProps) {
   const [breedte, zetBreedte] = useState(0);
-  const [huidig, zetHuidig] = useState(0);
   const paginas = Children.toArray(children);
+  const begin = Math.min(Math.max(0, start), Math.max(0, paginas.length - 1));
+  const [huidig, zetHuidig] = useState(begin);
   const stap = space[3];
   // De pagina is de volle breedte van het vel min de piep van de volgende kaart.
   const paginaBreedte = Math.max(0, breedte - bleed * 2 - piep);
@@ -52,9 +55,9 @@ export function Pager({ children, piep = space[6], bleed = space[5], onPagina }:
           showsHorizontalScrollIndicator={false}
           snapToInterval={paginaBreedte + stap}
           snapToAlignment="start"
-          // Expliciet op nul: zonder deze prop stond de pager bij het openen via een
+          // Expliciet gezet: zonder deze prop stond de pager bij het openen via een
           // link soms op de een na laatste kaart (iOS, snapToInterval).
-          contentOffset={{ x: 0, y: 0 }}
+          contentOffset={{ x: begin * (paginaBreedte + stap), y: 0 }}
           decelerationRate="fast"
           scrollEventThrottle={16}
           onScroll={bijScroll}
