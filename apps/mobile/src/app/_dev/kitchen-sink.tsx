@@ -33,6 +33,7 @@ import { NavIcoonHome } from "@mind/ui/components/NavIcoonHome";
 import { NavIcoonChallenges, NavIcoonCheckIn, NavIcoonProfiel, NavIcoonTips } from "@mind/ui/components/navIconen";
 import { Slider } from "@mind/ui/components/Slider";
 import { TerugKnop } from "@mind/ui/components/TerugKnop";
+import { TextField } from "@mind/ui/components/TextField";
 import { UitklapRij } from "@mind/ui/components/UitklapRij";
 import { WeerIcoon, type WeerIcoonStaat } from "@mind/ui/components/WeerIcoon";
 import type { WeerStaat } from "@mind/ui/components/achtergronden";
@@ -74,6 +75,8 @@ export default function KitchenSink() {
   const [vinkje, zetVinkje] = useState(false);
   const [keuze, zetKeuze] = useState<"ja" | "nee" | null>(null);
   const [segment, zetSegment] = useState(0);
+  const [veld, zetVeld] = useState("");
+  const [geheim, zetGeheim] = useState("geheim123");
 
   return (
     <ScrollView
@@ -205,6 +208,14 @@ export default function KitchenSink() {
           <AppText rol="body">Altijd de laatste kaart, in paars.</AppText>
         </Card>
       </Pager>
+
+      <Kop>TextField</Kop>
+      <View style={{ gap: space[3] }}>
+        <TextField value={veld} onChangeText={zetVeld} placeholder="Leeg, met een placeholder" accessibilityLabel="Voorbeeldveld" />
+        <TextField value="Ingevuld" onChangeText={() => undefined} accessibilityLabel="Ingevuld veld" />
+        <TextField value={geheim} onChangeText={zetGeheim} wachtwoord toonLabel="Toon" verbergLabel="Verberg" accessibilityLabel="Wachtwoord" />
+        <TextField value="Niet te wijzigen" editable={false} accessibilityLabel="Uitgeschakeld veld" />
+      </View>
 
       <Kop>Lijst met LijstRij</Kop>
       <Lijst>

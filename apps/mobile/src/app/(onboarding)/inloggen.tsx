@@ -27,13 +27,13 @@
 import * as Linking from "expo-linking";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { TextInput, View } from "react-native";
+import { View } from "react-native";
 
-import { colors, space, type } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
+import { TextField } from "@mind/ui/components/TextField";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { lijktOpEmail, MIN_WACHTWOORD, PAD_MAIL_BEVESTIGD, stuurBevestigingOpnieuw } from "@/features/auth/accountHerstel";
@@ -74,6 +74,8 @@ const nl = {
   wachtwoordPlaceholder: "Wachtwoord",
   wachtwoordKiezen: "Kies een wachtwoord (minstens {n} tekens)",
   wachtwoordLabel: "Wachtwoord",
+  toon: "Toon",
+  verberg: "Verberg",
   inloggen: "Inloggen",
   accountAanmaken: "Account aanmaken",
   wachtwoordVergeten: "Wachtwoord vergeten?",
@@ -109,6 +111,8 @@ const teksten: Woordenboek<typeof nl> = {
     wachtwoordPlaceholder: "Password",
     wachtwoordKiezen: "Choose a password (at least {n} characters)",
     wachtwoordLabel: "Password",
+    toon: "Show",
+    verberg: "Hide",
     inloggen: "Log in",
     accountAanmaken: "Create account",
     wachtwoordVergeten: "Forgot password?",
@@ -144,10 +148,14 @@ export default function Inloggen() {
   // Wie de onboarding op dit toestel al had afgerond en alleen de sessie kwijt
   // was, gaat terug naar Home: naam, onderwerpen en toestemming staan er nog.
   // Iedereen anders gaat door met de onboarding (18 september 2026).
-  const verderNaInloggen = async () => {
+  // Wie met een bestaand account inlogt op een toestel zonder instellingen
+  // (nieuw toestel, of eerder uitgelogd) moet naam, onderwerpen en toestemming
+  // opnieuw geven: die staan alleen op het toestel. Het naamscherm zegt dan
+  // in één zin waarom.
+  const verderNaInloggen = async (bestaandAccount = false) => {
     const instellingen = await bewaarInstellingen({ consentVoorwaarden: true });
     if (instellingen.onboardingAfgerond) router.replace("/dashboard");
-    else router.push("/naam");
+    else router.push(bestaandAccount ? { pathname: "/naam", params: { terug: "1" } } : "/naam");
   };
 
   // Het venster sluiten zonder in te loggen is geen fout: dan geen melding.
@@ -195,9 +203,10 @@ export default function Inloggen() {
     const { error } = await client.auth.signInWithPassword({ email: email.trim(), password: wachtwoord });
     zetBezig(false);
     if (error) {
-      if (error.code === "invalid_credentials" || error.message.toLowerCase().includes("invalid login credentials")) {
+      // Op de foutcode, niet meer op de Engelse tekst: die kan Supabase wijzigen.
+      if (error.code === "invalid_credentials") {
         zetMelding(t("verkeerdeCombinatie"));
-      } else if (error.code === "email_not_confirmed" || error.message.toLowerCase().includes("not confirmed")) {
+      } else if (error.code === "email_not_confirmed") {
         zetMelding(t("nietBevestigd"));
         zetWachtOpMail(true);
       } else {
@@ -205,7 +214,7 @@ export default function Inloggen() {
       }
       return;
     }
-    await verderNaInloggen();
+    await verderNaInloggen(true);
   };
 
   const maakAccount = async () => {
@@ -219,7 +228,7 @@ export default function Inloggen() {
     });
     zetBezig(false);
     if (error) {
-      if (error.code === "user_already_exists" || error.message.toLowerCase().includes("already registered")) {
+      if (error.code === "user_already_exists") {
         zetMelding(t("bestaatAl"));
         zetStand("inloggen");
       } else {
@@ -251,34 +260,28 @@ export default function Inloggen() {
   return (
     <OnboardingScherm stap={2} titel={aanmaken ? t("accountAanmaken") : t("titel")} uitleg={t("ondertitel")}>
 
-      <Card tone="white" style={{ paddingVertical: space[2] }}>
-        <TextInput
-          value={email}
-          onChangeText={zetEmail}
-          placeholder={t("emailPlaceholder")}
-          placeholderTextColor={colors.textSecondary}
-          autoCapitalize="none"
-          autoComplete="email"
-          textContentType={aanmaken ? "emailAddress" : "username"}
-          keyboardType="email-address"
-          style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-          accessibilityLabel={t("emailLabel")}
-        />
-      </Card>
-      <Card tone="white" style={{ paddingVertical: space[2] }}>
-        <TextInput
-          value={wachtwoord}
-          onChangeText={zetWachtwoord}
-          placeholder={aanmaken ? t("wachtwoordKiezen").replace("{n}", String(MIN_WACHTWOORD)) : t("wachtwoordPlaceholder")}
-          placeholderTextColor={colors.textSecondary}
-          autoCapitalize="none"
-          autoComplete={aanmaken ? "new-password" : "current-password"}
-          textContentType={aanmaken ? "newPassword" : "password"}
-          secureTextEntry
-          style={{ ...type.body, color: colors.textPrimary, includeFontPadding: false }}
-          accessibilityLabel={t("wachtwoordLabel")}
-        />
-      </Card>
+      <TextField
+        value={email}
+        onChangeText={zetEmail}
+        placeholder={t("emailPlaceholder")}
+        autoCapitalize="none"
+        autoComplete="email"
+        textContentType={aanmaken ? "emailAddress" : "username"}
+        keyboardType="email-address"
+        accessibilityLabel={t("emailLabel")}
+      />
+      <TextField
+        value={wachtwoord}
+        onChangeText={zetWachtwoord}
+        placeholder={aanmaken ? t("wachtwoordKiezen").replace("{n}", String(MIN_WACHTWOORD)) : t("wachtwoordPlaceholder")}
+        autoCapitalize="none"
+        autoComplete={aanmaken ? "new-password" : "current-password"}
+        textContentType={aanmaken ? "newPassword" : "password"}
+        wachtwoord
+        toonLabel={t("toon")}
+        verbergLabel={t("verberg")}
+        accessibilityLabel={t("wachtwoordLabel")}
+      />
       {/* De voorwaarden-tekst is vastgelegd (scope.md) en blijft Nederlands. */}
       <KeuzeVak
         label="Ik accepteer de voorwaarden en begrijp dat deze app geen hulpverlening is"
