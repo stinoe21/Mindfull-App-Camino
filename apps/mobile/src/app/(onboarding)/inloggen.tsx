@@ -52,7 +52,7 @@ const MIN_WACHTWOORD = 6;
 // Alleen interface-teksten. {naam}, {n} en {email} worden op de plek ingevuld.
 const nl = {
   titel: "Inloggen",
-  ondertitel: "Met een account telt je check-in één keer per dag mee. Anoniem.",
+  ondertitel: "Met een account telt je check-in anoniem mee: hooguit één keer per ochtend en één keer per middag.",
   socialMislukt: "Inloggen met {naam} is niet gelukt. Probeer het opnieuw, of gebruik je e-mailadres.",
   geenVerbinding: "Geen verbinding. Probeer het later opnieuw.",
   vulEmail: "Vul een e-mailadres in.",
@@ -81,7 +81,7 @@ const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     titel: "Log in",
-    ondertitel: "So your check-in counts once per day.",
+    ondertitel: "With an account your check-in counts anonymously: at most once each morning and once each afternoon.",
     socialMislukt: "Logging in with {naam} failed. Try again, or use your email address.",
     geenVerbinding: "There's no connection to the server. Please try again later.",
     vulEmail: "Enter an email address.",

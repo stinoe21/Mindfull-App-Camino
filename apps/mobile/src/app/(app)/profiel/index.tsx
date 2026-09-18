@@ -27,8 +27,6 @@ import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { leesInstellingen, STANDAARD, type Instellingen } from "@/features/profiel/instellingen";
 import { InstellingenGroep, InstellingenRij } from "@/features/profiel/InstellingenRij";
-import { wisVoortgang } from "@/features/content/voortgang";
-import { wisLokaalWeer } from "@/features/weer/lokaalWeer";
 import { isProvincie, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 
 const nl = {
@@ -134,19 +132,6 @@ export default function Profiel() {
     }, [])
   );
 
-  const uitloggen = async () => {
-    await getSupabase()?.auth.signOut();
-    // Het weer van vandaag is van dit account: een volgend account op
-    // hetzelfde toestel begint schoon (ook het dagdeel dat al telde).
-    await wisLokaalWeer();
-    // Net als de challenge-voortgang: die hoort bij wie hem liep.
-    await wisVoortgang();
-    zetEmail(null);
-    // Zonder account kom je de app niet in: terug naar het begin.
-    router.dismissAll();
-    router.replace("/welkom");
-  };
-
   const onderwerpenWaarde = inst.voorkeuren.length
     ? inst.voorkeuren.slice(0, 2).join(", ") + (inst.voorkeuren.length > 2 ? " " + t("meerOnderwerpen").replace("{n}", String(inst.voorkeuren.length - 2)) : "")
     : t("geenOnderwerpen");
@@ -200,7 +185,7 @@ export default function Profiel() {
       </InstellingenGroep>
 
       <InstellingenGroep titel={t("groepAccount")}>
-        {email ? <InstellingenRij label={t("uitloggen")} onPress={uitloggen} /> : null}
+        {email ? <InstellingenRij label={t("uitloggen")} onPress={() => router.push("/profiel/uitloggen")} /> : null}
         <InstellingenRij label={t("accountVerwijderen")} onPress={() => router.push("/profiel/account-verwijderen")} laatste />
       </InstellingenGroep>
 
