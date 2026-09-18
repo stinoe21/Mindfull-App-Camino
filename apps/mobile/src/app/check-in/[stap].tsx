@@ -242,7 +242,7 @@ export default function CheckInStap() {
       <View style={{ flex: 1, justifyContent: "center", minHeight: 200 }}>
         <Animated.View style={[{ gap: space[3] }, overgang]}>
           <WeerWoord woord={woord} />
-          <Slider value={waarde} onChange={schuifNaar} leftLabel={stap.links} rightLabel={stap.rechts} onGreep={zetSleept} />
+          <Slider value={waarde} onChange={schuifNaar} leftLabel={stap.links} rightLabel={stap.rechts} onGreep={zetSleept} waardeTekst={woord} />
         </Animated.View>
       </View>
       <View style={{ gap: space[3] }}>
