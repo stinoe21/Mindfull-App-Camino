@@ -15,11 +15,11 @@ import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
 
-import { space } from "@mind/ui";
+import { palette, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
-import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
+import { VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { getSupabase } from "@/features/backend/client";
@@ -150,23 +150,32 @@ export default function Profiel() {
     <ScreenCanvas state="default" metNavRuimte>
       <AppText rol="h1">{t("titel")}</AppText>
 
-      {/* Wie je bent: de vlieger, je naam en je account. */}
+      {/* Wie je bent: de vlieger, je naam en je account. De vlieger is de
+          blauwe mascotte van de onboarding en van Home, niet meer de
+          koraalrode standaardvlieger die nergens anders voor jou staat. Wie
+          niet is ingelogd, vindt de knop in de kaart zelf; los eronder hing
+          hij nergens aan (Stijn, 17 september 2026). */}
       <Card tone="primary" style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
-        <MascotteVlieger state="wolken" hoogte={44} />
+        <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+          <VliegerOnderwerp uitdrukking="in-balans" hoogte={56} kleur={{ lijf: palette.primary200, schaduw: palette.primary400 }} />
+        </View>
         {/* gap 2: titel en duiding dicht op elkaar, zoals in de sectiekop van de referentie */}
-        <View style={{ flexShrink: 1, gap: 2 }}>
+        <View style={{ flex: 1, gap: 2, alignItems: "flex-start" }}>
           {!geladen ? (
             <AppText rol="bodySmall" kleur="secondary">{t("evenKijken")}</AppText>
           ) : (
             <>
               <AppText rol="h3">{inst.naam || email || t("nietIngelogd")}</AppText>
               <AppText rol="labelCaption" kleur="secondary">{email ? (inst.naam ? email : t("ingelogd")) : t("logInUitleg")}</AppText>
+              {!email ? (
+                <View style={{ marginTop: space[2] }}>
+                  <Button label={t("inloggen")} variant="secondary" onPress={() => router.push("/inloggen")} />
+                </View>
+              ) : null}
             </>
           )}
         </View>
       </Card>
-
-      {geladen && !email ? <Button label={t("inloggen")} variant="secondary" onPress={() => router.push("/inloggen")} /> : null}
 
       <InstellingenGroep titel={t("groepJij")}>
         <InstellingenRij label={t("naam")} onPress={() => router.push("/profiel/naam")} rechts={<Waarde tekst={inst.naam || t("geenNaam")} />} />
