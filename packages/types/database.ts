@@ -24,6 +24,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          added_on: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          added_on?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          added_on?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       app_status: {
         Row: {
           id: boolean
@@ -171,6 +189,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_role: { Args: never; Returns: string }
       delete_own_account: { Args: never; Returns: undefined }
       get_app_status: {
         Args: never
@@ -179,6 +198,7 @@ export type Database = {
           min_version: string
         }[]
       }
+      has_admin_role: { Args: { p_min: string }; Returns: boolean }
       log_usage: { Args: { p_events: Json }; Returns: number }
       purge_inactive_accounts: { Args: { p_days?: number }; Returns: number }
       submit_weather: {

@@ -262,9 +262,9 @@ Dit zit niet in de app die gebruikers installeren, maar hoort wel bij het projec
 
 **Dit wordt een webapp**, besloten op 30 juli 2026. Niet een scherm in de iOS-app achter een rol. Beide pagina's leven in `apps/admin` en zijn de reden dat de repo een monorepo is.
 
-Onderschat dit niet: het is een eigen applicatie met een eigen rollenmodel en eigen RLS-policies. Reken er aparte taken voor, het is geen bijvangst van een feature. Wat de analyticspagina precies toont en aan wie ligt nog open, zie `privacy-besluiten.md`.
+Onderschat dit niet: het is een eigen applicatie met een eigen rollenmodel en eigen RLS-policies. Reken er aparte taken voor, het is geen bijvangst van een feature. **Besloten op 18 september 2026 (Stijn):** de webapp staat in `apps/admin` in deze repo en niet in een eigen repo, zodat beide apps dezelfde types en hetzelfde contract delen. Het wordt **Vite met React, een statische site zonder server**: alles wat het beheer kan staat als functie in de database, en er bestaat nergens een service role key. Rollen staan in de tabel `admin_users` (analist, redacteur, beheerder), zie `datamodel.md`. De analyticspagina toont alleen totalen, nooit onder de 10, aan medewerkers met een rol; Paul moet dat nog wegen, zie `privacy-besluiten.md`. De huisstijl is zwart op wit, zonder franje. Voor nu draait het bij Vercel, met `apps/admin` als hoofdmap; bij de overdracht verhuist het naar waar MIND zijn sites heeft staan. Het plan in vier fasen (fundament, analytics, content in het beheer, content in de app) is van dezelfde dag.
 
-Twee dingen die hier nog niet vastliggen: **welk framework** de webapp krijgt, en of hij ook een eigen deploy en domein nodig heeft. Dat laatste is werk dat niemand nu heeft ingepland.
+Wat nog niet vastligt: het domein, en het contentmodel voor fase 3.
 
 ---
 

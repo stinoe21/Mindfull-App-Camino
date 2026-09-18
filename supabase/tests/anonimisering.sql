@@ -141,7 +141,7 @@ select relname as tabel, relrowsecurity as rls_aan,
        (select count(*) from pg_policy where polrelid = c.oid) as aantal_policies
   from pg_class c
  where relnamespace = 'public'::regnamespace
-   and relname in ('weather_hourly', 'weather_type', 'profiles', 'usage_daily', 'usage_event')
+   and relname in ('weather_hourly', 'weather_type', 'profiles', 'usage_daily', 'usage_event', 'admin_users')
  order by relname;
 
 do $$
@@ -341,7 +341,7 @@ begin
   select string_agg(routine_name, ', ') into v_fout
     from information_schema.routine_privileges
    where routine_schema = 'public' and grantee = 'authenticated'
-     and routine_name in ('purge_inactive_accounts', 'handle_new_user', 'usage_scrub');
+     and routine_name in ('purge_inactive_accounts', 'handle_new_user', 'usage_scrub', 'has_admin_role');
   assert v_fout is null,
     format('authenticated mag beheerfuncties aanroepen: %s', v_fout);
 
@@ -457,6 +457,55 @@ begin
 end $$;
 
 \echo 'usage_daily kent alleen dag, event, item en totaal; het weerbeeld kan er niet in'
+
+\echo ''
+\echo '=== 12. Kan iemand zichzelf rechten geven in het beheer? ==='
+
+select column_name, data_type
+  from information_schema.columns
+ where table_schema = 'public' and table_name = 'admin_users'
+ order by ordinal_position;
+
+do $$
+declare
+  v_kolommen text;
+  v_fout     text;
+  v_schrijft text;
+begin
+  -- admin_users (18 september 2026) zegt welk account welke rol heeft in het
+  -- beheer van MIND. Meer hoort er niet in te staan: geen naam, geen
+  -- e-mailadres, geen tijdstip.
+  select string_agg(column_name, ', ' order by ordinal_position) into v_kolommen
+    from information_schema.columns
+   where table_schema = 'public' and table_name = 'admin_users';
+  assert v_kolommen = 'user_id, role, added_on',
+    format('admin_users hoort precies user_id, role en added_on te hebben, gevonden: %s', v_kolommen);
+
+  -- Dicht voor de app en voor het beheer zelf: geen policy, geen recht. Alleen
+  -- de eigenaar vult hem, via SQL.
+  select string_agg(policyname, ', ') into v_fout
+    from pg_policies where schemaname = 'public' and tablename = 'admin_users';
+  assert v_fout is null,
+    format('admin_users heeft policies: %s. Er hoort er geen een te zijn.', v_fout);
+
+  select string_agg(grantee || ': ' || privilege_type, ', ') into v_fout
+    from information_schema.role_table_grants
+   where table_schema = 'public' and table_name = 'admin_users'
+     and grantee in ('anon', 'authenticated');
+  assert v_fout is null,
+    format('anon of authenticated heeft rechten op admin_users: %s', v_fout);
+
+  -- Geen enkele functie in public mag in admin_users schrijven: dan zou een
+  -- aanroep vanuit een app iemand rechten kunnen geven.
+  select string_agg(p.proname, ', ') into v_schrijft
+    from pg_proc p
+   where p.pronamespace = 'public'::regnamespace
+     and pg_get_functiondef(p.oid) ~* '(insert\s+into|update|delete\s+from)\s+public\.admin_users';
+  assert v_schrijft is null,
+    format('Deze functies schrijven in admin_users: %s. Rechten geven gaat alleen via SQL door de eigenaar.', v_schrijft);
+end $$;
+
+\echo 'admin_users is dicht, en geen functie kan er een rol in zetten'
 
 \echo ''
 \echo '======================================================================'
