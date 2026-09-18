@@ -27,7 +27,6 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ContentSection, ContentShelf, ShelfTegel } from "@mind/ui/components/ContentSection";
 import { KaartNederland, type ProvincieCode } from "@mind/ui/components/KaartNederland";
-import { MascotteVlieger } from "@mind/ui/components/MascotteVlieger";
 import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
@@ -42,6 +41,7 @@ import { KAARTKLEUR, WEERTINT_LICHT } from "@/features/weer/kaartKleuren";
 import { leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { isProvincie, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
+import { WeerVlieger } from "@/features/weer/WeerVlieger";
 import { haalWeerbericht, haalWeerberichtProvincies, type WeerberichtStand } from "@/features/weer/weerbericht";
 
 import { WEATHER_CODES, type WeatherCode, type WeatherTodayProvince } from "@mind/types";
@@ -217,7 +217,7 @@ export default function Dashboard() {
               <AppText rol="body" kleur="brand">{"›"}</AppText>
             </View>
           </View>
-          <MascotteVlieger state={weerbeeld} hoogte={88} />
+          <WeerVlieger weerbeeld={weerbeeld} hoogte={88} />
         </Card>
       ) : (
         // Dezelfde kaart als na de check-in, nog zonder weer: links de knop,

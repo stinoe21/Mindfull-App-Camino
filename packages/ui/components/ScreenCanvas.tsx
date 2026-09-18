@@ -23,7 +23,7 @@ import { colors, radius, space } from "../tokens/tokens.ts";
 
 import { AppText } from "./AppText.tsx";
 import { BackgroundHeroGradient } from "./BackgroundHeroGradient.tsx";
-import { NAV_PIL_HOOGTE } from "./NavigationBar.tsx";
+import { NAV_PIL_HOOGTE, navOnderMarge } from "./NavigationBar.tsx";
 import { TERUGKNOP_MAAT } from "./TerugKnop.tsx";
 import { Verschijn } from "./Verschijn.tsx";
 import type { WeerStaat } from "./achtergronden.ts";
@@ -85,6 +85,11 @@ export type ScreenCanvasProps = {
    */
   heroInhoud?: React.ReactNode;
   /**
+   * Een eigen laag over de hero-tekening, achter de hero-inhoud: een was die
+   * live meebeweegt met wat iemand doet (de check-in). Alleen de vel-variant.
+   */
+  heroLaag?: React.ReactNode;
+  /**
    * Korte titel voor de smalle balk die bovenin verschijnt zodra de hero is
    * weggescrold: op Home de naam, elders de schermtitel.
    */
@@ -105,17 +110,19 @@ export type ScreenCanvasProps = {
    * scherm naar beneden trekken, dat is niet fijn als je de slider gebruikt").
    */
   vast?: boolean;
+  /** Scrollen tijdelijk uit, bijvoorbeeld zolang iemand de slider vasthoudt. Alleen de vel-variant. */
+  scrollUit?: boolean;
   children?: React.ReactNode;
 };
 
-export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, heroInhoud, kopTitel, metNavRuimte = false, terugKnop, vast = false, children }: ScreenCanvasProps) {
+export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, heroInhoud, heroLaag, kopTitel, metNavRuimte = false, terugKnop, vast = false, scrollUit = false, children }: ScreenCanvasProps) {
   const insets = useSafeAreaInsets();
   const scrollY = useRef(new Animated.Value(0)).current;
   // De gemeten hoogte van de hero-inhoud, zodat het vel omlaag schuift als
   // de begroeting en de ondertitel samen meer regels nemen dan de band hoog
   // is (Stijn, 15 september 2026: de kop zat tegen de statusbalk).
   const [heroHoogte, zetHeroHoogte] = useState(0);
-  const navRuimte = metNavRuimte ? NAV_PIL_HOOGTE + Math.max(insets.bottom - space[3], space[2]) + space[6] : space[2];
+  const navRuimte = metNavRuimte ? NAV_PIL_HOOGTE + navOnderMarge(insets.bottom) + space[6] : space[2];
   // De knop staat in het midden van de titelbalk; het vel begint er vlak onder.
   const terugKnopTop = insets.top + KOP_MARGE;
   const terugKnopOverlay = terugKnop ? (
@@ -167,7 +174,7 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
   return (
     <View style={{ flex: 1, backgroundColor: colors.surfaceBackground }}>
       <Animated.View style={{ position: "absolute", left: 0, right: 0, top: 0, transform: [{ translateY: heroSchuif }] }}>
-        <BackgroundHeroGradient state={state} height={top + 240} />
+        <BackgroundHeroGradient state={state} height={top + 240} laag={heroLaag} />
       </Animated.View>
       {heroInhoud ? (
         <Animated.View
@@ -194,6 +201,7 @@ export function ScreenCanvas({ variant = "vel", state = "default", sheetTop, her
         bounces={!vast}
         alwaysBounceVertical={!vast}
         overScrollMode={vast ? "never" : "auto"}
+        scrollEnabled={!scrollUit}
         contentContainerStyle={{ flexGrow: 1, paddingTop: top }}
       >
         <View

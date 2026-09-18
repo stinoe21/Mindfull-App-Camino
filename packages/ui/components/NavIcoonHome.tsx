@@ -7,10 +7,13 @@ import { View } from "react-native";
 
 const BRON = require("../assets/nav/nav-home-icon.webp");
 
-export function NavIcoonHome({ hoogte = 30 }: { hoogte?: number }) {
+// kleur tint de lijnen van het plaatje (het heeft een transparante
+// achtergrond), zodat Home net als de vier vectoriconen meekleurt met actief
+// en inactief. Zonder kleur blijft het de oorspronkelijke tekening.
+export function NavIcoonHome({ hoogte = 30, kleur }: { hoogte?: number; kleur?: string }) {
   return (
     <View style={{ height: hoogte, width: hoogte, alignItems: "center", justifyContent: "center" }}>
-      <Image source={BRON} contentFit="contain" style={{ width: hoogte, height: hoogte }} />
+      <Image source={BRON} contentFit="contain" tintColor={kleur} style={{ width: hoogte, height: hoogte }} />
     </View>
   );
 }

@@ -101,7 +101,7 @@ export function kaartKleurVoor(onderwerp?: string, slug?: string): string {
   return gekozen ? KAARTKLEUR[gekozen] : palette.yellow100;
 }
 
-type Lijn = { d: string; dik?: number; vul?: boolean };
+export type Lijn = { d: string; dik?: number; vul?: boolean };
 
 // Per uitdrukking een eigen tint uit het palet (lijf en schaduw), zodat het
 // rooster niet één kleur is. Koel en gedempt voor de zware onderwerpen,
@@ -120,15 +120,17 @@ const KLEUR: Record<Uitdrukking, { lijf: string; schaduw: string }> = {
 };
 
 // Gezichten en attributen, als paden in het frame van 129 bij 99.
-const OGEN = {
+export const OGEN = {
   open: ["M52.5 37.5 v5.5", "M71.5 37.5 v5.5"],
   dicht: ["M49.5 40 q3 2.6 6 0", "M68.5 40 q3 2.6 6 0"],
   blij: ["M49.5 41.5 q3 -3.4 6 0", "M68.5 41.5 q3 -3.4 6 0"],
   omhoog: ["M52.5 35 v4.5", "M71.5 35 v4.5"],
   // Moe: half dichte ogen, een vlakke lijn met een klein oogwit eronder.
   moe: ["M49.5 40 h6", "M68.5 40 h6", "M50.5 42.5 q2 1.6 4 0", "M69.5 42.5 q2 1.6 4 0"],
+  // Dichtgeknepen, tegen kou of wind in (check-in, 17 september 2026).
+  knijp: ["M49.5 37.5 l5.5 2.5 l-5.5 2.5", "M74.5 37.5 l-5.5 2.5 l5.5 2.5"],
 };
-const MOND = {
+export const MOND = {
   glimlach: "M54.5 50.5 q5 5.5 10 0",
   breed: "M53 49.5 q6.5 8 13 0",
   vlak: "M55 52.5 h9",
@@ -137,7 +139,10 @@ const MOND = {
   klein: "M56.5 52 q3 3 6 0",
 };
 
-const UITDRUKKINGEN: Record<Uitdrukking, { ogen: string[]; rondeOgen?: boolean; mond?: string; kleineMond?: boolean; extra: Lijn[] }> = {
+/** Een gezicht voor de zittende vlieger: ogen, mond en een enkel attribuut. */
+export type Gezicht = { ogen: string[]; rondeOgen?: boolean; mond?: string; kleineMond?: boolean; extra: Lijn[] };
+
+const UITDRUKKINGEN: Record<Uitdrukking, Gezicht> = {
   slaperig: {
     ogen: OGEN.dicht,
     mond: MOND.klein,
@@ -243,13 +248,28 @@ export function uitdrukkingVoor(onderwerp?: string, slug?: string): Uitdrukking 
 
 export function VliegerOnderwerp({ onderwerp, slug, uitdrukking, hoogte = 56, kleur: eigenKleur }: VliegerOnderwerpProps) {
   const gekozen = uitdrukking ?? uitdrukkingVoor(onderwerp, slug);
-  const schaal = hoogte / H;
   if (!gekozen) return <MascotteVlieger state="wolken" hoogte={hoogte} />;
-  const g = UITDRUKKINGEN[gekozen];
-  const kleur = eigenKleur ?? KLEUR[gekozen];
+  return <VliegerMetGezicht gezicht={UITDRUKKINGEN[gekozen]} kleur={eigenKleur ?? KLEUR[gekozen]} hoogte={hoogte} label={"Vlieger, " + gekozen} />;
+}
+
+export type VliegerMetGezichtProps = {
+  gezicht: Gezicht;
+  kleur: { lijf: string; schaduw: string };
+  hoogte?: number;
+  /** Wat een schermlezer voorleest. */
+  label: string;
+};
+
+/**
+ * De zittende vlieger met een eigen gezicht. VliegerOnderwerp kiest het
+ * gezicht per onderwerp; de check-in kiest het per weerwoord, zodat de
+ * vlieger laat zien welk weer je aanwijst (Stijn, 17 september 2026).
+ */
+export function VliegerMetGezicht({ gezicht: g, kleur, hoogte = 56, label }: VliegerMetGezichtProps) {
+  const schaal = hoogte / H;
 
   return (
-    <View style={{ width: W * schaal, height: H * schaal }} accessibilityLabel={"Vlieger, " + gekozen}>
+    <View style={{ width: W * schaal, height: H * schaal }} accessibilityLabel={label}>
       <MascotteVlieger state="wolken" hoogte={hoogte} kleur={kleur} />
       <Svg width={W * schaal} height={H * schaal} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", left: 0, top: 0 }}>
         {/* Het originele gezicht afdekken met de lijfkleur. */}
