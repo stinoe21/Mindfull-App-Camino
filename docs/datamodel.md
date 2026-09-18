@@ -135,7 +135,7 @@ Welke schermen lezen dit? <lijst>
 
 ## Tabellen
 
-Drie tabellen, en wat er niet in staat, staat er bewust niet in. De rest van de dataflow, dus content, challenges en de twee consents, is nog niet ingevuld en staat onderaan bij de openstaande punten.
+Vier tabellen, en wat er niet in staat, staat er bewust niet in. De rest van de dataflow, dus content, challenges en de twee consents, is nog niet ingevuld en staat onderaan bij de openstaande punten.
 
 ### weather_type
 
@@ -228,6 +228,27 @@ Welke schermen lezen dit? Geen. De app leest deze rij niet; het slot werkt in su
 ```
 
 Komen er later velden bij die de gebruiker zelf mag wijzigen, dan geef je daar een grant **per kolom** op. Niet een update-policy op de hele tabel, want dan komen `last_checkin_on` en `last_checkin_part` er ongemerkt bij.
+
+### app_status
+
+```
+Tabel:            app_status
+Waarvoor:         De noodrem van de app: de laagste versie die nog werkt, en een optioneel onderhoudsbericht.
+RLS:              Aan, zonder policies. Lezen alleen via get_app_status(), en alleen ingelogd. Aanpassen doet de eigenaar.
+
+Kolommen:
+  id              boolean      verplicht   Vaste sleutel die alleen true kan zijn: er past precies een rij in
+  min_version     text         verplicht   Laagste versie van de app die nog werkt, als 1.2.3
+  maintenance_nl  text         optioneel   Onderhoudsbericht in het Nederlands, of null
+  updated_at      timestamptz  verplicht   Wanneer de rij voor het laatst is aangepast
+
+Bevat gevoelige data?     Nee. Er staat niets in over een persoon, een toestel of een check-in. De app stuurt bij het lezen ook niets over zichzelf mee; de vergelijking met de eigen versie doet hij zelf.
+Bewaartermijn:            Blijft. Hoort bij het schema.
+Verwijderbaar door user?  Niet van toepassing.
+Welke schermen lezen dit? De poort achter de onboarding (features/auth/Poort.tsx) en het scherm /bijwerken.
+```
+
+Sinds 18 september 2026 (besluit Stijn). `submit_weather()` is al twee keer van vorm veranderd; staat de app in de stores, dan is dit de enige manier om een oude versie te vragen bij te werken, of om tijdens onderhoud iets anders te tonen dan een foutmelding. De app faalt open: zonder netwerk of antwoord gaat hij gewoon door.
 
 ### Nog niet ingevuld
 

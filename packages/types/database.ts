@@ -24,6 +24,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_status: {
+        Row: {
+          id: boolean
+          maintenance_nl: string | null
+          min_version: string
+          updated_at: string
+        }
+        Insert: {
+          id?: boolean
+          maintenance_nl?: string | null
+          min_version?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: boolean
+          maintenance_nl?: string | null
+          min_version?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           id: string
@@ -101,6 +122,13 @@ export type Database = {
     }
     Functions: {
       delete_own_account: { Args: never; Returns: undefined }
+      get_app_status: {
+        Args: never
+        Returns: {
+          maintenance: string
+          min_version: string
+        }[]
+      }
       purge_inactive_accounts: { Args: { p_days?: number }; Returns: number }
       submit_weather: { Args: { p_weather: string; p_province?: string }; Returns: number }
       weather_today: {

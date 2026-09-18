@@ -8,7 +8,7 @@ De inhoudelijke besluiten staan niet hier: wat we opslaan staat in `datamodel.md
 
 ## 1. Hoe de backend in elkaar zit
 
-De hele backend is op dit moment zes migratiebestanden in `supabase/migrations/`. Dat is geen tussenstand maar het ontwerp: klein, leesbaar, en elke wijziging is een bestand met een review erop.
+De hele backend is op dit moment zeven migratiebestanden in `supabase/migrations/`. Dat is geen tussenstand maar het ontwerp: klein, leesbaar, en elke wijziging is een bestand met een review erop.
 
 Het idee in één alinea: het persoonlijke weerbeeld blijft op het toestel en wordt aan het eind van de dag gewist. De server kent maar twee dingen. Eén: **anonieme totalen**, per dag, uurblok, weerbeeld en provincie hoeveel inzendingen er waren; een inzending telt op bij een totaal en krijgt geen eigen rij. Twee: op het profiel **de datum en het dagdeel van de laatste bijdrage**, zodat iemand maximaal één keer per dagdeel meetelt (vóór en vanaf 12.00 uur, sinds 15 september 2026; inchecken zelf mag vaker). Tussen die twee loopt geen verbinding, en de tabellen zijn zo gebouwd dat die verbinding er ook niet bij kán: er is in de collectieve tabel geen kolom die een gebruiker of een exact moment kan aanduiden, en geen rij die één inzending vertegenwoordigt.
 
@@ -22,7 +22,17 @@ Dit is de volledige API van de backend. Alles wat hier niet staat, is voor de ap
 | Weerbericht lezen | `rpc('weather_today')` | De percentages van vandaag, over de **afgesloten uurblokken**. Het lopende blok telt niet mee, zodat niemand een inzending live ziet binnenkomen. Geeft **nul rijen** onder de toondrempel; dat is meteen de empty state, ook voor 01:00. |
 | Weertypen lezen | `select` op `weather_type` | De vijf weerbeelden met hun labels. Alleen ingelogd; voor het inloggen heeft de app ze niet nodig. |
 | Eigen profiel lezen | `select` op de eigen rij in `profiles` | Mag, maar de app doet het niet: inchecken kan altijd, en of een bijdrage nog telt onthoudt de app lokaal uit het antwoord van `submit_weather`. |
+| Noodrem lezen | `rpc('get_app_status')` | De minimale versie van de app en het onderhoudsbericht, of null. Alleen ingelogd, zonder argumenten: de app stuurt niets over zichzelf mee en vergelijkt zelf. Faalt open, zie `apps/mobile/src/features/systeem/appStatus.ts`. |
 | Account verwijderen | `rpc('delete_own_account')` | Verwijdert de eigen rij in `auth.users`; profiel en sessies gaan mee via de cascade. Scherm 19. |
+
+**De noodrem bedienen** is data en geen schema, en doet de eigenaar. Met de CLI, ingelogd met het eigen account:
+
+```bash
+echo "update public.app_status set min_version = '1.2.0', updated_at = now();" > /tmp/noodrem.sql
+supabase db query --linked -f /tmp/noodrem.sql
+```
+
+Onderhoud aan: `set maintenance_nl = 'Weertje is even in onderhoud. Probeer het over een uur opnieuw.'`. Onderhoud uit: `set maintenance_nl = null`. De app vraagt de stand hooguit eens per uur op, en direct bij "Probeer opnieuw".
 
 Daarnaast is er één functie die de app **niet** mag aanroepen: `purge_inactive_accounts(p_days)`, de bewaartermijn van twee jaar. Alleen een beheerder of een geplande taak, en die planning is een open besluit.
 

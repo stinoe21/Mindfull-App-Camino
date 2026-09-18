@@ -354,6 +354,44 @@ end $$;
 \echo 'anon kan niets aanroepen, de opruiming is niet voor de app'
 
 \echo ''
+\echo '=== 10. Staat er in de noodrem niets over een persoon? ==='
+
+-- app_status (18 september 2026) is de minimale versie van de app en een
+-- onderhoudsbericht. Er hoort niets in te staan dat naar een persoon, een
+-- toestel of een check-in wijst, en de leesfunctie hoort geen argumenten te
+-- hebben: de app stuurt niets over zichzelf mee.
+select column_name, data_type
+  from information_schema.columns
+ where table_schema = 'public' and table_name = 'app_status'
+ order by ordinal_position;
+
+do $$
+declare
+  v_cols  text;
+  v_args  integer;
+  v_rijen integer;
+begin
+  select string_agg(column_name, ', ' order by column_name) into v_cols
+    from information_schema.columns
+   where table_schema = 'public' and table_name = 'app_status';
+  assert v_cols = 'id, maintenance_nl, min_version, updated_at',
+    format('app_status hoort alleen id, maintenance_nl, min_version en updated_at te hebben, gevonden: %s', v_cols);
+
+  select p.pronargs into v_args
+    from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+   where n.nspname = 'public' and p.proname = 'get_app_status';
+  assert v_args = 0,
+    format('get_app_status() hoort geen argumenten te hebben, gevonden: %s', v_args);
+
+  select count(*) into v_rijen from public.app_status;
+  assert v_rijen = 1,
+    format('app_status hoort precies een rij te hebben, gevonden: %s', v_rijen);
+end $$;
+
+\echo 'de noodrem kent alleen een versie en een bericht, en vraagt niets van de app'
+
+\echo ''
 \echo '======================================================================'
 \echo ' GESLAAGD. De collectieve tabel heeft geen kolom die naar een persoon'
 \echo ' kan wijzen, geen rij per inzending, geen tijd fijner dan een uur, en'
