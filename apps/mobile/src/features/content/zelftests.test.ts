@@ -11,7 +11,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 
 import { ZELFTESTS, type Zelftest } from "./data/zelftests.ts";
-import { scoreVan, uitslagVoor, zelftestVoor } from "./zelftests.ts";
+import { HULPVRAGEN, isHulpantwoord, scoreVan, uitslagVoor, vraagtOmHulproute, zelftestVoor } from "./zelftests.ts";
 
 // Alleen de velden die de rekenregel leest.
 function nagemaakt(scoring: "som" | "gemiddelde"): Zelftest {
@@ -68,4 +68,47 @@ test("elke test van MIND: bij elke haalbare score hoort precies een uitslag", ()
       assert.equal(passend.length, 1, t.slug + " bij score " + score);
     }
   }
+});
+
+test("de hulproute wijst nog naar de vraag over gedachten aan de dood", () => {
+  // De data is gegenereerd. Verschuift MIND de vragen, dan moet de index mee.
+  for (const [slug, vragen] of Object.entries(HULPVRAGEN)) {
+    const t = zelftestVoor(slug);
+    assert.ok(t, slug);
+    for (const h of vragen) {
+      assert.match(t.vragen[h.vraag]?.tekst ?? "", /dood|pijn te doen/i, slug + " vraag " + h.vraag);
+    }
+  }
+});
+
+test("geen enkele andere vraag in de tests gaat over de dood of zelfbeschadiging", () => {
+  // Komt er een bij, dan hoort hij in HULPVRAGEN.
+  for (const t of ZELFTESTS) {
+    t.vragen.forEach((v, i) => {
+      if (!/\bdood\b|zelfmoord|suïcid|pijn te doen|niet meer leven/i.test(v.tekst)) return;
+      assert.ok((HULPVRAGEN[t.slug] ?? []).some((h) => h.vraag === i), t.slug + " vraag " + i + " mist in HULPVRAGEN");
+    });
+  }
+});
+
+test("de hulproute hangt aan het antwoord op die ene vraag, niet aan de totaalscore", () => {
+  const t = zelftestVoor("depressietest");
+  assert.ok(t);
+  const laag: (number | undefined)[] = t.vragen.map(() => 0);
+  assert.equal(vraagtOmHulproute(t, laag), false);
+  // Overal het laagste antwoord, alleen op vraag 9 "een aantal dagen".
+  const eenJa = [...laag];
+  eenJa[8] = 1;
+  assert.equal(scoreVan(t, eenJa), 1);
+  assert.equal(vraagtOmHulproute(t, eenJa), true);
+  assert.equal(isHulpantwoord(t, 8, 0), false);
+  assert.equal(isHulpantwoord(t, 8, 3), true);
+  assert.equal(isHulpantwoord(t, 8, undefined), false);
+  // Een hoog antwoord op een andere vraag is geen hulpantwoord.
+  assert.equal(isHulpantwoord(t, 0, 3), false);
+  // Onbeantwoord, of een test zonder zulke vraag: geen hulproute.
+  assert.equal(vraagtOmHulproute(t, []), false);
+  const andere = zelftestVoor("stresstest");
+  assert.ok(andere);
+  assert.equal(vraagtOmHulproute(andere, andere.vragen.map(() => 3)), false);
 });
