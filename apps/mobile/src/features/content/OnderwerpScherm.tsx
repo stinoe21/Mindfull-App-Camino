@@ -33,7 +33,6 @@
 // een gids voor naasten delen dezelfde opbouw; een paneel zonder inhoud
 // vervalt.
 
-import * as Linking from "expo-linking";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
@@ -58,6 +57,7 @@ import { isBewaard, leesBewaard, wisselBewaard, type BewaardeTip } from "@/featu
 import { challengeBijFamilie, gidsenInGroep } from "@/features/content/families";
 import { houvastBijOnderwerp, secties, type Onderwerp } from "@/features/content/houvast";
 import type { HouvastTip } from "@/features/content/data/houvast";
+import { useOpenLink } from "@/features/systeem/openLink";
 
 const nl = {
   nietGevonden: "Onderwerp niet gevonden",
@@ -202,6 +202,7 @@ const AANLOOP = 2;
 export function OnderwerpScherm({ onderwerp: houvast }: { onderwerp: Onderwerp | undefined }) {
   const router = useRouter();
   const t = useVertaling(teksten);
+  const openLink = useOpenLink();
   // Een link kan direct op een paneel openen (?paneel=helpen), en op een tip
   // (&tip=2), bijvoorbeeld vanaf een bewaarde tip op Houvast; zonder
   // parameters begint de pagina bij de uitleg.
@@ -333,9 +334,9 @@ export function OnderwerpScherm({ onderwerp: houvast }: { onderwerp: Onderwerp |
 
       {paneel === "meer" ? (
         <Lijst>
-          {houvast.bron ? <LijstRij titel={t("allesOver").replace("{titel}", titelLaag)} meta={t("opMind")} onPress={() => Linking.openURL(houvast.bron ?? "")} /> : null}
-          {houvast.gids ? <LijstRij titel={t("gids").replace("{titel}", houvast.gids.titel)} meta={t("gidsMeta")} onPress={() => Linking.openURL(houvast.gids?.url ?? "")} /> : null}
-          {houvast.gids?.aanmeld ? <LijstRij titel={t("gidsPerMail")} meta={t("gidsPerMailMeta")} onPress={() => Linking.openURL(houvast.gids?.aanmeld ?? "")} /> : null}
+          {houvast.bron ? <LijstRij titel={t("allesOver").replace("{titel}", titelLaag)} meta={t("opMind")} onPress={() => openLink(houvast.bron)} /> : null}
+          {houvast.gids ? <LijstRij titel={t("gids").replace("{titel}", houvast.gids.titel)} meta={t("gidsMeta")} onPress={() => openLink(houvast.gids?.url)} /> : null}
+          {houvast.gids?.aanmeld ? <LijstRij titel={t("gidsPerMail")} meta={t("gidsPerMailMeta")} onPress={() => openLink(houvast.gids?.aanmeld)} /> : null}
           {challenge ? (
             <LijstRij
               label={t("challenge")}
