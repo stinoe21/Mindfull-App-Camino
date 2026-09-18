@@ -30,22 +30,23 @@ Twee gevolgen:
 - **Tijdens ontwikkelen loop je er meteen tegenaan.** Drie mensen die accounts aanmaken met **Confirm email** aan, zijn binnen tien minuten door het uurquotum aan bevestigingsmails. Dat lijkt op een bug in de app en is het niet. Hergebruik daarom tijdens het ontwikkelen een bestaand testaccount in plaats van steeds een nieuw aan te maken; een lokale stack hebben we niet, zie `CLAUDE.md` sectie 9.
 - **Voor livegang is een eigen SMTP verplicht**, want anders krijgt de helft van de gebruikers geen bevestigingsmail. Dat betekent een extra partij die e-mailadressen verwerkt, en dus **een verwerkersovereenkomst erbij**. Zie `privacy-besluiten.md`.
 
-## 2. Eén check-in per dag, en die limiet moet aan de persoonlijke kant
+## 2. Twee bijdragen per dag, en die limiet moet aan de persoonlijke kant
 
 Dit is de belangrijkste consequentie van het datamodel en het is geen implementatiedetail.
 
-De collectieve store bestaat sinds 13 augustus 2026 uit totalen per (dag, uurblok, weerbeeld): **geen gebruikerscode, geen id, geen tijdstempel, en geen rij per inzending**. Zie `datamodel.md`. Dat betekent dat je aan de collectieve kant onmogelijk kunt zien of iemand vandaag al heeft ingestuurd. Er is niets om op te dedupliceren, en dat is precies de bedoeling.
+De collectieve store bestaat sinds 13 augustus 2026 uit totalen per (dag, uurblok, weerbeeld, provincie): **geen gebruikerscode, geen id, geen tijdstempel, en geen rij per inzending**. Zie `datamodel.md`. Dat betekent dat je aan de collectieve kant onmogelijk kunt zien of iemand vandaag al heeft ingestuurd. Er is niets om op te dedupliceren, en dat is precies de bedoeling.
 
 Dus:
 
-> **De teller staat in de persoonlijke stroom, de bijdrage gaat naar de anonieme pool.** Eerst vaststellen dat deze gebruiker vandaag nog niet heeft ingestuurd, dan pas het anonieme uurtotaal ophogen. Nooit andersom, en nooit met een sleutel die meegaat.
+> **De teller staat in de persoonlijke stroom, de bijdrage gaat naar de anonieme pool.** Eerst vaststellen dat deze gebruiker in dit dagdeel nog niet heeft bijgedragen, dan pas het anonieme uurtotaal ophogen. Nooit andersom, en nooit met een sleutel die meegaat.
 
 Bouw dit niet met een `count` op de collectieve tabel. Dat kan niet: er staan alleen totalen in, geen inzendingen. Een agent die het toch probeert, heeft een sleutel nodig en breekt daarmee de anonimisering.
 
-**Concreet, sinds 11 augustus 2026:** het slot is `profiles.last_checkin_on`, één datum die elke keer overschreven wordt, en het zit in `submit_weather()`. Twee dingen daarbij die niet vrijblijvend zijn:
+**Concreet, sinds 15 september 2026 (besluit Stijn; van 11 augustus tot dan was het één keer per dag):** inchecken mag zo vaak iemand wil, want het persoonlijke weerbeeld staat op het toestel. De limiet zit op wat meetelt voor het landelijke beeld: **maximaal één bijdrage vóór 12.00 uur en één vanaf 12.00 uur** (Europe/Amsterdam). Het slot is `profiles.last_checkin_on` plus `profiles.last_checkin_part` (1 of 2), twee velden die elke keer overschreven worden, en het zit in `submit_weather()`. Een extra check-in in hetzelfde dagdeel werkt het eigen weer bij en voegt niets toe; de eerdere bijdrage blijft staan. Drie dingen daarbij die niet vrijblijvend zijn:
 
-- **Het slot staat op de server en niet alleen lokaal.** Puur lokaal begrenzen wordt omzeild door de app opnieuw te installeren.
+- **Het slot staat op de server en niet alleen lokaal.** Puur lokaal begrenzen wordt omzeild door de app opnieuw te installeren. De app onthoudt wel lokaal welk dagdeel al telde, maar alleen om een zinloze aanroep over te slaan.
 - **Slot en ophoging zitten in één transactie.** Dat moet, want laat je de client twee losse calls doen, dan slaat hij de eerste gewoon over en is het slot geen slot.
+- **Het slot zegt niets over wát iemand instuurde.** Alleen de knop in de app beperken zou onvoldoende zijn tegen spam; een slot mét weerbeeld zou de scheiding tussen de twee stromen breken. Datum plus dagdeel is het minimum dat werkt.
 
 ## 3. Het landelijke weerbericht is niet te dedupliceren, dus wel te beïnvloeden
 
@@ -57,7 +58,8 @@ Wat we er wel tegen hebben:
 
 - Een account aanmaken kost een geverifieerd e-mailadres of een Apple- of Google-login. Dat maakt honderd accounts duur.
 - De auth-limieten hierboven begrenzen hoe snel dat kan.
-- De limiet uit punt 2 begrenst het tot één bijdrage per account per dag.
+- De limiet uit punt 2 begrenst het tot twee bijdragen per account per dag, één per dagdeel. Vaker inchecken geeft niemand meer invloed.
+- **De provincie is niet zelf te kiezen** (sinds 14 september 2026, besluit Stijn). Hij komt alleen via de locatie van het toestel, op het toestel bepaald, zie `datamodel.md`. Per provincie is dezelfde drempel van 10 al genoeg om te kleuren, dus met een vrije keuze konden tien accounts een lege provincie sturen zonder er ooit te zijn geweest. Een gesimuleerde locatie blijft mogelijk, maar het is geen knop meer in de app. Wie de locatie weigert, in de onboarding of later in de telefooninstellingen, telt als "onbekend", landelijk.
 
 **Wat we wél kunnen: het achteraf herkennen.** De totalen staan per uurblok (sinds 13 augustus 2026, zie `datamodel.md`), en het behoud van dat uurverloop was precies de reden om niet op dagtellers uit te komen. Vierhonderd inzendingen in één uur waar de basislijn op veertig ligt, is zichtbaar. Bij een dagteller was dat niet te zien.
 

@@ -26,7 +26,7 @@ Afgestemd met de privacyofficer van Mind op 29 juli 2026 en verwerkt in het Figm
 >
 > Wat in die mail aan Paul staat, is daarmee bindend. Wijkt de app ervan af, dan vervalt zijn conclusie en moet je eerst terug naar hem. Dat is geen formaliteit maar het verschil tussen wel en geen verplichte DPIA.
 >
-> **Aangescherpt op 13 augustus 2026: de collectieve opslag is totalen per uurblok geworden, geen rij per inzending meer.** Iedere inzending telt direct op bij een totaal per (dag, uurblok, weerbeeld). Dat is strikt sterker dan de rij uit de mail van 7 augustus: de informatie is identiek, maar een totaal kent geen volgorde en geen geschiedenis, dus het restrisico van de invoegvolgorde is vervallen. Wat Paul nog niet kent: deze aanscherping, het uurblok, de geschrapte "willekeurige unieke code" en het dagslot-veld `last_checkin_on`. Tot hij die heeft gewogen, schrijf nergens op dat de app niet DPIA-plichtig is. Zie de secties "Waarom er totalen per uurblok staan" en "Wat het uurblok niet oplost", en `privacy-besluiten.md`.
+> **Aangescherpt op 13 augustus 2026: de collectieve opslag is totalen per uurblok geworden, geen rij per inzending meer.** Iedere inzending telt direct op bij een totaal per (dag, uurblok, weerbeeld). Dat is strikt sterker dan de rij uit de mail van 7 augustus: de informatie is identiek, maar een totaal kent geen volgorde en geen geschiedenis, dus het restrisico van de invoegvolgorde is vervallen. Wat Paul nog niet kent: deze aanscherping, het uurblok, de geschrapte "willekeurige unieke code" en de slotvelden `last_checkin_on` en `last_checkin_part`. Tot hij die heeft gewogen, schrijf nergens op dat de app niet DPIA-plichtig is. Zie de secties "Waarom er totalen per uurblok staan" en "Wat het uurblok niet oplost", en `privacy-besluiten.md`.
 
 > **Uitgangspunt: we slaan bewust geen tot een persoon herleidbare data over mentaal welzijn op.** Elk besluit hieronder volgt daaruit. Doen we dat wel, dan worden de beveiligingseisen van de app fors zwaarder.
 
@@ -37,8 +37,8 @@ Afgestemd met de privacyofficer van Mind op 29 juli 2026 en verwerkt in het Figm
 | Collectieve store | **Geanonimiseerd**, niet gepseudonimiseerd. **Totalen per (dag, uurblok, weerbeeld)**, besloten op 13 augustus 2026: een inzending telt direct op bij een totaal en er bestaat geen rij die één inzending vertegenwoordigt. Geen gebruikerscode, geen id, geen tijdstempel, geen volgorde. De "willekeurige unieke code" uit de mail van 7 augustus is bewust geschrapt: elke code is een sleutel die een inzending aanwijst. Zie de secties hieronder over het uurblok en over waarom het totalen zijn geworden. |
 | Check-in-vorm | Vier sliders binnen de weermetafoor: **temperatuur, wind, zicht en wisselvalligheid**. Die worden **op het toestel** gecombineerd tot één van vijf vaste weerbeelden. Vastgelegd in de mail aan Paul van 7 augustus 2026. |
 | Sliderwaarden | Gaan **niet** naar de server en worden nergens als historie opgeslagen. Toegezegd aan Paul. Los van die toezegging: vier sliderwaarden vormen een vier-dimensionale vingerafdruk die veel unieker is dan één uit vijf weerbeelden, dus meesturen zou de anonimisering meetbaar verzwakken. |
-| Persoonlijk weerbeeld | Blijft **lokaal op het toestel** en wordt aan het eind van de dag gewist. Er komt geen persoonlijke historie van eerdere weerbeelden, niet lokaal en niet op de server. Toegezegd aan Paul op 7 augustus 2026. |
-| Dagslot | **Nieuw op 11 augustus 2026.** Eén datumveld op het profiel, `last_checkin_on`, dat elke keer overschreven wordt. Daarmee kan iemand maar één keer per dag bijdragen aan het landelijke beeld. Er staat **geen weerbeeld** in en geen historie. Dit veld kent Paul nog niet, zie `privacy-besluiten.md`. |
+| Persoonlijk weerbeeld | Blijft **lokaal op het toestel** en wordt aan het eind van de dag gewist. Er komt geen persoonlijke historie van eerdere weerbeelden, niet lokaal en niet op de server. Toegezegd aan Paul op 7 augustus 2026. **Sinds 15 september 2026 (besluit Stijn) mag iemand vaker per dag inchecken**: het toestel bewaart alleen de laatste, met het tijdstip ervan ("ingecheckt om 08.15"), en overschrijft de vorige. Nog steeds één record, geen historie. |
+| Slot per dagdeel | **11 augustus 2026, aangepast op 15 september 2026.** Twee velden op het profiel die elke keer overschreven worden: `last_checkin_on` (datum) en `last_checkin_part` (1 = vóór 12.00 uur, 2 = vanaf 12.00 uur, Europe/Amsterdam). Daarmee kan iemand maximaal twee keer per dag bijdragen aan het landelijke beeld, één keer per dagdeel; extra check-ins in hetzelfde dagdeel werken alleen het eigen weer bij en vervangen de eerdere bijdrage niet. Er staat **geen weerbeeld** in en geen historie. Deze velden kent Paul nog niet, zie `privacy-besluiten.md`. |
 | Bewaartermijn persoonsgegevens | Weg na 2 jaar inactiviteit, of eerder als de gebruiker zijn account zelf verwijdert. |
 | Inactiviteit meten | **Besloten op 30 juli 2026: we slaan het moment van laatste activiteit op.** Zonder dat veld is "weg na 2 jaar inactiviteit" niet te handhaven en beloof je in de privacyverklaring iets wat niemand uitvoert. De minimale vorm is **één tijdstip op het profiel dat elke keer overschreven wordt**, dus geen geschiedenis van wat iemand wanneer deed. Dat onderscheid is het hele punt: een laatste-activiteitsstempel is bewaartermijnadministratie, een logboek van sessies is gedragsdata. |
 | Bewaartermijn collectieve data | **Besloten op 13 augustus 2026: de uurtotalen blijven staan, zonder einddatum.** Ze zijn niet tot personen herleidbaar, dus er loopt geen termijn. De eerdere rollup naar dagtotalen (11 augustus) bestond als maatregel tegen het volgordelek van losse rijen, en dat lek bestaat niet meer; `weather_daily` en de rollup-functie zijn daarom geschrapt. Dagtotalen zijn voor de analyticspagina een group by op de uurtotalen. Wil Mind alsnog een termijn, dan is dat een kleine migratie; de vraag is aan Paul voorgelegd in de mail van 13 augustus. Verwijderen per gebruiker is er niet, want een totaal bevat geen losse inzendingen. Dit moet expliciet in de consent-tekst en de privacyverklaring staan. |
@@ -101,13 +101,17 @@ Dit hoort in de DPIA en het hoort niet weggepoetst te worden.
 
 De vraag die Paul op 6 augustus stelde, "op welk moment worden de individuele weerberichten losgekoppeld", heeft daarmee nog steeds hetzelfde antwoord: ze worden nooit losgekoppeld, want ze zijn nooit gekoppeld geweest. Er bestaat niet eens een rij per inzending.
 
-### De begrenzing van één per dag
+### De begrenzing per dagdeel
 
-Zonder identifier in stroom 2 kun je daar niet afdwingen dat iemand maar één keer per dag meetelt. Die begrenzing hoort dus aan de kant van stroom 1, vóór het wegschrijven, en dat is `profiles.last_checkin_on`.
+Zonder identifier in stroom 2 kun je daar niet afdwingen hoe vaak iemand meetelt. Die begrenzing hoort dus aan de kant van stroom 1, vóór het wegschrijven, en dat zijn `profiles.last_checkin_on` en `profiles.last_checkin_part`.
 
-Puur lokaal begrenzen volstaat niet: opnieuw installeren omzeilt dat. Het slot staat daarom op de server, in dezelfde transactie als het wegschrijven van de rij. Dat moet ook wel, want laat je de client twee losse calls doen, dan slaat hij de eerste gewoon over.
+De regel, sinds 15 september 2026 (besluit Stijn): **inchecken mag zo vaak je wilt, bijdragen aan het landelijke beeld maximaal één keer per dagdeel**, vóór en vanaf 12.00 uur. Het persoonlijke scherm toont altijd de laatste check-in; de kaart toont verzamelde momentopnamen. Een extra check-in in hetzelfde dagdeel vervangt de eerdere bijdrage niet: daarvoor zou de server die bijdrage moeten kunnen terugvinden, en die sleutel is precies wat we niet opslaan. Tot 15 september was het één keer per dag; dat was voor wie 's ochtends mist en 's middags zon voelde te star.
 
-Gevolg: de functie die instuurt ziet zowel `auth.uid()` als het weerbeeld. Ze kan die koppeling alleen niet wegschrijven, **want er is geen kolom voor**. Dat is de eigenlijke garantie in dit ontwerp, en je controleert hem aan de tabeldefinitie en niet aan de functie eromheen.
+Puur lokaal begrenzen volstaat niet: opnieuw installeren omzeilt dat. Het slot staat daarom op de server, in dezelfde transactie als het optellen. Dat moet ook wel, want laat je de client twee losse calls doen, dan slaat hij de eerste gewoon over. Het slot begrenst alleen de bijdrage; de app hoeft de server niet te vragen of iemand mag inchecken.
+
+Gevolg: de functie die instuurt ziet zowel `auth.uid()` als het weerbeeld. Ze kan die koppeling alleen niet wegschrijven, **want er is geen kolom voor**. Dat is de eigenlijke garantie in dit ontwerp, en je controleert hem aan de tabeldefinitie en niet aan de functie eromheen; `supabase/tests/anonimisering.sql` controleert sinds 15 september ook dat het profiel precies die twee slotvelden heeft en niets dat naar een weerbeeld wijst.
+
+Een bijdrage is niet meteen zichtbaar: de leesfuncties tellen alleen afgesloten uurblokken, dus een check-in van 12.05 uur zit vanaf 13.00 uur in het beeld.
 
 ## Sjabloon per tabel
 
@@ -198,18 +202,20 @@ Er is bewust geen aparte archieftabel. `weather_daily` bestond als eindstation v
 
 ```
 Tabel:            profiles
-Waarvoor:         Het account, met alleen wat nodig is voor de bewaartermijn en het dagslot.
+Waarvoor:         Het account, met alleen wat nodig is voor de bewaartermijn en het slot per dagdeel.
 RLS:              Aan. De gebruiker mag zijn eigen rij lezen. Niemand mag schrijven, ook de
                   gebruiker niet: schrijven loopt via functies. Anders kan iemand zijn eigen
-                  last_checkin_on terugzetten en het dagslot omzeilen.
+                  last_checkin_on of last_checkin_part terugzetten en het slot omzeilen.
 
 Kolommen:
-  id               uuid         verplicht  Verwijst naar auth.users, verdwijnt mee bij verwijderen
-  last_active_at   timestamptz  verplicht  Laatste activiteit, wordt overschreven, geen historie
-  last_checkin_on  date         optioneel  Datum van de laatste check-in. Geen weerbeeld, geen historie.
+  id                 uuid         verplicht  Verwijst naar auth.users, verdwijnt mee bij verwijderen
+  last_active_at     timestamptz  verplicht  Laatste activiteit, wordt overschreven, geen historie
+  last_checkin_on    date         optioneel  Datum van de laatste bijdrage aan het landelijke beeld. Geen weerbeeld, geen historie.
+  last_checkin_part  smallint     optioneel  Dagdeel van die bijdrage: 1 (vóór 12.00) of 2 (vanaf 12.00), Europe/Amsterdam.
+                                             Sinds 15 september 2026. Wordt overschreven; geen tijdstip, geen historie.
 
 Bevat gevoelige data?     Persoonsgegevens ja, gezondheidsgegevens nee. Er staat nergens in deze
-                          tabel wát iemand heeft ingevuld, alleen dát hij op een dag heeft ingecheckt.
+                          tabel wát iemand heeft ingevuld, alleen dát hij in een dagdeel heeft bijgedragen.
 Bewaartermijn:            Weg na 2 jaar inactiviteit, gemeten aan last_active_at, of eerder als de
                           gebruiker zijn account zelf verwijdert. De opruiming is de functie
                           purge_inactive_accounts() (sinds 26 augustus 2026), niet aanroepbaar
@@ -217,10 +223,11 @@ Bewaartermijn:            Weg na 2 jaar inactiviteit, gemeten aan last_active_at
 Verwijderbaar door user?  Ja, via Profiel en instellingen, scherm 19. Dat roept delete_own_account()
                           aan: de rij in auth.users gaat weg en deze rij en de sessies gaan mee via
                           de cascade.
-Welke schermen lezen dit? Profiel, instellingen, weer-check-in (voor het dagslot).
+Welke schermen lezen dit? Geen. De app leest deze rij niet; het slot werkt in submit_weather()
+                          en de app onthoudt lokaal in welk dagdeel een check-in al telde.
 ```
 
-Komen er later velden bij die de gebruiker zelf mag wijzigen, dan geef je daar een grant **per kolom** op. Niet een update-policy op de hele tabel, want dan komt `last_checkin_on` er ongemerkt bij.
+Komen er later velden bij die de gebruiker zelf mag wijzigen, dan geef je daar een grant **per kolom** op. Niet een update-policy op de hele tabel, want dan komen `last_checkin_on` en `last_checkin_part` er ongemerkt bij.
 
 ### Nog niet ingevuld
 
@@ -248,7 +255,7 @@ Het principe: **de personalisatie gebeurt op het toestel, de server blijft weerb
 
 **Zelftests.** Sinds 14 september 2026 (besluit Stijn) staan de twaalf zelftests van MIND in de app zelf, met dezelfde vragen, scores en uitslagteksten als op formulier.wijzijnmind.nl (`content/mind/psychische-klachten/zelftests`, opgehaald met `scripts/fetch-zelftests.mjs`). De antwoorden en de score zijn het gevoeligste wat iemand in deze app invult: een score op een depressie- of angstvragenlijst is een bijzonder persoonsgegeven zodra hij aan een persoon te koppelen is. Daarom: de score wordt **op het toestel** berekend, **niets wordt bewaard** (ook niet lokaal, ook geen "laatste uitslag") en **niets wordt verstuurd**; antwoorden bestaan alleen zolang het scherm open staat. De aanmeldvelden van het formulier (e-mail, nieuwsbrief) zijn weggelaten. Wil MIND later een uitslag kunnen bewaren of mailen, dan is dat een nieuwe verwerking: eerst het sjabloon hierboven invullen en langs Paul.
 
-Wat de server in dit ontwerp ziet, en meer niet: een account dat vandaag heeft ingecheckt (het dagslot), de anonieme uurtotalen, en contentverkeer dat er voor iedereen identiek uitziet.
+Wat de server in dit ontwerp ziet, en meer niet: een account dat in een dagdeel heeft bijgedragen (het slot: datum plus 1 of 2), de anonieme uurtotalen, en contentverkeer dat er voor iedereen identiek uitziet.
 
 Nog te besluiten door de drie, deels op het board: welke interessecategorieën, de frequentie van de pop-up, welke challenge bij welk weerbeeld hoort, en hoe weerbeeld en interesses samen de sortering bepalen. De content-tabellen zelf (de catalogus die Mind via de admin vult) staan hier los van en volgen het sjabloon hierboven.
 
@@ -299,6 +306,6 @@ Deze lijst is net zo belangrijk als de tabellen zelf. Vul aan naarmate we beslis
 - **Een sleutel die een inzending aanwijst.** De collectieve tabel heeft alleen de sleutel (dag, uurblok, weerbeeld), en die wijst een totaal aan. Geen rij-id, geen `uuid v7`, geen unique index daarbuiten: een geordende sleutel zou bovendien de volgorde verraden.
 - **Losse rijen per inzending.** Sinds 13 augustus 2026 telt een inzending direct op bij een totaal. Er bestaat geen rij die één inzending vertegenwoordigt, en daarmee ook geen invoegvolgorde die iets over een inzending zegt.
 - **De vier sliderwaarden.** Die blijven op het toestel. Een vier-dimensionale waarde is een veel unievere vingerafdruk dan één uit vijf weerbeelden.
-- **Een persoonlijke historie van weerbeelden**, niet op de server en niet lokaal.
+- **Een persoonlijke historie van weerbeelden**, niet op de server en niet lokaal. Ook niet nu inchecken vaker per dag mag (15 september 2026): het toestel bewaart één record met het laatste weerbeeld, het tijdstip ervan en het dagdeel dat al meetelde, en overschrijft dat bij elke check-in. Het tijdstip blijft op het toestel en gaat nooit mee.
 - **Een vingerafdruk van het toestel of een hash die bijdragen aan elkaar knoopt.** Dat zou werken tegen manipulatie, en het is precies de sleutel die we niet willen. Zie `limieten-en-misbruik.md`.
 - Alles wat we niet nodig hebben voor een functie die daadwerkelijk in v1 zit

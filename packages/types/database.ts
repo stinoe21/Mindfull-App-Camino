@@ -29,16 +29,19 @@ export type Database = {
           id: string
           last_active_at: string
           last_checkin_on: string | null
+          last_checkin_part: number | null
         }
         Insert: {
           id: string
           last_active_at?: string
           last_checkin_on?: string | null
+          last_checkin_part?: number | null
         }
         Update: {
           id?: string
           last_active_at?: string
           last_checkin_on?: string | null
+          last_checkin_part?: number | null
         }
         Relationships: []
       }
@@ -99,7 +102,7 @@ export type Database = {
     Functions: {
       delete_own_account: { Args: never; Returns: undefined }
       purge_inactive_accounts: { Args: { p_days?: number }; Returns: number }
-      submit_weather: { Args: { p_weather: string; p_province?: string }; Returns: undefined }
+      submit_weather: { Args: { p_weather: string; p_province?: string }; Returns: number }
       weather_today: {
         Args: never
         Returns: {

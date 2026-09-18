@@ -8,9 +8,9 @@ De inhoudelijke besluiten staan niet hier: wat we opslaan staat in `datamodel.md
 
 ## 1. Hoe de backend in elkaar zit
 
-De hele backend is op dit moment vier migratiebestanden in `supabase/migrations/`. Dat is geen tussenstand maar het ontwerp: klein, leesbaar, en elke wijziging is een bestand met een review erop.
+De hele backend is op dit moment zes migratiebestanden in `supabase/migrations/`. Dat is geen tussenstand maar het ontwerp: klein, leesbaar, en elke wijziging is een bestand met een review erop.
 
-Het idee in één alinea: het persoonlijke weerbeeld blijft op het toestel en wordt aan het eind van de dag gewist. De server kent maar twee dingen. Eén: **anonieme totalen**, per dag, uurblok en weerbeeld hoeveel inzendingen er waren; een inzending telt op bij een totaal en krijgt geen eigen rij. Twee: op het profiel **de datum van de laatste check-in**, zodat iemand één keer per dag meetelt. Tussen die twee loopt geen verbinding, en de tabellen zijn zo gebouwd dat die verbinding er ook niet bij kán: er is in de collectieve tabel geen kolom die een gebruiker of een exact moment kan aanduiden, en geen rij die één inzending vertegenwoordigt.
+Het idee in één alinea: het persoonlijke weerbeeld blijft op het toestel en wordt aan het eind van de dag gewist. De server kent maar twee dingen. Eén: **anonieme totalen**, per dag, uurblok, weerbeeld en provincie hoeveel inzendingen er waren; een inzending telt op bij een totaal en krijgt geen eigen rij. Twee: op het profiel **de datum en het dagdeel van de laatste bijdrage**, zodat iemand maximaal één keer per dagdeel meetelt (vóór en vanaf 12.00 uur, sinds 15 september 2026; inchecken zelf mag vaker). Tussen die twee loopt geen verbinding, en de tabellen zijn zo gebouwd dat die verbinding er ook niet bij kán: er is in de collectieve tabel geen kolom die een gebruiker of een exact moment kan aanduiden, en geen rij die één inzending vertegenwoordigt.
 
 ### Wat de app mag aanraken
 
@@ -18,15 +18,15 @@ Dit is de volledige API van de backend. Alles wat hier niet staat, is voor de ap
 
 | Handeling | Hoe | Wat het doet |
 |---|---|---|
-| Insturen | `rpc('submit_weather', { p_weather: 'zonnig' })` | Zet eerst het dagslot op het profiel, telt dan anoniem op bij het uurtotaal. Eén transactie. Tweede keer op een dag: foutmelding "vandaag al ingecheckt". |
+| Insturen | `rpc('submit_weather', { p_weather: 'zonnig', p_province: 'utrecht' })` | Zet eerst het slot per dagdeel op het profiel, telt dan anoniem op bij het uurtotaal. Eén transactie. Geeft het dagdeel terug (1 of 2). Tweede keer in hetzelfde dagdeel: foutmelding "dit dagdeel al bijgedragen"; de app werkt dan alleen het lokale weer bij. |
 | Weerbericht lezen | `rpc('weather_today')` | De percentages van vandaag, over de **afgesloten uurblokken**. Het lopende blok telt niet mee, zodat niemand een inzending live ziet binnenkomen. Geeft **nul rijen** onder de toondrempel; dat is meteen de empty state, ook voor 01:00. |
 | Weertypen lezen | `select` op `weather_type` | De vijf weerbeelden met hun labels. Alleen ingelogd; voor het inloggen heeft de app ze niet nodig. |
-| Eigen profiel lezen | `select` op de eigen rij in `profiles` | Voor `last_checkin_on`, zodat de check-in-knop uit kan staan als iemand al heeft ingecheckt. |
+| Eigen profiel lezen | `select` op de eigen rij in `profiles` | Mag, maar de app doet het niet: inchecken kan altijd, en of een bijdrage nog telt onthoudt de app lokaal uit het antwoord van `submit_weather`. |
 | Account verwijderen | `rpc('delete_own_account')` | Verwijdert de eigen rij in `auth.users`; profiel en sessies gaan mee via de cascade. Scherm 19. |
 
 Daarnaast is er één functie die de app **niet** mag aanroepen: `purge_inactive_accounts(p_days)`, de bewaartermijn van twee jaar. Alleen een beheerder of een geplande taak, en die planning is een open besluit.
 
-Schrijven op `profiles` kan niet vanuit de app, ook niet op je eigen rij: anders zet iemand zijn eigen dagslot terug. En `weather_hourly` is helemaal onzichtbaar: RLS staat aan en er is bewust geen enkele policy.
+Schrijven op `profiles` kan niet vanuit de app, ook niet op je eigen rij: anders zet iemand zijn eigen slot terug. En `weather_hourly` is helemaal onzichtbaar: RLS staat aan en er is bewust geen enkele policy.
 
 ### De tabellen
 
@@ -34,7 +34,7 @@ Schrijven op `profiles` kan niet vanuit de app, ook niet op je eigen rij: anders
 |---|---|---|
 | `weather_type` | De vijf weerbeelden: zonnig, wolken, mist, wind, regen | Referentiedata |
 | `weather_hourly` | Totalen: per dag, uurblok (0 tot 23) en weerbeeld hoeveel inzendingen. Geen id, geen code, geen tijdstip, geen rij per inzending. | Blijft staan: niet herleidbaar, dus geen termijn. Dagtotalen zijn een group by. |
-| `profiles` | `last_active_at` en `last_checkin_on`. Nergens staat wát iemand invulde. | Volgt het account |
+| `profiles` | `last_active_at`, `last_checkin_on` en `last_checkin_part` (dagdeel 1 of 2). Nergens staat wát iemand invulde. | Volgt het account |
 
 Waarom er geen rij per inzending is en geen tijdstip, staat uitgelegd in `datamodel.md`. De korte versie: de platformlogs bevatten bij elk verzoek wie het deed en wanneer, dus alles wat een inzending aanwijsbaar maakt is een sleutel naar die logs: een tijdstip, een rij-id, en zelfs de invoegvolgorde van losse rijen. Een totaal kent geen volgorde en geen geschiedenis, dus die sleutel bestaat niet meer.
 
