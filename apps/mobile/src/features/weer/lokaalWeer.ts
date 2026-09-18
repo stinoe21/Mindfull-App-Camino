@@ -49,11 +49,6 @@ function tijdNu(): string {
   return String(nu.getHours()).padStart(2, "0") + ":" + String(nu.getMinutes()).padStart(2, "0");
 }
 
-/** "08:15" naar "08.15", zoals de tijd in de app geschreven wordt. */
-export function toonTijd(tijd: string): string {
-  return tijd.replace(":", ".");
-}
-
 export async function leesWeerVanVandaag(): Promise<Opgeslagen | null> {
   try {
     const raw = await AsyncStorage.getItem(SLEUTEL);
@@ -84,13 +79,5 @@ export async function bewaarWeerVanVandaag(weerbeeld: WeatherCode, bijgedragen: 
     await AsyncStorage.setItem(SLEUTEL, JSON.stringify(data));
   } catch {
     // Niet kunnen bewaren is geen reden om de flow te blokkeren.
-  }
-}
-
-export async function wisLokaalWeer(): Promise<void> {
-  try {
-    await AsyncStorage.removeItem(SLEUTEL);
-  } catch {
-    // stil
   }
 }

@@ -66,13 +66,3 @@ export async function bepaalProvincieViaLocatie(): Promise<LocatieUitkomst> {
     return { status: "mislukt" };
   }
 }
-
-/** Of de toestemming al eerder gegeven is, zonder opnieuw te vragen. */
-export async function locatieToegestaan(): Promise<boolean> {
-  try {
-    const { status } = await Location.getForegroundPermissionsAsync();
-    return status === "granted";
-  } catch {
-    return false;
-  }
-}
