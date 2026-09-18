@@ -33,6 +33,7 @@ import { Slider } from "@mind/ui/components/Slider";
 import { TerugKnop } from "@mind/ui/components/TerugKnop";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { meet } from "@/features/meten/meet";
 import { bewaarInstellingen, leesInstellingen } from "@/features/profiel/instellingen";
 import { leesWaarden, resetWaarden, zetWaarde } from "@/features/weer/checkinSessie";
 import { CheckinHeroLaag, CheckinVlieger, WeerWoord } from "@/features/weer/CheckinBeeld";
@@ -117,6 +118,11 @@ export default function CheckInStap() {
 
   // Verandert het nummer in de URL terwijl het scherm al open staat (een
   // deeplink naar een andere vraag), dan volgt het scherm.
+  // Eén keer per check-in, niet per vraag.
+  useEffect(() => {
+    meet({ naam: "checkin_started" });
+  }, []);
+
   const startRef = useRef(start);
   useEffect(() => {
     if (startRef.current === start) return;
@@ -192,9 +198,12 @@ export default function CheckInStap() {
       }
       const ingestuurd = await stuurWeerIn(weerbeeld, provincie);
       resultaat = ingestuurd.resultaat;
+      // Of het insturen lukte, nooit wat er is ingestuurd.
+      meet({ naam: "weather_submit_result", item: ingestuurd.resultaat });
       dagdeel = ingestuurd.dagdeel;
     }
     await bewaarWeerVanVandaag(weerbeeld, dagdeel);
+    meet({ naam: "checkin_completed" });
     resetWaarden();
     zetBezig(false);
     // Direct door naar de uitkomst, zonder tussenscherm: feedback van Mind
@@ -204,6 +213,7 @@ export default function CheckInStap() {
   };
 
   const slaOver = () => {
+    meet({ naam: "checkin_skipped" });
     resetWaarden();
     router.replace("/dashboard");
   };

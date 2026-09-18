@@ -26,6 +26,7 @@ import { WeerIcoon } from "@mind/ui/components/WeerIcoon";
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { Poort } from "@/features/auth/Poort";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { meet } from "@/features/meten/meet";
 import { KAARTKLEUR } from "@/features/weer/kaartKleuren";
 import { isProvincie } from "@/features/weer/provincies";
 import { WEER_NAMEN } from "@/features/weer/teksten";
@@ -88,6 +89,9 @@ export default function Weerbericht() {
 
 function WeerberichtInhoud() {
   const router = useRouter();
+  useEffect(() => {
+    meet({ naam: "weather_map_opened" });
+  }, []);
   const t = useVertaling(teksten);
   const [stand, zetStand] = useState<WeerberichtStand | null>(null);
   const [provincies, zetProvincies] = useState<WeatherTodayProvince[]>([]);

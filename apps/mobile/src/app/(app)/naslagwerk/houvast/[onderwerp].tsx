@@ -9,11 +9,20 @@
 // (&tip=2), bijvoorbeeld vanaf een bewaarde tip op Houvast.
 
 import { useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
 
 import { OnderwerpScherm } from "@/features/content/OnderwerpScherm";
 import { houvastVoor } from "@/features/content/houvast";
+import { meet } from "@/features/meten/meet";
 
 export default function HouvastOnderwerp() {
   const { onderwerp } = useLocalSearchParams<{ onderwerp: string }>();
-  return <OnderwerpScherm onderwerp={houvastVoor(onderwerp)} />;
+  const gevonden = houvastVoor(onderwerp);
+  // De slug van het gevonden onderwerp, nooit de waarde uit de link: een
+  // deeplink kan elke tekst bevatten.
+  const slug = gevonden?.slug;
+  useEffect(() => {
+    if (slug) meet({ naam: "topic_opened", item: slug });
+  }, [slug]);
+  return <OnderwerpScherm onderwerp={gevonden} />;
 }

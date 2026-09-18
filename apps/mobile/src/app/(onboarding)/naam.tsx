@@ -20,6 +20,7 @@ import { TextField } from "@mind/ui/components/TextField";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
+import { meet } from "@/features/meten/meet";
 import { bewaarInstellingen, NAAM_MAX, schoonNaam } from "@/features/profiel/instellingen";
 
 const nl = {
@@ -48,6 +49,7 @@ export default function Naam() {
 
   const verder = async (bewaren: boolean) => {
     if (bewaren) await bewaarInstellingen({ naam: schoonNaam(naam) });
+    meet({ naam: "onboarding_step_completed", item: "naam" });
     router.push("/voorkeuren");
   };
 

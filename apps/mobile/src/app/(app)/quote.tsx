@@ -17,6 +17,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { quoteVanVandaag } from "@/features/content/data/quotes";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { meet } from "@/features/meten/meet";
 
 const nl = {
   overline: "QUOTE VAN DE DAG",
@@ -41,6 +42,7 @@ export default function QuotePagina() {
   const quote = quoteVanVandaag();
 
   const deel = () => {
+    meet({ naam: "quote_shared" });
     Share.share({ message: "“" + quote.tekst + "”\n" + quote.auteur + "\n\n" + t("deelNaschrift") });
   };
 

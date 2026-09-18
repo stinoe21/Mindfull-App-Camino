@@ -52,6 +52,7 @@ import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnd
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { meet } from "@/features/meten/meet";
 import { InhoudBlokken, type InhoudBlok } from "@/features/content/InhoudBlokken";
 import { isBewaard, leesBewaard, wisselBewaard, type BewaardeTip } from "@/features/content/bewaard";
 import { challengeBijFamilie, gidsenInGroep } from "@/features/content/families";
@@ -227,6 +228,8 @@ export function OnderwerpScherm({ onderwerp: houvast }: { onderwerp: Onderwerp |
   );
   const wissel = (positie: number) => {
     if (!slug) return;
+    // Alleen het bewaren telt, niet het weer weghalen, en alleen het onderwerp.
+    if (!isBewaard(bewaard, slug, positie)) meet({ naam: "tip_saved", item: slug });
     wisselBewaard(slug, positie).then(zetBewaard);
   };
 

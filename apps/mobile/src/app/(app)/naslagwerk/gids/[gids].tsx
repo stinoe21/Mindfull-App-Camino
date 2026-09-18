@@ -13,11 +13,19 @@
 // een onderwerp via onderwerpUitGids in features/content/houvast.ts.
 
 import { useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
 
 import { OnderwerpScherm } from "@/features/content/OnderwerpScherm";
 import { houvastVoor, houvastVoorGids } from "@/features/content/houvast";
+import { meet } from "@/features/meten/meet";
 
 export default function GidsScherm() {
   const { gids } = useLocalSearchParams<{ gids: string }>();
-  return <OnderwerpScherm onderwerp={houvastVoorGids(gids) ?? houvastVoor(gids)} />;
+  const gevonden = houvastVoorGids(gids) ?? houvastVoor(gids);
+  // De slug van de gevonden gids, nooit de waarde uit de link.
+  const slug = gevonden?.slug;
+  useEffect(() => {
+    if (slug) meet({ naam: "guide_opened", item: slug });
+  }, [slug]);
+  return <OnderwerpScherm onderwerp={gevonden} />;
 }

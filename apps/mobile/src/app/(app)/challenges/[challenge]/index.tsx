@@ -26,6 +26,7 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
 import { aantalAfgerond, laadVoortgang, vandaagAlAfgerond, wisChallenge } from "@/features/content/voortgang";
+import { meet } from "@/features/meten/meet";
 import { useOpenLink } from "@/features/systeem/openLink";
 
 const nl = {
@@ -139,8 +140,11 @@ export default function ChallengeDetail() {
       },
     ]);
 
-  const openDag = (nummer: number) =>
+  const openDag = (nummer: number) => {
+    // Begonnen is: dag 1 openen terwijl er nog niets is afgerond.
+    if (nummer === 1 && klaar === 0) meet({ naam: "challenge_started", item: challenge.slug });
     router.push({ pathname: "/challenges/[challenge]/dag/[dag]", params: { challenge: challenge.slug, dag: String(nummer) } });
+  };
 
   return (
     <ScreenCanvas

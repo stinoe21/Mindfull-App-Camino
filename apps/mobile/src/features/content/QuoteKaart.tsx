@@ -25,6 +25,7 @@ import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { PressableScale } from "@mind/ui/components/PressableScale";
 
+import { meet } from "../meten/meet.ts";
 import { quoteVanVandaag } from "./data/quotes.ts";
 
 export function QuoteKaart() {
@@ -32,6 +33,7 @@ export function QuoteKaart() {
   const quote = quoteVanVandaag();
 
   const deel = () => {
+    meet({ naam: "quote_shared" });
     Share.share({
       message: "“" + quote.tekst + "”\n" + quote.auteur + "\n\nQuote van de dag uit Weertje.",
     });

@@ -13,6 +13,7 @@ import { colors, space } from "@mind/ui";
 import { KeuzeVak } from "@mind/ui/components/KeuzeVak";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { meet } from "@/features/meten/meet";
 import { bewaarInstellingen, leesInstellingen, STANDAARD, type Instellingen } from "@/features/profiel/instellingen";
 import { InstellingenGroep } from "@/features/profiel/InstellingenRij";
 import { KeuzePagina } from "@/features/profiel/KeuzePagina";
@@ -43,6 +44,7 @@ export default function ProfielToestemmingen() {
   }, []);
 
   const wijzig = async (wijziging: Partial<Instellingen>) => {
+    if (wijziging.consentWeerbericht === false && inst.consentWeerbericht) meet({ naam: "weather_consent_withdrawn" });
     zetInst(await bewaarInstellingen(wijziging));
   };
 
