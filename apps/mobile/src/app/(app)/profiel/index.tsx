@@ -29,7 +29,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { useSessie } from "@/features/auth/sessie";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
-import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { ENGELS_BESCHIKBAAR, useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { leesInstellingen, STANDAARD, type Instellingen } from "@/features/profiel/instellingen";
 import { InstellingenGroep, InstellingenRij } from "@/features/profiel/InstellingenRij";
 
@@ -177,7 +177,8 @@ export default function Profiel() {
       </InstellingenGroep>
 
       <InstellingenGroep titel={t("groepApp")}>
-        <InstellingenRij label={t("taal")} onPress={() => router.push("/profiel/taal")} rechts={<Waarde tekst={taalWaarde} />} />
+        {/* Alleen zolang er iets te kiezen valt, zie ENGELS_BESCHIKBAAR. */}
+        {ENGELS_BESCHIKBAAR ? <InstellingenRij label={t("taal")} onPress={() => router.push("/profiel/taal")} rechts={<Waarde tekst={taalWaarde} />} /> : null}
         <InstellingenRij label={t("over")} onPress={() => router.push("/profiel/over")} laatste />
       </InstellingenGroep>
 

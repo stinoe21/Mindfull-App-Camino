@@ -21,7 +21,20 @@ import { bewaarInstellingen, leesInstellingen } from "@/features/profiel/instell
 
 export type Taal = "nl" | "en";
 
-export const TAAL_KEUZES: Taal[] = ["nl", "en"];
+/**
+ * Engels staat uit (Stijn, 18 september 2026). De bediening is vertaald, maar
+ * de toestemming, de Hulplijn, de check-in-vragen, de uitkomsten en alle
+ * content van MIND niet. Toestemming geven in een taal die iemand maar half
+ * leest is juridisch zwak, en een app die halverwege van taal wisselt leest
+ * als kapot. Tot MIND en Paul de Engelse kernteksten leveren is de app
+ * Nederlands, ook voor wie eerder Engels koos.
+ *
+ * Weer aanzetten is deze ene regel op true: de knop op het welkomscherm en de
+ * rij onder Profiel komen dan terug, en alle vertalingen staan er nog.
+ */
+export const ENGELS_BESCHIKBAAR: boolean = false;
+
+export const TAAL_KEUZES: Taal[] = ENGELS_BESCHIKBAAR ? ["nl", "en"] : ["nl"];
 
 /**
  * Een woordenboek voor één scherm: het Nederlands is de bron en bepaalt de
@@ -44,7 +57,7 @@ function laadEenmalig(): Promise<void> {
   if (!laden) {
     laden = leesInstellingen()
       .then((i) => {
-        const bewaard: Taal = i.taal === "en" ? "en" : "nl";
+        const bewaard: Taal = ENGELS_BESCHIKBAAR && i.taal === "en" ? "en" : "nl";
         if (bewaard !== keuze) {
           keuze = bewaard;
           meld();
@@ -56,6 +69,7 @@ function laadEenmalig(): Promise<void> {
 }
 
 export function kiesTaal(nieuw: Taal): void {
+  if (nieuw === "en" && !ENGELS_BESCHIKBAAR) return;
   keuze = nieuw;
   meld();
   // Bewust niet awaiten: de keuze werkt direct, en niet kunnen bewaren mag
