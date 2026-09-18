@@ -44,6 +44,7 @@ const nl = {
   meerOnderwerpen: "+{n}",
   provincie: "Provincie",
   provincieGeen: "Liever niet",
+  viaLocatie: "{provincie} (locatie)",
   groepApp: "App",
   taal: "Taal",
   taalSysteem: "Systeem",
@@ -78,6 +79,7 @@ const teksten: Woordenboek<typeof nl> = {
     meerOnderwerpen: "+{n}",
     provincie: "Province",
     provincieGeen: "Rather not",
+    viaLocatie: "{provincie} (location)",
     groepApp: "App",
     taal: "Language",
     taalSysteem: "System",
@@ -149,7 +151,11 @@ export default function Profiel() {
   const onderwerpenWaarde = inst.voorkeuren.length
     ? inst.voorkeuren.slice(0, 2).join(", ") + (inst.voorkeuren.length > 2 ? " " + t("meerOnderwerpen").replace("{n}", String(inst.voorkeuren.length - 2)) : "")
     : t("geenOnderwerpen");
-  const provincieWaarde = isProvincie(inst.provincie) ? PROVINCIE_NAMEN[inst.provincie] : t("provincieGeen");
+  const provincieWaarde = isProvincie(inst.provincie)
+    ? inst.provincieViaLocatie
+      ? t("viaLocatie").replace("{provincie}", PROVINCIE_NAMEN[inst.provincie])
+      : PROVINCIE_NAMEN[inst.provincie]
+    : t("provincieGeen");
   const taalWaarde = keuze === "nl" ? t("taalNederlands") : keuze === "en" ? t("taalEngels") : t("taalSysteem");
   const toestemmingWaarde =
     inst.consentWeerbericht === true ? t("weerberichtJa") : inst.consentWeerbericht === false ? t("weerberichtNee") : t("weerberichtGeen");
