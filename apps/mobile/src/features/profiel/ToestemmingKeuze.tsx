@@ -12,10 +12,12 @@
 // er als één formulier uitzien. Ze sluiten elkaar uit; een schermlezer hoort
 // dat via de rol "radio".
 //
-// Twee standen. In de onboarding (metUitleg) staat de volledige uitleg erbij,
-// want daar wordt de toestemming geïnformeerd gegeven. Op Instellingen is de
-// keuze al gemaakt en gaat het om intrekken of opnieuw geven: dan alleen de
-// vraag en de twee opties, met de uitleg achter "Lees de uitleg".
+// De uitleg van Paul staat achter "Lees de uitleg", direct onder de vraag en
+// dus vóór de keuze: één tik, en woordelijk. Tot 17 september 2026 stond hij
+// in de onboarding voluit op het scherm; Stijn, naast de onboarding van
+// Ommetje: "niet lappen tekst, die staan in de privacyverklaring". De vraag
+// zelf noemt al wie het verwerkt en waarvoor, en dat is de eerste laag van
+// een gelaagde privacymelding. Paul moet deze vorm nog zien.
 
 import { useState } from "react";
 import { View } from "react-native";
@@ -42,32 +44,27 @@ type Props = {
   /** null: nog geen keuze gemaakt, en dus geen toestemming. */
   waarde: boolean | null;
   onKies: (waarde: boolean) => void;
-  /** Volledige uitleg altijd zichtbaar (onboarding). Standaard ingeklapt. */
-  metUitleg?: boolean;
 };
 
-export function ToestemmingKeuze({ waarde, onKies, metUitleg = false }: Props) {
+export function ToestemmingKeuze({ waarde, onKies }: Props) {
   const [uitgeklapt, zetUitgeklapt] = useState(false);
-  const toonUitleg = metUitleg || uitgeklapt;
 
   return (
     <View style={{ gap: space[2] }}>
       {/* De vraag als vette bodytekst, niet als kop: het is een formulierveld. */}
       <AppText rol="bodyEmphasis">{TOESTEMMING_VRAAG}</AppText>
-      {toonUitleg ? <AppText rol="bodySmall" kleur="secondary">{TOESTEMMING_UITLEG}</AppText> : null}
+      <View style={{ alignItems: "flex-start" }}>
+        <Button
+          label={uitgeklapt ? "Verberg de uitleg" : "Lees de uitleg"}
+          variant="link"
+          onPress={() => zetUitgeklapt(!uitgeklapt)}
+        />
+      </View>
+      {uitgeklapt ? <AppText rol="bodySmall" kleur="secondary">{TOESTEMMING_UITLEG}</AppText> : null}
       <View accessibilityRole="radiogroup">
         <KeuzeVak rol="radio" label={TOESTEMMING_JA} gekozen={waarde === true} onPress={() => onKies(true)} />
         <KeuzeVak rol="radio" label={TOESTEMMING_NEE} gekozen={waarde === false} onPress={() => onKies(false)} />
       </View>
-      {!metUitleg ? (
-        <View style={{ alignItems: "flex-start" }}>
-          <Button
-            label={uitgeklapt ? "Verberg de uitleg" : "Lees de uitleg"}
-            variant="link"
-            onPress={() => zetUitgeklapt(!uitgeklapt)}
-          />
-        </View>
-      ) : null}
     </View>
   );
 }

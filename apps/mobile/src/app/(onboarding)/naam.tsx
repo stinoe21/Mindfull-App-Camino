@@ -11,15 +11,11 @@ import { useState } from "react";
 import { TextInput, View } from "react-native";
 
 import { colors, space, type } from "@mind/ui";
-import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
-import { MascotMain } from "@mind/ui/components/MascotMain";
-import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
-import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
-import { OnboardingVoortgang } from "@/features/onboarding/OnboardingVoortgang";
+import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
 import { bewaarInstellingen, NAAM_MAX, schoonNaam } from "@/features/profiel/instellingen";
 
 const nl = {
@@ -51,15 +47,7 @@ export default function Naam() {
   };
 
   return (
-    <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />} heroInhoud={<MascotMain hoogte={112} />}>
-      <OnboardingVoortgang stap={3} />
-      <View style={{ gap: space[1] }}>
-        <AppText rol="h1">{t("titel")}</AppText>
-        <AppText rol="subtitle">
-          {t("ondertitel")}
-        </AppText>
-      </View>
-
+    <OnboardingScherm stap={3} titel={t("titel")} uitleg={t("ondertitel")}>
       <Card tone="outline" style={{ paddingVertical: space[2] }}>
         <TextInput
           value={naam}
@@ -79,6 +67,6 @@ export default function Naam() {
       <View style={{ flex: 1 }} />
       <Button label={t("verder")} fullWidth onPress={() => verder(true)} />
       <Button label={t("slaOver")} variant="link" fullWidth onPress={() => verder(false)} />
-    </ScreenCanvas>
+    </OnboardingScherm>
   );
 }

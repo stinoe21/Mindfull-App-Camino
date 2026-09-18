@@ -48,7 +48,6 @@ const nl = {
   viaLocatie: "{provincie} (locatie)",
   groepApp: "App",
   taal: "Taal",
-  taalSysteem: "Systeem",
   taalNederlands: "Nederlands",
   taalEngels: "English",
   groepPrivacy: "Privacy",
@@ -80,7 +79,6 @@ const teksten: Woordenboek<typeof nl> = {
     viaLocatie: "{provincie} (location)",
     groepApp: "App",
     taal: "Language",
-    taalSysteem: "System",
     taalNederlands: "Nederlands",
     taalEngels: "English",
     groepPrivacy: "Privacy",
@@ -107,7 +105,7 @@ function Waarde({ tekst }: { tekst: string }) {
 export default function Profiel() {
   const router = useRouter();
   const t = useVertaling(teksten);
-  const { keuze } = useTaal();
+  const { taal } = useTaal();
   const [inst, zetInst] = useState<Instellingen>(STANDAARD);
   const [email, zetEmail] = useState<string | null>(null);
   const [geladen, zetGeladen] = useState(false);
@@ -154,7 +152,7 @@ export default function Profiel() {
       ? t("viaLocatie").replace("{provincie}", PROVINCIE_NAMEN[inst.provincie])
       : PROVINCIE_NAMEN[inst.provincie]
     : t("provincieGeen");
-  const taalWaarde = keuze === "nl" ? t("taalNederlands") : keuze === "en" ? t("taalEngels") : t("taalSysteem");
+  const taalWaarde = taal === "en" ? t("taalEngels") : t("taalNederlands");
   const toestemmingWaarde =
     inst.consentWeerbericht === true ? t("weerberichtJa") : inst.consentWeerbericht === false ? t("weerberichtNee") : t("weerberichtGeen");
 
