@@ -56,6 +56,8 @@ const nl = {
   hoeWeer: "Hoe is je weer vandaag?",
   jouwWeerOverline: "JOUW WEER VANDAAG",
   inchecken: "Inchecken",
+  // Wat het is en wat het oplevert, in één regel (gatenlijst P: "steeds zeggen waarom"). Voorstel; de check-in-copy is van Stijn.
+  waaromInchecken: "Vier korte vragen. Zo zie je hoe je er vandaag voor staat.",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien.",
   berichtRegel: "Vandaag vooral een {weer} in Nederland.",
@@ -76,6 +78,7 @@ const teksten: Woordenboek<typeof nl> = {
     hoeWeer: "How's your weather today?",
     jouwWeerOverline: "YOUR WEATHER TODAY",
     inchecken: "Check in",
+    waaromInchecken: "Four short questions. They show you how you are doing today.",
     weerVanNederland: "The mental weather of the Netherlands",
     weerVanNederlandSub: "Per province, the weather we see most today.",
     berichtRegel: "Mostly a {weer} in the Netherlands today.",
@@ -226,7 +229,10 @@ export default function Dashboard() {
         // heet "Inchecken", net als de tab (Stijn, 17 september 2026).
         <Card tone="white" style={{ flexDirection: "row", alignItems: "center", gap: space[3] }}>
           <View style={{ flex: 1, gap: space[3], alignItems: "flex-start" }}>
-            <AppText rol="labelOverline" kleur="brand">{t("jouwWeerOverline")}</AppText>
+            <View style={{ gap: space[1] }}>
+              <AppText rol="labelOverline" kleur="brand">{t("jouwWeerOverline")}</AppText>
+              <AppText rol="bodySmall" kleur="secondary">{t("waaromInchecken")}</AppText>
+            </View>
             <Button label={t("inchecken")} onPress={() => router.push("/check-in/1")} />
           </View>
           <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
