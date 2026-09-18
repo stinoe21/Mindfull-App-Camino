@@ -1,6 +1,8 @@
 # Mentale Weerbericht
 
-Projectinstructies voor Claude Code. Dit bestand laadt automatisch bij iedere sessie, bij alle drie de teamleden. Het is het contract waar we ons alle drie aan houden.
+Projectinstructies voor Claude Code. Dit bestand laadt automatisch bij iedere sessie. Het is het contract voor iedereen die aan deze repo werkt, mens of agent.
+
+**Sinds 10 september 2026 bouwt Stijn alleen verder.** Max en Caesar werken niet meer mee aan de code, krijgen sinds 18 september 2026 geen reviewverzoeken meer en hoeven niets goed te keuren. Een deel van de regels hieronder komt uit de tijd van drie bouwers; waar dat zo is, staat erbij wat er nu geldt.
 
 Lees bij twijfel het document dat bij je vraag hoort. Dit is de volledige lijst, er is niets daarbuiten.
 
@@ -17,7 +19,7 @@ Lees bij twijfel het document dat bij je vraag hoort. Dit is de volledige lijst,
 | Wat met Mind is afgesproken over privacy, en wat nog open staat | `docs/privacy-besluiten.md` |
 | Waar een afbeelding hoort, compressie, caching en egress | `docs/assets-en-media.md` |
 | Rate limits, misbruik, en waarom de check-in-teller persoonlijk moet zijn | `docs/limieten-en-misbruik.md` |
-| Wie waar eigenaar van is, hoe een taak eruitziet, dagritme | `docs/taakverdeling.md` |
+| Wie waar eigenaar van was, hoe een taak eruitziet. Geschiedenis sinds 10 september 2026 | `docs/taakverdeling.md` |
 | Eenmalige repo-instellingen, door de eigenaar | `docs/setup-github.md` |
 
 **Staat het antwoord in geen van deze bestanden, dan is het niet afgesproken.** Vraag ernaar, vul het niet zelf in. Dat geldt ook voor iets dat logisch of onvermijdelijk lijkt.
@@ -30,22 +32,22 @@ Zes skills laden automatisch: `werkwijze` (de git-workflow), `nieuwe-feature` (e
 
 ## 0. Stand van zaken, lees dit eerst
 
-**De app draait, maar er staat nog geen enkel scherm in.** Wat er wel staat:
+**De app is gebouwd en staat op `main`.** Stand 18 september 2026:
 
-- **De backend**, sinds 13 augustus 2026: het Supabase-schema in `supabase/`, de migraties, de seed met de vijf weerbeelden en het controlescript `supabase/tests/anonimisering.sql`.
-- **Het design system**, sinds 20 augustus 2026, in `packages/ui`: de tokens als CSS en als TypeScript, de assets, de vijf lettertypes en de volledige specificatie van 41 schermen in `packages/ui/reference`.
-- **De scaffold**, sinds 20 augustus 2026: Expo SDK 57 met expo-router in `apps/mobile`, als npm workspace naast `packages/ui` en `packages/types`. `npm install` en `npm start`, en hij draait op Expo Go en op de Simulator.
+- **De backend**, sinds 13 augustus 2026: het Supabase-schema in `supabase/`, zeven migraties, de seed met de vijf weerbeelden en het controlescript `supabase/tests/anonimisering.sql`.
+- **Het design system** in `packages/ui`: de tokens als CSS en als TypeScript, de assets, de vijf lettertypes, de specificatie in `packages/ui/reference`, en sinds 24 augustus 2026 ook de componenten in `packages/ui/components`.
+- **De app** in `apps/mobile`: Expo SDK 57 met expo-router. Alle schermen uit `docs/scope.md` zijn gebouwd, plus wat er sindsdien bij kwam; die lijst staat in `docs/scope.md` onder "Wat er sinds 20 augustus bij kwam". In de interface heet de app sinds 17 september 2026 **Weertje**; de configuratie heet nog "Mentale Weerbericht" tot MIND over de naam beslist.
 
 Wat dat concreet voor je betekent als je nu een taak oppakt:
 
-- **De tokens bestaan, de componenten nog niet.** `packages/ui/components` is leeg. Zoek een waarde op in `packages/ui/tokens` of met de skill `mind-design`, en leid er nooit een af. Er is een lint-regel in `eslint.config.js` die hardcoded kleur en typografie weigert.
-- **`npm run typecheck`, `npm run lint` en `npm test` bestaan en zijn groen.** De definition of done in sectie 7 is dus af te vinken, en dat is vanaf nu geen vrijblijvende stap meer.
-- **De twintig routebestanden van de userflow staan er**, in `apps/mobile/src/app`, allemaal leeg met een omschrijving en een verwijzing naar hun specificatie. Een feature bouwen is dat ene bestand vullen plus nieuwe bestanden ernaast zetten. Zie sectie 4.
-- **Elk scherm toont nu "NOG TE BOUWEN".** Dat komt uit `apps/mobile/src/components/NogTeBouwen.tsx`. Die component is scaffold en geen design system: bouw er niets op voort, en hij verdwijnt zodra het laatste routebestand gevuld is.
+- **Zoek eerst een component voor je er een bouwt**, in `packages/ui/components`, en een waarde in `packages/ui/tokens` of met de skill `mind-design`. Leid nooit zelf een waarde af. Er is een lint-regel in `eslint.config.js` die hardcoded kleur en typografie weigert.
+- **`npm run typecheck`, `npm run lint` en `npm test` zijn groen**, en dat blijft zo. De tests draaien met de testrunner van Node, zonder testdependency: ze dekken de tokens, het contrast en de logica van de app (de weerregel, de provincie bij een coördinaat, het zoeken, de zelftests, de versies). Nieuwe logica schrijf je in een puur `.ts`-bestand zonder React Native, met een `*.test.ts` ernaast.
+- **Feature-code staat in `apps/mobile/src/features/<feature>/`**, routes in `apps/mobile/src/app`.
+- **De hoofdmap op Stijns laptop is het live voorbeeld.** Metro draait daar en serveert zijn simulator en zijn telefoon. Bouw als agent in een eigen worktree, wissel in de hoofdmap niet van branch en commit er niet, en haal er na een merge alleen `git pull --ff-only` binnen.
 
-Er staat nog één ding voor, en dat is geen agent-taak:
+Wat er nog open staat is vooral geen bouwwerk:
 
-> **`docs/scope.md` bevestigen.** Het staat sinds 20 augustus 2026 grotendeels ingevuld, vanuit het design system en het whiteboard, maar het is een concept tot de drie het samen bevestigd hebben, en er staan nog enkele TODO's in. Zolang dat zo is, mag je op die punten geen productbeslissing nemen en is stoppen en vragen het juiste antwoord.
+> **De besluiten die bij MIND en Paul liggen.** De DPIA, de privacyverklaring, de voorwaarden, de naam, de ontwikkelaarsaccounts, het akkoord op de content, de positionering van de zelftests. Ze staan in `docs/privacy-besluiten.md` en `docs/scope.md`. Een productbeslissing neemt Stijn, een juridische Paul, en geen van beide neemt een agent.
 
 Word je gevraagd iets te bouwen waarvoor het antwoord in `scope.md` had moeten staan, zeg dat dan in plaats van alvast iets neer te zetten.
 
@@ -53,7 +55,7 @@ Word je gevraagd iets te bouwen waarvoor het antwoord in `scope.md` had moeten s
 
 ## 1. Wat dit project is
 
-Een mobiele app voor **Stichting Mind**, werktitel "Mentale Weerbericht", gebouwd door drie mensen tijdens het lopen van de Camino, zomer 2026.
+Een mobiele app voor **Stichting Mind**, werktitel "Mentale Weerbericht" en in de interface "Weertje", begonnen door drie mensen tijdens het lopen van de Camino, zomer 2026. Sinds 10 september 2026 bouwt Stijn alleen verder.
 
 - **Doel:** zie `docs/scope.md`. Is de scope daar nog niet ingevuld, vraag er dan naar in plaats van iets aan te nemen.
 - **Platform:** iOS en Android, via de App Store en de Play Store. Daarnaast een **webapp** voor de adminpagina van Mind en de analyticspagina voor het IT-departement. Die zitten dus niet in de app die gebruikers installeren, zie `docs/scope.md`.
@@ -77,15 +79,13 @@ https://www.figma.com/board/jwNUZRHmpKfqTCeUnFcVdP/MIND-Mentale-Weerbericht---Us
 
 Dit is de bron voor wat de app doet. Staat iets niet in `docs/scope.md`, lees dan dit board voordat je iets aanneemt.
 
-## 2. Hoe we met drie mensen werken
+## 2. Wie er werkt: Stijn, en soms meerdere agents tegelijk
 
-Wij zijn met z'n drieën en we werken in **één gedeelde GitHub-repo**. Ieder heeft een eigen lokale clone op een eigen laptop en een eigen Claude Code-sessie.
+Er is **één gedeelde GitHub-repo** en één bouwer: Stijn, met zijn eigen laptop en zijn eigen Claude Code-sessies. Tot 10 september 2026 waren dat drie mensen met elk een eigen clone; veel regels in dit bestand bestaan om botsingen tussen hen te voorkomen. De botsingen zijn niet weg, ze zijn verhuisd:
 
-Dat betekent voor jou als agent:
-
-- Er werken op dit moment mogelijk **twee andere agents tegelijk** in dezelfde repo, op andere branches.
-- Alles wat jij aanraakt buiten de scope van je taak, kan het werk van iemand anders breken.
-- Je bent daarom **niet vrij** om code op te ruimen, te refactoren of te "verbeteren" buiten je taak. Zie sectie 5.
+- Er draaien soms **meerdere Claude Code-sessies tegelijk**, in dezelfde werkmap en tegen dezelfde database. Op 18 september 2026 kozen twee sessies hetzelfde tijdstempel voor een migratie.
+- Controleer daarom de branch vlak voor elke commit, werk in een eigen worktree, en kijk voor een migratie eerst met `gh pr list` en `supabase migration list --linked` wat een andere sessie al heeft klaargezet.
+- Alles wat jij aanraakt buiten de scope van je taak, kan het werk van een andere sessie breken. Je bent daarom **niet vrij** om code op te ruimen, te refactoren of te "verbeteren" buiten je taak. Zie sectie 5.
 
 Werken we vanuit een gedeelde cloudmap (iCloud, Drive, Dropbox)? Nee. Nooit. De git-checkout staat altijd in een gewone lokale map.
 
@@ -105,48 +105,47 @@ Kort:
 
 Je pusht als agent **nooit** rechtstreeks naar `main`. `main` is technisch beschermd, maar probeer het ook niet.
 
-Krijg je bij het rebasen elke keer conflicten, meld dat. Dat is geen git-probleem maar een teken dat de taken verkeerd gesneden zijn.
+Sinds 18 september 2026 is er geen verplichte review meer. Een agent mag een eigen pull request mergen als Stijn dat in de sessie heeft gezegd: met squash, en pas als de CI groen is (`gh pr checks <nummer> --watch`). Iets wat Stijn op beeld of op tekst wil beoordelen, zoals een ontwerp of dit bestand, blijft open staan tot hij het gezien heeft. Workflowbestanden, de ruleset en `supabase db push` doet Stijn zelf.
+
+Krijg je bij het rebasen elke keer conflicten, meld dat. Dat is geen git-probleem maar een teken dat twee sessies aan hetzelfde werken.
 
 ## 4. Hoe taken gesneden zijn
 
-De regel waar onze hele parallelle workflow op rust:
+De regel uit de tijd van drie bouwers was: een taak bestaat uit nieuwe bestanden plus hooguit één bestaand bestand. Zo kon er geen merge-conflict ontstaan. Met één bouwer is dat geen wet meer, maar de gedachte blijft:
 
-> **Een taak bestaat uit nieuwe bestanden plus hooguit één bestaand bestand.**
-
-Als dat waar is, kan er per definitie geen merge-conflict ontstaan, ongeacht wie er tegelijk werkt.
+> **Een pull request doet één ding, en is klein genoeg om in één keer te lezen.**
 
 Praktisch betekent dit:
 
-- Elk scherm uit de userflow heeft een leeg routebestand op de juiste plek, sinds 20 augustus 2026, zie de stand van zaken hierboven. Een feature bouwen is dat bestand vullen plus nieuwe bestanden ernaast zetten.
 - Feature-code staat in `apps/mobile/src/features/<feature>/` en nergens anders.
-- Moet je toch een gedeeld bestand wijzigen, dan is dat een **aparte, kleine pull request** die binnen een halfuur gemerged wordt. Niet als bijvangst van een feature.
-
-Kun je een taak niet uitvoeren zonder een gedeeld bestand aan te raken, **stop dan en meld het**. Ga niet alsnog je gang.
+- Moet je een gedeeld bestand wijzigen (de lijst staat in sectie 5), doe dat dan in een **eigen, kleine pull request** en zeg erbij waarom. Niet als bijvangst van een feature.
+- Werk dat Stijn op beeld moet beoordelen, zit in een eigen pull request, los van werk dat gewoon door kan.
 
 ## 5. Bestanden die je als agent niet aanraakt
 
-Wijzig deze nooit als onderdeel van een feature-taak. Ze horen in een eigen pull request van hun eigenaar (zie `docs/taakverdeling.md`):
+Wijzig deze nooit als bijvangst van een feature-taak. Ze horen in een eigen, kleine pull request, en alleen als Stijn erom vraagt of de taak er echt niet zonder kan:
 
 - `package.json` en de lockfile (dus: geen nieuwe dependencies zonder aparte PR)
 - `app.json` / `app.config.ts` en alles wat de build configureert
 - `packages/ui/tokens/**` (design tokens)
 - `supabase/migrations/**`
-- `.github/workflows/**`
+- `.github/workflows/**` (deze pusht alleen Stijn: een agent heeft er de rechten niet voor)
 - `CLAUDE.md`, `.mcp.json`, `.claude/**`
 - Auth- en sessielogica
 - De root layout van expo-router
 
 Verder:
 
-- Voeg **geen nieuwe dependency** toe. Vraag ernaar. Een package dat drie mensen moeten installeren op slechte wifi is duurder dan het lijkt.
-- Verwijder geen bestaande code die buiten je taak valt, ook niet als die dood lijkt. Iemand anders is er misschien mee bezig op een andere branch.
+- Voeg **geen nieuwe dependency** toe. Vraag ernaar. Elke dependency is onderhoud, een risico bij App Review en iets wat in Expo Go moet werken. Is er een akkoord, dan komt hij in een eigen pull request met alleen `package.json` en de lockfile.
+- Verwijder geen bestaande code die buiten je taak valt, ook niet als die dood lijkt. Een andere sessie is er misschien mee bezig op een andere branch.
 
 ## 6. Design en visuele consistentie
 
-Het grootste risico bij drie parallelle agents is dat het beeld uit elkaar loopt. Daarom:
+Het grootste risico bij parallelle agents is dat het beeld uit elkaar loopt. Daarom:
 
 - **Nooit hardcoded kleuren, spacing, radii, font sizes of shadows.** Altijd via de tokens uit `packages/ui/tokens`. Er staat een lint-regel op die dit weigert.
 - Bouw geen nieuwe component als er al een is. Zoek eerst in `packages/ui/components`.
+- Stijn beslist op beeld. Maak van een zichtbare wijziging een schermafbeelding in de simulator, en bij een ontwerpkeuze twee of drie varianten.
 - Elke nieuwe of gewijzigde component wordt toegevoegd aan het kitchen sink-scherm (`apps/mobile/src/app/_dev/kitchen-sink.tsx`) met al zijn states.
 - **Introduceer nooit zelf een icoon, illustratie of afbeelding.** De assetbibliotheek staat vast, ook de weer-iconen. Mis je iets, meld het.
 - Figma is de bron voor hoe iets eruitziet. De **build** hangt nooit af van een live Figma-query. Tokens en assets staan in de repo.
@@ -185,7 +184,7 @@ Wat er met Mind is afgesproken, wat nog open staat en wie daarvoor aan zet is: `
 
 - Schema-wijzigingen gaan **altijd** via een migratiebestand in `supabase/migrations/`, nooit via de dashboard-UI en nooit via een los `execute_sql`-commando tegen productie.
 - De Supabase MCP staat op `--read-only`. Dat is bewust. Wil je iets wijzigen, schrijf een migratie.
-- **We draaien Supabase niet lokaal.** Besloten op 13 augustus 2026: geen Docker, geen `supabase start`. Iedereen werkt tegen het gedeelde dev-project in de cloud, en dat kan omdat daar geen echte gebruikers op staan, zie `docs/privacy-besluiten.md`. Kijken doe je met de MCP, pushen met `supabase db push` via de CLI, met je eigen account. Zeg het even tegen de andere twee voordat je pusht: we delen die ene database, en we lopen naast elkaar.
+- **We draaien Supabase niet lokaal.** Besloten op 13 augustus 2026: geen Docker, geen `supabase start`. Alles werkt tegen het gedeelde dev-project in de cloud, en dat kan omdat daar geen echte gebruikers op staan, zie `docs/privacy-besluiten.md`. Kijken doe je met de MCP of de CLI. **Pushen doet Stijn**, met `supabase db push` en zijn eigen account. Een agent bereidt het voor vanuit de hoofdmap (alleen daar staat de koppeling): `supabase migration list --linked`, `supabase db push --linked --dry-run`, en na het pushen het controlescript en de types, zie `docs/backend-draaiboek.md`. Kies voor een nieuwe migratie een tijdstempel dat later is dan alles wat op afstand staat, ook van een andere sessie.
 - TypeScript-types worden gegenereerd uit het schema, niet met de hand geschreven.
 - Row Level Security staat aan op elke tabel met gebruikersdata. Een tabel zonder RLS is een bug.
 
@@ -198,13 +197,15 @@ Er zijn drie routes, en welke je pakt hangt af van wat je wil doen. Geen ervan v
 | Kijken: schema, tabellen, policies, logs | De MCP. Werkt die niet, dan het Supabase-dashboard in de browser, of de `supabase` CLI na `supabase login` met je eigen account. |
 | Types genereren | `supabase gen types typescript` via de CLI. Werkt zonder MCP. |
 | Schema wijzigen | **Altijd** een migratiebestand plus `supabase db push`. De CLI authenticeert met jouw account, niet met een key die alles mag. |
-| Vrij experimenteren, data schrijven, dingen stukmaken | Het **gedeelde dev-project**. Daar staan geen echte gebruikers en geen productiedata, dus stukmaken kan. Meld het wel even, want jullie delen die ene database met z'n drieën. |
+| Vrij experimenteren, data schrijven, dingen stukmaken | Het **gedeelde dev-project**. Daar staan geen echte gebruikers en geen productiedata, dus stukmaken kan. Meld het wel, want andere sessies delen die ene database. |
 
 > **Geen service role key op een laptop, en nooit voor een agent.** Die key omzeilt Row Level Security volledig, en RLS is precies het mechanisme dat de twee datastromen uit `datamodel.md` gescheiden houdt. Met zo'n key is één verkeerde join genoeg om de collectieve pool aan gebruikers-id's te koppelen, en dan is de anonimisering weg die we aan Mind hebben belegd.
 >
 > Drie laptops op wisselende wifi betekent drie kopieën van een sleutel die alles kan met mentale-gezondheidsdata, terwijl de DPIA nog loopt. De CLI met je eigen account op een dev-project zonder echte gebruikers lost hetzelfde probleem op zonder dat risico.
 >
 > De productie-service-role-key hoort alleen in de serveromgeving van de admin- en analyticspagina, en nooit in een `.env` naast de app.
+
+Dat geldt ook nu er één bouwer is (bevestigd op 18 september 2026): het risico hangt niet af van het aantal laptops. De CLI en de MCP werken met Stijns eigen login en respecteren RLS, en dat is genoeg.
 
 ## 10. MCP's
 

@@ -1,5 +1,7 @@
 # Onboarding
 
+> **Stand 18 september 2026:** sinds 10 september bouwt Stijn alleen verder. Deze handleiding is geschreven voor drie mensen die elk hun laptop inrichten, en blijft kloppen voor wie de repo opnieuw moet opzetten. Waar staat "met z'n drieën" of "de andere twee", lees: Stijn, en soms een tweede agentsessie.
+
 Deel dit bestand met de andere twee teamleden. Werk het van boven naar beneden af. Reken op ongeveer 45 minuten, plus de download van Xcode.
 
 Aan het eind heb je een draaiende app op je Simulator, met exact dezelfde MCP's, skills en projectinstructies als de rest van het team.
@@ -272,7 +274,7 @@ Daarna heb je twee routes, en ze werken allebei:
 
   Controleren: `xcode-select -p` hoort `/Applications/Xcode.app/Contents/Developer` te geven. Zonder deze stap start `npm start` gewoon, maar de `i` doet niets.
 
-Je ziet een app die je door de hele userflow laat lopen, met op elk scherm "NOG TE BOUWEN" en een omschrijving van wat daar hoort te komen. Dat is de bedoeling: de routes staan er, de schermen nog niet.
+Je ziet het welkomscherm van Weertje. Loop de onboarding door en je staat op Home. (Tot 24 augustus 2026 stond hier op elk scherm "NOG TE BOUWEN"; dat is voorbij.)
 
 **Controleer meteen het lettertype.** De koppen horen in Averia Serif Libre te staan, een licht handgetekende schreefletter. Zie je een gewone schreefloze systeemletter, dan zijn de fonts niet geladen en moet je dat eerst oplossen, want dan klopt straks geen enkel scherm. Kijk in `apps/mobile/src/theme/fonts.ts`.
 
@@ -290,7 +292,7 @@ npm run lint
 npm test
 ```
 
-`npm test` controleert de invarianten van het design system: dat elke typerol een echt lettertypebestand heeft, dat geen enkele rol zelf een gewicht draagt, en dat geen token een gemoedstoestand waardeert. Acht tests, allemaal groen.
+`npm test` controleert de invarianten van het design system (dat elke typerol een echt lettertypebestand heeft, dat geen enkele rol zelf een gewicht draagt, dat geen token een gemoedstoestand waardeert), het contrast van tekst op elk vlak, en de logica van de app: de weerregel, de provincie bij een coördinaat, het zoeken, de zelftests en de versies. Allemaal groen, zonder testdependency.
 
 Draai daarna in Claude Code:
 

@@ -10,11 +10,13 @@ Dit is dus geen tweede regelset. Bij twijfel of tegenspraak wint `CLAUDE.md`.
 
 ## Stand van zaken
 
-**De app draait, maar er staat nog geen enkel scherm in.** `apps/mobile` is gescaffold (Expo SDK 57, expo-router) en `npm run typecheck`, `npm run lint` en `npm test` zijn groen. De tokens staan in `packages/ui/tokens`, de componenten in `packages/ui/components` nog niet. De twintig routebestanden van de userflow staan er leeg, met per stuk een verwijzing naar hun specificatie.
+**De app is gebouwd en staat op `main`**, stand 18 september 2026: de backend in `supabase/`, het design system met tokens en componenten in `packages/ui`, en de app in `apps/mobile` (Expo SDK 57, expo-router) met alle schermen uit `docs/scope.md`. `npm run typecheck`, `npm run lint` en `npm test` zijn groen. In de interface heet de app Weertje.
 
-Sinds 20 augustus 2026 staat de contentbibliotheek van Mind in `content/mind/`: 339 pagina's naslag om in te zoeken. Let op: dat is **nog geen goedgekeurde contentbron voor de app**, zie `content/mind/LEESMIJ.md` voordat je er iets uit overneemt.
+**Sinds 10 september 2026 bouwt Stijn alleen verder.** Er is geen verplichte review meer, maar alles gaat nog steeds via een pull request met squash. Er draaien soms meerdere agentsessies tegelijk in dezelfde werkmap en tegen dezelfde database: werk in een eigen worktree en controleer je branch voor elke commit. Zie `CLAUDE.md` sectie 2.
 
-Wat nog moet: het concept in `docs/scope.md` bevestigen en de resterende TODO's daar beslissen, door het team en niet door een agent. Zie `CLAUDE.md` sectie 0. Word je gevraagd een productbeslissing te nemen die daar had moeten staan, meld dat dan in plaats van hem zelf te nemen.
+De contentbibliotheek van Mind staat in `content/mind/`: 339 pagina's naslag om in te zoeken. Sinds 10 september 2026 mag de challenge-inhoud in de app; lees voor al het andere eerst `content/mind/LEESMIJ.md` voordat je er iets uit overneemt.
+
+Wat open staat is vooral geen bouwwerk: de besluiten die bij MIND en Paul liggen, zie `docs/privacy-besluiten.md` en `docs/scope.md`. Een productbeslissing neemt Stijn, een juridische Paul, en geen van beide neemt een agent. Word je gevraagd zo'n beslissing te nemen, meld dat dan in plaats van hem zelf te nemen.
 
 ---
 
@@ -42,11 +44,9 @@ Vier regels die egress en laadtijd bepalen. De onderbouwing en de cijfers staan 
 
 Melden dat iets niet kan binnen deze grenzen is een geldig eindresultaat. Een taak half afmaken zonder het te melden is dat niet.
 
-## Eigenaarschap is geen schrijfrecht
+## Wie beslist
 
-In `docs/taakverdeling.md` staat per gebied één eindverantwoordelijke. Dat betekent dat die persoon reviewt en de knopen doorhakt.
-
-Het betekent **niet** dat alleen die persoon daar mag werken, en het betekent niet dat een wijziging van iemand anders geweigerd hoort te worden. We hebben daarom bewust geen verplichte Code Owner-review op de repo staan, zie `docs/setup-github.md`. Iedereen mag overal aan werken, met één review als kwaliteitscheck.
+Stijn. `docs/taakverdeling.md` beschrijft de verdeling over drie mensen tot 10 september 2026 en is sindsdien geschiedenis. Een agent mag een eigen pull request mergen als Stijn dat in de sessie heeft gezegd, pas als de CI groen is. Wat Stijn op beeld of op tekst wil beoordelen blijft open staan. Workflowbestanden, de ruleset en `supabase db push` doet Stijn zelf.
 
 ## Waar je de rest vindt
 
@@ -63,7 +63,7 @@ Het betekent **niet** dat alleen die persoon daar mag werken, en het betekent ni
 | Waar plaatjes horen, compressie en caching | `docs/assets-en-media.md` |
 | Rate limits en misbruik | `docs/limieten-en-misbruik.md` |
 | Wat met Mind is afgesproken over privacy | `docs/privacy-besluiten.md` |
-| Wie waar eigenaar van is | `docs/taakverdeling.md` |
+| Wie waar eigenaar van was, tot 10 september 2026 | `docs/taakverdeling.md` |
 | De git-workflow | `.claude/skills/werkwijze/SKILL.md` |
 
 ## Voor je klaar bent
