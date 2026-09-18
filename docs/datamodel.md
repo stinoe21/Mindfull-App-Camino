@@ -42,7 +42,7 @@ Afgestemd met de privacyofficer van Mind op 29 juli 2026 en verwerkt in het Figm
 | Bewaartermijn persoonsgegevens | Weg na 2 jaar inactiviteit, of eerder als de gebruiker zijn account zelf verwijdert. |
 | Inactiviteit meten | **Besloten op 30 juli 2026: we slaan het moment van laatste activiteit op.** Zonder dat veld is "weg na 2 jaar inactiviteit" niet te handhaven en beloof je in de privacyverklaring iets wat niemand uitvoert. De minimale vorm is **één tijdstip op het profiel dat elke keer overschreven wordt**, dus geen geschiedenis van wat iemand wanneer deed. Dat onderscheid is het hele punt: een laatste-activiteitsstempel is bewaartermijnadministratie, een logboek van sessies is gedragsdata. |
 | Bewaartermijn collectieve data | **Besloten op 13 augustus 2026: de uurtotalen blijven staan, zonder einddatum.** Ze zijn niet tot personen herleidbaar, dus er loopt geen termijn. De eerdere rollup naar dagtotalen (11 augustus) bestond als maatregel tegen het volgordelek van losse rijen, en dat lek bestaat niet meer; `weather_daily` en de rollup-functie zijn daarom geschrapt. Dagtotalen zijn voor de analyticspagina een group by op de uurtotalen. Wil Mind alsnog een termijn, dan is dat een kleine migratie; de vraag is aan Paul voorgelegd in de mail van 13 augustus. Verwijderen per gebruiker is er niet, want een totaal bevat geen losse inzendingen. Dit moet expliciet in de consent-tekst en de privacyverklaring staan. |
-| Analytics | Geen externe tool. Analyse en app-gebruik lopen via Supabase, met een beheerpagina buiten de app. |
+| Analytics | Geen externe tool. Analyse en app-gebruik lopen via Supabase, met een beheerpagina buiten de app. **Sinds 18 september 2026 (besluit Stijn) telt de app wat er gebeurt, als totalen per dag zonder gebruiker**, zie de sectie "Gebruikstotalen" en de tabellen `usage_event` en `usage_daily`. Paul kent dit nog niet, zie `privacy-besluiten.md`. |
 | n8n | Er gaan **geen persoonsgegevens** door n8n. Het landelijke weerbericht komt rechtstreeks uit Supabase. |
 | Crisis | Bewust **geen** proactieve escalatie bij structureel negatieve check-ins, want daarvoor zouden we juist de data moeten bewaren die we niet bewaren. Alleen de disclaimer en de hulpknop. Dit is een gedocumenteerde grens, geen omissie. |
 | Hulplijn | De WhatsApp-knop is een doorverwijzing naar Mind. Er gaat geen identiteit vanuit de app mee. WhatsApp valt onder Minds eigen voorwaarden en verwerkersovereenkomst, niet onder die van deze app. |
@@ -135,7 +135,7 @@ Welke schermen lezen dit? <lijst>
 
 ## Tabellen
 
-Vier tabellen, en wat er niet in staat, staat er bewust niet in. De rest van de dataflow, dus content, challenges en de twee consents, is nog niet ingevuld en staat onderaan bij de openstaande punten.
+Zes tabellen, en wat er niet in staat, staat er bewust niet in. De rest van de dataflow, dus content, challenges en de twee consents, is nog niet ingevuld en staat onderaan bij de openstaande punten.
 
 ### weather_type
 
@@ -198,6 +198,59 @@ Het uur staat in de tabel **voor Mind, niet voor de app**. `weather_today()` gee
 
 Er is bewust geen aparte archieftabel. `weather_daily` bestond als eindstation van een rollup na een jaar, maar die rollup was een maatregel tegen het volgordelek van losse rijen, en dat lek bestaat sinds de totalen niet meer. Dagtotalen voor de analyticspagina zijn een group by op `weather_hourly`.
 
+### usage_event
+
+```
+Tabel:            usage_event
+Waarvoor:         De vaste lijst gebeurtenissen die de app mag tellen, met per event welke items mogen.
+RLS:              Aan, zonder policy. De app leest deze tabel niet: hij kent de lijst als TypeScript-type
+                  (features/meten/events.ts). log_usage() gebruikt hem om een batch te controleren.
+
+Kolommen:
+  code       text    verplicht   Sleutel, object plus actie in de verleden tijd: topic_opened
+  item_kind  text    verplicht   'none' (geen item), 'list' (item moet in items staan) of 'slug'
+                                 (een vaste waarde uit de app in slugvorm)
+  items      text[]  optioneel   De toegestane items bij 'list', anders leeg
+
+Bevat gevoelige data?     Nee. Referentiedata, gaat over de app en niet over een persoon.
+Bewaartermijn:            Blijft. Hoort bij het schema; een event erbij is een migratie.
+Verwijderbaar door user?  Niet van toepassing.
+Welke schermen lezen dit? Geen scherm in de app. Het dashboard van MIND, zodra dat er is.
+```
+
+### usage_daily
+
+```
+Tabel:            usage_daily
+Waarvoor:         Wat er in de app gebeurt, als totalen per dag, event en item.
+RLS:              Aan, en zonder één policy. Niemand leest of schrijft rechtstreeks.
+                  Schrijven loopt via log_usage(). Lezen komt met het dashboard, via een
+                  functie die de drempel van 10 toepast; tot dan leest niemand.
+
+Kolommen:
+  day    date     verplicht   De kalenderdag waarop het gebeurde, van het toestel. Alleen afgesloten
+                              dagen, hooguit zeven dagen terug; log_usage() weigert de rest
+  event  text     verplicht   Verwijst naar usage_event.code
+  item   text     verplicht   Een vaste waarde uit de app: een slug, een routepatroon, ja of nee.
+                              Leeg voor events zonder item. Nooit vrije tekst
+  total  integer  verplicht   Hoe vaak, minimaal 1
+
+Bevat gevoelige data?     Nee, om dezelfde reden als weather_hourly: er is geen kolom die een persoon
+                          kán aanduiden, geen tijd fijner dan een dag, en geen rij die één gebeurtenis
+                          of één gebruiker vertegenwoordigt. Een item kan wel een thema uit de
+                          geestelijke gezondheid zijn ("topic_opened: angst"); dat is een gegeven over
+                          de app en niet over een persoon zolang het een totaal is. Daarom de drempel
+                          bij het lezen, en daarom nooit een tweede dimensie naast het item.
+Bewaartermijn:            Geen: de totalen zijn niet herleidbaar. Wil MIND een termijn, dan is dat een
+                          kleine migratie; zelfde vraag als bij weather_hourly.
+Verwijderbaar door user?  Nee, en dat kan ook niet: een totaal bevat geen losse gebeurtenissen. Wie niet
+                          wil meetellen zet het meten uit onder Profiel; dan wordt er ook lokaal niets
+                          geteld. Dit moet in de privacyverklaring staan.
+Welke schermen lezen dit? Geen scherm in de app. Het dashboard van MIND, zodra dat er is.
+```
+
+Dezelfde twee platforminstellingen als bij `weather_hourly` gelden hier: **PITR uit** en **realtime uit**.
+
 ### profiles
 
 ```
@@ -213,9 +266,12 @@ Kolommen:
   last_checkin_on    date         optioneel  Datum van de laatste bijdrage aan het landelijke beeld. Geen weerbeeld, geen historie.
   last_checkin_part  smallint     optioneel  Dagdeel van die bijdrage: 1 (vóór 12.00) of 2 (vanaf 12.00), Europe/Amsterdam.
                                              Sinds 15 september 2026. Wordt overschreven; geen tijdstip, geen historie.
+  last_usage_on      date         optioneel  Datum van de laatste batch gebruikstotalen. Sinds 18 september 2026. Het slot van
+                                             één batch per account per dag. Wordt overschreven; geen inhoud, geen tijdstip, geen historie.
 
 Bevat gevoelige data?     Persoonsgegevens ja, gezondheidsgegevens nee. Er staat nergens in deze
-                          tabel wát iemand heeft ingevuld, alleen dát hij in een dagdeel heeft bijgedragen.
+                          tabel wát iemand heeft ingevuld of gedaan, alleen dát hij in een dagdeel heeft bijgedragen
+                          en dát hij op een dag een batch gebruikstotalen instuurde.
 Bewaartermijn:            Weg na 2 jaar inactiviteit, gemeten aan last_active_at, of eerder als de
                           gebruiker zijn account zelf verwijdert. De opruiming is de functie
                           purge_inactive_accounts() (sinds 26 augustus 2026), niet aanroepbaar
@@ -226,6 +282,8 @@ Verwijderbaar door user?  Ja, via Profiel en instellingen, scherm 19. Dat roept 
 Welke schermen lezen dit? Geen. De app leest deze rij niet; het slot werkt in submit_weather()
                           en de app onthoudt lokaal in welk dagdeel een check-in al telde.
 ```
+
+Sinds 18 september 2026 werkt ook `log_usage()` `last_active_at` bij. Tot dan deed alleen een check-in dat, en wie geen toestemming gaf voor het weerbericht leek daardoor altijd inactief: zo iemand zou na twee jaar door de opruiming verdwijnen terwijl hij de app gewoon gebruikte. Wie het meten uitzet en ook niet bijdraagt aan het weerbericht, heeft dat probleem nog steeds; dat hoort opgelost te zijn voordat de opruiming wordt ingepland.
 
 Komen er later velden bij die de gebruiker zelf mag wijzigen, dan geef je daar een grant **per kolom** op. Niet een update-policy op de hele tabel, want dan komen `last_checkin_on` en `last_checkin_part` er ongemerkt bij.
 
@@ -249,6 +307,52 @@ Welke schermen lezen dit? De poort achter de onboarding (features/auth/Poort.tsx
 ```
 
 Sinds 18 september 2026 (besluit Stijn). `submit_weather()` is al twee keer van vorm veranderd; staat de app in de stores, dan is dit de enige manier om een oude versie te vragen bij te werken, of om tijdens onderhoud iets anders te tonen dan een foutmelding. De app faalt open: zonder netwerk of antwoord gaat hij gewoon door.
+### Gebruikstotalen: wat er in de app gebeurt
+
+**Besloten door Stijn op 18 september 2026.** Tot dan stond in `scope.md` "geen enkel event". MIND wil kunnen zien wat werkt; zonder cijfers weet niemand welke tips gelezen worden, waar mensen afhaken in de onboarding of hoe vaak de Hulplijn geopend wordt. De migratie is `usage_daily_totals`. **Paul kent dit nog niet**, zie `privacy-besluiten.md`.
+
+Het principe is dat van het weerbericht: **we tellen gebeurtenissen, geen mensen.**
+
+1. **Een scherm roept één functie aan**, `meet()` in `features/meten`, en weet verder niets. Schermweergaven gaan automatisch, vanuit de root layout, op het routepatroon en nooit op het pad met de waarde erin.
+2. **De app telt lokaal**, per dag, event en item. Er staat op het toestel geen tijdstip en geen volgorde, alleen tellers. Ze gaan mee met uitloggen, met account verwijderen en met het wissen van de app.
+3. **Eén batch per dag, en alleen van afgesloten dagen.** Gaat de app naar de achtergrond en staat er een afgesloten dag klaar, dan gaan alle tellers in één aanroep naar `log_usage()`. Het moment van die aanroep staat in de platformlogs naast het account, maar zegt niets over wanneer iemand iets deed, en de inhoud staat er niet in: die zit in de body, en Postgres logt hier geen parameters (gecontroleerd op 18 september 2026: `log_statement = ddl`).
+4. **De server telt op en vergeet.** Eerst het slot `profiles.last_usage_on` (één batch per account per dag, tegen opblazen), dan het optellen, in één transactie. Wat niet klopt wordt overgeslagen: een onbekend event, een item dat niet mag, een dag die niet afgesloten is of ouder dan zeven dagen, een aantal boven de 200 per sleutel wordt afgetopt.
+5. **Lezen komt later, met een drempel van 10.** Deze migratie geeft niemand leesrecht. Het dashboard krijgt een eigen rol en leesfuncties die geen totaal onder de 10 teruggeven, en ook geen totaal waaruit je zo'n cel kunt terugrekenen.
+
+**Toestemming.** Het meten staat aan, wordt in de onboarding en de privacy-uitleg in gewone taal genoemd, en kan uit onder Profiel (`instellingen.metenAan`). Staat het uit, dan wordt er ook lokaal niets geteld. De gedachte is dat dit onder de uitzondering voor privacyvriendelijke analytics uit artikel 11.7a Telecommunicatiewet valt: geen derde partij, geen id, geen profiel, alleen totalen. **Of dat hier opgaat is aan Paul**; zegt hij nee, dan wordt het een aparte vraag die standaard uit staat, en dat is één regel in de app.
+
+**Wat er geteld wordt.** De vaste lijst staat in `usage_event` en in `features/meten/events.ts`; die twee horen gelijk te lopen. Namen zijn object plus actie in de verleden tijd.
+
+| Deel | Events | Item |
+|---|---|---|
+| App | `app_opened_day`, `app_opened_week`, `app_opened_month`, `screen_viewed` | platform (`ios`, `android`) bij de dag; het routepatroon bij een schermweergave |
+| Onboarding | `onboarding_step_completed`, `account_created`, `weather_consent_answered`, `location_permission_answered` | de stap; de inlogroute; ja of nee |
+| Check-in | `checkin_started`, `checkin_completed`, `checkin_skipped`, `weather_submit_result`, `outcome_shared`, `weather_map_opened` | alleen bij het resultaat van het insturen: gelukt, al-bijgedragen, mislukt, niet-verbonden, niet-ingelogd |
+| Tips | `topic_opened`, `article_opened`, `guide_opened`, `tip_saved`, `external_link_opened`, `search_performed`, `search_no_results` | de slug; bij een link het domein; bij zoeken niets |
+| Challenges, zelftests, quote | `challenge_started`, `challenge_day_completed`, `challenge_completed`, `selftest_started`, `selftest_completed`, `quote_shared` | de slug; bij een challengedag `slug/dagnummer` |
+| Hulplijn en toestemming | `helpline_opened`, `helpline_channel_tapped`, `weather_consent_withdrawn` | het kanaal: bellen, whatsapp, chat, mail, luisterlijn, 113 |
+
+Actieve gebruikers tellen we zonder id: het toestel stuurt één keer per dag "vandaag voor het eerst geopend", en hetzelfde per week en per maand. De events van vóór het inloggen (de leeftijdsvraag, het begin van het account) wachten op het toestel en gaan mee na het inloggen. Wie vóór het account afhaakt, stuurt dus nooit iets in, en wie onder de 16 is ook niet: anonieme bezoekers mogen de server niet aanroepen, en dat blijft zo.
+
+**Wat er nooit geteld wordt**, in geen enkele vorm:
+
+- Het weerbeeld, buiten `weather_hourly` om. Ook niet als item bij `checkin_completed`: dat zou het weer meetellen van wie nee zei op het delen. `anonimisering.sql` controleert dat geen event een weerbeeld als item toelaat.
+- De vier sliderwaarden, een zelftestscore of een uitslagcategorie.
+- De zoekterm, de naam, of welke tekst dan ook die iemand intypt.
+- De provincie bij een event, of iets fijner dan een dag.
+- Een tweede dimensie naast het item, zoals "geopend vanaf de uitkomst". Wat op de uitkomst staat hangt af van het weer, dus die kruising zegt alsnog iets over het weer.
+- Een id, een hash of een vingerafdruk die tellingen aan elkaar knoopt. Ook geen dagelijks wisselende: zie `limieten-en-misbruik.md`.
+
+**Nog niet besloten, en dus niet gebouwd:** `interest_selected` (interesses zijn hier thema's uit de geestelijke gezondheid), `crisis_term_searched` (alleen een teller, maar kleine aantallen) en `selftest_helproute_shown` (het gevoeligste getal van de lijst). Alle drie gaan eerst langs Paul. Uitstroom (`account_deleted`) kan de app niet tellen, want na het verwijderen is er geen account meer om een batch mee in te sturen; dat hoort, als MIND het wil, aan de serverkant.
+
+#### Wat de dagtotalen niet oplossen
+
+Net als bij het uurblok hoort dit in de DPIA en niet weggepoetst te worden.
+
+- **Een batch werkt meerdere totalen tegelijk bij.** De systeemkolom `xmin` verraadt achteraf welke rijen in dezelfde transactie zijn bijgewerkt. Bij `weather_hourly` is dat één rij per transactie en valt er niets te groeperen. Hier zou het de dag van een naamloze gebruiker bij elkaar leggen (dit onderwerp, die zelftest, de Hulplijn), zolang geen latere batch dezelfde rijen raakt, en via de platformlogs is zo'n batch aan een account te koppelen zolang die logs bestaan. Daarom herschrijft `usage_scrub()` alle totalen van de laatste dagen in één keer, zodat ze dezelfde `xmin` krijgen. `log_usage()` doet dat bij ongeveer één op de tien batches. Dat sluit het venster niet, het maakt het kort. Komt er ooit een planner (pg_cron, zelfde besluit als bij de opruiming), dan hoort dit elke nacht te draaien.
+- **Wie live meekijkt, ziet welke totalen ophogen.** Zelfde restrisico als bij het weer, met dezelfde begrenzing: de logbewaartermijn van het platform en wie er bij het dashboard van Supabase kan. Het verschil is dat hier een hele dag in één keer zichtbaar is. Dat is een reden te meer voor beperkte dashboardtoegang.
+- **Een zeldzaam item is een kleine cel.** Een onderwerp dat op een dag één keer geopend is, staat er als totaal 1. De drempel bij het lezen verbergt dat voor MIND, niet voor wie in de database zelf kan kijken.
+- **De tellers zijn een indicatie.** Het slot begrenst één account tot één batch per dag en 200 per sleutel, maar wie veel accounts maakt kan de cijfers sturen. Zelfde grens als bij het weerbericht, zie `limieten-en-misbruik.md` sectie 3.
 
 ### Nog niet ingevuld
 
@@ -289,7 +393,10 @@ Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat w
 - [x] Slaan we vrije tekst op over iemands gemoedstoestand? **Nee.** De check-in werkt met een weer-metafoor en vaste antwoordopties, juist om buiten de bijzondere persoonsgegevens te blijven. De precieze vraagvorm ligt nog bij Mind.
 - [x] Wat is de bewaartermijn per tabel? Persoonsgegevens weg na 2 jaar inactiviteit. De collectieve, geanonimiseerde weerdata blijft.
 - [x] Hoe verwijdert een gebruiker zijn account, en wat gebeurt er dan precies met zijn data? Zelf te verwijderen vanuit profiel en instellingen, waarna alles wat aan hem gekoppeld is weggaat. Zijn bijdrage aan het landelijke weerbericht blijft, want die is anoniem en dus niet terug te vinden. Dat laatste moet in de consent-tekst staan, anders beloof je iets wat je niet waarmaakt.
-- [x] Doen we aan analytics? Geen externe tool, alles via Supabase met een beheerpagina buiten de app. **Welke events precies staat nog open.** Elk event komt hier eerst als veld te staan voordat het gebouwd wordt.
+- [x] Doen we aan analytics? Geen externe tool, alles via Supabase met een beheerpagina buiten de app. **Welke events: besloten op 18 september 2026**, zie de sectie "Gebruikstotalen". Een event erbij komt eerst daar en in `usage_event` te staan voordat het gebouwd wordt.
+- [ ] **Valt het meten onder de uitzondering voor privacyvriendelijke analytics?** Het staat aan en kan uit. Paul moet bevestigen dat dat mag; anders wordt het een aparte vraag die standaard uit staat.
+- [ ] **De drie twijfelgevallen bij het meten:** `interest_selected`, `crisis_term_searched` en `selftest_helproute_shown`. Niet gebouwd tot Paul ze gewogen heeft.
+- [ ] **Wat toont het dashboard bij een klein aantal op de Hulplijn?** Onder de drempel niets tonen is veilig, maar verbergt juist het cijfer waar MIND om vraagt.
 - [x] **Welke weertypen bestaan er precies, en hoe heten ze?** **Beantwoord op 11 augustus 2026** vanaf het Figma-board, sectie "4 . Uitkomsten (weer-states)". Het zijn er vijf, wat klopt met de mail aan Paul van 7 augustus:
 
   | code | label | volgorde |
@@ -329,4 +436,6 @@ Deze lijst is net zo belangrijk als de tabellen zelf. Vul aan naarmate we beslis
 - **De vier sliderwaarden.** Die blijven op het toestel. Een vier-dimensionale waarde is een veel unievere vingerafdruk dan één uit vijf weerbeelden.
 - **Een persoonlijke historie van weerbeelden**, niet op de server en niet lokaal. Ook niet nu inchecken vaker per dag mag (15 september 2026): het toestel bewaart één record met het laatste weerbeeld, het tijdstip ervan en het dagdeel dat al meetelde, en overschrijft dat bij elke check-in. Het tijdstip blijft op het toestel en gaat nooit mee.
 - **Een vingerafdruk van het toestel of een hash die bijdragen aan elkaar knoopt.** Dat zou werken tegen manipulatie, en het is precies de sleutel die we niet willen. Zie `limieten-en-misbruik.md`.
+- **Wat één persoon in de app doet.** De gebruikstotalen (sinds 18 september 2026) kennen geen gebruiker, geen tijdstip en geen volgorde; op het toestel staan alleen tellers per dag. Er is geen pad, geen sessie en geen geschiedenis per persoon, niet op de server en niet lokaal.
+- **Een zoekterm, een zelftestscore of een weerbeeld als onderdeel van een telling.** Zie "Wat er nooit geteld wordt".
 - Alles wat we niet nodig hebben voor een functie die daadwerkelijk in v1 zit

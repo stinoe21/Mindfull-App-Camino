@@ -71,6 +71,10 @@ Verwacht er niet te veel van. Je ziet een piek, geen handtekening:
 
 Wat we er bewust **niet** tegen doen: een vingerafdruk van het toestel opslaan, of een hash die bijdragen aan elkaar knoopt. Dat zou werken, en het is precies de sleutel die we niet willen. Voor een app waarin het weerbericht een gespreksopener is en geen statistiek, is dit een acceptabele grens. Het hoort wel gemeld te worden als iemand het weerbericht ooit als onderzoeksdata wil gebruiken, want daarvoor is het niet geschikt.
 
+### Hetzelfde slot voor de gebruikstotalen
+
+Sinds 18 september 2026 telt de app wat er gebeurt en stuurt dat één keer per dag in, zie `datamodel.md`. Ook daar staat in de totalen geen gebruiker, dus ook daar hoort de begrenzing aan de persoonlijke kant: `profiles.last_usage_on`, één batch per account per dag, in dezelfde transactie als het optellen, met een plafond van 200 per sleutel per batch. Een roterende of dagelijks wisselende hash om unieke gebruikers te tellen, zoals sommige privacyvriendelijke analyticsdiensten doen, bouwen we niet: het is dezelfde sleutel in een ander alfabet.
+
 ## 4. De data-API heeft geen ingebouwde limiet per gebruiker
 
 Supabase begrenst wel bursts op platformniveau, maar er is **geen** rate limiting per gebruiker op PostgREST. Een ingelogde gebruiker kan dus zo vaak lezen als hij wil, en dat is egress.
