@@ -23,7 +23,6 @@ import { MOND, OGEN, VliegerMetGezicht, type Gezicht } from "@mind/ui/components
 import type { WeatherCode } from "@mind/types";
 
 import { DRUPPEL_A, DRUPPEL_B, RILLING_BUITEN, SLIERT_LAAG, SLIERT_LINKS, SLIERT_RECHTS, TWINKEL, WIND_TEGEN, ZONNETJE } from "./checkinGezichten";
-import { WEER_NAMEN } from "./teksten";
 
 // Een derde druppel en een tweede twinkel, in dezelfde lijn als de rest.
 const DRUPPEL_C = { d: "M14 12 q-2.6 4.5 0 6.5 q2.6 -2 0 -6.5 Z", vul: true };
@@ -47,5 +46,6 @@ const KLEUR: Record<WeatherCode, { lijf: string; schaduw: string }> = {
 };
 
 export function WeerVlieger({ weerbeeld, hoogte = 112 }: { weerbeeld: WeatherCode; hoogte?: number }) {
-  return <VliegerMetGezicht gezicht={GEZICHT[weerbeeld]} kleur={KLEUR[weerbeeld]} hoogte={hoogte} label={"Vlieger, " + WEER_NAMEN[weerbeeld].toLowerCase()} />;
+  // Zonder label: de weernaam staat er op de uitkomst en op Home als tekst naast.
+  return <VliegerMetGezicht gezicht={GEZICHT[weerbeeld]} kleur={KLEUR[weerbeeld]} hoogte={hoogte} />;
 }

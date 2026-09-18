@@ -39,9 +39,15 @@ type RijProps = {
   laatste?: boolean;
   /** Grijs en niet te tikken, met de omschrijving als uitleg waarom. */
   uit?: boolean;
+  /**
+   * De waarde die rechts staat, als tekst, voor de schermlezer. De rij wordt
+   * dan in één keer voorgelezen als "Naam, Stijn", zonder het pijltje.
+   */
+  waarde?: string;
 };
 
-export function InstellingenRij({ label, omschrijving, onPress, rechts, laatste = false, uit = false }: RijProps) {
+export function InstellingenRij({ label, omschrijving, onPress, rechts, laatste = false, uit = false, waarde }: RijProps) {
+  const voorgelezen = [label, waarde, omschrijving].filter(Boolean).join(", ");
   const inhoud = (
     <View
       style={{
@@ -66,7 +72,7 @@ export function InstellingenRij({ label, omschrijving, onPress, rechts, laatste 
   if (!onPress || uit) return inhoud;
 
   return (
-    <Pressable onPress={onPress} accessibilityRole="button" style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}>
+    <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={voorgelezen} style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}>
       {inhoud}
     </Pressable>
   );

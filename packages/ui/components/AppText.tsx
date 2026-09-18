@@ -37,6 +37,10 @@ const KOPROLLEN: ReadonlySet<Rol> = new Set<Rol>(["h1", "h2", "h3"]);
 export function AppText({ rol = "body", kleur = "primary", centreer = false, style, children, ...rest }: AppTextProps) {
   return (
     <Text
+      // Een kop is voor de schermlezer ook een kop: met de rotor van VoiceOver
+      // en de navigatie van TalkBack spring je dan van kop naar kop. Een scherm
+      // dat iets anders wil, geeft zelf een accessibilityRole mee.
+      accessibilityRole={KOPROLLEN.has(rol) ? "header" : undefined}
       {...rest}
       style={[
         type[rol],

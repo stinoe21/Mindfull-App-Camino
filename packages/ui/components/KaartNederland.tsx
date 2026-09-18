@@ -77,11 +77,17 @@ export type KaartNederlandProps = {
   /** De provincie die gekozen is: zij krijgt haar eigen inktlijn. */
   gekozen?: ProvincieCode | null;
   onPress?: (code: ProvincieCode) => void;
+  /**
+   * Wat een schermlezer bij een provincie voorleest, bijvoorbeeld "Drenthe,
+   * bewolkt". Zonder deze functie is het alleen de naam. De kleur en het
+   * icoon op de kaart zijn voor wie niet kijkt geen informatie.
+   */
+  labelVoor?: (code: ProvincieCode, naam: string) => string;
   /** Breedte in punten; de hoogte volgt de verhouding van de kaart. */
   breedte?: number;
 };
 
-export function KaartNederland({ kleuren = {}, icoon, gekozen, onPress, breedte = 240 }: KaartNederlandProps) {
+export function KaartNederland({ kleuren = {}, icoon, gekozen, onPress, labelVoor, breedte = 240 }: KaartNederlandProps) {
   const hoogte = (breedte * H) / W;
   const maat = Math.round(breedte * ICOON_DEEL);
   const gekozenProvincie = gekozen ? PROVINCIES.find((p) => p.code === gekozen) : undefined;
@@ -102,7 +108,8 @@ export function KaartNederland({ kleuren = {}, icoon, gekozen, onPress, breedte 
               d={p.d}
               fill={kleuren[p.code] ?? palette.yellow100}
               onPress={onPress ? () => onPress(p.code) : undefined}
-              accessibilityLabel={p.naam}
+              accessible
+              accessibilityLabel={labelVoor ? labelVoor(p.code, p.naam) : p.naam}
             />
           ))}
         </G>
@@ -116,7 +123,7 @@ export function KaartNederland({ kleuren = {}, icoon, gekozen, onPress, breedte 
             const x = ((p.cx + INKT) / (W + INKT * 2)) * breedte;
             const y = ((p.cy + INKT) / (H + INKT * 2)) * hoogte;
             return (
-              <View key={p.code} pointerEvents="none" style={{ position: "absolute", left: x - maat / 2, top: y - maat / 2 }}>
+              <View key={p.code} pointerEvents="none" accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={{ position: "absolute", left: x - maat / 2, top: y - maat / 2 }}>
                 {beeld}
               </View>
             );

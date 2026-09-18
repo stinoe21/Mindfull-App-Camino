@@ -18,6 +18,7 @@ import Svg, { Circle, Ellipse, Path } from "react-native-svg";
 import { palette } from "../tokens/tokens.ts";
 
 import { MascotteVlieger } from "./MascotteVlieger.tsx";
+import { beeldVoorSchermlezer } from "./toegankelijk.ts";
 
 const W = 129;
 const H = 99;
@@ -238,6 +239,8 @@ export type VliegerOnderwerpProps = {
   hoogte?: number;
   /** Eén vaste kleur in plaats van de kleur van de uitdrukking: de mascotte van de onboarding. */
   kleur?: { lijf: string; schaduw: string };
+  /** Wat een schermlezer voorleest. Zonder label is de vlieger versiering, zie toegankelijk.ts. */
+  label?: string;
 };
 
 export function uitdrukkingVoor(onderwerp?: string, slug?: string): Uitdrukking | undefined {
@@ -246,18 +249,25 @@ export function uitdrukkingVoor(onderwerp?: string, slug?: string): Uitdrukking 
   return undefined;
 }
 
-export function VliegerOnderwerp({ onderwerp, slug, uitdrukking, hoogte = 56, kleur: eigenKleur }: VliegerOnderwerpProps) {
+export function VliegerOnderwerp({ onderwerp, slug, uitdrukking, hoogte = 56, kleur: eigenKleur, label }: VliegerOnderwerpProps) {
   const gekozen = uitdrukking ?? uitdrukkingVoor(onderwerp, slug);
-  if (!gekozen) return <MascotteVlieger state="wolken" hoogte={hoogte} />;
-  return <VliegerMetGezicht gezicht={UITDRUKKINGEN[gekozen]} kleur={eigenKleur ?? KLEUR[gekozen]} hoogte={hoogte} label={"Vlieger, " + gekozen} />;
+  if (!gekozen) {
+    return (
+      <View {...beeldVoorSchermlezer(label)}>
+        <MascotteVlieger state="wolken" hoogte={hoogte} />
+      </View>
+    );
+  }
+  // Geen "Vlieger, gestrest" meer: het gezicht hoort bij het onderwerp, niet bij de lezer.
+  return <VliegerMetGezicht gezicht={UITDRUKKINGEN[gekozen]} kleur={eigenKleur ?? KLEUR[gekozen]} hoogte={hoogte} label={label} />;
 }
 
 export type VliegerMetGezichtProps = {
   gezicht: Gezicht;
   kleur: { lijf: string; schaduw: string };
   hoogte?: number;
-  /** Wat een schermlezer voorleest. */
-  label: string;
+  /** Wat een schermlezer voorleest. Zonder label is de vlieger versiering, zie toegankelijk.ts. */
+  label?: string;
 };
 
 /**
@@ -269,7 +279,7 @@ export function VliegerMetGezicht({ gezicht: g, kleur, hoogte = 56, label }: Vli
   const schaal = hoogte / H;
 
   return (
-    <View style={{ width: W * schaal, height: H * schaal }} accessibilityLabel={label}>
+    <View style={{ width: W * schaal, height: H * schaal }} {...beeldVoorSchermlezer(label)}>
       <MascotteVlieger state="wolken" hoogte={hoogte} kleur={kleur} />
       <Svg width={W * schaal} height={H * schaal} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", left: 0, top: 0 }}>
         {/* Het originele gezicht afdekken met de lijfkleur. */}

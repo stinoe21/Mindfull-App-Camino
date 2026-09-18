@@ -9,6 +9,7 @@ import { Image } from "expo-image";
 import { View } from "react-native";
 
 import { MascotMain } from "./MascotMain.tsx";
+import { beeldVoorSchermlezer } from "./toegankelijk.ts";
 
 export type InputStaat = "temperatuur" | "wind" | "zicht" | "wisselvallig";
 
@@ -36,7 +37,7 @@ export function MascotteInput({ state, hoogte = 128 }: MascotteInputProps) {
         source={BRONNEN[state]}
         contentFit="contain"
         style={{ height: hoogte, width: hoogte * BEELDVERHOUDING, maxWidth: "100%" }}
-        accessibilityLabel={"Vlieger bij de " + state + "-vraag"}
+        {...beeldVoorSchermlezer()}
       />
     </View>
   );
