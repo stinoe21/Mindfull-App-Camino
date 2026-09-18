@@ -17,20 +17,7 @@ import { Card } from "@mind/ui/components/Card";
 import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
-
-// Kanalen van de MIND Hulplijn, zoals op mindhulplijn.nl.
-const KANALEN = [
-  { label: "Bel 0900 - 1450", url: "tel:09001450" },
-  { label: "WhatsApp", url: "https://wa.me/31613863803" },
-  { label: "Chat op mindhulplijn.nl", url: "https://mindhulplijn.nl/" },
-  { label: "Mail hulplijn@wijzijnmind.nl", url: "mailto:hulplijn@wijzijnmind.nl" },
-];
-
-// Andere lijnen, zoals MIND ze zelf noemt.
-const ANDERE = [
-  { label: "Luisterlijn, 088 - 0767 000", url: "tel:0880767000" },
-  { label: "113 Zelfmoordpreventie, 0800 - 0113", url: "tel:08000113" },
-];
+import { ANDERE, KANALEN } from "@/features/hulplijn/kanalen";
 
 // Terug gaat via de terugknop op de hero (TerugNaarVorige); een tweede
 // "Terug" onderaan was dubbelop (Stijn, 10 september 2026).
