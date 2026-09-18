@@ -18,7 +18,7 @@
 // gebruiker; er gaat niets vanzelf weg.
 
 import { useRouter } from "expo-router";
-import { Share, View } from "react-native";
+import { View } from "react-native";
 
 import { palette, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
@@ -31,11 +31,8 @@ export function QuoteKaart() {
   const router = useRouter();
   const quote = quoteVanVandaag();
 
-  const deel = () => {
-    Share.share({
-      message: "“" + quote.tekst + "”\n" + quote.auteur + "\n\nQuote van de dag uit Weertje.",
-    });
-  };
+  // Eerst het deelscherm, dan pas het deelvenster: zie app/delen.tsx.
+  const deel = () => router.push({ pathname: "/delen", params: { soort: "quote" } });
 
   return (
     <View style={{ alignItems: "center", paddingVertical: space[4], gap: space[1] }}>
