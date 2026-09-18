@@ -22,6 +22,7 @@ import { CHALLENGES } from "@/features/content/data/challenges";
 import { ONDERWERP_PER_CHALLENGE } from "@/features/content/challengeOnderwerp";
 import { InhoudBlokken } from "@/features/content/InhoudBlokken";
 import { aantalAfgerond, laadVoortgang, markeerAfgerond, vandaagAlAfgerond } from "@/features/content/voortgang";
+import { meet } from "@/features/meten/meet";
 
 const nl = {
   nietGevonden: "Dag niet gevonden",
@@ -83,6 +84,11 @@ export default function ChallengeDag() {
   const isAfgerond = nummer <= klaar;
 
   const rondAf = () => {
+    // Alleen een dag die nog niet af was telt, en de challenge is af bij de laatste dag.
+    if (!isAfgerond) {
+      meet({ naam: "challenge_day_completed", item: challenge.slug + "/" + nummer });
+      if (nummer === challenge.dagen.length) meet({ naam: "challenge_completed", item: challenge.slug });
+    }
     markeerAfgerond(challenge.slug, nummer);
     router.replace({ pathname: "/challenges/[challenge]/afgerond", params: { challenge: challenge.slug } });
   };

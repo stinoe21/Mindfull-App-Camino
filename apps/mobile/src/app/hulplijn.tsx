@@ -7,7 +7,7 @@
 // De nummers en kanalen staan ook op die pagina; hier wordt niets verzonnen.
 // Wijzigt MIND de tekst, dan wijzigt hij hier, niet andersom.
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 
 import { space } from "@mind/ui";
@@ -18,6 +18,7 @@ import { ScreenCanvas } from "@mind/ui/components/ScreenCanvas";
 
 import { TerugNaarVorige } from "@/components/TerugNaarVorige";
 import { ANDERE, KANALEN, openKanaal, type Kanaal } from "@/features/hulplijn/kanalen";
+import { meet } from "@/features/meten/meet";
 
 // Het toestel kan het kanaal niet openen: dan staat het nummer of adres er
 // los onder, selecteerbaar, zodat je het kunt kopiëren of overtikken op een
@@ -37,6 +38,9 @@ export default function Hulplijn() {
   // Een toestel dat niet kan bellen of geen mailapp heeft (een tablet, de
   // simulator) deed niets. Nu staat het kanaal er dan uitgeschreven bij.
   const [lukteNiet, zetLukteNiet] = useState<Kanaal | null>(null);
+  useEffect(() => {
+    meet({ naam: "helpline_opened" });
+  }, []);
   const open = async (k: Kanaal) => zetLukteNiet((await openKanaal(k)) ? null : k);
   return (
     <ScreenCanvas state="default" terugKnop={<TerugNaarVorige />}>

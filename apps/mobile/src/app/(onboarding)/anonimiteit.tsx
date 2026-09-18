@@ -36,6 +36,7 @@ import { AppText } from "@mind/ui/components/AppText";
 import { Button } from "@mind/ui/components/Button";
 
 import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
+import { meet } from "@/features/meten/meet";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 import { ToestemmingKeuze } from "@/features/profiel/ToestemmingKeuze";
 import { bepaalProvincieViaLocatie } from "@/features/weer/locatie";
@@ -56,6 +57,7 @@ export default function Anonimiteit() {
     if (weerbericht === true) {
       const uitkomst = await bepaalProvincieViaLocatie();
       provincieViaLocatie = uitkomst.status !== "geweigerd";
+      meet({ naam: "location_permission_answered", item: provincieViaLocatie ? "ja" : "nee" });
       if (uitkomst.status === "ok") provincie = uitkomst.provincie;
     }
     await bewaarInstellingen({
@@ -64,6 +66,8 @@ export default function Anonimiteit() {
       provincieViaLocatie,
       onboardingAfgerond: true,
     });
+    meet({ naam: "weather_consent_answered", item: weerbericht === true ? "ja" : "nee" });
+    meet({ naam: "onboarding_step_completed", item: "toestemming" });
     zetBezig(false);
     router.dismissAll();
     router.replace("/dashboard");

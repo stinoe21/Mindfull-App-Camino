@@ -23,7 +23,7 @@
 // onder de twee tekens (docs/limieten-en-misbruik.md sectie 4).
 
 import { useFocusEffect, useRouter } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 
 import { space } from "@mind/ui";
@@ -38,6 +38,7 @@ import { TextField } from "@mind/ui/components/TextField";
 import { kaartKleurVoor, VliegerOnderwerp } from "@mind/ui/components/VliegerOnderwerp";
 
 import { useTaal, useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { meet } from "@/features/meten/meet";
 import { HulpBij113 } from "@/features/hulplijn/HulpBij113";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { familiesVoorVoorkeuren, type Familie } from "@/features/content/families";
@@ -199,6 +200,31 @@ export default function Houvast() {
   }
 
   const nood = zoekterm ? isCrisisZoekopdracht(zoekterm) : false;
+
+  // Geteld wordt dat er gezocht is, en of dat niets opleverde. Nooit de
+  // zoekterm. Eén keer per zoekbeurt, niet per toetsaanslag: een beurt loopt
+  // tot het veld weer leeg is, en "niets gevonden" telt pas als iemand daar
+  // anderhalve seconde op blijft staan.
+  const aantalGevonden = gevonden.length;
+  const zoektRef = useRef(false);
+  const leegGeteldRef = useRef(false);
+  useEffect(() => {
+    if (!zoekterm) {
+      zoektRef.current = false;
+      leegGeteldRef.current = false;
+      return;
+    }
+    if (!zoektRef.current) {
+      zoektRef.current = true;
+      meet({ naam: "search_performed" });
+    }
+    if (aantalGevonden > 0 || leegGeteldRef.current) return;
+    const timer = setTimeout(() => {
+      leegGeteldRef.current = true;
+      meet({ naam: "search_no_results" });
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [zoekterm, aantalGevonden]);
 
   const families = familiesVoorVoorkeuren(voorkeuren);
 

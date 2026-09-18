@@ -19,7 +19,7 @@
 // uitslag, los van de score. Zie features/content/zelftests.ts.
 
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 
 import { colors, palette, radius, space } from "@mind/ui";
@@ -37,6 +37,7 @@ import { isHulpantwoord, scoreVan, uitslagVoor, vraagtOmHulproute, zelftestVoor 
 import { HulpBij113 } from "@/features/hulplijn/HulpBij113";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { meet } from "@/features/meten/meet";
 import { useOpenLink } from "@/features/systeem/openLink";
 
 const nl = {
@@ -90,6 +91,15 @@ export default function ZelftestScherm() {
   const [fase, zetFase] = useState<Fase>("intro");
   const [index, zetIndex] = useState(0);
   const [antwoorden, zetAntwoorden] = useState<(number | undefined)[]>([]);
+
+  // Geteld wordt dat een test begonnen en afgerond is. Nooit een antwoord,
+  // nooit de score en nooit de uitslag: zie docs/datamodel.md.
+  const testSlug = test?.slug;
+  useEffect(() => {
+    if (!testSlug) return;
+    if (fase === "vragen") meet({ naam: "selftest_started", item: testSlug });
+    if (fase === "uitslag") meet({ naam: "selftest_completed", item: testSlug });
+  }, [fase, testSlug]);
 
   if (!test) {
     return (

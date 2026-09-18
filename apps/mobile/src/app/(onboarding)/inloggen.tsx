@@ -40,6 +40,7 @@ import { lijktOpEmail, MIN_WACHTWOORD, PAD_MAIL_BEVESTIGD, stuurBevestigingOpnie
 import { logInMet, type Aanbieder } from "@/features/auth/socialLogin";
 import { getSupabase } from "@/features/backend/client";
 import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
+import { meet } from "@/features/meten/meet";
 import { bewaarInstellingen, instellingenAlsBekend } from "@/features/profiel/instellingen";
 
 // De schakelaars, zie de kop van dit bestand. Zie docs/scope.md: aanzetten
@@ -154,6 +155,7 @@ export default function Inloggen() {
   // in één zin waarom.
   const verderNaInloggen = async (bestaandAccount = false) => {
     const instellingen = await bewaarInstellingen({ consentVoorwaarden: true });
+    meet({ naam: "onboarding_step_completed", item: "account" });
     if (instellingen.onboardingAfgerond) router.replace("/dashboard");
     else router.push(bestaandAccount ? { pathname: "/naam", params: { terug: "1" } } : "/naam");
   };
@@ -236,6 +238,9 @@ export default function Inloggen() {
       }
       return;
     }
+    // Een adres dat al bestond komt zonder identiteiten terug (Supabase verbergt
+    // dat het bestaat); dat is geen nieuw account.
+    if (data.user?.identities?.length) meet({ naam: "account_created", item: "email" });
     if (data.session) {
       await verderNaInloggen();
       return;

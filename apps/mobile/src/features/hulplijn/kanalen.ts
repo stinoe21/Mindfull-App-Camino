@@ -5,6 +5,8 @@
 
 import * as Linking from "expo-linking";
 
+import { meet } from "../meten/meet.ts";
+
 /**
  * overnemen is wat iemand kan overtikken of kopiëren als het toestel het
  * kanaal niet zelf kan openen. Het is telkens hetzelfde nummer of adres als
@@ -19,6 +21,16 @@ export const KANALEN: Kanaal[] = [
   { label: "Chat op mindhulplijn.nl", url: "https://mindhulplijn.nl/", overnemen: "mindhulplijn.nl" },
   { label: "Mail hulplijn@wijzijnmind.nl", url: "mailto:hulplijn@wijzijnmind.nl", overnemen: "hulplijn@wijzijnmind.nl" },
 ];
+
+// Onder welke naam een kanaal meetelt in de gebruikstotalen (docs/datamodel.md).
+const KANAAL_IN_TELLING: Record<string, "bellen" | "whatsapp" | "chat" | "mail" | "luisterlijn" | "113"> = {
+  "tel:09001450": "bellen",
+  "https://wa.me/31613863803": "whatsapp",
+  "https://mindhulplijn.nl/": "chat",
+  "mailto:hulplijn@wijzijnmind.nl": "mail",
+  "tel:0880767000": "luisterlijn",
+  "tel:08000113": "113",
+};
 
 // Andere lijnen, zoals MIND ze zelf noemt.
 export const ANDERE: Kanaal[] = [
@@ -39,6 +51,9 @@ export const ANDERE: Kanaal[] = [
  * eigen app van het toestel te openen, niet een venster in deze app.
  */
 export async function openKanaal(kanaal: Kanaal): Promise<boolean> {
+  // Geteld wordt dat het kanaal gekozen is, ook als openen daarna niet lukt.
+  const gekozen = KANAAL_IN_TELLING[kanaal.url];
+  if (gekozen) meet({ naam: "helpline_channel_tapped", item: gekozen });
   try {
     await Linking.openURL(kanaal.url);
     return true;

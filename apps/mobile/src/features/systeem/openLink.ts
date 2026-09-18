@@ -20,6 +20,7 @@ import { Alert } from "react-native";
 import { colors } from "@mind/ui";
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
+import { meet } from "@/features/meten/meet";
 
 const nl = {
   titel: "Deze link opent nu niet",
@@ -37,11 +38,16 @@ const teksten: Woordenboek<typeof nl> = {
 
 const isWebadres = (url: string): boolean => /^https?:\/\//i.test(url);
 
+// Alleen het domein telt mee in de gebruikstotalen, nooit het hele adres.
+const domeinVan = (url: string): string | null => /^https?:\/\/(?:www\.)?([^/?#:]+)/i.exec(url)?.[1]?.toLowerCase() ?? null;
+
 /** Opent een link. Geeft terug of het lukte; meldt zelf niets. */
 export async function openLink(url: string | null | undefined): Promise<boolean> {
   if (!url) return false;
   try {
     if (isWebadres(url)) {
+      const domein = domeinVan(url);
+      if (domein) meet({ naam: "external_link_opened", item: domein });
       await WebBrowser.openBrowserAsync(url, { controlsColor: colors.brandDefault, dismissButtonStyle: "done" });
     } else {
       await Linking.openURL(url);

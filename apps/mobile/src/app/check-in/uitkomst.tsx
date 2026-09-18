@@ -33,6 +33,7 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { houvastVoorArtikel } from "@/features/content/houvast";
 import { tipsBijWeer } from "@/features/content/weerNaarTips";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
+import { meet } from "@/features/meten/meet";
 import { dagdeelNu, leesWeerVanVandaag } from "@/features/weer/lokaalWeer";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
 import { WeerVlieger } from "@/features/weer/WeerVlieger";
@@ -130,6 +131,8 @@ export default function CheckInUitkomst() {
   const deel = () => {
     if (!tekst) return;
     // Delen is een keuze van de gebruiker zelf; er gaat niets automatisch weg.
+    // Geteld wordt dat er gedeeld is, nooit welk weer.
+    meet({ naam: "outcome_shared" });
     Share.share({
       message:
         (weerbeeld ? WEER_NAMEN[weerbeeld] + ". " : "") +

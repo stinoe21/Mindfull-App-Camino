@@ -22,6 +22,7 @@ import { chipKleurGekozenVoor, kaartKleurVoor } from "@mind/ui/components/Vliege
 
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
+import { meet } from "@/features/meten/meet";
 import { bewaarInstellingen, VOORKEUR_OPTIES } from "@/features/profiel/instellingen";
 
 const MIN_ONDERWERPEN = 3;
@@ -58,6 +59,8 @@ export default function Voorkeuren() {
 
   const verder = async () => {
     await bewaarInstellingen({ voorkeuren: gekozen });
+    // Alleen dat de stap is afgerond, nooit welke onderwerpen: zie docs/datamodel.md.
+    meet({ naam: "onboarding_step_completed", item: "voorkeuren" });
     router.push("/anonimiteit");
   };
 

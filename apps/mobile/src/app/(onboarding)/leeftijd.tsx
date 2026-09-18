@@ -13,6 +13,7 @@ import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 import { OnboardingScherm } from "@/features/onboarding/OnboardingScherm";
+import { meet } from "@/features/meten/meet";
 import { bewaarInstellingen } from "@/features/profiel/instellingen";
 
 const nl = {
@@ -48,6 +49,7 @@ export default function Leeftijd() {
 
   const bevestig = async () => {
     await bewaarInstellingen({ leeftijdBevestigd: true });
+    meet({ naam: "onboarding_step_completed", item: "leeftijd" });
     router.push({ pathname: "/inloggen", params: stand === "inloggen" ? { stand } : {} });
   };
 
