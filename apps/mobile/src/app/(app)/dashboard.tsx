@@ -36,7 +36,7 @@ import { houvastVoorVoorkeuren } from "@/features/content/houvast";
 import { QuoteKaart } from "@/features/content/QuoteKaart";
 import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 import { leesInstellingen } from "@/features/profiel/instellingen";
-import { KAARTKLEUR } from "@/features/weer/kaartKleuren";
+import { KAARTKLEUR, WEERTINT_LICHT } from "@/features/weer/kaartKleuren";
 import { leesWeerVanVandaag, toonTijd } from "@/features/weer/lokaalWeer";
 import { isProvincie, PROVINCIE_NAMEN } from "@/features/weer/provincies";
 import { UITKOMSTEN, WEER_NAMEN } from "@/features/weer/teksten";
@@ -60,9 +60,6 @@ const nl = {
   berichtRegel: "Vandaag vooral een {weer} in Nederland.",
   provincieRegel: "Vandaag vooral een {weer}.",
   provincieLeeg: "Nog te weinig check-ins voor een beeld.",
-  nietIngelogd: "Log in om het mentale weer te zien.",
-  teWeinig: "Nog te weinig check-ins voor een beeld. Later vandaag staat hier meer.",
-  berichtFout: "Het mentale weer kon niet worden opgehaald. Zonder verbinding werkt de rest van de app gewoon.",
   allesBekijken: "Alles bekijken",
   tipsTitel: "Houvast voor jou",
   tipsNote: "Kort uitgelegd en wat kan helpen. Jouw onderwerpen eerst.",
@@ -84,14 +81,14 @@ const teksten: Woordenboek<typeof nl> = {
     berichtRegel: "Mostly a {weer} in the Netherlands today.",
     provincieRegel: "Mostly a {weer} today.",
     provincieLeeg: "Not enough check-ins yet for a picture.",
-    nietIngelogd: "Log in to see the mental weather.",
-    teWeinig: "Not enough check-ins yet for a picture. Later today there will be more here.",
-    berichtFout: "The mental weather couldn't be loaded. Without a connection the rest of the app still works.",
     allesBekijken: "See all",
     tipsTitel: "Houvast for you",
     tipsNote: "Explained briefly and what can help. Your topics first.",
   },
 };
+
+/** Vanaf zoveel provincies met een weerbeeld staat de weerkaart op Home (twaalf in totaal). */
+const MIN_PROVINCIES_MET_BEELD = 6;
 
 const isWeerCode = (code: string): code is WeatherCode => (WEATHER_CODES as readonly string[]).includes(code);
 export default function Dashboard() {
@@ -165,9 +162,19 @@ export default function Dashboard() {
     }
   }
   const gekozenRij = gekozenProvincie ? provincies.find((r) => r.province === gekozenProvincie) : undefined;
+  // De weerkaart komt pas op Home als hij iets te zeggen heeft: het landelijke
+  // beeld is er, en minstens de helft van de provincies heeft een eigen beeld.
+  // Een kaart die bijna leeg is, met een zin waarom, is ruis die nog niet
+  // uitgelegd hoeft te worden (Stijn, 17 september 2026). Ook tijdens het
+  // laden, zonder verbinding en zonder login blijft de sectie weg; de rest van
+  // Home werkt gewoon.
+  const toonKaart = bericht?.staat === "geladen" && Object.keys(kaartWeer).length >= MIN_PROVINCIES_MET_BEELD;
 
-  // Op de hero: begroeting links, de vlieger rechts. Na de check-in staat hij
-  // in het weer van vandaag; ervoor de hoofdmascotte.
+  // Op de hero: de begroeting, en vóór de check-in de hoofdmascotte ernaast.
+  // Na de check-in staat de vlieger niet meer hier maar in de kaart "Jouw weer
+  // vandaag": daar hoort hij bij het weer dat hij uitbeeldt, en zet hij de
+  // toon van het vel (Stijn, 17 september 2026). De hero houdt de was van dat
+  // weer en de duiding.
   const hero = (
     <View style={{ flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", alignSelf: "stretch", paddingHorizontal: space[5], gap: space[3] }}>
       <View style={{ flexShrink: 1, gap: space[1] }}>
@@ -176,7 +183,7 @@ export default function Dashboard() {
             vraag naast de kaart met je weer was dubbelop (Stijn, 14 september 2026). */}
         <AppText rol="subtitle">{weerbeeld ? UITKOMSTEN[weerbeeld].kop : t("hoeWeer")}</AppText>
       </View>
-      {weerbeeld ? <MascotteVlieger state={weerbeeld} hoogte={72} /> : <MascotMain hoogte={96} />}
+      {weerbeeld ? null : <MascotMain hoogte={96} />}
     </View>
   );
 
@@ -186,20 +193,26 @@ export default function Dashboard() {
       {!weerGeladen ? (
         <ActivityIndicator color={colors.brandDefault} />
       ) : weerbeeld ? (
-        <Card tone="white" onPress={() => router.push("/check-in/uitkomst")} style={{ flexDirection: "row", alignItems: "center", gap: space[4] }}>
-          {/* Eén beeld en twee regels (Stijn, 10 september 2026): het weericoon
-              links, overline en naam rechts, en de kaart zelf opent de uitkomst.
-              gap 2: overline en titel dicht op elkaar, zoals in de sectiekop. */}
-          <WeerIcoon staat={weerbeeld} hoogte={48} />
-          <View style={{ flexShrink: 1, gap: 2 }}>
+        <Card onPress={() => router.push("/check-in/uitkomst")} style={{ backgroundColor: WEERTINT_LICHT[weerbeeld], borderWidth: 0, flexDirection: "row", alignItems: "center", gap: space[3] }}>
+          {/* Jouw weer zet de toon van het vel: de kaart in de tint van dat weer,
+              de vlieger in dat weer erin, en het weericoon bij de naam (hetzelfde
+              icoon als op de uitkomst en op de weerkaart). Tot 17 september 2026
+              een zandkaart met alleen het icoon, terwijl de vlieger los bovenin
+              stond (Stijn: "niet echt heel denderend", "een huisstijlbreuk").
+              De kaart zelf opent de uitkomst; opnieuw inchecken kan daar en via
+              de tab (Stijn, 15 september 2026). */}
+          <View style={{ flex: 1, gap: space[1] }}>
             <AppText rol="labelOverline" kleur="brand">{t("jouwWeerOverline")}</AppText>
-            <AppText rol="h3">{WEER_NAMEN[weerbeeld]}</AppText>
-            {/* De laatste check-in; opnieuw inchecken kan op de uitkomstpagina
-                en via de tab (Stijn, 15 september 2026). */}
+            <View style={{ flexDirection: "row", alignItems: "center", gap: space[2] }}>
+              <WeerIcoon staat={weerbeeld} hoogte={28} />
+              <View style={{ flexShrink: 1 }}>
+                <AppText rol="h3">{WEER_NAMEN[weerbeeld]}</AppText>
+              </View>
+              <AppText rol="body" kleur="brand">{"›"}</AppText>
+            </View>
             {tijd ? <AppText rol="labelCaption" kleur="secondary">{t("ingechecktOm").replace("{tijd}", toonTijd(tijd))}</AppText> : null}
           </View>
-          <View style={{ flexGrow: 1 }} />
-          <AppText rol="body" kleur="brand">{"›"}</AppText>
+          <MascotteVlieger state={weerbeeld} hoogte={88} />
         </Card>
       ) : (
         // De vraag staat op de hero; hier alleen de knop, los op het vel, met
@@ -241,11 +254,9 @@ export default function Dashboard() {
           niets, en dicht bij de drempel per provincie is een exact getal juist
           wat je niet wilt tonen (Stijn, 15 september 2026). Nooit een
           waardering: de kleur is het weer zelf (productprincipe 3). */}
-      <ContentSection title={t("weerVanNederland")} note={t("weerVanNederlandSub")}>
-        <View style={{ alignItems: "center", gap: space[4] }}>
-          {bericht === null ? (
-            <ActivityIndicator color={colors.brandDefault} />
-          ) : (
+      {toonKaart ? (
+        <ContentSection title={t("weerVanNederland")} note={t("weerVanNederlandSub")}>
+          <View style={{ alignItems: "center", gap: space[4] }}>
             <KaartNederland
               breedte={kaartBreedte}
               kleuren={kaartKleuren}
@@ -253,33 +264,27 @@ export default function Dashboard() {
               gekozen={gekozenProvincie}
               onPress={(code) => zetGekozenProvincie(code === gekozenProvincie ? null : code)}
             />
-          )}
-          {gekozenProvincie ? (
-            <Card tone="white" style={{ alignSelf: "stretch", flexDirection: "row", alignItems: "center", gap: space[3] }}>
-              {gekozenRij && isWeerCode(gekozenRij.weather) ? <WeerIcoon staat={gekozenRij.weather} hoogte={32} /> : null}
-              <View style={{ flexShrink: 1, gap: space[1] }}>
-                <AppText rol="bodyEmphasis">{PROVINCIE_NAMEN[gekozenProvincie]}</AppText>
-                <AppText rol="bodySmall" kleur="secondary">
-                  {gekozenRij
-                    ? t("provincieRegel").replace("{weer}", isWeerCode(gekozenRij.weather) ? WEER_NAMEN[gekozenRij.weather].toLowerCase() : gekozenRij.label.toLowerCase())
-                    : t("provincieLeeg")}
-                </AppText>
-              </View>
-            </Card>
+            {gekozenProvincie ? (
+              <Card tone="white" style={{ alignSelf: "stretch", flexDirection: "row", alignItems: "center", gap: space[3] }}>
+                {gekozenRij && isWeerCode(gekozenRij.weather) ? <WeerIcoon staat={gekozenRij.weather} hoogte={32} /> : null}
+                <View style={{ flexShrink: 1, gap: space[1] }}>
+                  <AppText rol="bodyEmphasis">{PROVINCIE_NAMEN[gekozenProvincie]}</AppText>
+                  <AppText rol="bodySmall" kleur="secondary">
+                    {gekozenRij
+                      ? t("provincieRegel").replace("{weer}", isWeerCode(gekozenRij.weather) ? WEER_NAMEN[gekozenRij.weather].toLowerCase() : gekozenRij.label.toLowerCase())
+                      : t("provincieLeeg")}
+                  </AppText>
+                </View>
+              </Card>
           ) : null}
-          {bericht === null ? null : (
+          {topBericht ? (
             <AppText rol="bodySmall" kleur="secondary" centreer>
-              {bericht.staat === "geladen" && topBericht
-                ? t("berichtRegel").replace("{weer}", topCode ? WEER_NAMEN[topCode].toLowerCase() : topBericht.label.toLowerCase())
-                : bericht.staat === "niet-ingelogd"
-                  ? t("nietIngelogd")
-                  : bericht.staat === "leeg"
-                    ? t("teWeinig")
-                    : t("berichtFout")}
+              {t("berichtRegel").replace("{weer}", topCode ? WEER_NAMEN[topCode].toLowerCase() : topBericht.label.toLowerCase())}
             </AppText>
-          )}
+          ) : null}
         </View>
       </ContentSection>
+      ) : null}
 
       {/* Slot 4: de quote van de dag, voor iedereen gelijk, klein onderaan */}
       <QuoteKaart />
