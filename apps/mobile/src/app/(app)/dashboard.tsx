@@ -53,8 +53,7 @@ const nl = {
   avond: "Goedenavond",
   hoeWeer: "Hoe is je weer vandaag?",
   jouwWeerOverline: "JOUW WEER VANDAAG",
-  evenIncheckenUitleg: "Vier korte vragen, één minuut.",
-  evenIncheckenKnop: "Inchecken",
+  evenIncheckenKnop: "Doe je mentale weer check-in",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien",
   kaartLeeg: "Een provincie kleurt zodra er genoeg check-ins zijn.",
@@ -77,8 +76,7 @@ const teksten: Woordenboek<typeof nl> = {
     avond: "Good evening",
     hoeWeer: "How's your weather today?",
     jouwWeerOverline: "YOUR WEATHER TODAY",
-    evenIncheckenUitleg: "Four short questions, one minute.",
-    evenIncheckenKnop: "Check in",
+    evenIncheckenKnop: "Do your mental weather check-in",
     weerVanNederland: "The mental weather of the Netherlands",
     weerVanNederlandSub: "Per province, the weather we see most today",
     kaartLeeg: "A province gets its colour once there are enough check-ins.",
@@ -190,16 +188,17 @@ export default function Dashboard() {
         </Card>
       ) : (
         // De vraag staat op de hero, de mascotte ook; de kaart herhaalt hem
-        // niet. Hier de vijf weerbeelden als strook, één regel en de knop.
+        // niet. Hier de vijf weerbeelden als strook en de knop, meer niet.
         // Geen zin over anoniem meetellen: daar heeft de gebruiker al ja op
-        // gezegd bij de toestemming (Stijn, 13 september 2026).
-        <Card tone="sun" style={{ gap: space[3] }}>
+        // gezegd bij de toestemming (Stijn, 13 september 2026). Ook geen
+        // "vier vragen, één minuut" meer: de knop zegt wat je gaat doen
+        // (Stijn, 15 september 2026).
+        <Card tone="sun" style={{ gap: space[4] }}>
           <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: space[2] }}>
             {WEATHER_CODES.map((code) => (
               <WeerIcoon key={code} staat={code} hoogte={36} />
             ))}
           </View>
-          <AppText rol="body" centreer>{t("evenIncheckenUitleg")}</AppText>
           <Button label={t("evenIncheckenKnop")} fullWidth onPress={() => router.push("/check-in/1")} />
         </Card>
       )}
