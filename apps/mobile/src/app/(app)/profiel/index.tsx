@@ -40,6 +40,8 @@ const nl = {
   nietIngelogd: "Niet ingelogd",
   logInUitleg: "Log in om anoniem mee te tellen in het mentale weer.",
   inloggen: "Inloggen",
+  email: "E-mailadres",
+  wachtwoord: "Wachtwoord",
   groepJij: "Over jou",
   naam: "Voornaam",
   geenNaam: "Nog geen naam",
@@ -69,6 +71,8 @@ const teksten: Woordenboek<typeof nl> = {
     nietIngelogd: "Not logged in",
     logInUitleg: "Log in to count anonymously towards the mental weather.",
     inloggen: "Log in",
+    email: "Email address",
+    wachtwoord: "Password",
     groepJij: "About you",
     naam: "First name",
     geenNaam: "No name yet",
@@ -186,6 +190,9 @@ export default function Profiel() {
       </InstellingenGroep>
 
       <InstellingenGroep titel={t("groepAccount")}>
+        {/* E-mailadres en wachtwoord wijzigen kan alleen met een sessie (18 september 2026). */}
+        {email ? <InstellingenRij label={t("email")} onPress={() => router.push("/profiel/email")} rechts={<Waarde tekst={email} />} /> : null}
+        {email ? <InstellingenRij label={t("wachtwoord")} onPress={() => router.push("/profiel/wachtwoord")} /> : null}
         {email ? <InstellingenRij label={t("uitloggen")} onPress={() => router.push("/profiel/uitloggen")} /> : null}
         <InstellingenRij label={t("accountVerwijderen")} onPress={() => router.push("/profiel/account-verwijderen")} laatste />
       </InstellingenGroep>
