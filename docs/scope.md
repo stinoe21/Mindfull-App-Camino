@@ -106,7 +106,7 @@ Dit is precies waarom die knop toch in v1 hoort: Apple eist Sign in with Apple z
 
 ## Schermen in v1
 
-> **De routebestanden staan er sinds 20 augustus 2026**, allemaal leeg, met per stuk een omschrijving en een verwijzing naar hun specificatie. Niemand hoeft tijdens het bouwen nog een gedeeld navigatiebestand aan te raken. De eigenaars hieronder zijn een voorstel op basis van `taakverdeling.md`, nog te verdelen.
+> **Stand 18 september 2026: alle schermen hieronder zijn gebouwd en staan op main**, en er zijn er sindsdien bij gekomen, zie "Wat er sinds 20 augustus bij kwam" onder de tabellen. De tabellen zelf zijn de lijst van 20 augustus 2026, met de eigenaars van toen; sinds 10 september 2026 bouwt Stijn alleen verder. De routebestanden stonden er op 20 augustus leeg, met per stuk een omschrijving en een verwijzing naar hun specificatie. De eigenaars hieronder zijn een voorstel op basis van `taakverdeling.md`, nog te verdelen.
 
 Twintig schermen. De specificatie staat in `packages/ui/reference`: `HERKOMST.md` voor de regels en de teksten, `ui_kits/mind-app/index.html` voor het klikbare prototype, `components/` voor de maten.
 
@@ -165,12 +165,33 @@ Scherm 15a is er sinds 10 september 2026: de online gidsen van MIND, gegenereerd
 
 Scherm 19 is een harde eis van Apple, richtlijn 5.1.1(v), en hij moet echt alle data weghalen. Zie `datamodel.md`.
 
+### Wat er sinds 20 augustus bij kwam
+
+De twintig schermen hierboven zijn de lijst van het ontwerp. Wat er daarna bij kwam, met het besluit erbij. Elk besluit is van Stijn, tenzij er iets anders staat; de uitleg staat in de kop van het bestand zelf.
+
+| Scherm | Route | Sinds | Waarom |
+|---|---|---|---|
+| Challenge, één dag | `(app)/challenges/[challenge]/dag/[dag]` | PR #105, #109 | De challenge als pad, één dag per kalenderdag (feedbacksessie MIND, 10 september 2026). |
+| Tips per familie, en de gidsen per groep | `(app)/naslagwerk/familie/[familie]`, `(app)/naslagwerk/gidsen/[groep]` | PR #121 | Houvast opent op families in plaats van 27 losse onderwerpen. |
+| Zelftest | `(app)/naslagwerk/zelftest/[test]` | 14 september 2026, PR #125 | De twaalf zelftests van MIND. Sinds 18 september met de hulproute bij de vraag over doodsgedachten (PR #183). |
+| De quote van de dag | `(app)/quote` | PR #173 | Elke quote met betekenis en herkomst. |
+| Profiel als overzicht met keuzepagina's | `(app)/profiel/naam`, `onderwerpen`, `toestemmingen`, `taal` | 13 september 2026, PR #117 | Vervangt scherm 18, Instellingen. De taalpagina is sinds 18 september 2026 niet meer bereikbaar, zie "Expliciet niet in v1". |
+| Uitloggen, met bevestiging | `(app)/profiel/uitloggen` | 17 september 2026, PR #150 | Uitloggen wist alles wat persoonlijk is van het toestel. |
+| Over deze app | `(app)/profiel/over` | 17 september 2026, PR #151 | Versie, "geen hulpverlening", bronnen. |
+| Wachtwoord vergeten, nieuw wachtwoord, mail bevestigd | `(onboarding)/wachtwoord-vergeten`, `wachtwoord-nieuw`, `mail-bevestigd` | 17 september 2026, PR #152 | Zie "Accountherstel via e-mail" hieronder. |
+| De voorwaarden, tijdelijke tekst | `(onboarding)/voorwaarden` | 17 september 2026, PR #158 | Wat je accepteert moet je kunnen lezen. De echte tekst komt van MIND en Paul. |
+| E-mailadres en wachtwoord wijzigen | `(app)/profiel/email`, `wachtwoord`, `email-gewijzigd` | 18 september 2026, PR #186 | Kon nergens. |
+| Hulp en uitleg | `(app)/profiel/hulp` | 18 september 2026, PR #191 | Eén plek voor uitleg en veelgestelde vragen. Contact volgt zodra MIND een supportadres heeft. |
+| Werk de app bij, of onderhoud | `bijwerken` | 18 september 2026, PR #193 | De noodrem, zie `datamodel.md`, tabel `app_status`. |
+
+Ook sinds 18 september 2026: de tabs, de check-in en het weerbericht liggen achter een poort die de afgeronde onboarding controleert (PR #181), en wie inlogt met een afgeronde onboarding op het toestel gaat direct naar Home.
+
 ### Wat er nog naast moet
 
 Deze zijn geen eigen scherm maar wel eigen werk, en ze staan in de definition of done:
 
 - **De systeemstaten.** Fout en offline, leeg weerbericht, geen zoekresultaten, content achter consent, verlopen sessie, challenge ontgrendeld. (De eerste-keer-tips op Home zijn op 13 september 2026 vervallen: Welkom en de onboarding zijn de introductie.) Het ontwerp benoemt ze zelf als gat. **Besloten op 20 augustus 2026: we ontwerpen ze zelf**, uit de huisstijl, op het moment dat het eerste scherm ze nodig heeft.
-- **De navigatiebalk.** Vijf bestemmingen met "Check in" in het midden, een zwevende pil met frosted achtergrond. De vectorpaden liggen klaar. Er staat nu een tijdelijke standaardbalk.
+- **De navigatiebalk.** Vijf bestemmingen met "Check in" in het midden, een zwevende pil met frosted achtergrond. De balk staat er sinds 24 augustus 2026; sinds 15 september 2026 (Stijn) zonder pil of vlak, de iconen direct op het vel.
 
 ## Feedbacksessie MIND, verwerkt op 10 september 2026
 
@@ -185,7 +206,7 @@ Stijn deelde op 10 september 2026 de samenvatting van de feedbacksessie MIND x B
 - **Challenges:** in de app en per mail, allebei. De aanmeldknop naar MIND blijft op elke challenge en elke gids staan, want de leadwerving (e-mail, straks Salesforce) moet blijven. Het tempo is voorlopig één dag per kalenderdag met een bewuste bevestiging per stap. Back to Being bedenkt geen eigen challenges; nieuwe challenges van MIND komen erbij via `content/` en de generator.
 
 - **Consent** is één formulier met één vorm van aanvinken (KeuzeVak): ja of nee voor de weerstatus (tekst van Paul, geen voorinvulling) en het vinkje voor de voorwaarden. Besloten door Stijn op 10 september 2026 na de sessie.
-- **Mentale weer per provincie.** MIND heeft gezegd dat de provincie mee mag worden geteld. De provincie komt sinds 13 september 2026 (besluit Stijn) het liefst via de locatie van het toestel, met toestemming van het systeem en volledig op het toestel: de coördinaten worden in de app zelf tegen de CBS-provinciegrenzen gelegd en nooit bewaard of verstuurd; alleen de provinciecode telt mee. De locatievraag komt in de onboarding, direct na een ja op de toestemming voor het weerbericht, als onderdeel van die stap: geen eigen scherm en niets dat iemand later in de instellingen moet aanzetten. Wie de locatie weigert telt als 'onbekend' en kan onder Profiel alsnog zelf een provincie kiezen. Zie `datamodel.md`, "Locatiegegevens". De toestemmingstekst van het systeem en de privacyverklaring moeten nog langs Paul. Op Home staat een kaart van Nederland, standaard heel Nederland, per provincie gekleurd zodra die provincie de drempel haalt. Zie `datamodel.md` voor de kolom en de migratie van 10 september 2026.
+- **Mentale weer per provincie.** MIND heeft gezegd dat de provincie mee mag worden geteld. De provincie komt sinds 13 september 2026 (besluit Stijn) het liefst via de locatie van het toestel, met toestemming van het systeem en volledig op het toestel: de coördinaten worden in de app zelf tegen de CBS-provinciegrenzen gelegd en nooit bewaard of verstuurd; alleen de provinciecode telt mee. De locatievraag komt in de onboarding, direct na een ja op de toestemming voor het weerbericht, als onderdeel van die stap: geen eigen scherm en niets dat iemand later in de instellingen moet aanzetten. Wie de locatie weigert telt als 'onbekend'. Zelf een provincie kiezen kan sinds 14 september 2026 niet meer (Stijn): een vrije keuze maakte het te makkelijk om het beeld van een provincie te sturen, zie `limieten-en-misbruik.md`. Zie `datamodel.md`, "Locatiegegevens". De toestemmingstekst van het systeem en de privacyverklaring moeten nog langs Paul. Op Home staat een kaart van Nederland, standaard heel Nederland, per provincie gekleurd zodra die provincie de drempel haalt. Zie `datamodel.md` voor de kolom en de migratie van 10 september 2026.
 - **Hulplijn-tekst** is woordelijk van mindhulplijn.nl (opgehaald 10 september 2026): deskundig, anoniem en gratis advies, bel 0900-1450, WhatsApp, chat of mail, en "Voor een luisterend oor is er de Luisterlijn. Bij suïcidale gedachten is er 113 Zelfmoordpreventie." Dat vervangt de eerdere afspraak om geen nummers te noemen: het zijn de nummers zoals MIND ze zelf noemt, en de crisis-signposting-TODO hieronder is daarmee beantwoord met de tekst van MIND.
 - **Zelftests** (besluit Stijn, 14 september 2026, PR #125). De twaalf zelftests van MIND staan in de app zelf, met dezelfde vragen, scores en uitslagteksten als op formulier.wijzijnmind.nl; opgehaald uit het formulier dat de testpagina laadt (`scripts/fetch-zelftests.mjs`, data in `content/mind/psychische-klachten/zelftests`). Scherm `naslagwerk/zelftest/[test]`: intro met "geen diagnose", de vragen één voor één, de uitslag met de tekst van MIND en de Hulplijn-kaart eronder. Score op het toestel, niets bewaard of verstuurd (`datamodel.md`, "Zelftests"). Ingang: de plank "Doe een test" op Houvast en de rij op de familiepagina. Open: of er in de depressietest (PHQ-9) direct na vraag 9 iets moet staan; MIND's eigen formulier doet dat niet.
 - **De vijf gidsen die pdf waren** (mentaal fit op het werk, KOPP/KOV, paniekaanval, psychische klachten bij ouderen, PTSS in je omgeving) staan sinds 14 september 2026 wel als pagina online en zijn alsnog opgehaald (PR #124); geen gids staat meer alleen als link in de app.
@@ -220,11 +241,11 @@ Dit is de belangrijkste lijst van dit document. Zonder harde non-goals groeit de
 | **Meertaligheid van de content** | De contentbibliotheek van MIND (challenges, naslagwerk, ervaringsverhalen) blijft Nederlands: die vertalen is geen bouwwerk maar redactiewerk. De **UI-taal** is hierop sinds 28 augustus 2026 een uitzondering (issue #47): de interface wordt schakelbaar NL/EN. Sinds 17 september 2026 (Stijn) is Nederlands de standaard en volgt de app de systeemtaal niet meer; wisselen kan op het welkomscherm en onder Profiel. Consent-, hulplijn- en check-in-teksten blijven Nederlands tot er canonieke Engelse teksten zijn via Paul en MIND; de i18n-laag valt daar terug op het Nederlands. **Sinds 18 september 2026 (Stijn) staat Engels uit** tot die kernteksten er zijn: toestemming geven in een taal die iemand half leest is juridisch zwak. De knop op het welkomscherm en de taalrij onder Profiel zijn verborgen achter één schakelaar, `ENGELS_BESCHIKBAAR` in `apps/mobile/src/features/i18n/taal.ts`; de vertalingen blijven in de code staan. |
 | **Push-notificaties** | Er is geen enkel scherm voor toestemming of instellingen ervoor, en het ontwerp bouwt het dagelijkse moment expliciet **niet** op een herinnering maar op een eigen keuze ("Sla vandaag over"). Een notificatie die vraagt hoe je je voelt is bovendien precies het soort ding waar een DPIA vragen over stelt. |
 | **Offline-first synchronisatie** | De app moet zonder netwerk netjes falen, en dat staat in de definition of done. Een wachtrij die check-ins later alsnog wegschrijft is iets anders, en die botst met de begrenzing van één bijdrage per dagdeel. |
-| **Delen met derden of hulpverleners** | Er is geen scherm voor, en het staat haaks op de belofte "Niemand kan zien wat jij hebt ingevuld". |
+| **Delen met derden of hulpverleners, vanuit de app** | De app deelt zelf niets met iemand: geen koppeling met een hulpverlener, geen vrienden, geen publiek profiel. Dat blijft zo, en het is de belofte "Niemand kan zien wat jij hebt ingevuld". **Wel in v1, besluit Stijn 18 september 2026:** wie dat zelf wil, kan zijn weer van vandaag of de quote delen via het deelvenster van de telefoon. Dat gaat buiten de app om en buiten de server om; de app ziet niet met wie. Er komt een deelbeeld met doorzichtige achtergrond, en vóór het delen een bevestiging met de zin dat de verantwoordelijkheid bij de persoon zelf ligt. Hoort nog in het overzicht voor Paul, zie `privacy-besluiten.md`. |
 | **Data-export** | Verwijderen moet, exporteren niet. Geen scherm in het ontwerp. |
 | **Een webversie van de app zelf** | De app is voor de telefoon ontworpen, 402 punten breed. `apps/admin` is iets anders: dat is een CMS voor Mind, zie hieronder. |
 | ~~**Accountherstel via e-mail**~~ | **Wel in v1, besluit Stijn 17 september 2026.** Zonder herstel was een vergeten wachtwoord een doodlopende weg, en App Review test dat. "Wachtwoord vergeten?" op het inlogscherm mailt een link; die opent de app, waar je een nieuw wachtwoord kiest. De bevestigingsmail is opnieuw te versturen en de link daarin opent de app ook. Zie `apps/mobile/src/features/auth/accountHerstel.ts`. |
-| **Zelftests en ervaringsverhalen** | Nice-to-have, van het whiteboard van 20 augustus 2026. Ze zitten al wél in de contentbibliotheek, dus later toevoegen is contentwerk en geen verbouwing. |
+| **Ervaringsverhalen** (~~en zelftests~~) | Nice-to-have, van het whiteboard van 20 augustus 2026. Ze zitten al wél in de contentbibliotheek, dus later toevoegen is contentwerk en geen verbouwing. **De zelftests staan sinds 14 september 2026 wel in de app** (besluit Stijn, zie de feedbacksessie hierboven). Open blijft hoe MIND ze positioneert tegenover de regels voor medische hulpmiddelen; dat is een gesprek met MIND en Paul, geen bouwwerk. |
 | **Windrichtingen** | Geparkeerd door Stijn op 20 augustus 2026. Raakt de kern niet. |
 | **Een iPad-layout** | `supportsTablet` staat op `false`. Universal declareren zonder een echte iPad-layout is een afwijzingsreden, zie hieronder. |
 | **Donkere modus** | De app dwingt licht af. Nog geen besluit, en zolang dat zo is is dit de veilige kant: het systeem zelf donker laten maken levert onleesbare tekst op de crèmekleur. Zie `design-system.md`. |
@@ -321,7 +342,7 @@ Let op bij het lezen: "de build staat in TestFlight" kan hier niet als eis staan
 1. **De twintig schermen hierboven zijn gebouwd**, elk met zijn loading-, empty- en error-state. Niet alleen het gelukte pad.
 2. **Een testgebruiker loopt de hele flow door zonder vast te lopen**, van een verse installatie tot en met het verwijderen van zijn account. Op de Simulator én op een echt toestel.
 3. **De eerste keer openen is niet leeg.** Een vers account zonder één check-in toont een werkend dashboard, geen wit vlak. Dit is de meest voorkomende afwijzingsreden en het is precies wat wij het minst testen.
-4. **Er staat nergens placeholder-tekst.** Geen lorem ipsum, geen knop die niets doet, geen "NOG TE BOUWEN". `apps/mobile/src/components/NogTeBouwen.tsx` is dan verwijderd: pas als niets hem meer importeert, is dit punt af. Vandaag importeren alle schermen hem nog, dat is de bedoeling van de scaffold.
+4. **Er staat nergens placeholder-tekst.** Geen lorem ipsum, geen knop die niets doet, geen "NOG TE BOUWEN". `apps/mobile/src/components/NogTeBouwen.tsx` is op 24 augustus 2026 verwijderd (PR #42), toen de twintig schermen gebouwd werden. Dit punt is daarmee af; blijft: geen knop die niets doet.
 5. **Het beeld klopt met het ontwerp.** Naast elkaar gecontroleerd op 402 punten breed, en apart op Android, want daar gaan de tekstuitlijning en de nagemaakte vetdruk mis. Zie `van-ontwerp-naar-app.md` deel 6.
 6. **`npm run typecheck`, `npm run lint` en `npm test` zijn groen**, op alle drie de laptops en in de CI.
 7. **De vier vragen onderaan `productprincipes.md` zijn per scherm nagelopen.**

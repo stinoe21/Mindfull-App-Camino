@@ -68,8 +68,9 @@ export type Insturen = { resultaat: InsturenResultaat; dagdeel: 1 | 2 | 0 };
 // Insturen naar de anonieme pool. Het slot per dagdeel zit in submit_weather()
 // aan de serverkant (sinds 15 september 2026: maximaal een bijdrage voor en
 // een vanaf 12.00 uur); "dit dagdeel al bijgedragen" is een normale flow en
-// geen bug. Tot de migratie gepusht is meldt een oudere server nog "vandaag
-// al ingecheckt"; die telt hier als hetzelfde.
+// geen bug. De migratie staat sinds 18 september 2026 op het dev-project; de
+// oude melding "vandaag al ingecheckt" telt hier nog als hetzelfde, voor een
+// omgeving die achterloopt.
 export async function stuurWeerIn(weerbeeld: string, provincie: string | null = null): Promise<Insturen> {
   const client = getSupabase();
   if (!client) return { resultaat: "niet-verbonden", dagdeel: 0 };

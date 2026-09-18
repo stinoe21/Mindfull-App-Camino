@@ -286,8 +286,10 @@ Nog te besluiten door de drie, deels op het board: welke interessecategorieën, 
 
 Deze blokkeren het bouwen van features die data opslaan. Beantwoord ze voordat we vertrekken.
 
-- [x] Slaan we vrije tekst op over iemands gemoedstoestand? **Nee.** De check-in werkt met een weer-metafoor en vaste antwoordopties, juist om buiten de bijzondere persoonsgegevens te blijven. De precieze vraagvorm ligt nog bij Mind.
+- [x] Slaan we vrije tekst op over iemands gemoedstoestand? **Nee.** De check-in werkt met een weer-metafoor en vaste antwoordopties, juist om buiten de bijzondere persoonsgegevens te blijven.
+- [ ] **De precieze vraagvorm en de vertaling naar een weerbeeld liggen nog bij MIND.** De vier vragen zijn sinds 17 september 2026 van Stijn; de regels die er een weerbeeld van maken heten in de code nog VOORLOPIG (`features/weer/weerbeeld.ts`) en zijn sinds 18 september 2026 met tests vastgelegd op wat de app nu doet. Opgevallen daarbij: alle vier de schuiven in het midden geeft mist, en zonnig wordt het pas vanaf 70 op alle vier.
 - [x] Wat is de bewaartermijn per tabel? Persoonsgegevens weg na 2 jaar inactiviteit. De collectieve, geanonimiseerde weerdata blijft.
+- [ ] **De opruiming na 2 jaar draait nog niet.** `purge_inactive_accounts()` bestaat sinds 26 augustus 2026 en is aan Paul toegezegd, maar is niet ingepland. Tot dat gebeurt is de bewaartermijn een voornemen.
 - [x] Hoe verwijdert een gebruiker zijn account, en wat gebeurt er dan precies met zijn data? Zelf te verwijderen vanuit profiel en instellingen, waarna alles wat aan hem gekoppeld is weggaat. Zijn bijdrage aan het landelijke weerbericht blijft, want die is anoniem en dus niet terug te vinden. Dat laatste moet in de consent-tekst staan, anders beloof je iets wat je niet waarmaakt.
 - [x] Doen we aan analytics? Geen externe tool, alles via Supabase met een beheerpagina buiten de app. **Welke events precies staat nog open.** Elk event komt hier eerst als veld te staan voordat het gebouwd wordt.
 - [x] **Welke weertypen bestaan er precies, en hoe heten ze?** **Beantwoord op 11 augustus 2026** vanaf het Figma-board, sectie "4 . Uitkomsten (weer-states)". Het zijn er vijf, wat klopt met de mail aan Paul van 7 augustus:

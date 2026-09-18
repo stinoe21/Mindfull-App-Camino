@@ -120,10 +120,10 @@ Onder **Authentication**:
 
 - [ ] **Confirm email** aan: een account zonder bevestigd e-mailadres mag niet bestaan, anders is één script genoeg om accounts te maken en het landelijke beeld te sturen.
 - [ ] **Leaked password protection** aan. De app logt sinds 28 augustus in met een wachtwoord, dus dit is geen formaliteit meer. De security advisor meldt hem nu als uit.
-- [ ] **Minimale wachtwoordlengte** in het dashboard gelijk aan of hoger dan wat de app eist (nu 6, streven 8), zodat een script langs de app niet met een korter wachtwoord kan.
+- [ ] **Minimale wachtwoordlengte** in het dashboard gelijk aan of hoger dan wat de app eist: 8, sinds 17 september 2026 (`MIN_WACHTWOORD` in `features/auth/accountHerstel.ts`), zodat een script langs de app niet met een korter wachtwoord kan.
 - [ ] **Rate limits** op de standaardwaarden laten of strenger; nooit ruimer zonder reden. Zie sectie 1.
 - [ ] **Anonieme logins uit** en **e-mailcode/magic link uit** zodra het dashboard dat toestaat: de app gebruikt ze niet, dus elke aanroep ervan is een script.
-- [ ] **Redirect URLs**: alleen `mentaleweerbericht://**` (dekt `auth-callback`, `wachtwoord-nieuw` en `mail-bevestigd`). Voor Expo Go op de simulator tijdelijk ook `exp://127.0.0.1:8081/--/**`, alleen op het dev-project. Geen wildcard op een domein dat niet van Mind is.
+- [ ] **Redirect URLs**: alleen `mentaleweerbericht://**` (dekt `auth-callback`, `wachtwoord-nieuw`, `mail-bevestigd` en sinds 18 september 2026 `profiel/email-gewijzigd`). Voor Expo Go op de simulator tijdelijk ook `exp://127.0.0.1:8081/--/**`, alleen op het dev-project. Geen wildcard op een domein dat niet van Mind is.
 
 Onder **Database** en **Settings**:
 
