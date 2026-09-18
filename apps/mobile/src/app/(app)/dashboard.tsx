@@ -61,6 +61,7 @@ const nl = {
   waaromInchecken: "Vier korte vragen. Zo zie je hoe je ervoor staat.",
   weerVanNederland: "Het mentale weer van Nederland",
   weerVanNederlandSub: "Per provincie het weer dat we vandaag het vaakst zien.",
+  uitleg: "Uitleg",
   berichtRegel: "Vandaag vooral een {weer} in Nederland.",
   provincieRegel: "Vandaag vooral een {weer}.",
   provincieLeeg: "Nog te weinig check-ins voor een beeld.",
@@ -81,6 +82,7 @@ const teksten: Woordenboek<typeof nl> = {
     waaromInchecken: "Four short questions. They show you how you are doing today.",
     weerVanNederland: "The mental weather of the Netherlands",
     weerVanNederlandSub: "Per province, the weather we see most today.",
+    uitleg: "Explanation",
     berichtRegel: "Mostly a {weer} in the Netherlands today.",
     provincieRegel: "Mostly a {weer} today.",
     provincieLeeg: "Not enough check-ins yet for a picture.",
@@ -279,7 +281,14 @@ export default function Dashboard() {
           wat je niet wilt tonen (Stijn, 15 september 2026). Nooit een
           waardering: de kleur is het weer zelf (productprincipe 3). */}
       {toonKaart ? (
-        <ContentSection title={t("weerVanNederland")} note={t("weerVanNederlandSub")}>
+        <ContentSection
+          title={t("weerVanNederland")}
+          note={t("weerVanNederlandSub")}
+          // Waar de kaart vandaan komt en waarom je je provincie soms niet ziet
+          // staat op de hulppagina, met die rij al open (18 september 2026).
+          action={t("uitleg")}
+          onAction={() => router.push({ pathname: "/profiel/hulp", params: { open: "kaart" } })}
+        >
           <View style={{ alignItems: "center", gap: space[4] }}>
             <KaartNederland
               breedte={kaartBreedte}

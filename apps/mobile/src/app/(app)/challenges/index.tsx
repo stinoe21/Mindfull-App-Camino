@@ -9,6 +9,7 @@ import { View } from "react-native";
 
 import { colors, palette, radius, space } from "@mind/ui";
 import { AppText } from "@mind/ui/components/AppText";
+import { Button } from "@mind/ui/components/Button";
 import { Card } from "@mind/ui/components/Card";
 import { ContentGrid, ContentCard } from "@mind/ui/components/ContentGrid";
 import { ContentSection } from "@mind/ui/components/ContentSection";
@@ -24,6 +25,7 @@ import { HulplijnKaart } from "@/features/hulplijn/HulplijnKaart";
 const nl = {
   titel: "Challenges",
   ondertitel: "Kleine stappen, geen opdrachten.",
+  uitleg: "Uitleg",
   leegTitel: "Nog geen challenges",
   leegUitleg: "Binnenkort staan ze hier.",
   challengesTitel: "Challenges",
@@ -43,6 +45,7 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     titel: "Challenges",
     ondertitel: "Small steps, no assignments.",
+    uitleg: "Explanation",
     leegTitel: "No challenges yet",
     leegUitleg: "They will appear here soon.",
     challengesTitel: "Challenges",
@@ -107,6 +110,13 @@ export default function Challenges() {
       <View style={{ gap: space[1] }}>
         <AppText rol="h1">{t("titel")}</AppText>
         <AppText rol="subtitle">{t("ondertitel")}</AppText>
+        {/* Waarom er één dag per dag vrijkomt staat op de hulppagina (18
+            september 2026). In de kop zelf, zodat de link er niet los onder
+            hangt; de marge trekt de tekst gelijk met de kop, want een
+            link-knop heeft zelf lucht links. */}
+        <View style={{ alignItems: "flex-start", marginLeft: -space[2] }}>
+          <Button label={t("uitleg")} variant="link" onPress={() => router.push({ pathname: "/profiel/hulp", params: { open: "challenges" } })} />
+        </View>
       </View>
 
       {CHALLENGES.length === 0 ? (
