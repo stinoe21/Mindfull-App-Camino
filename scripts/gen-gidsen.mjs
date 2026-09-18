@@ -4,8 +4,9 @@
 // Bron van de lijst, de titels en de URL's: GIDSEN.md in
 // content/mind/psychische-klachten/flyers-en-informatie (de lijst die MIND op
 // 10 september 2026 stuurde). Per gids komt de lokale pagina mee als blokken,
-// woordelijk, met de uitzonderingen uit scripts/mind-markdown.mjs. Gidsen
-// zonder lokale pagina (waren pdf) krijgen alleen titel en link.
+// woordelijk, met de uitzonderingen uit scripts/mind-markdown.mjs. Een gids
+// zonder lokale pagina zou alleen titel en link krijgen; sinds 14 september
+// 2026 hebben alle gidsen een pagina.
 //
 // Welke gids bij welk onderwerp van de app hoort is een redactionele keuze en
 // staat hieronder. Gidsen zonder onderwerp staan wel in het naslagwerk, maar

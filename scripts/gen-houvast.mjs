@@ -61,7 +61,6 @@ const ONDERWERPEN = [
   { slug: "relatiebreuk", titel: "Relatiebreuk", onderwerp: "Somberheid", gids: "relatiebreuk" },
   // Angst
   { slug: "angst", titel: "Angst", onderwerp: "Angst", psychipedia: "angst", gids: "angst" },
-  // De gids over paniekaanvallen was pdf: alleen de link en de aanmeldpagina.
   { slug: "paniekaanval", titel: "Paniekaanval", onderwerp: "Angst", psychipedia: "paniekaanval", gids: "paniekaanval" },
   { slug: "sociale-angst", titel: "Sociale angst", onderwerp: "Angst", psychipedia: "socialeangst", gids: "sociale-angst" },
   { slug: "faalangst", titel: "Faalangst", onderwerp: "Angst", psychipedia: "faalangst", gids: "faalangst" },
@@ -125,7 +124,7 @@ const PROMO = [
 const PROMO_KOP = [/^lees meer/i, /^meer lezen/i, /challenge/i, /^advies nodig/i, /^meer hulp nodig/i, /vragen over .* aan de mind hulplijn/i, /^veelgestelde vragen/i, /^deel of rapporteer/i];
 
 // Koppen in een gids die geen tip zijn.
-const GEEN_TIP = [/\?$/, /oefening/i, /training/i, /test/i, /lees meer/i, /meer informatie/i, /hulp/i, /aanmeld/i, /^tips? voor/i, /^inleiding/i, /^wat is/i];
+const GEEN_TIP = [/\?$/, /in het kort$/i, /oefening/i, /training/i, /test/i, /lees meer/i, /meer informatie/i, /hulp/i, /aanmeld/i, /^tips? voor/i, /^inleiding/i, /^wat is/i];
 
 /** Blokken opknippen in secties: { kop, blokken } per kop, met een eventuele kopvrije eerste sectie. */
 function secties(blokken) {
