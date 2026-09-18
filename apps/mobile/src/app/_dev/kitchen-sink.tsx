@@ -33,6 +33,7 @@ import { NavIcoonHome } from "@mind/ui/components/NavIcoonHome";
 import { NavIcoonChallenges, NavIcoonCheckIn, NavIcoonProfiel, NavIcoonTips } from "@mind/ui/components/navIconen";
 import { Slider } from "@mind/ui/components/Slider";
 import { TerugKnop } from "@mind/ui/components/TerugKnop";
+import { UitklapRij } from "@mind/ui/components/UitklapRij";
 import { WeerIcoon, type WeerIcoonStaat } from "@mind/ui/components/WeerIcoon";
 import type { WeerStaat } from "@mind/ui/components/achtergronden";
 
@@ -173,7 +174,7 @@ export default function KitchenSink() {
       </ContentSection>
 
       <Kop>Segmenten (interactief)</Kop>
-      <Segmenten segmenten={["Uitleg", "Wat kan helpen", "Verder"]} actief={segment} onKies={zetSegment} />
+      <Segmenten segmenten={["Uitleg", "Tips", "Meer info"]} actief={segment} onKies={zetSegment} />
       <Segmenten segmenten={["Twee", "Segmenten"]} actief={1} onKies={() => undefined} />
 
       <Kop>Pager (swipe)</Kop>
@@ -201,6 +202,17 @@ export default function KitchenSink() {
         <LijstRij titel="Met een regel eronder" meta="5 tips, met een oefening" onPress={() => undefined} />
         <LijstRij titel="Met beeld" meta="Kort uitgelegd" beeld={<VliegerOnderwerp uitdrukking="gestrest" hoogte={40} />} onPress={() => undefined} />
         <LijstRij label="GIDS" titel="Met een overline" meta="Praktische tips van MIND" onPress={() => undefined} />
+      </Lijst>
+
+      <Kop>Lijst met UitklapRij</Kop>
+      <Lijst>
+        <UitklapRij titel="Dicht bij het openen">
+          <AppText rol="body">De inhoud verschijnt onder de titel zodra de rij open staat.</AppText>
+        </UitklapRij>
+        <UitklapRij titel="Open bij het openen, met een lange titel die over twee regels loopt" startOpen>
+          <AppText rol="body">Eén alinea.</AppText>
+          <AppText rol="body">En nog een, met dezelfde tussenruimte als op het vel.</AppText>
+        </UitklapRij>
       </Lijst>
 
       <Kop>ContentGrid</Kop>
