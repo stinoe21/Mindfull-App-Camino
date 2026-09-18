@@ -117,6 +117,8 @@ Alleen taken in `Ready` mogen geclaimd worden. `Ready` betekent dat alle velden 
 
 Staat ingevuld met de echte usernames. GitHub stelt daarmee automatisch een reviewer voor bij de paar plekken waar één iemand het overzicht houdt.
 
+Sinds 18 september 2026 staat alleen Stijn er nog in. Max stond op `packages/ui`, en dat betekende: bij elke PR die het design system raakt een reviewverzoek per mail en daarna een mail van de merge. Sinds Stijn alleen verder werkt (10 september 2026) had niemand daar iets aan. Let op dat GitHub de eigenaar van een pad altijd als reviewer aanhaakt, ook als `require_code_owner_review` uit staat.
+
 **Let op wat er bewust niet in staat:** feature-code en documentatie. `require_code_owner_review` staat uit in de ruleset, dus dit bestand blokkeert niets. Zou je het wel aanzetten, dan loopt elk onderdeel van de app langs één reviewer en is precies dat kapot wat `docs/taakverdeling.md` probeert te voorkomen.
 
 ---

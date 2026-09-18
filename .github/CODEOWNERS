@@ -24,5 +24,7 @@ app.config.ts           @stinoe21
 /AGENTS.md              @stinoe21
 /docs/datamodel.md      @stinoe21
 
-# Tokens, componenten en assets, want daar loopt het beeld uit elkaar: Max
-/packages/ui/           @maxhelmantel-gif
+# Tot 18 september 2026 stond hier ook Max op /packages/ui/. Sinds 10 september
+# 2026 werkt Stijn alleen verder (docs/taakverdeling.md), en die regel vroeg
+# Max bij elke PR die het design system raakte automatisch om review, met een
+# mail per PR en per merge. Daarom weg. Wie hier staat, krijgt die mails.
