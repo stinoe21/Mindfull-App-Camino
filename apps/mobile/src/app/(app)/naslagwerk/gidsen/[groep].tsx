@@ -24,7 +24,7 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 const nl = {
   nietGevonden: "Pagina niet gevonden",
   nietGevondenUitleg: "Deze pagina bestaat niet of is verplaatst.",
-  terugOverzicht: "Terug naar Houvast",
+  terugOverzicht: "Terug naar Tips",
   naastenTitel: "Voor naasten",
   naastenUitleg: "Als iemand in je omgeving het moeilijk heeft.",
   andereTitel: "Andere onderwerpen",
@@ -36,7 +36,7 @@ const teksten: Woordenboek<typeof nl> = {
   en: {
     nietGevonden: "Page not found",
     nietGevondenUitleg: "This page doesn't exist or has been moved.",
-    terugOverzicht: "Back to Houvast",
+    terugOverzicht: "Back to Tips",
     naastenTitel: "For loved ones",
     naastenUitleg: "When someone close to you is struggling.",
     andereTitel: "Other topics",

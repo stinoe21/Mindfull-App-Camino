@@ -40,7 +40,7 @@ De rest is secundair of staat er niet. Twijfel je tussen twee even belangrijke k
 
 Op het board staat dit op drie plekken: de voorkeuren en interesses hebben Skip, de contextuele tips bij eerste gebruik zijn niet blokkerend, en de weer-check-in is opt out.
 
-Sinds 17 september 2026 (Stijn) wijkt de app op één punt van het board af: de onderwerpen in de onboarding hebben geen Skip meer. Iemand kiest er minstens drie, omdat Houvast daarop draait en de app zonder keuze weinig oplevert. De naam kan nog wel overgeslagen worden.
+Sinds 17 september 2026 (Stijn) wijkt de app op één punt van het board af: de onderwerpen in de onboarding hebben geen Skip meer. Iemand kiest er minstens drie, omdat de tab Tips daarop draait en de app zonder keuze weinig oplevert. De naam kan nog wel overgeslagen worden.
 
 > **De uitzonderingen, en die zijn hard.** Drie stappen hebben bewust **geen** Skip en die mag je nooit skipbaar maken, ook niet om een flow soepeler te laten voelen:
 >

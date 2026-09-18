@@ -62,7 +62,7 @@ const nl = {
   provincieRegel: "Vandaag vooral een {weer}.",
   provincieLeeg: "Nog te weinig check-ins voor een beeld.",
   allesBekijken: "Alles bekijken",
-  tipsTitel: "Houvast voor jou",
+  tipsTitel: "Tips voor jou",
   tipsNote: "Kort uitgelegd en wat kan helpen. Jouw onderwerpen eerst.",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
@@ -82,7 +82,7 @@ const teksten: Woordenboek<typeof nl> = {
     provincieRegel: "Mostly a {weer} today.",
     provincieLeeg: "Not enough check-ins yet for a picture.",
     allesBekijken: "See all",
-    tipsTitel: "Houvast for you",
+    tipsTitel: "Tips for you",
     tipsNote: "Explained briefly and what can help. Your topics first.",
   },
 };

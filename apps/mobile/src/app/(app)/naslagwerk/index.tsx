@@ -49,7 +49,7 @@ import { zoek, type ZoekResultaat } from "@/features/content/zoeken";
 import { leesInstellingen } from "@/features/profiel/instellingen";
 
 const nl = {
-  titel: "Houvast",
+  titel: "Tips",
   ondertitel: "Kort uitgelegd, en wat kan helpen.",
   // Kort genoeg voor het veld: de lange variant met een voorbeeld viel weg (Stijn, 14 september 2026).
   zoekPlaceholder: "Waar loop je tegenaan?",
@@ -58,7 +58,7 @@ const nl = {
   challenge: "CHALLENGE",
   onderwerp: "ONDERWERP",
   gids: "GIDS",
-  zoekLabel: "Zoek in Houvast",
+  zoekLabel: "Zoek in Tips",
   onderwerpen: "Onderwerpen",
   onderwerpenNote: "Jouw onderwerpen eerst.",
   vandaagTitel: "Bij jouw weer vandaag",
@@ -71,7 +71,7 @@ const nl = {
   testNote: "Geen diagnose, wel inzicht. Een paar minuten per test.",
   zelftest: "ZELFTEST",
   aantalVragen: "{n} vragen",
-  ookTitel: "Ook in Houvast",
+  ookTitel: "Meer gidsen",
   naastenTitel: "Voor naasten",
   naastenNote: "Als iemand in je omgeving het moeilijk heeft.",
   andereTitel: "Andere onderwerpen",
@@ -83,7 +83,7 @@ const nl = {
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
-    titel: "Houvast",
+    titel: "Tips",
     ondertitel: "Explained briefly, and what can help.",
     zoekPlaceholder: "What are you running into?",
     gevonden: "Found for you",
@@ -91,7 +91,7 @@ const teksten: Woordenboek<typeof nl> = {
     challenge: "CHALLENGE",
     onderwerp: "TOPIC",
     gids: "GUIDE",
-    zoekLabel: "Search Houvast",
+    zoekLabel: "Search Tips",
     onderwerpen: "Topics",
     onderwerpenNote: "Your topics first.",
     vandaagTitel: "For your weather today",
@@ -104,7 +104,7 @@ const teksten: Woordenboek<typeof nl> = {
     testNote: "No diagnosis, but insight. A few minutes per test.",
     zelftest: "SELF-TEST",
     aantalVragen: "{n} questions",
-    ookTitel: "Also in Houvast",
+    ookTitel: "More guides",
     naastenTitel: "For loved ones",
     naastenNote: "When someone close to you is struggling.",
     andereTitel: "Other topics",

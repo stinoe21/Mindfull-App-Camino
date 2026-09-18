@@ -21,14 +21,14 @@ import { useVertaling, type Woordenboek } from "@/features/i18n/taal";
 const nl = {
   nietGevonden: "Artikel niet gevonden",
   nietGevondenUitleg: "Dit artikel bestaat niet of is verplaatst.",
-  terugNaslagwerk: "Terug naar Houvast",
+  terugNaslagwerk: "Terug naar Tips",
 } as const;
 const teksten: Woordenboek<typeof nl> = {
   nl,
   en: {
     nietGevonden: "Article not found",
     nietGevondenUitleg: "This article doesn't exist or has been moved.",
-    terugNaslagwerk: "Back to Houvast",
+    terugNaslagwerk: "Back to Tips",
   },
 };
 
