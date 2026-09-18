@@ -87,10 +87,19 @@ Bij het linken of de eerste push vraagt de CLI het **databasewachtwoord van het 
 | Kijken: schema, data, logs | De MCP `supabase-mind`, of het dashboard | Read-only, en dat blijft zo |
 | Iets wijzigen aan het schema | Migratiebestand plus eigen kleine PR; je agent kent de stappen via de skill `backend-draaiboek` | Nooit via de dashboard-UI |
 | Pushen naar dev | Zeg het hardop tegen de andere twee, dan `supabase db push` | Alles op dev staat in minstens een open PR, en die merget dezelfde dag |
-| De anonimisering testen | `psql "<pooler-URI>" -f supabase/tests/anonimisering.sql` | Na elke push. Eindigt met GESLAAGD of stopt op de fout |
+| De anonimisering testen | `psql "<pooler-URI>" -f supabase/tests/anonimisering.sql`, of zonder wachtwoord via de CLI, zie hieronder | Na elke push. Eindigt met GESLAAGD of stopt op de fout |
 | Types genereren | `supabase gen types typescript --linked` | Zodra `packages/types` bestaat; nooit met de hand |
 
 De pooler-URI vind je in het dashboard onder **Connect**, kies **Session pooler**, en vul het databasewachtwoord uit sectie 3 in.
+
+**Het proefscript zonder pooler-URI, sinds 18 september 2026.** `supabase db query --linked -f <bestand>` draait een SQL-bestand tegen het gekoppelde project via de Management API, met je eigen login en zonder databasewachtwoord of key. Het script bevat `\echo`-regels die alleen psql kent, dus die eerst weglaten:
+
+```bash
+grep -v '^\\echo' supabase/tests/anonimisering.sql > /tmp/anonimisering.sql
+supabase db query --linked -f /tmp/anonimisering.sql
+```
+
+Exitcode 0 is geslaagd: elke assert zit in een `do`-blok dat het script met een fout stopt. De GESLAAGD-tekst zelf zie je zo niet, wel het laatste resultaat (de rechten op de functies). Dit is ook de route voor een agent: geen service role key, geen wachtwoord op schrift, alleen de login van de CLI. Gedraaid op 18 september 2026 na de dagdeelmigratie: geslaagd.
 
 ## 5. Wie doet wat
 
