@@ -40,6 +40,7 @@ const nl = {
   nietIngelogd: "Niet ingelogd",
   logInUitleg: "Log in om anoniem mee te tellen in het mentale weer.",
   inloggen: "Inloggen",
+  hulp: "Hulp en uitleg",
   email: "E-mailadres",
   wachtwoord: "Wachtwoord",
   groepJij: "Over jou",
@@ -71,6 +72,7 @@ const teksten: Woordenboek<typeof nl> = {
     nietIngelogd: "Not logged in",
     logInUitleg: "Log in to count anonymously towards the mental weather.",
     inloggen: "Log in",
+    hulp: "Help and explanation",
     email: "Email address",
     wachtwoord: "Password",
     groepJij: "About you",
@@ -179,6 +181,7 @@ export default function Profiel() {
       <InstellingenGroep titel={t("groepApp")}>
         {/* Alleen zolang er iets te kiezen valt, zie ENGELS_BESCHIKBAAR. */}
         {ENGELS_BESCHIKBAAR ? <InstellingenRij label={t("taal")} onPress={() => router.push("/profiel/taal")} rechts={<Waarde tekst={taalWaarde} />} waarde={taalWaarde} /> : null}
+        <InstellingenRij label={t("hulp")} onPress={() => router.push("/profiel/hulp")} />
         <InstellingenRij label={t("over")} onPress={() => router.push("/profiel/over")} laatste />
       </InstellingenGroep>
 
