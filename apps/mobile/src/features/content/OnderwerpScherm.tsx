@@ -57,6 +57,7 @@ import { InhoudBlokken, type InhoudBlok } from "@/features/content/InhoudBlokken
 import { isBewaard, leesBewaard, wisselBewaard, type BewaardeTip } from "@/features/content/bewaard";
 import { challengeBijFamilie, gidsenInGroep } from "@/features/content/families";
 import { houvastBijOnderwerp, secties, type Onderwerp } from "@/features/content/houvast";
+import { mindTipsVoor } from "@/features/content/mindTipsVorm";
 import type { HouvastTip } from "@/features/content/data/houvast";
 import { useOpenLink } from "@/features/systeem/openLink";
 
@@ -251,7 +252,7 @@ export function OnderwerpScherm({ onderwerp: houvast }: { onderwerp: Onderwerp |
   const challenge = familie ? challengeBijFamilie(familie) : undefined;
   const voorNaasten = !familie && gidsenInGroep("naasten").some((g) => g.slug === houvast.slug);
   const overline = familie && familie !== houvast.titel ? familie.toUpperCase() : voorNaasten ? t("voorNaasten") : undefined;
-  const heeftHulp = houvast.tips.length > 0 || houvast.oefening !== undefined;
+  const heeftHulp = houvast.tips.length > 0 || houvast.oefening !== undefined || mindTipsVoor(houvast.slug).length > 0;
 
   const panelen: { sleutel: Paneel; label: string }[] = [
     { sleutel: "uitleg", label: t("uitleg") },
@@ -269,7 +270,16 @@ export function OnderwerpScherm({ onderwerp: houvast }: { onderwerp: Onderwerp |
   const aanloop = verdieping.filter((s) => !s.kop).flatMap((s) => s.blokken);
   const koppen = verdieping.filter((s) => s.kop && s.blokken.length);
 
-  const totaal = houvast.tips.length + (houvast.oefening ? 1 : 0);
+  // De tips die MIND vanuit het beheer heeft gepubliceerd staan achter de
+  // tips en de oefening uit de app zelf, elk met een vaste positie vanaf
+  // 1000, zodat een bewaarde tip nooit naar een andere gaat wijzen.
+  const vanMind = mindTipsVoor(houvast.slug);
+  const eigen = houvast.tips.length + (houvast.oefening ? 1 : 0);
+  const totaal = eigen + vanMind.length;
+  // Een link naar een tip noemt zijn positie; voor een tip van MIND is dat niet de plek in de pager.
+  const gevraagd = Number(startTip) || 0;
+  const plekVanMind = vanMind.findIndex((m) => m.positie === gevraagd);
+  const startPlek = plekVanMind >= 0 ? eigen + plekVanMind : gevraagd < eigen ? gevraagd : 0;
 
   return (
     <ScreenCanvas
@@ -309,7 +319,7 @@ export function OnderwerpScherm({ onderwerp: houvast }: { onderwerp: Onderwerp |
       ) : null}
 
       {paneel === "helpen" ? (
-        <Pager start={Number(startTip) || 0}>
+        <Pager start={startPlek}>
           {houvast.tips.map((tip, i) => (
             <TipKaart
               key={i}
@@ -332,6 +342,17 @@ export function OnderwerpScherm({ onderwerp: houvast }: { onderwerp: Onderwerp |
               labels={{ bewaar: t("bewaar"), bewaard: t("bewaard"), leesMeer: t("leesMeer"), minder: t("minder") }}
             />
           ) : null}
+          {vanMind.map((m, i) => (
+            <TipKaart
+              key={m.positie}
+              tip={m.tip}
+              tone="white"
+              overline={t("tipVan").replace("{x}", String(eigen + i + 1)).replace("{y}", String(totaal))}
+              bewaard={isBewaard(bewaard, houvast.slug, m.positie)}
+              onBewaar={() => wissel(m.positie)}
+              labels={{ bewaar: t("bewaar"), bewaard: t("bewaard"), leesMeer: t("leesMeer"), minder: t("minder") }}
+            />
+          ))}
         </Pager>
       ) : null}
 

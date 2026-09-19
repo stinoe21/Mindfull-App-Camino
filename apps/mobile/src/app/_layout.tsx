@@ -12,6 +12,9 @@
 // Ook sinds 18 september 2026: <Meten /> telt schermweergaven en verstuurt de
 // gebruikstotalen van afgesloten dagen. Het tekent niets. Zie
 // features/meten/Meten.tsx en docs/datamodel.md, "Gebruikstotalen".
+//
+// Sinds 19 september 2026 haalt <MindTipsLader /> de tips op die MIND vanuit het
+// beheer heeft gepubliceerd. Het tekent niets. Zie features/content/mindTips.ts.
 
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -23,6 +26,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { colors } from "@mind/ui";
 
 import { SessieProvider } from "@/features/auth/sessie";
+import { MindTipsLader } from "@/features/content/MindTipsLader";
 import { Meten } from "@/features/meten/Meten";
 import { fontAssets } from "@/theme/fonts";
 
@@ -60,6 +64,7 @@ export default function RootLayout() {
       <StatusBar style="dark" />
       <SessieProvider>
       <Meten />
+      <MindTipsLader />
       <Stack
         screenOptions={{
           // Elk scherm tekent zijn eigen hero-gradient als paginaachtergrond,

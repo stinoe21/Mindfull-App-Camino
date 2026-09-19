@@ -13,6 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { type HouvastTip } from "./data/houvast.ts";
 import { houvastVoor, type Onderwerp } from "./houvast.ts";
+import { MIND_VANAF, mindTipsVoor } from "./mindTipsVorm.ts";
 
 const SLEUTEL = "mind.bewaardetips";
 
@@ -55,6 +56,8 @@ export async function wisselBewaard(onderwerp: string, tip: number): Promise<Bew
 
 /** De tip in de pager op deze positie: een tip, of de oefening als laatste. */
 export function tipOpPositie(houvast: Onderwerp, positie: number): HouvastTip | undefined {
+  // Een tip van MIND heeft een vaste positie vanaf 1000; is hij ingetrokken, dan vervalt de verwijzing.
+  if (positie >= MIND_VANAF) return mindTipsVoor(houvast.slug).find((m) => m.positie === positie)?.tip;
   if (positie < houvast.tips.length) return houvast.tips[positie];
   return positie === houvast.tips.length ? houvast.oefening : undefined;
 }
