@@ -141,7 +141,7 @@ select relname as tabel, relrowsecurity as rls_aan,
        (select count(*) from pg_policy where polrelid = c.oid) as aantal_policies
   from pg_class c
  where relnamespace = 'public'::regnamespace
-   and relname in ('weather_hourly', 'weather_type', 'profiles', 'usage_daily', 'usage_event', 'admin_users')
+   and relname in ('weather_hourly', 'weather_type', 'profiles', 'usage_daily', 'usage_event', 'admin_users', 'content_tips')
  order by relname;
 
 do $$
@@ -341,7 +341,7 @@ begin
   select string_agg(routine_name, ', ') into v_fout
     from information_schema.routine_privileges
    where routine_schema = 'public' and grantee = 'authenticated'
-     and routine_name in ('purge_inactive_accounts', 'handle_new_user', 'usage_scrub', 'has_admin_role');
+     and routine_name in ('purge_inactive_accounts', 'handle_new_user', 'usage_scrub', 'has_admin_role', 'content_body_problem');
   assert v_fout is null,
     format('authenticated mag beheerfuncties aanroepen: %s', v_fout);
 
@@ -506,6 +506,55 @@ begin
 end $$;
 
 \echo 'admin_users is dicht, en geen functie kan er een rol in zetten'
+
+\echo ''
+\echo '=== 13. Zegt het ophalen van content iets over wat iemand leest? ==='
+
+do $$
+declare
+  v_fout text;
+  v_args integer;
+  v_def  text;
+begin
+  -- content_tips (19 september 2026): tips die MIND vanuit het beheer in de
+  -- app zet. Dicht voor de app en voor het beheer: alles loopt via functies.
+  select string_agg(policyname, ', ') into v_fout
+    from pg_policies where schemaname = 'public' and tablename = 'content_tips';
+  assert v_fout is null,
+    format('content_tips heeft policies: %s. Er hoort er geen een te zijn.', v_fout);
+
+  select string_agg(grantee || ': ' || privilege_type, ', ') into v_fout
+    from information_schema.role_table_grants
+   where table_schema = 'public' and table_name = 'content_tips'
+     and grantee in ('anon', 'authenticated');
+  assert v_fout is null,
+    format('anon of authenticated heeft rechten op content_tips: %s', v_fout);
+
+  -- De app haalt alle gepubliceerde tips in een keer op, zonder argumenten.
+  -- Een argument (een onderwerp, een weerbeeld) zou in de platformlogs naast
+  -- het account zetten wat iemand leest.
+  select p.pronargs into v_args
+    from pg_proc p
+   where p.pronamespace = 'public'::regnamespace and p.proname = 'published_tips';
+  assert v_args = 0,
+    format('published_tips() hoort geen argumenten te hebben, gevonden: %s', v_args);
+
+  -- Wie een tip wijzigde is voor de eigenaar en komt nooit in de app.
+  select pg_get_functiondef('public.published_tips()'::regprocedure) into v_def;
+  assert v_def !~* 'updated_by',
+    'published_tips() geeft updated_by terug. Wie een tip schreef hoort niet in de app.';
+
+  -- Schrijven kan alleen na de rolcontrole.
+  select string_agg(p.proname, ', ') into v_fout
+    from pg_proc p
+   where p.pronamespace = 'public'::regnamespace
+     and p.proname like 'admin\_tip%'
+     and pg_get_functiondef(p.oid) !~* 'has_admin_role';
+  assert v_fout is null,
+    format('Deze beheerfuncties controleren de rol niet: %s', v_fout);
+end $$;
+
+\echo 'content ophalen is voor iedereen dezelfde aanroep, en schrijven kan alleen met een rol'
 
 \echo ''
 \echo '======================================================================'

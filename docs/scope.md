@@ -264,7 +264,9 @@ Dit zit niet in de app die gebruikers installeren, maar hoort wel bij het projec
 
 Onderschat dit niet: het is een eigen applicatie met een eigen rollenmodel en eigen RLS-policies. Reken er aparte taken voor, het is geen bijvangst van een feature. **Besloten op 18 september 2026 (Stijn):** de webapp staat in `apps/admin` in deze repo en niet in een eigen repo, zodat beide apps dezelfde types en hetzelfde contract delen. Het wordt **Vite met React, een statische site zonder server**: alles wat het beheer kan staat als functie in de database, en er bestaat nergens een service role key. Rollen staan in de tabel `admin_users` (analist, redacteur, beheerder), zie `datamodel.md`. De analyticspagina toont alleen totalen, nooit onder de 10, aan medewerkers met een rol; Paul moet dat nog wegen, zie `privacy-besluiten.md`. De huisstijl is zwart op wit, zonder franje. Voor nu draait het bij Vercel, met `apps/admin` als hoofdmap; bij de overdracht verhuist het naar waar MIND zijn sites heeft staan. Het plan in vier fasen (fundament, analytics, content in het beheer, content in de app) is van dezelfde dag.
 
-Wat nog niet vastligt: het domein, en het contentmodel voor fase 3.
+**Content, besloten op 18 september 2026 (Stijn):** MIND begint met tips bij een onderwerp, en de redacteur publiceert zelf. Het model staat in `datamodel.md` bij `content_tips`. De app haalt alle gepubliceerde tips in één keer op, voor iedereen hetzelfde, en zet ze achter de tips die hij zelf bij zich heeft.
+
+Wat nog niet vastligt: het domein, en welke content na de tips komt.
 
 ---
 

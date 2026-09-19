@@ -168,6 +168,40 @@ button.pil.pil--actief { background: var(--oranje); color: var(--inkt); }
 .melding { color: var(--fout); font-size: 0.9rem; }
 .rij { display: flex; flex-wrap: wrap; gap: 8px; }
 
+/* Content */
+
+.formulier select, .formulier textarea { font: inherit; padding: 12px 14px; border: 1px solid var(--lijn); border-radius: 12px; background: var(--vlak); color: var(--inkt); width: 100%; }
+.formulier textarea { resize: vertical; line-height: 1.5; }
+.formulier select:focus-visible, .formulier textarea:focus-visible { outline: 2px solid var(--inkt); outline-offset: 0; border-color: var(--inkt); }
+.formulier .rij { margin-top: 14px; }
+.formulier .rij .knop { margin-top: 0; }
+.rij--velden { margin-top: 0 !important; }
+.rij--velden input { flex: 1 1 220px; min-width: 0; }
+.hulp { font-size: 0.85rem; color: var(--gedempt); }
+.hulp--let-op { margin-top: 10px; padding: 10px 14px; border-radius: 12px; background: var(--oranje-licht); border: 1px solid var(--oranje-rand); color: var(--inkt); }
+.knop--rand { background: transparent; color: var(--inkt); }
+.knop--rand:hover { background: var(--papier); }
+
+.lijstgroep { display: flex; flex-direction: column; gap: 8px; }
+.lijst { list-style: none; margin: 0; padding: 0; background: var(--vlak); border: 1px solid var(--lijn); border-radius: var(--ronding); overflow: hidden; }
+.lijst li + li { border-top: 1px solid var(--lijn); }
+.lijst__rij { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 12px; align-items: center; width: 100%; padding: 14px 20px; border: 0; background: transparent; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.lijst__rij:hover:not(:disabled) { background: var(--papier); }
+.lijst__rij:disabled { cursor: default; }
+.lijst__titel { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lijst__meta { grid-column: 2; font-size: 0.85rem; color: var(--gedempt); }
+.stip { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--gedempt); }
+.stip--gepubliceerd { background: var(--oranje); border-color: var(--oranje); }
+.stip--ingetrokken { background: var(--lijn); border-color: var(--lijn); }
+
+.toestel { margin-top: 10px; padding: 14px; border-radius: 28px; background: var(--papier); border: 1px solid var(--lijn); max-width: 380px; }
+.toestel__kaart { display: flex; flex-direction: column; gap: 10px; padding: 18px; border-radius: 18px; background: var(--vlak); }
+.toestel__kaart h3 { margin: 0; font-size: 1.05rem; line-height: 1.3; }
+.toestel__kaart p, .toestel__kaart ul { margin: 0; font-size: 0.95rem; }
+.toestel__kaart ul { padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; }
+.toestel__link { font-weight: 600; text-decoration: underline; }
+.toestel__leeg { color: var(--gedempt); }
+
 @media (max-width: 720px) {
   .balk { justify-content: flex-start; }
   .pillen { order: 3; width: 100%; border-radius: 18px; }
