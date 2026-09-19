@@ -4,6 +4,7 @@
 
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 
+import { Aanleveren } from "../components/Aanleveren.tsx";
 import { Kaart, Pagina } from "../components/Pagina.tsx";
 import { TipVoorbeeld } from "../components/TipVoorbeeld.tsx";
 import { ONDERWERPEN } from "../lib/onderwerpen.ts";
@@ -81,11 +82,12 @@ export function Content({ rol }: { rol: Rol }) {
       void voerUit();
     };
     return (
-      <Pagina label="Content" titel={open.id ? "Tip bewerken" : "Nieuwe tip"} uitleg={live ? "Deze tip staat in de app. Wat je bewaart, staat er bij de volgende keer openen." : UITLEG}
+      <Pagina label="Content" titel={!magSchrijven ? "Tip bekijken" : open.id ? "Tip bewerken" : "Nieuwe tip"} uitleg={!magSchrijven ? "Zo komt deze tip in de app te staan. Je kunt hem bekijken, niet wijzigen. Geef je akkoord of je opmerkingen door aan wie de content plaatst." : live ? "Deze tip staat in de app. Wat je bewaart, staat er bij de volgende keer openen." : UITLEG}
         rechts={<button type="button" className="knop knop--stil" onClick={() => zetOpen(null)}>Terug naar de lijst</button>}>
         <div className="kaarten kaarten--breed-smal">
           <Kaart titel="De tip">
             <form className="formulier" onSubmit={opslaan}>
+              <fieldset className="velden" disabled={!magSchrijven}>
               <label htmlFor="topic">Onderwerp</label>
               <select id="topic" required value={open.invoer.topic} onChange={(e) => wijzig({ topic: e.target.value })}>
                 <option value="">Kies een onderwerp</option>
@@ -105,6 +107,10 @@ export function Content({ rol }: { rol: Rol }) {
                 <input id="linkUrl" type="url" placeholder="https://wijzijnmind.nl/..." maxLength={300} value={open.invoer.linkUrl} onChange={(e) => wijzig({ linkUrl: e.target.value })} />
               </div>
 
+              </fieldset>
+
+              {magSchrijven ? (
+                <>
               <p className="hulp hulp--let-op">Noem in een tip geen hulplijn of telefoonnummer. De Hulplijn van MIND en 113 staan al onder elk onderwerp, met een vaste tekst.</p>
 
               {melding ? <p className="melding" role="alert">{melding}</p> : null}
@@ -123,6 +129,10 @@ export function Content({ rol }: { rol: Rol }) {
                   </>
                 )}
               </div>
+                </>
+              ) : (
+                <p className="hulp">Status: {STATUS_NAAM[open.status].toLowerCase()}.</p>
+              )}
             </form>
           </Kaart>
           <Kaart titel="Zo staat hij in de app" uitleg={open.invoer.topic ? `Onder ${titelVan(open.invoer.topic)}, achter de tips die er al staan.` : "Kies een onderwerp om te zien waar hij komt."}>
@@ -138,7 +148,8 @@ export function Content({ rol }: { rol: Rol }) {
   ) : undefined;
 
   return (
-    <Pagina label="Content" titel="Tips in de app zetten" uitleg={UITLEG} rechts={nieuweKnop}>
+    <Pagina label="Content" titel={magSchrijven ? "Tips in de app zetten" : "Tips van MIND in de app"} uitleg={magSchrijven ? UITLEG : "Hier staan de tips die MIND bij een onderwerp in de app heeft gezet, en wat er klaarstaat. Open een tip om te zien hoe hij in de app komt te staan."} rechts={nieuweKnop}>
+      <Aanleveren />
       {fout ? (
         <Kaart titel="De tips konden niet geladen worden" uitleg={fout}>
           <div className="rij"><button type="button" className="knop" onClick={() => void laad()}>Probeer opnieuw</button></div>
@@ -157,7 +168,7 @@ export function Content({ rol }: { rol: Rol }) {
               <ul className="lijst">
                 {rij.map((t) => (
                   <li key={t.id}>
-                    <button type="button" className="lijst__rij" disabled={!magSchrijven} onClick={() => { zetMelding(null); zetOpen({ id: t.id, status: t.status, invoer: naarInvoer(t) }); }}>
+                    <button type="button" className="lijst__rij" onClick={() => { zetMelding(null); zetOpen({ id: t.id, status: t.status, invoer: naarInvoer(t) }); }}>
                       <span className={`stip stip--${t.status}`} aria-hidden="true" />
                       <span className="lijst__titel">{t.title}</span>
                       <span className="lijst__meta">{titelVan(t.topic)} · gewijzigd op {datum(t.updated_at)}</span>

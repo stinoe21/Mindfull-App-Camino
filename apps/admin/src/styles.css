@@ -170,6 +170,16 @@ button.pil.pil--actief { background: var(--oranje); color: var(--inkt); }
 
 /* Content */
 
+.velden { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.velden:disabled input, .velden:disabled select, .velden:disabled textarea { background: var(--papier); color: var(--inkt); opacity: 1; -webkit-text-fill-color: var(--inkt); }
+
+.uitklap { background: var(--vlak); border: 1px solid var(--lijn); border-radius: var(--ronding); }
+.uitklap summary { padding: 16px 22px; font-weight: 650; cursor: pointer; list-style-position: inside; }
+.uitklap__inhoud { display: flex; flex-direction: column; gap: 14px; padding: 0 22px 22px; }
+.uitklap__inhoud > p { max-width: 70ch; color: var(--gedempt); }
+.punten { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; max-width: 80ch; font-size: 0.95rem; }
+.sjabloon { margin: 0; padding: 16px 18px; border-radius: 14px; background: var(--papier); border: 1px solid var(--lijn); font-family: var(--mono); font-size: 0.82rem; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+
 .formulier select, .formulier textarea { font: inherit; padding: 12px 14px; border: 1px solid var(--lijn); border-radius: 12px; background: var(--vlak); color: var(--inkt); width: 100%; }
 .formulier textarea { resize: vertical; line-height: 1.5; }
 .formulier select:focus-visible, .formulier textarea:focus-visible { outline: 2px solid var(--inkt); outline-offset: 0; border-color: var(--inkt); }
