@@ -146,6 +146,8 @@ module.exports = [
       "**/node_modules/**",
       "apps/*/.expo/**",
       "dist/**",
+      // De gebouwde site van het beheer, na `vite build`.
+      "apps/*/dist/**",
       // De export uit Claude Design: React DOM, specificatie en geen code die wij
       // draaien. Zie packages/ui/README.md.
       "packages/ui/reference/**",
