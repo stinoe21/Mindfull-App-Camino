@@ -4,10 +4,10 @@ import { Bovenbalk } from "./components/Bovenbalk.tsx";
 import { padUitAdres, type Pad } from "./lib/paginas.ts";
 import { useSessie } from "./lib/sessie.ts";
 import { Inloggen } from "./pages/Inloggen.tsx";
+import { Content } from "./pages/Content.tsx";
+import { Dashboard } from "./pages/Dashboard.tsx";
 import { Fout, GeenToegang, Laden, NietIngesteld } from "./pages/Meldingen.tsx";
 import { OverDeCijfers } from "./pages/OverDeCijfers.tsx";
-import { Overzicht } from "./pages/Overzicht.tsx";
-import { Volgt } from "./pages/Volgt.tsx";
 
 function usePad(): Pad {
   const [pad, zetPad] = useState<Pad>(() => padUitAdres(window.location.hash));
@@ -32,7 +32,7 @@ export function App() {
   return (
     <>
       <Bovenbalk actief={pad} email={stand.email} rol={stand.rol} />
-      {pad === "overzicht" ? <Overzicht /> : pad === "cijfers" ? <OverDeCijfers /> : <Volgt pad={pad} />}
+      {pad === "dashboard" ? <Dashboard /> : pad === "content" ? <Content rol={stand.rol} /> : <OverDeCijfers />}
     </>
   );
 }

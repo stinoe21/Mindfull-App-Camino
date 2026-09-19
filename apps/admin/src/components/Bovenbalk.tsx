@@ -4,7 +4,7 @@ import { logUit, type Rol } from "../lib/sessie.ts";
 export function Bovenbalk({ actief, email, rol }: { actief: Pad; email: string | null; rol: Rol }) {
   return (
     <header className="balk">
-      <a className="balk__merk" href="#/overzicht">
+      <a className="balk__merk" href="#/dashboard">
         <span className="balk__stip" aria-hidden="true" />
         Weertje beheer
       </a>
