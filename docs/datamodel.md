@@ -135,7 +135,7 @@ Welke schermen lezen dit? <lijst>
 
 ## Tabellen
 
-Zeven tabellen, en wat er niet in staat, staat er bewust niet in. De rest van de dataflow, dus content, challenges en de twee consents, is nog niet ingevuld en staat onderaan bij de openstaande punten.
+Acht tabellen, en wat er niet in staat, staat er bewust niet in. De rest van de dataflow, dus content, challenges en de twee consents, is nog niet ingevuld en staat onderaan bij de openstaande punten.
 
 ### weather_type
 
@@ -287,6 +287,45 @@ Sinds 18 september 2026 werkt ook `log_usage()` `last_active_at` bij. Tot dan de
 
 Komen er later velden bij die de gebruiker zelf mag wijzigen, dan geef je daar een grant **per kolom** op. Niet een update-policy op de hele tabel, want dan komen `last_checkin_on` en `last_checkin_part` er ongemerkt bij.
 
+### content_tips
+
+```
+Tabel:            content_tips
+Waarvoor:         Tips die MIND vanuit het beheer (apps/admin) bij een onderwerp in de app zet.
+RLS:              Aan, en zonder één policy. Niemand leest of schrijft rechtstreeks.
+                  Het beheer werkt via admin_tips_list(), admin_tip_save(), admin_tip_set_status() en
+                  admin_tip_delete(), die eerst de rol controleren (lezen: elke rol; schrijven: redacteur).
+                  De app leest via published_tips(): alle gepubliceerde tips, zonder argumenten.
+
+Kolommen:
+  id            uuid         verplicht  Sleutel
+  topic         text         verplicht  De slug van het onderwerp in de app (piekeren, slaap). De database
+                                        controleert alleen de vorm; de app negeert een onbekend onderwerp
+  title         text         verplicht  De kop van de tip, 3 tot 120 tekens
+  body          jsonb        verplicht  De blokken, in de vorm die de app al tekent: een alinea (tekst), een
+                                        opsomming (lijst) of een link (linkLabel en linkUrl, alleen https).
+                                        Platte tekst: geen HTML, geen opmaak
+  status        text         verplicht  concept, gepubliceerd of ingetrokken
+  created_at    timestamptz  verplicht  Wanneer de tip is aangemaakt
+  updated_at    timestamptz  verplicht  Wanneer hij het laatst is gewijzigd
+  published_at  timestamptz  optioneel  Wanneer hij voor het eerst is gepubliceerd
+  updated_by    uuid         optioneel  De medewerker van MIND die hem het laatst wijzigde. Wordt leeg als
+                                        dat account verdwijnt. Komt nooit in de app en niet in het beheerscherm
+
+Bevat gevoelige data?     Nee, over gebruikers van de app staat hier niets. Het is content. Het enige
+                          persoonsgegeven is updated_by, van een medewerker van MIND.
+Bewaartermijn:            Tot een redacteur de tip weggooit. Een gepubliceerde tip moet eerst ingetrokken worden.
+Verwijderbaar door user?  Niet van toepassing: geen gebruikersdata.
+Welke schermen lezen dit? In de app: elk onderwerp in Tips, achter de tips die de app zelf bij zich heeft.
+                          In het beheer: de pagina Content.
+```
+
+**Besloten door Stijn op 18 september 2026:** MIND zet zelf content in de app, als eerste tips bij een onderwerp, en **de redacteur publiceert zelf**. Er is geen tweede paar ogen; intrekken kan altijd en werkt de volgende keer dat de app ophaalt.
+
+**De app vraagt nooit om een onderwerp.** `published_tips()` heeft geen argumenten en geeft voor iedereen hetzelfde antwoord; de app bewaart het lokaal en filtert zelf. Dit is regel 2 uit het funnel-voorstel hieronder ("content ophalen is weerblind") en `anonimisering.sql` bewaakt het: een argument zou in de platformlogs naast het account zetten wat iemand leest. Lukt het ophalen niet, dan toont de app wat hij al had, en anders alleen zijn eigen tips.
+
+**Wat MIND hier niet mee kan, en dat is bewust:** een crisistekst of een hulplijn toevoegen. De Hulplijn staat al onder elk onderwerp, met de tekst uit `scope.md`. Het beheer zegt dat bij het schrijven; technisch afdwingen kan niet, dus het blijft een afspraak met MIND. Een tip is platte tekst in een vaste vorm, links alleen naar https.
+
 ### admin_users
 
 ```
@@ -385,7 +424,7 @@ Net als bij het uurblok hoort dit in de DPIA en niet weggepoetst te worden.
 
 ### Nog niet ingevuld
 
-De twee consents, de content voor het naslagwerk en de challenges. Die blokkeren onderdeel 1, 4 en 5 uit `taakverdeling.md`. Voor elk daarvan hoort het sjabloon hierboven volledig ingevuld te worden voordat er een migratie voor geschreven wordt.
+De twee consents, de rest van de content voor het naslagwerk (de tips van MIND staan sinds 19 september 2026 in `content_tips`) en de challenges. Die blokkeren onderdeel 1, 4 en 5 uit `taakverdeling.md`. Voor elk daarvan hoort het sjabloon hierboven volledig ingevuld te worden voordat er een migratie voor geschreven wordt.
 
 ### Voorstel: de funnel van weerbeeld naar challenges en content
 

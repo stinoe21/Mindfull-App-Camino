@@ -63,6 +63,42 @@ export type Database = {
         }
         Relationships: []
       }
+      content_tips: {
+        Row: {
+          body: Json
+          created_at: string
+          id: string
+          published_at: string | null
+          status: string
+          title: string
+          topic: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          body: Json
+          created_at?: string
+          id?: string
+          published_at?: string | null
+          status?: string
+          title: string
+          topic: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          body?: Json
+          created_at?: string
+          id?: string
+          published_at?: string | null
+          status?: string
+          title?: string
+          topic?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           id: string
@@ -190,6 +226,28 @@ export type Database = {
     }
     Functions: {
       admin_role: { Args: never; Returns: string }
+      admin_tip_delete: { Args: { p_id: string }; Returns: undefined }
+      admin_tip_save: {
+        Args: { p_body: Json; p_id: string; p_title: string; p_topic: string }
+        Returns: string
+      }
+      admin_tip_set_status: {
+        Args: { p_id: string; p_status: string }
+        Returns: undefined
+      }
+      admin_tips_list: {
+        Args: never
+        Returns: {
+          body: Json
+          id: string
+          published_at: string
+          status: string
+          title: string
+          topic: string
+          updated_at: string
+        }[]
+      }
+      content_body_problem: { Args: { p_body: Json }; Returns: string }
       delete_own_account: { Args: never; Returns: undefined }
       get_app_status: {
         Args: never
@@ -200,6 +258,7 @@ export type Database = {
       }
       has_admin_role: { Args: { p_min: string }; Returns: boolean }
       log_usage: { Args: { p_events: Json }; Returns: number }
+      published_tips: { Args: never; Returns: Json }
       purge_inactive_accounts: { Args: { p_days?: number }; Returns: number }
       submit_weather: {
         Args: { p_province?: string; p_weather: string }

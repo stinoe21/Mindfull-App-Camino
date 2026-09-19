@@ -27,6 +27,8 @@ Dit is de volledige API van de backend. Alles wat hier niet staat, is voor de ap
 | Account verwijderen | `rpc('delete_own_account')` | Verwijdert de eigen rij in `auth.users`; profiel en sessies gaan mee via de cascade. Scherm 19. |
 | Gebruikstotalen insturen | `rpc('log_usage', { p_events: [{ d: '2026-09-17', e: 'topic_opened', i: 'piekeren', n: 3 }] })` | Eén batch per account per dag, alleen van afgesloten dagen (hooguit zeven terug). Zet eerst het slot `last_usage_on` en werkt `last_active_at` bij, telt dan op bij `usage_daily`. Wat niet in `usage_event` past wordt overgeslagen. Tweede batch op dezelfde dag: "vandaag al ingestuurd". Alleen `features/meten` roept dit aan. |
 | De eigen rol in het beheer | `rpc('admin_role')` | Geeft `analist`, `redacteur`, `beheerder` of `null`. Alleen `apps/admin` roept dit aan, na het inloggen. Voor een medewerker werkt het ook `last_active_at` bij. |
+| Tips van MIND ophalen | `rpc('published_tips')` | Alle gepubliceerde tips als `{ version, tips }`, voor iedereen hetzelfde. **Nooit een argument toevoegen**: de app vraagt niet om een onderwerp, zie `datamodel.md` bij `content_tips`. Alleen `features/content/mindTips` roept dit aan. |
+| Tips beheren | `rpc('admin_tips_list')`, `admin_tip_save`, `admin_tip_set_status`, `admin_tip_delete` | Alleen `apps/admin`. Lezen mag elke rol, schrijven vraagt de rol redacteur. De inhoud wordt in de database gecontroleerd: platte tekst in een vaste vorm, links alleen naar https. Een gepubliceerde tip kun je niet weggooien, eerst intrekken. |
 
 **De noodrem bedienen** is data en geen schema, en doet de eigenaar. Met de CLI, ingelogd met het eigen account:
 
